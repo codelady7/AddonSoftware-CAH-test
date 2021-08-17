@@ -665,11 +665,6 @@
         </copy>
 
         <copy preserveLastModified="true"
-              todir="${barista.build.dir}/bbdict">
-              <fileset dir="${barista.bbj.dir}/bbdict" includes="**,*"/>
-        </copy>
-
-        <copy preserveLastModified="true"
               todir="${barista.build.dir}/sys/config">
               <fileset dir="${barista.bbj.dir}/sys/config"
                        includes="*/barista.men,
