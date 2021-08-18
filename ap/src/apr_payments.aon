@@ -6,6 +6,8 @@ rem --- AddonSoftware Version 8.0.0 - 01Jan2007
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem --- All Rights Reserved
 
+    use java.util.HashMap
+
     setesc std_error
     seterr std_error
 
@@ -57,33 +59,37 @@ rem --- set rd_alias_id$, if needed, for DocOut Settings
 
 rem --- Open/Lock files
 
-    files=7,begfile=1,endfile=files
+    files=9,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS";rem "aps-01
-    files$[2]="ape-01",ids$[2]="APE_INVOICEHDR";rem ape-01
+    files$[2]="apt-01",ids$[2]="APT_INVOICEHDR"
     files$[3]="ape-04",ids$[3]="APE_CHECKS";rem "ape-04
     files$[4]="ape-11",ids$[4]="APE_INVOICEDET";rem ape-11
     files$[5]="ape-16",ids$[5]="APE_SELECTIONDET";rem "ape-16
     files$[6]="apm-01",ids$[6]="APM_VENDMAST";rem "apm-01
     files$[7]="apc_typecode",ids$[7]="APC_TYPECODE";rem "apm-10A
+    files$[8]="apc_distribution",ids$[8]="APC_DISTRIBUTION"
+    files$[9]="adc_bankacctcode",ids$[9]="ADC_BANKACCTCODE"
     
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :       ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
     
     aps01_dev=channels[1]
-    ape01_dev=channels[2]
+    apt01_dev=channels[2]
     ape04_dev=channels[3]
     ape11_dev=channels[4]
     ape16_dev=channels[5]
     apm01_dev=channels[6]
     apm10_dev=channels[7]
+    apcDist_dev=channels[8]
+    adcBnkAcct_dev=channels[9]
 
 rem --- Dimension string templates
 
-    dim aps01a$:templates$[1],ape01a$:templates$[2],ape04a$:templates$[3]
+    dim aps01a$:templates$[1],apt01a$:templates$[2],ape04a$:templates$[3]
     dim ape11a$:templates$[4],ape16a$:templates$[5],apm01a$:templates$[6]
-    dim apm10a$:templates$[7]
+    dim apm10a$:templates$[7],apcDist$:templates$[8],adcBnkAcct$:templates$[9]
 
 rem --- Retrieve parameter records
 
@@ -96,6 +102,20 @@ rem --- Retrieve parameter records
     m0=len(m0$)
     m1=len(m1$)
     maxheadings=9
+    
+rem --- If using GL, open Bank Account Master file
+    if aps01a.post_to_gl$="Y" then
+        files=1,begfile=1,endfile=files
+        dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+        files$[1]="glm-05",ids$[1]="GLM_BANKMASTER"
+    
+        call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:           ids$[all],templates$[all],channels[all],batch,status
+        if status goto std_exit
+    
+        glm05_dev=channels[1]
+        dim glm05$:templates$[1]
+    endif
 
 rem --- Initializations
 
@@ -124,6 +144,9 @@ rem --- Initializations
     if multitypes headings$[2]="[HEADER]"
     recs=0
     use_underline$="Y"
+    acctInvMap!=new HashMap()
+    badBankAccts!=BBjAPI().makeVector()
+    missingBankRecs!=BBjAPI().makeVector()
 
 rem --- Prompt user for permission to continue
 
@@ -259,8 +282,41 @@ rem --- Read next Check Detail (ape-04) record
             endif
         next x
 
-    rem --- Loop back for next check detail record
+        rem --- Build HashMap holding Vector of all invoices being paid for each checking account
+        if aps01a.post_to_gl$="Y" then
+            redim apt01a$
+            ape01_key$=firm_id$+ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$
+            readrecord(apt01_dev,key=ape01_key$,dom=*next)apt01a$
+            if cvs(apt01a.ap_dist_code$,2)<>"" then
+                redim apcDist$
+                readrecord(apcDist_dev,key=firm_id$+"B"+apt01a.ap_dist_code$,dom=*next)apcDist$
+                if cvs(apcDist.gl_cash_acct$,2)<>"" then
+                    redim glm05$
+                    readrecord(glm05_dev,key=firm_id$+apcDist.gl_cash_acct$,dom=*next)glm05$
+                    if cvs(glm05.bnk_acct_cd$,2)<>"" then
+                        if acctInvMap!.containsKey(glm05.bnk_acct_cd$)
+                            invVect!=acctInvMap!.get(glm05.bnk_acct_cd$)
+                        else
+                            invVect!=BBjAPI().makeVector()
+                        endif
+                        invVect!.addItem(ape04a.ap_inv_no$)
+                        acctInvMap!.put(glm05.bnk_acct_cd$,invVect!)
 
+                        rem --- Warn if Bank Account is not a checking account
+                        redim adcBnkAcct$
+                        readrecord(adcBnkAcct_dev,key=firm_id$+glm05.bnk_acct_cd$,dom=*next)adcBnkAcct$
+                        if adcBnkAcct.bnk_acct_type$<>"C" then
+                            badBankAccts!.addItem(glm05.bnk_acct_cd$)
+                        endif
+                    else
+                        rem --- Warn if Cash Account isn't in Bank Reconciliation
+                        missingBankRecs!.addItem(apcDist.gl_cash_acct$)
+                    endif
+                endif
+            endif
+        endif
+
+        rem --- Loop back for next check detail record
     wend
 
 rem --- All done
@@ -296,26 +352,119 @@ rem --- All done
     use_underline$="Y"
     gosub print_total
 
-    while negative_checks
+    if negative_checks then
+        xwk=fnblank(10)
+        if retention OutVect!.addItem("")
+
         warning$=Translate!.getTranslation("AON_WARNING:_THIS_PAYMENT_SELECTION_REPORT_CONTAINS_NEGATIVE_CHECKS!")
-
         xwk = fnblank(1)
-
         OutVect!.addItem(warning$)
+            if retention wblanks=9 else wblanks=8
+            xwk=fnblank(wblanks)
 
         msg_id$="NEG_CHECKS_ON_RPT"
         gosub disp_message
-        break
-    wend
+    endif
+
+    rem --- Warn multiple checking accounts (Bank Accounts) being used
+    if acctInvMap!.size()>1 then
+        xwk=fnblank(10)
+        if retention OutVect!.addItem("")
+
+        warning$=Translate!.getTranslation("AON_MULTI_CHK_ACCTS")
+        OutVect!.addItem(warning$)
+        if retention wblanks=10 else wblanks=9
+        xwk=fnblank(wblanks)
+
+        acctIter!=acctInvMap!.keySet().iterator()
+        while acctIter!.hasNext()
+            acct$=acctIter!.next()
+            
+            xwk = fnblank(1)
+            OutVect!.addItem(acct$)
+            if retention wblanks=9 else wblanks=8
+            xwk=fnblank(wblanks)
+            
+            invVect!=acctInvMap!.get(acct$)
+            for i=0 to invVect!.size()-1
+                xwk = fnblank(1)
+                OutVect!.addItem("        "+invVect!.getItem(i))
+                if retention wblanks=9 else wblanks=8
+                xwk=fnblank(wblanks)
+            next i
+        wend
+
+        msg_id$="AP_MULTI_CHK_ACCTS"
+        gosub disp_message
+    endif
+
+    rem --- Warn Cash Account isn't in Bank Reconciliation
+    if missingBankRecs!.size()>0 then
+        xwk=fnblank(10)
+        if retention OutVect!.addItem("")
+
+        warning$=Translate!.getTranslation("AON_NOT_BANK_REC")
+        OutVect!.addItem(warning$)
+        if retention wblanks=10 else wblanks=9
+        xwk=fnblank(wblanks)
+
+        call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",gl_acct_mask$,0,gl_acct_length
+        for i=0 to missingBankRecs!.size()-1
+            bankRec$=missingBankRecs!.getItem(i)
+            bankRec$=fnmask$(bankRec$(1,gl_acct_length),gl_acct_mask$)
+        
+            xwk = fnblank(1)
+            OutVect!.addItem(bankRec$)
+            if retention wblanks=9 else wblanks=8
+            xwk=fnblank(wblanks)
+
+            if i>0 then missingBankRecs$=missingBankRecs$+"; "
+            missingBankRecs$=missingBankRecs$+bankRec$
+        next i
+
+        msg_id$="AP_NOT_BANK_REC"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=missingBankRecs$
+        gosub disp_message
+    endif
+
+    rem --- Warn Bank Account is not a checking account
+    if badBankAccts!.size()>0 then
+        xwk=fnblank(10)
+        if retention OutVect!.addItem("")
+
+        warning$=Translate!.getTranslation("AON_NOT_CHECK_ACCT")
+        OutVect!.addItem(warning$)
+        if retention wblanks=10 else wblanks=9
+        xwk=fnblank(wblanks)
+
+        for i=0 to badBankAccts!.size()-1
+            xwk = fnblank(1)
+            OutVect!.addItem(badBankAccts!.getItem(i))
+            if retention wblanks=9 else wblanks=8
+            xwk=fnblank(wblanks)
+
+            if i>0 then badBankAccts$=badBankAccts$+"; "
+            badBankAccts$=badBankAccts$+badBankAccts!.getItem(i)
+        next i
+
+        msg_id$="AP_NOT_CHECK_ACCT"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=badBankAccts$
+        gosub disp_message
+    endif
 
     rem --- Close files now, otherwise they remain open until exit DocOut report viewer
     close(aps01_dev,err=*next)
-    close(ape01_dev,err=*next)
+    close(apt01_dev,err=*next)
     close(ape04_dev,err=*next)
     close(ape11_dev,err=*next)
     close(ape16_dev,err=*next)
     close(apm01_dev,err=*next)
     close(apm10_dev,err=*next)
+    close(apcDist_dev,err=*next)
+    close(adcBnkAcct_dev,err=*next)
+    if aps01a.post_to_gl$="Y" then close(glm05_dev,err=*next)
 
     goto std_exit
 
