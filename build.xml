@@ -670,6 +670,17 @@
                        includes="*/barista.men,
                                  */barista.cfg"/>
         </copy>
+        
+        <!-- More stuff built by addon sync that needs to go into the install -->
+        <copy preserveLastModified="true"
+              todir="${addon.build.dir}/classes">
+              <fileset dir="${addon.bbj.dir}/classes" includes="**,*"/>
+        </copy>
+        
+        <copy preserveLastModified="true"
+              todir="${prbabs.build.dir}/classes">
+              <fileset dir="${prbabs.bbj.dir}/classes" includes="**,*"/>
+        </copy>
 
     </target>
     <!-- End of copyAddonSync -->
