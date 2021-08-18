@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-08-16
+ Report Date:   2021-08-18
  Report Branch: AddonSoftware 21.10
  Last Release:  AddonSoftware 21.03
 =======================================================================================================================================
@@ -150,5 +150,20 @@ Modified: data/cdf/ope_custchng.cdf
 Modified: data/cdf/ope_ordhdr.cdf
 Modified: data/sync/adm_mnu_item~[01007514OP].xml
 Modified: data/sync/adm_mnu_trans~[01007514OP].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: d3e6a5f39856573b36c742f186c27210e7886841
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 8/18/2021 1:01:43 PM
+Message:
+ER 10120: Modified Payment Selection Report to warn when selected
+invoices use different Checking Accounts.
+
+(cherry picked from commit 550350de8115c5c1f96e48ead6457aae9e049f62)
+----
+Modified: ap/src/apr_payments.aon
+Modified: data/sync/ads_messages~[01007514AP].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
