@@ -17,8 +17,6 @@ rem ==========================================================================
     use java.util.HashMap
     use java.util.stream.Collectors
     use java.util.Vector
-    use java.nio.file.Files
-    use java.nio.file.Paths
     use java.nio.file.FileSystems
     use java.nio.file.attribute.PosixFilePermissions 
 
