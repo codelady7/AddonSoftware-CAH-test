@@ -208,20 +208,85 @@ rem --- Disable prior statement date/amt (will enable if there is no prior info 
 	callpoint!.setColumnEnabled("GLM_BANKMASTER.PRI_END_DATE",0)
 	callpoint!.setColumnEnabled("GLM_BANKMASTER.PRI_END_AMT",0)
 
+[[GLM_BANKMASTER.ASHO]]
+rem --- Warn if same Bank Account Code used for multiple GL Accounts
+	bnkAcctMap!= new HashMap()
+   	glm05_dev=fnget_dev("GLM_BANKMASTER")
+   	dim glm05_tpl$:fnget_tpl$("GLM_BANKMASTER")
+	read(glm05_dev,key=firm_id$,dom=*next)
+	while 1
+		readrecord(glm05_dev,end=*break)glm05_tpl$
+		if glm05_tpl.firm_id$<>firm_id$ then break
+		if bnkAcctMap!.containsKey(glm05_tpl.bnk_acct_cd$)
+			glAcctVect!=bnkAcctMap!.get(glm05_tpl.bnk_acct_cd$)
+		else
+			glAcctVect!=BBjAPI().makeVector()
+		endif
+		glAcctVect!.addItem(glm05_tpl.gl_account$)
+		bnkAcctMap!.put(glm05_tpl.bnk_acct_cd$,glAcctVect!)
+	wend
+
+	call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
+	bnkAcctIter!=bnkAcctMap!.keySet().iterator()
+	while bnkAcctIter!.hasNext()
+		thisBnkAcct!=bnkAcctIter!.next()
+		glAcctVect!=bnkAcctMap!.get(thisBnkAcct!)
+		if glAcctVect!.size()>1 then
+			glAccts$=""
+			for i=0 to glAcctVect!.size()-1
+				if i>0 then glAccts$=glAccts$+"; "
+				thisGlAcct$=glAcctVect!.getItem(i)
+				glAccts$=glAccts$+fnmask$(thisGlAcct$(1,gl_size),m0$)
+			next i
+			msg_id$="GL_BNKACCT_WARN"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=thisBnkAcct!
+			msg_tokens$[2]=glAccts$
+			gosub disp_message
+		endif
+	wend
+
 [[GLM_BANKMASTER.BDTW]]
 rem --- Pass current statement date to check detail and other transaction listings
 	stmtdate$=callpoint!.getColumnData("GLM_BANKMASTER.CURSTM_DATE")
 	callpoint!.setDevObject("stmtdate",stmtdate$)
 
 [[GLM_BANKMASTER.BNK_ACCT_CD.AVAL]]
-rem --- Display Bank Account Information
+rem --- Do NOT allow the same Bank Account Code for multiple GL Accounts
 	bnk_acct_cd$=callpoint!.getUserInput()
+	gl_account$=callpoint!.getColumnData("GLM_BANKMASTER.GL_ACCOUNT")
+   	glm05_dev=fnget_dev("GLM_BANKMASTER")
+   	dim glm05_tpl$:fnget_tpl$("GLM_BANKMASTER")
+
+	other_glAcct$=""
+	read(glm05_dev,key=firm_id$,dom=*next)
+	while 1
+		readrecord(glm05_dev,end=*break)glm05_tpl$
+		if glm05_tpl.firm_id$<>firm_id$ then break
+		if glm05_tpl.bnk_acct_cd$=bnk_acct_cd$ and glm05_tpl.gl_account$<>gl_account$ then
+			other_glAcct$=glm05_tpl.gl_account$
+			break
+		endif
+	wend
+	if other_glAcct$<>"" then
+		call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
+		msg_id$="GL_BNKACCT_USED"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=bnk_acct_cd$
+		msg_tokens$[2]=fnmask$(other_glAcct$(1,gl_size),m0$)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Display Bank Account Information
 	gosub displayBankInfo
 
 [[GLM_BANKMASTER.BSHO]]
-rem --- Encryptor for bank acct #
-
-	use ::sys/prog/bao_encryptor.bbj::Encryptor
+rem --- Inits
+	use java.util.HashMap
+	rem --- Encryptor for bank acct #
+	use ::sys/prog/bao_encryptor.bbj::Encryptor; rem --- Encryptor for bank acct #
 
 rem --- Open/Lock files
 	dir_pgm$=stbl("+DIR_PGM")
