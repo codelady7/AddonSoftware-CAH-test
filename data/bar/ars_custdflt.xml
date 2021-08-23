@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_custdflt">62C308ED65D45D3C87F70E435530644B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_custdflt">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_custdflt">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_custdflt">20210302</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_custdflt">20210302</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_custdflt">125008</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_custdflt">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_custdflt">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_custdflt">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_custdflt"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ars_custdflt">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ars_custdflt">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_custdflt"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ars_custdflt"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ars_custdflt">T</DD_ATTR_FTYP>
@@ -106,6 +106,132 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ars_custdflt">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ars_custdflt"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ars_custdflt">firm_id:c(2),record_id_d:c(1),disc_code:c(2),territory:c(3),slspsn_code:c(3),tax_code:c(10),ar_terms_code:c(2),ar_dist_code:c(2),customer_inv_his:c(1),customer_type:c(3),frt_terms:c(3),message_code:c(2),pricing_code:c(6),label_code:c(2),ar_cyclecode:c(2),sa_flag:c(1),cred_hold:c(1),finance_chg:c(1),statements:c(1),inv_hist_flg:c(1),ar_ship_via:c(10),fob:c(15),credit_limit:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ars_custdfltar_ship_viaarc_shipviacode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_custdfltar_ship_viaarc_shipviacode">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_custdfltar_ship_viaarc_shipviacode">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_custdfltar_ship_viaarc_shipviacode">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_custdfltar_ship_viaarc_shipviacode">FK_ARS_CUSTDFLT_AR_SHIP_VIA_ARC_SHIPVIACODE                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_custdfltdisc_codeopc_disccode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_custdfltdisc_codeopc_disccode">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_custdfltdisc_codeopc_disccode">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_custdfltdisc_codeopc_disccode">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_custdfltdisc_codeopc_disccode">FK_ARS_CUSTDFLT_DISC_CODE_OPC_DISCCODE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_custdfltmessage_codeopc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_custdfltmessage_codeopc_message">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_custdfltmessage_codeopc_message">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_custdfltmessage_codeopc_message">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_custdfltmessage_codeopc_message">FK_ARS_CUSTDFLT_MESSAGE_CODE_OPC_MESSAGE                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_custdfltpricing_codeopc_pricecds">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_custdfltpricing_codeopc_pricecds">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_custdfltpricing_codeopc_pricecds">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_custdfltpricing_codeopc_pricecds">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_custdfltpricing_codeopc_pricecds">FK_ARS_CUSTDFLT_PRICING_CODE_OPC_PRICECDS                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_custdflttax_codeopc_taxcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_custdflttax_codeopc_taxcode">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_custdflttax_codeopc_taxcode">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_custdflttax_codeopc_taxcode">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_custdflttax_codeopc_taxcode">FK_ARS_CUSTDFLT_TAX_CODE_OPC_TAXCODE                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">DISC_CODE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltdisc_codeopc_disccode0002">DISC_CODE       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">MESSAGE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltmessage_codeopc_message0002">MESSAGE_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">PRICING_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdfltpricing_codeopc_pricecds0002">PRICING_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">ARS_CUSTDFLT    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">OP_TAX_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_custdflttax_codeopc_taxcode0002">TAX_CODE        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

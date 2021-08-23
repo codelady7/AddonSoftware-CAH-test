@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.pow_bofill">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pow_bofill">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pow_bofill">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pow_bofill">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pow_bofill">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.pow_bofill">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pow_bofill">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pow_bofill"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pow_bofill"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pow_bofill"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pow_bofill">POW_BOFILL      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pow_bofill">pow-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.pow_bofill">firm_id:c(2),warehouse_id:c(2),item_id:c(20*),qty_received:n(7*),reserved_num:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.pow_bofillitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pow_bofillitem_idivm_itemmast">POW_BOFILL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pow_bofillitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pow_bofillitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pow_bofillitem_idivm_itemmast">FK_POW_BOFILL_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">POW_BOFILL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">POW_BOFILL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_bofillitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivu_itemeoqupdat"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivu_itemeoqupdat">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivu_itemeoqupdat">20111011</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivu_itemeoqupdat">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivu_itemeoqupdat">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivu_itemeoqupdat">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivu_itemeoqupdat">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivu_itemeoqupdat">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivu_itemeoqupdat">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivu_itemeoqupdat"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivu_itemeoqupdat">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivu_itemeoqupdat">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivu_itemeoqupdat"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivu_itemeoqupdat"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivu_itemeoqupdat">S</DD_ATTR_FTYP>

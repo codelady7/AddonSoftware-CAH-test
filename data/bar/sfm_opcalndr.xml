@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfm_opcalndr">CBE0FE3ECADE0195D3431E7D29AD0928</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfm_opcalndr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfm_opcalndr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfm_opcalndr">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfm_opcalndr">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfm_opcalndr">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfm_opcalndr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfm_opcalndr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfm_opcalndr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfm_opcalndr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sfm_opcalndr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sfm_opcalndr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfm_opcalndr"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sfm_opcalndr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sfm_opcalndr">T</DD_ATTR_FTYP>
@@ -98,6 +98,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfm_opcalndr">SFM_OPCALNDR    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfm_opcalndr">sfm-04</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfm_opcalndr">firm_id:c(2),op_code:c(3),year:c(4),month:c(2*),reserved_str:c(10*),dealer_str:c(10*),days_in_mth:n(2*),hrs_per_day_01:n(6*),hrs_per_day_02:n(6*),hrs_per_day_03:n(6*),hrs_per_day_04:n(6*),hrs_per_day_05:n(6*),hrs_per_day_06:n(6*),hrs_per_day_07:n(6*),hrs_per_day_08:n(6*),hrs_per_day_09:n(6*),hrs_per_day_10:n(6*),hrs_per_day_11:n(6*),hrs_per_day_12:n(6*),hrs_per_day_13:n(6*),hrs_per_day_14:n(6*),hrs_per_day_15:n(6*),hrs_per_day_16:n(6*),hrs_per_day_17:n(6*),hrs_per_day_18:n(6*),hrs_per_day_19:n(6*),hrs_per_day_20:n(6*),hrs_per_day_21:n(6*),hrs_per_day_22:n(6*),hrs_per_day_23:n(6*),hrs_per_day_24:n(6*),hrs_per_day_25:n(6*),hrs_per_day_26:n(6*),hrs_per_day_27:n(6*),hrs_per_day_28:n(6*),hrs_per_day_29:n(6*),hrs_per_day_30:n(6*),hrs_per_day_31:n(6*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfm_opcalndrop_codebmc_opcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfm_opcalndrop_codebmc_opcodes">SFM_OPCALNDR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfm_opcalndrop_codebmc_opcodes">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfm_opcalndrop_codebmc_opcodes">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfm_opcalndrop_codebmc_opcodes">FK_SFM_OPCALNDR_OP_CODE_BMC_OPCODES                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">SFM_OPCALNDR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">SFM_OPCALNDR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">OP_CODE         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfm_opcalndrop_codebmc_opcodes0002">OP_CODE         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

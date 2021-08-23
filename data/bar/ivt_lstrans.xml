@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivt_lstrans">B1AA327C799CA9D44A1B05FDFBCEEB70</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivt_lstrans">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivt_lstrans">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivt_lstrans">20210311</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivt_lstrans">20210311</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivt_lstrans">113618</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivt_lstrans">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivt_lstrans">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivt_lstrans">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivt_lstrans"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivt_lstrans"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivt_lstrans">AO_ITM_WH_LOT_DT</DD_ATTR_DKNM>
@@ -91,6 +91,123 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivt_lstrans">IVT_LSTRANS     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivt_lstrans">ivt-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivt_lstrans">firm_id:c(2),warehouse_id:c(2),item_id:c(20),lotser_no:c(20),trans_date:c(8),iv_hist_seq:c(5),trans_source:c(2),trans_ref_1:c(6),trans_ref_2:c(7),trans_ref_3:c(7),trans_ref_4:c(2),trans_seq:c(12),line_code:c(1),unit_measure:c(6),trans_cmt:c(20),finish_item:c(20),gl_account:c(10),location:c(10),po_line_code:c(2),reserved_str:c(3),user_id:c(16),reserved_str_02:c(3),system_time:c(4),terminal_id:c(4),reserved_str_03:c(2),system_date:c(8),dealer_str:c(1),trans_qty:n(7*),unit_cost:n(7*),unit_price:n(7*),reserved_num:n(1*),dealer_num:n(1*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivt_lstransgl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivt_lstransgl_accountglm_acct">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivt_lstransgl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivt_lstransgl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivt_lstransgl_accountglm_acct">FK_IVT_LSTRANS_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivt_lstransitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivt_lstransitem_idivm_itemmast">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivt_lstransitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivt_lstransitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivt_lstransitem_idivm_itemmast">FK_IVT_LSTRANS_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivt_lstranspo_line_codepoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivt_lstranspo_line_codepoc_linecode">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivt_lstranspo_line_codepoc_linecode">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivt_lstranspo_line_codepoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivt_lstranspo_line_codepoc_linecode">FK_IVT_LSTRANS_PO_LINE_CODE_POC_LINECODE                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivt_lstransunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivt_lstransunit_measureivc_umcodes">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivt_lstransunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivt_lstransunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivt_lstransunit_measureivc_umcodes">FK_IVT_LSTRANS_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivt_lstransuser_idadm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivt_lstransuser_idadm_user">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivt_lstransuser_idadm_user">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivt_lstransuser_idadm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivt_lstransuser_idadm_user">FK_IVT_LSTRANS_USER_ID_ADM_USER                                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransgl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstranspo_line_codepoc_linecode0002">PO_LINE_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">IVT_LSTRANS     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivt_lstransuser_idadm_user0001">USER_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -979,11 +1096,11 @@
 			<DD_ATTR_FTSR id="ddm_table_cols.ivt_lstrans014"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.ivt_lstrans014"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivt_lstrans014">3013</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.ivt_lstrans014">ine_unit_measure</DD_ATTR_CTLN>
+			<DD_ATTR_CTLN id="ddm_table_cols.ivt_lstrans014">dis_unit_measure</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.ivt_lstrans014">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivt_lstrans014"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivt_lstrans014"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.ivt_lstrans014"></DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.ivt_lstrans014">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.ivt_lstrans015">
 			<DD_TABLE_ALIAS id="ddm_table_cols.ivt_lstrans015">IVT_LSTRANS     </DD_TABLE_ALIAS>

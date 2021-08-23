@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivr_pricelist">F7CF2A422DD6D15F07F037F343D2B181</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivr_pricelist">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivr_pricelist">20070719</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivr_pricelist">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivr_pricelist">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivr_pricelist">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivr_pricelist">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivr_pricelist">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivr_pricelist">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivr_pricelist"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivr_pricelist">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivr_pricelist">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivr_pricelist"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivr_pricelist"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivr_pricelist">S</DD_ATTR_FTYP>
@@ -275,7 +275,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivr_pricelist004">20070719</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivr_pricelist004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivr_pricelist004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivr_pricelist004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivr_pricelist004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivr_pricelist004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivr_pricelist004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivr_pricelist004"></DD_ATTR_CTLY>

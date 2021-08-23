@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.art_invdet">4370D8777C92FE3FF18907362540DF96</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.art_invdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.art_invdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.art_invdet">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.art_invdet">20210219</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.art_invdet">153550</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.art_invdet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.art_invdet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.art_invdet">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.art_invdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.art_invdet"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.art_invdet">AO_INVOICE</DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.art_invdet">ART_INVDET      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.art_invdet">art-11</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.art_invdet">firm_id:c(2),ar_type:c(2),customer_id:c(6),ar_inv_no:c(7),sequence_num:c(2*),trans_type:c(1),reserved_str:c(3),refchk_no:c(7),trans_date:c(8*),trans_amt:n(7*),adjdisc_amt:n(7*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.art_invdetcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.art_invdetcustomer_idarm_custmast">ART_INVDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.art_invdetcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.art_invdetcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.art_invdetcustomer_idarm_custmast">FK_ART_INVDET_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">ART_INVDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">ART_INVDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.art_invdetcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

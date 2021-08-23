@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arr_analysis">1BE832B5DAE2881A3CB3AF3D5A8459AF</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arr_analysis"></DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arr_analysis">20060419</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arr_analysis">20210419</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arr_analysis">20210419</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arr_analysis">174206</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arr_analysis">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arr_analysis">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arr_analysis">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arr_analysis"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arr_analysis">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arr_analysis">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arr_analysis"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arr_analysis"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arr_analysis">S</DD_ATTR_FTYP>

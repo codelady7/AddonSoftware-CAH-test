@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.saw_salespsn">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.saw_salespsn">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.saw_salespsn">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.saw_salespsn">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.saw_salespsn">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.saw_salespsn">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.saw_salespsn">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.saw_salespsn"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.saw_salespsn"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.saw_salespsn"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.saw_salespsn">SAW_SALESPSN    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.saw_salespsn">saw-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.saw_salespsn">firm_id:c(2),sort_amount:c(16),slspsn_code:c(3),product_type:c(3),item_id:c(20*),mtd_qnty:n(7*),ytd_qnty:n(7*),pyr_mtd_qty:n(7*),pri_ytd_qnty:n(7*),mtd_cost:n(7*),ytd_cost:n(7*),pyr_mtd_cost:n(7*),pri_ytd_cost:n(7*),mtd_sales:n(7*),ytd_sales:n(7*),pyr_mtd_sale:n(7*),pri_ytd_sale:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.saw_salespsnitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.saw_salespsnitem_idivm_itemmast">SAW_SALESPSN    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.saw_salespsnitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.saw_salespsnitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.saw_salespsnitem_idivm_itemmast">FK_SAW_SALESPSN_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">SAW_SALESPSN    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">SAW_SALESPSN    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.saw_salespsnitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

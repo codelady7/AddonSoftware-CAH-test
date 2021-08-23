@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glr_recurring">407EC7A5E708F4D6893C13E972C2F461</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glr_recurring"></DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glr_recurring">20060428</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glr_recurring">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glr_recurring">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glr_recurring">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glr_recurring">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glr_recurring">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glr_recurring">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glr_recurring"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glr_recurring">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glr_recurring">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glr_recurring"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glr_recurring"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glr_recurring">S</DD_ATTR_FTYP>

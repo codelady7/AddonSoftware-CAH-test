@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.opm_shiptrack"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opm_shiptrack">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opm_shiptrack">20180806</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opm_shiptrack">20210309</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opm_shiptrack">20210309</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opm_shiptrack">150114</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opm_shiptrack">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opm_shiptrack">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opm_shiptrack">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opm_shiptrack"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.opm_shiptrack">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.opm_shiptrack">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opm_shiptrack"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opm_shiptrack"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opm_shiptrack">S</DD_ATTR_FTYP>
@@ -273,7 +273,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opm_shiptrack003">20180810</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opm_shiptrack003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opm_shiptrack003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opm_shiptrack003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opm_shiptrack003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opm_shiptrack003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opm_shiptrack003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opm_shiptrack003"></DD_ATTR_CTLY>

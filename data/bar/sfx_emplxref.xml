@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.sfx_emplxref">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfx_emplxref">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.sfx_emplxref">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfx_emplxref">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfx_emplxref">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfx_emplxref">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfx_emplxref">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfx_emplxref"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sfx_emplxref"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfx_emplxref"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfx_emplxref">SFX_EMPLXREF    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfx_emplxref">sfm-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfx_emplxref">firm_id:c(2),record_id_b:c(1),alt_sequence:c(10),employee_no:c(9*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfx_emplxrefemployee_nosfm_emplmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfx_emplxrefemployee_nosfm_emplmast">SFX_EMPLXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfx_emplxrefemployee_nosfm_emplmast">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfx_emplxrefemployee_nosfm_emplmast">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfx_emplxrefemployee_nosfm_emplmast">FK_SFX_EMPLXREF_EMPLOYEE_NO_SFM_EMPLMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">SFX_EMPLXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">SFX_EMPLXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">EMPLOYEE_NO     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfx_emplxrefemployee_nosfm_emplmast0002">EMPLOYEE_NO     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

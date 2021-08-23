@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_ordship">D53DAB3F2FB4AE757FDE817BA9F3B7AC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_ordship">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_ordship">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_ordship">20210305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordship">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordship">172000</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_ordship">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordship">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordship">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_ordship">OPT_INVSHIP     </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_ordship"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_ordship"></DD_ATTR_DKNM>
@@ -91,6 +91,96 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ope_ordship">OPE_ORDSHIP     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ope_ordship">opt-31</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ope_ordship">firm_id:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),name:c(30),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),addr_line_4:c(30),city:c(30),state_code:c(2),zip_code:c(9),cntry_id:c(2),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ope_ordshiparc_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_ordshiparc_useradm_user">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_ordshiparc_useradm_user">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_ordshiparc_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_ordshiparc_useradm_user">FK_OPE_ORDSHIP_ARC_USER_ADM_USER                                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_ordshipcntry_idadc_country">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_ordshipcntry_idadc_country">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_ordshipcntry_idadc_country">CNTRY_ID        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_ordshipcntry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_ordshipcntry_idadc_country">FK_OPE_ORDSHIP_CNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_ordshipcreated_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_ordshipcreated_useradm_user">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_ordshipcreated_useradm_user">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_ordshipcreated_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_ordshipcreated_useradm_user">FK_OPE_ORDSHIP_CREATED_USER_ADM_USER                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_ordshipcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_ordshipcustomer_idarm_custmast">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_ordshipcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_ordshipcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_ordshipcustomer_idarm_custmast">FK_OPE_ORDSHIP_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_ordshipmod_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_ordshipmod_useradm_user">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_ordshipmod_useradm_user">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_ordshipmod_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_ordshipmod_useradm_user">FK_OPE_ORDSHIP_MOD_USER_ADM_USER                                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_ordshiparc_useradm_user0001">ARC_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">CNTRY_ID        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_ordshipcntry_idadc_country0001">CNTRY_ID        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_ordshipcreated_useradm_user0001">CREATED_USER    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_ordshipcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">OPE_ORDSHIP     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_ordshipmod_useradm_user0001">MOD_USER        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

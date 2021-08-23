@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.mpw_reqvend">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.mpw_reqvend">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.mpw_reqvend">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.mpw_reqvend">20210311</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.mpw_reqvend">113628</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.mpw_reqvend">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.mpw_reqvend">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.mpw_reqvend"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.mpw_reqvend"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.mpw_reqvend"></DD_ATTR_DKNM>
@@ -64,6 +64,108 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.mpw_reqvend">MPW_REQVEND     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.mpw_reqvend">mpw-04</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.mpw_reqvend">firm_id:c(2),forecast:c(3),warehouse_id:c(2),vendor_id:c(6),item_id:c(20),trns_date:c(8),unit_measure:c(6),reserved_str:c(33),conv_factor:n(7),require_date:c(8),unit_cost:n(7*),qty_required:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.mpw_reqvendforecastmpm_forecast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpw_reqvendforecastmpm_forecast">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpw_reqvendforecastmpm_forecast">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpw_reqvendforecastmpm_forecast">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpw_reqvendforecastmpm_forecast">FK_MPW_REQVEND_FORECAST_MPM_FORECAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpw_reqvenditem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpw_reqvenditem_idivm_itemmast">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpw_reqvenditem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpw_reqvenditem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpw_reqvenditem_idivm_itemmast">FK_MPW_REQVEND_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpw_reqvendunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpw_reqvendunit_measureivc_umcodes">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpw_reqvendunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpw_reqvendunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpw_reqvendunit_measureivc_umcodes">FK_MPW_REQVEND_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpw_reqvendvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpw_reqvendvendor_idapm_vendmast">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpw_reqvendvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpw_reqvendvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpw_reqvendvendor_idapm_vendmast">FK_MPW_REQVEND_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">FORECAST        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvendforecastmpm_forecast0002">FORECAST        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvenditem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvendunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">MPW_REQVEND     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpw_reqvendvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

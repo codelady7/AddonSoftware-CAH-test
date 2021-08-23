@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bmu_compreplace"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bmu_compreplace">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bmu_compreplace">20110727</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bmu_compreplace">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bmu_compreplace">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bmu_compreplace">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bmu_compreplace">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bmu_compreplace">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bmu_compreplace">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bmu_compreplace"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bmu_compreplace">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bmu_compreplace">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bmu_compreplace"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bmu_compreplace"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bmu_compreplace">S</DD_ATTR_FTYP>
@@ -126,7 +126,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmu_compreplace001">20120518</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmu_compreplace001"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmu_compreplace001"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmu_compreplace001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmu_compreplace001">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmu_compreplace001">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmu_compreplace001">+4</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmu_compreplace001"></DD_ATTR_CTLY>
@@ -177,7 +177,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmu_compreplace002">20110727</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmu_compreplace002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmu_compreplace002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmu_compreplace002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmu_compreplace002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmu_compreplace002">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmu_compreplace002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmu_compreplace002"></DD_ATTR_CTLY>

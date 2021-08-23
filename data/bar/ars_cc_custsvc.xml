@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_cc_custsvc"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_cc_custsvc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_cc_custsvc">2458379</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_cc_custsvc">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_cc_custsvc">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_cc_custsvc">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_cc_custsvc">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_cc_custsvc">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_cc_custsvc">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_cc_custsvc"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ars_cc_custsvc">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ars_cc_custsvc">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_cc_custsvc"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ars_cc_custsvc"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ars_cc_custsvc">T</DD_ATTR_FTYP>
@@ -124,6 +124,75 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ars_cc_custsvc">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ars_cc_custsvc">ars_cc_custsvc</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ars_cc_custsvc">firm_id:c(2),cash_rec_cd:c(3*),use_custsvc_cc:c(1),interface_tp:c(1),gateway_id:c(10),batch_desc:c(30),deposit_desc:c(30),dflt_cntry_id:c(2),cc_pending:c(10),cc_expense:c(10)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ars_cc_custsvccc_expenseglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_cc_custsvccc_expenseglm_acct">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_cc_custsvccc_expenseglm_acct">CC_EXPENSE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_cc_custsvccc_expenseglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_cc_custsvccc_expenseglm_acct">FK_ARS_CC_CUSTSVC_CC_EXPENSE_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_cc_custsvccc_pendingglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_cc_custsvccc_pendingglm_acct">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_cc_custsvccc_pendingglm_acct">CC_PENDING      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_cc_custsvccc_pendingglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_cc_custsvccc_pendingglm_acct">FK_ARS_CC_CUSTSVC_CC_PENDING_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_cc_custsvcdflt_cntry_idadc_country">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_cc_custsvcdflt_cntry_idadc_country">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_cc_custsvcdflt_cntry_idadc_country">DFLT_CNTRY_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_cc_custsvcdflt_cntry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_cc_custsvcdflt_cntry_idadc_country">FK_ARS_CC_CUSTSVC_DFLT_CNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">CC_EXPENSE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">CC_EXPENSE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_expenseglm_acct0002">CC_EXPENSE      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">CC_PENDING      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">CC_PENDING      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custsvccc_pendingglm_acct0002">CC_PENDING      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">ARS_CC_CUSTSVC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">DFLT_CNTRY_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custsvcdflt_cntry_idadc_country0001">DFLT_CNTRY_ID   </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -336,7 +405,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custsvc004">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custsvc004">ARS_CC_CUSTSVC.USE_CUSTSVC_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custsvc004">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custsvc004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custsvc004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custsvc004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custsvc004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custsvc004"></DD_ATTR_CTLY>
@@ -387,7 +456,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custsvc005">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custsvc005">ARS_CC_CUSTSVC.USE_CUSTSVC_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custsvc005">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custsvc005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custsvc005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custsvc005">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custsvc005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custsvc005"></DD_ATTR_CTLY>

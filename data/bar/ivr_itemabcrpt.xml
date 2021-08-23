@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivr_itemabcrpt">6F7B1246D1A6C63659FB916C976FFE21</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivr_itemabcrpt">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivr_itemabcrpt">20080117</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivr_itemabcrpt">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivr_itemabcrpt">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivr_itemabcrpt">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivr_itemabcrpt">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivr_itemabcrpt">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivr_itemabcrpt">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivr_itemabcrpt"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivr_itemabcrpt">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivr_itemabcrpt">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivr_itemabcrpt"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivr_itemabcrpt"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivr_itemabcrpt">S</DD_ATTR_FTYP>

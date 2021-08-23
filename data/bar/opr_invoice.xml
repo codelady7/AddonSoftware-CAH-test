@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opr_invoice">89F1F894061980C71E7EFF7D7769E187</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opr_invoice"></DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opr_invoice">20060425</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opr_invoice">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opr_invoice">20210219</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opr_invoice">153550</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opr_invoice">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opr_invoice">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opr_invoice">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opr_invoice"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opr_invoice"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opr_invoice"></DD_ATTR_DKNM>

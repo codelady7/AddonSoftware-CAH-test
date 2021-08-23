@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ads_terminal">A085397F1869928450FD5FE12FC8CD07</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ads_terminal">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ads_terminal">20060404</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ads_terminal">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ads_terminal">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ads_terminal">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ads_terminal">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ads_terminal">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ads_terminal">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ads_terminal"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ads_terminal"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ads_terminal"></DD_ATTR_DKNM>
@@ -91,6 +91,27 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ads_terminal">ADS_TERMINAL    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ads_terminal"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ads_terminal">record_id_t:c(1),terminal_id:c(4),reserved_str:c(3),user_id:c(16),reserved_str_02:c(6),printer_id:c(2),security_lev:c(1),firm_id:c(2),reserved_str_03:c(6),printer_flag:c(1),printer_opt:c(1),system_date:c(8),current_date:c(8),program_name:c(24),menu_id:c(10),task_no:c(2),task_params:c(60),firm_name:c(40),task_desc:c(35)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ads_terminaluser_idadm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ads_terminaluser_idadm_user">ADS_TERMINAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ads_terminaluser_idadm_user">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ads_terminaluser_idadm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ads_terminaluser_idadm_user">FK_ADS_TERMINAL_USER_ID_ADM_USER                                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ads_terminaluser_idadm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ads_terminaluser_idadm_user0001">ADS_TERMINAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ads_terminaluser_idadm_user0001">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ads_terminaluser_idadm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ads_terminaluser_idadm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ads_terminaluser_idadm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ads_terminaluser_idadm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ads_terminaluser_idadm_user0001">USER_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

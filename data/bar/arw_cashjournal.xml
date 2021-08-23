@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.arw_cashjournal">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arw_cashjournal">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.arw_cashjournal">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arw_cashjournal">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arw_cashjournal">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.arw_cashjournal">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arw_cashjournal">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arw_cashjournal"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arw_cashjournal"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arw_cashjournal"></DD_ATTR_DKNM>
@@ -64,6 +64,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.arw_cashjournal">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.arw_cashjournal">arw-07</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.arw_cashjournal">firm_id:c(2),ar_type:c(2),receipt_date:c(8),gl_account:c(10),customer_id:c(6),ar_check_no:c(7),ar_inv_no:c(7*),gl_post_amt:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.arw_cashjournalcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arw_cashjournalcustomer_idarm_custmast">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arw_cashjournalcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arw_cashjournalcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arw_cashjournalcustomer_idarm_custmast">FK_ARW_CASHJOURNAL_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arw_cashjournalgl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arw_cashjournalgl_accountglm_acct">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arw_cashjournalgl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arw_cashjournalgl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arw_cashjournalgl_accountglm_acct">FK_ARW_CASHJOURNAL_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arw_cashjournalcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">ARW_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arw_cashjournalgl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

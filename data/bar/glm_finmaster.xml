@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glm_finmaster">25B6F2ABA41CECD94CF0CE04303B350B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_finmaster">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_finmaster">20060616</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_finmaster">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_finmaster">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_finmaster">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_finmaster">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_finmaster">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_finmaster">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_finmaster"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glm_finmaster">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glm_finmaster">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_finmaster"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glm_finmaster"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glm_finmaster">T</DD_ATTR_FTYP>
@@ -201,6 +201,45 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glm_finmaster">GLM_FINMASTER   </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glm_finmaster">glm-12</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glm_finmaster">firm_id:c(2),gl_rpt_no:c(2),gl_rpt_line:c(4),gl_rpt_desc:c(20),heading_no:c(2*),amount_mask:c(15*),unit_mask:c(12*),ratio_mask:c(15*),percent_mask:c(10*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glm_finmastergl_rpt_lineglm_findetail">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glm_finmastergl_rpt_lineglm_findetail">GLM_FINMASTER   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glm_finmastergl_rpt_lineglm_findetail">GL_RPT_LINE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glm_finmastergl_rpt_lineglm_findetail">GLM_FINDETAIL   </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glm_finmastergl_rpt_lineglm_findetail">FK_GLM_FINMASTER_GL_RPT_LINE_GLM_FINDETAIL                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">GLM_FINMASTER   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">GL_RPT_LINE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">GLM_FINDETAIL   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">GLM_FINMASTER   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">GL_RPT_LINE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">GLM_FINDETAIL   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">GL_RPT_NO       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0002">GL_RPT_NO       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">GLM_FINMASTER   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">GL_RPT_LINE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">GLM_FINDETAIL   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">GL_RPT_LINE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_finmastergl_rpt_lineglm_findetail0003">GL_RPT_LINE     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

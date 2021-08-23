@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arr_statements">BF51677961296793A18097031968B9FB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arr_statements"></DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arr_statements">20060417</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arr_statements">20210420</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arr_statements">20210419</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arr_statements">175316</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arr_statements">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arr_statements">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arr_statements">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arr_statements"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arr_statements">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arr_statements">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arr_statements"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arr_statements"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arr_statements">S</DD_ATTR_FTYP>
@@ -211,7 +211,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements002"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements002">3001</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements002">ind_curstm_date</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements002">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements002"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements002">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements002">C</DD_ATTR_BTNS>
@@ -262,7 +262,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements003"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements003">3003</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements003">dis_ar_cyclecode</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements003">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements003"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements003">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements003">F</DD_ATTR_BTNS>
@@ -313,7 +313,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements004"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements004">3004</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements004">dis_territory</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements004">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements004"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements004">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements004">F</DD_ATTR_BTNS>
@@ -364,7 +364,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements005"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements005">3005</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements005">lbn_pick_per</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements005">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements005"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements005">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements005"></DD_ATTR_BTNS>
@@ -415,7 +415,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements006"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements006">3010</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements006">dis_customer_id</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements006">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements006">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements006"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements006">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements006">F</DD_ATTR_BTNS>
@@ -466,7 +466,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements007"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements007">3011</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements007">ine_alt_sequence</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements007">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements007">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements007"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements007">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements007"></DD_ATTR_BTNS>
@@ -517,7 +517,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements008"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements008">3002</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements008">ine_pick_text</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements008">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements008">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements008"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements008">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements008"></DD_ATTR_BTNS>
@@ -568,7 +568,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements009"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements009">3006</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements009">lbn_report_type</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements009">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements009">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements009"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements009">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements009"></DD_ATTR_BTNS>
@@ -589,7 +589,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arr_statements010">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arr_statements010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arr_statements010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arr_statements010">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arr_statements010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arr_statements010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arr_statements010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arr_statements010"></DD_ATTR_CTLY>
@@ -619,7 +619,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements010"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements010">3008</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements010">lbn_report_option</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements010">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements010"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements010">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements010"></DD_ATTR_BTNS>
@@ -640,7 +640,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arr_statements011">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arr_statements011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arr_statements011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arr_statements011">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arr_statements011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arr_statements011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arr_statements011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arr_statements011"></DD_ATTR_CTLY>
@@ -670,7 +670,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements011"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements011">3009</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements011">lbn_report_sequence</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements011">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements011">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements011"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements011">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements011"></DD_ATTR_BTNS>
@@ -721,7 +721,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements012"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements012">3007</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements012">inn_pick_no</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements012">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements012">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements012"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements012">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements012"></DD_ATTR_BTNS>
@@ -823,7 +823,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.arr_statements014"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.arr_statements014">3012</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arr_statements014">cbx_cust_inactive</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements014">4</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_statements014">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arr_statements014"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_statements014">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_statements014"></DD_ATTR_BTNS>

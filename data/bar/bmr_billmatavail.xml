@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bmr_billmatavail"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bmr_billmatavail">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bmr_billmatavail">20080215</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bmr_billmatavail">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bmr_billmatavail">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bmr_billmatavail">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bmr_billmatavail">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bmr_billmatavail">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bmr_billmatavail">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bmr_billmatavail"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bmr_billmatavail">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bmr_billmatavail">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bmr_billmatavail"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bmr_billmatavail"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bmr_billmatavail">S</DD_ATTR_FTYP>
@@ -122,7 +122,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmr_billmatavail001">20080304</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmr_billmatavail001"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmr_billmatavail001"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmr_billmatavail001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmr_billmatavail001">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmr_billmatavail001"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmr_billmatavail001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmr_billmatavail001"></DD_ATTR_CTLY>

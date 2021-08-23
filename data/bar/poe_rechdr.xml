@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_rechdr">B4EF7697B3177406A17214903B053944</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_rechdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_rechdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_rechdr">20210309</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_rechdr">20210309</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_rechdr">152642</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_rechdr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_rechdr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_rechdr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_rechdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poe_rechdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poe_rechdr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_rechdr">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poe_rechdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poe_rechdr">T</DD_ATTR_FTYP>
@@ -172,6 +172,165 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.poe_rechdr">POE_RECHDR      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.poe_rechdr">poe-04</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.poe_rechdr">firm_id:c(2),receiver_no:c(7*),po_no:c(7),vendor_id:c(6),warehouse_id:c(2),purch_addr:c(2),hold_flag:c(1),ap_terms_code:c(2),po_frt_terms:c(15),ap_ship_via:c(15),acknowledge:c(20),fob:c(15),po_msg_code:c(3),req_no:c(7),packing_list:c(15),rec_complete:c(1),ord_date:c(8),promise_date:c(8),not_b4_date:c(8),reqd_date:c(8),recpt_date:c(8*),dropship:c(1),customer_id:c(6),order_no:c(7),shipto_no:c(6),ds_name:c(30),ds_addr_line_1:c(30),ds_addr_line_2:c(30),ds_addr_line_3:c(30),ds_addr_line_4:c(30),ds_city:c(30),ds_state_cd:c(2),ds_zip_code:c(9),batch_no:c(7),entered_by:c(16)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.poe_rechdrcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_rechdrcustomer_idarm_custmast">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_rechdrcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_rechdrcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_rechdrcustomer_idarm_custmast">FK_POE_RECHDR_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_rechdrpo_msg_codepoc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_rechdrpo_msg_codepoc_message">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_rechdrpo_msg_codepoc_message">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_rechdrpo_msg_codepoc_message">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_rechdrpo_msg_codepoc_message">FK_POE_RECHDR_PO_MSG_CODE_POC_MESSAGE                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_rechdrpo_nopoe_pohdr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_rechdrpo_nopoe_pohdr">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_rechdrpo_nopoe_pohdr">PO_NO           </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_rechdrpo_nopoe_pohdr">POE_POHDR       </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_rechdrpo_nopoe_pohdr">FK_POE_RECHDR_PO_NO_POE_POHDR                                                                                                                                                                                                                                  </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_rechdrpurch_addrapm_vendaddr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_rechdrpurch_addrapm_vendaddr">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_rechdrpurch_addrapm_vendaddr">PURCH_ADDR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_rechdrpurch_addrapm_vendaddr">APM_VENDADDR    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_rechdrpurch_addrapm_vendaddr">FK_POE_RECHDR_PURCH_ADDR_APM_VENDADDR                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_rechdrreq_nopoe_reqhdr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_rechdrreq_nopoe_reqhdr">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_rechdrreq_nopoe_reqhdr">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_rechdrreq_nopoe_reqhdr">POE_REQHDR      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_rechdrreq_nopoe_reqhdr">FK_POE_RECHDR_REQ_NO_POE_REQHDR                                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_rechdrvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_rechdrvendor_idapm_vendmast">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_rechdrvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_rechdrvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_rechdrvendor_idapm_vendmast">FK_POE_RECHDR_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">PO_MSG_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_msg_codepoc_message0002">PO_MSG_CODE     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">PO_NO           </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">POE_POHDR       </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">PO_NO           </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">POE_POHDR       </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">PO_NO           </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpo_nopoe_pohdr0002">PO_NO           </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">PURCH_ADDR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">APM_VENDADDR    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">PURCH_ADDR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">APM_VENDADDR    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0002">VENDOR_ID       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">PURCH_ADDR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">APM_VENDADDR    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">PURCH_ADDR      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrpurch_addrapm_vendaddr0003">PURCH_ADDR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">REQ_NO          </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrreq_nopoe_reqhdr0002">REQ_NO          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">POE_RECHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_rechdrvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -446,7 +605,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr002"></DD_ATTR_CTLY>
@@ -497,7 +656,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr003">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr003"></DD_ATTR_CTLY>
@@ -548,7 +707,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr004">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr004"></DD_ATTR_CTLY>
@@ -599,7 +758,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr005"></DD_ATTR_CTLY>
@@ -650,7 +809,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr006">POE_RECHDR.RECEIVER_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr006">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr006">+33</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr006">-8</DD_ATTR_CTLY>
@@ -1262,7 +1421,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr018">POE_RECHDR.RECEIVER_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr018">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr018">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr018"></DD_ATTR_CTLY>
@@ -1313,7 +1472,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr019">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr019">POE_RECHDR.RECEIVER_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr019">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr019">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr019">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr019"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr019"></DD_ATTR_CTLY>
@@ -1364,7 +1523,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr020">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr020">POE_RECHDR.RECEIVER_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr020">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr020">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr020">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr020"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr020"></DD_ATTR_CTLY>
@@ -1415,7 +1574,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr021">POE_RECHDR.RECEIVER_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr021">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr021">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr021"></DD_ATTR_CTLY>
@@ -1466,7 +1625,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr022">20081013</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr022"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr022">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr022">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr022">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr022"></DD_ATTR_CTLY>
@@ -1517,7 +1676,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr023">20081013</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr023">POE_RECHDR.DROPSHIP</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr023">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr023">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr023">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr023">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr023"></DD_ATTR_CTLY>
@@ -1568,7 +1727,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_rechdr024">20081013</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_rechdr024"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_rechdr024"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr024">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_rechdr024">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_rechdr024">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_rechdr024"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_rechdr024"></DD_ATTR_CTLY>

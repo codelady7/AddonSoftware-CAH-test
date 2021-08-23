@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custship">777AC602BEC600EEB292BD70D4270CA7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custship">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custship">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20210305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">171934</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custship"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custship"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custship"></DD_ATTR_DKNM>
@@ -91,6 +91,99 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.arm_custship">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.arm_custship">arm-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.arm_custship">firm_id:c(2),customer_id:c(6),shipto_no:c(6),name:c(30),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),addr_line_4:c(30),city:c(30),state_code:c(2),zip_code:c(9),phone_no:c(20),phone_exten:c(4),contact_name:c(20),slspsn_code:c(3),territory:c(3),tax_code:c(10),db_no:c(9),sic_code:c(8),country:c(24),reserved_str:c(13*),cntry_id:c(2),code_inactive:c(1),ar_ship_via:c(10),shipping_id:c(15),shipping_email:c(80)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.arm_custshipar_ship_viaarc_shipviacode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custshipar_ship_viaarc_shipviacode">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arm_custshipar_ship_viaarc_shipviacode">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custshipar_ship_viaarc_shipviacode">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arm_custshipar_ship_viaarc_shipviacode">FK_ARM_CUSTSHIP_AR_SHIP_VIA_ARC_SHIPVIACODE                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arm_custshipcntry_idadc_country">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custshipcntry_idadc_country">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arm_custshipcntry_idadc_country">CNTRY_ID        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custshipcntry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arm_custshipcntry_idadc_country">FK_ARM_CUSTSHIP_CNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">FK_ARM_CUSTSHIP_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">FK_ARM_CUSTSHIP_TAX_CODE_OPC_TAXCODE                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">CNTRY_ID        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipcntry_idadc_country0001">CNTRY_ID        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">OP_TAX_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0002">TAX_CODE        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

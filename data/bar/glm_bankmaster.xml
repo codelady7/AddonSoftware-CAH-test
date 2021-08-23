@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glm_bankmaster">77F5B7263DE0B2D37BE2B56FB18269BC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_bankmaster">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_bankmaster">20060609</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_bankmaster">20210809</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_bankmaster">20210809</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_bankmaster">171726</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_bankmaster">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_bankmaster">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_bankmaster">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_bankmaster"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glm_bankmaster">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glm_bankmaster">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_bankmaster"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glm_bankmaster"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glm_bankmaster">T</DD_ATTR_FTYP>
@@ -174,6 +174,60 @@
 			<DD_TABLE_TPL id="ddm_table_tpls.glm_bankmaster">firm_id:c(2),gl_account:c(10*),reserved_str:c(12),bnk_acct_cd:c(10),reserved_str_02:c(13),pri_end_date:c(8),curstm_date:c(8*),pri_end_amt:n(7*),cur_stmt_amt:n(7*),book_balance:n(7*),reserved_num:n(1*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glm_bankmasterbnk_acct_cdadc_bankacctcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glm_bankmasterbnk_acct_cdadc_bankacctcode">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glm_bankmasterbnk_acct_cdadc_bankacctcode">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glm_bankmasterbnk_acct_cdadc_bankacctcode">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glm_bankmasterbnk_acct_cdadc_bankacctcode">FK_GLM_BANKMASTER_BNK_ACCT_CD_ADC_BANKACCTCODE                                                                                                                                                                                                                 </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.glm_bankmastergl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glm_bankmastergl_accountglm_acct">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glm_bankmastergl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glm_bankmastergl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glm_bankmastergl_accountglm_acct">FK_GLM_BANKMASTER_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_bankmasterbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_bankmastergl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_keys">
 		<ID id="ddm_keys">DDM_KEYS</ID>
 		<RECORD id="ddm_keys.glm_bankmaster00">
@@ -282,7 +336,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_bankmaster002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_bankmaster002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_bankmaster002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_bankmaster002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_bankmaster002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_bankmaster002"></DD_ATTR_CTLY>
@@ -384,7 +438,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_bankmaster004">20190220</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_bankmaster004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_bankmaster004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_bankmaster004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_bankmaster004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_bankmaster004"></DD_ATTR_CTLY>
@@ -537,7 +591,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_bankmaster007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_bankmaster007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_bankmaster007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster007">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_bankmaster007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_bankmaster007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_bankmaster007"></DD_ATTR_CTLY>
@@ -639,7 +693,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_bankmaster009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_bankmaster009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_bankmaster009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster009">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_bankmaster009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_bankmaster009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_bankmaster009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_bankmaster009"></DD_ATTR_CTLY>
@@ -1053,7 +1107,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.glm_bankmaster012">ine_temp_tab_stop</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glm_bankmaster012">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glm_bankmaster012"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.glm_bankmaster012">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.glm_bankmaster012">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.glm_bankmaster013">
 			<DD_TABLE_ALIAS id="ddm_table_disp.glm_bankmaster013">GLM_BANKMASTER  </DD_TABLE_ALIAS>

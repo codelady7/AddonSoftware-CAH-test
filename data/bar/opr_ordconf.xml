@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opr_ordconf"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opr_ordconf">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opr_ordconf">20210621</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opr_ordconf">20210628</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opr_ordconf">20210628</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opr_ordconf">121328</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opr_ordconf">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opr_ordconf">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opr_ordconf">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opr_ordconf"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opr_ordconf"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opr_ordconf"></DD_ATTR_DKNM>

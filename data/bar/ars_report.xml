@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_report">4EDDEC09878D4F77A51173F850D988E0</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_report">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_report">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_report">20210305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_report">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_report">171936</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_report">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_report">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_report">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_report"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ars_report">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ars_report">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_report"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ars_report"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ars_report">T</DD_ATTR_FTYP>

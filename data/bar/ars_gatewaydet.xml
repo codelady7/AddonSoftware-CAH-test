@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_gatewaydet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_gatewaydet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_gatewaydet">20181109</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_gatewaydet">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_gatewaydet">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_gatewaydet">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_gatewaydet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_gatewaydet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_gatewaydet">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_gatewaydet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ars_gatewaydet"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_gatewaydet"></DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ars_gatewaydet">ARS_GATEWAYDET  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ars_gatewaydet">ars_gatewaydet</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ars_gatewaydet">firm_id:c(2),gateway_id:c(10),sequence_num:c(2),config_attr:c(30),config_value:c(288)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ars_gatewaydetgateway_idars_gatewayhdr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_gatewaydetgateway_idars_gatewayhdr">ARS_GATEWAYDET  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_gatewaydetgateway_idars_gatewayhdr">GATEWAY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_gatewaydetgateway_idars_gatewayhdr">ARS_GATEWAYHDR  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_gatewaydetgateway_idars_gatewayhdr">FK_ARS_GATEWAYDET_GATEWAY_ID_ARS_GATEWAYHDR                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">ARS_GATEWAYDET  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">GATEWAY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">ARS_GATEWAYHDR  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">ARS_GATEWAYDET  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">GATEWAY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">ARS_GATEWAYHDR  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">GATEWAY_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_gatewaydetgateway_idars_gatewayhdr0002">GATEWAY_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

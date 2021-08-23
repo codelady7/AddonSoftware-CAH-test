@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfc_wotypecd">1686552A101DB41E0552CCDE73CF1B9F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfc_wotypecd">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfc_wotypecd">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfc_wotypecd">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfc_wotypecd">20210219</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfc_wotypecd">153550</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfc_wotypecd">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfc_wotypecd">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfc_wotypecd">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfc_wotypecd"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sfc_wotypecd">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sfc_wotypecd">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfc_wotypecd"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sfc_wotypecd"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sfc_wotypecd">T</DD_ATTR_FTYP>
@@ -102,6 +102,228 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfc_wotypecd">SFC_WOTYPECD    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfc_wotypecd">sfm-10</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfc_wotypecd">firm_id:c(2),record_id_a:c(1),wo_type:c(2),code_desc:c(20),wo_category:c(1),stdact_flag:c(1),reserved_str:c(12*),gl_wip_acct:c(10),gl_close_to:c(10),gl_dir_lab:c(10),gl_ovh_lab:c(10),gl_pur_acct:c(10),gl_lab_var:c(10),gl_ovh_var:c(10),gl_mat_var:c(10),gl_sub_var:c(10),reserved_str_02:c(20*),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_close_toglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_close_toglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_close_toglm_acct">GL_CLOSE_TO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_close_toglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_close_toglm_acct">FK_SFC_WOTYPECD_GL_CLOSE_TO_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_dir_labglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_dir_labglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_dir_labglm_acct">GL_DIR_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_dir_labglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_dir_labglm_acct">FK_SFC_WOTYPECD_GL_DIR_LAB_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_lab_varglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_lab_varglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_lab_varglm_acct">GL_LAB_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_lab_varglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_lab_varglm_acct">FK_SFC_WOTYPECD_GL_LAB_VAR_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_mat_varglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_mat_varglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_mat_varglm_acct">GL_MAT_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_mat_varglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_mat_varglm_acct">FK_SFC_WOTYPECD_GL_MAT_VAR_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_ovh_labglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_ovh_labglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_ovh_labglm_acct">GL_OVH_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_ovh_labglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_ovh_labglm_acct">FK_SFC_WOTYPECD_GL_OVH_LAB_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_ovh_varglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_ovh_varglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_ovh_varglm_acct">GL_OVH_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_ovh_varglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_ovh_varglm_acct">FK_SFC_WOTYPECD_GL_OVH_VAR_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_pur_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_pur_acctglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_pur_acctglm_acct">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_pur_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_pur_acctglm_acct">FK_SFC_WOTYPECD_GL_PUR_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_sub_varglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_sub_varglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_sub_varglm_acct">GL_SUB_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_sub_varglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_sub_varglm_acct">FK_SFC_WOTYPECD_GL_SUB_VAR_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfc_wotypecdgl_wip_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_wip_acctglm_acct">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfc_wotypecdgl_wip_acctglm_acct">GL_WIP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfc_wotypecdgl_wip_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfc_wotypecdgl_wip_acctglm_acct">FK_SFC_WOTYPECD_GL_WIP_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">GL_CLOSE_TO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">GL_CLOSE_TO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_close_toglm_acct0002">GL_CLOSE_TO     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">GL_DIR_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">GL_DIR_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_dir_labglm_acct0002">GL_DIR_LAB      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">GL_LAB_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">GL_LAB_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_lab_varglm_acct0002">GL_LAB_VAR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">GL_MAT_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">GL_MAT_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_mat_varglm_acct0002">GL_MAT_VAR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">GL_OVH_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">GL_OVH_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_labglm_acct0002">GL_OVH_LAB      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">GL_OVH_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">GL_OVH_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_ovh_varglm_acct0002">GL_OVH_VAR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_pur_acctglm_acct0002">GL_PUR_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">GL_SUB_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">GL_SUB_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_sub_varglm_acct0002">GL_SUB_VAR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">GL_WIP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">SFC_WOTYPECD    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">GL_WIP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfc_wotypecdgl_wip_acctglm_acct0002">GL_WIP_ACCT     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -429,7 +651,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfc_wotypecd006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfc_wotypecd006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfc_wotypecd006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfc_wotypecd006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfc_wotypecd006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfc_wotypecd006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfc_wotypecd006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfc_wotypecd006"></DD_ATTR_CTLY>

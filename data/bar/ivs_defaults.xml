@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivs_defaults">C6A89C234C7AE0319F4860CB61D21D7E</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivs_defaults">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivs_defaults">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivs_defaults">20210405</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivs_defaults">20210405</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivs_defaults">151228</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivs_defaults">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivs_defaults">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivs_defaults">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivs_defaults"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivs_defaults">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivs_defaults">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivs_defaults"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivs_defaults"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivs_defaults">T</DD_ATTR_FTYP>
@@ -98,6 +98,252 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivs_defaults">IVS_DEFAULTS    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivs_defaults"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivs_defaults">firm_id:c(2),record_id_d:c(1),product_type:c(3),unit_of_sale:c(6),purchase_um:c(6),taxable_flag:c(1),buyer_code:c(3),lotser_item:c(1),inventoried:c(1),item_class:c(6),stock_level:c(1),abc_code:c(1),eoq_code:c(1),ord_pnt_code:c(1),saf_stk_code:c(1),ar_dist_code:c(2),item_type:c(3),gl_inv_acct:c(10),gl_cogs_acct:c(10),gl_inv_adj:c(10),gl_cogs_adj:c(10),gl_ppv_acct:c(10),gl_pur_acct:c(10)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivs_defaultsgl_cogs_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_cogs_acctglm_acct">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsgl_cogs_acctglm_acct">GL_COGS_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_cogs_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsgl_cogs_acctglm_acct">FK_IVS_DEFAULTS_GL_COGS_ACCT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsgl_cogs_adjglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_cogs_adjglm_acct">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsgl_cogs_adjglm_acct">GL_COGS_ADJ     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_cogs_adjglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsgl_cogs_adjglm_acct">FK_IVS_DEFAULTS_GL_COGS_ADJ_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsgl_inv_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_inv_acctglm_acct">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsgl_inv_acctglm_acct">GL_INV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_inv_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsgl_inv_acctglm_acct">FK_IVS_DEFAULTS_GL_INV_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsgl_inv_adjglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_inv_adjglm_acct">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsgl_inv_adjglm_acct">GL_INV_ADJ      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_inv_adjglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsgl_inv_adjglm_acct">FK_IVS_DEFAULTS_GL_INV_ADJ_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsgl_ppv_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_ppv_acctglm_acct">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsgl_ppv_acctglm_acct">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_ppv_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsgl_ppv_acctglm_acct">FK_IVS_DEFAULTS_GL_PPV_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsgl_pur_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_pur_acctglm_acct">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsgl_pur_acctglm_acct">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsgl_pur_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsgl_pur_acctglm_acct">FK_IVS_DEFAULTS_GL_PUR_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsitem_classivc_clascode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsitem_classivc_clascode">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsitem_classivc_clascode">ITEM_CLASS      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsitem_classivc_clascode">IVC_CLASCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsitem_classivc_clascode">FK_IVS_DEFAULTS_ITEM_CLASS_IVC_CLASCODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsitem_typeivc_typecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsitem_typeivc_typecode">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsitem_typeivc_typecode">ITEM_TYPE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsitem_typeivc_typecode">IVC_TYPECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsitem_typeivc_typecode">FK_IVS_DEFAULTS_ITEM_TYPE_IVC_TYPECODE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultspurchase_umivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultspurchase_umivc_umcodes">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultspurchase_umivc_umcodes">PURCHASE_UM     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultspurchase_umivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultspurchase_umivc_umcodes">FK_IVS_DEFAULTS_PURCHASE_UM_IVC_UMCODES                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivs_defaultsunit_of_saleivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsunit_of_saleivc_umcodes">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivs_defaultsunit_of_saleivc_umcodes">UNIT_OF_SALE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivs_defaultsunit_of_saleivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivs_defaultsunit_of_saleivc_umcodes">FK_IVS_DEFAULTS_UNIT_OF_SALE_IVC_UMCODES                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">GL_COGS_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">GL_COGS_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_acctglm_acct0002">GL_COGS_ACCT    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">GL_COGS_ADJ     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">GL_COGS_ADJ     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_cogs_adjglm_acct0002">GL_COGS_ADJ     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">GL_INV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">GL_INV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_acctglm_acct0002">GL_INV_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">GL_INV_ADJ      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">GL_INV_ADJ      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_inv_adjglm_acct0002">GL_INV_ADJ      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_ppv_acctglm_acct0002">GL_PPV_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsgl_pur_acctglm_acct0002">GL_PUR_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">ITEM_CLASS      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">IVC_CLASCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">ITEM_CLASS      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">IVC_CLASCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">ITEM_CLASS      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_classivc_clascode0002">ITEM_CLASS      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">ITEM_TYPE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">IVC_TYPECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">ITEM_TYPE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">IVC_TYPECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">ITEM_TYPE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsitem_typeivc_typecode0002">ITEM_TYPE       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">PURCHASE_UM     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">PURCHASE_UM     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultspurchase_umivc_umcodes0002">PURCHASE_UM     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">UNIT_OF_SALE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">IVS_DEFAULTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">UNIT_OF_SALE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivs_defaultsunit_of_saleivc_umcodes0002">UNIT_OF_SALE    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -1024,7 +1270,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivs_defaults018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivs_defaults018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivs_defaults018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults018">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivs_defaults018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivs_defaults018">-35</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivs_defaults018">+4</DD_ATTR_CTLY>
@@ -1075,7 +1321,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivs_defaults019">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivs_defaults019"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivs_defaults019"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults019">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults019">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivs_defaults019"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivs_defaults019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivs_defaults019"></DD_ATTR_CTLY>
@@ -1126,7 +1372,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivs_defaults020">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivs_defaults020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivs_defaults020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults020">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults020">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivs_defaults020"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivs_defaults020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivs_defaults020"></DD_ATTR_CTLY>
@@ -1177,7 +1423,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivs_defaults021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivs_defaults021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivs_defaults021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults021">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivs_defaults021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivs_defaults021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivs_defaults021"></DD_ATTR_CTLY>
@@ -1228,7 +1474,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivs_defaults022">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivs_defaults022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivs_defaults022"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults022">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults022">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivs_defaults022"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivs_defaults022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivs_defaults022"></DD_ATTR_CTLY>
@@ -1279,7 +1525,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivs_defaults023">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivs_defaults023"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivs_defaults023"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults023">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivs_defaults023">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivs_defaults023"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivs_defaults023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivs_defaults023"></DD_ATTR_CTLY>

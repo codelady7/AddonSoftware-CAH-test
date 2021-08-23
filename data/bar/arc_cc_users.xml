@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arc_cc_users"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arc_cc_users">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arc_cc_users">20190912</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arc_cc_users">20210624</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arc_cc_users">20210624</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arc_cc_users">182704</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arc_cc_users">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arc_cc_users">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arc_cc_users">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arc_cc_users"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arc_cc_users">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arc_cc_users">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arc_cc_users"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arc_cc_users"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arc_cc_users">T</DD_ATTR_FTYP>
@@ -124,6 +124,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.arc_cc_users">ARC_CC_USERS    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.arc_cc_users">arc_ccusers</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.arc_cc_users">firm_id:c(2),customer_id:c(6),cc_username:c(256),name_first:c(20),name_last:c(25),activated_date:c(8),last_used_date:c(8),deactivated_date:c(8),user_email:c(80),emuser:c(512)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.arc_cc_userscustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_cc_userscustomer_idarm_custmast">ARC_CC_USERS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_cc_userscustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_cc_userscustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_cc_userscustomer_idarm_custmast">FK_ARC_CC_USERS_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">ARC_CC_USERS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">ARC_CC_USERS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_cc_userscustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ive_costchg">62B422DEA33C63453ED9B1D5FFEFE028</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_costchg">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_costchg">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_costchg">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ive_costchg">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_costchg">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ive_costchg">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ive_costchg">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_costchg">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_costchg"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ive_costchg">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ive_costchg">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_costchg">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ive_costchg"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ive_costchg">T</DD_ATTR_FTYP>
@@ -130,6 +130,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ive_costchg">IVE_COSTCHG     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ive_costchg">ive-06</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ive_costchg">firm_id:c(2),effect_date:c(8),warehouse_id:c(2),item_id:c(20*),reserved_str:c(1*),dealer_str:c(1*),new_cost:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),batch_no:c(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ive_costchgitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ive_costchgitem_idivm_itemmast">IVE_COSTCHG     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ive_costchgitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ive_costchgitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ive_costchgitem_idivm_itemmast">FK_IVE_COSTCHG_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">IVE_COSTCHG     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">IVE_COSTCHG     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_costchgitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -389,7 +419,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_costchg003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_costchg003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_costchg003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_costchg003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_costchg003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_costchg003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_costchg003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_costchg003"></DD_ATTR_CTLY>
@@ -440,7 +470,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_costchg004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_costchg004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_costchg004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_costchg004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_costchg004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_costchg004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_costchg004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_costchg004"></DD_ATTR_CTLY>

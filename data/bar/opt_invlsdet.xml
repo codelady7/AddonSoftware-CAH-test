@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invlsdet">4A6E70BD169A10AF1C83FACDC1AF16CF</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invlsdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invlsdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invlsdet">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invlsdet">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invlsdet">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invlsdet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invlsdet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invlsdet">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invlsdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invlsdet"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invlsdet">AO_STAT_CUST_INV</DD_ATTR_DKNM>
@@ -103,6 +103,81 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opt_invlsdet">OPT_INVLSDET    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opt_invlsdet">opt-21</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.opt_invlsdet">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),orddet_seq_ref:c(12),sequence_no:c(3),lotser_no:c(20),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*),qty_ordered:n(7*),qty_shipped:n(7*),unit_cost:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.opt_invlsdetarc_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetarc_useradm_user">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invlsdetarc_useradm_user">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetarc_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invlsdetarc_useradm_user">FK_OPT_INVLSDET_ARC_USER_ADM_USER                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invlsdetcreated_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetcreated_useradm_user">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invlsdetcreated_useradm_user">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetcreated_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invlsdetcreated_useradm_user">FK_OPT_INVLSDET_CREATED_USER_ADM_USER                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invlsdetcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetcustomer_idarm_custmast">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invlsdetcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invlsdetcustomer_idarm_custmast">FK_OPT_INVLSDET_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invlsdetmod_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetmod_useradm_user">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invlsdetmod_useradm_user">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invlsdetmod_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invlsdetmod_useradm_user">FK_OPT_INVLSDET_MOD_USER_ADM_USER                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invlsdetarc_useradm_user0001">ARC_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invlsdetcreated_useradm_user0001">CREATED_USER    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invlsdetcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">OPT_INVLSDET    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invlsdetmod_useradm_user0001">MOD_USER        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.sfx_oprtnwo">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfx_oprtnwo">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.sfx_oprtnwo">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfx_oprtnwo">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfx_oprtnwo">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfx_oprtnwo">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfx_oprtnwo">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfx_oprtnwo"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sfx_oprtnwo"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfx_oprtnwo"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfx_oprtnwo">SFX_OPRTNWO     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfx_oprtnwo">sfe-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfx_oprtnwo">firm_id:c(2),record_id_d:c(1),wo_location:c(2),op_code:c(3),require_date:c(8),wo_no:c(7),op_seq:c(3*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfx_oprtnwoop_codebmc_opcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfx_oprtnwoop_codebmc_opcodes">SFX_OPRTNWO     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfx_oprtnwoop_codebmc_opcodes">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfx_oprtnwoop_codebmc_opcodes">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfx_oprtnwoop_codebmc_opcodes">FK_SFX_OPRTNWO_OP_CODE_BMC_OPCODES                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">SFX_OPRTNWO     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">SFX_OPRTNWO     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">OP_CODE         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfx_oprtnwoop_codebmc_opcodes0002">OP_CODE         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

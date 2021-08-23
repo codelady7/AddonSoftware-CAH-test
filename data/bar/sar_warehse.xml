@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sar_warehse">E60AE6866CC9515E77DC6C88A02B498C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sar_warehse">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sar_warehse">20070802</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sar_warehse">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sar_warehse">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sar_warehse">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sar_warehse">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sar_warehse">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sar_warehse">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sar_warehse"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sar_warehse">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sar_warehse">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sar_warehse"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sar_warehse"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sar_warehse">S</DD_ATTR_FTYP>
@@ -134,7 +134,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sar_warehse001">20070722</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sar_warehse001"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sar_warehse001"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse001">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sar_warehse001"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sar_warehse001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sar_warehse001"></DD_ATTR_CTLY>
@@ -185,7 +185,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sar_warehse002">20070722</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sar_warehse002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sar_warehse002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sar_warehse002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sar_warehse002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sar_warehse002"></DD_ATTR_CTLY>
@@ -440,7 +440,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sar_warehse007">20070722</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sar_warehse007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sar_warehse007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sar_warehse007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sar_warehse007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sar_warehse007"></DD_ATTR_CTLY>
@@ -491,7 +491,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sar_warehse008">20070722</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sar_warehse008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sar_warehse008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sar_warehse008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sar_warehse008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sar_warehse008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sar_warehse008"></DD_ATTR_CTLY>

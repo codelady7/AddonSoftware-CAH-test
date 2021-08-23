@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.pow_pobyven">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pow_pobyven">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pow_pobyven">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pow_pobyven">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pow_pobyven">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.pow_pobyven">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pow_pobyven">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pow_pobyven"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pow_pobyven"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pow_pobyven"></DD_ATTR_DKNM>
@@ -77,6 +77,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pow_pobyven">POW_POBYVEN     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pow_pobyven">pow-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.pow_pobyven">firm_id:c(2),warehouse_id:c(2),reserved_str:c(8),vendor_id:c(6),po_no:c(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.pow_pobyvenvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pow_pobyvenvendor_idapm_vendmast">POW_POBYVEN     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pow_pobyvenvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pow_pobyvenvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pow_pobyvenvendor_idapm_vendmast">FK_POW_POBYVEN_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">POW_POBYVEN     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">POW_POBYVEN     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_pobyvenvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

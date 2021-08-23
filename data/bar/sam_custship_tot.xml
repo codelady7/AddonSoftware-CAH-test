@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.sam_custship_tot"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sam_custship_tot">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sam_custship_tot">2457058</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sam_custship_tot">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sam_custship_tot">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sam_custship_tot">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sam_custship_tot">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sam_custship_tot">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sam_custship_tot">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sam_custship_tot"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sam_custship_tot"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sam_custship_tot"></DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sam_custship_tot">SAM_CUSTSHIP_TOT</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sam_custship_tot">sam_custship_tot</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sam_custship_tot">firm_id:c(2),year:c(4),customer_id:c(6),shipto_no:c(6),qty_shipped_01:n(7*),qty_shipped_02:n(7*),qty_shipped_03:n(7*),qty_shipped_04:n(7*),qty_shipped_05:n(7*),qty_shipped_06:n(7*),qty_shipped_07:n(7*),qty_shipped_08:n(7*),qty_shipped_09:n(7*),qty_shipped_10:n(7*),qty_shipped_11:n(7*),qty_shipped_12:n(7*),qty_shipped_13:n(7*),total_cost_01:n(7*),total_cost_02:n(7*),total_cost_03:n(7*),total_cost_04:n(7*),total_cost_05:n(7*),total_cost_06:n(7*),total_cost_07:n(7*),total_cost_08:n(7*),total_cost_09:n(7*),total_cost_10:n(7*),total_cost_11:n(7*),total_cost_12:n(7*),total_cost_13:n(7*),total_sales_01:n(7*),total_sales_02:n(7*),total_sales_03:n(7*),total_sales_04:n(7*),total_sales_05:n(7*),total_sales_06:n(7*),total_sales_07:n(7*),total_sales_08:n(7*),total_sales_09:n(7*),total_sales_10:n(7*),total_sales_11:n(7*),total_sales_12:n(7*),total_sales_13:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sam_custship_totcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sam_custship_totcustomer_idarm_custmast">SAM_CUSTSHIP_TOT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sam_custship_totcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sam_custship_totcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sam_custship_totcustomer_idarm_custmast">FK_SAM_CUSTSHIP_TOT_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                   </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">SAM_CUSTSHIP_TOT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">SAM_CUSTSHIP_TOT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sam_custship_totcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

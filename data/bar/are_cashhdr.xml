@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_cashhdr">9B0701CABA66B28A2A32D39AD765B011</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_cashhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_cashhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_cashhdr">20210316</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_cashhdr">20210316</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_cashhdr">131748</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_cashhdr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_cashhdr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_cashhdr">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_cashhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.are_cashhdr">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.are_cashhdr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_cashhdr">AO_BATCH_RECTDAT</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.are_cashhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.are_cashhdr">T</DD_ATTR_FTYP>
@@ -223,6 +223,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.are_cashhdr">ARE_CASHHDR     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.are_cashhdr">are-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.are_cashhdr">firm_id:c(2),ar_type:c(2),reserved_key_01:c(1),receipt_date:c(8),customer_id:c(6),cash_rec_cd:c(3),ar_check_no:c(7),reserved_key_02:c(1),cash_check:c(1),aba_no:c(10),payment_amt:n(7*),batch_no:c(7),deposit_id:c(7),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.are_cashhdrcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.are_cashhdrcustomer_idarm_custmast">ARE_CASHHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.are_cashhdrcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.are_cashhdrcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.are_cashhdrcustomer_idarm_custmast">FK_ARE_CASHHDR_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">ARE_CASHHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">ARE_CASHHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_cashhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -1016,7 +1046,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashhdr004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashhdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashhdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr004">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashhdr004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashhdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashhdr004"></DD_ATTR_CTLY>
@@ -1067,7 +1097,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashhdr005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashhdr005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashhdr005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr005">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashhdr005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashhdr005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashhdr005"></DD_ATTR_CTLY>
@@ -1118,7 +1148,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashhdr006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashhdr006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashhdr006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr006">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashhdr006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashhdr006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashhdr006"></DD_ATTR_CTLY>
@@ -1169,7 +1199,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashhdr007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashhdr007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashhdr007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr007">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashhdr007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashhdr007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashhdr007"></DD_ATTR_CTLY>
@@ -1271,7 +1301,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashhdr009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashhdr009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashhdr009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr009">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashhdr009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashhdr009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashhdr009"></DD_ATTR_CTLY>
@@ -1373,7 +1403,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashhdr011">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashhdr011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashhdr011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr011">C:/dev_addon21/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashhdr011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashhdr011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashhdr011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashhdr011">+2</DD_ATTR_CTLY>

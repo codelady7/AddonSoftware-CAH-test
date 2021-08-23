@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_params">6C86E4DEC7C6B455A88D2DC7EC930ABC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_params">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_params">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_params">20210622</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_params">20210622</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_params">151804</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_params">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_params">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_params">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_params"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ars_params">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ars_params">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_params"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ars_params"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ars_params">T</DD_ATTR_FTYP>
@@ -131,6 +131,84 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ars_params">ARS_PARAMS      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ars_params"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ars_params">firm_id:c(2),ar:c(2),sequence_00:c(2),customer_size:c(2),max_customer_len:c(2),multi_types:c(1),multi_dist:c(1),hold_zero:c(1),zip_length:c(1),label_across:c(2),label_length:c(2),label_width:c(2),dist_by_item:c(1),job_nos:c(1),auto_no:c(1),br_interface:c(1),post_to_gl:c(1),cash_sale:c(1),customer_id:c(6),retain_hist:c(2),beg_cmt_line:c(2),end_cmt_line:c(2),dropshp_cost:c(1),min_ord_amt:n(7*),min_line_amt:n(7*),skip_ln_code:c(1),line_code:c(1),dropshp_whse:c(1),backorders:c(1),retain_jobs:c(2),min_csh_sale:n(7*),rec_prt_sys:c(1),cntr_prt_pgm:c(10),inv_hist_flg:c(1),op_post_to_gl:c(1),prt_gl_det:c(1),commit_days:c(3),def_shp_days:c(2),rec_prt_pgm:c(10),inv_histpgm:c(10),lstcom_date:c(8),current_per:c(2),current_year:c(4),customer_output:c(10),default_station:c(16),op_totals_warn:c(1),op_check_dupe_po:c(1),op_create_wo:c(1),op_create_wo_typ:c(2),sls_tax_intrface:c(1),tax_svc_cd_src:c(1),on_demand_aging:c(1),dflt_age_by:c(1),age_per_days_1:n(3),age_per_days_2:n(3),age_per_days_3:n(3),age_per_days_4:n(3),auto_ord_conf:c(1),warn_not_avail:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ars_paramscustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_paramscustomer_idarm_custmast">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_paramscustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_paramscustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_paramscustomer_idarm_custmast">FK_ARS_PARAMS_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_paramsdefault_stationopm_pointofsale">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_paramsdefault_stationopm_pointofsale">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_paramsdefault_stationopm_pointofsale">DEFAULT_STATION </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_paramsdefault_stationopm_pointofsale">OPM_POINTOFSALE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_paramsdefault_stationopm_pointofsale">FK_ARS_PARAMS_DEFAULT_STATION_OPM_POINTOFSALE                                                                                                                                                                                                                  </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_paramsline_codeopc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_paramsline_codeopc_linecode">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_paramsline_codeopc_linecode">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_paramsline_codeopc_linecode">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_paramsline_codeopc_linecode">FK_ARS_PARAMS_LINE_CODE_OPC_LINECODE                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_paramscustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">DEFAULT_STATION </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">OPM_POINTOFSALE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">DEFAULT_STATION </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">OPM_POINTOFSALE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">POS_STATION     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_paramsdefault_stationopm_pointofsale0002">DEFAULT_STATION </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_paramsline_codeopc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">ARS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">LINE_CODE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_paramsline_codeopc_linecode0002">LINE_CODE       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -815,7 +893,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params013">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params013"></DD_ATTR_CTLY>
@@ -917,7 +995,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params015">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params015">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params015"></DD_ATTR_CTLY>
@@ -2294,7 +2372,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params042">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params042"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params042"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params042">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params042">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params042"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params042">+5</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params042"></DD_ATTR_CTLY>
@@ -2345,7 +2423,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params043">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params043"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params043"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params043">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params043">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params043"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params043"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params043"></DD_ATTR_CTLY>
@@ -2906,7 +2984,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params054">20210121</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params054"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params054"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params054">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params054">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params054">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params054"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params054"></DD_ATTR_CTLY>
@@ -2957,7 +3035,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params055">20210121</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params055"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params055"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params055">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params055">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params055">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params055"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params055"></DD_ATTR_CTLY>
@@ -3008,7 +3086,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params056">20210121</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params056"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params056"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params056">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params056">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params056">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params056"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params056"></DD_ATTR_CTLY>
@@ -3059,7 +3137,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_params057">20210121</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_params057"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_params057"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_params057">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_params057">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_params057">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_params057"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_params057"></DD_ATTR_CTLY>

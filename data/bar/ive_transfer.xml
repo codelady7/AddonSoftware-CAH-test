@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ive_transfer">1C8D8E9B77DD1B4EFFDB9BAD84A73775</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_transfer">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_transfer">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_transfer">20210623</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ive_transfer">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_transfer">113938</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ive_transfer">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ive_transfer">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_transfer">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_transfer"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ive_transfer">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ive_transfer">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_transfer">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ive_transfer"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ive_transfer">T</DD_ATTR_FTYP>
@@ -156,6 +156,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ive_transfer">IVE_TRANSFER    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ive_transfer">ive-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ive_transfer">firm_id:c(2),warehouse_id:c(2),trans_date:c(8),warehouse_id_to:c(2),item_id:c(20),lotser_no:c(20*),inv_xfer_no:c(6),reserved_str:c(1*),trans_qty:n(7*),ext_cost:n(15*),unit_cost:n(7*),batch_no:c(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ive_transferitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ive_transferitem_idivm_itemmast">IVE_TRANSFER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ive_transferitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ive_transferitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ive_transferitem_idivm_itemmast">FK_IVE_TRANSFER_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">IVE_TRANSFER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_transferitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">IVE_TRANSFER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_transferitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -416,7 +446,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer002"></DD_ATTR_CTLY>
@@ -467,7 +497,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer003"></DD_ATTR_CTLY>
@@ -518,7 +548,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer004"></DD_ATTR_CTLY>
@@ -569,7 +599,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer005"></DD_ATTR_CTLY>
@@ -620,7 +650,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer006"></DD_ATTR_CTLY>
@@ -671,7 +701,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer007"></DD_ATTR_CTLY>
@@ -773,7 +803,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transfer009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transfer009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transfer009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transfer009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transfer009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transfer009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transfer009"></DD_ATTR_CTLY>
@@ -1659,7 +1689,7 @@
 			<ASC_PROD_ID id="ddm_elements.unit_of_sale">IV </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.unit_of_sale"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.unit_of_sale">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.unit_of_sale">20210630</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.unit_of_sale">20210405</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.unit_of_sale"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.unit_of_sale"></DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.unit_of_sale"></DD_ATTR_CDAT>

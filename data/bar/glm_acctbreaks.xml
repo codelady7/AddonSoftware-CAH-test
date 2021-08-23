@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glm_acctbreaks">B4313FE464837D73610310313EF3B7C6</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_acctbreaks">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_acctbreaks">20060630</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_acctbreaks">20210223</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_acctbreaks">20210223</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_acctbreaks">104636</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_acctbreaks">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_acctbreaks">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_acctbreaks">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_acctbreaks"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glm_acctbreaks"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_acctbreaks"></DD_ATTR_DKNM>

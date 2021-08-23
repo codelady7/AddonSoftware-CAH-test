@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.sft_opnlstrn">05C5A1D7CE52BA7B606B25AB3E914792</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sft_opnlstrn">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sft_opnlstrn">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sft_opnlstrn">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sft_opnlstrn">20200825</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sft_opnlstrn">153838</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sft_opnlstrn">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sft_opnlstrn">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sft_opnlstrn">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sft_opnlstrn"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sft_opnlstrn"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sft_opnlstrn"></DD_ATTR_DKNM>
