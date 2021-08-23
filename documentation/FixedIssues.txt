@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-08-18
+ Report Date:   2021-08-23
  Report Branch: AddonSoftware 21.10
  Last Release:  AddonSoftware 21.03
 =======================================================================================================================================
@@ -165,5 +165,21 @@ invoices use different Checking Accounts.
 ----
 Modified: ap/src/apr_payments.aon
 Modified: data/sync/ads_messages~[01007514AP].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: a1586de185d955cc965ae5030b7b3dfb807b5ce4
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 8/23/2021 11:13:40 AM
+Message:
+Bug 10267: Modified Bank Reconciliation to prevent using the same Bank
+Account Code for multiple GL Accounts.
+
+(cherry picked from commit a77972e7f557f39be34ee913731366d2f9721a27)
+----
+Modified: data/bar/glm_bankmaster.xml
+Modified: data/cdf/glm_bankmaster.cdf
+Modified: data/sync/ads_messages~[01007514GL].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
