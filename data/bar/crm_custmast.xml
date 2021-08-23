@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.crm_custmast">B0AE4537C94866F0AF91493A5C8B7BCB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.crm_custmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.crm_custmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.crm_custmast">20210305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.crm_custmast">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.crm_custmast">171940</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.crm_custmast">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.crm_custmast">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.crm_custmast">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.crm_custmast">ARM_CUSTMAST    </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.crm_custmast">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.crm_custmast">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.crm_custmast"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.crm_custmast"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.crm_custmast">T</DD_ATTR_FTYP>
@@ -1235,6 +1235,75 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.crm_custmast">CRM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.crm_custmast">arm-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.crm_custmast">firm_id:c(2),customer_id:c(6),customer_name:c(30),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),zip_code:c(9),phone_no:c(20),phone_exten:c(4),resale_no:c(20),alt_sequence:c(10),reserved_str:c(3),ar_ship_via:c(10),fax_no:c(20),addr_line_4:c(30),city:c(30),state_code:c(2),retain_cust:c(1),contact_name:c(20),db_no:c(9),sic_code:c(8),country:c(24),fob:c(15),reserved_str_02:c(22),opened_date:c(8),cntry_id:c(2),cust_inactive:c(1),memo_1024:c(1024*=1),shipping_id:c(15),shipping_email:c(80),pay_online:c(1),pay_auth_email:c(80)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.crm_custmastar_ship_viaarc_shipviacode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_custmastar_ship_viaarc_shipviacode">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_custmastar_ship_viaarc_shipviacode">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_custmastar_ship_viaarc_shipviacode">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_custmastar_ship_viaarc_shipviacode">FK_CRM_CUSTMAST_AR_SHIP_VIA_ARC_SHIPVIACODE                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.crm_custmastcntry_idadc_country">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_custmastcntry_idadc_country">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_custmastcntry_idadc_country">CNTRY_ID        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_custmastcntry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_custmastcntry_idadc_country">FK_CRM_CUSTMAST_CNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">FK_CRM_CUSTMAST_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">CNTRY_ID        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">CNTRY_ID        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

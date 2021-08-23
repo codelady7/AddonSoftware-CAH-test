@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_proctables">6F56BC11D1437F0808407A0F39EAB038</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_proctables">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_proctables">20070305</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_proctables">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_proctables">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_proctables">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_proctables">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_proctables">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_proctables">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_proctables"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.adm_proctables"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_proctables"></DD_ATTR_DKNM>
@@ -91,6 +91,51 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adm_proctables">ADM_PROCTABLES  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adm_proctables">adm-39</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adm_proctables">firm_id:c(2),process_id:c(16),sequence_no:c(3),dd_table_alias:c(16),dd_file_name:c(30)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adm_proctablesdd_table_aliasddm_tables">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_proctablesdd_table_aliasddm_tables">ADM_PROCTABLES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_proctablesdd_table_aliasddm_tables">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_proctablesdd_table_aliasddm_tables">DDM_TABLES      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_proctablesdd_table_aliasddm_tables">FK_ADM_PROCTABLES_DD_TABLE_ALIAS_DDM_TABLES                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_proctablesprocess_idadm_procmaster">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_proctablesprocess_idadm_procmaster">ADM_PROCTABLES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_proctablesprocess_idadm_procmaster">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_proctablesprocess_idadm_procmaster">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_proctablesprocess_idadm_procmaster">FK_ADM_PROCTABLES_PROCESS_ID_ADM_PROCMASTER                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">ADM_PROCTABLES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">DDM_TABLES      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">DD_TABLE_ALIAS  </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_proctablesdd_table_aliasddm_tables0001">DD_TABLE_ALIAS  </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">ADM_PROCTABLES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">ADM_PROCTABLES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">PROCESS_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_proctablesprocess_idadm_procmaster0002">PROCESS_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -485,7 +530,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_proctables005"></DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_proctables005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_proctables005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_proctables005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_proctables005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_proctables005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_proctables005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_proctables005"></DD_ATTR_CTLY>

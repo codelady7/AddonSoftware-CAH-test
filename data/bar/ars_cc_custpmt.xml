@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_cc_custpmt"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_cc_custpmt">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_cc_custpmt">20190508</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_cc_custpmt">20210423</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_cc_custpmt">20210423</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_cc_custpmt">130840</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_cc_custpmt">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_cc_custpmt">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_cc_custpmt">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_cc_custpmt"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ars_cc_custpmt">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ars_cc_custpmt">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_cc_custpmt"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ars_cc_custpmt"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ars_cc_custpmt">T</DD_ATTR_FTYP>
@@ -131,6 +131,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ars_cc_custpmt">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ars_cc_custpmt">ars_cc_custpmt</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ars_cc_custpmt">firm_id:c(2),cash_rec_cd:c(3*),allow_cust_cc:c(1),interface_tp:c(1),gateway_id:c(10),last_batch_no:c(7),batch_desc:c(30),last_deposit_id:c(7),deposit_desc:c(30),payment_url:c(256),register_url:c(256),cc_pending:c(10),cc_expense:c(10),password_url:c(256)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ars_cc_custpmtcc_expenseglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_cc_custpmtcc_expenseglm_acct">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_cc_custpmtcc_expenseglm_acct">CC_EXPENSE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_cc_custpmtcc_expenseglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_cc_custpmtcc_expenseglm_acct">FK_ARS_CC_CUSTPMT_CC_EXPENSE_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ars_cc_custpmtcc_pendingglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ars_cc_custpmtcc_pendingglm_acct">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ars_cc_custpmtcc_pendingglm_acct">CC_PENDING      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ars_cc_custpmtcc_pendingglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ars_cc_custpmtcc_pendingglm_acct">FK_ARS_CC_CUSTPMT_CC_PENDING_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">CC_EXPENSE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">CC_EXPENSE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_expenseglm_acct0002">CC_EXPENSE      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">CC_PENDING      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">ARS_CC_CUSTPMT  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">CC_PENDING      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ars_cc_custpmtcc_pendingglm_acct0002">CC_PENDING      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -292,7 +346,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt003">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_CTLY>
@@ -343,7 +397,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt004">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt004">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt004">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_CTLY>
@@ -394,7 +448,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt005">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt005">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt005">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_CTLY>
@@ -598,7 +652,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt009">20181003</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt009">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt009">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_CTLY>
@@ -649,7 +703,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt010">20190508</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt010">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt010">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt010"></DD_ATTR_CTLY>
@@ -700,7 +754,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt011">20191209</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt011">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt011">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt011">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt011"></DD_ATTR_CTLY>

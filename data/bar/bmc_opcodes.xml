@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bmc_opcodes">97C295318140927791DBCFFB62B09383</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bmc_opcodes">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bmc_opcodes">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bmc_opcodes">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bmc_opcodes">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bmc_opcodes">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bmc_opcodes">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bmc_opcodes">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bmc_opcodes">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bmc_opcodes"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bmc_opcodes">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bmc_opcodes">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bmc_opcodes"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bmc_opcodes"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bmc_opcodes">T</DD_ATTR_FTYP>
@@ -102,6 +102,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.bmc_opcodes">BMC_OPCODES     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.bmc_opcodes">bmm-08</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.bmc_opcodes">firm_id:c(2),op_code:c(3),code_desc:c(20),reserved_str:c(5),gl_dir_lab:c(10),gl_ovh_var:c(10),reserved_str_02:c(20),dealer_str:c(20*),direct_rate:n(7*),pcs_per_hour:n(7*),ovhd_factor:n(7*),queue_time:n(5*),setup_time:n(5*),move_time:n(5*),reserved_num_01:n(1*),reserved_num_02:n(1*),reserved_num_03:n(1*),reserved_num_04:n(1*),reserved_num_05:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.bmc_opcodesgl_dir_labglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bmc_opcodesgl_dir_labglm_acct">BMC_OPCODES     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bmc_opcodesgl_dir_labglm_acct">GL_DIR_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bmc_opcodesgl_dir_labglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bmc_opcodesgl_dir_labglm_acct">FK_BMC_OPCODES_GL_DIR_LAB_GLM_ACCT                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.bmc_opcodesgl_ovh_varglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bmc_opcodesgl_ovh_varglm_acct">BMC_OPCODES     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bmc_opcodesgl_ovh_varglm_acct">GL_OVH_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bmc_opcodesgl_ovh_varglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bmc_opcodesgl_ovh_varglm_acct">FK_BMC_OPCODES_GL_OVH_VAR_GLM_ACCT                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">BMC_OPCODES     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">GL_DIR_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">BMC_OPCODES     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">GL_DIR_LAB      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_dir_labglm_acct0002">GL_DIR_LAB      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">BMC_OPCODES     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">GL_OVH_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">BMC_OPCODES     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">GL_OVH_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmc_opcodesgl_ovh_varglm_acct0002">GL_OVH_VAR      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -620,7 +674,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmc_opcodes010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmc_opcodes010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmc_opcodes010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmc_opcodes010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmc_opcodes010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmc_opcodes010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmc_opcodes010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmc_opcodes010"></DD_ATTR_CTLY>

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.pos_params">D18C91D258F4B6385C7CFACA77D8B12F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pos_params">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pos_params">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pos_params">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pos_params">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pos_params">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pos_params">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pos_params">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pos_params">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pos_params"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.pos_params">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.pos_params">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pos_params"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.pos_params"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.pos_params">T</DD_ATTR_FTYP>
@@ -121,6 +121,180 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pos_params">POS_PARAMS      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pos_params"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.pos_params">firm_id:c(2),po:c(2),sequence_00:c(2),plain_paper:c(1),display_cmts:c(1),ap_ship_via:c(15),po_frt_terms:c(15),fob:c(15),hold_flag:c(1),po_req_msg_code:c(3),po_msg_code:c(3),land_method:c(1),po_line_code:c(2),prt_vdr_item:c(1),beg_cmt_line:c(2),end_cmt_line:c(2),req_s_linecd:c(2),req_n_linecd:c(2),req_m_linecd:c(2),updt_plan_wo:c(1),po_inv_code:c(2),post_to_gl:c(1),m_line_hist:c(1),v_line_hist:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.pos_paramspo_inv_codepoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_inv_codepoc_linecode">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramspo_inv_codepoc_linecode">PO_INV_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_inv_codepoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramspo_inv_codepoc_linecode">FK_POS_PARAMS_PO_INV_CODE_POC_LINECODE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pos_paramspo_line_codepoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_line_codepoc_linecode">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramspo_line_codepoc_linecode">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_line_codepoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramspo_line_codepoc_linecode">FK_POS_PARAMS_PO_LINE_CODE_POC_LINECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pos_paramspo_msg_codepoc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_msg_codepoc_message">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramspo_msg_codepoc_message">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_msg_codepoc_message">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramspo_msg_codepoc_message">FK_POS_PARAMS_PO_MSG_CODE_POC_MESSAGE                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pos_paramspo_req_msg_codepoc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_req_msg_codepoc_message">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramspo_req_msg_codepoc_message">PO_REQ_MSG_CODE </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramspo_req_msg_codepoc_message">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramspo_req_msg_codepoc_message">FK_POS_PARAMS_PO_REQ_MSG_CODE_POC_MESSAGE                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pos_paramsreq_m_linecdpoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramsreq_m_linecdpoc_linecode">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramsreq_m_linecdpoc_linecode">REQ_M_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramsreq_m_linecdpoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramsreq_m_linecdpoc_linecode">FK_POS_PARAMS_REQ_M_LINECD_POC_LINECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pos_paramsreq_n_linecdpoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramsreq_n_linecdpoc_linecode">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramsreq_n_linecdpoc_linecode">REQ_N_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramsreq_n_linecdpoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramsreq_n_linecdpoc_linecode">FK_POS_PARAMS_REQ_N_LINECD_POC_LINECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pos_paramsreq_s_linecdpoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pos_paramsreq_s_linecdpoc_linecode">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pos_paramsreq_s_linecdpoc_linecode">REQ_S_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pos_paramsreq_s_linecdpoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pos_paramsreq_s_linecdpoc_linecode">FK_POS_PARAMS_REQ_S_LINECD_POC_LINECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">PO_INV_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">PO_INV_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_inv_codepoc_linecode0002">PO_INV_CODE     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_line_codepoc_linecode0002">PO_LINE_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">PO_MSG_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_msg_codepoc_message0002">PO_MSG_CODE     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">PO_REQ_MSG_CODE </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">PO_REQ_MSG_CODE </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">PO_MSG_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramspo_req_msg_codepoc_message0002">PO_REQ_MSG_CODE </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">REQ_M_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">REQ_M_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramsreq_m_linecdpoc_linecode0002">REQ_M_LINECD    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">REQ_N_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">REQ_N_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramsreq_n_linecdpoc_linecode0002">REQ_N_LINECD    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">REQ_S_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">POS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">REQ_S_LINECD    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pos_paramsreq_s_linecdpoc_linecode0002">REQ_S_LINECD    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -754,7 +928,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pos_params012">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pos_params012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pos_params012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pos_params012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pos_params012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pos_params012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pos_params012">+4</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pos_params012"></DD_ATTR_CTLY>
@@ -1009,7 +1183,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pos_params017">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pos_params017"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pos_params017"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pos_params017">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pos_params017">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pos_params017"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pos_params017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pos_params017"></DD_ATTR_CTLY>
@@ -1060,7 +1234,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pos_params018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pos_params018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pos_params018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pos_params018">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pos_params018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pos_params018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pos_params018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pos_params018"></DD_ATTR_CTLY>
@@ -1111,7 +1285,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pos_params019">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pos_params019"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pos_params019"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pos_params019">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pos_params019">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pos_params019"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pos_params019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pos_params019"></DD_ATTR_CTLY>
@@ -1213,7 +1387,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pos_params021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pos_params021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pos_params021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pos_params021">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pos_params021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pos_params021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pos_params021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pos_params021"></DD_ATTR_CTLY>

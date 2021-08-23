@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfe_woschdl">5A6E1D3084E6E006FE934C1B51FDDC3D</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfe_woschdl">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfe_woschdl">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfe_woschdl">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfe_woschdl">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfe_woschdl">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfe_woschdl">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfe_woschdl">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfe_woschdl">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfe_woschdl"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sfe_woschdl">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sfe_woschdl">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfe_woschdl"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sfe_woschdl"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sfe_woschdl">T</DD_ATTR_FTYP>
@@ -98,6 +98,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfe_woschdl">SFE_WOSCHDL     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfe_woschdl">sfm-05</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfe_woschdl">firm_id:c(2),op_code:c(3),sched_date:c(8),wo_no:c(7),oper_seq_ref:c(12),queue_time:n(5*),setup_time:n(5*),runtime_hrs:n(7*),move_time:n(5*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfe_woschdlop_codebmc_opcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfe_woschdlop_codebmc_opcodes">SFE_WOSCHDL     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfe_woschdlop_codebmc_opcodes">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfe_woschdlop_codebmc_opcodes">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfe_woschdlop_codebmc_opcodes">FK_SFE_WOSCHDL_OP_CODE_BMC_OPCODES                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">SFE_WOSCHDL     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">SFE_WOSCHDL     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">OP_CODE         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_woschdlop_codebmc_opcodes0002">OP_CODE         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

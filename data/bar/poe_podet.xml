@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_podet">CAECFA361FDD3C6AC5A607CD13BA554F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_podet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_podet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_podet">20210311</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_podet">20210311</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_podet">113642</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_podet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_podet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_podet">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_podet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poe_podet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poe_podet">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_podet">DISPLAY_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poe_podet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poe_podet">G</DD_ATTR_FTYP>
@@ -164,6 +164,156 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.poe_podet">POE_PODET       </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.poe_podet">poe-12</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.poe_podet">firm_id:c(2),po_no:c(7),internal_seq_no:c(12),po_line_no:c(3),po_line_code:c(2),reserved_str:c(18),lead_tim_flg:c(1),unit_measure:c(6),location:c(10),source_code:c(1),forecast:c(3),po_msg_code:c(3),reserved_str_02:c(8),reqd_date:c(8),promise_date:c(8),not_b4_date:c(8),req_no:c(7),wo_no:c(7),wk_ord_seq_ref:c(12),so_int_seq_ref:c(12),warehouse_id:c(2),item_id:c(20),order_memo:c(40),reserved_str_03:c(1),dealer_str:c(1),conv_factor:n(7*),unit_cost:n(7*),req_qty:n(7*),qty_ordered:n(7*),qa_wip_qty:n(7*),qa_rec_qty:n(7*),qa_rej_qty:n(7*),qty_received:n(7*),qty_invoiced:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),ns_item_id:c(20),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.poe_podetforecastmpm_forecast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_podetforecastmpm_forecast">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_podetforecastmpm_forecast">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_podetforecastmpm_forecast">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_podetforecastmpm_forecast">FK_POE_PODET_FORECAST_MPM_FORECAST                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_podetitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_podetitem_idivm_itemmast">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_podetitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_podetitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_podetitem_idivm_itemmast">FK_POE_PODET_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_podetpo_line_codepoc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_podetpo_line_codepoc_linecode">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_podetpo_line_codepoc_linecode">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_podetpo_line_codepoc_linecode">POC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_podetpo_line_codepoc_linecode">FK_POE_PODET_PO_LINE_CODE_POC_LINECODE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_podetpo_msg_codepoc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_podetpo_msg_codepoc_message">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_podetpo_msg_codepoc_message">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_podetpo_msg_codepoc_message">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_podetpo_msg_codepoc_message">FK_POE_PODET_PO_MSG_CODE_POC_MESSAGE                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_podetreq_nopoe_reqhdr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_podetreq_nopoe_reqhdr">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_podetreq_nopoe_reqhdr">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_podetreq_nopoe_reqhdr">POE_REQHDR      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_podetreq_nopoe_reqhdr">FK_POE_PODET_REQ_NO_POE_REQHDR                                                                                                                                                                                                                                 </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poe_podetunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_podetunit_measureivc_umcodes">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_podetunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_podetunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_podetunit_measureivc_umcodes">FK_POE_PODET_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetforecastmpm_forecast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">FORECAST        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetforecastmpm_forecast0002">FORECAST        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">PO_LINE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">POC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">PO_LINE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetpo_line_codepoc_linecode0002">PO_LINE_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">PO_MSG_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">POC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">PO_MSG_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetpo_msg_codepoc_message0002">PO_MSG_CODE     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">REQ_NO          </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetreq_nopoe_reqhdr0002">REQ_NO          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_podetunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -735,7 +885,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet005"></DD_ATTR_CTLY>
@@ -917,11 +1067,11 @@
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_podet008"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.poe_podet008"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.poe_podet008">3007</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.poe_podet008">ine_unit_measure</DD_ATTR_CTLN>
+			<DD_ATTR_CTLN id="ddm_table_cols.poe_podet008">dis_unit_measure</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.poe_podet008">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.poe_podet008"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.poe_podet008"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.poe_podet008"></DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.poe_podet008">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.poe_podet009">
 			<DD_TABLE_ALIAS id="ddm_table_cols.poe_podet009">POE_PODET       </DD_TABLE_ALIAS>
@@ -1194,7 +1344,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet014">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet014"></DD_ATTR_CTLY>
@@ -1245,7 +1395,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet015">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet015">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet015"></DD_ATTR_CTLY>
@@ -1296,7 +1446,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet016">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet016"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet016">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet016">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet016"></DD_ATTR_CTLY>
@@ -1398,7 +1548,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet018">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet018"></DD_ATTR_CTLY>
@@ -1500,7 +1650,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet020">20081128</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet020">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet020">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet020"></DD_ATTR_CTLY>
@@ -1551,7 +1701,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet021">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet021"></DD_ATTR_CTLY>
@@ -1602,7 +1752,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet022">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet022"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet022">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet022">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet022"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet022"></DD_ATTR_CTLY>
@@ -1653,7 +1803,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet023">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet023"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet023"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet023">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet023">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet023"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet023"></DD_ATTR_CTLY>
@@ -1806,7 +1956,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet026">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet026"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet026"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet026">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet026">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet026"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet026"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet026"></DD_ATTR_CTLY>
@@ -1857,7 +2007,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet027">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet027"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet027"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet027">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet027">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet027"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet027"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet027"></DD_ATTR_CTLY>
@@ -1959,7 +2109,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet029">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet029"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet029"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet029">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet029">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet029"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet029"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet029"></DD_ATTR_CTLY>
@@ -2418,7 +2568,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet038">20170328</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet038"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet038"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet038">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet038">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet038">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet038"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet038"></DD_ATTR_CTLY>

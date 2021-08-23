@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arc_distcode">C629009E7C84C7BF74A3C71F7D54F37D</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arc_distcode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arc_distcode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arc_distcode">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arc_distcode">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arc_distcode">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arc_distcode">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arc_distcode">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arc_distcode">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arc_distcode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arc_distcode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arc_distcode">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arc_distcode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arc_distcode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arc_distcode">T</DD_ATTR_FTYP>
@@ -102,6 +102,276 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.arc_distcode">ARC_DISTCODE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.arc_distcode"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.arc_distcode">firm_id:c(2),record_id_d:c(1),ar_dist_code:c(2),code_desc:c(20),reserved_str:c(5*),gl_ar_acct:c(10),gl_cash_acct:c(10),gl_sls_acct:c(10),gl_disc_acct:c(10),gl_frgt_acct:c(10),gl_inv_adj:c(10),gl_inv_acct:c(10),gl_cogs_acct:c(10),gl_cogs_adj:c(10),gl_ppv_acct:c(10),gl_purc_acct:c(10),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.arc_distcodegl_ar_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_ar_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_ar_acctglm_acct">GL_AR_ACCT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_ar_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_ar_acctglm_acct">FK_ARC_DISTCODE_GL_AR_ACCT_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_cash_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_cash_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_cash_acctglm_acct">GL_CASH_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_cash_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_cash_acctglm_acct">FK_ARC_DISTCODE_GL_CASH_ACCT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_cogs_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_cogs_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_cogs_acctglm_acct">GL_COGS_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_cogs_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_cogs_acctglm_acct">FK_ARC_DISTCODE_GL_COGS_ACCT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_cogs_adjglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_cogs_adjglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_cogs_adjglm_acct">GL_COGS_ADJ     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_cogs_adjglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_cogs_adjglm_acct">FK_ARC_DISTCODE_GL_COGS_ADJ_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_disc_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_disc_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_disc_acctglm_acct">GL_DISC_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_disc_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_disc_acctglm_acct">FK_ARC_DISTCODE_GL_DISC_ACCT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_frgt_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_frgt_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_frgt_acctglm_acct">GL_FRGT_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_frgt_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_frgt_acctglm_acct">FK_ARC_DISTCODE_GL_FRGT_ACCT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_inv_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_inv_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_inv_acctglm_acct">GL_INV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_inv_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_inv_acctglm_acct">FK_ARC_DISTCODE_GL_INV_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_inv_adjglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_inv_adjglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_inv_adjglm_acct">GL_INV_ADJ      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_inv_adjglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_inv_adjglm_acct">FK_ARC_DISTCODE_GL_INV_ADJ_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_ppv_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_ppv_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_ppv_acctglm_acct">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_ppv_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_ppv_acctglm_acct">FK_ARC_DISTCODE_GL_PPV_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_purc_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_purc_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_purc_acctglm_acct">GL_PURC_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_purc_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_purc_acctglm_acct">FK_ARC_DISTCODE_GL_PURC_ACCT_GLM_ACCT                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.arc_distcodegl_sls_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_sls_acctglm_acct">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arc_distcodegl_sls_acctglm_acct">GL_SLS_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arc_distcodegl_sls_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arc_distcodegl_sls_acctglm_acct">FK_ARC_DISTCODE_GL_SLS_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">GL_AR_ACCT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">GL_AR_ACCT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ar_acctglm_acct0002">GL_AR_ACCT      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">GL_CASH_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">GL_CASH_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cash_acctglm_acct0002">GL_CASH_ACCT    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">GL_COGS_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">GL_COGS_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_acctglm_acct0002">GL_COGS_ACCT    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">GL_COGS_ADJ     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">GL_COGS_ADJ     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_cogs_adjglm_acct0002">GL_COGS_ADJ     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">GL_DISC_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">GL_DISC_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_disc_acctglm_acct0002">GL_DISC_ACCT    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">GL_FRGT_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">GL_FRGT_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_frgt_acctglm_acct0002">GL_FRGT_ACCT    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">GL_INV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">GL_INV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_acctglm_acct0002">GL_INV_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">GL_INV_ADJ      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">GL_INV_ADJ      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_inv_adjglm_acct0002">GL_INV_ADJ      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_ppv_acctglm_acct0002">GL_PPV_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">GL_PURC_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">GL_PURC_ACCT    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_purc_acctglm_acct0002">GL_PURC_ACCT    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">GL_SLS_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">ARC_DISTCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">GL_SLS_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arc_distcodegl_sls_acctglm_acct0002">GL_SLS_ACCT     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -429,7 +699,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode006">180</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode006"></DD_ATTR_CTLY>
@@ -480,7 +750,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode007"></DD_ATTR_CTLY>
@@ -531,7 +801,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode008"></DD_ATTR_CTLY>
@@ -582,7 +852,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode009"></DD_ATTR_CTLY>
@@ -633,7 +903,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode010"></DD_ATTR_CTLY>
@@ -684,7 +954,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode011">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode011"></DD_ATTR_CTLY>
@@ -735,7 +1005,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode012">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode012"></DD_ATTR_CTLY>
@@ -786,7 +1056,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode013"></DD_ATTR_CTLY>
@@ -837,7 +1107,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode014"></DD_ATTR_CTLY>
@@ -888,7 +1158,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode015">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode015">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode015"></DD_ATTR_CTLY>
@@ -939,7 +1209,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode016">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode016"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode016">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode016">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode016"></DD_ATTR_CTLY>

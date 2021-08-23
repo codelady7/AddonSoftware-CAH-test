@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.ivw_eoqwhse">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivw_eoqwhse">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ivw_eoqwhse">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivw_eoqwhse">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivw_eoqwhse">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivw_eoqwhse">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivw_eoqwhse">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivw_eoqwhse"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivw_eoqwhse"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivw_eoqwhse"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivw_eoqwhse">IVW_EOQWHSE     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivw_eoqwhse">ivw-21</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivw_eoqwhse">firm_id:c(2),warehouse_id:c(2),product_type:c(3),item_id:c(20*),item_desc:c(60*),abc_code:c(1),eoq_code:c(1),ord_pnt_code:c(1),saf_stk_code:c(1),stock_level:c(1),reserved_str:c(11*),lead_time:n(7*),usage_qty_01:n(7*),usage_qty_02:n(7*),safety_stock_01:n(7*),safety_stock_02:n(7*),order_point_01:n(7*),order_point_02:n(7*),eoq_01:n(7*),eoq_02:n(7*),unit_cost:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivw_eoqwhseitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivw_eoqwhseitem_idivm_itemmast">IVW_EOQWHSE     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivw_eoqwhseitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivw_eoqwhseitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivw_eoqwhseitem_idivm_itemmast">FK_IVW_EOQWHSE_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">IVW_EOQWHSE     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">IVW_EOQWHSE     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_eoqwhseitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

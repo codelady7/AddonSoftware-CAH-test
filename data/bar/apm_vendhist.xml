@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendhist">D879CB11C862689876536F5DAEAA40A8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendhist">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendhist">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendhist"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.apm_vendhist">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.apm_vendhist">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendhist"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.apm_vendhist"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.apm_vendhist">T</DD_ATTR_FTYP>
@@ -181,6 +181,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apm_vendhist">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apm_vendhist">apm-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.apm_vendhist">firm_id:c(2),vendor_id:c(6),ap_type:c(2),ap_dist_code:c(2),payment_grp:c(2),ap_terms_code:c(2),reserved_str:c(18),lstinv_date:c(8),lstpay_date:c(8),gl_account:c(10),irs1099_type_box:c(6),open_invs:n(7*),open_ret:n(7*),ytd_purch:n(7*),pyr_purch:n(7*),nyr_purch:n(7*),ytd_discs:n(7*),pri_yr_discs:n(7*),nyr_disc:n(7*),ytd_payments:n(7*),pyr_payments:n(7*),nyr_payments:n(7*),cur_cal_pmts:n(7*),pri_cal_pmt:n(7*),nxt_cyr_pmts:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apm_vendhistgl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apm_vendhistgl_accountglm_acct">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apm_vendhistgl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apm_vendhistgl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apm_vendhistgl_accountglm_acct">FK_APM_VENDHIST_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.apm_vendhistvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apm_vendhistvendor_idapm_vendmast">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apm_vendhistvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apm_vendhistvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apm_vendhistvendor_idapm_vendmast">FK_APM_VENDHIST_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apm_vendhistgl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apm_vendhistvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -421,7 +475,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendhist003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendhist003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendhist003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendhist003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendhist003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendhist003"></DD_ATTR_CTLY>
@@ -523,7 +577,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendhist005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendhist005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendhist005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendhist005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendhist005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendhist005"></DD_ATTR_CTLY>
@@ -778,7 +832,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendhist010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendhist010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendhist010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendhist010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendhist010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendhist010"></DD_ATTR_CTLY>

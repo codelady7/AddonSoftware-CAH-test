@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.mpe_resource">029037A700C7CC355973CBD78055C9A0</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.mpe_resource">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.mpe_resource">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.mpe_resource">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.mpe_resource">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.mpe_resource">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.mpe_resource">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.mpe_resource">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.mpe_resource">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.mpe_resource"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.mpe_resource"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.mpe_resource"></DD_ATTR_DKNM>
@@ -91,6 +91,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.mpe_resource">MPE_RESOURCE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.mpe_resource">mpe-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.mpe_resource">firm_id:c(2),forecast:c(3),warehouse_id:c(2),op_code:c(3*),resource_cap_01:n(7*),resource_cap_02:n(7*),resource_cap_03:n(7*),resource_cap_04:n(7*),resource_cap_05:n(7*),resource_cap_06:n(7*),resource_cap_07:n(7*),resource_cap_08:n(7*),resource_cap_09:n(7*),resource_cap_10:n(7*),resource_cap_11:n(7*),resource_cap_12:n(7*),resource_cap_13:n(7*),resource_cap_14:n(7*),resource_cap_15:n(7*),resource_cap_16:n(7*),resource_cap_17:n(7*),resource_cap_18:n(7*),resource_cap_19:n(7*),resource_cap_20:n(7*),resource_cap_21:n(7*),resource_cap_22:n(7*),resource_cap_23:n(7*),resource_cap_24:n(7*),resource_cap_25:n(7*),resource_cap_26:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.mpe_resourceforecastmpm_forecast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_resourceforecastmpm_forecast">MPE_RESOURCE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_resourceforecastmpm_forecast">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_resourceforecastmpm_forecast">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_resourceforecastmpm_forecast">FK_MPE_RESOURCE_FORECAST_MPM_FORECAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpe_resourceop_codebmc_opcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_resourceop_codebmc_opcodes">MPE_RESOURCE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_resourceop_codebmc_opcodes">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_resourceop_codebmc_opcodes">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_resourceop_codebmc_opcodes">FK_MPE_RESOURCE_OP_CODE_BMC_OPCODES                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">MPE_RESOURCE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">MPE_RESOURCE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">FORECAST        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_resourceforecastmpm_forecast0002">FORECAST        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">MPE_RESOURCE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">MPE_RESOURCE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">OP_CODE         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_resourceop_codebmc_opcodes0002">OP_CODE         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_deposit"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_deposit">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_deposit">20160107</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_deposit">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_deposit">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_deposit">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_deposit">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_deposit">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_deposit">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_deposit">ART_DEPOSIT     </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.are_deposit">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.are_deposit">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_deposit">AO_BATCH_STAT</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.are_deposit"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.are_deposit">T</DD_ATTR_FTYP>
@@ -140,6 +140,57 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.are_deposit">ARE_DEPOSIT     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.are_deposit"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.are_deposit">firm_id:c(2),deposit_id:c(7),deposit_date:c(8),description:c(30),cash_rec_cd:c(3),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*),tot_deposit_amt:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.are_depositarc_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.are_depositarc_useradm_user">ARE_DEPOSIT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.are_depositarc_useradm_user">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.are_depositarc_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.are_depositarc_useradm_user">FK_ARE_DEPOSIT_ARC_USER_ADM_USER                                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.are_depositcreated_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.are_depositcreated_useradm_user">ARE_DEPOSIT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.are_depositcreated_useradm_user">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.are_depositcreated_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.are_depositcreated_useradm_user">FK_ARE_DEPOSIT_CREATED_USER_ADM_USER                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.are_depositmod_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.are_depositmod_useradm_user">ARE_DEPOSIT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.are_depositmod_useradm_user">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.are_depositmod_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.are_depositmod_useradm_user">FK_ARE_DEPOSIT_MOD_USER_ADM_USER                                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.are_depositarc_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_depositarc_useradm_user0001">ARE_DEPOSIT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_depositarc_useradm_user0001">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_depositarc_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_depositarc_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_depositarc_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_depositarc_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_depositarc_useradm_user0001">ARC_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.are_depositcreated_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_depositcreated_useradm_user0001">ARE_DEPOSIT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_depositcreated_useradm_user0001">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_depositcreated_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_depositcreated_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_depositcreated_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_depositcreated_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_depositcreated_useradm_user0001">CREATED_USER    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.are_depositmod_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_depositmod_useradm_user0001">ARE_DEPOSIT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_depositmod_useradm_user0001">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_depositmod_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_depositmod_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_depositmod_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_depositmod_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_depositmod_useradm_user0001">MOD_USER        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -729,7 +780,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_deposit002">20160118</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_deposit002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_deposit002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_deposit002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_deposit002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_deposit002">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_deposit002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_deposit002"></DD_ATTR_CTLY>
@@ -780,7 +831,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_deposit003">20160107</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_deposit003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_deposit003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_deposit003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_deposit003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_deposit003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_deposit003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_deposit003"></DD_ATTR_CTLY>
@@ -882,7 +933,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_deposit005">20160107</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_deposit005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_deposit005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_deposit005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_deposit005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_deposit005">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_deposit005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_deposit005"></DD_ATTR_CTLY>

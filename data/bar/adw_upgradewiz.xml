@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.adw_upgradewiz"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adw_upgradewiz">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adw_upgradewiz">20200630</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adw_upgradewiz">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adw_upgradewiz">20200708</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adw_upgradewiz">094800</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adw_upgradewiz">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adw_upgradewiz">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adw_upgradewiz">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adw_upgradewiz"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.adw_upgradewiz"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adw_upgradewiz"></DD_ATTR_DKNM>
@@ -91,6 +91,42 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adw_upgradewiz">ADW_UPGRADEWIZ  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adw_upgradewiz">adw_upgradewiz</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adw_upgradewiz">new_aon_loc:c(256),old_aon_loc:c(256),grid_id:c(6),row:c(3),app_id:c(16),app_parent:c(16),install:c(1),copy:c(1),stbl_prefix:c(30),source:c(256),target:c(256)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adw_upgradewizapp_idddm_systems">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adw_upgradewizapp_idddm_systems">ADW_UPGRADEWIZ  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adw_upgradewizapp_idddm_systems">APP_ID          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adw_upgradewizapp_idddm_systems">DDM_SYSTEMS     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adw_upgradewizapp_idddm_systems">FK_ADW_UPGRADEWIZ_APP_ID_DDM_SYSTEMS                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adw_upgradewizapp_parentddm_systems">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adw_upgradewizapp_parentddm_systems">ADW_UPGRADEWIZ  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adw_upgradewizapp_parentddm_systems">APP_PARENT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adw_upgradewizapp_parentddm_systems">DDM_SYSTEMS     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adw_upgradewizapp_parentddm_systems">FK_ADW_UPGRADEWIZ_APP_PARENT_DDM_SYSTEMS                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">ADW_UPGRADEWIZ  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">APP_ID          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">DDM_SYSTEMS     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">MOUNT_SYS_ID    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adw_upgradewizapp_idddm_systems0001">APP_ID          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">ADW_UPGRADEWIZ  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">APP_PARENT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">DDM_SYSTEMS     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">MOUNT_SYS_ID    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adw_upgradewizapp_parentddm_systems0001">APP_PARENT      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.ivw_turnxref">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivw_turnxref">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ivw_turnxref">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivw_turnxref">20210311</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivw_turnxref">113628</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivw_turnxref">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivw_turnxref">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivw_turnxref"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivw_turnxref"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivw_turnxref"></DD_ATTR_DKNM>
@@ -64,6 +64,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivw_turnxref">IVW_TURNXREF    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivw_turnxref">ivw-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivw_turnxref">firm_id:c(2),warehouse_id:c(2),product_type:c(3),recip_sign:c(1),recip_amount:c(17),item_id:c(20*),item_desc:c(60),unit_measure:c(6),reserved_str:c(1*),total_usage:n(15*),unit_cost:n(7*),total_cost:n(7*),qty_on_hand:n(7*),total_value:n(15*),item_turns:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivw_turnxrefitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivw_turnxrefitem_idivm_itemmast">IVW_TURNXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivw_turnxrefitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivw_turnxrefitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivw_turnxrefitem_idivm_itemmast">FK_IVW_TURNXREF_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivw_turnxrefunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivw_turnxrefunit_measureivc_umcodes">IVW_TURNXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivw_turnxrefunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivw_turnxrefunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivw_turnxrefunit_measureivc_umcodes">FK_IVW_TURNXREF_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">IVW_TURNXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">IVW_TURNXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_turnxrefitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">IVW_TURNXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">IVW_TURNXREF    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_turnxrefunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

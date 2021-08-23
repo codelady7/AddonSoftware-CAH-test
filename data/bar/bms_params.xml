@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bms_params">88705C93650889BECB2673BBD78492E3</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bms_params">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bms_params">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bms_params">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bms_params">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bms_params">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bms_params">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bms_params">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bms_params">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bms_params"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bms_params">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bms_params">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bms_params"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bms_params"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bms_params">T</DD_ATTR_FTYP>
@@ -98,6 +98,84 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.bms_params">BMS_PARAMS      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.bms_params">bms_params</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.bms_params">firm_id:c(2),bm:c(2),sequence_00:c(2),post_to_gl:c(1),gl_wip_acct:c(10),gl_pur_acct:c(10),gl_prd_var:c(10),bm_precision:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.bms_paramsgl_prd_varglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bms_paramsgl_prd_varglm_acct">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bms_paramsgl_prd_varglm_acct">GL_PRD_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bms_paramsgl_prd_varglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bms_paramsgl_prd_varglm_acct">FK_BMS_PARAMS_GL_PRD_VAR_GLM_ACCT                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.bms_paramsgl_pur_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bms_paramsgl_pur_acctglm_acct">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bms_paramsgl_pur_acctglm_acct">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bms_paramsgl_pur_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bms_paramsgl_pur_acctglm_acct">FK_BMS_PARAMS_GL_PUR_ACCT_GLM_ACCT                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.bms_paramsgl_wip_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bms_paramsgl_wip_acctglm_acct">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bms_paramsgl_wip_acctglm_acct">GL_WIP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bms_paramsgl_wip_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bms_paramsgl_wip_acctglm_acct">FK_BMS_PARAMS_GL_WIP_ACCT_GLM_ACCT                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">GL_PRD_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">GL_PRD_VAR      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bms_paramsgl_prd_varglm_acct0002">GL_PRD_VAR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">GL_PUR_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bms_paramsgl_pur_acctglm_acct0002">GL_PUR_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">GL_WIP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">BMS_PARAMS      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">GL_WIP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bms_paramsgl_wip_acctglm_acct0002">GL_WIP_ACCT     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

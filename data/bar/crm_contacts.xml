@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.crm_contacts">EF554E420BD386B1A24B811375E1FEC8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.crm_contacts">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.crm_contacts">20060407</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.crm_contacts">20210309</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.crm_contacts">20210309</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.crm_contacts">153628</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.crm_contacts">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.crm_contacts">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.crm_contacts">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.crm_contacts"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.crm_contacts"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.crm_contacts"></DD_ATTR_DKNM>
@@ -102,6 +102,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.crm_contacts">CRM_CONTACTS    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.crm_contacts"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.crm_contacts">firm_id:c(2),customer_id:c(6),contact_id:c(4),name_salutation:c(4),name_first:c(20),name_last:c(25),name_mi:c(1),name_suffix:c(10),name:c(30),title:c(20),department:c(20),address_line_1:c(30),address_line_2:c(30),address_line_3:c(30),city:c(22),state_code:c(2),zip_code:c(9),country:c(24),phone_no:c(20),phone_exten:c(4),cell_phone_no:c(20),fax_no:c(20),pager_no:c(20),email_addr:c(80),messenger_id:c(20)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.crm_contactscustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_contactscustomer_idarm_custmast">CRM_CONTACTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_contactscustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_contactscustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_contactscustomer_idarm_custmast">FK_CRM_CONTACTS_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">CRM_CONTACTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">CRM_CONTACTS    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_contactscustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

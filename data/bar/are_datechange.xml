@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_datechange">3A8A4CDDA569C989D45A3A6E72C90577</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_datechange">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_datechange">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_datechange">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_datechange">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_datechange">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_datechange">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_datechange">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_datechange">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_datechange"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.are_datechange">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.are_datechange">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_datechange"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.are_datechange"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.are_datechange">T</DD_ATTR_FTYP>
@@ -106,6 +106,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.are_datechange">ARE_DATECHANGE  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.are_datechange">are-06</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.are_datechange">firm_id:c(2),ar_type:c(2),customer_id:c(6),ar_inv_no_ver:c(7),ar_dist_code:c(2),ar_terms_code:c(2),invoice_date:c(8),inv_due_date:c(8),disc_date:c(8),invoice_type:c(1),reserved_str:c(14*),invoice_amt:n(7*),discount_amt:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.are_datechangecustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.are_datechangecustomer_idarm_custmast">ARE_DATECHANGE  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.are_datechangecustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.are_datechangecustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.are_datechangecustomer_idarm_custmast">FK_ARE_DATECHANGE_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">ARE_DATECHANGE  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">ARE_DATECHANGE  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.are_datechangecustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -293,7 +323,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_datechange003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_datechange003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_datechange003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_datechange003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_datechange003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_datechange003"></DD_ATTR_CTLY>
@@ -344,7 +374,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_datechange004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_datechange004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_datechange004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_datechange004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_datechange004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_datechange004"></DD_ATTR_CTLY>
@@ -446,7 +476,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_datechange006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_datechange006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_datechange006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_datechange006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_datechange006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_datechange006"></DD_ATTR_CTLY>
@@ -497,7 +527,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_datechange007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_datechange007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_datechange007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_datechange007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_datechange007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_datechange007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_datechange007"></DD_ATTR_CTLY>

@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.gmw_linkcustomer"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.gmw_linkcustomer">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.gmw_linkcustomer">20150811</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.gmw_linkcustomer">20210305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.gmw_linkcustomer">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.gmw_linkcustomer">171948</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.gmw_linkcustomer">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.gmw_linkcustomer">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.gmw_linkcustomer">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.gmw_linkcustomer"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.gmw_linkcustomer"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.gmw_linkcustomer"></DD_ATTR_DKNM>
@@ -91,6 +91,66 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.gmw_linkcustomer">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.gmw_linkcustomer">gmw_linkcustomer</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.gmw_linkcustomer">user_id:c(16),company_id:c(2),customer_id:c(6),customer_name:c(30),contact_name:c(20),phone_no:c(10),phone_exten:c(4),fax_no:c(20),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),city:c(30),state_code:c(2),zip_code:c(9),country:c(24)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.gmw_linkcustomercompany_idadm_firms">
+			<DD_TABLE_ALIAS id="ddm_table_ref.gmw_linkcustomercompany_idadm_firms">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.gmw_linkcustomercompany_idadm_firms">COMPANY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.gmw_linkcustomercompany_idadm_firms">ADM_FIRMS       </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.gmw_linkcustomercompany_idadm_firms">FK_GMW_LINKCUSTOMER_COMPANY_ID_ADM_FIRMS                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.gmw_linkcustomercustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.gmw_linkcustomercustomer_idarm_custmast">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.gmw_linkcustomercustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.gmw_linkcustomercustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.gmw_linkcustomercustomer_idarm_custmast">FK_GMW_LINKCUSTOMER_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                   </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.gmw_linkcustomeruser_idadm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.gmw_linkcustomeruser_idadm_user">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.gmw_linkcustomeruser_idadm_user">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.gmw_linkcustomeruser_idadm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.gmw_linkcustomeruser_idadm_user">FK_GMW_LINKCUSTOMER_USER_ID_ADM_USER                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">COMPANY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">ADM_FIRMS       </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">COMPANY_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gmw_linkcustomercompany_idadm_firms0001">COMPANY_ID      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gmw_linkcustomercustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">GMW_LINKCUSTOMER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gmw_linkcustomeruser_idadm_user0001">USER_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

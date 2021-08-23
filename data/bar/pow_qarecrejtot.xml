@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.pow_qarecrejtot">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pow_qarecrejtot">20071110</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pow_qarecrejtot">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pow_qarecrejtot">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pow_qarecrejtot">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.pow_qarecrejtot">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pow_qarecrejtot">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pow_qarecrejtot"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pow_qarecrejtot"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pow_qarecrejtot"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pow_qarecrejtot">POW_QARECREJTOT </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pow_qarecrejtot">pow-16</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.pow_qarecrejtot">firm_id:c(2),reject_code:c(3*),description:c(30*),tot_qty_rej:n(7*),tot_val_rej:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.pow_qarecrejtotreject_codepoc_rejctcod">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pow_qarecrejtotreject_codepoc_rejctcod">POW_QARECREJTOT </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pow_qarecrejtotreject_codepoc_rejctcod">REJECT_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pow_qarecrejtotreject_codepoc_rejctcod">POC_REJCTCOD    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pow_qarecrejtotreject_codepoc_rejctcod">FK_POW_QARECREJTOT_REJECT_CODE_POC_REJCTCOD                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">POW_QARECREJTOT </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">REJECT_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">POC_REJCTCOD    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">POW_QARECREJTOT </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">REJECT_CODE     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">POC_REJCTCOD    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">REJECT_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_qarecrejtotreject_codepoc_rejctcod0002">REJECT_CODE     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

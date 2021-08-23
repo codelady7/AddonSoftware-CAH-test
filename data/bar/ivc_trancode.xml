@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivc_trancode">1463D60A1C1B7CDF1B3A046A2F1A62D1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivc_trancode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivc_trancode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivc_trancode">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivc_trancode">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivc_trancode">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivc_trancode">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivc_trancode">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivc_trancode">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivc_trancode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivc_trancode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivc_trancode">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivc_trancode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivc_trancode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivc_trancode">T</DD_ATTR_FTYP>
@@ -118,6 +118,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivc_trancode">IVC_TRANCODE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivc_trancode"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivc_trancode">firm_id:c(2),record_id_b:c(1),trans_code:c(2),code_desc:c(20),trans_type:c(1),post_gl:c(1),reserved_str:c(5*),gl_adj_acct:c(10),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivc_trancodegl_adj_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivc_trancodegl_adj_acctglm_acct">IVC_TRANCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivc_trancodegl_adj_acctglm_acct">GL_ADJ_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivc_trancodegl_adj_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivc_trancodegl_adj_acctglm_acct">FK_IVC_TRANCODE_GL_ADJ_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">IVC_TRANCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">GL_ADJ_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">IVC_TRANCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">GL_ADJ_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_trancodegl_adj_acctglm_acct0002">GL_ADJ_ACCT     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -394,7 +424,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivc_trancode005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivc_trancode005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivc_trancode005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivc_trancode005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivc_trancode005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivc_trancode005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivc_trancode005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivc_trancode005">+1</DD_ATTR_CTLY>
@@ -547,7 +577,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivc_trancode008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivc_trancode008">IVC_TRANCODE.POST_GL</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivc_trancode008">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivc_trancode008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivc_trancode008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivc_trancode008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivc_trancode008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivc_trancode008"></DD_ATTR_CTLY>

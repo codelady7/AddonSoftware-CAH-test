@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_rptrcp_vend"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_rptrcp_vend">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_rptrcp_vend">2459270</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_rptrcp_vend">20210225</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptrcp_vend">20210225</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptrcp_vend">174902</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_rptrcp_vend">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptrcp_vend">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptrcp_vend">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_rptrcp_vend">ADM_RPTCTL_RCP  </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.adm_rptrcp_vend">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.adm_rptrcp_vend">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_rptrcp_vend">AO_VEND_ALIAS</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.adm_rptrcp_vend"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.adm_rptrcp_vend">T</DD_ATTR_FTYP>
@@ -113,6 +113,84 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adm_rptrcp_vend">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adm_rptrcp_vend"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adm_rptrcp_vend">firm_id:c(2),dd_table_alias:c(16),customer_id:c(6),vendor_id:c(6),recipient_tp:c(1),print_yn:c(1),fax_yn:c(1),fax_nos:c(60),from_company:c(60),from_name:c(60),recipient_name:c(60),fax_to:c(60),fax_subject:c(128),fax_message:c(1024*=1),email_yn:c(1),email_from:c(80),email_replyto:c(80),email_to:c(1024),email_cc:c(1024),email_bcc:c(1024),email_subject:c(128),email_message:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adm_rptrcp_vendcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_rptrcp_vendcustomer_idarm_custmast">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_rptrcp_vendcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_rptrcp_vendcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_rptrcp_vendcustomer_idarm_custmast">FK_ADM_RPTRCP_VEND_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_rptrcp_venddd_table_aliasadm_rptctl">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_rptrcp_venddd_table_aliasadm_rptctl">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_rptrcp_venddd_table_aliasadm_rptctl">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_rptrcp_venddd_table_aliasadm_rptctl">ADM_RPTCTL      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_rptrcp_venddd_table_aliasadm_rptctl">FK_ADM_RPTRCP_VEND_DD_TABLE_ALIAS_ADM_RPTCTL                                                                                                                                                                                                                   </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_rptrcp_vendvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_rptrcp_vendvendor_idapm_vendmast">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_rptrcp_vendvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_rptrcp_vendvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_rptrcp_vendvendor_idapm_vendmast">FK_ADM_RPTRCP_VEND_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">ADM_RPTCTL      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">ADM_RPTCTL      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">DD_TABLE_ALIAS  </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptrcp_venddd_table_aliasadm_rptctl0002">DD_TABLE_ALIAS  </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">ADM_RPTRCP_VEND </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptrcp_vendvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -341,7 +419,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptrcp_vend002">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptrcp_vend002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptrcp_vend002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_vend002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_vend002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptrcp_vend002">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptrcp_vend002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptrcp_vend002"></DD_ATTR_CTLY>
@@ -596,7 +674,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptrcp_vend007">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptrcp_vend007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptrcp_vend007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_vend007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_vend007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptrcp_vend007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptrcp_vend007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptrcp_vend007">-8</DD_ATTR_CTLY>
@@ -1004,7 +1082,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptrcp_vend015">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptrcp_vend015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptrcp_vend015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_vend015">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_vend015">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptrcp_vend015">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptrcp_vend015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptrcp_vend015"></DD_ATTR_CTLY>

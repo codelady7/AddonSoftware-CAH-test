@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glt_transdetail">DDA0DC404934BC7DA849F5A0D29C762E</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glt_transdetail">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glt_transdetail">20060630</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glt_transdetail">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glt_transdetail">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glt_transdetail">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glt_transdetail">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glt_transdetail">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glt_transdetail">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glt_transdetail"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glt_transdetail"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glt_transdetail"></DD_ATTR_DKNM>
@@ -91,6 +91,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glt_transdetail">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glt_transdetail">glt-06</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glt_transdetail">firm_id:c(2),gl_account:c(10),posting_year:c(4),posting_per:c(2),trns_date:c(8),journal_id:c(2),gl_adt_no:c(7),seq_no:c(5*),reference_01:c(10),reference_02:c(10),reference_03:c(10),description:c(30),period:c(2),year:c(4*),dealer_str:c(1*),trans_amt:n(7*),units:n(7*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glt_transdetailgl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glt_transdetailgl_accountglm_acct">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glt_transdetailgl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glt_transdetailgl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glt_transdetailgl_accountglm_acct">FK_GLT_TRANSDETAIL_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.glt_transdetailjournal_idglc_journalcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glt_transdetailjournal_idglc_journalcode">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glt_transdetailjournal_idglc_journalcode">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glt_transdetailjournal_idglc_journalcode">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glt_transdetailjournal_idglc_journalcode">FK_GLT_TRANSDETAIL_JOURNAL_ID_GLC_JOURNALCODE                                                                                                                                                                                                                  </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glt_transdetailgl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">GLT_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">JOURNAL_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glt_transdetailjournal_idglc_journalcode0002">JOURNAL_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

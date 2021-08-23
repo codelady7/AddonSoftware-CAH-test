@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_rptctl"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_rptctl">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_rptctl">20080326</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_rptctl">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptctl">20210219</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptctl">153550</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_rptctl">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptctl">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptctl">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_rptctl"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.adm_rptctl">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.adm_rptctl">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_rptctl"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.adm_rptctl"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.adm_rptctl">T</DD_ATTR_FTYP>
@@ -113,6 +113,51 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adm_rptctl">ADM_RPTCTL      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adm_rptctl">adm_rptctl</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adm_rptctl">firm_id:c(2),dd_table_alias:c(16),recipient_tp:c(1),email_account:c(10),dflt_subject:c(128),dflt_message:c(1024*=1),logo_file:c(255)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adm_rptctldd_table_aliasddm_tables">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_rptctldd_table_aliasddm_tables">ADM_RPTCTL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_rptctldd_table_aliasddm_tables">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_rptctldd_table_aliasddm_tables">DDM_TABLES      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_rptctldd_table_aliasddm_tables">FK_ADM_RPTCTL_DD_TABLE_ALIAS_DDM_TABLES                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_rptctlemail_accountadm_email_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_rptctlemail_accountadm_email_acct">ADM_RPTCTL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_rptctlemail_accountadm_email_acct">EMAIL_ACCOUNT   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_rptctlemail_accountadm_email_acct">ADM_EMAIL_ACCT  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_rptctlemail_accountadm_email_acct">FK_ADM_RPTCTL_EMAIL_ACCOUNT_ADM_EMAIL_ACCT                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">ADM_RPTCTL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">DD_TABLE_ALIAS  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">DDM_TABLES      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">DD_TABLE_ALIAS  </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptctldd_table_aliasddm_tables0001">DD_TABLE_ALIAS  </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">ADM_RPTCTL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">EMAIL_ACCOUNT   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">ADM_EMAIL_ACCT  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">ADM_RPTCTL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">EMAIL_ACCOUNT   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">ADM_EMAIL_ACCT  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">EMAIL_ACCOUNT   </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_rptctlemail_accountadm_email_acct0002">EMAIL_ACCOUNT   </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.gle_jrnlhdr">721D526FD79E7011486A932AB1F24969</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.gle_jrnlhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.gle_jrnlhdr">20070925</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.gle_jrnlhdr">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.gle_jrnlhdr">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.gle_jrnlhdr">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.gle_jrnlhdr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.gle_jrnlhdr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.gle_jrnlhdr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.gle_jrnlhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.gle_jrnlhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.gle_jrnlhdr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.gle_jrnlhdr">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.gle_jrnlhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.gle_jrnlhdr">T</DD_ATTR_FTYP>
@@ -145,6 +145,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.gle_jrnlhdr">GLE_JRNLHDR     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.gle_jrnlhdr">gle-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.gle_jrnlhdr">firm_id:c(2),journal_id:c(2),je_trans_id:c(10*),description:c(30),reserved_str:c(6),cycle_code:c(2),reserved_str_02:c(10),trans_date:c(8),reverse_date:c(8*),dealer_str:c(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*),batch_no:c(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.gle_jrnlhdrcycle_codeglc_cyclecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.gle_jrnlhdrcycle_codeglc_cyclecode">GLE_JRNLHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.gle_jrnlhdrcycle_codeglc_cyclecode">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.gle_jrnlhdrcycle_codeglc_cyclecode">GLC_CYCLECODE   </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.gle_jrnlhdrcycle_codeglc_cyclecode">FK_GLE_JRNLHDR_CYCLE_CODE_GLC_CYCLECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.gle_jrnlhdrjournal_idglc_journalcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.gle_jrnlhdrjournal_idglc_journalcode">GLE_JRNLHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.gle_jrnlhdrjournal_idglc_journalcode">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.gle_jrnlhdrjournal_idglc_journalcode">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.gle_jrnlhdrjournal_idglc_journalcode">FK_GLE_JRNLHDR_JOURNAL_ID_GLC_JOURNALCODE                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">GLE_JRNLHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">GLC_CYCLECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">GLE_JRNLHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">GLC_CYCLECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">CYCLE_CODE      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrcycle_codeglc_cyclecode0002">CYCLE_CODE      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">GLE_JRNLHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">GLE_JRNLHDR     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">JOURNAL_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gle_jrnlhdrjournal_idglc_journalcode0002">JOURNAL_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -327,7 +381,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gle_jrnlhdr002">20070925</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gle_jrnlhdr002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gle_jrnlhdr002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gle_jrnlhdr002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gle_jrnlhdr002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gle_jrnlhdr002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gle_jrnlhdr002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gle_jrnlhdr002"></DD_ATTR_CTLY>
@@ -633,7 +687,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gle_jrnlhdr008">20070925</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gle_jrnlhdr008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gle_jrnlhdr008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gle_jrnlhdr008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gle_jrnlhdr008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gle_jrnlhdr008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gle_jrnlhdr008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gle_jrnlhdr008"></DD_ATTR_CTLY>
@@ -684,7 +738,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gle_jrnlhdr009">20070925</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gle_jrnlhdr009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gle_jrnlhdr009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gle_jrnlhdr009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gle_jrnlhdr009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gle_jrnlhdr009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gle_jrnlhdr009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gle_jrnlhdr009"></DD_ATTR_CTLY>
