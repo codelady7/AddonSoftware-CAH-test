@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.saw_customer">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.saw_customer">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.saw_customer">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.saw_customer">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.saw_customer">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.saw_customer">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.saw_customer">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.saw_customer"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.saw_customer"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.saw_customer"></DD_ATTR_DKNM>
@@ -64,6 +64,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.saw_customer">SAW_CUSTOMER    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.saw_customer">saw-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.saw_customer">firm_id:c(2),sort_amount:c(16),customer_id:c(6),product_type:c(3),item_id:c(20*),mtd_qnty:n(7*),ytd_qnty:n(7*),pyr_mtd_qty:n(7*),pri_ytd_qnty:n(7*),mtd_cost:n(7*),ytd_cost:n(7*),pyr_mtd_cost:n(7*),pri_ytd_cost:n(7*),mtd_sales:n(7*),ytd_sales:n(7*),pyr_mtd_sale:n(7*),pri_ytd_sale:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.saw_customercustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.saw_customercustomer_idarm_custmast">SAW_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.saw_customercustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.saw_customercustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.saw_customercustomer_idarm_custmast">FK_SAW_CUSTOMER_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.saw_customeritem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.saw_customeritem_idivm_itemmast">SAW_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.saw_customeritem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.saw_customeritem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.saw_customeritem_idivm_itemmast">FK_SAW_CUSTOMER_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">SAW_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.saw_customercustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">SAW_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.saw_customercustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">SAW_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.saw_customeritem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">SAW_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.saw_customeritem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

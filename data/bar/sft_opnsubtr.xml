@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.sft_opnsubtr">A1D54FF3605988DC2294693FE0018BAC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sft_opnsubtr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sft_opnsubtr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sft_opnsubtr">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sft_opnsubtr">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sft_opnsubtr">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sft_opnsubtr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sft_opnsubtr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sft_opnsubtr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sft_opnsubtr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sft_opnsubtr"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sft_opnsubtr"></DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sft_opnsubtr">SFT_OPNSUBTR    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sft_opnsubtr">sft-31</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sft_opnsubtr">firm_id:c(2),wo_location:c(2),wo_no:c(7),trans_date:c(8),trans_seq:c(3),subcont_seq_ref:c(12),vendor_id:c(6),po_no:c(7),pur_ord_seq_ref:c(12),desc:c(40),units:n(7*),unit_cost:n(7*),ext_cost:n(15*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sft_opnsubtrvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sft_opnsubtrvendor_idapm_vendmast">SFT_OPNSUBTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sft_opnsubtrvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sft_opnsubtrvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sft_opnsubtrvendor_idapm_vendmast">FK_SFT_OPNSUBTR_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">SFT_OPNSUBTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">SFT_OPNSUBTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_opnsubtrvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

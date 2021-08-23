@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ads_compinfo"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ads_compinfo">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ads_compinfo">20110118</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ads_compinfo">20210305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ads_compinfo">20210305</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ads_compinfo">171756</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ads_compinfo">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ads_compinfo">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ads_compinfo">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ads_compinfo"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ads_compinfo">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ads_compinfo">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ads_compinfo"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ads_compinfo"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ads_compinfo">T</DD_ATTR_FTYP>
@@ -102,6 +102,51 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ads_compinfo">ADS_COMPINFO    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ads_compinfo">ads_compinfo</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ads_compinfo">firm_id:c(2),firm_name:c(40),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),city:c(30),state_code:c(2),country_id:c(2),postal_code:c(9),phone_no:c(20),fax_no:c(20),own_tax_id:c(20),email_account:c(10),logo_file:c(255)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ads_compinfocountry_idadc_country">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ads_compinfocountry_idadc_country">ADS_COMPINFO    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ads_compinfocountry_idadc_country">COUNTRY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ads_compinfocountry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ads_compinfocountry_idadc_country">FK_ADS_COMPINFO_COUNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ads_compinfoemail_accountadm_email_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ads_compinfoemail_accountadm_email_acct">ADS_COMPINFO    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ads_compinfoemail_accountadm_email_acct">EMAIL_ACCOUNT   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ads_compinfoemail_accountadm_email_acct">ADM_EMAIL_ACCT  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ads_compinfoemail_accountadm_email_acct">FK_ADS_COMPINFO_EMAIL_ACCOUNT_ADM_EMAIL_ACCT                                                                                                                                                                                                                   </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">ADS_COMPINFO    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">COUNTRY_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ads_compinfocountry_idadc_country0001">COUNTRY_ID      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">ADS_COMPINFO    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">EMAIL_ACCOUNT   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">ADM_EMAIL_ACCT  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">ADS_COMPINFO    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">EMAIL_ACCOUNT   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">ADM_EMAIL_ACCT  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">EMAIL_ACCOUNT   </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ads_compinfoemail_accountadm_email_acct0002">EMAIL_ACCOUNT   </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -811,7 +856,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ads_compinfo014">20150116</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ads_compinfo014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ads_compinfo014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ads_compinfo014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ads_compinfo014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ads_compinfo014">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ads_compinfo014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ads_compinfo014"></DD_ATTR_CTLY>

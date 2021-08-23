@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.sft_clsmattr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sft_clsmattr">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.sft_clsmattr">20210405</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sft_clsmattr">20210405</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sft_clsmattr">140924</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.sft_clsmattr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sft_clsmattr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sft_clsmattr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sft_clsmattr"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sft_clsmattr"></DD_ATTR_DKNM>
@@ -91,6 +91,84 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sft_clsmattr">SFT_CLSMATTR    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sft_clsmattr">sft-23</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sft_clsmattr">firm_id:c(2),wo_location:c(2),wo_no:c(7),trans_date:c(8),trans_seq:c(3),material_seq_ref:c(12),vendor_id:c(6),po_no:c(7),pur_ord_seq_ref:c(12),unit_measure:c(6),warehouse_id:c(2),item_id:c(20),units:n(7*),unit_cost:n(7*),ext_cost:n(15*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sft_clsmattritem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sft_clsmattritem_idivm_itemmast">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sft_clsmattritem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sft_clsmattritem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sft_clsmattritem_idivm_itemmast">FK_SFT_CLSMATTR_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sft_clsmattrunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sft_clsmattrunit_measureivc_umcodes">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sft_clsmattrunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sft_clsmattrunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sft_clsmattrunit_measureivc_umcodes">FK_SFT_CLSMATTR_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sft_clsmattrvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sft_clsmattrvendor_idapm_vendmast">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sft_clsmattrvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sft_clsmattrvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sft_clsmattrvendor_idapm_vendmast">FK_SFT_CLSMATTR_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsmattritem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsmattrunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">SFT_CLSMATTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsmattrvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.ivw_physical">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivw_physical">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ivw_physical">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivw_physical">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivw_physical">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivw_physical">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivw_physical">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivw_physical"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivw_physical"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivw_physical"></DD_ATTR_DKNM>
@@ -64,6 +64,45 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivw_physical">IVW_PHYSICAL    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivw_physical">ivw-10</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivw_physical">firm_id:c(2),cycle_code:c(2*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivw_physicalcycle_codeivc_physcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivw_physicalcycle_codeivc_physcode">IVW_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivw_physicalcycle_codeivc_physcode">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivw_physicalcycle_codeivc_physcode">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivw_physicalcycle_codeivc_physcode">FK_IVW_PHYSICAL_CYCLE_CODE_IVC_PHYSCODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">IVW_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">IVW_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">WAREHOUSE_ID    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0002">WAREHOUSE_ID    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">IVW_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">CYCLE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">PI_CYCLECODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivw_physicalcycle_codeivc_physcode0003">CYCLE_CODE      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

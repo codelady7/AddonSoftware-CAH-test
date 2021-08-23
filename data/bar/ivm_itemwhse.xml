@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivm_itemwhse">46A8D21149542FF2287ED5E9A98B817C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivm_itemwhse">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivm_itemwhse">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivm_itemwhse">20210304</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemwhse">20210304</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemwhse">152826</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivm_itemwhse">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemwhse">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemwhse">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivm_itemwhse"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivm_itemwhse">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivm_itemwhse">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivm_itemwhse">AO_ITEM_WH</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivm_itemwhse"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivm_itemwhse">T</DD_ATTR_FTYP>
@@ -180,6 +180,108 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivm_itemwhse">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivm_itemwhse">ivm-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivm_itemwhse">firm_id:c(2),warehouse_id:c(2),item_id:c(20),location:c(10),pi_cyclecode:c(2),ar_dist_code:c(2),select_phys:c(1),product_type:c(3),buyer_code:c(3),vendor_id:c(6),cur_price_cd:c(2),pri_price_cd:c(2),abc_code:c(1),eoq_code:c(1),ord_pnt_code:c(1),saf_stk_code:c(1),special_ord:c(1),lstphy_date:c(8),lstrec_date:c(8),lstblt_date:c(8),lstsal_date:c(8),lstiss_date:c(8),lstadj_date:c(8),lstxin_date:c(8),lstxot_date:c(8),lstret_date:c(8),qty_on_hand:n(7*),qty_on_order:n(7*),qty_commit:n(7*),maximum_qty:n(7*),order_point:n(7*),safety_stock:n(7*),eoq:n(7*),lead_time:n(7*),physical_cnt:n(7*),cur_price:n(7*),pri_price:n(7*),unit_cost:n(7*),avg_cost:n(7*),std_cost:n(7*),rep_cost:n(7*),landed_cost:n(7*),last_po_cost:n(7*),cntry_of_origin:c(2)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivm_itemwhsecntry_of_originadc_country">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhsecntry_of_originadc_country">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivm_itemwhsecntry_of_originadc_country">CNTRY_OF_ORIGIN </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhsecntry_of_originadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivm_itemwhsecntry_of_originadc_country">FK_IVM_ITEMWHSE_CNTRY_OF_ORIGIN_ADC_COUNTRY                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivm_itemwhseitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhseitem_idivm_itemmast">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivm_itemwhseitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhseitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivm_itemwhseitem_idivm_itemmast">FK_IVM_ITEMWHSE_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivm_itemwhsepi_cyclecodeivc_physcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhsepi_cyclecodeivc_physcode">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivm_itemwhsepi_cyclecodeivc_physcode">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhsepi_cyclecodeivc_physcode">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivm_itemwhsepi_cyclecodeivc_physcode">FK_IVM_ITEMWHSE_PI_CYCLECODE_IVC_PHYSCODE                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivm_itemwhsevendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhsevendor_idapm_vendmast">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivm_itemwhsevendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivm_itemwhsevendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivm_itemwhsevendor_idapm_vendmast">FK_IVM_ITEMWHSE_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">CNTRY_OF_ORIGIN </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">ADC_COUNTRY     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhsecntry_of_originadc_country0001">CNTRY_OF_ORIGIN </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhseitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">WAREHOUSE_ID    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0002">WAREHOUSE_ID    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">PI_CYCLECODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhsepi_cyclecodeivc_physcode0003">PI_CYCLECODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivm_itemwhsevendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -1039,7 +1141,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_CTLY>
@@ -1192,7 +1294,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_CTLY>
@@ -2059,7 +2161,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse030">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse030">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse030">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_CTLY>
@@ -2110,7 +2212,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse031">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse031">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse031">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_CTLY>
@@ -2161,7 +2263,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse032">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse032">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse032">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse032">-24</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_CTLY>
@@ -2212,7 +2314,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse033">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse033">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse033">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse033">-24</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_CTLY>
@@ -2263,7 +2365,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse034">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse034">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse034">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_CTLY>
@@ -2467,7 +2569,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse038">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse038">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse038">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_CTLY>
@@ -2518,7 +2620,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse039">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse039"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse039"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse039">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse039">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse039"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse039">+25</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse039">-3</DD_ATTR_CTLY>
@@ -2569,7 +2671,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse040">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse040">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse040">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_CTLY>
@@ -2620,7 +2722,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse041">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse041">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse041">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_CTLY>
@@ -2878,7 +2980,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemwhse003">inn_on_ord_wo</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemwhse003">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ivm_itemwhse003"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse003">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ivm_itemwhse004">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ivm_itemwhse004">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
@@ -2924,7 +3026,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemwhse005">inn_commit_wo</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemwhse005">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ivm_itemwhse005"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse005">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cmts">

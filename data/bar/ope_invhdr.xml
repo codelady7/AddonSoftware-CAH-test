@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_invhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_invhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_invhdr">20090501</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_invhdr">20210802</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_invhdr">20210802</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_invhdr">150316</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_invhdr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_invhdr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_invhdr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_invhdr">OPT_INVHDR      </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ope_invhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ope_invhdr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_invhdr">AO_STATUS</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ope_invhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ope_invhdr">T</DD_ATTR_FTYP>
@@ -408,6 +408,267 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ope_invhdr">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ope_invhdr"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ope_invhdr">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),invoice_type:c(1),ordinv_flag:c(1),backord_flag:c(1),ar_ship_via:c(10),misc_no:c(10),slspsn_code:c(3),terms_code:c(2),disc_code:c(2),ar_dist_code:c(2),print_status:c(1),lock_status:c(1),message_code:c(2),territory:c(3),price_code:c(2),tax_code:c(10),pricing_code:c(6),job_no:c(10),ord_taken_by:c(16),cash_sale:c(1),reprint_flag:c(1),credit_flag:c(1),shipto_no:c(6),customer_po_no:c(20),customer_rel_no:c(20),invoice_date:c(8),shipmnt_date:c(8),order_date:c(8),expire_date:c(8),shipto_type:c(1),fob:c(15),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*),tax_amount:n(7*),freight_amt:n(7*),discount_amt:n(7*),comm_percent:n(7*),taxable_amt:n(7*),comm_amt:n(7*),total_sales:n(7*),total_cost:n(7*),ship_lbl_count:n(8*),memo_1024:c(1024*=1),prnt_ship_labels:c(1),prnt_bill_lading:c(1),ship_seq_no:c(3),shipping_id:c(15),shipping_email:c(80),credit_invoice:c(7),no_sls_tax_calc:n(1*),ord_conf_printed:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ope_invhdrarc_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrarc_useradm_user">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrarc_useradm_user">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrarc_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrarc_useradm_user">FK_OPE_INVHDR_ARC_USER_ADM_USER                                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrar_ship_viaarc_shipviacode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrar_ship_viaarc_shipviacode">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrar_ship_viaarc_shipviacode">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrar_ship_viaarc_shipviacode">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrar_ship_viaarc_shipviacode">FK_OPE_INVHDR_AR_SHIP_VIA_ARC_SHIPVIACODE                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrcreated_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrcreated_useradm_user">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrcreated_useradm_user">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrcreated_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrcreated_useradm_user">FK_OPE_INVHDR_CREATED_USER_ADM_USER                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrcustomer_idarm_custmast">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrcustomer_idarm_custmast">FK_OPE_INVHDR_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrdisc_codeopc_disccode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrdisc_codeopc_disccode">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrdisc_codeopc_disccode">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrdisc_codeopc_disccode">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrdisc_codeopc_disccode">FK_OPE_INVHDR_DISC_CODE_OPC_DISCCODE                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrjob_noopm_custjobs">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrjob_noopm_custjobs">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrjob_noopm_custjobs">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrjob_noopm_custjobs">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrjob_noopm_custjobs">FK_OPE_INVHDR_JOB_NO_OPM_CUSTJOBS                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrmessage_codeopc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrmessage_codeopc_message">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrmessage_codeopc_message">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrmessage_codeopc_message">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrmessage_codeopc_message">FK_OPE_INVHDR_MESSAGE_CODE_OPC_MESSAGE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrmod_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrmod_useradm_user">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrmod_useradm_user">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrmod_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrmod_useradm_user">FK_OPE_INVHDR_MOD_USER_ADM_USER                                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrpricing_codeopc_pricecds">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrpricing_codeopc_pricecds">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrpricing_codeopc_pricecds">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrpricing_codeopc_pricecds">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrpricing_codeopc_pricecds">FK_OPE_INVHDR_PRICING_CODE_OPC_PRICECDS                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrshipto_noarm_custship">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrshipto_noarm_custship">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrshipto_noarm_custship">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrshipto_noarm_custship">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrshipto_noarm_custship">FK_OPE_INVHDR_SHIPTO_NO_ARM_CUSTSHIP                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ope_invhdrtax_codeopc_taxcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ope_invhdrtax_codeopc_taxcode">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ope_invhdrtax_codeopc_taxcode">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ope_invhdrtax_codeopc_taxcode">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ope_invhdrtax_codeopc_taxcode">FK_OPE_INVHDR_TAX_CODE_OPC_TAXCODE                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrarc_useradm_user0001">ARC_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrcreated_useradm_user0001">CREATED_USER    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">DISC_CODE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrdisc_codeopc_disccode0002">DISC_CODE       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">JOB_NO          </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrjob_noopm_custjobs0003">JOB_NO          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">MESSAGE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrmessage_codeopc_message0002">MESSAGE_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrmod_useradm_user0001">MOD_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">PRICING_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrpricing_codeopc_pricecds0002">PRICING_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">SHIPTO_NO       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrshipto_noarm_custship0003">SHIPTO_NO       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">OP_TAX_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ope_invhdrtax_codeopc_taxcode0002">TAX_CODE        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -1864,7 +2125,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr003">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr003"></DD_ATTR_CTLY>
@@ -1915,7 +2176,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr004"></DD_ATTR_CTLY>
@@ -2017,7 +2278,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr006">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr006"></DD_ATTR_CTLY>
@@ -2170,7 +2431,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr009">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr009"></DD_ATTR_CTLY>
@@ -2221,7 +2482,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr010">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr010"></DD_ATTR_CTLY>
@@ -2272,7 +2533,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr011">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr011">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr011"></DD_ATTR_CTLY>
@@ -2323,7 +2584,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr012">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr012">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr012"></DD_ATTR_CTLY>
@@ -2374,7 +2635,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr013">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr013"></DD_ATTR_CTLY>
@@ -2425,7 +2686,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr014">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr014"></DD_ATTR_CTLY>
@@ -2578,7 +2839,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr017">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr017"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr017"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr017">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr017">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr017"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr017"></DD_ATTR_CTLY>
@@ -2629,7 +2890,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr018">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr018"></DD_ATTR_CTLY>
@@ -2680,7 +2941,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr019">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr019"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr019"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr019">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr019">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr019"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr019"></DD_ATTR_CTLY>
@@ -2731,7 +2992,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr020">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr020">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr020">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr020"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr020"></DD_ATTR_CTLY>
@@ -2782,7 +3043,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr021">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr021">+30</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr021">-9</DD_ATTR_CTLY>
@@ -2833,7 +3094,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr022">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr022"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr022">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr022">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr022"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr022"></DD_ATTR_CTLY>
@@ -3088,7 +3349,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr027">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr027">OPE_INVHDR.SHIPTO_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr027">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr027">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr027">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr027"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr027"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr027"></DD_ATTR_CTLY>
@@ -3139,7 +3400,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr028">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr028"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr028"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr028">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr028">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr028"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr028"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr028"></DD_ATTR_CTLY>
@@ -3190,7 +3451,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr029">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr029"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr029"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr029">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr029">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr029"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr029"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr029"></DD_ATTR_CTLY>
@@ -3241,7 +3502,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr030">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr030"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr030"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr030">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr030">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr030"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr030"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr030"></DD_ATTR_CTLY>
@@ -3292,7 +3553,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr031">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr031"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr031"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr031">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr031">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr031"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr031"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr031"></DD_ATTR_CTLY>
@@ -3343,7 +3604,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr032">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr032"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr032"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr032">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr032">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr032"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr032"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr032"></DD_ATTR_CTLY>
@@ -3394,7 +3655,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr033">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr033"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr033"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr033">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr033">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr033"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr033"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr033"></DD_ATTR_CTLY>
@@ -3445,7 +3706,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr034">20080131</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr034"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr034"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr034">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr034">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr034"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr034">-7</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr034"></DD_ATTR_CTLY>
@@ -4159,7 +4420,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr048">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr048"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr048"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr048">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr048">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr048"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr048"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr048"></DD_ATTR_CTLY>
@@ -4210,7 +4471,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr049">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr049"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr049"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr049">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr049">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr049"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr049"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr049"></DD_ATTR_CTLY>
@@ -4261,7 +4522,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr050">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr050"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr050"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr050">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr050">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr050"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr050"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr050"></DD_ATTR_CTLY>
@@ -4465,7 +4726,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_invhdr054">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_invhdr054"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_invhdr054"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr054">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_invhdr054">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_invhdr054"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_invhdr054">+1</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_invhdr054">+2</DD_ATTR_CTLY>
@@ -5315,7 +5576,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr011">ine_sadd1</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr011">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr011"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr011">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr011">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr012">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr012">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5338,7 +5599,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr012">ine_sadd2</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr012">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr012"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr012">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr012">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr013">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr013">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5361,7 +5622,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr013">ine_sadd3</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr013">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr013"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr013">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr013">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr014">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr014">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5384,7 +5645,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr014">ine_sadd4</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr014">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr014"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr014">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr014">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr015">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr015">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5407,7 +5668,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr015">ine_scity</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr015">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr015"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr015">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr015">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr016">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr016">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5430,7 +5691,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr016">ine_sstate</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr016">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr016"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr016">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr016">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr017">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr017">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5453,7 +5714,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr017">ine_szip</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr017">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr017"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr017">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr017">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr018">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr018">OPE_INVHDR      </DD_TABLE_ALIAS>
@@ -5752,7 +6013,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_invhdr030">dis_scntry_id</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_invhdr030">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_invhdr030"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr030">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_invhdr030">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_invhdr031">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_invhdr031">OPE_INVHDR      </DD_TABLE_ALIAS>

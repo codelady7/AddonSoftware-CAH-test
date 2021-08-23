@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.mpe_pegging">7BD618E1C12CC3811450AB53C47EE50C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.mpe_pegging">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.mpe_pegging">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.mpe_pegging">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.mpe_pegging">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.mpe_pegging">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.mpe_pegging">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.mpe_pegging">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.mpe_pegging">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.mpe_pegging"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.mpe_pegging"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.mpe_pegging"></DD_ATTR_DKNM>
@@ -91,6 +91,108 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.mpe_pegging">MPE_PEGGING     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.mpe_pegging">mpe-05</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.mpe_pegging">firm_id:c(2),forecast:c(3),warehouse_id:c(2),item_id:c(20),trns_date:c(8),source_code:c(1),seq_no:c(5*),finish_item:c(20*),order_no:c(7),customer_id:c(6),vendor_id:c(6),po_no:c(7),wo_no:c(7),wo_type:c(2),wo_status:c(1),mrp_type:c(1),reserved_str:c(26),reqd_date:c(8*),dealer_str:c(1*),gross_req:n(7*),qty_on_order:n(7*),qty_on_hand:n(7*),net_required:n(7*),planned_rel:n(7*),planned_rec:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),reserved_num_03:n(1*),reserved_num_04:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.mpe_peggingcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_peggingcustomer_idarm_custmast">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_peggingcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_peggingcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_peggingcustomer_idarm_custmast">FK_MPE_PEGGING_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpe_peggingforecastmpm_forecast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_peggingforecastmpm_forecast">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_peggingforecastmpm_forecast">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_peggingforecastmpm_forecast">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_peggingforecastmpm_forecast">FK_MPE_PEGGING_FORECAST_MPM_FORECAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpe_peggingitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_peggingitem_idivm_itemmast">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_peggingitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_peggingitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_peggingitem_idivm_itemmast">FK_MPE_PEGGING_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpe_peggingvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_peggingvendor_idapm_vendmast">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_peggingvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_peggingvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_peggingvendor_idapm_vendmast">FK_MPE_PEGGING_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">FORECAST        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingforecastmpm_forecast0002">FORECAST        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">MPE_PEGGING     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_peggingvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -368,7 +470,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.mpe_pegging004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.mpe_pegging004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.mpe_pegging004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.mpe_pegging004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.mpe_pegging004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.mpe_pegging004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.mpe_pegging004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.mpe_pegging004"></DD_ATTR_CTLY>

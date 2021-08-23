@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ive_physical"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_physical">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_physical">20120904</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_physical">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ive_physical">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_physical">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ive_physical">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ive_physical">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_physical">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_physical"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ive_physical"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_physical"></DD_ATTR_DKNM>
@@ -91,6 +91,69 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ive_physical">IVE_PHYSICAL    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ive_physical">ive-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ive_physical">firm_id:c(2),warehouse_id:c(2),pi_cyclecode:c(2),location:c(10),item_id:c(20),lotser_no:c(20),entered_flag:c(1),lotser_item:c(1),count_string:c(50),cutoff_date:c(8),freeze_qty:n(7*),act_phys_cnt:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ive_physicalitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ive_physicalitem_idivm_itemmast">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ive_physicalitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ive_physicalitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ive_physicalitem_idivm_itemmast">FK_IVE_PHYSICAL_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ive_physicalpi_cyclecodeivc_physcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ive_physicalpi_cyclecodeivc_physcode">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ive_physicalpi_cyclecodeivc_physcode">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ive_physicalpi_cyclecodeivc_physcode">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ive_physicalpi_cyclecodeivc_physcode">FK_IVE_PHYSICAL_PI_CYCLECODE_IVC_PHYSCODE                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_physicalitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">WAREHOUSE_ID    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0002">WAREHOUSE_ID    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">IVE_PHYSICAL    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">PI_CYCLECODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">IVC_PHYSCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">PI_CYCLECODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ive_physicalpi_cyclecodeivc_physcode0003">PI_CYCLECODE    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_emailfax">163582805B50DED105EF9FFEFE61BA42</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_emailfax">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_emailfax">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_emailfax">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_emailfax">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_emailfax">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_emailfax">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_emailfax">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_emailfax">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_emailfax"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apm_emailfax"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_emailfax"></DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apm_emailfax">APM_EMAILFAX    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apm_emailfax">apm-15</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.apm_emailfax">firm_id:c(2),vendor_id:c(6),email_to:c(80),email_cc:c(80),email_bcc:c(80),fax_to:c(60),fax_nos:c(60),web_page:c(60),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apm_emailfaxvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apm_emailfaxvendor_idapm_vendmast">APM_EMAILFAX    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apm_emailfaxvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apm_emailfaxvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apm_emailfaxvendor_idapm_vendmast">FK_APM_EMAILFAX_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">APM_EMAILFAX    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">APM_EMAILFAX    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apm_emailfaxvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -252,7 +282,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_emailfax003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_emailfax003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_emailfax003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_emailfax003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_emailfax003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_emailfax003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_emailfax003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_emailfax003"></DD_ATTR_CTLY>
@@ -303,7 +333,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_emailfax004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_emailfax004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_emailfax004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_emailfax004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_emailfax004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_emailfax004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_emailfax004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_emailfax004"></DD_ATTR_CTLY>
@@ -507,7 +537,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_emailfax008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_emailfax008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_emailfax008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_emailfax008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_emailfax008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_emailfax008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_emailfax008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_emailfax008"></DD_ATTR_CTLY>

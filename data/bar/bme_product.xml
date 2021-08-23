@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bme_product">EF3F5728B02C96799F1985D44AB1D4BE</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bme_product">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bme_product">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bme_product">20210630</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bme_product">20210630</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bme_product">140930</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bme_product">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bme_product">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bme_product">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bme_product"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bme_product">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bme_product">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bme_product">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bme_product"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bme_product">T</DD_ATTR_FTYP>
@@ -130,6 +130,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.bme_product">BME_PRODUCT     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.bme_product">bme-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.bme_product">firm_id:c(2),warehouse_id:c(2),prod_date:c(8),bm_reference:c(7),item_id:c(20),update_flag:c(1),qty_ordered:n(7*),total_cost:n(7*),batch_no:c(7)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.bme_productitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bme_productitem_idivm_itemmast">BME_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bme_productitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bme_productitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bme_productitem_idivm_itemmast">FK_BME_PRODUCT_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">BME_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bme_productitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">BME_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bme_productitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -415,7 +445,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_product003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_product003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_product003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_product003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_product003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_product003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_product003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_product003"></DD_ATTR_CTLY>
@@ -517,7 +547,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_product005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_product005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_product005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_product005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_product005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_product005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_product005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_product005"></DD_ATTR_CTLY>
@@ -619,7 +649,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_product007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_product007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_product007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_product007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_product007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_product007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_product007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_product007"></DD_ATTR_CTLY>
@@ -1353,7 +1383,7 @@
 			<ASC_PROD_ID id="ddm_elements.unit_of_sale">IV </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.unit_of_sale"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.unit_of_sale">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.unit_of_sale">20210630</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.unit_of_sale">20210405</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.unit_of_sale"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.unit_of_sale"></DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.unit_of_sale"></DD_ATTR_CDAT>

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_recurringhdr">639F77497E0E67A18E299E3AC9DF3D73</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_recurringhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_recurringhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_recurringhdr">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_recurringhdr">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_recurringhdr">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_recurringhdr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_recurringhdr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_recurringhdr">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_recurringhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ape_recurringhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ape_recurringhdr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_recurringhdr"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ape_recurringhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ape_recurringhdr">T</DD_ATTR_FTYP>
@@ -146,6 +146,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ape_recurringhdr">APE_RECURRINGHDR</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ape_recurringhdr">ape-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ape_recurringhdr">firm_id:c(2),ap_type:c(2),vendor_id:c(6),ap_inv_no:c(10),sequence_00:c(2),ap_dist_code:c(2),payment_grp:c(2),ap_terms_code:c(2),reserved_str:c(12),reference:c(10),ap_inv_memo:c(16),hold_flag:c(1),invoice_type:c(1),invoice_date:c(8),accting_date:c(8),inv_due_date:c(8),disc_date:c(8),invoice_amt:n(7*),discount_amt:n(7*),retention:n(7*),net_inv_amt:n(7*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ape_recurringhdrvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ape_recurringhdrvendor_idapm_vendmast">APE_RECURRINGHDR</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ape_recurringhdrvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ape_recurringhdrvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ape_recurringhdrvendor_idapm_vendmast">FK_APE_RECURRINGHDR_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">APE_RECURRINGHDR</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">APE_RECURRINGHDR</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ape_recurringhdrvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -282,7 +312,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr002">+1</DD_ATTR_CTLY>
@@ -333,7 +363,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr003"></DD_ATTR_CTLY>
@@ -384,7 +414,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr004"></DD_ATTR_CTLY>
@@ -486,7 +516,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr006"></DD_ATTR_CTLY>
@@ -537,7 +567,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr007"></DD_ATTR_CTLY>
@@ -588,7 +618,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr008"></DD_ATTR_CTLY>
@@ -945,7 +975,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr015">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr015">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr015"></DD_ATTR_CTLY>
@@ -1098,7 +1128,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr018">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr018">+20</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr018">-4</DD_ATTR_CTLY>
@@ -1251,7 +1281,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_recurringhdr021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_recurringhdr021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_recurringhdr021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr021">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_recurringhdr021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_recurringhdr021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_recurringhdr021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_recurringhdr021"></DD_ATTR_CTLY>

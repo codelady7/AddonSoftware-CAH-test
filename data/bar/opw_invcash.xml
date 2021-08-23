@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.opw_invcash">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opw_invcash">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.opw_invcash">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opw_invcash">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opw_invcash">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.opw_invcash">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opw_invcash">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opw_invcash"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opw_invcash"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opw_invcash"></DD_ATTR_DKNM>
@@ -64,6 +64,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opw_invcash">OPW_INVCASH     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opw_invcash">opw-41</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.opw_invcash">firm_id:c(2),ar_type:c(2),invoice_date:c(8),ar_inv_no:c(7),customer_id:c(6),order_no:c(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.opw_invcashcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opw_invcashcustomer_idarm_custmast">OPW_INVCASH     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opw_invcashcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opw_invcashcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opw_invcashcustomer_idarm_custmast">FK_OPW_INVCASH_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">OPW_INVCASH     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">OPW_INVCASH     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opw_invcashcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

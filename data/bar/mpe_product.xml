@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.mpe_product">A07A1C527DBAF9A967B95C564B7D7D75</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.mpe_product">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.mpe_product">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.mpe_product">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.mpe_product">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.mpe_product">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.mpe_product">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.mpe_product">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.mpe_product">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.mpe_product"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.mpe_product"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.mpe_product"></DD_ATTR_DKNM>
@@ -91,6 +91,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.mpe_product">MPE_PRODUCT     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.mpe_product">mpe-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.mpe_product">firm_id:c(2),forecast:c(3),warehouse_id:c(2),item_id:c(20*),reserved_str:c(100*),forecast_qty_01:n(7*),forecast_qty_02:n(7*),forecast_qty_03:n(7*),forecast_qty_04:n(7*),forecast_qty_05:n(7*),forecast_qty_06:n(7*),forecast_qty_07:n(7*),forecast_qty_08:n(7*),forecast_qty_09:n(7*),forecast_qty_10:n(7*),forecast_qty_11:n(7*),forecast_qty_12:n(7*),forecast_qty_13:n(7*),forecast_qty_14:n(7*),forecast_qty_15:n(7*),forecast_qty_16:n(7*),forecast_qty_17:n(7*),forecast_qty_18:n(7*),forecast_qty_19:n(7*),forecast_qty_20:n(7*),forecast_qty_21:n(7*),forecast_qty_22:n(7*),forecast_qty_23:n(7*),forecast_qty_24:n(7*),forecast_qty_25:n(7*),forecast_qty_26:n(7*),reserved_num:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.mpe_productforecastmpm_forecast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_productforecastmpm_forecast">MPE_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_productforecastmpm_forecast">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_productforecastmpm_forecast">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_productforecastmpm_forecast">FK_MPE_PRODUCT_FORECAST_MPM_FORECAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpe_productitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_productitem_idivm_itemmast">MPE_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_productitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_productitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_productitem_idivm_itemmast">FK_MPE_PRODUCT_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">MPE_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_productforecastmpm_forecast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">MPE_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">FORECAST        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_productforecastmpm_forecast0002">FORECAST        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">MPE_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_productitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">MPE_PRODUCT     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_productitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -329,7 +383,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.mpe_product004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.mpe_product004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.mpe_product004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.mpe_product004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.mpe_product004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.mpe_product004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.mpe_product004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.mpe_product004"></DD_ATTR_CTLY>

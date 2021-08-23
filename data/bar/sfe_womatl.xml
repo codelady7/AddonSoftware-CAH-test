@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfe_womatl">A6CFA5FBE9DCAA1CD3B29E4265BAD2C4</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfe_womatl">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfe_womatl">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfe_womatl">20210414</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfe_womatl">20210414</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfe_womatl">141134</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfe_womatl">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfe_womatl">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfe_womatl">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfe_womatl"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sfe_womatl">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sfe_womatl">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfe_womatl"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sfe_womatl"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sfe_womatl">G</DD_ATTR_FTYP>
@@ -163,6 +163,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfe_womatl">SFE_WOMATL      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfe_womatl">sfe-22</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfe_womatl">firm_id:c(2),wo_location:c(2),wo_no:c(7),material_seq:c(3),internal_seq_no:c(12),unit_measure:c(6),warehouse_id:c(2),item_id:c(20),oper_seq_ref:c(12),po_no:c(7),pur_ord_seq_ref:c(12),po_status:c(1),line_type:c(1),ext_comments:c(60),require_date:c(8),wo_ref_num:c(6),units:n(7*),unit_cost:n(7*),total_units:n(7*),total_cost:n(7*),divisor:n(7*),qty_required:n(7*),alt_factor:n(7*),iv_unit_cost:n(7*),scrap_factor:n(5*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfe_womatlitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfe_womatlitem_idivm_itemmast">SFE_WOMATL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfe_womatlitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfe_womatlitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfe_womatlitem_idivm_itemmast">FK_SFE_WOMATL_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfe_womatlunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfe_womatlunit_measureivc_umcodes">SFE_WOMATL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfe_womatlunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfe_womatlunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfe_womatlunit_measureivc_umcodes">FK_SFE_WOMATL_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">SFE_WOMATL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">SFE_WOMATL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_womatlitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">SFE_WOMATL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">SFE_WOMATL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_womatlunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -749,7 +803,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl008">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl008">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl008"></DD_ATTR_CTLY>
@@ -1004,7 +1058,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl013"></DD_ATTR_CTLY>
@@ -1055,7 +1109,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl014">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl014">M</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl014"></DD_ATTR_CTLY>
@@ -1157,7 +1211,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl016">20130809</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl016"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl016">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl016">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl016">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl016"></DD_ATTR_CTLY>
@@ -1412,7 +1466,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl021">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl021">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl021">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl021">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl021"></DD_ATTR_CTLY>
@@ -1463,7 +1517,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl022">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl022">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl022">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl022">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl022">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl022"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl022"></DD_ATTR_CTLY>
@@ -1514,7 +1568,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl023">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl023">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl023">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl023">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl023">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl023"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl023"></DD_ATTR_CTLY>
@@ -1616,7 +1670,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl025">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl025">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl025">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl025">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl025">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl025"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl025"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl025"></DD_ATTR_CTLY>
@@ -1667,7 +1721,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_womatl026">20180103</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_womatl026">SFE_WOMATL.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_womatl026">M</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl026">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_womatl026">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_womatl026">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_womatl026"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_womatl026"></DD_ATTR_CTLY>
@@ -1726,7 +1780,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.sfe_womatl001">cbx_explode_bill</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.sfe_womatl001">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.sfe_womatl001"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.sfe_womatl001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.sfe_womatl001">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.sfe_womatl002">
 			<DD_TABLE_ALIAS id="ddm_table_disp.sfe_womatl002">SFE_WOMATL      </DD_TABLE_ALIAS>

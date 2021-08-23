@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_invsel">5DCBE3FE0D3D10E43DCAC2A3B3F1515E</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_invsel">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_invsel">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_invsel">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_invsel">20210219</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_invsel">153550</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_invsel">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_invsel">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_invsel">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_invsel"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poe_invsel">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poe_invsel">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_invsel"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poe_invsel"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poe_invsel">G</DD_ATTR_FTYP>
@@ -144,6 +144,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.poe_invsel">POE_INVSEL      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.poe_invsel">poe-15</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.poe_invsel">firm_id:c(2),ap_type:c(2),vendor_id:c(6),ap_inv_no:c(10),line_no:c(3*),po_no:c(7),receiver_no:c(7),reserved_str:c(17*),dealer_str:c(1*),total_amount:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.poe_invselvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_invselvendor_idapm_vendmast">POE_INVSEL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_invselvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_invselvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_invselvendor_idapm_vendmast">FK_POE_INVSEL_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">POE_INVSEL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">POE_INVSEL      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_invselvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -497,7 +527,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_invsel006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_invsel006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_invsel006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_invsel006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_invsel006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_invsel006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_invsel006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_invsel006"></DD_ATTR_CTLY>
@@ -548,7 +578,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_invsel007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_invsel007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_invsel007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_invsel007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_invsel007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_invsel007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_invsel007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_invsel007"></DD_ATTR_CTLY>

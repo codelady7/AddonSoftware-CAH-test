@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.crm_activities">F9BDA55545C59B143B133835CE42AAE0</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.crm_activities">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.crm_activities">20060407</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.crm_activities">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.crm_activities">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.crm_activities">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.crm_activities">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.crm_activities">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.crm_activities">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.crm_activities"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.crm_activities"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.crm_activities"></DD_ATTR_DKNM>
@@ -91,6 +91,51 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.crm_activities">CRM_ACTIVITIES  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.crm_activities"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.crm_activities">firm_id:c(2),customer_id:c(6),trans_date_stamp:n(8*),trans_time_stamp:c(6),activity_type:c(1),activity_date:c(8),activity_time:c(6),duration:n(4*),priority:c(1),alarm:c(1),status_flag:c(1),act_location:c(20),user_id:c(16),private:c(1),comment:c(40)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.crm_activitiescustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_activitiescustomer_idarm_custmast">CRM_ACTIVITIES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_activitiescustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_activitiescustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_activitiescustomer_idarm_custmast">FK_CRM_ACTIVITIES_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.crm_activitiesuser_idadm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_activitiesuser_idadm_user">CRM_ACTIVITIES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_activitiesuser_idadm_user">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_activitiesuser_idadm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_activitiesuser_idadm_user">FK_CRM_ACTIVITIES_USER_ID_ADM_USER                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">CRM_ACTIVITIES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">CRM_ACTIVITIES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_activitiescustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">CRM_ACTIVITIES  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_activitiesuser_idadm_user0001">USER_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

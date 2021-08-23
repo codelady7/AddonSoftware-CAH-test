@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.sft_clsoprtr">2FDB75EE331AEF9BC40E8DE35DE633F8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sft_clsoprtr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sft_clsoprtr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sft_clsoprtr">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sft_clsoprtr">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sft_clsoprtr">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sft_clsoprtr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sft_clsoprtr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sft_clsoprtr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sft_clsoprtr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sft_clsoprtr"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sft_clsoprtr"></DD_ATTR_DKNM>
@@ -91,6 +91,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sft_clsoprtr">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sft_clsoprtr">sft-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sft_clsoprtr">firm_id:c(2),wo_location:c(2),wo_no:c(7),trans_date:c(8),trans_seq:c(3),oper_seq_ref:c(12),op_code:c(3),employee_no:c(9),units:n(7*),unit_cost:n(7*),ext_cost:n(15*),direct_rate:n(7*),ovhd_rate:n(7*),complete_qty:n(5*),setup_time:n(5*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sft_clsoprtremployee_nosfm_emplmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sft_clsoprtremployee_nosfm_emplmast">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sft_clsoprtremployee_nosfm_emplmast">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sft_clsoprtremployee_nosfm_emplmast">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sft_clsoprtremployee_nosfm_emplmast">FK_SFT_CLSOPRTR_EMPLOYEE_NO_SFM_EMPLMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sft_clsoprtrop_codebmc_opcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sft_clsoprtrop_codebmc_opcodes">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sft_clsoprtrop_codebmc_opcodes">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sft_clsoprtrop_codebmc_opcodes">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sft_clsoprtrop_codebmc_opcodes">FK_SFT_CLSOPRTR_OP_CODE_BMC_OPCODES                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">EMPLOYEE_NO     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsoprtremployee_nosfm_emplmast0002">EMPLOYEE_NO     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">SFT_CLSOPRTR    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">OP_CODE         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sft_clsoprtrop_codebmc_opcodes0002">OP_CODE         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

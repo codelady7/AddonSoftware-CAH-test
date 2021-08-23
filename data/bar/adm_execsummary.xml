@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_execsummary">1F12D23DD38CF1FC2B8710D58B20E9EC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_execsummary">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_execsummary">20070320</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_execsummary">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_execsummary">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_execsummary">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_execsummary">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_execsummary">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_execsummary">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_execsummary"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.adm_execsummary"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_execsummary"></DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adm_execsummary">ADM_EXECSUMMARY </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adm_execsummary"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adm_execsummary">firm_id:c(2),summary_id:c(16),summary_desc:c(30),summary_type:c(1),summary_id_par:c(16),summary_expand:c(1),menu_desc:c(30),prog_path_ud:c(50),prog_path_disp:c(50),summary_cd:c(5)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adm_execsummarysummary_id_paradm_execsummary">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_execsummarysummary_id_paradm_execsummary">ADM_EXECSUMMARY </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_execsummarysummary_id_paradm_execsummary">SUMMARY_ID_PAR  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_execsummarysummary_id_paradm_execsummary">ADM_EXECSUMMARY </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_execsummarysummary_id_paradm_execsummary">FK_ADM_EXECSUMMARY_SUMMARY_ID_PAR_ADM_EXECSUMMARY                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">ADM_EXECSUMMARY </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">SUMMARY_ID_PAR  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">ADM_EXECSUMMARY </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">ADM_EXECSUMMARY </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">SUMMARY_ID_PAR  </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">ADM_EXECSUMMARY </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">SUMMARY_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_execsummarysummary_id_paradm_execsummary0002">SUMMARY_ID_PAR  </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

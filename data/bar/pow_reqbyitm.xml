@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.pow_reqbyitm">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pow_reqbyitm">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pow_reqbyitm">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pow_reqbyitm">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pow_reqbyitm">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.pow_reqbyitm">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pow_reqbyitm">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pow_reqbyitm"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pow_reqbyitm"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pow_reqbyitm"></DD_ATTR_DKNM>
@@ -64,6 +64,84 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pow_reqbyitm">POW_REQBYITM    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pow_reqbyitm">pow-14</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.pow_reqbyitm">firm_id:c(2),warehouse_id:c(2),item_id:c(20),req_no:c(7),po_line_no:c(3),vendor_id:c(6*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.pow_reqbyitmitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pow_reqbyitmitem_idivm_itemmast">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pow_reqbyitmitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pow_reqbyitmitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pow_reqbyitmitem_idivm_itemmast">FK_POW_REQBYITM_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pow_reqbyitmreq_nopoe_reqhdr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pow_reqbyitmreq_nopoe_reqhdr">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pow_reqbyitmreq_nopoe_reqhdr">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pow_reqbyitmreq_nopoe_reqhdr">POE_REQHDR      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pow_reqbyitmreq_nopoe_reqhdr">FK_POW_REQBYITM_REQ_NO_POE_REQHDR                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pow_reqbyitmvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pow_reqbyitmvendor_idapm_vendmast">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pow_reqbyitmvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pow_reqbyitmvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pow_reqbyitmvendor_idapm_vendmast">FK_POW_REQBYITM_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_reqbyitmitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">REQ_NO          </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_reqbyitmreq_nopoe_reqhdr0002">REQ_NO          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">POW_REQBYITM    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pow_reqbyitmvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

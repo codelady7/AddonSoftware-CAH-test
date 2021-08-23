@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glm_budgetmaster">4C95D78CC6C85129F1F40097AA869C7A</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_budgetmaster">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_budgetmaster">20060523</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_budgetmaster">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_budgetmaster">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_budgetmaster">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_budgetmaster">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_budgetmaster">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_budgetmaster">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_budgetmaster"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glm_budgetmaster">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glm_budgetmaster">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_budgetmaster"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glm_budgetmaster"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glm_budgetmaster">T</DD_ATTR_FTYP>
@@ -128,6 +128,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glm_budgetmaster">GLM_BUDGETMASTER</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glm_budgetmaster">glm-08</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glm_budgetmaster">firm_id:c(2),budget_code:c(5),amt_or_units:c(1),description:c(30),rev_title:c(15),revision_src:c(6),amt_or_pct:c(1),overwrite:c(1),rounding:c(1),created_date:c(8),lstrev_date:c(8),gl_account_01:c(10),gl_account_02:c(10),gl_wildcard:c(19),amtpct_val:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),reserved_num_03:n(1*),reserved_num_04:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*),dealer_num_04:n(1*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glm_budgetmastergl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glm_budgetmastergl_accountglm_acct">GLM_BUDGETMASTER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glm_budgetmastergl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glm_budgetmastergl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glm_budgetmastergl_accountglm_acct">FK_GLM_BUDGETMASTER_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">GLM_BUDGETMASTER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">GLM_BUDGETMASTER</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glm_budgetmastergl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -251,7 +281,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_budgetmaster002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_budgetmaster002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_budgetmaster002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_budgetmaster002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_budgetmaster002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_budgetmaster002"></DD_ATTR_CTLY>
@@ -455,7 +485,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_budgetmaster006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_budgetmaster006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_budgetmaster006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_budgetmaster006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_budgetmaster006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_budgetmaster006"></DD_ATTR_CTLY>
@@ -761,7 +791,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_budgetmaster012">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_budgetmaster012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_budgetmaster012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_budgetmaster012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_budgetmaster012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_budgetmaster012"></DD_ATTR_CTLY>
@@ -812,7 +842,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_budgetmaster013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_budgetmaster013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_budgetmaster013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_budgetmaster013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_budgetmaster013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_budgetmaster013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_budgetmaster013"></DD_ATTR_CTLY>

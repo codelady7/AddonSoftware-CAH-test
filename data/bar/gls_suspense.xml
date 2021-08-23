@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.gls_suspense">5FA94B624C2D27DC71895CFE675094DE</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.gls_suspense">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.gls_suspense">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.gls_suspense">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.gls_suspense">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.gls_suspense">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.gls_suspense">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.gls_suspense">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.gls_suspense">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.gls_suspense"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.gls_suspense"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.gls_suspense"></DD_ATTR_DKNM>
@@ -91,6 +91,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.gls_suspense">GLS_SUSPENSE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.gls_suspense"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.gls_suspense">firm_id:c(2),gl:c(2),sequence_03:c(2*),use_suspense:c(1),reserved_str:c(31*),gl_account:c(10*),gl_max_limit:n(7*),max_balance:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.gls_suspensegl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.gls_suspensegl_accountglm_acct">GLS_SUSPENSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.gls_suspensegl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.gls_suspensegl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.gls_suspensegl_accountglm_acct">FK_GLS_SUSPENSE_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">GLS_SUSPENSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gls_suspensegl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">GLS_SUSPENSE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.gls_suspensegl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -316,7 +346,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gls_suspense004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gls_suspense004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gls_suspense004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gls_suspense004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gls_suspense004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gls_suspense004"></DD_ATTR_CTLY>
@@ -418,7 +448,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gls_suspense006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gls_suspense006">GLS_SUSPENSE.USE_SUSPENSE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gls_suspense006">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gls_suspense006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gls_suspense006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gls_suspense006"></DD_ATTR_CTLY>

@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.mpe_matdet">05F1EA93D25E35BC986863DCE6294653</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.mpe_matdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.mpe_matdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.mpe_matdet">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.mpe_matdet">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.mpe_matdet">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.mpe_matdet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.mpe_matdet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.mpe_matdet">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.mpe_matdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.mpe_matdet"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.mpe_matdet"></DD_ATTR_DKNM>
@@ -91,6 +91,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.mpe_matdet">MPE_MATDET      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.mpe_matdet">mpe-03</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.mpe_matdet">firm_id:c(2),forecast:c(3),warehouse_id:c(2),item_id:c(20),mrp_type:c(1),plan_date_01:c(8*),plan_date_02:c(8*),plan_date_03:c(8*),plan_date_04:c(8*),plan_date_05:c(8*),plan_date_06:c(8*),plan_date_07:c(8*),plan_date_08:c(8*),plan_date_09:c(8*),plan_date_10:c(8*),plan_date_11:c(8*),plan_date_12:c(8*),plan_date_13:c(8*),plan_date_14:c(8*),plan_date_15:c(8*),plan_date_16:c(8*),plan_date_17:c(8*),plan_date_18:c(8*),plan_date_19:c(8*),plan_date_20:c(8*),plan_date_21:c(8*),plan_date_22:c(8*),plan_date_23:c(8*),plan_date_24:c(8*),plan_date_25:c(8*),plan_date_26:c(8*),qty_on_hand:n(7*),qty_on_order_01:n(7*),gross_req_01:n(7*),net_required_01:n(7*),planned_rel_01:n(7*),planned_rec_01:n(7*),qty_avail_01:n(7*),qty_on_order_02:n(7*),gross_req_02:n(7*),net_required_02:n(7*),planned_rel_02:n(7*),planned_rec_02:n(7*),qty_avail_02:n(7*),qty_on_order_03:n(7*),gross_req_03:n(7*),net_required_03:n(7*),planned_rel_03:n(7*),planned_rec_03:n(7*),qty_avail_03:n(7*),qty_on_order_04:n(7*),gross_req_04:n(7*),net_required_04:n(7*),planned_rel_04:n(7*),planned_rec_04:n(7*),qty_avail_04:n(7*),qty_on_order_05:n(7*),gross_req_05:n(7*),net_required_05:n(7*),planned_rel_05:n(7*),planned_rec_05:n(7*),qty_avail_05:n(7*),qty_on_order_06:n(7*),gross_req_06:n(7*),net_required_06:n(7*),planned_rel_06:n(7*),planned_rec_06:n(7*),qty_avail_06:n(7*),qty_on_order_07:n(7*),gross_req_07:n(7*),net_required_07:n(7*),planned_rel_07:n(7*),planned_rec_07:n(7*),qty_avail_07:n(7*),qty_on_order_08:n(7*),gross_req_08:n(7*),net_required_08:n(7*),planned_rel_08:n(7*),planned_rec_08:n(7*),qty_avail_08:n(7*),qty_on_order_09:n(7*),gross_req_09:n(7*),net_required_09:n(7*),planned_rel_09:n(7*),planned_rec_09:n(7*),qty_avail_09:n(7*),qty_on_order_10:n(7*),gross_req_10:n(7*),net_required_10:n(7*),planned_rel_10:n(7*),planned_rec_10:n(7*),qty_avail_10:n(7*),qty_on_order_11:n(7*),gross_req_11:n(7*),net_required_11:n(7*),planned_rel_11:n(7*),planned_rec_11:n(7*),qty_avail_11:n(7*),qty_on_order_12:n(7*),gross_req_12:n(7*),net_required_12:n(7*),planned_rel_12:n(7*),planned_rec_12:n(7*),qty_avail_12:n(7*),qty_on_order_13:n(7*),gross_req_13:n(7*),net_required_13:n(7*),planned_rel_13:n(7*),planned_rec_13:n(7*),qty_avail_13:n(7*),qty_on_order_14:n(7*),gross_req_14:n(7*),net_required_14:n(7*),planned_rel_14:n(7*),planned_rec_14:n(7*),qty_avail_14:n(7*),qty_on_order_15:n(7*),gross_req_15:n(7*),net_required_15:n(7*),planned_rel_15:n(7*),planned_rec_15:n(7*),qty_avail_15:n(7*),qty_on_order_16:n(7*),gross_req_16:n(7*),net_required_16:n(7*),planned_rel_16:n(7*),planned_rec_16:n(7*),qty_avail_16:n(7*),qty_on_order_17:n(7*),gross_req_17:n(7*),net_required_17:n(7*),planned_rel_17:n(7*),planned_rec_17:n(7*),qty_avail_17:n(7*),qty_on_order_18:n(7*),gross_req_18:n(7*),net_required_18:n(7*),planned_rel_18:n(7*),planned_rec_18:n(7*),qty_avail_18:n(7*),qty_on_order_19:n(7*),gross_req_19:n(7*),net_required_19:n(7*),planned_rel_19:n(7*),planned_rec_19:n(7*),qty_avail_19:n(7*),qty_on_order_20:n(7*),gross_req_20:n(7*),net_required_20:n(7*),planned_rel_20:n(7*),planned_rec_20:n(7*),qty_avail_20:n(7*),qty_on_order_21:n(7*),gross_req_21:n(7*),net_required_21:n(7*),planned_rel_21:n(7*),planned_rec_21:n(7*),qty_avail_21:n(7*),qty_on_order_22:n(7*),gross_req_22:n(7*),net_required_22:n(7*),planned_rel_22:n(7*),planned_rec_22:n(7*),qty_avail_22:n(7*),qty_on_order_23:n(7*),gross_req_23:n(7*),net_required_23:n(7*),planned_rel_23:n(7*),planned_rec_23:n(7*),qty_avail_23:n(7*),qty_on_order_24:n(7*),gross_req_24:n(7*),net_required_24:n(7*),planned_rel_24:n(7*),planned_rec_24:n(7*),qty_avail_24:n(7*),qty_on_order_25:n(7*),gross_req_25:n(7*),net_required_25:n(7*),planned_rel_25:n(7*),planned_rec_25:n(7*),qty_avail_25:n(7*),qty_on_order_26:n(7*),gross_req_26:n(7*),net_required_26:n(7*),planned_rel_26:n(7*),planned_rec_26:n(7*),qty_avail_26:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.mpe_matdetforecastmpm_forecast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_matdetforecastmpm_forecast">MPE_MATDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_matdetforecastmpm_forecast">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_matdetforecastmpm_forecast">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_matdetforecastmpm_forecast">FK_MPE_MATDET_FORECAST_MPM_FORECAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.mpe_matdetitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.mpe_matdetitem_idivm_itemmast">MPE_MATDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.mpe_matdetitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.mpe_matdetitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.mpe_matdetitem_idivm_itemmast">FK_MPE_MATDET_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">MPE_MATDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">MPE_MATDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">FORECAST        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">MPM_FORECAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">FORECAST        </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_matdetforecastmpm_forecast0002">FORECAST        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">MPE_MATDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">MPE_MATDET      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.mpe_matdetitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -342,7 +396,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.mpe_matdet004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.mpe_matdet004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.mpe_matdet004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.mpe_matdet004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.mpe_matdet004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.mpe_matdet004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.mpe_matdet004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.mpe_matdet004"></DD_ATTR_CTLY>

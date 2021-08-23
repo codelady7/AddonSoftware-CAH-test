@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sam_customer">B7664C2952537FB2914E74FCCC2FF52C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sam_customer">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sam_customer">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sam_customer">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sam_customer">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sam_customer">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sam_customer">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sam_customer">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sam_customer">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sam_customer"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sam_customer">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sam_customer">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sam_customer"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sam_customer"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sam_customer">T</DD_ATTR_FTYP>
@@ -227,6 +227,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sam_customer">SAM_CUSTOMER    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sam_customer">sam-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sam_customer">firm_id:c(2),year:c(4),customer_id:c(6),product_type:c(3),item_id:c(20*),qty_shipped_01:n(7*),qty_shipped_02:n(7*),qty_shipped_03:n(7*),qty_shipped_04:n(7*),qty_shipped_05:n(7*),qty_shipped_06:n(7*),qty_shipped_07:n(7*),qty_shipped_08:n(7*),qty_shipped_09:n(7*),qty_shipped_10:n(7*),qty_shipped_11:n(7*),qty_shipped_12:n(7*),qty_shipped_13:n(7*),total_cost_01:n(7*),total_cost_02:n(7*),total_cost_03:n(7*),total_cost_04:n(7*),total_cost_05:n(7*),total_cost_06:n(7*),total_cost_07:n(7*),total_cost_08:n(7*),total_cost_09:n(7*),total_cost_10:n(7*),total_cost_11:n(7*),total_cost_12:n(7*),total_cost_13:n(7*),total_sales_01:n(7*),total_sales_02:n(7*),total_sales_03:n(7*),total_sales_04:n(7*),total_sales_05:n(7*),total_sales_06:n(7*),total_sales_07:n(7*),total_sales_08:n(7*),total_sales_09:n(7*),total_sales_10:n(7*),total_sales_11:n(7*),total_sales_12:n(7*),total_sales_13:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sam_customercustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sam_customercustomer_idarm_custmast">SAM_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sam_customercustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sam_customercustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sam_customercustomer_idarm_custmast">FK_SAM_CUSTOMER_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sam_customeritem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sam_customeritem_idivm_itemmast">SAM_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sam_customeritem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sam_customeritem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sam_customeritem_idivm_itemmast">FK_SAM_CUSTOMER_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">SAM_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sam_customercustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">SAM_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sam_customercustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">SAM_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sam_customeritem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">SAM_CUSTOMER    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sam_customeritem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -499,7 +553,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_customer003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_customer003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_customer003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_customer003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_customer003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_customer003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_customer003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_customer003"></DD_ATTR_CTLY>
@@ -550,7 +604,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_customer004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_customer004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_customer004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_customer004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_customer004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_customer004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_customer004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_customer004"></DD_ATTR_CTLY>
@@ -601,7 +655,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_customer005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_customer005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_customer005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_customer005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_customer005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_customer005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_customer005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_customer005"></DD_ATTR_CTLY>

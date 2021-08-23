@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfe_timeempldet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfe_timeempldet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfe_timeempldet">20120430</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfe_timeempldet">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfe_timeempldet">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfe_timeempldet">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfe_timeempldet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfe_timeempldet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfe_timeempldet">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfe_timeempldet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sfe_timeempldet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sfe_timeempldet">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfe_timeempldet">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sfe_timeempldet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sfe_timeempldet">T</DD_ATTR_FTYP>
@@ -142,6 +142,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sfe_timeempldet">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sfe_timeempldet">sfe_timeempldet</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.sfe_timeempldet">firm_id:c(2),employee_no:c(9),trans_date:c(8),wo_no:c(7),batch_no:c(7),sequence_num:c(2),oper_seq_ref:c(12),op_code:c(3),start_time:c(4),stop_time:c(4),pay_code:c(2),title_code:c(2),dept_code:c(2),hrs:n(7*),direct_rate:n(7*),ovhd_rate:n(7*),extended_amt:n(15*),setup_time:n(7*),complete_qty:n(5*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.sfe_timeempldetemployee_nosfm_emplmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfe_timeempldetemployee_nosfm_emplmast">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfe_timeempldetemployee_nosfm_emplmast">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfe_timeempldetemployee_nosfm_emplmast">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfe_timeempldetemployee_nosfm_emplmast">FK_SFE_TIMEEMPLDET_EMPLOYEE_NO_SFM_EMPLMAST                                                                                                                                                                                                                    </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.sfe_timeempldetop_codebmc_opcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.sfe_timeempldetop_codebmc_opcodes">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.sfe_timeempldetop_codebmc_opcodes">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.sfe_timeempldetop_codebmc_opcodes">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.sfe_timeempldetop_codebmc_opcodes">FK_SFE_TIMEEMPLDET_OP_CODE_BMC_OPCODES                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">EMPLOYEE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">SFM_EMPLMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">EMPLOYEE_NO     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_timeempldetemployee_nosfm_emplmast0002">EMPLOYEE_NO     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">SFE_TIMEEMPLDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">OP_CODE         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">BMC_OPCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">OP_CODE         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.sfe_timeempldetop_codebmc_opcodes0002">OP_CODE         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -452,7 +506,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet004">20120430</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet004">-1</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet004"></DD_ATTR_CTLY>
@@ -707,7 +761,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet009">20120430</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet009"></DD_ATTR_CTLY>
@@ -758,7 +812,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet010">20120430</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet010">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet010"></DD_ATTR_CTLY>
@@ -809,7 +863,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet011">20120430</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet011">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet011"></DD_ATTR_CTLY>
@@ -860,7 +914,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet012">20120430</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet012">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet012"></DD_ATTR_CTLY>
@@ -962,7 +1016,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet014">20120430</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet014">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet014"></DD_ATTR_CTLY>
@@ -1166,7 +1220,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sfe_timeempldet018">20151109</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sfe_timeempldet018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sfe_timeempldet018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet018">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sfe_timeempldet018">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sfe_timeempldet018">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sfe_timeempldet018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_timeempldet018"></DD_ATTR_CTLY>
@@ -1299,7 +1353,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.sfe_timeempldet002">dis_op_ref</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.sfe_timeempldet002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.sfe_timeempldet002"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.sfe_timeempldet002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.sfe_timeempldet002">../apps/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">

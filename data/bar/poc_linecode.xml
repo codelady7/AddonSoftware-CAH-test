@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.poc_linecode">CFF8A46A48FEF0EC707032A5D939201C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poc_linecode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poc_linecode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poc_linecode">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poc_linecode">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poc_linecode">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poc_linecode">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poc_linecode">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poc_linecode">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poc_linecode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poc_linecode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poc_linecode">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poc_linecode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poc_linecode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poc_linecode">T</DD_ATTR_FTYP>
@@ -98,6 +98,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.poc_linecode">POC_LINECODE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.poc_linecode">pom-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.poc_linecode">firm_id:c(2),po_line_code:c(2),code_desc:c(20),line_type:c(1),dropship:c(1),lead_tim_flg:c(1),land_cst_flg:c(1),add_options:c(1),reserved_str:c(7*),gl_exp_acct:c(10),gl_ppv_acct:c(10),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.poc_linecodegl_exp_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poc_linecodegl_exp_acctglm_acct">POC_LINECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poc_linecodegl_exp_acctglm_acct">GL_EXP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poc_linecodegl_exp_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poc_linecodegl_exp_acctglm_acct">FK_POC_LINECODE_GL_EXP_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.poc_linecodegl_ppv_acctglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poc_linecodegl_ppv_acctglm_acct">POC_LINECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poc_linecodegl_ppv_acctglm_acct">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poc_linecodegl_ppv_acctglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poc_linecodegl_ppv_acctglm_acct">FK_POC_LINECODE_GL_PPV_ACCT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">POC_LINECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">GL_EXP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">POC_LINECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">GL_EXP_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poc_linecodegl_exp_acctglm_acct0002">GL_EXP_ACCT     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">POC_LINECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">POC_LINECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">GL_PPV_ACCT     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poc_linecodegl_ppv_acctglm_acct0002">GL_PPV_ACCT     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -310,7 +364,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poc_linecode004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poc_linecode004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poc_linecode004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poc_linecode004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poc_linecode004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poc_linecode004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poc_linecode004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poc_linecode004"></DD_ATTR_CTLY>
@@ -616,7 +670,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poc_linecode010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poc_linecode010">POC_LINECODE.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poc_linecode010">N;O</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poc_linecode010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poc_linecode010">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poc_linecode010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poc_linecode010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poc_linecode010"></DD_ATTR_CTLY>
@@ -667,7 +721,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poc_linecode011">20060306</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poc_linecode011">POC_LINECODE.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poc_linecode011">N;O</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poc_linecode011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poc_linecode011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poc_linecode011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poc_linecode011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poc_linecode011"></DD_ATTR_CTLY>

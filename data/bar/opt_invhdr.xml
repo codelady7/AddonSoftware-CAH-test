@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invhdr">20090727</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invhdr">20210505</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invhdr">20210505</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invhdr">131300</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invhdr">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invhdr">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invhdr">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.opt_invhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.opt_invhdr">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invhdr">AO_STAT_CUST_INV</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opt_invhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opt_invhdr">T</DD_ATTR_FTYP>
@@ -220,6 +220,267 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opt_invhdr">OPT_INVHDR      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opt_invhdr">opt-01</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.opt_invhdr">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),invoice_type:c(1),ordinv_flag:c(1),backord_flag:c(1),ar_ship_via:c(10),misc_no:c(10),slspsn_code:c(3),terms_code:c(2),disc_code:c(2),ar_dist_code:c(2),print_status:c(1),lock_status:c(1),message_code:c(2),territory:c(3),price_code:c(2),tax_code:c(10),pricing_code:c(6),job_no:c(10),ord_taken_by:c(16),cash_sale:c(1),reprint_flag:c(1),credit_flag:c(1),shipto_no:c(6),customer_po_no:c(20),customer_rel_no:c(20),invoice_date:c(8),shipmnt_date:c(8),order_date:c(8),expire_date:c(8),shipto_type:c(1),fob:c(15),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*),tax_amount:n(7*),freight_amt:n(7*),discount_amt:n(7*),comm_percent:n(7*),taxable_amt:n(7*),comm_amt:n(7*),total_sales:n(7*),total_cost:n(7*),ship_lbl_count:n(8*),memo_1024:c(1024*=1),prnt_ship_labels:c(1),prnt_bill_lading:c(1),ship_seq_no:c(3),shipping_id:c(15),shipping_email:c(80),credit_invoice:c(7),no_sls_tax_calc:n(1*),ord_conf_printed:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.opt_invhdrarc_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrarc_useradm_user">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrarc_useradm_user">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrarc_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrarc_useradm_user">FK_OPT_INVHDR_ARC_USER_ADM_USER                                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrar_ship_viaarc_shipviacode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrar_ship_viaarc_shipviacode">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrar_ship_viaarc_shipviacode">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrar_ship_viaarc_shipviacode">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrar_ship_viaarc_shipviacode">FK_OPT_INVHDR_AR_SHIP_VIA_ARC_SHIPVIACODE                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrcreated_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrcreated_useradm_user">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrcreated_useradm_user">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrcreated_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrcreated_useradm_user">FK_OPT_INVHDR_CREATED_USER_ADM_USER                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrcustomer_idarm_custmast">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrcustomer_idarm_custmast">FK_OPT_INVHDR_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrdisc_codeopc_disccode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrdisc_codeopc_disccode">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrdisc_codeopc_disccode">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrdisc_codeopc_disccode">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrdisc_codeopc_disccode">FK_OPT_INVHDR_DISC_CODE_OPC_DISCCODE                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrjob_noopm_custjobs">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrjob_noopm_custjobs">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrjob_noopm_custjobs">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrjob_noopm_custjobs">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrjob_noopm_custjobs">FK_OPT_INVHDR_JOB_NO_OPM_CUSTJOBS                                                                                                                                                                                                                              </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrmessage_codeopc_message">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrmessage_codeopc_message">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrmessage_codeopc_message">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrmessage_codeopc_message">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrmessage_codeopc_message">FK_OPT_INVHDR_MESSAGE_CODE_OPC_MESSAGE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrmod_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrmod_useradm_user">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrmod_useradm_user">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrmod_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrmod_useradm_user">FK_OPT_INVHDR_MOD_USER_ADM_USER                                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrpricing_codeopc_pricecds">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrpricing_codeopc_pricecds">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrpricing_codeopc_pricecds">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrpricing_codeopc_pricecds">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrpricing_codeopc_pricecds">FK_OPT_INVHDR_PRICING_CODE_OPC_PRICECDS                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrshipto_noarm_custship">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrshipto_noarm_custship">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrshipto_noarm_custship">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrshipto_noarm_custship">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrshipto_noarm_custship">FK_OPT_INVHDR_SHIPTO_NO_ARM_CUSTSHIP                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invhdrtax_codeopc_taxcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invhdrtax_codeopc_taxcode">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invhdrtax_codeopc_taxcode">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invhdrtax_codeopc_taxcode">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invhdrtax_codeopc_taxcode">FK_OPT_INVHDR_TAX_CODE_OPC_TAXCODE                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrarc_useradm_user0001">ARC_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">ARC_SHIPVIACODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrar_ship_viaarc_shipviacode0002">AR_SHIP_VIA     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrcreated_useradm_user0001">CREATED_USER    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">DISC_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">OPC_DISCCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">DISC_CODE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrdisc_codeopc_disccode0002">DISC_CODE       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">JOB_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">OPM_CUSTJOBS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">JOB_NO          </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrjob_noopm_custjobs0003">JOB_NO          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">MESSAGE_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">OPC_MESSAGE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">MESSAGE_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrmessage_codeopc_message0002">MESSAGE_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrmod_useradm_user0001">MOD_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">PRICING_CODE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">OPC_PRICECDS    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">PRICING_CODE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrpricing_codeopc_pricecds0002">PRICING_CODE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">SHIPTO_NO       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">SHIPTO_NO       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrshipto_noarm_custship0003">SHIPTO_NO       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">OPT_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">TAX_CODE        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">OPC_TAXCODE     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">OP_TAX_CODE     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invhdrtax_codeopc_taxcode0002">TAX_CODE        </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -1778,7 +2039,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invhdr005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invhdr005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invhdr005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invhdr005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invhdr005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invhdr005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invhdr005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invhdr005"></DD_ATTR_CTLY>
@@ -4430,7 +4691,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invhdr057">20170407</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invhdr057"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invhdr057"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invhdr057">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invhdr057">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invhdr057">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invhdr057"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invhdr057"></DD_ATTR_CTLY>

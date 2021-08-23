@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_auditcontrol">66FED3E782AF15A92D54EE5AD69BD3ED</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_auditcontrol">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_auditcontrol">20070306</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_auditcontrol">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_auditcontrol">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_auditcontrol">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_auditcontrol">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_auditcontrol">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_auditcontrol">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_auditcontrol"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.adm_auditcontrol">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.adm_auditcontrol">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_auditcontrol"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.adm_auditcontrol"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.adm_auditcontrol">T</DD_ATTR_FTYP>
@@ -98,6 +98,93 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adm_auditcontrol">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adm_auditcontrol">glm-06</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adm_auditcontrol">firm_id:c(2),process_id:c(16),sequence_no:c(3),process_alias:c(16),process_program:c(24),journal_id:c(2),lstuse_date:c(8),lstuse_time:c(4),lstupd_date:c(8),lstupd_time:c(4),file_name:c(6),gl_audit:c(1),gl_work_file:c(1),detail_level:c(1),prt_gl_sum:c(1),gl_post_memo:c(30),audit_number:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adm_auditcontroljournal_idglc_journalcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_auditcontroljournal_idglc_journalcode">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_auditcontroljournal_idglc_journalcode">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_auditcontroljournal_idglc_journalcode">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_auditcontroljournal_idglc_journalcode">FK_ADM_AUDITCONTROL_JOURNAL_ID_GLC_JOURNALCODE                                                                                                                                                                                                                 </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_auditcontrolprocess_idadm_procmaster">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_auditcontrolprocess_idadm_procmaster">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_auditcontrolprocess_idadm_procmaster">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_auditcontrolprocess_idadm_procmaster">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_auditcontrolprocess_idadm_procmaster">FK_ADM_AUDITCONTROL_PROCESS_ID_ADM_PROCMASTER                                                                                                                                                                                                                  </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_auditcontrolsequence_noadm_procdetail">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_auditcontrolsequence_noadm_procdetail">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_auditcontrolsequence_noadm_procdetail">SEQUENCE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_auditcontrolsequence_noadm_procdetail">ADM_PROCDETAIL  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_auditcontrolsequence_noadm_procdetail">FK_ADM_AUDITCONTROL_SEQUENCE_NO_ADM_PROCDETAIL                                                                                                                                                                                                                 </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">JOURNAL_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontroljournal_idglc_journalcode0002">JOURNAL_ID      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">PROCESS_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontrolprocess_idadm_procmaster0002">PROCESS_ID      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">SEQUENCE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">ADM_PROCDETAIL  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">SEQUENCE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">ADM_PROCDETAIL  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">PROCESS_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0002">PROCESS_ID      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">ADM_AUDITCONTROL</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">SEQUENCE_NO     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">ADM_PROCDETAIL  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">03</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">SEQUENCE_NO     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_auditcontrolsequence_noadm_procdetail0003">SEQUENCE_NO     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

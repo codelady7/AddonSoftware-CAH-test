@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_procbatchmnt">B64A0AE0F81D18410C282CF159A434C1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_procbatchmnt">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_procbatchmnt">20090724</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_procbatchmnt">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_procbatchmnt">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_procbatchmnt">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_procbatchmnt">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_procbatchmnt">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_procbatchmnt">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_procbatchmnt">ADM_PROCBATCHES </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.adm_procbatchmnt">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.adm_procbatchmnt">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_procbatchmnt"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.adm_procbatchmnt"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.adm_procbatchmnt">T</DD_ATTR_FTYP>
@@ -128,6 +128,51 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.adm_procbatchmnt">ADM_PROCBATCHMNT</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.adm_procbatchmnt"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.adm_procbatchmnt">firm_id:c(2),process_id:c(16),batch_no:c(7),user_id:c(16),date_opened:c(8),time_opened:c(4),lstuse_date:c(8),lstuse_time:c(4),description:c(30)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.adm_procbatchmntprocess_idadm_procmaster">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_procbatchmntprocess_idadm_procmaster">ADM_PROCBATCHMNT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_procbatchmntprocess_idadm_procmaster">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_procbatchmntprocess_idadm_procmaster">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_procbatchmntprocess_idadm_procmaster">FK_ADM_PROCBATCHMNT_PROCESS_ID_ADM_PROCMASTER                                                                                                                                                                                                                  </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.adm_procbatchmntuser_idadm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.adm_procbatchmntuser_idadm_user">ADM_PROCBATCHMNT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.adm_procbatchmntuser_idadm_user">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.adm_procbatchmntuser_idadm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.adm_procbatchmntuser_idadm_user">FK_ADM_PROCBATCHMNT_USER_ID_ADM_USER                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">ADM_PROCBATCHMNT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">ADM_PROCBATCHMNT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">PROCESS_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">ADM_PROCMASTER  </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">PROCESS_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_procbatchmntprocess_idadm_procmaster0002">PROCESS_ID      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">ADM_PROCBATCHMNT</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">USER_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.adm_procbatchmntuser_idadm_user0001">USER_ID         </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -297,7 +342,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_procbatchmnt002"></DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_procbatchmnt002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_procbatchmnt002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_procbatchmnt002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_procbatchmnt002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_procbatchmnt002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_procbatchmnt002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_procbatchmnt002"></DD_ATTR_CTLY>

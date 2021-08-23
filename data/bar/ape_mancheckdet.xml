@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_mancheckdet">4D092546C643C76EE5050E60ADDC7272</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_mancheckdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_mancheckdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_mancheckdet">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_mancheckdet">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_mancheckdet">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_mancheckdet">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_mancheckdet">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_mancheckdet">154820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_mancheckdet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ape_mancheckdet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ape_mancheckdet">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_mancheckdet">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ape_mancheckdet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ape_mancheckdet">G</DD_ATTR_FTYP>
@@ -181,6 +181,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ape_mancheckdet">APE_MANCHECKDET </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ape_mancheckdet">ape-22</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ape_mancheckdet">firm_id:c(2),ap_type:c(2),check_no:c(7),vendor_id:c(6),ap_inv_no:c(10),sequence_00:c(2),reserved_str:c(3),ap_dist_code:c(2),reserved_str_02:c(10),invoice_date:c(8*),invoice_amt:n(7*),discount_amt:n(7*),retention:n(7*),net_paid_amt:n(7*),batch_no:c(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ape_mancheckdetvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ape_mancheckdetvendor_idapm_vendmast">APE_MANCHECKDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ape_mancheckdetvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ape_mancheckdetvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ape_mancheckdetvendor_idapm_vendmast">FK_APE_MANCHECKDET_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">APE_MANCHECKDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">APE_MANCHECKDET </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ape_mancheckdetvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -666,7 +696,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_mancheckdet005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_mancheckdet005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_mancheckdet005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_mancheckdet005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_mancheckdet005">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_mancheckdet005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_mancheckdet005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_mancheckdet005"></DD_ATTR_CTLY>
@@ -972,7 +1002,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_mancheckdet011">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_mancheckdet011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_mancheckdet011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_mancheckdet011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_mancheckdet011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_mancheckdet011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_mancheckdet011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_mancheckdet011"></DD_ATTR_CTLY>
@@ -1023,7 +1053,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ape_mancheckdet012">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ape_mancheckdet012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ape_mancheckdet012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ape_mancheckdet012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ape_mancheckdet012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ape_mancheckdet012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ape_mancheckdet012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ape_mancheckdet012"></DD_ATTR_CTLY>

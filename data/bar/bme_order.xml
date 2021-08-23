@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bme_order">1A347E66EF3C8DE50EF031D0F5EFE7EF</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bme_order">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bme_order">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bme_order">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bme_order">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bme_order">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bme_order">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bme_order">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bme_order">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bme_order"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bme_order">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bme_order">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bme_order">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bme_order"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bme_order">T</DD_ATTR_FTYP>
@@ -118,6 +118,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.bme_order">BME_ORDER       </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.bme_order">bme-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.bme_order">firm_id:c(2),prod_date:c(8),customer_id:c(6),order_no:c(7),bm_reference:c(7),update_flag:c(1),batch_no:c(7)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.bme_ordercustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bme_ordercustomer_idarm_custmast">BME_ORDER       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bme_ordercustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bme_ordercustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bme_ordercustomer_idarm_custmast">FK_BME_ORDER_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">BME_ORDER       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">BME_ORDER       </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bme_ordercustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -326,7 +356,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_order002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_order002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_order002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_order002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_order002">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_order002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_order002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_order002"></DD_ATTR_CTLY>
@@ -377,7 +407,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_order003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_order003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_order003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_order003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_order003">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_order003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_order003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_order003"></DD_ATTR_CTLY>
@@ -428,7 +458,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_order004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_order004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_order004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_order004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_order004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_order004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_order004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_order004"></DD_ATTR_CTLY>

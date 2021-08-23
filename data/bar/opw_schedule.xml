@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.opw_schedule">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opw_schedule">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.opw_schedule">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opw_schedule">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opw_schedule">142036</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.opw_schedule">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opw_schedule">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opw_schedule"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opw_schedule"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opw_schedule"></DD_ATTR_DKNM>
@@ -64,6 +64,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opw_schedule">OPW_SCHEDULE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opw_schedule">opw-02</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.opw_schedule">firm_id:c(2),item_iddes:c(40),warehouse_id:c(2),order_no:c(7),line_no:c(3*),ar_type:c(2),customer_id:c(6),product_type:c(3),reserved_str:c(3),line_code:c(1),order_status:c(1),reserved_str_02:c(3),commit_flag:c(1),dropship:c(1),reserved_str_03:c(7),est_shp_date:c(8),order_date:c(8*),qty_ordered:n(7*),extended_amt:n(15*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.opw_schedulecustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opw_schedulecustomer_idarm_custmast">OPW_SCHEDULE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opw_schedulecustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opw_schedulecustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opw_schedulecustomer_idarm_custmast">FK_OPW_SCHEDULE_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opw_scheduleline_codeopc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opw_scheduleline_codeopc_linecode">OPW_SCHEDULE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opw_scheduleline_codeopc_linecode">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opw_scheduleline_codeopc_linecode">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opw_scheduleline_codeopc_linecode">FK_OPW_SCHEDULE_LINE_CODE_OPC_LINECODE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">OPW_SCHEDULE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">OPW_SCHEDULE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opw_schedulecustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">OPW_SCHEDULE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">OPW_SCHEDULE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">LINE_CODE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opw_scheduleline_codeopc_linecode0002">LINE_CODE       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

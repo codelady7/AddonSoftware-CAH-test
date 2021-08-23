@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bmm_billsub">9A9B1111D89A1ECCC6209952A6F0B22A</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bmm_billsub">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bmm_billsub">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bmm_billsub">20210311</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bmm_billsub">20210311</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bmm_billsub">113630</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bmm_billsub">20210823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bmm_billsub">20210820</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bmm_billsub">154822</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bmm_billsub"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bmm_billsub">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bmm_billsub">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bmm_billsub"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bmm_billsub"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bmm_billsub">G</DD_ATTR_FTYP>
@@ -132,6 +132,84 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.bmm_billsub">BMM_BILLSUB     </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.bmm_billsub">bmm-05</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.bmm_billsub">firm_id:c(2),bill_no:c(20),subcont_seq:c(3),line_type:c(1),unit_measure:c(6),vendor_id:c(6),ext_comments:c(60),effect_date:c(8),obsolt_date:c(8),op_int_seq_ref:c(12),wo_ref_num:c(6),qty_required:n(7*),alt_factor:n(7*),unit_cost:n(7*),divisor:n(7*),lead_time:n(7*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.bmm_billsubbill_noivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bmm_billsubbill_noivm_itemmast">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bmm_billsubbill_noivm_itemmast">BILL_NO         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bmm_billsubbill_noivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bmm_billsubbill_noivm_itemmast">FK_BMM_BILLSUB_BILL_NO_IVM_ITEMMAST                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.bmm_billsubunit_measureivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bmm_billsubunit_measureivc_umcodes">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bmm_billsubunit_measureivc_umcodes">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bmm_billsubunit_measureivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bmm_billsubunit_measureivc_umcodes">FK_BMM_BILLSUB_UNIT_MEASURE_IVC_UMCODES                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.bmm_billsubvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.bmm_billsubvendor_idapm_vendmast">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.bmm_billsubvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.bmm_billsubvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.bmm_billsubvendor_idapm_vendmast">FK_BMM_BILLSUB_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">BILL_NO         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">BILL_NO         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmm_billsubbill_noivm_itemmast0002">BILL_NO         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">UNIT_MEASURE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmm_billsubunit_measureivc_umcodes0002">UNIT_MEASURE    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">BMM_BILLSUB     </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.bmm_billsubvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -357,7 +435,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub004">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub004"></DD_ATTR_CTLY>
@@ -437,11 +515,11 @@
 			<DD_ATTR_FTSR id="ddm_table_cols.bmm_billsub005"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.bmm_billsub005"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.bmm_billsub005">3012</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.bmm_billsub005">ine_unit_measure</DD_ATTR_CTLN>
+			<DD_ATTR_CTLN id="ddm_table_cols.bmm_billsub005">dis_unit_measure</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.bmm_billsub005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.bmm_billsub005"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.bmm_billsub005">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.bmm_billsub005"></DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.bmm_billsub005">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.bmm_billsub006">
 			<DD_TABLE_ALIAS id="ddm_table_cols.bmm_billsub006">BMM_BILLSUB     </DD_TABLE_ALIAS>
@@ -459,7 +537,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub006">BMM_BILLSUB.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub006">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub006"></DD_ATTR_CTLY>
@@ -510,7 +588,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub007">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub007">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub007"></DD_ATTR_CTLY>
@@ -561,7 +639,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub008">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub008"></DD_ATTR_CTLY>
@@ -612,7 +690,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub009">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub009">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub009"></DD_ATTR_CTLY>
@@ -714,7 +792,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub011">20140114</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub011">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub011">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub011">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub011"></DD_ATTR_CTLY>
@@ -765,7 +843,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub012">20110713</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub012">BMM_BILLSUB.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub012">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub012">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub012">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub012">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub012"></DD_ATTR_CTLY>
@@ -816,7 +894,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub013">BMM_BILLSUB.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub013">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub013">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub013">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub013"></DD_ATTR_CTLY>
@@ -867,7 +945,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub014">BMM_BILLSUB.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub014">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub014">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub014">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub014"></DD_ATTR_CTLY>
@@ -918,7 +996,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub015">BMM_BILLSUB.LINE_TYPE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub015">S</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub015">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub015">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub015"></DD_ATTR_CTLY>
@@ -1020,7 +1098,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bmm_billsub017">20170328</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bmm_billsub017"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bmm_billsub017"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub017">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bmm_billsub017">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bmm_billsub017">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bmm_billsub017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bmm_billsub017"></DD_ATTR_CTLY>
