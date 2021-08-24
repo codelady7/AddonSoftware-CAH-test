@@ -268,7 +268,7 @@ rem --- Get next glw-11 key
 
         if glstatus call pgmdir$+"glc_datewarn.aon",printer_dev,glw11a.trns_date$,glstatus,
 :           l,errors,status
-        if stbl("+DTWARN_MSG",err=*endif)<>"" and report$="Y"
+        if glstatus and stbl("+DTWARN_MSG",err=*endif)<>"" and report$="Y"
             xwk=fnblank(2)
             OutVect!.addItem(stbl("+DTWARN_MSG"))
             xwk=fnblank(3)
