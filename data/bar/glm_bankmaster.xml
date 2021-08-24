@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glm_bankmaster">77F5B7263DE0B2D37BE2B56FB18269BC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_bankmaster">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_bankmaster">20060609</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_bankmaster">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_bankmaster">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_bankmaster">154822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_bankmaster">20210824</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_bankmaster">20210824</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_bankmaster">123618</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_bankmaster"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glm_bankmaster">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_bankmaster"></DD_ATTR_DKNM>
@@ -103,6 +103,10 @@
 		<RECORD id="ddm_table_cpro.glm_bankmasterarar">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glm_bankmasterarar">GLM_BANKMASTER  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glm_bankmasterarar">ARAR</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.glm_bankmasterasho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glm_bankmasterasho">GLM_BANKMASTER  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glm_bankmasterasho">ASHO</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.glm_bankmasterbdtw">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glm_bankmasterbdtw">GLM_BANKMASTER  </DD_TABLE_ALIAS>
