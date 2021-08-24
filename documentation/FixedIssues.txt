@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-08-23
+ Report Date:   2021-08-24
  Report Branch: AddonSoftware 21.10
  Last Release:  AddonSoftware 21.03
 =======================================================================================================================================
@@ -183,3 +183,15 @@ Modified: data/cdf/glm_bankmaster.cdf
 Modified: data/sync/ads_messages~[01007514GL].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: eb693aa19591a2c31939cc137cc456ce6e5da2b2
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 8/24/2021 3:44:42 PM
+Message:
+Bug 10270: Modified GL Recap Report to skip date warnings that might be
+left over from the preceding register.
+
+(cherry picked from commit 94e0f4e2131acd243098ab91b6ba7dfe2fb7dc0e)
+----
+Modified: gl/src/glr_recap.aon
