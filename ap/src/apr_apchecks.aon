@@ -163,7 +163,7 @@ rem --- Set Report Name & Subreport directory
 	
 rem --- Open/Lock files
 
-    files=15,begfile=1,endfile=files
+    files=16,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",  ids$[1]="APS_PARAMS"
     files$[2]="ape-04",      ids$[2]="APE_CHECKS"
@@ -180,6 +180,7 @@ rem --- Open/Lock files
     files$[13]="apm_approvers",ids$[13]="APM_APPROVERS"
     files$[14]="apt_invapproval",ids$[14]="APT_INVAPPROVAL"
     files$[15]="aps_ach",    ids$[15]="APS_ACH"
+    files$[16]="adc_bankacctcode", ids$[16]="ADC_BANKACCTCODE"
 	
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
     if status goto all_done
@@ -199,6 +200,7 @@ rem --- Open/Lock files
     apm_approvers_dev=channels[13]
     apt_invapproval_dev=channels[14]
     apsACH_dev=channels[15]
+    adcBnkAcct_dev=channels[16]
 
 rem --- Dimension string templates
 
@@ -207,6 +209,7 @@ rem --- Dimension string templates
     dim apt02a$:templates$[7],apw01a$:templates$[8],aps01b$:templates$[9]
 	dim apw_chkprn$:templates$[10],adxlocks$:templates$[11],payauth$:templates$[12]
     dim apm_approvers$:templates$[13],apt_invapproval$:templates$[14],apsACH$:templates$[15]
+    dim adcBnkAcct$:templates$[16]
 
 rem --- Assign form input values to local variables
 
@@ -223,6 +226,18 @@ rem --- Assign form input values to local variables
 	top_part$=form_order$(1,1)
 	middle_part$=form_order$(2,1)
 	bottom_part$=form_order$(3,1)
+
+    bnkAcctCd$=callpoint!.getDevObject("bnkAcctCd")
+    acctInvMap!=callpoint!.getDevObject("acctInvMap")
+
+    payInvoices$=""
+    if cvs(bnkAcctCd$,2)<>"" then
+        invVect!=acctInvMap!.get(bnkAcctCd$)
+        invIter!=invVect!.iterator()
+        while invIter!.hasNext()
+            payInvoices$=payInvoices$+invIter!.next()+"::"
+        wend
+    endif
 
 rem --- Retrieve parameter records
 
@@ -401,6 +416,7 @@ rem --- Start progress meter and position check File (ape-04)
 
 rem --- Init Read
 
+    invSkipped=0
     read (ape04_dev,key=firm_id$,dom=*next)
     if restart$="Y" read (ape04_dev,key=firm_id$+ap_type$+vendor_id$,dom=*next)
 
@@ -408,11 +424,17 @@ rem --- Main Read
 rem --- First pass gets Accounting stub and actual check data
 
     while 1
-        k$=key(ape04_dev,end=*break)
-        if pos(firm_id$=k$)<>1 break
+        ape04Key$=key(ape04_dev,end=*break)
+        if pos(firm_id$=ape04Key$)<>1 break
         read record (ape04_dev) ape04a$
 
 rem --- Breaks
+
+        rem --- Skip invoices not being paid with this checking account
+        if aps01a.post_to_gl$="Y" and pos(ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$+"::"=payInvoices$)=0 then
+            invSkipped=1
+            continue
+        endif
 
         if ape04a.ap_type$<>prev_aptype_t0$ gosub ap_type_break
         if ape04a.ap_type$+ape04a.vendor_id$<>prev_aptype_vend_t1$ gosub new_vendor
@@ -588,6 +610,19 @@ rem --- Fill jasper reports
         bbjWindowACH!.setCallback(bbjWindowACH!.ON_CLOSE,"close_ACH_win")
     else
         achViewerWin_closed=1
+    endif
+
+rem ---Update next check number for this Bank Account, i.e. Checking Account
+    if cvs(bnkAcctCd$,2)<>"" then
+        extractrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$; rem Advisory Locking
+        adcBnkAcct.nxt_check_no$=str(num(printed_check_no$)+1)
+        writerecord(adcBnkAcct_dev)adcBnkAcct$
+    endif
+
+rem --- Warn if invoices were skipped
+    if invSkipped then
+        msg_id$="AP_INVOICE_SKIPPED"
+        gosub disp_message
     endif
     
 rem --- Event Control

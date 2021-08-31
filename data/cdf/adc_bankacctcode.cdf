@@ -92,6 +92,15 @@ rem --- Bank account number must be a number with at least 4 digits, or blank
 		endif
 	endif
 
+[[ADC_BANKACCTCODE.BNK_ACCT_TYPE.AVAL]]
+rem --- Disable and clear NXT_CHECK_NO if this is NOT a checking account
+	if callpoint!.getUserInput()<>"C" then
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.NXT_CHECK_NO",0)
+		callpoint!.setColumnData("ADC_BANKACCTCODE.NXT_CHECK_NO","",1)
+	else
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.NXT_CHECK_NO",1)
+	endif
+
 [[ADC_BANKACCTCODE.BSHO]]
 rem --- Open tables
 	num_files=2
@@ -102,4 +111,6 @@ rem --- Open tables
 
 [[ADC_BANKACCTCODE.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
+
+
 

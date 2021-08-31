@@ -1,6 +1,39 @@
+[[APR_CHECKS.ACUS]]
+rem --- Process custom event
+rem This routine is executed when callbacks have been set to run a 'custom event'.
+rem Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind of event it is.
+rem See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ctl_ID=dec(gui_event.ID$)
+
+	notify_base$=notice(gui_dev,gui_event.x%)
+	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
+	notice$=notify_base$
+
+	rem --- The CHECK_ACCTS ListButton
+	chkAcctCtl!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
+	if ctl_ID=chkAcctCtl!.getID() then
+		switch notice.code
+			case 2; rem --- ON_LIST_SELECT
+				rem --- Initialize CHECK_NO for the selected checking account
+				index=chkAcctCtl!.getSelectedIndex()
+				nextChkList!=callpoint!.getDevObject("nextCheckList")
+				callpoint!.setColumnData("APR_CHECKS.CHECK_NO",nextChkList!.getItem(index),1)
+
+				rem --- Hold on to selected Bank Account Code, i.e. Checking Account
+				bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
+				bnkAcctCd$=bnkAcctCdList!.getItem(index)
+				callpoint!.setDevObject("bnkAcctCd",bnkAcctCd$)
+			break
+		swend
+	endif
+
 [[APR_CHECKS.ADIS]]
-rem --- Clear Check Number when using previously saved selections.
-	callpoint!.setColumnData("APR_CHECKS.CHECK_NO","",1)
+rem --- Refresh Checking Account ListButton when using previously saved selections.
+	gosub initCheckAccts
 
 [[APR_CHECKS.ARER]]
 rem --- Use default check form order if available
@@ -39,6 +72,9 @@ rem --- Initialize and enable/disable prnt_signature and signature_file
 			callpoint!.setColumnEnabled("APR_CHECKS.SIGNATURE_FILE",0)
 		endif
 	endif
+
+rem --- Initialize Checking Account ListButton for all selected invoices
+	gosub initCheckAccts
 
 [[APR_CHECKS.ASVA]]
 rem --- Validate Check Number unless only ACH payments selected, i.e. there are no printed checks
@@ -142,11 +178,13 @@ rem --- Make sure softlock is cleared when exiting/aborting
 
 [[APR_CHECKS.BSHO]]
 rem --- Inits
+	use ::ado_func.src::func
 	use java.io.File
+	use java.util.HashMap
 
 rem --- See if we need to disable AP Type
 rem --- and see if a print run in currently running
-	num_files=7
+	num_files=10
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="ADX_LOCKS",   open_opts$[2]="OTA"
@@ -155,6 +193,9 @@ rem --- and see if a print run in currently running
 	open_tables$[5]="APM_VENDMAST",open_opts$[5]="OTA"
 	open_tables$[6]="APE_CHECKS",open_opts$[6]="OTA"
 	open_tables$[7]="APS_PAYAUTH",open_opts$[7]="OTA"
+	open_tables$[8]="APT_INVOICEHDR",open_opts$[8]="OTA"
+	open_tables$[9]="APC_DISTRIBUTION",open_opts$[9]="OTA"
+	open_tables$[10]="ADC_BANKACCTCODE",open_opts$[10]="OTA"
 	gosub open_tables
 
 	aps01_dev=fnget_dev("APS_PARAMS")
@@ -170,6 +211,7 @@ rem --- and see if a print run in currently running
 rem --- Get parameters
 	aps01_key$=firm_id$+"AP00"
 	readrecord(aps01_dev,key=aps01_key$,dom=std_missing_params)aps01a$
+	callpoint!.setDevObject("post_to_gl",aps01a.post_to_gl$)
 	callpoint!.setDevObject("multi_types",aps01a.multi_types$)
 	callpoint!.setDevObject("default_form_order",aps01a.form_order$)
 	callpoint!.setDevObject("aps01_prnt_signature",aps01a.prnt_signature$)
@@ -178,6 +220,13 @@ rem --- Get parameters
 		ctl_name$="APR_CHECKS.AP_TYPE"
 		ctl_stat$="I"
 		gosub disable_fields
+	endif
+
+	if aps01a.post_to_gl$="Y" then
+		num_files=1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="GLM_BANKMASTER",open_opts$[1]="OTA"
+		gosub open_tables
 	endif
 
 	readrecord(apsACH_dev,key=firm_id$+"AP00",dom=*next)apsACH$
@@ -209,6 +258,10 @@ rem --- Abort if a check run is actively running
 
 rem --- Initializations
 	callpoint!.setDevObject("reuse_check_num","")		
+
+rem --- Set callback for ON_LIST_SELECT event from CHECK_ACCTS ListButton
+	chkAcctCtl!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
+	chkAcctCtl!.setCallback(BBjListButton.ON_LIST_SELECT,"custom_event")
 
 [[APR_CHECKS.CHECK_NO.AVAL]]
 rem --- Warn if this check number has been previously used
@@ -353,6 +406,113 @@ endif
 callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[APR_CHECKS.<CUSTOM>]]
+rem ==========================================================================
+initCheckAccts: rem --- Initialize Checking Account ListButton for all selected invoices
+rem ==========================================================================
+	acctInvMap!=new HashMap()
+	chkAcctList!=BBjAPI().makeVector()
+	bnkAcctCdList!=BBjAPI().makeVector()
+	nextChkLIst!=BBjAPI().makeVector()
+	codeList!=BBjAPI().makeVector()
+	if callpoint!.getDevObject("post_to_gl")="Y" then
+		rem --- AP using GL
+		ape04_dev=fnget_dev("APE_CHECKS")
+		dim ape04a$:fnget_tpl$("APE_CHECKS")
+		apt01_dev=fnget_dev("APT_INVOICEHDR")
+		dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
+		apcDist_dev=fnget_dev("APC_DISTRIBUTION")
+		dim apcDist$:fnget_tpl$("APC_DISTRIBUTION")
+		glm05_dev=fnget_dev("GLM_BANKMASTER")
+		dim glm05$:fnget_tpl$("GLM_BANKMASTER")
+		adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
+		dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
+
+		read(ape04_dev,key=firm_id$,dom=*next)
+		while 1
+			readrecord(ape04_dev,end=*break)ape04a$
+			if ape04a.firm_id$<>firm_id$ then break
+
+			redim apt01a$
+			ape01_key$=firm_id$+ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$
+			readrecord(apt01_dev,key=ape01_key$,dom=*next)apt01a$
+			if cvs(apt01a.ap_dist_code$,2)<>"" then
+				redim apcDist$
+				readrecord(apcDist_dev,key=firm_id$+"B"+apt01a.ap_dist_code$,dom=*next)apcDist$
+				if cvs(apcDist.gl_cash_acct$,2)<>"" then
+					redim glm05$
+					readrecord(glm05_dev,key=firm_id$+apcDist.gl_cash_acct$,dom=*next)glm05$
+					if cvs(glm05.bnk_acct_cd$,2)<>"" then
+						redim adcBnkAcct$
+						readrecord(adcBnkAcct_dev,key=firm_id$+glm05.bnk_acct_cd$,dom=*next)adcBnkAcct$
+						if adcBnkAcct.bnk_acct_type$="C" then
+							if acctInvMap!.containsKey(glm05.bnk_acct_cd$)
+								invVect!=acctInvMap!.get(glm05.bnk_acct_cd$)
+							else
+								invVect!=BBjAPI().makeVector()
+								bnkAcctCdList!.addItem(glm05.bnk_acct_cd$)
+								chkAcctList!.addItem(adcBnkAcct.acct_desc$)
+								nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
+								codeList!.addItem("")
+							endif
+							invVect!.addItem(ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$)
+							acctInvMap!.put(glm05.bnk_acct_cd$,invVect!)
+						endif
+					endif
+				endif
+			endif
+		wend
+	else
+		rem --- AP is not using GL
+		adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
+		dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
+		read(adcBnkAcct_dev,key=firm_id$,dom=*next)
+		while 1
+			readrecord(adcBnkAcct_dev,end=*break)adcBnkAcct$
+			if adcBnkAcct.firm_id$<>firm_id$ then break
+			if adcBnkAcct.bnk_acct_type$="C" then
+				bnkAcctCdList!.addItem(adcBnkAcct.bnk_acct_cd$)
+				chkAcctList!.addItem(adcBnkAcct.acct_desc$)
+				nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
+				codeList!.addItem("")
+			endif
+		wend
+	endif
+	callpoint!.setDevObject("acctInvMap",acctInvMap!)
+	callpoint!.setDevObject("bnkAcctCdList",bnkAcctCdList!)
+	callpoint!.setDevObject("nextCheckList",nextChkList!)
+
+	chkAcctCtl!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
+	chkAcctCtl!.removeAllItems()
+	chkAcctCtl!.insertItems(0,chkAcctList!)
+	chkAcctCtl!.selectIndex(0)
+	ldat$=func.buildListButtonList(chkAcctList!,codeList!)
+	callpoint!.setTableColumnAttribute("APR_CHECKS.CHECK_ACCTS","LDAT",ldat$)
+
+	if chkAcctList!.size()>0 then
+		if chkAcctList!.size()=1 then
+			callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",0)
+		else
+			callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",1)
+		endif
+
+		rem --- Initialize CHECK_NO for the first Checking Account in ListButton
+		callpoint!.setColumnData("APR_CHECKS.CHECK_NO",nextChkList!.getItem(0))
+
+		rem --- Hold on to selected Bank Account Code, i.e. Checking Account
+		bnkAcctCd$=bnkAcctCdList!.getItem(0)
+		callpoint!.setDevObject("bnkAcctCd",bnkAcctCd$)
+	else
+		callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",0)
+
+		rem --- Clear CHECK_NO
+		callpoint!.setColumnData("APR_CHECKS.CHECK_NO","")
+
+		rem --- Hold on to selected Bank Account Code, i.e. Checking Account
+		callpoint!.setDevObject("bnkAcctCd","")
+	endif
+	callpoint!.setStatus("REFRESH")
+return
+
 disable_fields:
 rem --- used to disable/enable controls depending on parameter settings
 rem --- send in control to toggle (format "ALIAS.CONTROL_NAME"), and D or space to disable/enable
@@ -363,6 +523,7 @@ rem --- send in control to toggle (format "ALIAS.CONTROL_NAME"), and D or space 
 	callpoint!.setAbleMap(wmap$)
 	callpoint!.setStatus("ABLEMAP-REFRESH")
 return
+
 #include [+ADDON_LIB]std_missing_params.aon
 #include [+ADDON_LIB]std_functions.aon
 
