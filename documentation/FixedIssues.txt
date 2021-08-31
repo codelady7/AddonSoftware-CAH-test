@@ -8,4 +8,23 @@
 BBjBaristaAddonDemos2110_08-26-2021_1542.jar.
 
 =======================================================================================================================================
+Revision: 4f62bd0996225e1dd5b70958084a09996f7376e8
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 8/31/2021 12:32:37 PM
+Message:
+ER 10120: Modified AP Check Printing to default the Check Number to the
+next check number for the selected Checking Account.
 
+(cherry picked from commit fe5e5333db8d9e4d5e6955441bf9fed18d266d0c)
+----
+Modified: ap/src/apr_apchecks.aon
+Modified: ap/src/apr_payments.aon
+Modified: ap/src/apu_chkregister.aon
+Modified: data/adc_bankacctcode
+Modified: data/bar/adc_bankacctcode.xml
+Modified: data/bar/apr_checks.xml
+Modified: data/cdf/adc_bankacctcode.cdf
+Modified: data/cdf/apr_checks.cdf
+Modified: data/sync/ads_messages~[01007514AP].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
