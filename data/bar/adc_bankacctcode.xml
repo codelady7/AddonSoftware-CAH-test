@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.adc_bankacctcode"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adc_bankacctcode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adc_bankacctcode">20190220</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adc_bankacctcode">20210412</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adc_bankacctcode">20210226</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adc_bankacctcode">160822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adc_bankacctcode">20210819</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adc_bankacctcode">20210819</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adc_bankacctcode">123240</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adc_bankacctcode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.adc_bankacctcode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.adc_bankacctcode">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adc_bankacctcode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.adc_bankacctcode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.adc_bankacctcode">T</DD_ATTR_FTYP>
@@ -564,7 +564,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adc_bankacctcode008">20190220</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adc_bankacctcode008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adc_bankacctcode008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adc_bankacctcode008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adc_bankacctcode008">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adc_bankacctcode008">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adc_bankacctcode008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adc_bankacctcode008"></DD_ATTR_CTLY>
@@ -615,7 +615,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adc_bankacctcode009">20190220</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adc_bankacctcode009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adc_bankacctcode009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adc_bankacctcode009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adc_bankacctcode009">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adc_bankacctcode009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adc_bankacctcode009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adc_bankacctcode009"></DD_ATTR_CTLY>
@@ -666,7 +666,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adc_bankacctcode010">20190220</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adc_bankacctcode010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adc_bankacctcode010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adc_bankacctcode010"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adc_bankacctcode010">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adc_bankacctcode010">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adc_bankacctcode010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adc_bankacctcode010"></DD_ATTR_CTLY>
@@ -745,9 +745,9 @@
 			<DD_ATTR_STYL id="ddm_table_cols.adc_bankacctcode011"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.adc_bankacctcode011">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.adc_bankacctcode011">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.adc_bankacctcode011"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.adc_bankacctcode011"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.adc_bankacctcode011"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.adc_bankacctcode011">3012</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.adc_bankacctcode011">ine_nxt_check_no</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.adc_bankacctcode011">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.adc_bankacctcode011"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.adc_bankacctcode011">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.adc_bankacctcode011"></DD_ATTR_BTNS>
@@ -764,6 +764,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.adc_bankacctcodebnk_acct_noaval">ADC_BANKACCTCODE</DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.adc_bankacctcodebnk_acct_noaval">BNK_ACCT_NO     </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.adc_bankacctcodebnk_acct_noaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.adc_bankacctcodebnk_acct_typeaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.adc_bankacctcodebnk_acct_typeaval">ADC_BANKACCTCODE</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.adc_bankacctcodebnk_acct_typeaval">BNK_ACCT_TYPE   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.adc_bankacctcodebnk_acct_typeaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_ldat">
@@ -801,11 +806,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.adc_bankacctcodeaddress_line_3l">ADC_BANKACCTCODE</DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.adc_bankacctcodeaddress_line_3l">ADDRESS_LINE_3  </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.adc_bankacctcodeaddress_line_3l">L</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.adc_bankacctcodenxt_check_noo">
-			<DD_TABLE_ALIAS id="ddm_column_opts.adc_bankacctcodenxt_check_noo">ADC_BANKACCTCODE</DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.adc_bankacctcodenxt_check_noo">NXT_CHECK_NO    </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.adc_bankacctcodenxt_check_noo">O</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">

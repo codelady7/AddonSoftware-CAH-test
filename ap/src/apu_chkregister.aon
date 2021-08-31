@@ -287,19 +287,13 @@ remove_check: rem --- Remove Check
 
     wend
 
-done: rem --- Clear Remainder
-    
-    read (ape04_dev,key=firm_id$,dom=*next)
-    while more
-        k$=key(ape04_dev,end=*break)
-        if pos(firm_id$=k$)<>1 break
-        remove (ape04_dev,key=k$)
-    wend
+done: rem --- All done
+
+    rem --- Do NOT clear remainding records in APE_CHECKS. 
+    rem --- They may be for invoices being paid with a checking account that checks haven't been printed for yet.
 
     rem --- Finish building complete NACHA text file for ACH payments
     if nacha_dev>-1 then gosub finish_NACHA_file
-
-rem --- All done
 
     if gl$="Y"
        call pgmdir$+"glc_update.aon",glm01_dev,glt04_dev,glw11_dev,status

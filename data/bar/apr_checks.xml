@@ -21,9 +21,15 @@
 			<ASC_LICENSE_ID id="ddm_tables.apr_checks">2F9D12E59490FA927FE583CDFC2C6CD9</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apr_checks">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apr_checks">20130306</DD_CREATE_DATE>
+<<<<<<< BBJ2111GA
 			<DD_LSTREV_DATE id="ddm_tables.apr_checks">20210713</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.apr_checks">20210713</DD_LSTSYNC_DATE>
 			<DD_LSTSYNC_TIME id="ddm_tables.apr_checks">155022</DD_LSTSYNC_TIME>
+=======
+			<DD_LSTREV_DATE id="ddm_tables.apr_checks">20210830</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apr_checks">20210830</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apr_checks">101300</DD_LSTSYNC_TIME>
+>>>>>>> fe5e533 ER 10120: Modified AP Check Printing to default the Check Number to the next check number for the selected Checking Account.
 			<DD_ATTR_ATAB id="ddm_tables.apr_checks"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apr_checks">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apr_checks"></DD_ATTR_DKNM>
@@ -60,6 +66,10 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.apr_checksacus">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apr_checksacus">APR_CHECKS      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apr_checksacus">ACUS</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.apr_checksadis">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.apr_checksadis">APR_CHECKS      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.apr_checksadis">ADIS</DD_ATTR_CPRO>
@@ -117,7 +127,7 @@
 		<RECORD id="ddm_table_tpls.apr_checks">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apr_checks">APR_CHECKS      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apr_checks"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.apr_checks">firm_id:c(2*),check_date:c(8*),check_no:c(7*),pick_check:c(1*),ap_type:c(2*),vendor_id:c(6*),top_part:c(1*),middle_part:c(1*),bottom_part:c(1*),form_order:c(3*),prnt_signature:c(1*),signature_file:c(80*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.apr_checks">firm_id:c(2*),check_date:c(8*),check_no:c(7*),pick_check:c(1*),ap_type:c(2*),vendor_id:c(6*),top_part:c(1*),middle_part:c(1*),bottom_part:c(1*),form_order:c(3*),prnt_signature:c(1*),signature_file:c(80*),check_accts:c(30*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -261,14 +271,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks003"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks003"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks003">3</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks003">4</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks003"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks003">CHECK_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks003"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks003"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks003"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks003"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks003">3002</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks003">3003</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks003">ine_check_no</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks003"></DD_ATTR_RADG>
@@ -312,14 +322,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks004"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks004"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks004">4</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks004">5</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks004"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks004">PICK_CHECK</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks004"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks004"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks004"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks004"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks004">3003</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks004">3004</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks004">cbx_pick_check</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks004"></DD_ATTR_RADG>
@@ -363,14 +373,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks005"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks005">5</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks005">6</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks005"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks005">AP_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks005"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks005"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks005"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks005"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks005">3004</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks005">3005</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks005">dis_ap_type</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks005"></DD_ATTR_RADG>
@@ -414,14 +424,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks006"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks006"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks006">6</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks006">7</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks006"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks006">VENDOR_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks006"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks006"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks006"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks006"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks006">3005</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks006">3006</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks006">dis_vendor_id</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks006">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks006"></DD_ATTR_RADG>
@@ -465,7 +475,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks007"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks007">7</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks007">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks007"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks007">TOP_PART</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks007"></DD_ATTR_FONT>
@@ -516,7 +526,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks008">8</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks008">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks008">MIDDLE_PART</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks008"></DD_ATTR_FONT>
@@ -567,7 +577,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks009">9</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks009">10</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks009">BOTTOM_PART</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks009"></DD_ATTR_FONT>
@@ -618,14 +628,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks010">10</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks010">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks010">FORM_ORDER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks010"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks010"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks010"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks010"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks010">3006</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks010">3007</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks010">lbn_form_order</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks010"></DD_ATTR_RADG>
@@ -669,14 +679,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks011">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks011">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks011">PRNT_SIGNATURE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks011"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks011"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks011">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks011">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks011">3007</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks011">3008</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks011">cbx_prnt_signature</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks011">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks011"></DD_ATTR_RADG>
@@ -720,19 +730,70 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apr_checks012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apr_checks012">12</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks012">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apr_checks012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks012">SIGNATURE_FILE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apr_checks012"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apr_checks012"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks012">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apr_checks012">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks012">3008</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks012">3009</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks012">ine_signature_file</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks012">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apr_checks012"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.apr_checks012">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apr_checks012">F</DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.apr_checks013">
+			<DD_TABLE_ALIAS id="ddm_table_cols.apr_checks013">APR_CHECKS      </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.apr_checks013">013</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.apr_checks013">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.apr_checks013">CHECK_ACCTS     </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.apr_checks013">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apr_checks013">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.apr_checks013">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.apr_checks013">0A</DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.apr_checks013"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.apr_checks013"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.apr_checks013"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.apr_checks013">20210818</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apr_checks013">20210818</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.apr_checks013"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.apr_checks013"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.apr_checks013"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.apr_checks013">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.apr_checks013"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.apr_checks013"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.apr_checks013">250</DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.apr_checks013"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.apr_checks013"></DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.apr_checks013"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.apr_checks013"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.apr_checks013"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.apr_checks013">Checking Account</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apr_checks013">Chk Acct</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.apr_checks013">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.apr_checks013"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.apr_checks013"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.apr_checks013"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.apr_checks013"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.apr_checks013"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.apr_checks013"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.apr_checks013"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.apr_checks013"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.apr_checks013">3</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.apr_checks013"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.apr_checks013">CHECK_ACCTS</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.apr_checks013"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.apr_checks013"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.apr_checks013">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.apr_checks013">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.apr_checks013">3002</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apr_checks013">lbn_check_accts</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apr_checks013">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.apr_checks013"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.apr_checks013">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.apr_checks013"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
@@ -1437,6 +1498,58 @@
 			<DD_ATTR_Y2KW id="ddm_elements.generic_file_80"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.generic_file_80"></DD_ATTR_CASB>
 		</RECORD>
+		<RECORD id="ddm_elements.generic_list">
+			<DD_DATA_NAME id="ddm_elements.generic_list">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.generic_list">Generic ListButton</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.generic_list">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.generic_list">30</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.generic_list"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.generic_list"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.generic_list">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.generic_list">AD </ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.generic_list"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.generic_list">20071226</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.generic_list">20101221</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.generic_list"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.generic_list"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.generic_list"></DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.generic_list"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.generic_list"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.generic_list">L</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.generic_list"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.generic_list"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.generic_list"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.generic_list"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.generic_list"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.generic_list"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.generic_list"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.generic_list"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.generic_list"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.generic_list"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.generic_list">Generic ListButton</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.generic_list">Generic ListButton</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.generic_list">O</DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.generic_list"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.generic_list"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.generic_list"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.generic_list"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.generic_list"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.generic_list"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.generic_list"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.generic_list"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.generic_list"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.generic_list">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.generic_list"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.generic_list"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.generic_list"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.generic_list"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.generic_list"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.generic_list"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.generic_list"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.generic_list"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.generic_list"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.generic_list"></DD_ATTR_CASB>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_element_cmts">
 		<ID id="ddm_element_cmts">DDM_ELEMENT_CMTS</ID>
@@ -1525,6 +1638,12 @@
 			<DD_ATTR_SEQ id="ddm_element_ldat.ap_chk_formorder04">04</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_element_ldat.ap_chk_formorder04">AVC</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_element_ldat.ap_chk_formorder04">Accting Stub/Vendor Stub/Check</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.generic_list01">
+			<DD_DATA_NAME id="ddm_element_ldat.generic_list01">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.generic_list01">01</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.generic_list01">X</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.generic_list01">Default List Item</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 </APR_CHECKS>
