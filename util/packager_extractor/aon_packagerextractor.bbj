@@ -1503,6 +1503,7 @@ std_exit:
       sourcePaths!=new Properties()
       stblValues!=new Properties()
       systems!=new Properties()
+      configIni!=new Properties()
       savedDir$=dir("")
       bbjHome$=java.lang.System.getProperty("basis.BBjHome").replace("\","/")
       Translate!=BBTranslator.getInstance("barista",stbl("+USER_LOCALE"),null(),stbl("+DIR_SYR"))
@@ -1829,6 +1830,12 @@ std_exit:
                               path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
                           endif
                           record$=record$(1,ypos)+path$
+                          rem --- also store the SYSCFG info in configIni! so we can use it to update the database! (i.e., config.ini) later
+                          if pos("\"=path$)
+                              path!=path$
+                              path$=path!.replace("\","/")
+                          endif
+                          configIni!.setProperty(stbl$,path$)
                       endif
                       print(log_dev)"    "+"    "+key$+" "+stbl$+": "+path$
                       break
@@ -2343,7 +2350,7 @@ std_exit:
       meter_action$="MTR-LST"
       call stbl("+DIR_SYP")+"bam_prog_bar.bbj",#Sysgui!,#Win!,meterWin!,meter_title$,meter_total_recs,meter_proc_recs,meter_text$,meter_action$
       print(log_dev)
-      print(log_dev)meter_text$
+      print(log_dev)meter_text$     
 
       rem --- Get languages for barista's barista.cfg files
       barConfigDir!=new File(barDir$+File.separator+"sys"+File.separator+"config")
@@ -2463,6 +2470,16 @@ std_exit:
                           case key$="SET +ENPORT"
                               line$=key$+"="+stbl("+ENPORT",err=*break)
                               break
+                          case pos("SET "=key$);rem a settings line other than the above cases - replace value with that from .syn files if it exists there
+                              if stblValues!.getProperty(key$(5))<>null() and pos(key$(5)+"^"="+DIR_BRA^+DIR_BRD^+DIR_SYP^+DIR_SYR^")=0
+                                  syn_value$=stblValues!.getProperty(key$(5),err=*break)
+                                  if pos("\"=syn_value$)
+                                      synValue!=syn_value$
+                                      syn_value$=synValue!.replace("\","/")
+                                  endif
+                                  line$=key$+"="+syn_value$
+                              endif
+                              break
                           case default
                               break
                       swend
@@ -2504,6 +2521,14 @@ std_exit:
       dataBase!.setBoolean("AUTO_ANALYZE_TABLES",BBjAPI().TRUE)
       dataBase!.setBoolean("ENFORCE_VARCHAR_LENGTH",BBjAPI().TRUE)
       dataBase!.setBoolean("STRICTKEYCHECKING",BBjAPI().TRUE)
+   
+      rem --- Iterate through configIni! and set the data paths (+APDATA, etc.)
+      configIniIter!=configIni!.keySet().iterator()
+      while configIniIter!.hasNext()
+          config_key$=configIniIter!.next()
+          config_path$=configIni!.getProperty(config_key$)
+          dataBase!.setString(config_key$,config_path$)
+      wend
 
       dataBase!.commit()
 
@@ -2590,8 +2615,8 @@ std_exit:
       xmlData!=xmlData!.replace($0d0a$,tempSep$)
       xmlData!=xmlData!.replace($0d$,tempSep$)
       xml_data$=xmlData!.replace($0a$,tempSep$)
-
-      rec_block$=$09$+"<RECORD id="+$22$+cvs(dbName$,136)+$22$+">"+line_sep$+$0909$+"<ID id="+$22$+cvs(dbName$,136)+$22$+">"+dbName$+"</ID>"+line_sep$+$0909$+"<DESCRIPTION id="+$22$+cvs(dbName$,136)+$22$+">"+appDesc$+"</DESCRIPTION>"+line_sep$+$0909$+"<LOCATION id="+$22$+cvs(dbName$,136)+$22$+">"+barDir$+"</LOCATION>"+line_sep$+$0909$+"<VERSION id="+$22$+cvs(dbName$,136)+$22$+">"+newVersion$+"</VERSION>"+line_sep$+$0909$+"<DATE_CREATED id="+$22$+cvs(dbName$,136)+$22$+">"+date(0:"%Yd%Mz%Dz%Hz%mz%sz")+"</DATE_CREATED>"+line_sep$+$0909$+"<PROPERTIES id="+$22$+cvs(dbName$,136)+$22$+">"+baseProp$+"</PROPERTIES>"+line_sep$+$09$+"</RECORD>"+line_sep$
+      rem --- strip 'barista' off of barDir$ for the LOCATION line
+      rec_block$=$09$+"<RECORD id="+$22$+cvs(dbName$,136)+$22$+">"+line_sep$+$0909$+"<ID id="+$22$+cvs(dbName$,136)+$22$+">"+dbName$+"</ID>"+line_sep$+$0909$+"<DESCRIPTION id="+$22$+cvs(dbName$,136)+$22$+">"+appDesc$+"</DESCRIPTION>"+line_sep$+$0909$+"<LOCATION id="+$22$+cvs(dbName$,136)+$22$+">"+barDir$(1,pos(File.separator+"barista"=barDir$))+"</LOCATION>"+line_sep$+$0909$+"<VERSION id="+$22$+cvs(dbName$,136)+$22$+">"+newVersion$+"</VERSION>"+line_sep$+$0909$+"<DATE_CREATED id="+$22$+cvs(dbName$,136)+$22$+">"+date(0:"%Yd%Mz%Dz%Hz%mz%sz")+"</DATE_CREATED>"+line_sep$+$0909$+"<PROPERTIES id="+$22$+cvs(dbName$,136)+$22$+">"+baseProp$+"</PROPERTIES>"+line_sep$+$09$+"</RECORD>"+line_sep$
 
       temp_pos=pos(temp_tag$=xml_data$)
       if temp_pos=0
@@ -2613,18 +2638,10 @@ std_exit:
       write record(xml_chan)xml_data$
       close(xml_chan)
 
-      rem --- Reset ADS_AUTOLAUNCH record for BUILDSPROC, 50AUTOSYNC, and 90MNUIMP processes
+      rem --- Reset ADS_AUTOLAUNCH record for 90MNUIMP process
 
-      sql_prep$="UPDATE ADS_AUTOLAUNCH SET PROCESS_STATUS='N',TRANS_DATE='',TRANS_TIME='' WHERE PROCESS_ID='BUILDSPROC'"
       sql_chan=sqlunt
       sqlopen(sql_chan)dbName$
-
-      sqlprep(sql_chan)sql_prep$
-      sqlexec(sql_chan)
-
-      sql_prep$="UPDATE ADS_AUTOLAUNCH SET PROCESS_STATUS='N',TRANS_DATE='',TRANS_TIME='' WHERE PROCESS_ID='50AUTOSYNC'"
-      sqlprep(sql_chan)sql_prep$
-      sqlexec(sql_chan)
 
       sql_prep$="UPDATE ADS_AUTOLAUNCH SET PROCESS_STATUS='N',TRANS_DATE='',TRANS_TIME='' WHERE PROCESS_ID='90MNUIMP'"
       sqlprep(sql_chan)sql_prep$
@@ -2634,6 +2651,36 @@ std_exit:
 
       rem --- Set permissions for extracted directory and file
       rem --- (HOLD: This may not be necessary. Need to determine.)
+
+      rem --- Launch adx_build_sproc in new barista to change paths in SPROC defs
+
+      rem --- Increment progress meter
+      meterWin!=mainMeter!
+      meter_total_recs=mainMeterTotalRecs
+      mainMeterProcRecs=mainMeterProcRecs+1
+      meter_text$="Build SPROC definitions"
+      meter_proc_recs=mainMeterProcRecs
+      meter_action$="MTR-LST"
+      call stbl("+DIR_SYP")+"bam_prog_bar.bbj",#Sysgui!,#Win!,meterWin!,meter_title$,meter_total_recs,meter_proc_recs,meter_text$,meter_action$
+      print(log_dev)
+      print(log_dev)meter_text$
+
+      rem --- Launch adx_build_sproc.aon via bax_launch_task
+	  bar_dir$=barDir$
+	  if pos(":"=bar_dir$)=0 then bar_dir$=dsk("")+bar_dir$
+	  run_arg$="bbj -tT0 -q -WD"+$22$+bar_dir$+$22$
+:	      +" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
+:	      +" "+$22$+bar_dir$+"/sys/prog/bax_launch_task.bbj"+$22$
+
+      user_arg$=" - "
+:         +" -u"+rdAdmin!.getUser()
+:         +" -p"+rdAdmin!.getPassword()
+:         +" -t"+"DDM_TABLES"
+:         +" -y"+"A"
+:         +" -a" +bar_dir$+File.separator+".."+File.separator+"aon/ad/src/adx_build_sproc.aon"+$22$+" - -u"+rdAdmin!.getUser()+$22$
+:         +" -w"
+
+      scall_result=scall(run_arg$+user_arg$,err=*next)
 
       done: rem --- All done
 
