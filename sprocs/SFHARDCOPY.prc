@@ -70,7 +70,7 @@ rem --- Create a memory record set to hold results.
 rem --- Columns for the record set are defined using a string template
 	      temp$="FIRM_ID:C(2), WO_NO:C(7*), WO_TYPE:C(1*), WO_CATEGORY:C(1*), WO_STATUS:C(1*), CUSTOMER_ID:C(1*), "
 	temp$=temp$+"SLS_ORDER_NO:C(1*), WAREHOUSE_ID:C(1*), ITEM_ID:C(1*), OPENED_DATE:C(1*), LAST_CLOSE:C(1*), "
-	temp$=temp$+"TYPE_DESC:C(1*), PRIORITY:C(1*), UOM:C(1*), YIELD:C(1*), PROD_QTY:C(1*), COMPLETED:C(1*), "
+	temp$=temp$+"TYPE_DESC:C(1*), PRIORITY:C(1*), UOM:C(1*), YIELD:C(1*), SCH_PROD_QTY:C(1*), PROD_QTY:C(1*), COMPLETED:C(1*), "
 	temp$=temp$+"LAST_ACT_DATE:C(1*), ITEM_DESC_1:C(1*), ITEM_DESC_2:C(1*), IMAGE_PATH:C(1*), DRAWING_NO:C(1*), REV:C(1*), "
 	temp$=temp$+"INCLUDE_LOTSER:C(1*), MAST_CLS_INP_QTY_STR:C(1*), MAST_CLS_INP_DT:C(1*), MAST_CLOSED_COST_STR:C(1*), "
 	temp$=temp$+"COMPLETE_YN:C(1*), COST_MASK:C(1*), UNITS_MASK:C(1*), AMT_MASK:C(1*), "	
@@ -352,7 +352,8 @@ rem --- Trip Read
 		data!.setFieldValue("PRIORITY",read_tpl.priority$)
 		data!.setFieldValue("UOM",read_tpl.unit_measure$)
 		data!.setFieldValue("YIELD",str(read_tpl.est_yield:sf_pct_mask$))
-		data!.setFieldValue("PROD_QTY",str(read_tpl.sch_prod_qty:ad_units_mask$))
+        data!.setFieldValue("SCH_PROD_QTY",str(read_tpl.sch_prod_qty:ad_units_mask$))
+        data!.setFieldValue("PROD_QTY",str(read_tpl.sch_prod_qty))
 		data!.setFieldValue("COMPLETED",str(read_tpl.qty_cls_todt:ad_units_mask$))
 		data!.setFieldValue("LAST_ACT_DATE",fndate$(read_tpl.lstact_date$))
 		if cvs(read_tpl.lstact_date$,3)="" data!.setFieldValue("LAST_ACT_DATE","")
