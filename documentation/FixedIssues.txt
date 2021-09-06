@@ -45,3 +45,17 @@ Modified: op/src/opr_opnorddetail.aon
 Modified: op/src/opr_opnorddetail_o1.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: c2a6d9aa44f1c8982c2cc3f5d19c88c1c287ac54
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/6/2021 1:37:39 PM
+Message:
+Bug 10278: Modified SFHARDCOPY.prc to provide both a masked and and
+unmasked scheduled production quantity.
+
+(cherry picked from commit 899865c776666f603366f1cddc4e11e954f33271)
+----
+Modified: reports/SFHardCopy.jasper
+Modified: reports/SFHardCopy.jrxml
+Modified: sprocs/SFHARDCOPY.prc
