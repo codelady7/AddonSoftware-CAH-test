@@ -41,7 +41,7 @@ rem --- Retrieve the program path
 rem --- Parameters
 
     h0=132
-    headings=9
+    headings=8
 
 rem --- Initializations
 
@@ -81,11 +81,11 @@ rem --- column heading
         columns = 12
     endif
     dim columns$[columns,10]
-    columns$[0,0]="Customer^Number",columns$[0,1]="C",columns$[0,2]="6"
+    columns$[0,0]="Customer^Number",columns$[0,1]="C",columns$[0,2]="7"
     columns$[1,0]="Customer Name",  columns$[1,1]="C",columns$[1,2]="15"
-    columns$[2,0]="Order^Number",   columns$[2,1]="C",columns$[2,2]="16",  columns$[2,10]="T"
+    columns$[2,0]="Order^Number",   columns$[2,1]="C",columns$[2,2]="17",  columns$[2,10]="T"
     columns$[3,0]="Order Date",      columns$[3,1]="C",columns$[3,2]="10", columns$[3,10]="T"
-    columns$[4,0]="Ship Date",       columns$[4,1]="C",columns$[4,2]="10", columns$[4,10]="T"
+    columns$[4,0]="Ship Date",       columns$[4,1]="C",columns$[4,2]="12", columns$[4,10]="T"
     columns$[5,0]="By",              columns$[5,1]="C",columns$[5,2]="10", columns$[5,10]="T"
     columns$[6,0]="Sls",             columns$[6,1]="C",columns$[6,2]="10",  columns$[6,10]="T"
     columns$[7,0]="P.O  Number",     columns$[7,1]="C",columns$[7,2]="10"
@@ -116,62 +116,69 @@ rem --- column heading
 
 rem --- Headings
 
-    if s6$="A" then x1$=""
-    if s6$="P" then x1$=Translate!.getTranslation("AON_PRINTED")
-    if s6$="U" then x1$=Translate!.getTranslation("AON_UNPRINTED")
-    x3$=""
-    for i=1 to len(s4$)
-        if len(x3$) and s4$(i,1)<>"N" then x3$=x3$+"+"
-        if s4$(i,1)="O" then
-            x$=Translate!.getTranslation("AON_OPEN/")+"/"
-            x3$=x3$+x$(1,pos("/"=x$)-1)
-        endif
-        if s4$(i,1)="Q" then
-            x$=Translate!.getTranslation("AON_QUOTED/")+"/"
-            x3$=x3$+x$(1,pos("/"=x$)-1)
-        endif
-        if s4$(i,1)="B" then x3$=x3$+Translate!.getTranslation("AON_BACKORDERED")
-        if s4$(i,1)="C" then x3$=x3$+Translate!.getTranslation("AON_CREDIT_HELD")
-    next i
-    if len(s4$)=5 or (len(s4$)=4 and pos("N"=s4$)=0) then
-        x3$=Translate!.getTranslation("AON_ALL")
-        if len(x1$) then x3$=x3$+" "+x1$
-        x3$=x3$+" "+Translate!.getTranslation("AON_ORDERS")
-    else
-        if s4$="N" then x3$=x3$+"Non Stock"+" "
-        if len(x1$) then x3$=x3$+" "+x1$
-        x3$=x3$+" "+Translate!.getTranslation("AON_ORDERS")+" "+Translate!.getTranslation("AON_ONLY")
-    endif
-    h8$=x3$
-
-    if s5$="" then h9$="Entered By: All" else h9$="Entered By :"+s5$
-
-    if s7$="" then
-        h10$="All"
-    else
-        h10$=s7$
-    endif
-
-    h10$="Salesperson: "+h10$
     headings$[0]=n1$
     headings$[1]=n4$ 
-    headings$[8]=h9$
-
-    bs$="Non Stock Option: "
-    if s8$="A" or s8$="" then  bs$=bs$+"All"
-    if s8$="P" then  bs$=bs$+"With Associated PO's"
-    if s8$="N" then  bs$=bs$+"Without Associated PO's"
-    headings$[9]=bs$
 
     if s0$="" then headings$[3]="Begining Customer: First" else headings$[3]="Begining Customer: "+fnmask$(s0$(1,m0),m0$)
     if s1$="" then headings$[3]=headings$[3]+" -- Ending Customer: Last" else headings$[3]=headings$[3]+" -- Ending Customer: "+fnmask$(s1$(1,m0),m0$)
+
     if s2$="" then headings$[4]="Begining Order Date: First" else headings$[4]="Begining Order Date "+fndate$(s2$)                
     if s3$="" then headings$[4]=headings$[4]+" -- Ending Order Date: Last" else headings$[4]=headings$[4]+" -- Ending Order Date: "+fndate$(s3$)
-    if start_ship_date$="" then headings$[5]="Begining Ship Date: First" else headings$[5]="Begining Ship Date "+fndate$(start_ship_date$)
-    if end_ship_date$="" then headings$[5]=headings$[5]+" -- Ending Ship Date: Last" else headings$[5]=headings$[5]+" -- Ending Ship Date: "+fndate$(end_ship_date$)
 
-    headings$[6]=h8$
-    headings$[7]=h10$
+rem    if start_ship_date$="" then headings$[5]="Begining Ship Date: First" else headings$[5]="Begining Ship Date "+fndate$(start_ship_date$)
+rem    if end_ship_date$="" then headings$[5]=headings$[5]+" -- Ending Ship Date: Last" else headings$[5]=headings$[5]+" -- Ending Ship Date: "+fndate$(end_ship_date$)
+
+    h5$="Order Taken By: "
+    if s5$="" then h5$=h5$+"All" else h5$=h5$+s5$
+    headings$[5]=h5$
+    
+    h6$="Salesperson: "
+    if s7$="" then h6$=h6$+"All" else h6$=h6$+s7$
+    headings$[6]=h6$
+
+    if s6$="A" then h7$="All"
+    if s6$="P" then h7$=Translate!.getTranslation("AON_PRINTED")
+    if s6$="U" then h7$=Translate!.getTranslation("AON_UNPRINTED")
+    headings$[7]="Print Status: "+h7$
+    
+    h8$="Orders: "
+    if open$="Y" then
+    open$=Option!.getOptionData("OPEN")
+        if open_new$="Y" then h8$=h8$+"New"
+        if open_back$="Y" then
+            if open_new$="Y" then h8$=h8$+" + "
+            h8$=h8$+"B/O"
+        endif
+        if open_hold$="Y" then
+            if open_new$="Y" or open_back$="Y" then h8$=h8$+" + "
+            h8$=h8$+"Held"
+        endif
+        if pos(non_stock_option$="APN") then
+            if open_new$="Y" or open_back$="Y" or open_hold$="Y" then h8$=h8$+" + "
+            if non_stock_option$="A" then h8$=h8$+"All Non-Stocks"
+            if non_stock_option$="P" then h8$=h8$+"Non-Stocks With PO's"
+            if non_stock_option$="N" then  h8$=h8$+"Non-Stocks Without PO's"
+        endif
+    else
+        h8$=h8$+"None"
+    endif
+    headings$[8]=h8$
+    
+    h9$="Quotes: "
+    if quoted$="Y" then
+        if quote_new$="Y" then h9$=h9$+"New"
+        if quote_hold$="Y" then
+            if quote_new$="Y" then h9$=h9$+" + "
+            h9$=h9$+"Held"
+        endif
+        if non_stock$="Y" then
+            if quote_new$="Y" or quote_hold$="Y" then h9$=h9$+" + "
+            h9$=h9$+"Non-Stocks"
+        endif
+    else
+        h9$=h9$+"None"
+    endif
+    headings$[9]=h9$
 
 rem --- Background
 
@@ -196,57 +203,56 @@ rem --- Main Loop Starts
 
         if s2$<>"" and ope01a.order_date$<s2$ then continue
         if s3$<>"" and ope01a.order_date$>s3$ then continue
-        if start_ship_date$<>"" and ope01a.shipmnt_date$<start_ship_date$ then continue
-        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then continue
+rem        if start_ship_date$<>"" and ope01a.shipmnt_date$<start_ship_date$ then continue
+rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then continue
         if s5$<>"" and cvs(ope01a.ord_taken_by$,3)<>s5$ then continue
         if s7$<>"" and ope01a.slspsn_code$<>s7$ then continue
         if ope01a.ordinv_flag$="I" then continue
-        stat$="Order"
+
+        skipRecord=1
+        if ope01a.invoice_type$="P" and quoted$="Y" then
+            if quote_new$="Y" and ope01a.credit_flag$<>"C" then skipRecord=0
+            if quote_hold$="Y" and ope01a.credit_flag$="C" then skipRecord=0
+        endif
+        if ope01a.invoice_type$="S" and open$="Y" then
+            if open_new$="Y" and ope01a.backord_flag$<>"B" and ope01a.credit_flag$<>"C" then skipRecord=0
+            if open_back$="Y" and ope01a.backord_flag$="B" then skipRecord=0
+            if open_hold$="Y" and ope01a.credit_flag$="C" then skipRecord=0
+        Endif
+        if skipRecord then continue
 
         if ope01a.invoice_type$="P" then
             stat$="Quote"
         else
-            if ope01a.credit_flag$="C" then
-                stat$="Credit"
-            else
-                if ope01a.credit_flag$="R" then
-                    stat$="Release"
-                else
-                    if ope01a.backord_flag$="B" then
-                        stat$="B/O"
-                    endif
-                endif
-            endif
+            stat$="Order"
         endif
+        switch pos(ope01a.credit_flag$=" CR")
+            case 1
+                if ope01a.backord_flag$="B" then stat$="B/O"
+                break
+            case 2
+                stat$="Held"
+                if ope01a.backord_flag$="B" then stat$=stat$+" B/O"
+                break
+            case 3
+                stat$="Released"
+                if ope01a.backord_flag$="B" then stat$=stat$+" B/O"
+                break
+            case default
+                break
+        swend
 
         if s6$<>"A" then
-            find (ope04_dev,key=firm_id$+"O"+"  "+ope01a.customer_id$+ope01a.order_no$,dom=label_one)
-            if s6$="P" then continue
-            goto label_two
-
-        label_one: 
-            if s6$="U" then continue
-        endif
-
-    label_two: 
-
-        if s4$="N" then
-            if ope01a.invoice_type$<>"P" then
-                goto heading_1
+            found=0
+            find (ope04_dev,key=firm_id$+"O"+"  "+ope01a.customer_id$+ope01a.order_no$,dom=*next); found=1
+            if found then
+                if s6$="P" then continue
             else
-                continue
+                if s6$="U" then continue
             endif
         endif
 
-        if (pos("O"=s4$) <= 0 or ope01a.backord_flag$  = "B" or ope01a.credit_flag$="C" or ope01a.invoice_type$="P") and
-:           (pos("B"=s4$)  = 0 or ope01a.backord_flag$ <> "B") and 
-:           (pos("C"=s4$)  = 0 or ope01a.credit_flag$  <> "C") and
-:           (pos("Q"=s4$) <= 0 or ope01a.invoice_type$ <> "P") 
-:       then 
-            continue
-        endif
-
-    heading_1: rem --- Heading
+        rem --- Heading
 
         gosub get_cust
         if ope01a.invoice_type$="V" then
@@ -272,7 +278,7 @@ rem --- Main Loop Starts
     rem --- Print
 
         prth$="N"
-        if s4$<>"N" then gosub ord_header
+        gosub ord_header
         ope11_trip$=ope01a_key$
         read (ope11_dev,key=ope11_trip$,knum="AO_STAT_CUST_ORD",dom=label_three)
 
@@ -285,9 +291,24 @@ rem --- Main Loop Starts
             if pos(ope11_trip$=ope11a_key$)<>1 then break
             read record (ope11_dev) ope11a$
             find record (opm02_dev,key=firm_id$+ope11a.line_code$,dom=*continue) opm02a$
-            if s4$="N" and opm02a.line_type$<>"N" then continue
-            gosub pos_for_nonstock
-            if s4$="N" and pof$<>"Y" then continue
+
+            rem --- Skip non-stock items when not doing non-stock
+            if opm02a.line_type$="N" then
+                if ope01a.invoice_type$="P" then
+                    rem --- Doing non-stocks for quotes?
+                    if non_stock$<>"Y" then continue
+                else
+                    rem --- Doing non-stocks for orders?
+                    if non_stock_option$="X" then continue
+                endif
+            endif
+
+            rem --- Doing All, or just some non-stocks?
+            if opm02a.line_type$="N" then
+                gosub pos_for_nonstock
+                if pof$<>"Y" then continue
+            endif
+
             if prth$="N" then gosub ord_header
             desc$=ope11a.order_memo$
 
@@ -359,22 +380,16 @@ rem --- Main Loop Starts
 
     rem --- Order Totals
 
-        if s0<>0 or s4$<>"N" then
-            if s0>=2 and col_format$<>"Y" then
+        if s0>=2 and col_format$<>"Y" then
 
-                TotVect!.addItem(str(OutVect!.size()/(columns+1))) 
-                xwk = fnblank(7)
-                OutVect!.addItem(Translate!.getTranslation("AON_ORDER")+" "+Translate!.getTranslation("AON_TOTAL:"))
-                OutVect!.addItem(str(s[0]:m1$)+$00$+"R")
-                xwk = fnblank(1)
-                OutVect!.addItem(str(s[1]:m1$)+$00$+"R")
-                OutVect!.addItem(str(s[0]-s[1]:m1$)+$00$+"R")
-                OutVect!.addItem(str(fnd(s[0]-s[1],s[0]):m9$)+$00$+"R")
-
-            endif
-
-            t2=t2+1
-            u2=u2+1
+            TotVect!.addItem(str(OutVect!.size()/(columns+1))) 
+            xwk = fnblank(7)
+            OutVect!.addItem(Translate!.getTranslation("AON_ORDER")+" "+Translate!.getTranslation("AON_TOTAL:"))
+            OutVect!.addItem(str(s[0]:m1$)+$00$+"R")
+            xwk = fnblank(1)
+            OutVect!.addItem(str(s[1]:m1$)+$00$+"R")
+            OutVect!.addItem(str(s[0]-s[1]:m1$)+$00$+"R")
+            OutVect!.addItem(str(fnd(s[0]-s[1],s[0]):m9$)+$00$+"R")
 
         endif
 
@@ -418,19 +433,19 @@ rem --- Product Totals
 
         iter! = product_typeMap!.keySet().iterator()
         while iter!.hasNext()
-        product_type$=cast(BBjString, iter!.next())
-        t9!=cast(BBjVector, product_typeMap!.get(product_type$))
-        price=cast(BBjNumber, t9!.getItem(0))
-        cost=cast(BBjNumber, t9!.getItem(1))
-        comm_percent=cast(BBjNumber, t9!.getItem(2))
-        qty_ordered=cast(BBjNumber, t9!.getItem(3))
-        if price=0 and cost=0 and comm_percent=0 then continue
-
-        ivm10a.code_desc$="Unknown Product Type"
-        find record (ivm10_dev,key=firm_id$+"A"+product_type$,dom=*next) ivm10a$
-
-        OutVect!.addItem(product_type$+"  "+ivm10a.code_desc$)
-        xwk = fnblank(1)
+            product_type$=cast(BBjString, iter!.next())
+            t9!=cast(BBjVector, product_typeMap!.get(product_type$))
+            price=cast(BBjNumber, t9!.getItem(0))
+            cost=cast(BBjNumber, t9!.getItem(1))
+            comm_percent=cast(BBjNumber, t9!.getItem(2))
+            qty_ordered=cast(BBjNumber, t9!.getItem(3))
+            if price=0 and cost=0 and comm_percent=0 then continue
+    
+            ivm10a.code_desc$="Unknown Product Type"
+            find record (ivm10_dev,key=firm_id$+"A"+product_type$,dom=*next) ivm10a$
+    
+            OutVect!.addItem(product_type$+"  "+ivm10a.code_desc$)
+            xwk = fnblank(1)
             OutVect!.addItem(str(qty_ordered:m2$)+$00$+"R")
             OutVect!.addItem(str(price:m1$)+$00$+"R")
             OutVect!.addItem(str(cost:m1$)+$00$+"R")
@@ -534,6 +549,7 @@ ord_header: rem --- Print Order Header
     OutVect!.addItem(ope01a.tax_code$)
     OutVect!.addItem(ope01a.print_status$)
     recs=recs+1
+    u2=u2+1
 
     if ope01a.lock_status$<>"N" then 
         xwk = fnblank(2)
@@ -726,18 +742,27 @@ pos_for_nonstock: rem --- P/Os for non-stock items
     pol$=""
     pof$=""
 
-    if opm02a.line_type$="N" then 
-        pol$="Vnd:"+ope11a.vendor_id$
-        dim poe08a$:fattr(poe08a$)
-        find record (poe08_dev,key=ope11a.firm_id$+ope11a.customer_id$+ope11a.order_no$+ope11a.line_no$, knum="AO_CUST_ORD", dom=*next) poe08a$
-        if (s8$="N" and poe08a.po_no$="") or s8$="A" or (s8$="P" and poe08a.po_no$<>"") then  pof$="Y"
-
-        if pos(s8$="AP") and poe08a.po_no$<>"" then  
-            start_block = 1
-            if start_block then
-                find record (poe02_dev, key=firm_id$+poe08a$.po_no$, dom=*endif) poe02a$
-                pol$="Vnd:"+poe02a.vendor_id$+" PO:"+poe08a.po_no$+"-"+poe08a.po_line_no$
+    pol$="Vnd:"+ope11a.vendor_id$
+    dim poe08a$:fattr(poe08a$)
+    find record (poe08_dev,key=ope11a.firm_id$+ope11a.customer_id$+ope11a.order_no$+ope11a.internal_seq_no$, knum="AO_CUST_ORD", dom=*next) poe08a$
+    if ope01a.invoice_type$="S" then
+        if non_stock_option$="A" then
+            pof$="Y"
+        else
+            if cvs(poe08a.po_no$,2)="" then
+                if non_stock_option$="N" then pof$="Y"
+            else
+                if non_stock_option$="P" then pof$="Y"
             endif
+        endif
+    else
+        if non_stock$="Y" then pof$="Y"
+    endif
+
+    if cvs(poe08a.po_no$,2)<>"" then
+        if (ope01a.invoice_type$="P" and non_stock$="Y") or (ope01a.invoice_type$="S" and pos(non_stock_option$="AP"))  then  
+            find record (poe02_dev, key=firm_id$+poe08a$.po_no$, dom=*endif) poe02a$
+            pol$="Vnd:"+poe02a.vendor_id$+"  PO:"+poe08a.po_no$
         endif
     endif
 

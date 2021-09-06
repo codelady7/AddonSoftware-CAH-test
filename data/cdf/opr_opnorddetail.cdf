@@ -1,62 +1,141 @@
-[[OPR_OPNORDDETAIL.QUOTED.AVAL]]
-open$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN")
-quoted$=callpoint!.getUserInput()
-backorders$=callpoint!.getColumnData("OPR_OPNORDDETAIL.BACKORDERS")
-credit$=callpoint!.getColumnData("OPR_OPNORDDETAIL.CREDIT")
-non_stock$=callpoint!.getColumnData("OPR_OPNORDDETAIL.NON_STOCK")
-gosub enable_listbutton
-[[OPR_OPNORDDETAIL.CREDIT.AVAL]]
-open$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN")
-quoted$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTED")
-backorders$=callpoint!.getColumnData("OPR_OPNORDDETAIL.BACKORDERS")
-credit$=callpoint!.getUserInput()
-non_stock$=callpoint!.getColumnData("OPR_OPNORDDETAIL.NON_STOCK")
-gosub enable_listbutton
-[[OPR_OPNORDDETAIL.NON_STOCK.AVAL]]
-open$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN")
-quoted$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTED")
-backorders$=callpoint!.getColumnData("OPR_OPNORDDETAIL.BACKORDERS")
-credit$=callpoint!.getColumnData("OPR_OPNORDDETAIL.CREDIT")
-non_stock$=callpoint!.getUserInput()
-gosub enable_listbutton
-[[OPR_OPNORDDETAIL.BACKORDERS.AVAL]]
-open$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN")
-quoted$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTED")
-backorders$=callpoint!.getUserInput()
-credit$=callpoint!.getColumnData("OPR_OPNORDDETAIL.CREDIT")
-non_stock$=callpoint!.getColumnData("OPR_OPNORDDETAIL.NON_STOCK")
-gosub enable_listbutton
+[[OPR_OPNORDDETAIL.ARER]]
+rem --- Enable Open Orders' Non-Stock Options ListButton
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
+
 [[OPR_OPNORDDETAIL.OPEN.AVAL]]
+rem --- Skip if not changed
 open$=callpoint!.getUserInput()
-quoted$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTED")
-backorders$=callpoint!.getColumnData("OPR_OPNORDDETAIL.BACKORDERS")
-credit$=callpoint!.getColumnData("OPR_OPNORDDETAIL.CREDIT")
-non_stock$=callpoint!.getColumnData("OPR_OPNORDDETAIL.NON_STOCK")
-gosub enable_listbutton
-[[OPR_OPNORDDETAIL.<CUSTOM>]]
-enable_listbutton:
+if open$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN") then break
 
-	ctl_name$="OPR_OPNORDDETAIL.non_stock_option"
+rem --- Enable/disable Open Orders sub-options
+if open$="Y" then
+	rem --- Enable and check sub-options
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_BACK",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_HOLD",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_NEW",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_BACK","Y",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_HOLD","Y",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_NEW","Y",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","A",1)
+else
+	rem --- Disable and uncheck sub-options
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_BACK",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_HOLD",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_NEW",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_BACK","N",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_HOLD","N",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_NEW","N",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","X",1)
+endif
 
-	if open$="N" and quoted$="N" and backorders$="N" and credit$="N" and non_stock$="Y"
-		ctl_stat$=" "
-	else
-		ctl_stat$="D"
-	endif
-	gosub disable_fields
+[[OPR_OPNORDDETAIL.OPEN_BACK.AVAL]]
+rem --- Skip if not changed
+open_back$=callpoint!.getUserInput()
+if open$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_BACK") then break
 
-	callpoint!.setStatus("ABLEMAP-ACTIVATE-REFRESH:OPR_OPNORDDETAIL.non_stock_option")
-return
+rem --- Enable/disable Open Orders' Non-Stock Options ListButton
+open_hold$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_HOLD")
+open_new$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_NEW")
+if open_back$="Y" or open_hold$="Y" or open_new$="Y" then
+	rem --- Enable Non-Stock Options ListButton, but don't set
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
+else
+	rem --- Disable and set Non-Stock Options ListButton
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","X",1)
+endif
 
-disable_fields:
-rem --- used to disable/enable controls depending on parameter settings
-rem --- send in control to toggle (format "ALIAS.CONTROL_NAME"), and D or space to disable/enable
+[[OPR_OPNORDDETAIL.OPEN_HOLD.AVAL]]
+rem --- Skip if not changed
+open_hold$=callpoint!.getUserInput()
+if open_hold$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_HOLD") then break
 
-	wctl$=str(num(callpoint!.getTableColumnAttribute(ctl_name$,"CTLI")):"00000")
-	wmap$=callpoint!.getAbleMap()
-	wpos=pos(wctl$=wmap$,8)
-	wmap$(wpos+6,1)=ctl_stat$
-	callpoint!.setAbleMap(wmap$)
-	callpoint!.setStatus("ABLEMAP-REFRESH")
+rem --- Enable/disable Open Orders' Non-Stock Options ListButton
+open_back$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_BACK")
+open_new$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_NEW")
+if open_back$="Y" or open_hold$="Y" or open_new$="Y" then
+	rem --- Enable Non-Stock Options ListButton, but don't set
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
+else
+	rem --- Disable and set Non-Stock Options ListButton
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","X",1)
+endif
 
-return
+[[OPR_OPNORDDETAIL.OPEN_NEW.AVAL]]
+rem --- Skip if not changed
+open_new$=callpoint!.getUserInput()
+if open_new$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_new") then break
+
+rem --- Enable/disable Open Orders' Non-Stock Options ListButton
+open_back$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_BACK")
+open_hold$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_HOLD")
+if open_back$="Y" or open_hold$="Y" or open_new$="Y" then
+	rem --- Enable Non-Stock Options ListButton, but don't set
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
+else
+	rem --- Disable and set Non-Stock Options ListButton
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","X",1)
+endif
+
+[[OPR_OPNORDDETAIL.QUOTED.AVAL]]
+rem --- Skip if not changed
+quoted$=callpoint!.getUserInput()
+if quoted$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTED") then break
+
+rem --- Enable/disable Quotes sub-options
+if quoted$="Y" then
+	rem --- Enable and check sub-options
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.QUOTE_HOLD",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.QUOTE_NEW",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.QUOTE_HOLD","Y",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.QUOTE_NEW","Y",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK","Y",1)
+else
+	rem --- Disable and uncheck sub-options
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.QUOTE_HOLD",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.QUOTE_NEW",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.QUOTE_HOLD","N",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.QUOTE_NEW","N",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK","N",1)
+endif
+
+[[OPR_OPNORDDETAIL.QUOTE_HOLD.AVAL]]
+rem --- Skip if not changed
+quote_hold$=callpoint!.getUserInput()
+if quote_hold$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTE_HOLD") then break
+
+rem --- Enable/disable Quotes Non-Stock CheckBox
+quote_new$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTE_NEW")
+if quote_hold$="Y" or quote_new$="Y" then
+	rem --- Enable Non-Stock CheckBox, but don't set
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK",1)
+else
+	rem --- Disable and set Non-Stock CheckBox
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK","N",1)
+endif
+
+[[OPR_OPNORDDETAIL.QUOTE_NEW.AVAL]]
+rem --- Skip if not changed
+quote_new$=callpoint!.getUserInput()
+if quote_new$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTE_NEW") then break
+
+rem --- Enable/disable Quotes Non-Stock CheckBox
+quote_hold$=callpoint!.getColumnData("OPR_OPNORDDETAIL.QUOTE_HOLD")
+if quote_hold$="Y" or quote_new$="Y" then
+	rem --- Enable Non-Stock CheckBox, but don't set
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK",1)
+else
+	rem --- Disable and set Non-Stock CheckBox
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK","N",1)
+endif
+
+
+

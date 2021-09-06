@@ -84,18 +84,15 @@ rem --- Assign form input values to local variables
     s5$  =  option!.getOptionData("ORD_TAKEN_BY")
     s7$  =  option!.getOptionData("SALESPERSON")
     s6$  =  option!.getOptionData("PRINT_UPRINT_ALL")
-    wo_open$=Option!.getOptionData("OPEN")
-    wo_quoted$=Option!.getOptionData("QUOTED")
-    wo_backord$=Option!.getOptionData("BACKORDERS")
-    wo_cred$=Option!.getOptionData("CREDIT")
-    wo_non_stock$=Option!.getOptionData("NON_STOCK")
-    s4$=""
-    if wo_open$="Y" then s4$=s4$+"O"
-    if wo_quoted$="Y" then s4$=s4$+"Q"
-    if wo_backord$="Y" then s4$=s4$+"B"
-    if wo_cred$="Y" then s4$=s4$+"C"
-    if wo_non_stock$="Y" then s4$=s4$+"N"
-    s8$  =  option!.getOptionData("NON_STOCK_OPTION")
+    open$=Option!.getOptionData("OPEN")
+    open_new$=Option!.getOptionData("OPEN_NEW")
+    open_back$=Option!.getOptionData("OPEN_BACK")
+    open_hold$=Option!.getOptionData("OPEN_HOLD")
+    quoted$=Option!.getOptionData("QUOTED")
+    quote_new$=Option!.getOptionData("QUOTE_NEW")
+    quote_hold$=Option!.getOptionData("QUOTE_HOLD")
+    non_stock$=Option!.getOptionData("NON_STOCK")
+    non_stock_option$  =  option!.getOptionData("NON_STOCK_OPTION")
     col_format$=option!.getOptionData("COL_FORMAT")
 
 rem --- Retrieve parameter records
