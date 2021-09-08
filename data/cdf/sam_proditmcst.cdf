@@ -16,76 +16,7 @@ rem --- Create totals
 		cwin!.setVisible(1)
 	endif
  
-[[SAM_PRODITMCST.ASHO]]
-rem - create stacked bar chart widget
 
-	gosub create_widget
-[[SAM_PRODITMCST.BPRK]]
-rem --- Use current selections for initiating previous record
-	year$=callpoint!.getColumnData("SAM_PRODITMCST.YEAR")
-	product_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
-	item_id$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
-	sam_dev=fnget_dev("SAM_PRODITMCST")
-	customer_id$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
-	read(sam_dev,key=firm_id$+year$+product_type$+item_id$+customer_id$,dir=0,dom=*next)
-[[SAM_PRODITMCST.BNEK]]
-rem --- Use current selections for initiating next record
-	year$=callpoint!.getColumnData("SAM_PRODITMCST.YEAR")
-	product_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
-	item_id$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
-	sam_dev=fnget_dev("SAM_PRODITMCST")
-	customer_id$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
-	read(sam_dev,key=firm_id$+year$+product_type$+item_id$+customer_id$,dom=*next)
-[[SAM_PRODITMCST.BOVE]]
-rem --- Restrict lookup to orders
-			
-	alias_id$ = "SAM_CUSTOMER"
-	inq_mode$ = ""
-	key_pfx$  = firm_id$
-	key_id$   = "AO_PRD_ITM_CST"
-			
-	dim filter_defs$[1,1]
-			
-	call stbl("+DIR_SYP")+"bam_inquiry.bbj",
-:		gui_dev,
-:		Form!,
-:		alias_id$,
-:		inq_mode$,
-:		table_chans$[all],
-:		key_pfx$,
-:		key_id$,
-:		selected_key$,
-:		filter_defs$[all],
-:		search_defs$[all]
-			
-	if selected_key$<>"" then 
-		callpoint!.setStatus("RECORD:[" + selected_key$ +"]")
-	else
-		callpoint!.setStatus("ABORT")
-	endif
-	callpoint!.setStatus("ACTIVATE")
-[[SAM_PRODITMCST.ITEM_ID.AINV]]
-rem --- Item synonym processing
-
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
-[[SAM_PRODITMCST.CUSTOMER_ID.AVAL]]
-rem --- Enable/Disable Summary button
-	prod_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
-	item_no$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
-	cust_no$=callpoint!.getUserInput()
-	gosub summ_button
-[[SAM_PRODITMCST.ITEM_ID.AVAL]]
-rem --- Enable/Disable Summary button
-	prod_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
-	item_no$=callpoint!.getUserInput()
-	cust_no$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
-	gosub summ_button
-[[SAM_PRODITMCST.PRODUCT_TYPE.AVAL]]
-rem --- Enable/Disable Summary button
-	prod_type$=callpoint!.getUserInput()
-	item_no$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
-	cust_no$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
-	gosub summ_button
 [[SAM_PRODITMCST.AOPT-SUMM]]
 rem --- Calculate and display summary info
 	tcst=0
@@ -235,6 +166,7 @@ rem --- Now display all of these things and disable key fields
 		endif
 		cwin!.setVisible(1)
 	endif
+
 [[SAM_PRODITMCST.AREC]]
 rem --- Enable key fields
 	callpoint!.setColumnEnabled("SAM_PRODITMCST.YEAR",1)
@@ -274,12 +206,66 @@ rem --- clear out the widget
 	cwin!.setVisible(0)
 
 	callpoint!.setStatus("REFRESH")
+
+[[SAM_PRODITMCST.ASHO]]
+rem - create stacked bar chart widget
+
+	gosub create_widget
+
+[[SAM_PRODITMCST.BNEK]]
+rem --- Use current selections for initiating next record
+	year$=callpoint!.getColumnData("SAM_PRODITMCST.YEAR")
+	product_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
+	item_id$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
+	sam_dev=fnget_dev("SAM_PRODITMCST")
+	customer_id$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
+	read(sam_dev,key=firm_id$+year$+product_type$+item_id$+customer_id$,dom=*next)
+
+[[SAM_PRODITMCST.BOVE]]
+rem --- Restrict lookup to orders
+			
+	alias_id$ = "SAM_CUSTOMER"
+	inq_mode$ = ""
+	key_pfx$  = firm_id$
+	key_id$   = "AO_PRD_ITM_CST"
+			
+	dim filter_defs$[1,1]
+			
+	call stbl("+DIR_SYP")+"bam_inquiry.bbj",
+:		gui_dev,
+:		Form!,
+:		alias_id$,
+:		inq_mode$,
+:		table_chans$[all],
+:		key_pfx$,
+:		key_id$,
+:		selected_key$,
+:		filter_defs$[all],
+:		search_defs$[all]
+			
+	if selected_key$<>"" then 
+		callpoint!.setStatus("RECORD:[" + selected_key$ +"]")
+	else
+		callpoint!.setStatus("ABORT")
+	endif
+	callpoint!.setStatus("ACTIVATE")
+
+[[SAM_PRODITMCST.BPRK]]
+rem --- Use current selections for initiating previous record
+	year$=callpoint!.getColumnData("SAM_PRODITMCST.YEAR")
+	product_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
+	item_id$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
+	sam_dev=fnget_dev("SAM_PRODITMCST")
+	customer_id$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
+	read(sam_dev,key=firm_id$+year$+product_type$+item_id$+customer_id$,dir=0,dom=*next)
+
 [[SAM_PRODITMCST.BSHO]]
 rem --- Check for parameter record
-	num_files=2
+	num_files=3
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="SAS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="SAM_PRODITMCST",open_opts$[2]="OTA@"
+	open_tables$[3]="GLS_CALENDAR",open_opts$[3]="OTA"
 	gosub open_tables
 	sas01_dev=num(open_chans$[1]),sas01a$=open_tpls$[1]
 
@@ -300,6 +286,52 @@ rem --- disable total elements
 	callpoint!.setColumnEnabled("<<DISPLAY>>.TQTY",-1)
 	callpoint!.setColumnEnabled("<<DISPLAY>>.TCST",-1)
 	callpoint!.setColumnEnabled("<<DISPLAY>>.TSLS",-1)
+
+[[SAM_PRODITMCST.CUSTOMER_ID.AVAL]]
+rem --- Enable/Disable Summary button
+	prod_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
+	item_no$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
+	cust_no$=callpoint!.getUserInput()
+	gosub summ_button
+
+[[SAM_PRODITMCST.ITEM_ID.AINV]]
+rem --- Item synonym processing
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
+[[SAM_PRODITMCST.ITEM_ID.AVAL]]
+rem --- Enable/Disable Summary button
+	prod_type$=callpoint!.getColumnData("SAM_PRODITMCST.PRODUCT_TYPE")
+	item_no$=callpoint!.getUserInput()
+	cust_no$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
+	gosub summ_button
+
+[[SAM_PRODITMCST.PRODUCT_TYPE.AVAL]]
+rem --- Enable/Disable Summary button
+	prod_type$=callpoint!.getUserInput()
+	item_no$=callpoint!.getColumnData("SAM_PRODITMCST.ITEM_ID")
+	cust_no$=callpoint!.getColumnData("SAM_PRODITMCST.CUSTOMER_ID")
+	gosub summ_button
+
+[[SAM_PRODITMCST.YEAR.AVAL]]
+rem --- Use fiscal period and abbreviation for table row label
+	year$=callpoint!.getUserInput()
+	aon_period$=Translate!.getTranslation("AON_PERIOD")
+	gls_calendar=fnget_dev("GLS_CALENDAR")
+	dim gls_calendar$:fnget_tpl$("GLS_CALENDAR")
+	findrecord(gls_calendar,key=firm_id$+year$,dom=*next)gls_calendar$
+	for i=1 to 13
+		period$=str(i:"00")
+		mthAbbr$=field(gls_calendar$,"abbr_name_"+period$)
+		if cvs(mthAbbr$,2)="" then continue
+		ctlContext=num(callpoint!.getTableColumnAttribute("SAM_PRODITMCST.QTY_SHIPPED_"+period$,"CTLC"))
+		ctlID=num(callpoint!.getTableColumnAttribute("SAM_PRODITMCST.QTY_SHIPPED_"+period$,"CTLI"))
+		ctlLabel!=SysGUI!.getWindow(ctlContext).getControl(ctlID-1000)
+		ctlLabel!.setLocation(ctlLabel!.getX()-25,ctlLabel!.getY())
+		ctlLabel!.setSize(ctlLabel!.getWidth()+25,ctlLabel!.getHeight())
+		ctlLabel!.setText(aon_period$+" "+period$+" - "+mthAbbr$+":")
+	next i
+
 [[SAM_PRODITMCST.<CUSTOM>]]
 rem ========================================================
 calc_totals:
@@ -566,3 +598,6 @@ rem ========================================================
 	SAWidget!.refresh()
 
 return
+
+
+

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sam_salespsn">4E29E5375854F1355ABC44F90088E348</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sam_salespsn">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sam_salespsn">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sam_salespsn">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sam_salespsn">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sam_salespsn">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sam_salespsn">20210907</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sam_salespsn">20210907</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sam_salespsn">165450</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sam_salespsn"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sam_salespsn">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sam_salespsn">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sam_salespsn"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sam_salespsn"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sam_salespsn">T</DD_ATTR_FTYP>
@@ -106,7 +106,7 @@
 			<DD_SEQUENCE id="ddm_table_labl.sam_salespsn001">001</DD_SEQUENCE>
 			<DD_CTRL_NAME id="ddm_table_labl.sam_salespsn001">UNIT            </DD_CTRL_NAME>
 			<DD_ATTR_LABL id="ddm_table_labl.sam_salespsn001">Units</DD_ATTR_LABL>
-			<DD_ATTR_CTLX id="ddm_table_labl.sam_salespsn001">-4</DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_labl.sam_salespsn001">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.sam_salespsn001">+4</DD_ATTR_CTLY>
 			<DD_ATTR_TIND id="ddm_table_labl.sam_salespsn001">6</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.sam_salespsn001"></DD_ATTR_GHDR>
@@ -376,7 +376,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_salespsn002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_salespsn002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_salespsn002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn002"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_salespsn002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_salespsn002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_salespsn002"></DD_ATTR_CTLY>
@@ -427,7 +427,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_salespsn003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_salespsn003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_salespsn003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_salespsn003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_salespsn003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_salespsn003"></DD_ATTR_CTLY>
@@ -478,7 +478,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_salespsn004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_salespsn004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_salespsn004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_salespsn004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_salespsn004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_salespsn004"></DD_ATTR_CTLY>
@@ -529,7 +529,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.sam_salespsn005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.sam_salespsn005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.sam_salespsn005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.sam_salespsn005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.sam_salespsn005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.sam_salespsn005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.sam_salespsn005"></DD_ATTR_CTLY>
@@ -1758,6 +1758,11 @@
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
 		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.sam_salespsnyearaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.sam_salespsnyearaval">SAM_SALESPSN    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.sam_salespsnyearaval">YEAR            </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.sam_salespsnyearaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_column_cpro.sam_salespsnslspsn_codeaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.sam_salespsnslspsn_codeaval">SAM_SALESPSN    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.sam_salespsnslspsn_codeaval">SLSPSN_CODE     </DD_DVAR_NAME>
