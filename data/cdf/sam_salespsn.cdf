@@ -15,48 +15,7 @@ rem --- Create totals
 		endif
 		cwin!.setVisible(1)
 	endif
-[[SAM_SALESPSN.ASHO]]
-rem - create stacked bar chart widget
 
-	gosub create_widget
-[[SAM_SALESPSN.BPRK]]
-rem --- Use current selections for initiating previous record
-	year$=callpoint!.getColumnData("SAM_SALESPSN.YEAR")
-	slspsn_code$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
-	product_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
-	item_id$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
-	sam_dev=fnget_dev("SAM_SALESPSN")
-	read(sam_dev,key=firm_id$+year$+slspsn_code$+product_type$+item_id$,dir=0,dom=*next)
-[[SAM_SALESPSN.BNEK]]
-rem --- Use current selections for initiating next record
-	year$=callpoint!.getColumnData("SAM_SALESPSN.YEAR")
-	slspsn_code$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
-	product_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
-	item_id$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
-	sam_dev=fnget_dev("SAM_SALESPSN")
-	read(sam_dev,key=firm_id$+year$+slspsn_code$+product_type$+item_id$,dom=*next)
-[[SAM_SALESPSN.ITEM_ID.AINV]]
-rem --- Item synonym processing
-
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
-[[SAM_SALESPSN.ITEM_ID.AVAL]]
-rem --- Enable/Disable Summary button
-	slsmn_no$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
-	prod_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
-	item_no$=callpoint!.getUserInput()
-	gosub summ_button
-[[SAM_SALESPSN.PRODUCT_TYPE.AVAL]]
-rem --- Enable/Disable Summary button
-	slsmn_no$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
-	prod_type$=callpoint!.getUserInput()
-	item_no$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
-	gosub summ_button
-[[SAM_SALESPSN.SLSPSN_CODE.AVAL]]
-rem --- Enable/Disable Summary button
-	slsmn_no$=callpoint!.getUserInput()
-	prod_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
-	item_no$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
-	gosub summ_button
 [[SAM_SALESPSN.AOPT-SUMM]]
 rem --- Calculate and display summary info
 	tcst=0
@@ -205,6 +164,143 @@ rem --- Now display all of these things and disable key fields
 		endif
 		cwin!.setVisible(1)
 	endif
+
+[[SAM_SALESPSN.AREC]]
+rem --- Enable key fields
+	callpoint!.setColumnEnabled("SAM_SALESPSN.YEAR",1)
+	callpoint!.setColumnEnabled("SAM_SALESPSN.CUSTOMER_ID",1)
+	callpoint!.setColumnEnabled("SAM_SALESPSN.PRODUCT_TYPE",1)
+	callpoint!.setColumnEnabled("SAM_SALESPSN.ITEM_ID",1)
+
+	callpoint!.setColumnData("<<DISPLAY>>.TCST","0")
+	callpoint!.setColumnData("<<DISPLAY>>.TQTY","0")
+	callpoint!.setColumnData("<<DISPLAY>>.TSLS","0")
+
+	for x=1 to 13
+		callpoint!.setColumnData("<<DISPLAY>>.LY_SHIP_"+str(x:"00"),"0")
+		callpoint!.setColumnData("<<DISPLAY>>.LY_SALES_"+str(x:"00"),"0")
+		callpoint!.setColumnData("<<DISPLAY>>.LY_COST_"+str(x:"00"),"0")
+	next x
+
+	callpoint!.setColumnData("<<DISPLAY>>.LY_COST_TOT","0")
+	callpoint!.setColumnData("<<DISPLAY>>.LY_SALES_TOT","0")
+	callpoint!.setColumnData("<<DISPLAY>>.LY_SHIP_TOT","0")
+
+rem --- Enable/Disable Summary button
+
+	slsmn_no$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
+	prod_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
+	item_no$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
+	gosub summ_button
+
+rem --- clear out the widget
+
+	SAWidget!=callpoint!.getDevObject("barWidget")
+	widget!=SAWidget!.getWidget()
+	widget!.clearDataSet()
+	widget!.refresh()
+
+	cwin!=callpoint!.getDevObject("cwin")
+	cwin!.setVisible(0)
+
+	callpoint!.setStatus("REFRESH")
+
+[[SAM_SALESPSN.ASHO]]
+rem - create stacked bar chart widget
+
+	gosub create_widget
+
+[[SAM_SALESPSN.BNEK]]
+rem --- Use current selections for initiating next record
+	year$=callpoint!.getColumnData("SAM_SALESPSN.YEAR")
+	slspsn_code$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
+	product_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
+	item_id$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
+	sam_dev=fnget_dev("SAM_SALESPSN")
+	read(sam_dev,key=firm_id$+year$+slspsn_code$+product_type$+item_id$,dom=*next)
+
+[[SAM_SALESPSN.BPRK]]
+rem --- Use current selections for initiating previous record
+	year$=callpoint!.getColumnData("SAM_SALESPSN.YEAR")
+	slspsn_code$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
+	product_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
+	item_id$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
+	sam_dev=fnget_dev("SAM_SALESPSN")
+	read(sam_dev,key=firm_id$+year$+slspsn_code$+product_type$+item_id$,dir=0,dom=*next)
+
+[[SAM_SALESPSN.BSHO]]
+rem --- Check for parameter record
+	num_files=3
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="SAS_PARAMS",open_opts$[1]="OTA"
+	open_tables$[2]="SAM_SALESPSN",open_opts$[2]="OTA@"
+	open_tables$[3]="GLS_CALENDAR",open_opts$[3]="OTA"
+	gosub open_tables
+	sas01_dev=num(open_chans$[1]),sas01a$=open_tpls$[1]
+
+	dim sas01a$:sas01a$
+	read record (sas01_dev,key=firm_id$+"SA00")sas01a$
+	if sas01a.by_salespsn$<>"Y"
+		msg_id$="INVALID_SA"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=Translate!.getTranslation("AON_SALESPERSON")
+		gosub disp_message
+		bbjAPI!=bbjAPI()
+		rdFuncSpace!=bbjAPI!.getGroupNamespace()
+		rdFuncSpace!.setValue("+build_task","OFF")
+		release
+	endif
+
+rem --- disable total elements
+	callpoint!.setColumnEnabled("<<DISPLAY>>.TQTY",-1)
+	callpoint!.setColumnEnabled("<<DISPLAY>>.TCST",-1)
+	callpoint!.setColumnEnabled("<<DISPLAY>>.TSLS",-1)
+
+[[SAM_SALESPSN.ITEM_ID.AINV]]
+rem --- Item synonym processing
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
+[[SAM_SALESPSN.ITEM_ID.AVAL]]
+rem --- Enable/Disable Summary button
+	slsmn_no$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
+	prod_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
+	item_no$=callpoint!.getUserInput()
+	gosub summ_button
+
+[[SAM_SALESPSN.PRODUCT_TYPE.AVAL]]
+rem --- Enable/Disable Summary button
+	slsmn_no$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
+	prod_type$=callpoint!.getUserInput()
+	item_no$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
+	gosub summ_button
+
+[[SAM_SALESPSN.SLSPSN_CODE.AVAL]]
+rem --- Enable/Disable Summary button
+	slsmn_no$=callpoint!.getUserInput()
+	prod_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
+	item_no$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
+	gosub summ_button
+
+[[SAM_SALESPSN.YEAR.AVAL]]
+rem --- Use fiscal period and abbreviation for table row label
+	year$=callpoint!.getUserInput()
+	aon_period$=Translate!.getTranslation("AON_PERIOD")
+	gls_calendar=fnget_dev("GLS_CALENDAR")
+	dim gls_calendar$:fnget_tpl$("GLS_CALENDAR")
+	findrecord(gls_calendar,key=firm_id$+year$,dom=*next)gls_calendar$
+	for i=1 to 13
+		period$=str(i:"00")
+		mthAbbr$=field(gls_calendar$,"abbr_name_"+period$)
+		if cvs(mthAbbr$,2)="" then continue
+		ctlContext=num(callpoint!.getTableColumnAttribute("SAM_SALESPSN.QTY_SHIPPED_"+period$,"CTLC"))
+		ctlID=num(callpoint!.getTableColumnAttribute("SAM_SALESPSN.QTY_SHIPPED_"+period$,"CTLI"))
+		ctlLabel!=SysGUI!.getWindow(ctlContext).getControl(ctlID-1000)
+		ctlLabel!.setLocation(ctlLabel!.getX()-25,ctlLabel!.getY())
+		ctlLabel!.setSize(ctlLabel!.getWidth()+25,ctlLabel!.getHeight())
+		ctlLabel!.setText(aon_period$+" "+period$+" - "+mthAbbr$+":")
+	next i
+
 [[SAM_SALESPSN.<CUSTOM>]]
 rem ========================================================
 calc_totals:
@@ -471,68 +567,6 @@ rem ========================================================
 	SAWidget!.refresh()
 
 return
-[[SAM_SALESPSN.BSHO]]
-rem --- Check for parameter record
-	num_files=2
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="SAS_PARAMS",open_opts$[1]="OTA"
-	open_tables$[2]="SAM_SALESPSN",open_opts$[2]="OTA@"
-	gosub open_tables
-	sas01_dev=num(open_chans$[1]),sas01a$=open_tpls$[1]
 
-	dim sas01a$:sas01a$
-	read record (sas01_dev,key=firm_id$+"SA00")sas01a$
-	if sas01a.by_salespsn$<>"Y"
-		msg_id$="INVALID_SA"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=Translate!.getTranslation("AON_SALESPERSON")
-		gosub disp_message
-		bbjAPI!=bbjAPI()
-		rdFuncSpace!=bbjAPI!.getGroupNamespace()
-		rdFuncSpace!.setValue("+build_task","OFF")
-		release
-	endif
 
-rem --- disable total elements
-	callpoint!.setColumnEnabled("<<DISPLAY>>.TQTY",-1)
-	callpoint!.setColumnEnabled("<<DISPLAY>>.TCST",-1)
-	callpoint!.setColumnEnabled("<<DISPLAY>>.TSLS",-1)
-[[SAM_SALESPSN.AREC]]
-rem --- Enable key fields
-	callpoint!.setColumnEnabled("SAM_SALESPSN.YEAR",1)
-	callpoint!.setColumnEnabled("SAM_SALESPSN.CUSTOMER_ID",1)
-	callpoint!.setColumnEnabled("SAM_SALESPSN.PRODUCT_TYPE",1)
-	callpoint!.setColumnEnabled("SAM_SALESPSN.ITEM_ID",1)
 
-	callpoint!.setColumnData("<<DISPLAY>>.TCST","0")
-	callpoint!.setColumnData("<<DISPLAY>>.TQTY","0")
-	callpoint!.setColumnData("<<DISPLAY>>.TSLS","0")
-
-	for x=1 to 13
-		callpoint!.setColumnData("<<DISPLAY>>.LY_SHIP_"+str(x:"00"),"0")
-		callpoint!.setColumnData("<<DISPLAY>>.LY_SALES_"+str(x:"00"),"0")
-		callpoint!.setColumnData("<<DISPLAY>>.LY_COST_"+str(x:"00"),"0")
-	next x
-
-	callpoint!.setColumnData("<<DISPLAY>>.LY_COST_TOT","0")
-	callpoint!.setColumnData("<<DISPLAY>>.LY_SALES_TOT","0")
-	callpoint!.setColumnData("<<DISPLAY>>.LY_SHIP_TOT","0")
-
-rem --- Enable/Disable Summary button
-
-	slsmn_no$=callpoint!.getColumnData("SAM_SALESPSN.SLSPSN_CODE")
-	prod_type$=callpoint!.getColumnData("SAM_SALESPSN.PRODUCT_TYPE")
-	item_no$=callpoint!.getColumnData("SAM_SALESPSN.ITEM_ID")
-	gosub summ_button
-
-rem --- clear out the widget
-
-	SAWidget!=callpoint!.getDevObject("barWidget")
-	widget!=SAWidget!.getWidget()
-	widget!.clearDataSet()
-	widget!.refresh()
-
-	cwin!=callpoint!.getDevObject("cwin")
-	cwin!.setVisible(0)
-
-	callpoint!.setStatus("REFRESH")
