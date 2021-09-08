@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-06
+ Report Date:   2021-09-07
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -59,3 +59,37 @@ unmasked scheduled production quantity.
 Modified: reports/SFHardCopy.jasper
 Modified: reports/SFHardCopy.jrxml
 Modified: sprocs/SFHARDCOPY.prc
+
+=======================================================================================================================================
+Revision: 08f0ad62911b6e92f393394d4a7ba62278e9070d
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/7/2021 5:40:53 PM
+Message:
+ER 2439: Added fiscal period and abbreviation to table row labels.
+
+(cherry picked from commit a237bdd63eab526822fb2fc31ad71620bcd9a73a)
+----
+Modified: data/bar/sam_customer.xml
+Modified: data/bar/sam_custship.xml
+Modified: data/bar/sam_custsic.xml
+Modified: data/bar/sam_custtype.xml
+Modified: data/bar/sam_distcode.xml
+Modified: data/bar/sam_item.xml
+Modified: data/bar/sam_nonstock.xml
+Modified: data/bar/sam_proditmcst.xml
+Modified: data/bar/sam_salespsn.xml
+Modified: data/bar/sam_territry.xml
+Modified: data/bar/sam_vendor.xml
+Modified: data/bar/sam_warehse.xml
+Modified: data/cdf/sam_customer.cdf
+Modified: data/cdf/sam_custship.cdf
+Modified: data/cdf/sam_custsic.cdf
+Modified: data/cdf/sam_custtype.cdf
+Modified: data/cdf/sam_distcode.cdf
+Modified: data/cdf/sam_item.cdf
+Modified: data/cdf/sam_nonstock.cdf
+Modified: data/cdf/sam_proditmcst.cdf
+Modified: data/cdf/sam_salespsn.cdf
+Modified: data/cdf/sam_territry.cdf
+Modified: data/cdf/sam_vendor.cdf
+Modified: data/cdf/sam_warehse.cdf
