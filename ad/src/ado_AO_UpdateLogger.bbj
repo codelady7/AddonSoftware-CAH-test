@@ -1,0 +1,50 @@
+REM /**
+REM  * ado_AO_UpdateLogger.bbj
+REM  * @author shaun
+REM  *
+REM  */
+use java.io.File 
+use java.text.SimpleDateFormat
+
+class public AO_UpdateLogger
+    
+    rem -- path to the log file
+    field protected BBjString logName!
+    field protected BBjNumber logChan!
+    
+    field protected BBjString BaseName!="updater_"
+    field protected BBjString DatePattern!="yyyyMM"
+    field protected BBjString Extension!=".log"
+    
+    method public AO_UpdateLogger()
+        #this!(dir("")+"../aon")
+    methodend 
+    
+    rem -- 
+    method public AO_UpdateLogger(BBjString aonPath!)
+        declare File aonPathFile!
+        
+        rem Derive the name of our log file
+        aonPathFile!=new java.io.File(aonPath!)
+        if (!aonPathFile!.isDirectory()) then
+            throw "AON home directory is invalid.",12
+        endif 
+        format!=new SimpleDateFormat(#DatePattern!)
+        #logName!=aonPath!+#BaseName!+format!.format(new java.util.Date())+#Extension!
+        
+        string #logName!,err=*next 
+        #logChan!=unt
+        open (#logChan!) #logName!
+        
+    methodend 
+    
+    
+    method public void log(BBjString message$)
+        write(#logChan!) message$
+    methodend 
+    
+    method public void close()
+        close (#logChan!)
+    methodend 
+    
+classend 

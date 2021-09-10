@@ -1,0 +1,184 @@
+REM /**
+REM  * ado_AO_Updater.bbj
+REM  * @author shaun
+REM  *
+REM  *   Provides live updates for the current branch via Git. 
+REM  */
+
+rem --- test program
+declare AO_Updater updater!
+updater!=new AO_Updater() 
+updater!.checkForUpdates()
+
+end 
+
+use ::ado_GitRepoInterface.aon::GitRepoInterface
+use ::ado_AO_UpdaterStatus.bbj::AO_UpdaterStatus
+use ::ado_AO_UpdateLogger.bbj::AO_UpdateLogger
+
+use java.util.Iterator
+
+
+REM Main class for retrieving Addon updates
+class public AO_Updater
+
+    field public static BBjString DEFAULT_REPOSITORY!="BASISAON"
+    field protected GitRepoInterface Git!
+    field protected AO_UpdateLogger Logger!
+    field protected BBjString AddonDirectory!
+    
+    rem -- Name of the repo we're pulling from. 
+    rem -- SDH Not sure if we're going to truly need this field once we instantiate GitRepoInterface
+    field protected BBjString RepoConfigName!
+    
+    REM constructor
+    method public AO_Updater() 
+        #this!(#DEFAULT_REPOSITORY!)
+    methodend 
+    
+    method public AO_Updater(BBjString repoConfigName!)
+        declare java.io.File addonDirectoryFile!
+        rem Get our Addon directory, assuming our current directory is the Barista directory
+        #AddonDirectory!=dir("")+"../aon"
+        addonDirectoryFile!=new java.io.File(#AddonDirectory!)
+        #AddonDirectory!=addonDirectoryFile!.getCanonicalPath()
+        
+        #Logger!=new AO_UpdateLogger(#AddonDirectory!)
+        #Logger!.log("Addon Directory: "+#AddonDirectory!)
+        #Logger!.log("Repo: "+repoConfigName!)
+        #Git!=new GitRepoInterface(repoConfigName!,#AddonDirectory!) 
+        
+    methodend 
+    
+    REM checkForUpdates()
+    REM arguments: none
+    REM returns: updateResult
+    REM Goes through the process of checking for updates: 
+    REM      Check for unchecked-in changes.  Basically without a clean directory, we can't give a good 
+    REM      prediction of whether conflicts will result.
+    REM      Dry-run fetching branch
+    REM      Check fetched refs list to see if we're getting updates
+    REM      Check fetch result to see if conflicts will result.
+    method public UpdateResult checkForUpdates()
+        
+        declare AO_UpdaterStatus status!
+        declare BBjString baristaHome!
+        declare BBjString addonHome!
+        declare BBjString statePropertyFile!
+        declare BBjString logFile!
+        declare BBjVector stagedFiles!
+        declare BBjVector unstagedFiles!
+        declare BBjVector conflictedFiles! 
+        declare BBjVector committedConflicts!
+        declare BBjNumber dirtyWorkArea!
+        declare Iterator fileIterator!
+        declare BBjString fileName!
+        declare BBjNumber staged!
+        declare BBjNumber unstaged!
+        declare BBjNumber conflicts!
+        declare BBjNumber committedConflicts!
+        
+        rem --- Is the working area free of unchecked in changes and conflicts, including 
+        rem --- conflicts of the third kind? (Files that were marked resolved without actually
+        rem -- resolving the conflicts?  (Is there already a method to check this in GitRepo interface?)
+        dirtyWorkArea=0
+        stagedFiles!=#Git!.getStagedChanges() 
+        unstagedFiles!=#Git!.getUnstagedChanges() 
+        conflictedFiles!=#Git!.getConflicts()
+        committedConflicts!=#Git!.getCommittedConflicts() 
+        
+        staged!=#logUncheckedInFiles("Staged Files",stagedFiles!)
+        unstaged!=#logUncheckedInFiles("Unstaged files",unstagedFiles!)
+        conflicts!=#logUncheckedInFiles("Conflicted files",conflictedFiles!) 
+        committedConflicts!=#logUncheckedInFiles("Committed Conflicts",committedConflicts!)
+        dirtyWorkArea=staged! or unstaged! or conflicts! or committedConflicts! 
+        
+        rem -- SDH Show a message to the user that the working directory is dirty. 
+        if (dirtyWorkArea) then 
+            #Logger!.log("Work area is dirty.  Not proceeding with update.")
+            methodret null()
+        endif    
+        
+        rem --- Check our state to see if this is an initial run or a subsequent run. 
+        rem --- --- Get the name of the propertie file. I am assuming that we are running in the "barista"
+        rem --- --- directory. 
+        statePropertyFile!=#AddonDirectory!+"state.properties"
+        
+        status!=new AO_UpdaterStatus(statePropertyFile!)
+        switch (1)
+            case status!.getState()=AO_UpdaterStatus.getNOT_UPDATING()
+                #Logger!.log("Status: Not Updating")
+               
+                
+                
+                break
+            case status!.getState()=AO_UpdaterStatus.getRESOLVING_CONFLICTS()
+                #Logger!.log("Status: Resolving conflicts")
+                break
+            default
+                #Logger!.log("Status:"+status!.getState()+": no case handles this status. PLease make sure the status is spelled correctly and prefer constants over literals.")
+                break
+        swend
+        
+        methodret null()
+    methodend 
+    
+    REM Writes a list of files to the log.  
+    REM type$ indicates the type of files being written to the log. For example, "staged files", "unstaged files", "conflicts"
+    method protected BBjNumber logUncheckedInFiles(BBjString type$, java.util.List fileList!)
+        if (fileList!=null()) then 
+            methodret 0
+        endif 
+        
+        if (fileList!.size()=0) then 
+            methodret 0
+        endif 
+        
+        #Logger!.log(type$+":")
+        fileIterator!=fileList!.iterator()
+        while (fileIterator!.hasNext()) 
+            fileName!=cast(BBjString,fileIterator!.next())
+            #Logger!.log(fileName!)
+        wend 
+        methodret 1 
+    methodend 
+
+    REM checkRunningProcesses() 
+    REM arguments: none 
+    REM returns: BBjNumber: 1 if processes are running and 0 if processes are not running. 
+    REM Checks the processes that are running in the instance (maybe just the MDI?) and returns 1 if there are 
+    REM users on the system and 0 if the system is all clear. 
+    method public BBjNumber checkRunningProcesses() 
+        methodret 0
+    methodend
+    
+    REM copyMaintenanceMessage() 
+    REM arguments: none
+    REM returns: none
+    REM Copy the maintenance message into place.
+    method public void copyMaintenanceMessage()
+    methodend 
+    
+    REM backupAddonData()
+    REM arguments: none 
+    REM returns: none
+    REM Bundle's the installation's data into a compressed archive file so that it can be restored 
+    REM safely if need be. 
+    method public void backupAddonData() 
+    
+    methodend 
+    
+    REM tagCurrentCommit() 
+    REM arguments: none 
+    REM returns: none
+    method public void tagCurrentCommit() 
+    methodend 
+    
+    
+    
+classend
+
+
+REM Holds the results of a dry-run update, including 
+class public UpdateResult
+classend 

@@ -6,6 +6,9 @@ rem ---
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem ==========================================================================
 
+
+AO_GitRepoInterface.sdhTest()
+
 rem /**
 rem  * This class uses JGit to interface with Addon's Git repository to perform
 rem  * tasks needed during upgrades and updates.
@@ -27,6 +30,8 @@ rem  */
     use java.nio.file.attribute.BasicFileAttributes
     use java.nio.file.attribute.UserPrincipal
     use java.nio.file.attribute.UserPrincipalLookupService
+    use java.util.regex.Matcher
+    use java.util.regex.Pattern
     use java.text.SimpleDateFormat
     use java.util.Date
     use java.util.HashMap
@@ -42,6 +47,7 @@ rem  */
     use org.eclipse.jgit.api.CheckoutCommand
     use org.eclipse.jgit.api.CheckoutCommand.Stage
     use org.eclipse.jgit.api.CherryPickResult.CherryPickStatus
+    use org.eclipse.jgit.api.FetchCommand
     use org.eclipse.jgit.api.LsRemoteCommand
     use org.eclipse.jgit.api.TransportConfigCallback
     use org.eclipse.jgit.api.ResetCommand
@@ -59,8 +65,10 @@ rem  */
     use org.eclipse.jgit.revwalk.RevCommit
     use org.eclipse.jgit.revwalk.RevWalk
     use org.eclipse.jgit.transport.CredentialsProvider
+    use org.eclipse.jgit.transport.FetchResult
     use org.eclipse.jgit.transport.JschConfigSessionFactory
     use org.eclipse.jgit.transport.OpenSshConfig
+    use org.eclipse.jgit.transport.RefSpec
     use org.eclipse.jgit.transport.SshTransport
     use org.eclipse.jgit.transport.Transport
     use org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider
@@ -629,6 +637,36 @@ getConflicts_error:rem --- Method error trap/handler (11Oct2017)
             x$=stbl("+THROWN_ERR","TRUE")
             throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
         methodend
+        
+        rem /**
+        rem  * Builds Vector of file names for files containing embedded conflicts that have been 
+        rem  * marked as resolved.
+        rem  * If any are found, these have to be fixed by hand and committed or the repo needs to 
+        rem  * be rolled back. 
+        rem  * @return BBjVector conflicts!
+        rem  */
+        method public BBjVector getCommittedConflicts()
+            declare BBjVector matches!
+            seterr getCommittedConflicts_error
+            
+            matches!=Grepper.grepRecursively(#AonDir$,"<{4}|>{4}")
+        
+            methodret matches!
+        
+        getCommittedConflicts_error:rem --- Method error trap/handler (11Oct2017)
+            rd_err_text$="", err_num=err
+            if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+            if err_num=252 then
+                E!=BBjAPI().getLastBBjException()
+                rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+                if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+            endif
+            call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+            if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+            if pos("RETRY"=rd_err_act$)<>0 retry
+            x$=stbl("+THROWN_ERR","TRUE")
+            throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+        methodend 
 
         rem /**
         rem  * Builds Vector of local commits made from since$ through until$ that
@@ -907,6 +945,10 @@ getRevCommit_error:rem --- Method error trap/handler (11Oct2017)
         rem  */
         method public BBjVector getStagedChanges()
             seterr getStagedChanges_error
+            
+            rem Note: You will get an error here if you used the single argument constructor, 
+            rem since an Addon directory was not specified. 
+            
             stagedChanges!=BBjAPI().makeVector()
 
             diffCmd!=#git!.diff().setCached(1)
@@ -943,6 +985,9 @@ getStagedChanges_error:rem --- Method error trap/handler (11Oct2017)
         method public BBjVector getUnstagedChanges()
             seterr getUnstagedChanges_error
             unstagedChanges!=BBjAPI().makeVector()
+
+            rem Note: You will get an error here if you used the single argument constructor, 
+            rem since an Addon directory was not specified. 
 
             diffCmd!=#git!.diff()
             if diffCmd!<>null() then
@@ -1096,7 +1141,7 @@ pullRepository_error:rem --- Method error trap/handler (11Oct2017)
                 endif
             endif
 
-        methodend
+        methodend        
 
         REM Prepare Tree Parser
         method protected CanonicalTreeParser prepareTreeParser(RevCommit commit!)
@@ -1261,15 +1306,18 @@ pullRepository_error:rem --- Method error trap/handler (11Oct2017)
 
         REM Searches a file for a substring and returns 1 if the file contains the substring. Otherwise,
         REM returns 0. 
-        method public BBjNumber fileContains(BBjString filePath$, BBjString substring$)
+        method public BBjNumber fileContains(BBjString filePath$, BBjString regex$)
             declare Path fileToSearch!
-            declare java.util.List fileLines!
             declare BBjString fileContent!
+            declare Pattern pattern!
+            declare Matcher matcher!
+            
+            pattern!=Pattern.compile(regex$)
         
             fileToSearch!=Paths.get(filePath$)
-            fileLines!=Files.readAllLines(fileToSearch!)
-            fileContent!=cast(BBjString,fileLines!.stream().collect(Collectors.joining()))
-            methodret fileContent!.contains(substring$)
+            fileContent!=Files.readString(fileToSearch!)
+            matcher!=pattern.matcher(fileContent!)
+            methodret matcher!.find()
         methodend 
 classend
 
@@ -1375,6 +1423,59 @@ class public SSH extends JschConfigSessionFactory implements TransportConfigCall
     methodend
 
 classend
+
+REM Visits all files and directories under a given topLevel directory and sets them as
+REM owned by the specified user account.
+class public Grepper extends SimpleFileVisitor
+
+    field public BBjString Regex!
+    field protected Pattern Pattern!
+    
+    field public BBjVector MatchingFiles!=BBjAPI().makeVector()
+    
+    method public static BBjVector grepRecursively(BBjString topLevelDirectory!, BBjString pattern!)
+        declare Grepper grepper!
+        grepper!=new Grepper(pattern!)
+        Files.walkFileTree(Paths.get(topLevelDirectory!),grepper!)
+        methodret grepper!.getMatchingFiles()
+    methodend
+    
+    method public Grepper(BBjString pRegex$)
+        #setRegex(pRegex$)
+    methodend 
+    
+    method public void setRegex(BBjString pRegex$)
+        #Regex!=pRegex$
+        #Pattern!=Pattern.compile(#Regex!)
+    methodend
+    
+    method public FileVisitResult preVisitDirectory(Object directory!, BasicFileAttributes attrs!)
+        declare Path currentPath!
+        currentPath!=cast(Path,directory!)
+        if (currentPath!.getFileName().endsWith(".git")) then 
+            methodret FileVisitResult.SKIP_SUBTREE
+        endif 
+        methodret FileVisitResult.CONTINUE
+    methodend
+
+    method public FileVisitResult visitFile(Object path!,BasicFileAttributes attr!)
+        declare BBjString fileContents!
+        declare Matcher matcher!
+        declare Path currentPath!
+        currentPath!=cast(Path,path!)
+        fileContents!=Files.readString(currentPath!,err=*next)
+        if (fileContents!=null()) then
+            fileContents!=Files.readString(currentPath!,StandardCharsets.ISO_8859_1)
+        endif 
+        matcher!=#Pattern!.matcher(fileContents!)
+        if (matcher!.find()) then
+            #MatchingFiles!.add(currentPath!.toString())
+        endif 
+        methodret FileVisitResult.CONTINUE
+    methodend
+    
+classend
+
 
 REM Visits all files and directories under a given topLevel directory and sets them as
 REM owned by the specified user account.

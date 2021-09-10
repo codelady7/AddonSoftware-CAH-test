@@ -1,0 +1,57 @@
+REM /**
+REM  * ado_AO_UpdaterStatus.bbj
+REM  * @author shaun
+REM  *
+REM  */
+use java.util.Properties 
+use java.io.FileInputStream
+use java.io.FileOutputStream
+use java.io.File
+
+class public AO_UpdaterStatus 
+    field protected Properties Properties!
+    field public BBjString PropertiesFileName!
+    
+    rem Constants
+    field public static BBjString NOT_UPDATING!="NOT_UPDATING"
+    field public static BBjString RESOLVING_CONFLICTS!="RESOLVING_CONFLICTS"
+    
+    field public BBjString STATE_PROPERTY_NAME!="state"
+    field public BBjString COMMIT_PROPERTY_NAME!="commit"
+    
+    method public AO_UpdaterStatus(BBjString propertiesFileName!)
+        
+        declare FileInputStream fis!
+        declare java.io.File propertiesFile!
+        #PropertiesFileName!=propertiesFileName!
+        #Properties!=new Properties()
+        
+        propertiesFile!=new File(propertiesFileName!)
+        if (propertiesFile!.exists())
+            fis!=new FileInputStream(propertiesFileName!)
+        
+            #Properties!.load(fis!)
+            fis!.close()
+        else 
+            #Properties!.put("state",#NOT_UPDATING!)
+        endif 
+    methodend 
+    
+    method public void writeProperties() 
+        
+        declare FileOutputStream fos!
+        
+        fos!=new FileOutputStream(propertiesFileName!)
+        #Properties!.store(fos!,"")
+    methodend 
+    
+    method public BBjString getState()
+        methodret cast(BBjString,#Properties!.get("state"))
+    methodend 
+    
+    method public BBjString getCommit() 
+        methodret cast(BBjString,#Properties!.get("commit"))
+    methodend 
+    
+classend 
+    

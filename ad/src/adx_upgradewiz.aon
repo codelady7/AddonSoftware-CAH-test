@@ -103,6 +103,8 @@ rem --- Open log file
     gosub open_log
 
 rem --- Is this a restart after resolving Git conflicts?
+    declare BBjVector filesWithEmbeddedConflicts!
+    declare Iterator fileIterator!
     restartFile$=newAonDir$+"/logs/restartUpgradeWizard.txt"
     restartFlag=0
     restart_dev=unt
@@ -112,11 +114,17 @@ rem --- Is this a restart after resolving Git conflicts?
         rem --- with unmerged changes. This can cause a situation that overwrites 
         rem --- the previous installation
         repoInterface!=new GitRepoInterface(gitAuthID$,newAonDir$)
-        if repoInterface!.fileContains(newAonDir$+"/config/addon.syn","<<<<") then 
+        filesWithEmbeddedConflicts!=repoInterface!.getCommittedConflicts()
+        if  filesWithEmbeddedConflicts!.size()>0 then 
             rem --- There are files with embedded conflicts in the directory (Git might have them marked as resolved.) 
             msg_id$="AD_RESOLVE_CONFLICTS"
             gosub disp_message
-            print(log_dev)"***** ERROR: config/addon.syn and possibly other files in the upgraded instance contain conflicts. Please resolve the conflicts before proceeding.  *****"
+            print(log_dev)"***** ERROR: Please resolve conflicts in the following files before proceeding: *****"
+            fileIterator!=filesWithEmbeddedConflicts!.iterator()
+            
+            while (fileIterator!.hasNext()) 
+                print (log_dev) fileIterator!.next() 
+            wend 
          release
     endif 
         
