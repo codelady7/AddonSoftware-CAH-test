@@ -21,15 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apr_checks">2F9D12E59490FA927FE583CDFC2C6CD9</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apr_checks">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apr_checks">20130306</DD_CREATE_DATE>
-<<<<<<< BBJ2111GA
-			<DD_LSTREV_DATE id="ddm_tables.apr_checks">20210713</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apr_checks">20210713</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apr_checks">155022</DD_LSTSYNC_TIME>
-=======
 			<DD_LSTREV_DATE id="ddm_tables.apr_checks">20210830</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.apr_checks">20210830</DD_LSTSYNC_DATE>
 			<DD_LSTSYNC_TIME id="ddm_tables.apr_checks">101300</DD_LSTSYNC_TIME>
->>>>>>> fe5e533 ER 10120: Modified AP Check Printing to default the Check Number to the next check number for the selected Checking Account.
 			<DD_ATTR_ATAB id="ddm_tables.apr_checks"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apr_checks">C:/dev_projects/aon_dev2/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apr_checks"></DD_ATTR_DKNM>
