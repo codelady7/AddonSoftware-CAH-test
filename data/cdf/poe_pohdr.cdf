@@ -296,6 +296,26 @@ if callpoint!.getColumnData("POE_POHDR.DROPSHIP")="Y"
 	endif
 endif
 
+rem --- Show Purchase Order Print Report Controls
+admRptCtlRcp=fnget_dev("ADM_RPTCTL_RCP")
+dim admRptCtlRcp$:fnget_tpl$("ADM_RPTCTL_RCP")
+admRptCtlRcp.dd_table_alias$="POR_POPRINT"
+vendor_id$=callpoint!.getColumnData("POE_POHDR.VENDOR_ID")
+readrecord(admRptCtlRcp,key=firm_id$+vendor_id$+admRptCtlRcp.dd_table_alias$,knum="AO_VEND_ALIAS",dom=*next)admRptCtlRcp$
+if admRptCtlRcp.email_yn$<>"Y" and admRptCtlRcp.fax_yn$<>"Y" then
+	callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_NONE"))
+else
+	if admRptCtlRcp.email_yn$="Y" and admRptCtlRcp.fax_yn$="Y" then
+		callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_EMAIL")+" + "+Translate!.getTranslation("AON_FAX"))
+	else
+		if admRptCtlRcp.email_yn$="Y" then
+			callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_EMAIL")+" "+Translate!.getTranslation("AON_ONLY"))
+		else
+			callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_FAX")+" "+Translate!.getTranslation("AON_ONLY"))
+		endif
+	endif
+endif
+
 [[POE_POHDR.AREC]]
 gosub  form_inits
 
@@ -500,7 +520,7 @@ rem --- inits
 	use java.util.Properties
 
 rem --- Open Files
-	num_files=21
+	num_files=22
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -523,6 +543,7 @@ rem --- Open Files
 	open_tables$[19]="APM_VENDADDR",open_opts$[19]="OTA"
 	open_tables$[20]="POT_RECHDR",open_opts$[20]="OTA"
 	open_tables$[21]="POT_RECDET",open_opts$[21]="OTA"
+	open_tables$[22]="ADM_RPTCTL_RCP",open_opts$[22]="OTA"
 
 	gosub open_tables
 
