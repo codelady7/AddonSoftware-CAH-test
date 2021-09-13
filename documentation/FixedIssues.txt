@@ -106,3 +106,17 @@ ER 10272: Added "Amt Received" to the PO_INVRECPT query.
 Modified: data/sync/adm_query_cols~[01007514PO].xml
 Added: po/src/pof_receipt.aon
 
+=======================================================================================================================================
+Revision: 881269b1065caca8c8c95f5ea3b58d1a63052d55
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/13/2021 3:55:21 PM
+Message:
+ER 10162: Added Report Control status for Purchase Order Print to the
+Purchase Oder Entry form.
+
+(cherry picked from commit cbdb694d83965b1db994c0f2f454483001ea81fd)
+----
+Modified: data/bar/poe_pohdr.xml
+Modified: data/cdf/poe_pohdr.cdf
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
