@@ -1,0 +1,148 @@
+rem --- Purchace Receipt Lookup filter program
+rem --- Program ID: pof_receipt.aon
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- Run by Barista as part of the PO_INVRECPT query.
+rem --- For each row in the result set, this program runs to calculate the Amt Received column.
+
+    setesc std_error
+    seterr std_error
+
+    enter inq_mode$,rec_tpl$,calc_tpl$,table_chans$[all],status$
+
+rem inq_mode$      - not used until recently - current use not yet documented
+rem rec_tpl$       - Current row database columns
+rem calc_tpl$      - Current row calculated columns
+rem table_chans$[] - Barista opened channels array
+rem status$        - Returned status: "SKIP" = Skip current record
+
+rem --- Initialize data
+    status$=""
+
+rem --- Open tables
+
+    if pos(pad("@"+"POT_RECDET",17)=table_chans$[0,0],20)=0 or
+:       pos(pad("@"+"POC_LINECODE",17)=table_chans$[0,0],20)=0 then
+        call dir_pgm$+"adc_application.aon","PO",info$[all]
+        po$=info$[20]
+        if po$<>"Y" then
+            status$="SKIP"
+            goto exit_prog
+        endif
+
+        num_files=2
+        dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+        open_tables$[1]="POT_RECDET",open_opts$[1]="OTA@"
+        open_tables$[2]="POC_LINECODE",open_opts$[2]="OTA@"
+                
+        gosub open_tables        
+    endif
+
+    pot_recdet_dev=fnget_dev("@"+"POT_RECDET")
+    poc_linecode_dev=fnget_dev("@"+"POC_LINECODE")
+    dim pot_recdet$:fnget_tpl$("@"+"POT_RECDET")
+    dim poc_linecode$:fnget_tpl$("@"+"POC_LINECODE")
+
+rem --- Accumulate receipt total
+    poLineCode$=""
+    read(pot_recdet_dev,key=rec_tpl.firm_id$+rec_tpl.po_no$+rec_tpl.receiver_no$,dom=*next)
+    while 1
+        readrecord(pot_recdet_dev,end=*break)pot_recdet$
+        if pot_recdet.firm_id$+rec_tpl.po_no$+pot_recdet.receiver_no$<>rec_tpl.firm_id$+rec_tpl.po_no$+rec_tpl.receiver_no$ then break
+        if poLineCode$<>pot_recdet.po_line_code$ then
+            findrecord(poc_linecode_dev,key=pot_recdet.firm_id$+pot_recdet.po_line_code$,dom=*continue)poc_linecode$
+            poLineCode$=poc_linecode.po_line_code$
+            line_type$=poc_linecode.line_type$
+        endif
+        if line_type$="O" then
+            recQty=1
+        else
+            recQty=pot_recdet.qty_received
+        endif
+        received=received+(recQty*pot_recdet.unit_cost)
+    wend
+    calc_tpl.amt_received=received
+
+rem --- Done
+    goto exit_prog
+
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+
+    return
+    
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+
+    return
+
+rem --- Functions
+
+    def fnget_dev(tmp0$)=num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3))
+    def fnget_tpl$(tmp0$)=table_chans$[num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3)),0]
+
+rem --- Format inventory item description
+
+    def fnitem$(q$,q1,q2,q3)
+        q$=pad(q$,q1+q2+q3)
+        return cvs(q$(1,q1)+" "+q$(q1+1,q2)+" "+q$(q1+q2+1,q3),32)
+    fnend
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+    
+exit_prog:rem --- Exit Program
+
+    exit
