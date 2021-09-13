@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-07
+ Report Date:   2021-09-13
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -93,3 +93,16 @@ Modified: data/cdf/sam_salespsn.cdf
 Modified: data/cdf/sam_territry.cdf
 Modified: data/cdf/sam_vendor.cdf
 Modified: data/cdf/sam_warehse.cdf
+
+=======================================================================================================================================
+Revision: 5074e91b93875e3be9fa8d717ad9f0db79b835b2
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/13/2021 12:23:37 PM
+Message:
+ER 10272: Added "Amt Received" to the PO_INVRECPT query.
+
+(cherry picked from commit cb93acd69db0b1fa18b6e9778533463a387470c8)
+----
+Modified: data/sync/adm_query_cols~[01007514PO].xml
+Added: po/src/pof_receipt.aon
+
