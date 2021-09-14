@@ -120,3 +120,16 @@ Modified: data/bar/poe_pohdr.xml
 Modified: data/cdf/poe_pohdr.cdf
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 3703d972fd8a92c56970c856a8b3c74ea7fad1c2
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/13/2021 5:38:09 PM
+Message:
+ER 10161: Added Report Control status for OP Invoice Print to the OP
+Oder Entry and Invoice Entry forms.
+----
+Modified: data/bar/ope_invhdr.xml
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_invhdr.cdf
+Modified: data/cdf/ope_ordhdr.cdf
