@@ -154,3 +154,19 @@ Modified: data/sfe-32
 Added: data/sync/ads_messages~[01007514SF].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: bb52934422a434b8fc325c0e7e9ca1c414f19587
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/14/2021 2:13:28 PM
+Message:
+ER 10050: Added "Include Zero Balance Items" option to the Inventory
+Stock Status Report.
+
+(cherry picked from commit 472d783488da7ff815902bc2fd053c56db900595)
+----
+Modified: data/bar/ivr_stkstatus.xml
+Modified: iv/src/ivr_stkstatus.aon
+Modified: iv/src/ivr_stkstatus_o1.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
