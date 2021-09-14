@@ -125,7 +125,10 @@ rem --- Print report results
             item$[2]=item$
             item$[1]=whse$,action$=""
             call pgmdir$+"ivc_whseinfo.aon",action$,files[all],item$[all],whse$[all],w[all],value,rd_table_chans$[all],whseinfo_tpls$[all],status
-    
+
+            rem --- Include Zero Balance Items?
+            if zero_bal$="N" and w[0]=0 then continue
+            
             rem --- Print detail line
     
             x$=""
