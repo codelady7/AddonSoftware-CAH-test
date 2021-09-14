@@ -31,6 +31,51 @@ rem --- Set Op Code DevObject
 	callpoint!.setDevObject("op_code","")
 
 [[BMM_BILLOPER.BDEL]]
+rem --- Before deleting, check to make sure the op isn't used in a material or subcontract line
+	bill_no$=callpoint!.getColumnData("BMM_BILLOPER.BILL_NO")
+	opUsed=0
+	bmm02_dev=fnget_dev("BMM_BILLMAT")
+	dim bmm02a$:fnget_tpl$("BMM_BILLMAT")
+	read(bmm02_dev,key=firm_id$+bill_no$,dom=*next)
+	while 1
+		bmm02_key$=key(bmm02_dev,end=*break)
+		if pos(firm_id$+bill_no$=bmm02_key$)<>1 then break
+		readrecord(bmm02_dev)bmm02a$
+		if cvs(bmm02a.op_int_seq_ref$,2)=callpoint!.getColumnData("BMM_BILLOPER.INTERNAL_SEQ_NO") then
+			opUsed=1
+			break
+		endif
+	wend
+	if opUsed then
+		msg_id$="WO_OP_CANNOT_DEL"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=Translate!.getTranslation("AON_MATERIALS")
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+	bmm05_dev=fnget_dev("BMM_BILLSUB")
+	dim bmm05a$:fnget_tpl$("BMM_BILLSUB")
+	read(bmm05_dev,key=firm_id$+bill_no$,dom=*next)
+	while 1
+		bmm05_key$=key(bmm05_dev,end=*break)
+		if pos(firm_id$+bill_no$=bmm05_key$)<>1 then break
+		readrecord(bmm05_dev)bmm05a$
+		if cvs(bmm05a.op_int_seq_ref$,2)=callpoint!.getColumnData("BMM_BILLOPER.INTERNAL_SEQ_NO") then
+			opUsed=1
+			break
+		endif
+	wend
+	if opUsed then
+		msg_id$="WO_OP_CANNOT_DEL"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=Translate!.getTranslation("AON_SUBCONTRACTS")
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Update refnumMap!
 	refnumMap!=callpoint!.getDevObject("refnumMap")
 	wo_op_ref$=callpoint!.getColumnData("BMM_BILLOPER.WO_OP_REF")
