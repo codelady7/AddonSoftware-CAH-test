@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-13
+ Report Date:   2021-09-14
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -135,3 +135,22 @@ Modified: data/bar/ope_invhdr.xml
 Modified: data/bar/ope_ordhdr.xml
 Modified: data/cdf/ope_invhdr.cdf
 Modified: data/cdf/ope_ordhdr.cdf
+
+=======================================================================================================================================
+Revision: 534a0c600c45a63aaba0e77a6b49c73b94fba077
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/14/2021 1:06:03 PM
+Message:
+ER 10103: Prevented deleting Operation in Bill Of Materials and Work
+Orders when the Operation is used in the Materials or Subcontracts.
+
+(cherry picked from commit 2f09b96533f81ea53f2c19edf6e0525f9eb70b43)
+----
+Modified: data/bar/bmm_billoper.xml
+Modified: data/bar/sfe_wooprtn.xml
+Modified: data/cdf/bmm_billoper.cdf
+Modified: data/cdf/sfe_wooprtn.cdf
+Modified: data/sfe-32
+Added: data/sync/ads_messages~[01007514SF].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
