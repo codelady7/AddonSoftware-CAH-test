@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-14
+ Report Date:   2021-09-15
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -197,3 +197,15 @@ Modified: ap/src/apr_cashrequire.aon
 Modified: data/bar/apr_cashrequire.xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 608e1203af5ef8ab17ab5eaf17172cb9c0305a7e
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/15/2021 8:29:00 AM
+Message:
+ER 10039: Defaulted all three checkboxes on Release Work Order as
+checked.
+
+(cherry picked from commit 1e1264308fa22e07db8ee5b4fc10052bffa3c67e)
+----
+Modified: data/bar/sfe_releasewo.xml
