@@ -209,3 +209,17 @@ checked.
 (cherry picked from commit 1e1264308fa22e07db8ee5b4fc10052bffa3c67e)
 ----
 Modified: data/bar/sfe_releasewo.xml
+
+=======================================================================================================================================
+Revision: 889c19e5142d92b930f2357f633e57581d3a6717
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/15/2021 12:17:06 PM
+Message:
+ER 9850: For the GL Transaction History Report, disabled only the date,
+period and year filters when the Audit Number filter is used.
+
+(cherry picked from commit fafee3fcfd4df3292ea22f5ba8a048ad31b59fa2)
+----
+Modified: data/bar/glr_transhistory.xml
+Modified: data/cdf/glr_transhistory.cdf
+Modified: gl/src/glr_transhistory.aon
