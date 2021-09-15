@@ -67,7 +67,7 @@ rem --- Assign input values to local variables
     journal$=Option!.getOptionData("PICK_JOURNAL_ID")
     detail$=Option!.getOptionData("PICK_LISTBUTTON")
     export_format$=Option!.getOptionData("EXPORT_FORMAT")
-    rd_alias_id$=Option!.getAlias()    
+    rd_alias_id$=Option!.getAlias()
     rem "GL INACTIVE FEATURE"
     inactive$=Option!.getOptionData("ACCT_INACTIVE")
     if export_format$="Y"
@@ -171,14 +171,16 @@ rem --- Document columns
 
     if detail$="S"
 
-        columns=5
-        dim columns$[5,10]
+        columns=6
+        dim columns$[6,10]
         columns$[0,0]=Translate!.getTranslation("AON_ACCOUNT"),columns$[0,1]="C",columns$[0,2]=str(m0),columns$[0,3]=m0$,columns$[0,10]="1"
-        columns$[1,0]=Translate!.getTranslation("AON_DATE"),columns$[1,1]="C",columns$[1,2]="10"
-        columns$[2,0]=Translate!.getTranslation("AON_JRNL"),columns$[2,1]="C",columns$[2,2]="50"
-        columns$[3,0]=Translate!.getTranslation("AON_DEBITS"),columns$[3,1]="N",columns$[3,2]=str(len(m1$)),columns$[3,3]=m1$,columns$[3,10]="T"
-        columns$[4,0]=Translate!.getTranslation("AON_CREDITS"),columns$[4,1]="N",columns$[4,2]=str(len(m1$)),columns$[4,3]=m1$,columns$[4,10]="T"
-        columns$[5,0]=Translate!.getTranslation("AON_UNITS"),columns$[5,1]="N",columns$[5,2]=str(len(m2$)),columns$[5,3]=m2$,columns$[5,10]="T"
+        columns$[1,0]=Translate!.getTranslation("AON_ACCT")+" "+Translate!.getTranslation("AON_DESCRIPTION"),columns$[1,1]="C"
+        if export_format$="Y" then columns$[1,2]="30" else columns$[1,2]="0"
+        columns$[2,0]=Translate!.getTranslation("AON_DATE"),columns$[2,1]="C",columns$[2,2]="10"
+        columns$[3,0]=Translate!.getTranslation("AON_JRNL"),columns$[3,1]="C",columns$[3,2]="50"
+        columns$[4,0]=Translate!.getTranslation("AON_DEBITS"),columns$[4,1]="N",columns$[4,2]=str(len(m1$)),columns$[4,3]=m1$,columns$[4,10]="T"
+        columns$[5,0]=Translate!.getTranslation("AON_CREDITS"),columns$[5,1]="N",columns$[5,2]=str(len(m1$)),columns$[5,3]=m1$,columns$[5,10]="T"
+        columns$[6,0]=Translate!.getTranslation("AON_UNITS"),columns$[6,1]="N",columns$[6,2]=str(len(m2$)),columns$[6,3]=m2$,columns$[6,10]="T"
 
     endif
 
@@ -186,19 +188,21 @@ rem --- Document columns
 
     if detail$="D"
 
-        columns=10
-        dim columns$[10,10]
+        columns=11
+        dim columns$[11,10]
         columns$[0,0]=Translate!.getTranslation("AON_ACCOUNT"),columns$[0,1]="C",columns$[0,2]=str(m0),columns$[0,3]=m0$,columns$[0,10]="1"
-        columns$[1,0]=Translate!.getTranslation("AON_DATE"),columns$[1,1]="C",columns$[1,2]="10"
-        columns$[2,0]=Translate!.getTranslation("AON_JRNL"),columns$[2,1]="C",columns$[2,2]="5"
-        columns$[3,0]=Translate!.getTranslation("AON_AUDIT_#"),columns$[3,1]="C",columns$[3,2]="8"
-        columns$[4,0]=Translate!.getTranslation("AON_MEMO"),columns$[4,1]="C",columns$[4,2]="37"
-        columns$[5,0]=Translate!.getTranslation("AON_REF_1"),columns$[5,1]="C",columns$[5,2]="12"
-        columns$[6,0]=Translate!.getTranslation("AON_REF_2"),columns$[6,1]="C",columns$[6,2]="12"
-        columns$[7,0]=Translate!.getTranslation("AON_REF_3"),columns$[7,1]="C",columns$[7,2]="12"
-        columns$[8,0]=Translate!.getTranslation("AON_DEBITS"),columns$[8,1]="N",columns$[8,2]=str(len(m1$)),columns$[8,3]=m1$,columns$[8,10]="T"
-        columns$[9,0]=Translate!.getTranslation("AON_CREDITS"),columns$[9,1]="N",columns$[9,2]=str(len(m1$)),columns$[9,3]=m1$,columns$[9,10]="T"
-        columns$[10,0]=Translate!.getTranslation("AON_UNITS"),columns$[10,1]="N",columns$[10,2]=str(len(m2$)),columns$[10,3]=m2$,columns$[10,10]="T"
+        columns$[1,0]=Translate!.getTranslation("AON_ACCT")+" "+Translate!.getTranslation("AON_DESCRIPTION"),columns$[1,1]="C"
+        if export_format$="Y" then columns$[1,2]="30" else columns$[1,2]="0"
+        columns$[2,0]=Translate!.getTranslation("AON_DATE"),columns$[2,1]="C",columns$[2,2]="10"
+        columns$[3,0]=Translate!.getTranslation("AON_JRNL"),columns$[3,1]="C",columns$[3,2]="5"
+        columns$[4,0]=Translate!.getTranslation("AON_AUDIT_#"),columns$[4,1]="C",columns$[4,2]="8"
+        columns$[5,0]=Translate!.getTranslation("AON_MEMO"),columns$[5,1]="C",columns$[5,2]="37"
+        columns$[6,0]=Translate!.getTranslation("AON_REF_1"),columns$[6,1]="C",columns$[6,2]="12"
+        columns$[7,0]=Translate!.getTranslation("AON_REF_2"),columns$[7,1]="C",columns$[7,2]="12"
+        columns$[8,0]=Translate!.getTranslation("AON_REF_3"),columns$[8,1]="C",columns$[8,2]="12"
+        columns$[9,0]=Translate!.getTranslation("AON_DEBITS"),columns$[9,1]="N",columns$[9,2]=str(len(m1$)),columns$[9,3]=m1$,columns$[9,10]="T"
+        columns$[10,0]=Translate!.getTranslation("AON_CREDITS"),columns$[10,1]="N",columns$[10,2]=str(len(m1$)),columns$[10,3]=m1$,columns$[10,10]="T"
+        columns$[11,0]=Translate!.getTranslation("AON_UNITS"),columns$[11,1]="N",columns$[11,2]=str(len(m2$)),columns$[11,3]=m2$,columns$[11,10]="T"
 
     endif
 
@@ -320,14 +324,14 @@ rem --- Read next transaction history (glt-06) record
 
           rem --- Print detail line
             
-            if export_format$="Y"
-                wk$=export_acct$
-            else
-                wk$=""
-            endif
 
             if detail$="D"
-                OutVect!.addItem(wk$)
+                if export_format$="Y"
+                    OutVect!.addItem(export_acct$)
+                    OutVect!.addItem(export_desc$)
+                else
+                    abc=fnblank(2)
+                endif
                 OutVect!.addItem(fndate$(glt06a.trns_date$))
                 OutVect!.addItem(glt06a.journal_id$)
                 OutVect!.addItem(glt06a.gl_adt_no$)
@@ -384,11 +388,11 @@ rem        goto std_exit_no_report
     
     if nothing_to_print then
         if detail$ = "D" then
-            ignore = fnblank(4)
+            ignore = fnblank(5)
             OutVect!.addItem(Translate!.getTranslation("AON_NOTHING_TO_PRINT_WITHIN_THESE_PARAMETERS"))
             ignore = fnblank(6)
         else
-            ignore = fnblank(2)
+            ignore = fnblank(3)
             OutVect!.addItem(Translate!.getTranslation("AON_NOTHING_TO_PRINT_WITHIN_THESE_PARAMETERS"))
             ignore = fnblank(3)
         endif
@@ -410,8 +414,9 @@ account_heading: rem --- Account Heading
     if detail$="S"
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
+            OutVect!.addItem(export_desc$)
             abc=fnblank(1)
-            OutVect!.addItem(export_desc$+" "+h1$+" "+bb$)
+            OutVect!.addItem(h1$+" "+bb$)
             OutVect!.addItem(begdebit$)
             OutVect!.addItem(begcredit$)
             OutVect!.addItem(begunits$)
@@ -420,10 +425,11 @@ account_heading: rem --- Account Heading
             abc=fnblank(columns+1)
             
             OutVect!.addItem(acct$)
+            OutVect!.addItem("")
             OutVect!.addItem(desc$)
-            abc=fnblank(columns-1)
-            
-            abc=fnblank(2)
+            abc=fnblank(columns-2)
+
+            abc=fnblank(3)
             OutVect!.addItem(bb$)
             OutVect!.addItem(begdebit$)
             OutVect!.addItem(begcredit$)
@@ -435,8 +441,8 @@ account_heading: rem --- Account Heading
     if detail$="D"
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
-            abc=fnblank(3)
             OutVect!.addItem(export_desc$)
+            abc=fnblank(4)
             OutVect!.addItem(h1$)
             OutVect!.addItem(bb$)
             abc=fnblank(1)
@@ -445,9 +451,10 @@ account_heading: rem --- Account Heading
             OutVect!.addItem(begunits$)
             h1$=""
         else
-            abc=fnblank(11)
+            abc=fnblank(12)
             
             OutVect!.addItem(acct$)
+            OutVect!.addItem("")
             OutVect!.addItem(desc$)
             abc=fnblank(2)
             OutVect!.addItem(bb$)
@@ -467,11 +474,12 @@ period_heading: rem --- Period Heading
     if detail$="S"
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
+            OutVect!.addItem(export_desc$)
             OutVect!.addItem("")
-            OutVect!.addItem(export_desc$+" "+h1$)
+            OutVect!.addItem(h1$)
             abc=fnblank(3)
         else
-            OutVect!.addItem("")
+            abc=fnblank(2)
             OutVect!.addItem(h1$)
             abc=fnblank(4)
         endif
@@ -480,12 +488,12 @@ period_heading: rem --- Period Heading
     if detail$="D"
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
-            abc=fnblank(3)
             OutVect!.addItem(export_desc$)
+            abc=fnblank(4)
             OutVect!.addItem(h1$)
             abc=fnblank(5)
         else
-            OutVect!.addItem("")
+            abc=fnblank(2)            
             OutVect!.addItem(h1$)
             abc=fnblank(9)            
         endif
@@ -684,11 +692,11 @@ journal_break: rem --- Journal break
     if units_flag$="Y" if units unit$=stars$,unit$=str(jt[2],err=*next)
 
     if export_format$="Y"
-        wk$=export_acct$
+        OutVect!.addItem(export_acct$)
+        OutVect!.addItem(export_desc$)
     else
-        wk$=""
+        abc=fnblank(2)
     endif
-    OutVect!.addItem(wk$)
     OutVect!.addItem(fndate$(t2$))
     OutVect!.addItem(h2$)
     OutVect!.addItem(debit$)
@@ -720,8 +728,8 @@ print_totals: rem --- Print totals line
     if detail$="D"
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
-            abc=fnblank(3)
             OutVect!.addItem(export_desc$)
+            abc=fnblank(4)
             OutVect!.addItem(x$+" "+y$)
             OutVect!.addItem(total$)
             abc=fnblank(1)
@@ -730,7 +738,7 @@ print_totals: rem --- Print totals line
             OutVect!.addItem(unit$)
         else
             TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-            abc=fnblank(4)
+            abc=fnblank(5)
             OutVect!.addItem(total$)
             abc=fnblank(3)
             OutVect!.addItem(debit$)
@@ -743,14 +751,15 @@ print_totals: rem --- Print totals line
 
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
+            OutVect!.addItem(export_desc$)
             abc=fnblank(1)
-            OutVect!.addItem(export_desc$+" "+x$+" "+y$+" "+total$)
+            OutVect!.addItem(cvs(x$+" "+y$+" "+total$,1))
             OutVect!.addItem(debit$)
             OutVect!.addItem(credit$)
             OutVect!.addItem(unit$)
         else
             TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-            abc=fnblank(2)
+            abc=fnblank(3)
             OutVect!.addItem(total$)
             OutVect!.addItem(debit$)
             OutVect!.addItem(credit$)
@@ -774,8 +783,8 @@ print_totals_dr_cr: rem --- at each break print a total debit and credit line
     if detail$="D"
         if export_format$="Y"
             OutVect!.addItem(export_acct$)
-            abc=fnblank(3)
             OutVect!.addItem(export_desc$)
+            abc=fnblank(4)
             OutVect!.addItem(x$+" "+y$)
             OutVect!.addItem(line_desc$)
             abc=fnblank(1)
@@ -784,7 +793,7 @@ print_totals_dr_cr: rem --- at each break print a total debit and credit line
             OutVect!.addItem(unit$)
         else
             TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-            abc=fnblank(4)
+            abc=fnblank(5)
             OutVect!.addItem(line_desc$)
             abc=fnblank(3)
             OutVect!.addItem(debit$)
@@ -795,20 +804,20 @@ print_totals_dr_cr: rem --- at each break print a total debit and credit line
     
     if detail$="S"
         if export_format$="Y"
-	    OutVect!.addItem(export_acct$)
-	    abc=fnblank(1)
-	    rem ' OutVect!.addItem(export_desc$+" "+x$+" "+y$+" "+total$)
-	    OutVect!.addItem(export_desc$ + " " +line_desc$)
-	    OutVect!.addItem(debit$)
-	    OutVect!.addItem(credit$)
-	    OutVect!.addItem(unit$)
+    	    OutVect!.addItem(export_acct$)
+            OutVect!.addItem(export_desc$)
+            abc=fnblank(1)
+            OutVect!.addItem(line_desc$)
+    	    OutVect!.addItem(debit$)
+    	    OutVect!.addItem(credit$)
+    	    OutVect!.addItem(unit$)
         else
-	    TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-	    abc=fnblank(2)
-	    OutVect!.addItem(line_desc$)
-	    OutVect!.addItem(debit$)
-	    OutVect!.addItem(credit$)
-	    OutVect!.addItem(unit$)
+    	    TotVect!.addItem(str(OutVect!.size()/(columns+1)))
+    	    abc=fnblank(3)
+    	    OutVect!.addItem(line_desc$)
+    	    OutVect!.addItem(debit$)
+    	    OutVect!.addItem(credit$)
+    	    OutVect!.addItem(unit$)
         endif
     endif
 
