@@ -206,36 +206,34 @@ rem --- Document columns
 
 rem --- Initialize report headings
 
+    headings=5
+    dim headings$[headings]
     if audit_no$="" then
-        headings=5
-        dim headings$[headings]
-        if cvs(begacct$,2)="" x$=Translate!.getTranslation("AON_FIRST_ACCOUNT")
-:                    else x$=Translate!.getTranslation("AON_ACCOUNT_")+fnmask$(begacct$(1,m0),m0$)
-        if cvs(endacct$,2)="" y$=Translate!.getTranslation("AON_LAST_ACCOUNT")
-:                    else y$=Translate!.getTranslation("AON_ACCOUNT_")+fnmask$(endacct$(1,m0),m0$)
-        x$=Translate!.getTranslation("AON_FROM_")+x$+Translate!.getTranslation("AON__THROUGH_")+y$
-        if cvs(wildcard$,2)<>"" then x$=x$+Translate!.getTranslation("AON__(WILDCARD_")+$22$+cvs(wildcard$,2)+$22$+")"
-        headings$[2]=x$
         x$="",y$=""
         x$=field(begCalendar$,"period_name_"+begper$,err=*next)
         y$=field(endCalendar$,"period_name_"+endper$,err=*next)
         if x$<>"" and y$<>""
-            headings$[3]=Translate!.getTranslation("AON_FROM_")+cvs(x$,2)+Translate!.getTranslation("AON__(PERIOD_")+begper$+") "+begyear$+Translate!.getTranslation("AON__THROUGH_")+
-:           cvs(y$,2)+Translate!.getTranslation("AON__(PERIOD_")+endper$+") "+endyear$
+            headings$[2]=Translate!.getTranslation("AON_FROM_")+cvs(x$,2)+Translate!.getTranslation("AON__(PERIOD_")+begper$+") "+begyear$+Translate!.getTranslation("AON__THROUGH_")+
+:               cvs(y$,2)+Translate!.getTranslation("AON__(PERIOD_")+endper$+") "+endyear$
         else
             rem --- Report for specific transaction date
-            headings$[3]=Translate!.getTranslation("AON_TRANSACTION_DATE")+": "+fndate$(trns_date$)
+            headings$[2]=Translate!.getTranslation("AON_TRANSACTION_DATE")+": "+fndate$(trns_date$)
         endif
-        if detail$="D" x$=Translate!.getTranslation("AON_DETAIL") else x$=Translate!.getTranslation("AON_SUMMARY")
-        if cvs(journal$,2)="" y$=Translate!.getTranslation("AON_ALL_JOURNALS") 
-:       else y$=Translate!.getTranslation("AON_JOURNAL_ID_")+glm03a.journal_id$+" "+cvs(glm03a.code_desc$,2)
-        headings$[4]=x$+Translate!.getTranslation("AON__REPORT_FOR_")+y$
-        headings$[5]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_GENERAL_LEDGER_ACCOUNTS")+" = "+inactive$
     else
-        headings=3
-        dim headings$[headings]
-        headings$[3]=Translate!.getTranslation("AON_AUDIT_NUMBER")+": "+audit_no$
+        headings$[2]=Translate!.getTranslation("AON_AUDIT_NUMBER")+": "+audit_no$
     endif
+    if cvs(begacct$,2)="" x$=Translate!.getTranslation("AON_FIRST_ACCOUNT")
+:       else x$=Translate!.getTranslation("AON_ACCOUNT_")+fnmask$(begacct$(1,m0),m0$)
+    if cvs(endacct$,2)="" y$=Translate!.getTranslation("AON_LAST_ACCOUNT")
+:       else y$=Translate!.getTranslation("AON_ACCOUNT_")+fnmask$(endacct$(1,m0),m0$)
+    x$=Translate!.getTranslation("AON_FROM_")+x$+Translate!.getTranslation("AON__THROUGH_")+y$
+    if cvs(wildcard$,2)<>"" then x$=x$+Translate!.getTranslation("AON__(WILDCARD_")+$22$+cvs(wildcard$,2)+$22$+")"
+    headings$[3]=x$
+    if detail$="D" x$=Translate!.getTranslation("AON_DETAIL") else x$=Translate!.getTranslation("AON_SUMMARY")
+    if cvs(journal$,2)="" y$=Translate!.getTranslation("AON_ALL_JOURNALS") 
+:       else y$=Translate!.getTranslation("AON_JOURNAL_ID_")+glm03a.journal_id$+" "+cvs(glm03a.code_desc$,2)
+    headings$[4]=x$+Translate!.getTranslation("AON__REPORT_FOR_")+y$
+    headings$[5]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_GENERAL_LEDGER_ACCOUNTS")+" = "+inactive$
     headings$[0]=cvs(sysinfo.firm_name$,2)
     headings$[1]=cvs(sysinfo.task_desc$,2)
 
@@ -275,10 +273,10 @@ rem --- Read next transaction history (glt-06) record
                 if glt06a.gl_adt_no$<>audit_no$ then break
             else
                 if glt06a.trns_date$<>trns_date$ then break
-                if begacct$<>"" and glt06a.gl_account$<begacct$ then continue
-                if endacct$<>"" and glt06a.gl_account$>endacct$ then break
-                if journal$<>"" and glt06a.journal_id$<>journal$ then continue
             endif
+            if begacct$<>"" and glt06a.gl_account$<begacct$ then continue
+            if endacct$<>"" and glt06a.gl_account$>endacct$ then break
+            if journal$<>"" and glt06a.journal_id$<>journal$ then continue
           endif
 
           gosub wildcard
