@@ -170,3 +170,15 @@ Modified: iv/src/ivr_stkstatus.aon
 Modified: iv/src/ivr_stkstatus_o1.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 34768dc52247a8ebc286b4fb2297ffc583c743b6
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/14/2021 5:16:10 PM
+Message:
+ER 10046: On the Cash Requirements Report identified vendors being paid
+via ACH.
+
+(cherry picked from commit f9594088e7da7283ef8078f24a5e4575076bdac1)
+----
+Modified: ap/src/apr_cashrequire.aon
