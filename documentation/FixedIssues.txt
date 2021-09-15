@@ -182,3 +182,18 @@ via ACH.
 (cherry picked from commit f9594088e7da7283ef8078f24a5e4575076bdac1)
 ----
 Modified: ap/src/apr_cashrequire.aon
+
+=======================================================================================================================================
+Revision: 4dd1fd9430b7b7c81ced65c5a857568fb3d0624f
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/14/2021 6:09:02 PM
+Message:
+ER 10045: Added "Include vendors paid via ACH" option to the Cash
+Requirements Report.
+
+(cherry picked from commit 8e766269c0ee417d67163e7ad27bdbba0a36091f)
+----
+Modified: ap/src/apr_cashrequire.aon
+Modified: data/bar/apr_cashrequire.xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
