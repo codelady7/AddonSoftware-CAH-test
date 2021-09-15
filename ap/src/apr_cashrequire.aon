@@ -74,6 +74,7 @@ rem --- Assign form input values to local variables
     level$=Option!.getOptionData("REPORT_SUMM_DET")
     method$=Option!.getOptionData("REPORT_TYPE")
     days$=Option!.getOptionData("PICK_INTEGER")
+    ach_pay$=Option!.getOptionData("ACH_PAY")
     export_format$=Option!.getOptionData("EXPORT_FORMAT")
     rd_alias_id$=Option!.getAlias()    
     if export_format$="Y"
@@ -409,6 +410,12 @@ rem --- Read next Invoice Header (apt-01) record
 :            apt01a.ap_inv_no$
           endif
           read record (apt01_dev,key=k$,dom=*continue) apt01a$
+          if ach_pay$="N" then
+              rem --- Skip vendors not being paid via ACH
+              redim apm01a$
+              findrecord(apm01_dev,key=firm_id$+apt01a.vendor_id$,dom=*next)apm01a$
+              if apm01a.payment_type$="A" then continue
+          endif
           total_recs=total_recs+1
           if mod(total_recs,milestone)=0 then call stbl("+DIR_PGM")+"adc_progress.aon","S","","","","",0,0,milestone,meter_num,status
 
