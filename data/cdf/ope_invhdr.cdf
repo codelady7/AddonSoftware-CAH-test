@@ -19,6 +19,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 			case 2; rem --- ON_TAB_SELECT
 				gosub isTotalsTab
 				if isTotalsTab then
+					callpoint!.setFocus("OPE_INVHDR.FREIGHT_AMT",1)
 					if num(callpoint!.getColumnData("OPE_INVHDR.NO_SLS_TAX_CALC"))=1 then
 						taxAmount_warn!=callpoint!.getDevObject("taxAmount_warn")
 						taxAmount_warn!.setVisible(1)
