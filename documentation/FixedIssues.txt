@@ -235,3 +235,18 @@ Transaction History Report.
 (cherry picked from commit 9415a1c518941e3ffc392448a90f8067a1c48b52)
 ----
 Modified: gl/src/glr_transhistory.aon
+
+=======================================================================================================================================
+Revision: bd8fac663dcea99524d3cb29be729dd3dc83f546
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/15/2021 6:33:58 PM
+Message:
+ER 9350: On the OP Order and Invoice Entry forms' Total Tab, set initial
+focus on the Freight Amount field.
+
+(cherry picked from commit 0fdf7c78ab3d374b9e7b2af84142c76e14093ded)
+----
+Modified: data/bar/ope_invhdr.xml
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_invhdr.cdf
+Modified: data/cdf/ope_ordhdr.cdf
