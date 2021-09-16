@@ -223,3 +223,15 @@ period and year filters when the Audit Number filter is used.
 Modified: data/bar/glr_transhistory.xml
 Modified: data/cdf/glr_transhistory.cdf
 Modified: gl/src/glr_transhistory.aon
+
+=======================================================================================================================================
+Revision: fa9f49ae8fdd27bf53ace026f5844bbd552f8580
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/15/2021 4:57:14 PM
+Message:
+ER 9823: Added GL Account Description to the Export Format of the GL
+Transaction History Report.
+
+(cherry picked from commit 9415a1c518941e3ffc392448a90f8067a1c48b52)
+----
+Modified: gl/src/glr_transhistory.aon
