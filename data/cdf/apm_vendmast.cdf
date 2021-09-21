@@ -467,6 +467,18 @@ rem --- if vendor maint has been launched from Invoice/Manual Check Entry, defau
 		callpoint!.setTableColumnAttribute("APM_VENDMAST.TEMP_VEND","DFLT","Y")
 	endif
 
+rem --- if running V6Hybrid, constrain address/city input lengths
+
+while 1
+	v6h$=stbl("+V6DATA",err=*break)
+	if v6h$<>""
+		callpoint!.setTableColumnAttribute("APM_VENDMAST.ADDR_LINE_1","MAXL","24")
+		callpoint!.setTableColumnAttribute("APM_VENDMAST.ADDR_LINE_2","MAXL","24")
+		callpoint!.setTableColumnAttribute("APM_VENDMAST.CITY","MAXL","24")
+	endif
+	break
+wend
+
 [[APM_VENDMAST.BTBL]]
 
 [[APM_VENDMAST.BWRI]]
