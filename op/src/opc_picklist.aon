@@ -382,7 +382,7 @@ rem --- Misc setup and qualification
 
         new_doc_id$=""
         new_doc_name$=""
-        doc_name$="OPPickQuote_Cust"+ope01a.customer_id$+"_"+alias$
+        doc_name$="OPPickQuote"+ope01a.order_no$+"_Cust"+ope01a.customer_id$+"_"+alias$
         doc_keywords$="Order: "+ope01a.order_no$
 
         rd_source_alias$=alias$
