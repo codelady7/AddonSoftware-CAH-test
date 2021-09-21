@@ -263,3 +263,17 @@ on demand Invoices and Picking Lists.
 ----
 Modified: op/src/opc_invoice.aon
 Modified: op/src/opc_picklist.aon
+
+=======================================================================================================================================
+Revision: 3fc431f02af98a3a887b317aa08f15f834256da3
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/21/2021 1:22:26 PM
+Message:
+ER 9154: Added slspsn_code and credit_flag to the OP_INVOICES query, and
+made slspsn_code, credit_flag, trans_type and invoice_type "User
+selectable".
+
+(cherry picked from commit 4d3cc3e64354d97cb97d16fd960dce6fbb23a95a)
+----
+Modified: data/sync/adm_query_cols~[01007514OP].xml
+Modified: data/sync/adm_query~[01007514OP].xml
