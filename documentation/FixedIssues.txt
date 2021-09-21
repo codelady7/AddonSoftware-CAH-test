@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-15
+ Report Date:   2021-09-21
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -250,3 +250,16 @@ Modified: data/bar/ope_invhdr.xml
 Modified: data/bar/ope_ordhdr.xml
 Modified: data/cdf/ope_invhdr.cdf
 Modified: data/cdf/ope_ordhdr.cdf
+
+=======================================================================================================================================
+Revision: 7ee60fbdc483c899e048ffbb0b582742bb8b171e
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/21/2021 10:51:03 AM
+Message:
+ER 10285: Added invoice number to the default Save As document name for
+on demand Invoices and Picking Lists.
+
+(cherry picked from commit 8bfc774750ea3665d7e5038e89ddd01a0cf4afeb)
+----
+Modified: op/src/opc_invoice.aon
+Modified: op/src/opc_picklist.aon
