@@ -135,12 +135,28 @@ continues its history of constant improvement - additional features, increased f
                         <li>AP Checks can apply a stored electronic signature regardless of whether or not Payment Authorization is used. Default signature is supplied and can be overridden.</li>
                         <li>Modified Bank Reconciliation to skip listing checks and other transactions later than the current statement date.</li>
                         <li>The Bank Account Codes table now keeps track of the next check number, and uses it as the default for AP Check Printing.</li>
+                        <li>The Cash Requirements Report has a new option to include and flag, or exclude, vendors paid via Automated Clearing House (ACH).</li>
+                        <li>Improved filtering in GL Transaction History Report so Audit Number filter can be coupled with Account Number and/or Journal ID filters.</li>
+                        <li>Added the GL Account Description to the Export Format of the GL Transaction History Report.</li>
+                        <li>Enhanced the Order lookup on the Customer form to include Salesperson and Credit Flag.</li>
                     </ul>
                     <li>Distribution</li>
                     <ul>
                         <li>New "Change Customer" Additional Option in Order Entry allows users to change the Customer ID on an open order/quote.</li>
                         <li>Send customers an Order Acknowledgement via email or fax. Supports generating acknowledgements automatically or manually, on demand or in batch mode. Interfaces with Addon Report Control.</li>
                         <li>Added Pricing Basis and Amount fields to the Pricing Table form to allow quantity price breaks based on a specific amount as well as a percentage.</li>
+                        <li>Modified the Open Order Detail report to allow more intuitive and granular selections for Orders vs Quotes.</li>
+                        <li>Added the Fiscal Period abbreviations to row labels on Sales Analysis screens for more clarity.</li>
+                        <li>Added an Amount Received column to the Purchase Receipt query in Purchase Order Invoice Entry to make finding the correct PO/Receipt easier when there are multiple receivers.</li>
+                        <li>Added Report Control Status (Email/Fax/None) to Order/Invoice Entry and Purchase Order Entry.</li>
+                        <li>Added an "Include Zero Balance Items" option to the Inventory Stock Status Report.</li>
+                        <li>Focus directly on Freight Amount in Order/Invoice Entry's Totals tab rather than Discount Amount, since the latter isn't often changed.</li>
+                        <li>Added the Order or Invoice number to the saved document name for on-demand Pick Lists and Invoices, respectively.</li>
+                    </ul>
+                    <li>Manufacturing</li>
+                    <ul>
+                        <li>Disallow deletion of Operations records in Bill of Materials and Work Order Entry when the Operation is referenced in a Subcontract or Materials record.</li>
+                        <li>When releasing a Work Order, automatically select all checkboxes (Release Work Order, Print Traveler, Print Pick List).</li>
                     </ul>
                 </ul>
             <br />
