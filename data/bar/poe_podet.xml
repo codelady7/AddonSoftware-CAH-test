@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_podet">CAECFA361FDD3C6AC5A607CD13BA554F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_podet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_podet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_podet">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_podet">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_podet">154822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_podet">20210922</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_podet">20210922</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_podet">180340</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_podet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poe_podet">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poe_podet">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_podet">DISPLAY_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poe_podet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poe_podet">G</DD_ATTR_FTYP>
@@ -885,7 +885,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet005">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet005">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet005"></DD_ATTR_CTLY>
@@ -1344,7 +1344,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet014">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet014">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet014"></DD_ATTR_CTLY>
@@ -1395,7 +1395,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet015">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet015">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet015"></DD_ATTR_CTLY>
@@ -1446,7 +1446,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet016">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet016"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet016">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet016">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet016"></DD_ATTR_CTLY>
@@ -1548,7 +1548,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet018">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet018">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet018"></DD_ATTR_CTLY>
@@ -1650,7 +1650,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet020">20081128</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet020">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet020">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet020"></DD_ATTR_CTLY>
@@ -1701,7 +1701,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet021">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet021">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet021"></DD_ATTR_CTLY>
@@ -1752,7 +1752,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet022">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet022"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet022">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet022">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet022"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet022"></DD_ATTR_CTLY>
@@ -1803,7 +1803,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet023">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet023"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet023"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet023">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet023">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet023"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet023"></DD_ATTR_CTLY>
@@ -1956,7 +1956,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet026">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet026"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet026"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet026">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet026">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet026"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet026"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet026"></DD_ATTR_CTLY>
@@ -2007,7 +2007,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet027">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet027"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet027"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet027">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet027">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet027"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet027"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet027"></DD_ATTR_CTLY>
@@ -2109,7 +2109,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet029">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet029"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet029"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet029">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet029">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet029"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet029"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet029"></DD_ATTR_CTLY>
@@ -2568,7 +2568,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet038">20170328</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet038"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet038"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet038">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet038">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet038">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet038"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet038"></DD_ATTR_CTLY>
@@ -2701,6 +2701,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.poe_podetitem_idaval">POE_PODET       </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.poe_podetitem_idaval">ITEM_ID         </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.poe_podetitem_idaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.poe_podetitem_idbinq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.poe_podetitem_idbinq">POE_PODET       </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.poe_podetitem_idbinq">ITEM_ID         </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.poe_podetitem_idbinq">BINQ</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.poe_podetorder_memobinp">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.poe_podetorder_memobinp">POE_PODET       </DD_TABLE_ALIAS>

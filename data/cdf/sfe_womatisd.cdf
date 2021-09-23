@@ -1,9 +1,24 @@
+[[SFE_WOMATISD.ADGE]]
+
+rem --- Set precision
+	precision num(callpoint!.getDevObject("precision"))
+
 [[SFE_WOMATISD.AGCL]]
 rem --- set preset val for batch_no
 	callpoint!.setTableColumnAttribute("SFE_WOMATISD.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
-[[SFE_WOMATISD.BDGX]]
-rem --- Disable detail-only buttons
-	callpoint!.setOptionEnabled("LENT",0)
+
+[[SFE_WOMATISD.AGDR]]
+rem --- Init WO Material Reference
+	sfe_womatdtl_dev=fnget_dev("SFE_WOMATDTL")
+	dim sfe_womatdtl$:fnget_tpl$("SFE_WOMATDTL")
+	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
+	sfe_womatdtl_key$=firm_loc_wo$+callpoint!.getColumnData("SFE_WOMATISD.WOMATDTL_SEQ_REF")
+	readrecord(sfe_womatdtl_dev,key=sfe_womatdtl_key$,dom=*next)sfe_womatdtl$
+	callpoint!.setColumnData("<<DISPLAY>>.WO_MAT_REF",sfe_womatdtl.wo_mat_ref$,1)
+
+rem --- Init DISPLAY columns
+	gosub init_display_cols
+
 [[SFE_WOMATISD.AGRE]]
 rem --- Start lot/serial button disabled
 	callpoint!.setOptionEnabled("LENT",0)
@@ -133,6 +148,14 @@ rem --- (For new records qty_ordered=qty_issued and tot_qty_iss=0)
 
 rem --- Init DISPLAY columns
 	gosub init_display_cols
+
+[[SFE_WOMATISD.AGRN]]
+rem --- Init DISPLAY columns
+	gosub init_display_cols
+
+rem --- Enable lot/serial button
+	gosub able_lot_button
+
 [[SFE_WOMATISD.AOPT-LENT]]
 rem --- Lot/serial entry
 	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
@@ -179,23 +202,52 @@ rem --- Lot/serial entry
 
 	rem --- Reset focus on detail row where lot/serial lookup was executed
 	sysgui!.setContext(grid_ctx)
-[[SFE_WOMATISD.BGDS]]
-rem --- Init Java classes
-	use ::sfo_SfUtils.aon::SfUtils
-	use ::ado_util.src::util
 
-rem --- Init lot/serial additional option
-	switch pos(callpoint!.getDevObject("lotser")="LS")
-		case 1
-			callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY"))
-			break
-		case 2
-			callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY"))
-			break
-		case default
-			callpoint!.setOptionEnabled("LENT",0)
-			break
-	swend
+[[SFE_WOMATISD.AUDE]]
+rem --- Make sure undeleted row gets written to file
+	callpoint!.setStatus("MODIFIED")
+
+rem --- It is "safer" to use qty_issued from what was restored to disk rather than the grid row
+rem --- even though they "should" be the same. 
+rem --- Was record written?
+	sfe_womatisd_dev=fnget_dev("SFE_WOMATISD")
+	dim sfe_womatisd$:fnget_tpl$("SFE_WOMATISD")
+	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
+	sfe_womatish_key$=callpoint!.getDevObject("sfe_womatish_key")
+	sfe_womatisd_key$=sfe_womatish_key$+callpoint!.getColumnData("SFE_WOMATISD.MATERIAL_SEQ")
+	found=0
+	readrecord(sfe_womatisd_dev,key=sfe_womatisd_key$,knum="AO_DISP_SEQ",dom=*next)sfe_womatisd$; found=1
+	if !found then
+		rem --- Record not written , so do not undelete (recommit)
+		break
+	endif
+
+rem --- Initialize inventory item update
+	call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+rem --- Were commitments retained during delete? No if sfe_womatdtl.qty_ordered=sfe_womatisd.tot_qty_iss
+	sfe_womatdtl_dev=fnget_dev("SFE_WOMATDTL")
+	dim sfe_womatdtl$:fnget_tpl$("SFE_WOMATDTL")
+	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
+	sfe_womatdtl_key$=firm_loc_wo$+sfe_womatisd.womatdtl_seq_ref$
+	extractrecord(sfe_womatdtl_dev,key=sfe_womatdtl_key$,dom=*next)sfe_womatdtl$
+	if sfe_womatdtl.qty_ordered=sfe_womatisd.tot_qty_iss then
+		rem --- Undelete inventory commitments (recommit)
+		sfe_womatdtl.qty_ordered=sfe_womatisd.qty_ordered
+		writerecord(sfe_womatdtl_dev)sfe_womatdtl$
+
+		items$[1]=sfe_womatisd.warehouse_id$
+		items$[2]=sfe_womatisd.item_id$
+		refs[0]=max(0,sfe_womatisd.qty_ordered-sfe_womatisd.tot_qty_iss)
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+	else
+		rem --- remove extract lock
+		find(sfe_womatdtl_dev,key=sfe_womatdtl_key$,dom=*next)
+	endif
+
+rem --- Init DISPLAY columns
+	gosub init_display_cols
+
 [[SFE_WOMATISD.BDEL]]
 rem --- Has record been written yet?
 	sfe_womatisd_dev=fnget_dev("SFE_WOMATISD")
@@ -288,50 +340,37 @@ rem --- Delete lot/serial and inventory commitments. Must do this before sfe_wom
 			endif
 		endif
 	endif
-[[SFE_WOMATISD.AUDE]]
-rem --- Make sure undeleted row gets written to file
-	callpoint!.setStatus("MODIFIED")
 
-rem --- It is "safer" to use qty_issued from what was restored to disk rather than the grid row
-rem --- even though they "should" be the same. 
-rem --- Was record written?
-	sfe_womatisd_dev=fnget_dev("SFE_WOMATISD")
-	dim sfe_womatisd$:fnget_tpl$("SFE_WOMATISD")
-	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
-	sfe_womatish_key$=callpoint!.getDevObject("sfe_womatish_key")
-	sfe_womatisd_key$=sfe_womatish_key$+callpoint!.getColumnData("SFE_WOMATISD.MATERIAL_SEQ")
-	found=0
-	readrecord(sfe_womatisd_dev,key=sfe_womatisd_key$,knum="AO_DISP_SEQ",dom=*next)sfe_womatisd$; found=1
-	if !found then
-		rem --- Record not written , so do not undelete (recommit)
-		break
-	endif
+[[SFE_WOMATISD.BDGX]]
+rem --- Disable detail-only buttons
+	callpoint!.setOptionEnabled("LENT",0)
 
-rem --- Initialize inventory item update
-	call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-rem --- Were commitments retained during delete? No if sfe_womatdtl.qty_ordered=sfe_womatisd.tot_qty_iss
-	sfe_womatdtl_dev=fnget_dev("SFE_WOMATDTL")
-	dim sfe_womatdtl$:fnget_tpl$("SFE_WOMATDTL")
-	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
-	sfe_womatdtl_key$=firm_loc_wo$+sfe_womatisd.womatdtl_seq_ref$
-	extractrecord(sfe_womatdtl_dev,key=sfe_womatdtl_key$,dom=*next)sfe_womatdtl$
-	if sfe_womatdtl.qty_ordered=sfe_womatisd.tot_qty_iss then
-		rem --- Undelete inventory commitments (recommit)
-		sfe_womatdtl.qty_ordered=sfe_womatisd.qty_ordered
-		writerecord(sfe_womatdtl_dev)sfe_womatdtl$
-
-		items$[1]=sfe_womatisd.warehouse_id$
-		items$[2]=sfe_womatisd.item_id$
-		refs[0]=max(0,sfe_womatisd.qty_ordered-sfe_womatisd.tot_qty_iss)
-		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-	else
-		rem --- remove extract lock
-		find(sfe_womatdtl_dev,key=sfe_womatdtl_key$,dom=*next)
-	endif
-
+[[SFE_WOMATISD.BGDR]]
 rem --- Init DISPLAY columns
 	gosub init_display_cols
+
+[[SFE_WOMATISD.BGDS]]
+rem --- Init Java classes
+	use ::sfo_SfUtils.aon::SfUtils
+	use ::ado_util.src::util
+
+rem --- Init lot/serial additional option
+	switch pos(callpoint!.getDevObject("lotser")="LS")
+		case 1
+			callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY"))
+			break
+		case 2
+			callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY"))
+			break
+		case default
+			callpoint!.setOptionEnabled("LENT",0)
+			break
+	swend
+
+[[SFE_WOMATISD.ITEM_ID.AINV]]
+rem --- Item synonym processing
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::grid_entry"
+
 [[SFE_WOMATISD.ITEM_ID.AVAL]]
 rem "Inventory Inactive Feature"
 item_id$=callpoint!.getUserInput()
@@ -408,6 +447,29 @@ rem --- Item ID is disabled except for a new row, so can init entire new row her
 	callpoint!.setColumnData("SFE_WOMATISD.QTY_ISSUED",str(qty_issued),1)
 	callpoint!.setColumnData("SFE_WOMATISD.ISSUE_COST",str(issue_cost),1)
 	gosub init_display_cols; rem --- Init DISPLAY columns
+
+[[SFE_WOMATISD.ITEM_ID.BINQ]]
+rem --- Inventory Item/Whse Lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","IVM_ITEMWHSE","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim ivmItemWhse_key$:key_tpl$
+	dim filter_defs$[2,2]
+	filter_defs$[1,0]="IVM_ITEMWHSE.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="IVM_ITEMWHSE.WAREHOUSE_ID"
+	filter_defs$[2,1]="='"+callpoint!.getColumnData("SFE_WOMATISH.WAREHOUSE_ID")+"'"
+	filter_defs$[2,2]="LOCK"
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"IV_ITEM_WHSE_LK","",table_chans$[all],ivmItemWhse_key$,filter_defs$[all]
+
+	rem --- Update item_id if changed
+	if cvs(ivmItemWhse_key$,2)<>"" and ivmItemWhse_key.item_id$<>callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID") then 
+		callpoint!.setColumnData("SFE_WOMATISD.ITEM_ID",ivmItemWhse_key.item_id$,1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
 [[SFE_WOMATISD.QTY_ISSUED.AVAL]]
 rem --- Can't un-issue (negative issue) more than have already been issued.
 	qty_issued=num(callpoint!.getUserInput())
@@ -424,6 +486,7 @@ rem --- Can't un-issue (negative issue) more than have already been issued.
 rem --- Init DISPLAY columns
 	callpoint!.setColumnData("SFE_WOMATISD.QTY_ISSUED",callpoint!.getUserInput())
 	gosub init_display_cols
+
 [[SFE_WOMATISD.<CUSTOM>]]
 init_display_cols: rem --- Init DISPLAY columns
 	qty_ordered=num(callpoint!.getColumnData("SFE_WOMATISD.QTY_ORDERED"))
@@ -448,30 +511,6 @@ able_lot_button: rem --- Enable/disable Lot/Serial button
 		endif
 	endif
 	return
-[[SFE_WOMATISD.AGDR]]
-rem --- Init WO Material Reference
-	sfe_womatdtl_dev=fnget_dev("SFE_WOMATDTL")
-	dim sfe_womatdtl$:fnget_tpl$("SFE_WOMATDTL")
-	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
-	sfe_womatdtl_key$=firm_loc_wo$+callpoint!.getColumnData("SFE_WOMATISD.WOMATDTL_SEQ_REF")
-	readrecord(sfe_womatdtl_dev,key=sfe_womatdtl_key$,dom=*next)sfe_womatdtl$
-	callpoint!.setColumnData("<<DISPLAY>>.WO_MAT_REF",sfe_womatdtl.wo_mat_ref$,1)
 
-rem --- Init DISPLAY columns
-	gosub init_display_cols
-[[SFE_WOMATISD.BGDR]]
-rem --- Init DISPLAY columns
-	gosub init_display_cols
-[[SFE_WOMATISD.AGRN]]
-rem --- Init DISPLAY columns
-	gosub init_display_cols
 
-rem --- Enable lot/serial button
-	gosub able_lot_button
-[[SFE_WOMATISD.ADGE]]
 
-rem --- Set precision
-	precision num(callpoint!.getDevObject("precision"))
-[[SFE_WOMATISD.ITEM_ID.AINV]]
-rem --- Item synonym processing
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::grid_entry"
