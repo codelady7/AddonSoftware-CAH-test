@@ -1,242 +1,3 @@
-[[POE_REQDET.AOPT-COMM]]
-rem --- invoke the comments dialog
-
-	gosub comment_entry
-[[POE_REQDET.ORDER_MEMO.BINP]]
-rem --- invoke the comments dialog
-
-	gosub comment_entry
-[[POE_REQDET.MEMO_1024.AVAL]]
-rem --- store first part of memo_1024 in order_memo
-rem --- this AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor
-rem --- if on a memo line or using ctrl-C or Comments button, code in the comment_entry: subroutine is hit instead
-
-	disp_text$=callpoint!.getUserInput()
-	if disp_text$<>callpoint!.getColumnUndoData("POE_REQDET.MEMO_1024")
-		memo_len=len(callpoint!.getColumnData("POE_REQDET.ORDER_MEMO"))
-		order_memo$=disp_text$
-		order_memo$=order_memo$(1,min(memo_len,(pos($0A$=order_memo$+$0A$)-1)))
-
-		callpoint!.setColumnData("POE_REQDET.MEMO_1024",disp_text$,1)
-		callpoint!.setColumnData("POE_REQDET.ORDER_MEMO",order_memo$,1)
-
-		callpoint!.setStatus("MODIFIED")
-	endif
-[[POE_REQDET.SO_INT_SEQ_REF.BINP]]
-rem --- Refresh display of ListButton selection
-	callpoint!.setColumnData("POE_REQDET.SO_INT_SEQ_REF",callpoint!.getColumnData("POE_REQDET.SO_INT_SEQ_REF"),1)
-[[POE_REQDET.BGDS]]
-rem --- Re-initialize requisition total amount before it's accumulated again for each detail row
-	callpoint!.setDevObject("total_amt","0")
-[[POE_REQDET.CONV_FACTOR.AVAL]]
-rem --- Recalc Unit Cost
-
-	prev_fact=num(callpoint!.getColumnData("POE_REQDET.CONV_FACTOR"))
-	new_fact=num(callpoint!.getUserInput())
-	unit_cost=num(callpoint!.getColumnData("POE_REQDET.UNIT_COST"))
-	if num(callpoint!.getUserInput())<>prev_fact and prev_fact<>0
-		unit_cost=unit_cost/prev_fact
-		unit_cost=unit_cost*new_fact
-		callpoint!.setColumnData("POE_REQDET.UNIT_COST",str(unit_cost),1)
-		gosub update_header_tots
-		callpoint!.setDevObject("cost_this_row",unit_cost)
-	endif
-[[POE_REQDET.WO_NO.AVAL]]
-rem --- need to use custom query so we get back both po# and line#
-rem --- throw message to user and abort manual entry
-
-	if cvs(callpoint!.getUserInput(),3)<>""
-		if callpoint!.getUserInput()<>callpoint!.getColumnData("POE_REQDET.WO_NO")
-			if callpoint!.getDevObject("wo_looked_up")<>"Y"
-				callpoint!.setMessage("PO_USE_QUERY")
-				callpoint!.setStatus("ABORT")
-			endif
-		endif
-	else
-		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF","",1)
-	endif
-
-	callpoint!.setDevObject("wo_looked_up","N")
-[[POE_REQDET.WO_NO.BINQ]]
-rem --- call custom inquiry
-rem --- Query displays WO's for given firm/vendor, only showing those not already linked to a PO, and only non-stocks (per v6 validation code)
-
-	poc_linecode_dev=fnget_dev("POC_LINECODE")
-	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
-	po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
-	read record(poc_linecode_dev,key=firm_id$+po_line_code$,dom=*next)poc_linecode$
-	line_type$=poc_linecode.line_type$
-
-	switch pos(line_type$="NS")
-		case 1;rem Non-Stock
-			call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOSUBCNT","AO_SUBCONT_SEQ",key_tpl$,rd_table_chans$[all],status$
-			dim sf_sub_key$:key_tpl$
-			wo_loc$=sf_sub_key.wo_location$
-
-			saved_wo$=callpoint!.getColumnData("POE_REQDET.WO_NO")
-			saved_seq$=callpoint!.getColumnData("POE_REQDET.WK_ORD_SEQ_REF")
-			sub_dev=fnget_dev("SFE_WOSUBCNT")
-			dim subs$:fnget_tpl$("SFE_WOSUBCNT")
-			read record (sub_dev,key=firm_id$+sf_sub_key.wo_location$+saved_wo$+saved_seq$,knum="AO_SUBCONT_SEQ",dom=*next)subs$
-			if cvs(subs.wo_no$,3)=""
-				saved_wo$=""
-				saved_seq$=""
-			else
-				saved_seq$=subs.subcont_seq$
-			endif
-
-			dim filter_defs$[6,2]
-			filter_defs$[1,0]="SFE_WOSUBCNT.FIRM_ID"
-			filter_defs$[1,1]="='"+firm_id$ +"'"
-			filter_defs$[1,2]="LOCK"
-			filter_defs$[2,0]="SFE_WOSUBCNT.VENDOR_ID"
-			filter_defs$[2,1]="='"+callpoint!.getHeaderColumnData("POE_REQHDR.VENDOR_ID")+"'"
-			filter_defs$[2,2]="LOCK"
-			filter_defs$[3,0]="SFE_WOSUBCNT.PO_NO"
-			filter_defs$[3,1]="=''"
-			filter_defs$[3,2]="LOCK"
-			filter_defs$[4,0]="SFE_WOSUBCNT.LINE_TYPE"
-			filter_defs$[4,1]="='S' "
-			filter_defs$[4,2]="LOCK"
-			filter_defs$[5,0]="SFE_WOSUBCNT.WO_LOCATION"
-			filter_defs$[5,1]="='"+sf_sub_key.wo_location$+"' "
-			filter_defs$[5,2]="LOCK"
-			filter_defs$[6,0]="SFE_WOMASTR.WO_STATUS"
-			filter_defs$[6,1]="not in ('Q','C') "
-			filter_defs$[6,2]="LOCK"
-
-			call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"SF_SUBDETAIL","",table_chans$[all],sf_sub_key$,filter_defs$[all]
-			wo_type$="N"
-			wo_key$=sf_sub_key$
-			if wo_key$="" wo_key$=firm_id$+wo_loc$+saved_wo$+saved_seq$
-			break
-		case 2;rem Special Order Item
-			whse$=callpoint!.getColumnData("POE_REQDET.WAREHOUSE_ID")
-			item$=callpoint!.getColumnData("POE_REQDET.ITEM_ID")
-			ivm_itemwhse=fnget_dev("IVM_ITEMWHSE")
-			dim ivm_itemwhse$:fnget_tpl$("IVM_ITEMWHSE")
-			read record (ivm_itemwhse,key=firm_id$+whse$+item$,dom=*break) ivm_itemwhse$
-			if ivm_itemwhse.special_ord$<>"Y" break
-			call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMATL","AO_MAT_SEQ",key_tpl$,rd_table_chans$[all],status$
-			dim sf_mat_key$:key_tpl$
-			wo_loc$=sf_mat_key.wo_location$
-
-			saved_wo$=callpoint!.getColumnData("POE_REQDET.WO_NO")
-			saved_seq$=callpoint!.getColumnData("POE_REQDET.WK_ORD_SEQ_REF")
-			mat_dev=fnget_dev("SFE_WOMATL")
-			dim mats$:fnget_tpl$("SFE_WOMATL")
-			read record (mat_dev,key=firm_id$+sf_mat_key.wo_location$+saved_wo$+saved_seq$,knum="AO_MAT_SEQ",dom=*next)mats$
-			if cvs(mats.wo_no$,3)=""
-				saved_wo$=""
-				saved_seq$=""
-			else
-				saved_seq$=mats.material_seq$
-			endif
-
-			dim filter_defs$[5,2]
-			filter_defs$[1,0]="SFE_WOMATL.FIRM_ID"
-			filter_defs$[1,1]="='"+firm_id$ +"'"
-			filter_defs$[1,2]="LOCK"
-			filter_defs$[2,0]="SFE_WOMATL.ITEM_ID"
-			filter_defs$[2,1]="='"+callpoint!.getColumnData("POE_REQDET.ITEM_ID")+"'"
-			filter_defs$[2,2]="LOCK"
-			filter_defs$[3,0]="SFE_WOMATL.WO_LOCATION"
-			filter_defs$[3,1]="='"+sf_mat_key.wo_location$+"' "
-			filter_defs$[3,2]="LOCK"
-			filter_defs$[4,0]="SFE_WOMATL.LINE_TYPE"
-			filter_defs$[4,1]="='S' "
-			filter_defs$[4,2]="LOCK"
-			filter_defs$[5,0]="SFE_WOMASTR.WO_STATUS"
-			filter_defs$[5,1]="not in ('C','Q') "
-			filter_defs$[5,2]="LOCK"
-	
-			call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"SF_MATDETAIL","",table_chans$[all],sf_mat_key$,filter_defs$[all]
-			wo_type$="S"
-			wo_key$=sf_mat_key$
-			if wo_key$="" wo_key$=firm_id$+wo_loc$+saved_wo$+saved_seq$
-		break
-		case default
-		break
-	swend
-
-	if cvs(wo_key$,3)=firm_id$ wo_key$=""
-
-	gosub get_wo_info
-
-	if cvs(wo_key$,3)<>""
-		callpoint!.setColumnData("POE_REQDET.WO_NO",wo_no$,1)
-		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF",wo_line$,1)
-		callpoint!.setDevObject("wo_looked_up","Y")
-	else
-		callpoint!.setColumnData("POE_REQDET.WO_NO","",1)
-		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF","",1)
-		callpoint!.setDevObject("wo_looked_up","N")
-	endif
-
-	callpoint!.setStatus("MODIFIED-ACTIVATE-ABORT")
-[[POE_REQDET.REQ_QTY.BINP]]
-if callpoint!.getDevObject("line_type")="O"  
-	callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"POE_REQDET.REQ_QTY",0)
-	callpoint!.setFocus("POE_REQDET.UNIT_COST")
-endif
-[[POE_REQDET.BDGX]]
-rem -- loop thru gridVect; if there are any lines not marked deleted, set the callpoint!.setDevObject("dtl_posted") to Y
-
-dtl!=gridVect!.getItem(0)
-callpoint!.setDevObject("dtl_posted","")
-
-if dtl!.size()
-	for x=0 to dtl!.size()-1
-		if callpoint!.getGridRowDeleteStatus(x)<>"Y" then callpoint!.setDevObject("dtl_posted","Y")
-	next x
-endif
-
-callpoint!.setOptionEnabled("COMM",0)
-[[POE_REQDET.ADGE]]
-rem --- if there are order lines to display/access in the sales order line item listbutton, set the LDAT and list display
-rem --- get the detail grid, then get the listbutton within the grid; set the list on the listbutton, and put the listbutton back in the grid
-
-order_list!=callpoint!.getDevObject("so_lines_list")
-ldat$=callpoint!.getDevObject("so_ldat")
-
-if ldat$<>""
-	callpoint!.setColumnEnabled(-1,"POE_REQDET.SO_INT_SEQ_REF",1)
-	callpoint!.setTableColumnAttribute("POE_REQDET.SO_INT_SEQ_REF","LDAT",ldat$)
-	g!=callpoint!.getDevObject("dtl_grid")
-	col_hdr$=callpoint!.getTableColumnAttribute("POE_REQDET.SO_INT_SEQ_REF","LABS")
-	col_ref=util.getGridColumnNumber(g!, col_hdr$)
-	c!=g!.getColumnListControl(col_ref)
-	c!.removeAllItems()
-	c!.insertItems(0,order_list!)
-	g!.setColumnListControl(col_ref,c!)	
-else
-	callpoint!.setColumnEnabled(-1,"POE_REQDET.SO_INT_SEQ_REF",0)
-endif 
-[[POE_REQDET.AUDE]]
-gosub update_header_tots
-
-rem --- Update links to Work Orders
-	SF_installed$=callpoint!.getDevObject("SF_installed")
-	wo_no$=callpoint!.getColumnUndoData("POE_REQDET.WO_NO")
-	if SF_installed$="Y" and cvs(wo_no$,2)<>"" then
-		poc_linecode_dev=fnget_dev("POC_LINECODE")
-		dim poc_linecode$:fnget_tpl$("POC_LINECODE")
-		sfe_womatl_dev=fnget_dev("SFE_WOMATL")
-		sfe_wosubcnt_dev=fnget_dev("SFE_WOSUBCNT")
-
-		po_line_code$=callpoint!.getColumnUndoData("POE_REQDET.PO_LINE_CODE")
-		find record (poc_linecode_dev,key=firm_id$+po_line_code$,dom=*endif) poc_linecode$
-		if pos(poc_linecode.line_type$="NS")<>0  then
-			old_wo$=""
-			old_woseq$=""
-			new_wo$=wo_no$
-			new_woseq$=callpoint!.getColumnUndoData("POE_REQDET.WK_ORD_SEQ_REF")
-			req_no$=callpoint!.getColumnUndoData("POE_REQDET.REQ_NO")
-			req_seq$=callpoint!.getColumnUndoData("POE_REQDET.INTERNAL_SEQ_NO")
-			call pgmdir$+"poc_requpdate.aon",sfe_womatl_dev,sfe_wosubcnt_dev,
-:				req_no$,req_seq$,"R",poc_linecode.line_type$,old_wo$,old_woseq$,new_wo$,new_woseq$,status
-		endif
-	endif
 [[POE_REQDET.ADEL]]
 gosub update_header_tots
 
@@ -262,36 +23,55 @@ rem --- Update links to Work Orders
 :				req_no$,req_seq$,"R",poc_linecode.line_type$,old_wo$,old_woseq$,new_wo$,new_woseq$,status
 		endif
 	endif
-[[POE_REQDET.AREC]]
-callpoint!.setDevObject("qty_this_row",0)
-callpoint!.setDevObject("cost_this_row",0)
 
-rem --- set dates from Header
+[[POE_REQDET.ADGE]]
+rem --- if there are order lines to display/access in the sales order line item listbutton, set the LDAT and list display
+rem --- get the detail grid, then get the listbutton within the grid; set the list on the listbutton, and put the listbutton back in the grid
 
-callpoint!.setColumnData("POE_REQDET.NOT_B4_DATE",callpoint!.getHeaderColumnData("POE_REQHDR.NOT_B4_DATE"))
-callpoint!.setColumnData("POE_REQDET.REQD_DATE",callpoint!.getHeaderColumnData("POE_REQHDR.REQD_DATE"))
-callpoint!.setColumnData("POE_REQDET.PROMISE_DATE",callpoint!.getHeaderColumnData("POE_REQHDR.PROMISE_DATE"))
+order_list!=callpoint!.getDevObject("so_lines_list")
+ldat$=callpoint!.getDevObject("so_ldat")
 
-rem --- Comments button initially disabled
-callpoint!.setOptionEnabled("COMM",0)
+if ldat$<>""
+	callpoint!.setColumnEnabled(-1,"POE_REQDET.SO_INT_SEQ_REF",1)
+	callpoint!.setTableColumnAttribute("POE_REQDET.SO_INT_SEQ_REF","LDAT",ldat$)
+	g!=callpoint!.getDevObject("dtl_grid")
+	col_hdr$=callpoint!.getTableColumnAttribute("POE_REQDET.SO_INT_SEQ_REF","LABS")
+	col_ref=util.getGridColumnNumber(g!, col_hdr$)
+	c!=g!.getColumnListControl(col_ref)
+	c!.removeAllItems()
+	c!.insertItems(0,order_list!)
+	g!.setColumnListControl(col_ref,c!)	
+else
+	callpoint!.setColumnEnabled(-1,"POE_REQDET.SO_INT_SEQ_REF",0)
+endif 
 
-rem --- REFRESH is needed in order to get the default PO_LINE_CODE set in AGCL
-callpoint!.setStatus("REFRESH")
-[[POE_REQDET.UNIT_COST.AVAL]]
-gosub update_header_tots
-callpoint!.setDevObject("cost_this_row",num(callpoint!.getUserInput()))
-[[POE_REQDET.AGRN]]
-rem --- save current qty/price this row
+[[POE_REQDET.AGCL]]
+rem print 'show';rem debug
 
-callpoint!.setDevObject("qty_this_row",callpoint!.getColumnData("POE_REQDET.REQ_QTY"))
-callpoint!.setDevObject("cost_this_row",callpoint!.getColumnData("POE_REQDET.UNIT_COST"))
+use ::ado_util.src::util
 
-rem print "AGRN "
-rem print "qty this row: ",callpoint!.getDevObject("qty_this_row")
-rem print "cost this row: ",callpoint!.getDevObject("cost_this_row")
+rem --- set default line code based on param file
+callpoint!.setTableColumnAttribute("POE_REQDET.PO_LINE_CODE","DFLT",str(callpoint!.getDevObject("dflt_po_line_code")))
 
-rem print "AGRN line_no: ",callpoint!.getColumnData("POE_REQDET.PO_LINE_NO")
+rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
 
+	grid! = util.getGrid(Form!)
+	col_hdr$=callpoint!.getTableColumnAttribute("POE_REQDET.MEMO_1024","LABS")
+	memo_1024_col=util.getGridColumnNumber(grid!, col_hdr$)
+	grid!.setColumnWidth(memo_1024_col,15)
+
+[[POE_REQDET.AGDR]]
+rem --- After Grid Display Row
+
+po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
+if cvs(po_line_code$,2)<>"" then  
+    gosub update_line_type_info
+endif
+
+
+total_amt=num(callpoint!.getDevObject("total_amt"))
+total_amt=total_amt+round(num(callpoint!.getColumnData("POE_REQDET.REQ_QTY"))*num(callpoint!.getColumnData("POE_REQDET.UNIT_COST")),2)
+callpoint!.setDevObject("total_amt",str(total_amt))
 
 	poc_linecode_dev=fnget_dev("POC_LINECODE")
 	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
@@ -300,11 +80,6 @@ rem print "AGRN line_no: ",callpoint!.getColumnData("POE_REQDET.PO_LINE_NO")
 	line_type$=poc_linecode.line_type$
 	gosub enable_by_line_type
 
-rem --- save current po status flag, po/req# and line#
-
-	callpoint!.setDevObject("start_wo_no",callpoint!.getColumnData("POE_REQDET.WO_NO"))
-	callpoint!.setDevObject("start_wo_seq_ref",callpoint!.getColumnData("POE_REQDET.WK_ORD_SEQ_REF"))
-	callpoint!.setDevObject("wo_looked_up","N")
 [[POE_REQDET.AGRE]]
 rem --- check data to see if o.k. to leave row (only if the row isn't marked as deleted)
 
@@ -495,25 +270,191 @@ rem --- look at wo number; if different than it was when we entered the row, upd
 			endif
 		endif
 	endif
+
+[[POE_REQDET.AGRN]]
+rem --- save current qty/price this row
+
+callpoint!.setDevObject("qty_this_row",callpoint!.getColumnData("POE_REQDET.REQ_QTY"))
+callpoint!.setDevObject("cost_this_row",callpoint!.getColumnData("POE_REQDET.UNIT_COST"))
+
+rem print "AGRN "
+rem print "qty this row: ",callpoint!.getDevObject("qty_this_row")
+rem print "cost this row: ",callpoint!.getDevObject("cost_this_row")
+
+rem print "AGRN line_no: ",callpoint!.getColumnData("POE_REQDET.PO_LINE_NO")
+
+
+	poc_linecode_dev=fnget_dev("POC_LINECODE")
+	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
+	po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
+	read record(poc_linecode_dev,key=firm_id$+po_line_code$,dom=*next)poc_linecode$
+	line_type$=poc_linecode.line_type$
+	gosub enable_by_line_type
+
+rem --- save current po status flag, po/req# and line#
+
+	callpoint!.setDevObject("start_wo_no",callpoint!.getColumnData("POE_REQDET.WO_NO"))
+	callpoint!.setDevObject("start_wo_seq_ref",callpoint!.getColumnData("POE_REQDET.WK_ORD_SEQ_REF"))
+	callpoint!.setDevObject("wo_looked_up","N")
+
+[[POE_REQDET.AOPT-COMM]]
+rem --- invoke the comments dialog
+
+	gosub comment_entry
+
+[[POE_REQDET.AREC]]
+callpoint!.setDevObject("qty_this_row",0)
+callpoint!.setDevObject("cost_this_row",0)
+
+rem --- set dates from Header
+
+callpoint!.setColumnData("POE_REQDET.NOT_B4_DATE",callpoint!.getHeaderColumnData("POE_REQHDR.NOT_B4_DATE"))
+callpoint!.setColumnData("POE_REQDET.REQD_DATE",callpoint!.getHeaderColumnData("POE_REQHDR.REQD_DATE"))
+callpoint!.setColumnData("POE_REQDET.PROMISE_DATE",callpoint!.getHeaderColumnData("POE_REQHDR.PROMISE_DATE"))
+
+rem --- Comments button initially disabled
+callpoint!.setOptionEnabled("COMM",0)
+
+rem --- REFRESH is needed in order to get the default PO_LINE_CODE set in AGCL
+callpoint!.setStatus("REFRESH")
+
+[[POE_REQDET.AUDE]]
+gosub update_header_tots
+
+rem --- Update links to Work Orders
+	SF_installed$=callpoint!.getDevObject("SF_installed")
+	wo_no$=callpoint!.getColumnUndoData("POE_REQDET.WO_NO")
+	if SF_installed$="Y" and cvs(wo_no$,2)<>"" then
+		poc_linecode_dev=fnget_dev("POC_LINECODE")
+		dim poc_linecode$:fnget_tpl$("POC_LINECODE")
+		sfe_womatl_dev=fnget_dev("SFE_WOMATL")
+		sfe_wosubcnt_dev=fnget_dev("SFE_WOSUBCNT")
+
+		po_line_code$=callpoint!.getColumnUndoData("POE_REQDET.PO_LINE_CODE")
+		find record (poc_linecode_dev,key=firm_id$+po_line_code$,dom=*endif) poc_linecode$
+		if pos(poc_linecode.line_type$="NS")<>0  then
+			old_wo$=""
+			old_woseq$=""
+			new_wo$=wo_no$
+			new_woseq$=callpoint!.getColumnUndoData("POE_REQDET.WK_ORD_SEQ_REF")
+			req_no$=callpoint!.getColumnUndoData("POE_REQDET.REQ_NO")
+			req_seq$=callpoint!.getColumnUndoData("POE_REQDET.INTERNAL_SEQ_NO")
+			call pgmdir$+"poc_requpdate.aon",sfe_womatl_dev,sfe_wosubcnt_dev,
+:				req_no$,req_seq$,"R",poc_linecode.line_type$,old_wo$,old_woseq$,new_wo$,new_woseq$,status
+		endif
+	endif
+
+[[POE_REQDET.BDGX]]
+rem -- loop thru gridVect; if there are any lines not marked deleted, set the callpoint!.setDevObject("dtl_posted") to Y
+
+dtl!=gridVect!.getItem(0)
+callpoint!.setDevObject("dtl_posted","")
+
+if dtl!.size()
+	for x=0 to dtl!.size()-1
+		if callpoint!.getGridRowDeleteStatus(x)<>"Y" then callpoint!.setDevObject("dtl_posted","Y")
+	next x
+endif
+
+callpoint!.setOptionEnabled("COMM",0)
+
+[[POE_REQDET.BGDS]]
+rem --- Re-initialize requisition total amount before it's accumulated again for each detail row
+	callpoint!.setDevObject("total_amt","0")
+
+[[POE_REQDET.CONV_FACTOR.AVAL]]
+rem --- Recalc Unit Cost
+
+	prev_fact=num(callpoint!.getColumnData("POE_REQDET.CONV_FACTOR"))
+	new_fact=num(callpoint!.getUserInput())
+	unit_cost=num(callpoint!.getColumnData("POE_REQDET.UNIT_COST"))
+	if num(callpoint!.getUserInput())<>prev_fact and prev_fact<>0
+		unit_cost=unit_cost/prev_fact
+		unit_cost=unit_cost*new_fact
+		callpoint!.setColumnData("POE_REQDET.UNIT_COST",str(unit_cost),1)
+		gosub update_header_tots
+		callpoint!.setDevObject("cost_this_row",unit_cost)
+	endif
+
 [[POE_REQDET.ITEM_ID.AINV]]
 rem --- Item synonym processing
  
 	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::grid_entry"
      
-[[POE_REQDET.AGCL]]
-rem print 'show';rem debug
 
-use ::ado_util.src::util
+[[POE_REQDET.ITEM_ID.AVAL]]
+rem "Inventory Inactive Feature"
+item_id$=callpoint!.getUserInput()
+ivm01_dev=fnget_dev("IVM_ITEMMAST")
+ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+dim ivm01a$:ivm01_tpl$
+ivm01a_key$=firm_id$+item_id$
+find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
+if ivm01a.item_inactive$="Y" then
+   msg_id$="IV_ITEM_INACTIVE"
+   dim msg_tokens$[2]
+   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+   gosub disp_message
+   callpoint!.setStatus("ACTIVATE")
+endif
 
-rem --- set default line code based on param file
-callpoint!.setTableColumnAttribute("POE_REQDET.PO_LINE_CODE","DFLT",str(callpoint!.getDevObject("dflt_po_line_code")))
+gosub validate_whse_item
+if pos("ABORT"=callpoint!.getStatus())<>0
+	callpoint!.setUserInput("")
+endif
 
-rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
+	poc_linecode_dev=fnget_dev("POC_LINECODE")
+	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
+	po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
+	read record(poc_linecode_dev,key=firm_id$+po_line_code$,dom=*next)poc_linecode$
+	line_type$=poc_linecode.line_type$
+	gosub enable_by_line_type
 
-	grid! = util.getGrid(Form!)
-	col_hdr$=callpoint!.getTableColumnAttribute("POE_REQDET.MEMO_1024","LABS")
-	memo_1024_col=util.getGridColumnNumber(grid!, col_hdr$)
-	grid!.setColumnWidth(memo_1024_col,15)
+[[POE_REQDET.ITEM_ID.BINQ]]
+rem --- Inventory Item/Whse Lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","IVM_ITEMWHSE","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim ivmItemWhse_key$:key_tpl$
+	dim filter_defs$[2,2]
+	filter_defs$[1,0]="IVM_ITEMWHSE.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="IVM_ITEMWHSE.WAREHOUSE_ID"
+	filter_defs$[2,1]="='"+callpoint!.getColumnData("POE_REQDET.WAREHOUSE_ID")+"'"
+	filter_defs$[2,2]="LOCK"
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"IV_ITEM_WHSE_LK","",table_chans$[all],ivmItemWhse_key$,filter_defs$[all]
+
+	rem --- Update item_id if changed
+	if cvs(ivmItemWhse_key$,2)<>"" and ivmItemWhse_key.item_id$<>callpoint!.getColumnData("POE_REQDET.ITEM_ID") then 
+		callpoint!.setColumnData("POE_REQDET.ITEM_ID",ivmItemWhse_key.item_id$,1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
+[[POE_REQDET.MEMO_1024.AVAL]]
+rem --- store first part of memo_1024 in order_memo
+rem --- this AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor
+rem --- if on a memo line or using ctrl-C or Comments button, code in the comment_entry: subroutine is hit instead
+
+	disp_text$=callpoint!.getUserInput()
+	if disp_text$<>callpoint!.getColumnUndoData("POE_REQDET.MEMO_1024")
+		memo_len=len(callpoint!.getColumnData("POE_REQDET.ORDER_MEMO"))
+		order_memo$=disp_text$
+		order_memo$=order_memo$(1,min(memo_len,(pos($0A$=order_memo$+$0A$)-1)))
+
+		callpoint!.setColumnData("POE_REQDET.MEMO_1024",disp_text$,1)
+		callpoint!.setColumnData("POE_REQDET.ORDER_MEMO",order_memo$,1)
+
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+[[POE_REQDET.ORDER_MEMO.BINP]]
+rem --- invoke the comments dialog
+
+	gosub comment_entry
+
 [[POE_REQDET.PO_LINE_CODE.AVAL]]
 rem --- Line Code - After Validataion
 
@@ -591,6 +532,7 @@ if line_type$="M" and cvs(callpoint!.getColumnData("POE_REQDET.ORDER_MEMO"),2)="
 	callpoint!.setColumnData("POE_REQDET.ORDER_MEMO"," ")
 	callpoint!.setStatus("MODIFIED")
 endif
+
 [[POE_REQDET.REQ_QTY.AVAL]]
 rem --- call poc.ua to retrieve unit cost from ivm-05, at least that's what v6 did here
 rem --- send in: R/W for retrieve or write
@@ -615,6 +557,21 @@ callpoint!.setColumnData("POE_REQDET.UNIT_COST",str(unit_cost),1)
 gosub update_header_tots
 callpoint!.setDevObject("qty_this_row",num(callpoint!.getUserInput()))
 callpoint!.setDevObject("cost_this_row",unit_cost);rem setting both qty and cost because cost may have changed based on qty break
+
+[[POE_REQDET.REQ_QTY.BINP]]
+if callpoint!.getDevObject("line_type")="O"  
+	callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"POE_REQDET.REQ_QTY",0)
+	callpoint!.setFocus("POE_REQDET.UNIT_COST")
+endif
+
+[[POE_REQDET.SO_INT_SEQ_REF.BINP]]
+rem --- Refresh display of ListButton selection
+	callpoint!.setColumnData("POE_REQDET.SO_INT_SEQ_REF",callpoint!.getColumnData("POE_REQDET.SO_INT_SEQ_REF"),1)
+
+[[POE_REQDET.UNIT_COST.AVAL]]
+gosub update_header_tots
+callpoint!.setDevObject("cost_this_row",num(callpoint!.getUserInput()))
+
 [[POE_REQDET.WAREHOUSE_ID.AVAL]]
 rem --- Warehouse ID - After Validataion
 
@@ -624,53 +581,142 @@ rem --- Warehouse ID - After Validataion
 	endif
 
 	gosub validate_whse_item
-[[POE_REQDET.AGDR]]
-rem --- After Grid Display Row
 
-po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
-if cvs(po_line_code$,2)<>"" then  
-    gosub update_line_type_info
-endif
+[[POE_REQDET.WO_NO.AVAL]]
+rem --- need to use custom query so we get back both po# and line#
+rem --- throw message to user and abort manual entry
 
+	if cvs(callpoint!.getUserInput(),3)<>""
+		if callpoint!.getUserInput()<>callpoint!.getColumnData("POE_REQDET.WO_NO")
+			if callpoint!.getDevObject("wo_looked_up")<>"Y"
+				callpoint!.setMessage("PO_USE_QUERY")
+				callpoint!.setStatus("ABORT")
+			endif
+		endif
+	else
+		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF","",1)
+	endif
 
-total_amt=num(callpoint!.getDevObject("total_amt"))
-total_amt=total_amt+round(num(callpoint!.getColumnData("POE_REQDET.REQ_QTY"))*num(callpoint!.getColumnData("POE_REQDET.UNIT_COST")),2)
-callpoint!.setDevObject("total_amt",str(total_amt))
+	callpoint!.setDevObject("wo_looked_up","N")
 
-	poc_linecode_dev=fnget_dev("POC_LINECODE")
-	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
-	po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
-	read record(poc_linecode_dev,key=firm_id$+po_line_code$,dom=*next)poc_linecode$
-	line_type$=poc_linecode.line_type$
-	gosub enable_by_line_type
-[[POE_REQDET.ITEM_ID.AVAL]]
-rem "Inventory Inactive Feature"
-item_id$=callpoint!.getUserInput()
-ivm01_dev=fnget_dev("IVM_ITEMMAST")
-ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
-dim ivm01a$:ivm01_tpl$
-ivm01a_key$=firm_id$+item_id$
-find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
-if ivm01a.item_inactive$="Y" then
-   msg_id$="IV_ITEM_INACTIVE"
-   dim msg_tokens$[2]
-   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
-   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
-   gosub disp_message
-   callpoint!.setStatus("ACTIVATE")
-endif
-
-gosub validate_whse_item
-if pos("ABORT"=callpoint!.getStatus())<>0
-	callpoint!.setUserInput("")
-endif
+[[POE_REQDET.WO_NO.BINQ]]
+rem --- call custom inquiry
+rem --- Query displays WO's for given firm/vendor, only showing those not already linked to a PO, and only non-stocks (per v6 validation code)
 
 	poc_linecode_dev=fnget_dev("POC_LINECODE")
 	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
 	po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
 	read record(poc_linecode_dev,key=firm_id$+po_line_code$,dom=*next)poc_linecode$
 	line_type$=poc_linecode.line_type$
-	gosub enable_by_line_type
+
+	switch pos(line_type$="NS")
+		case 1;rem Non-Stock
+			call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOSUBCNT","AO_SUBCONT_SEQ",key_tpl$,rd_table_chans$[all],status$
+			dim sf_sub_key$:key_tpl$
+			wo_loc$=sf_sub_key.wo_location$
+
+			saved_wo$=callpoint!.getColumnData("POE_REQDET.WO_NO")
+			saved_seq$=callpoint!.getColumnData("POE_REQDET.WK_ORD_SEQ_REF")
+			sub_dev=fnget_dev("SFE_WOSUBCNT")
+			dim subs$:fnget_tpl$("SFE_WOSUBCNT")
+			read record (sub_dev,key=firm_id$+sf_sub_key.wo_location$+saved_wo$+saved_seq$,knum="AO_SUBCONT_SEQ",dom=*next)subs$
+			if cvs(subs.wo_no$,3)=""
+				saved_wo$=""
+				saved_seq$=""
+			else
+				saved_seq$=subs.subcont_seq$
+			endif
+
+			dim filter_defs$[6,2]
+			filter_defs$[1,0]="SFE_WOSUBCNT.FIRM_ID"
+			filter_defs$[1,1]="='"+firm_id$ +"'"
+			filter_defs$[1,2]="LOCK"
+			filter_defs$[2,0]="SFE_WOSUBCNT.VENDOR_ID"
+			filter_defs$[2,1]="='"+callpoint!.getHeaderColumnData("POE_REQHDR.VENDOR_ID")+"'"
+			filter_defs$[2,2]="LOCK"
+			filter_defs$[3,0]="SFE_WOSUBCNT.PO_NO"
+			filter_defs$[3,1]="=''"
+			filter_defs$[3,2]="LOCK"
+			filter_defs$[4,0]="SFE_WOSUBCNT.LINE_TYPE"
+			filter_defs$[4,1]="='S' "
+			filter_defs$[4,2]="LOCK"
+			filter_defs$[5,0]="SFE_WOSUBCNT.WO_LOCATION"
+			filter_defs$[5,1]="='"+sf_sub_key.wo_location$+"' "
+			filter_defs$[5,2]="LOCK"
+			filter_defs$[6,0]="SFE_WOMASTR.WO_STATUS"
+			filter_defs$[6,1]="not in ('Q','C') "
+			filter_defs$[6,2]="LOCK"
+
+			call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"SF_SUBDETAIL","",table_chans$[all],sf_sub_key$,filter_defs$[all]
+			wo_type$="N"
+			wo_key$=sf_sub_key$
+			if wo_key$="" wo_key$=firm_id$+wo_loc$+saved_wo$+saved_seq$
+			break
+		case 2;rem Special Order Item
+			whse$=callpoint!.getColumnData("POE_REQDET.WAREHOUSE_ID")
+			item$=callpoint!.getColumnData("POE_REQDET.ITEM_ID")
+			ivm_itemwhse=fnget_dev("IVM_ITEMWHSE")
+			dim ivm_itemwhse$:fnget_tpl$("IVM_ITEMWHSE")
+			read record (ivm_itemwhse,key=firm_id$+whse$+item$,dom=*break) ivm_itemwhse$
+			if ivm_itemwhse.special_ord$<>"Y" break
+			call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMATL","AO_MAT_SEQ",key_tpl$,rd_table_chans$[all],status$
+			dim sf_mat_key$:key_tpl$
+			wo_loc$=sf_mat_key.wo_location$
+
+			saved_wo$=callpoint!.getColumnData("POE_REQDET.WO_NO")
+			saved_seq$=callpoint!.getColumnData("POE_REQDET.WK_ORD_SEQ_REF")
+			mat_dev=fnget_dev("SFE_WOMATL")
+			dim mats$:fnget_tpl$("SFE_WOMATL")
+			read record (mat_dev,key=firm_id$+sf_mat_key.wo_location$+saved_wo$+saved_seq$,knum="AO_MAT_SEQ",dom=*next)mats$
+			if cvs(mats.wo_no$,3)=""
+				saved_wo$=""
+				saved_seq$=""
+			else
+				saved_seq$=mats.material_seq$
+			endif
+
+			dim filter_defs$[5,2]
+			filter_defs$[1,0]="SFE_WOMATL.FIRM_ID"
+			filter_defs$[1,1]="='"+firm_id$ +"'"
+			filter_defs$[1,2]="LOCK"
+			filter_defs$[2,0]="SFE_WOMATL.ITEM_ID"
+			filter_defs$[2,1]="='"+callpoint!.getColumnData("POE_REQDET.ITEM_ID")+"'"
+			filter_defs$[2,2]="LOCK"
+			filter_defs$[3,0]="SFE_WOMATL.WO_LOCATION"
+			filter_defs$[3,1]="='"+sf_mat_key.wo_location$+"' "
+			filter_defs$[3,2]="LOCK"
+			filter_defs$[4,0]="SFE_WOMATL.LINE_TYPE"
+			filter_defs$[4,1]="='S' "
+			filter_defs$[4,2]="LOCK"
+			filter_defs$[5,0]="SFE_WOMASTR.WO_STATUS"
+			filter_defs$[5,1]="not in ('C','Q') "
+			filter_defs$[5,2]="LOCK"
+	
+			call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"SF_MATDETAIL","",table_chans$[all],sf_mat_key$,filter_defs$[all]
+			wo_type$="S"
+			wo_key$=sf_mat_key$
+			if wo_key$="" wo_key$=firm_id$+wo_loc$+saved_wo$+saved_seq$
+		break
+		case default
+		break
+	swend
+
+	if cvs(wo_key$,3)=firm_id$ wo_key$=""
+
+	gosub get_wo_info
+
+	if cvs(wo_key$,3)<>""
+		callpoint!.setColumnData("POE_REQDET.WO_NO",wo_no$,1)
+		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF",wo_line$,1)
+		callpoint!.setDevObject("wo_looked_up","Y")
+	else
+		callpoint!.setColumnData("POE_REQDET.WO_NO","",1)
+		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF","",1)
+		callpoint!.setDevObject("wo_looked_up","N")
+	endif
+
+	callpoint!.setStatus("MODIFIED-ACTIVATE-ABORT")
+
 [[POE_REQDET.<CUSTOM>]]
 rem ==========================================================================
 update_line_type_info:
@@ -1010,3 +1056,6 @@ rem ==========================================================================
 	callpoint!.setStatus("ACTIVATE")
 
 	return
+
+
+

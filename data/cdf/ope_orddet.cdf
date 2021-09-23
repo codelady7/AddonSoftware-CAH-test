@@ -1282,6 +1282,28 @@ rem --- Set previous item / enable repricing, options, lot
 	gosub able_lot_button
 	callpoint!.setDevObject("skip_ItemId_AINV",0)
 
+[[OPE_ORDDET.ITEM_ID.BINQ]]
+rem --- Inventory Item/Whse Lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","IVM_ITEMWHSE","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim ivmItemWhse_key$:key_tpl$
+	dim filter_defs$[2,2]
+	filter_defs$[1,0]="IVM_ITEMWHSE.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="IVM_ITEMWHSE.WAREHOUSE_ID"
+	filter_defs$[2,1]="='"+callpoint!.getColumnData("OPE_ORDDET.WAREHOUSE_ID")+"'"
+	filter_defs$[2,2]="LOCK"
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"IV_ITEM_WHSE_LK","",table_chans$[all],ivmItemWhse_key$,filter_defs$[all]
+
+	rem --- Update item_id if changed
+	if cvs(ivmItemWhse_key$,2)<>"" and ivmItemWhse_key.item_id$<>callpoint!.getColumnData("OPE_ORDDET.ITEM_ID") then 
+		callpoint!.setColumnData("OPE_ORDDET.ITEM_ID",ivmItemWhse_key.item_id$,1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
 [[OPE_ORDDET.LINE_CODE.AVAL]]
 rem --- Initialize detail line for this line_code
 
