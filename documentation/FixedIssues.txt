@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-21
+ Report Date:   2021-09-23
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -277,3 +277,33 @@ selectable".
 ----
 Modified: data/sync/adm_query_cols~[01007514OP].xml
 Modified: data/sync/adm_query~[01007514OP].xml
+
+=======================================================================================================================================
+Revision: 127e20369523a0d262e7db3a6e3afedf50c9151b
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/23/2021 11:41:55 AM
+Message:
+ER 10130: In grids where warehouse_id is entered before the item_id,
+changed the IV Item lookup to restrict the lookup to the currently
+entered warehouse_id.
+----
+Modified: data/bar/ive_transdet.xml
+Modified: data/bar/mpe_pegging.xml
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/bar/poe_orddet.xml
+Modified: data/bar/poe_podet.xml
+Modified: data/bar/poe_recdet.xml
+Modified: data/bar/poe_reqdet.xml
+Modified: data/bar/sfe_womatdtl.xml
+Modified: data/bar/sfe_womatisd.xml
+Modified: data/cdf/ive_transdet.cdf
+Modified: data/cdf/mpe_pegging.cdf
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
+Modified: data/cdf/poe_orddet.cdf
+Modified: data/cdf/poe_podet.cdf
+Modified: data/cdf/poe_recdet.cdf
+Modified: data/cdf/poe_reqdet.cdf
+Modified: data/cdf/sfe_womatdtl.cdf
+Modified: data/cdf/sfe_womatisd.cdf
