@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-23
+ Report Date:   2021-09-28
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -307,3 +307,31 @@ Modified: data/cdf/poe_recdet.cdf
 Modified: data/cdf/poe_reqdet.cdf
 Modified: data/cdf/sfe_womatdtl.cdf
 Modified: data/cdf/sfe_womatisd.cdf
+
+=======================================================================================================================================
+Revision: cbaee2a824e0ecd946371350c85dc9a7c2519395
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 9/28/2021 4:10:30 PM
+Message:
+ER 9017: Added Audit Control Number drilldown to the "Detail" view query
+on the GL Account Summary Activity form.
+----
+Added: data/sync/adm_query_cols~[01007514GL].xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___001.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___002.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___003.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___004.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___005.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___006.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___007.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___008.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___009.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___010.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___011.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___012.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___013.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___014.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___015.xml
+Deleted: data/sync/adm_query_cols~gl_amount_inq___016.xml
+Rename: data/sync/adm_query~[01007514GL].xml (from data/sync/adm_query~gl_amount_inq.xml)
+Added: data/sync/ddm_drill_defs~[01007514GL].xml
