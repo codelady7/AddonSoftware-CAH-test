@@ -58,6 +58,7 @@ rem --- Assign form input values to local variables
     enditem$=option!.getOptionData("item_id_2")
     type$=option!.getOptionData("item_type")
     rem "ITEM INACTIVE FEATURE"
+    zero_bal$=Option!.getOptionData("ZERO_BAL")
     inactive$=Option!.getOptionData("ITEM_INACTIVE")
 
 rem --- Retrieve parameter records

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_ordhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_ordhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_ordhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">154822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20210929</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20210929</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">173904</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_ordhdr">OPT_INVHDR      </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ope_ordhdr">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ope_ordhdr">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_ordhdr">AO_STATUS</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ope_ordhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ope_ordhdr">T</DD_ATTR_FTYP>
@@ -320,7 +320,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.ope_ordhdr001">Aging Amounts</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.ope_ordhdr001">+20</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.ope_ordhdr001">-8</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.ope_ordhdr001">72</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.ope_ordhdr001">73</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.ope_ordhdr001"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.ope_ordhdr001"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.ope_ordhdr001">2307</DD_ATTR_CTLI>
@@ -334,7 +334,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.ope_ordhdr002">Internal Customer Comments</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.ope_ordhdr002">+30</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.ope_ordhdr002">-10</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.ope_ordhdr002">31</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.ope_ordhdr002">32</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.ope_ordhdr002"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.ope_ordhdr002"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.ope_ordhdr002">2120</DD_ATTR_CTLI>
@@ -348,7 +348,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.ope_ordhdr003">Internal Ordr/Invoice Comments</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.ope_ordhdr003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.ope_ordhdr003">+3</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.ope_ordhdr003">33</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.ope_ordhdr003">34</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.ope_ordhdr003"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.ope_ordhdr003"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.ope_ordhdr003">2122</DD_ATTR_CTLI>
@@ -2143,7 +2143,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr003">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr003">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr003">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr003"></DD_ATTR_CTLY>
@@ -2194,7 +2194,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr004">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr004">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr004"></DD_ATTR_CTLY>
@@ -2296,7 +2296,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr006">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr006">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr006">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_CTLY>
@@ -2317,7 +2317,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr006">2</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr006">35</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr006">36</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr006">INVOICE_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr006"></DD_ATTR_FONT>
@@ -2368,7 +2368,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr007"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr007">37</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr007">38</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr007"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr007">ORDINV_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr007"></DD_ATTR_FONT>
@@ -2419,7 +2419,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr008">14</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr008">15</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr008">BACKORD_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr008"></DD_ATTR_FONT>
@@ -2470,7 +2470,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr009">51</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr009">52</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr009">AR_SHIP_VIA</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr009"></DD_ATTR_FONT>
@@ -2521,7 +2521,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr010">45</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr010">46</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr010">MISC_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr010"></DD_ATTR_FONT>
@@ -2551,7 +2551,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr011">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr011">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr011">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_CTLY>
@@ -2572,7 +2572,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr011">55</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr011">56</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr011">SLSPSN_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr011"></DD_ATTR_FONT>
@@ -2623,7 +2623,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr012">48</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr012">49</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr012">TERMS_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr012"></DD_ATTR_FONT>
@@ -2653,7 +2653,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr013">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr013">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_CTLY>
@@ -2674,7 +2674,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr013">47</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr013">48</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr013">DISC_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr013"></DD_ATTR_FONT>
@@ -2725,7 +2725,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr014">49</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr014">50</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr014">AR_DIST_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr014"></DD_ATTR_FONT>
@@ -2776,7 +2776,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr015"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr015"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr015"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr015">59</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr015">60</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr015"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr015">PRINT_STATUS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr015"></DD_ATTR_FONT>
@@ -2827,7 +2827,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr016"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr016">61</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr016">62</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr016"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr016">LOCK_STATUS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr016"></DD_ATTR_FONT>
@@ -2878,7 +2878,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr017"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr017"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr017"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr017">56</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr017">57</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr017"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr017">MESSAGE_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr017"></DD_ATTR_FONT>
@@ -2929,7 +2929,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr018"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr018"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr018"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr018">50</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr018">51</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr018"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr018">TERRITORY</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr018"></DD_ATTR_FONT>
@@ -2959,7 +2959,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr019">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr019">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr019">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_CTLY>
@@ -2980,7 +2980,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr019">58</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr019">59</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr019">PRICE_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr019"></DD_ATTR_FONT>
@@ -3010,7 +3010,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr020">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr020">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr020">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_CTLY>
@@ -3031,7 +3031,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr020">57</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr020">58</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr020">TAX_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr020"></DD_ATTR_FONT>
@@ -3061,7 +3061,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr021">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr021">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr021">+30</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr021">-9</DD_ATTR_CTLY>
@@ -3082,7 +3082,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr021">54</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr021">55</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr021">PRICING_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr021"></DD_ATTR_FONT>
@@ -3133,7 +3133,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr022"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr022"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr022"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr022">60</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr022">61</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr022"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr022">JOB_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr022"></DD_ATTR_FONT>
@@ -3235,7 +3235,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr024"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr024">62</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr024">63</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr024"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr024">CASH_SALE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr024"></DD_ATTR_FONT>
@@ -3286,7 +3286,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr025"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr025"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr025"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr025">63</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr025">64</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr025"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr025">REPRINT_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr025"></DD_ATTR_FONT>
@@ -3337,7 +3337,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr026"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr026"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr026"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr026">46</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr026">47</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr026"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr026">CREDIT_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr026"></DD_ATTR_FONT>
@@ -3367,7 +3367,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr027">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr027">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr027">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_CTLY>
@@ -3388,7 +3388,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr027">12</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr027">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr027">SHIPTO_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr027"></DD_ATTR_FONT>
@@ -3418,7 +3418,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr028">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr028">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr028">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr028">+1</DD_ATTR_CTLY>
@@ -3439,7 +3439,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr028">41</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr028">42</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr028">CUSTOMER_PO_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr028"></DD_ATTR_FONT>
@@ -3490,7 +3490,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr029"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr029"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr029"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr029">42</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr029">43</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr029"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr029">CUSTOMER_REL_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr029"></DD_ATTR_FONT>
@@ -3541,7 +3541,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr030"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr030"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr030"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr030">40</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr030">41</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr030"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr030">INVOICE_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr030"></DD_ATTR_FONT>
@@ -3571,7 +3571,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr031">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr031">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr031">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_CTLY>
@@ -3592,7 +3592,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr031">38</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr031">39</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr031">SHIPMNT_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr031"></DD_ATTR_FONT>
@@ -3622,7 +3622,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr032">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr032">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr032">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_CTLY>
@@ -3643,7 +3643,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr032">36</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr032">37</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr032">ORDER_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr032"></DD_ATTR_FONT>
@@ -3694,7 +3694,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr033"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr033"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr033"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr033">39</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr033">40</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr033"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr033">EXPIRE_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr033"></DD_ATTR_FONT>
@@ -3724,7 +3724,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr034">20080131</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr034">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr034">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr034">-7</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_CTLY>
@@ -3745,7 +3745,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr034">1</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr034">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr034">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr034">SHIPTO_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr034"></DD_ATTR_FONT>
@@ -3796,7 +3796,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr035"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr035"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr035"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr035">43</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr035">44</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr035"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr035">FOB</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr035"></DD_ATTR_FONT>
@@ -3847,7 +3847,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr036"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr036"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr036"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr036">84</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr036">85</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr036"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr036">CREATED_USER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr036"></DD_ATTR_FONT>
@@ -3898,7 +3898,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr037"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr037"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr037"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr037">85</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr037">86</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr037"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr037">CREATED_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr037"></DD_ATTR_FONT>
@@ -3949,7 +3949,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr038"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr038"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr038"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr038">86</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr038">87</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr038"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr038">CREATED_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr038"></DD_ATTR_FONT>
@@ -4000,7 +4000,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr039"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr039"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr039"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr039">87</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr039">88</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr039"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr039">MOD_USER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr039"></DD_ATTR_FONT>
@@ -4051,7 +4051,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr040"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr040"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr040"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr040">88</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr040">89</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr040"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr040">MOD_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr040"></DD_ATTR_FONT>
@@ -4102,7 +4102,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr041"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr041"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr041"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr041">89</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr041">90</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr041"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr041">MOD_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr041"></DD_ATTR_FONT>
@@ -4204,7 +4204,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr043"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr043"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr043"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr043">90</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr043">91</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr043"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr043">ARC_USER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr043"></DD_ATTR_FONT>
@@ -4255,7 +4255,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr044"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr044"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr044"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr044">91</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr044">92</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr044"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr044">ARC_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr044"></DD_ATTR_FONT>
@@ -4306,7 +4306,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr045"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr045"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr045"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr045">92</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr045">93</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr045"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr045">ARC_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr045"></DD_ATTR_FONT>
@@ -4357,7 +4357,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr046"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr046"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr046"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr046">82</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr046">83</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr046"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr046">BATCH_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr046"></DD_ATTR_FONT>
@@ -4408,7 +4408,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr047"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr047"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr047"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr047">83</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr047">84</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr047"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr047">AUDIT_NUMBER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr047"></DD_ATTR_FONT>
@@ -4459,7 +4459,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr048"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr048"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr048"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr048">68</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr048">69</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr048"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr048">TAX_AMOUNT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr048"></DD_ATTR_FONT>
@@ -4489,7 +4489,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr049">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr049">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr049">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_CTLY>
@@ -4510,7 +4510,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr049">69</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr049">70</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr049">FREIGHT_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr049"></DD_ATTR_FONT>
@@ -4540,7 +4540,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_ordhdr050">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr050">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_ordhdr050">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_CTLY>
@@ -4561,7 +4561,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr050">65</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr050">66</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr050">DISCOUNT_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr050"></DD_ATTR_FONT>
@@ -4612,7 +4612,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr051"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr051"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr051"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr051">80</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr051">81</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr051"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr051">COMM_PERCENT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr051"></DD_ATTR_FONT>
@@ -4663,7 +4663,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr052"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr052"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr052"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr052">67</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr052">68</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr052"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr052">TAXABLE_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr052"></DD_ATTR_FONT>
@@ -4714,7 +4714,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr053"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr053"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr053"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr053">81</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr053">82</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr053"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr053">COMM_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr053"></DD_ATTR_FONT>
@@ -4765,7 +4765,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr054"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr054"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr054">3</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr054">64</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr054">65</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr054"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr054">TOTAL_SALES</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr054"></DD_ATTR_FONT>
@@ -4816,7 +4816,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr055"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr055"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr055"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr055">71</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr055">72</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr055"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr055">TOTAL_COST</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr055"></DD_ATTR_FONT>
@@ -4867,7 +4867,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr056"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr056"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr056"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr056">93</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr056">94</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr056"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr056">SHIP_LBL_COUNT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr056"></DD_ATTR_FONT>
@@ -4918,7 +4918,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr057">34</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr057">35</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr057">MEMO_1024</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_FONT>
@@ -4969,7 +4969,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr058"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr058"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr058"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr058">94</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr058">95</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr058"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr058">PRNT_SHIP_LABELS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr058"></DD_ATTR_FONT>
@@ -5020,7 +5020,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr059"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr059"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr059"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr059">95</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr059">96</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr059"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr059">PRNT_BILL_LADING</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr059"></DD_ATTR_FONT>
@@ -5071,7 +5071,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr060"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr060"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr060"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr060">96</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr060">97</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr060"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr060">SHIP_SEQ_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr060"></DD_ATTR_FONT>
@@ -5122,7 +5122,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr061"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr061"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr061"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr061">52</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr061">53</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr061"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr061">SHIPPING_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr061"></DD_ATTR_FONT>
@@ -5173,7 +5173,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr062"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr062"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr062"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr062">53</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr062">54</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr062"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr062">SHIPPING_EMAIL</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr062"></DD_ATTR_FONT>
@@ -5224,7 +5224,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr063"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr063"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr063"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr063">103</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr063">104</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr063"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr063">CREDIT_INVOICE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr063"></DD_ATTR_FONT>
@@ -5275,7 +5275,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr064"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr064"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr064"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr064">102</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr064">103</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr064"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr064">NO_SLS_TAX_CALC</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr064"></DD_ATTR_FONT>
@@ -5326,7 +5326,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ope_ordhdr065"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ope_ordhdr065"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ope_ordhdr065"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr065">104</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ope_ordhdr065">105</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ope_ordhdr065"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ope_ordhdr065">ORD_CONF_PRINTED</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ope_ordhdr065"></DD_ATTR_FONT>
@@ -5359,7 +5359,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr001"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr001"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr001">15</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr001">16</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr001">3104</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr001">ine_badd1</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr001">1</DD_ATTR_CTLC>
@@ -5382,7 +5382,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr002"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr002">16</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr002">17</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr002">3105</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr002">ine_badd2</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr002">1</DD_ATTR_CTLC>
@@ -5405,7 +5405,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr003"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr003"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr003">17</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr003">18</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr003">3106</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr003">ine_badd3</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr003">1</DD_ATTR_CTLC>
@@ -5428,7 +5428,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr004"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr004"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr004">18</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr004">19</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr004">3107</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr004">ine_badd4</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr004">1</DD_ATTR_CTLC>
@@ -5451,7 +5451,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr005"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr005">19</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr005">20</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr005">3108</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr005">ine_bcity</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr005">1</DD_ATTR_CTLC>
@@ -5474,7 +5474,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr006"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr006"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr006">20</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr006">21</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr006">3109</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr006">ine_bstate</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr006">1</DD_ATTR_CTLC>
@@ -5497,7 +5497,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr007"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr007">21</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr007">22</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr007">3110</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr007">ine_bzip</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr007">1</DD_ATTR_CTLC>
@@ -5520,7 +5520,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr008">13</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr008">14</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr008">3103</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr008">ine_sname</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr008">1</DD_ATTR_CTLC>
@@ -5543,12 +5543,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr009"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr009">23</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr009">24</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr009">3112</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr009">ine_sadd1</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr009">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr009"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr009">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr009">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr010">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr010">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5566,12 +5566,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr010"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr010">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr010">25</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr010">3113</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr010">ine_sadd2</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr010">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr010"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr010">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr010">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr011">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr011">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5589,12 +5589,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr011"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr011">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr011">26</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr011">3114</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr011">ine_sadd3</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr011">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr011"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr011">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr011">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr012">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr012">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5612,12 +5612,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr012"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr012">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr012">27</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr012">3115</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr012">ine_sadd4</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr012">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr012"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr012">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr012">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr013">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr013">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5635,12 +5635,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr013"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr013">27</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr013">28</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr013">3116</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr013">ine_scity</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr013">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr013"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr013">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr013">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr014">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr014">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5658,12 +5658,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr014"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr014">28</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr014">29</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr014">3117</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr014">ine_sstate</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr014">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr014"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr014">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr014">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr015">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr015">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5681,12 +5681,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr015"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr015"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr015"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr015">29</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr015">30</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr015">3118</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr015">ine_szip</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr015">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr015"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr015">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr015">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr016">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr016">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -5704,7 +5704,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr016"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr016">66</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr016">67</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr016">3303</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr016">inn_subtotal</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr016">3</DD_ATTR_CTLC>
@@ -5727,7 +5727,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr017"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr017"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr017"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr017">70</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr017">71</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr017">3306</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr017">inn_net_sales</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr017">3</DD_ATTR_CTLC>
@@ -5750,7 +5750,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr018"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr018"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr018"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr018">73</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr018">74</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr018">3308</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr018">inn_aging_future</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr018">3</DD_ATTR_CTLC>
@@ -5773,7 +5773,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr019"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr019"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr019"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr019">74</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr019">75</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr019">3309</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr019">inn_aging_cur</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr019">3</DD_ATTR_CTLC>
@@ -5796,7 +5796,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr020"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr020"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr020"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr020">75</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr020">76</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr020">3310</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr020">inn_aging_30</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr020">3</DD_ATTR_CTLC>
@@ -5819,7 +5819,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr021"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr021"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr021"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr021">76</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr021">77</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr021">3311</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr021">inn_aging_60</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr021">3</DD_ATTR_CTLC>
@@ -5842,7 +5842,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr022"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr022"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr022"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr022">77</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr022">78</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr022">3312</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr022">inn_aging_90</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr022">3</DD_ATTR_CTLC>
@@ -5865,7 +5865,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr023"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr023"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr023"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr023">78</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr023">79</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr023">3313</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr023">inn_aging_120</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr023">3</DD_ATTR_CTLC>
@@ -5888,7 +5888,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr024"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr024">79</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr024">80</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr024">3314</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr024">inn_tot_aging</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr024">3</DD_ATTR_CTLC>
@@ -5934,7 +5934,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr026"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr026"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr026"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr026">32</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr026">33</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr026">3121</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr026">ced_comments</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr026">1</DD_ATTR_CTLC>
@@ -5949,7 +5949,7 @@
 			<DD_ATTR_LABL id="ddm_table_disp.ope_ordhdr027"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_disp.ope_ordhdr027"></DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.ope_ordhdr027"></DD_ATTR_CALC>
-			<DD_ATTR_CTLX id="ddm_table_disp.ope_ordhdr027">+17</DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_disp.ope_ordhdr027">+16</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_disp.ope_ordhdr027">-2</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_disp.ope_ordhdr027"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_disp.ope_ordhdr027"></DD_ATTR_CTLH>
@@ -5972,7 +5972,7 @@
 			<DD_ATTR_LABL id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_CALC>
-			<DD_ATTR_CTLX id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_disp.ope_ordhdr028">-34</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_CTLH>
@@ -5980,8 +5980,8 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr028">10</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr028">3006</DD_ATTR_CTLI>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr028">11</DD_ATTR_TIND>
+			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr028">3007</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr028">ine_credit_hold</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr028">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr028"></DD_ATTR_RADG>
@@ -6003,7 +6003,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr029"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr029"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr029"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr029">22</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr029">23</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr029">3111</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr029">dis_bcntry_id</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr029">1</DD_ATTR_CTLC>
@@ -6026,12 +6026,12 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr030"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr030"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr030"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr030">30</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr030">31</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr030">3119</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr030">dis_scntry_id</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr030">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr030"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr030">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr030">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr031">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr031">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -6049,7 +6049,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr031"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr031"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr031"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr031">44</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr031">45</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr031">3208</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr031">dis_cust_tp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr031">2</DD_ATTR_CTLC>
@@ -6072,7 +6072,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr032"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr032"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr032"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr032">98</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr032">99</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr032">3316</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr032">ind_lstinv_date</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr032">3</DD_ATTR_CTLC>
@@ -6095,7 +6095,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr033"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr033"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr033"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr033">99</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr033">100</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr033">3317</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr033">ind_lstpay_date</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr033">3</DD_ATTR_CTLC>
@@ -6118,7 +6118,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr034"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr034"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr034"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr034">100</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr034">101</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr034">3318</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr034">ind_report_date</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr034">3</DD_ATTR_CTLC>
@@ -6141,7 +6141,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr035"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr035"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr035"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr035">97</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr035">98</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr035">3315</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr035">inn_avg_days</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr035">3</DD_ATTR_CTLC>
@@ -6164,12 +6164,35 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr036"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr036"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr036"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr036">101</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr036">102</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr036">3319</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr036">ine_report_type</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr036">3</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr036"></DD_ATTR_RADG>
 			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr036"></DD_ATTR_CPGM>
+		</RECORD>
+		<RECORD id="ddm_table_disp.ope_ordhdr037">
+			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr037">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_disp.ope_ordhdr037">037</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_disp.ope_ordhdr037">BAR_TEXT_20     </DD_DATA_NAME>
+			<DD_CTRL_NAME id="ddm_table_disp.ope_ordhdr037">RPT_CTL         </DD_CTRL_NAME>
+			<DD_ATTR_LABL id="ddm_table_disp.ope_ordhdr037">Report Control</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_disp.ope_ordhdr037">Rpt Ctl</DD_ATTR_LABS>
+			<DD_ATTR_CALC id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_CALC>
+			<DD_ATTR_CTLX id="ddm_table_disp.ope_ordhdr037">+34</DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_disp.ope_ordhdr037">-1</DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_CTLH>
+			<DD_ATTR_DRLE id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_GHDR>
+			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_disp.ope_ordhdr037">10</DD_ATTR_TIND>
+			<DD_ATTR_CTLI id="ddm_table_disp.ope_ordhdr037">3006</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr037">ine_rpt_ctl</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr037">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_RADG>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr037"></DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cmts">
@@ -6746,6 +6769,11 @@
 			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrbcityc">BCITY           </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.ope_ordhdrbcityc">C</DD_ATTR_OPTS>
 		</RECORD>
+		<RECORD id="ddm_column_opts.ope_ordhdrbcityl">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrbcityl">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrbcityl">BCITY           </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ope_ordhdrbcityl">L</DD_ATTR_OPTS>
+		</RECORD>
 		<RECORD id="ddm_column_opts.ope_ordhdrbstatec">
 			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrbstatec">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrbstatec">BSTATE          </DD_DVAR_NAME>
@@ -6770,6 +6798,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrsadd4l">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrsadd4l">SADD4           </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.ope_ordhdrsadd4l">L</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.ope_ordhdrscityl">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrscityl">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrscityl">SCITY           </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ope_ordhdrscityl">L</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.ope_ordhdrsubtotalc">
 			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrsubtotalc">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -6885,6 +6918,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrreport_typec">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrreport_typec">REPORT_TYPE     </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.ope_ordhdrreport_typec">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.ope_ordhdrrpt_ctlc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ope_ordhdrrpt_ctlc">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ope_ordhdrrpt_ctlc">RPT_CTL         </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ope_ordhdrrpt_ctlc">C</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">

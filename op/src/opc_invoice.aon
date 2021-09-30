@@ -404,7 +404,7 @@ rem --- Main Read
 
         new_doc_id$=""
         new_doc_name$=""
-        doc_name$="OPInvoice_Cust"+ope01a.customer_id$+"_"+alias$
+        doc_name$="OPInvoice"+ope01a.ar_inv_no$+"_Cust"+ope01a.customer_id$+"_"+alias$
         doc_keywords$="Order: "+ope01a.order_no$+" Invoice: "+ope01a.ar_inv_no$
 
         rd_source_alias$=alias$

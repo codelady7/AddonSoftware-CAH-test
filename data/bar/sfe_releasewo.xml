@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfe_releasewo"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfe_releasewo">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfe_releasewo">20111219</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfe_releasewo">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfe_releasewo">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfe_releasewo">154822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfe_releasewo">20210915</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfe_releasewo">20210915</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfe_releasewo">082200</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfe_releasewo"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.sfe_releasewo">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.sfe_releasewo">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfe_releasewo"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.sfe_releasewo"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.sfe_releasewo">S</DD_ATTR_FTYP>
@@ -161,7 +161,7 @@
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.sfe_releasewo001">Y</DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.sfe_releasewo001"></DD_ATTR_IDEF>
@@ -212,7 +212,7 @@
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.sfe_releasewo002">Y</DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.sfe_releasewo002"></DD_ATTR_IDEF>
@@ -263,7 +263,7 @@
 			<DD_ATTR_CTLY id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.sfe_releasewo003">Y</DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.sfe_releasewo003"></DD_ATTR_IDEF>

@@ -1,40 +1,133 @@
-[[SFE_WOOPRTN.LINE_TYPE.AVAL]]
-rem --- Enable/disable comments field
-	if cvs(callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF"),2)<>"" then
-		line_type$=callpoint!.getUserInput()
-		gosub enable_comments
+[[SFE_WOOPRTN.AGDR]]
+rem --- Enable/disable comments
+	line_type$=callpoint!.getColumnData("SFE_WOOPRTN.LINE_TYPE")
+	gosub enable_comments
+
+rem --- Track wo_op_ref in Map to insure they are unique
+	refnumMap!=callpoint!.getDevObject("refnumMap")
+	lastOpRef=callpoint!.getDevObject("lastOpRef")
+	wo_op_ref$=callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF")
+	refnumMap!.put(wo_op_ref$,"")
+	if num(wo_op_ref$)>lastOpRef then
+		callpoint!.setDevObject("lastOpRef",num(wo_op_ref$))
 	endif
+
+
+rem --- Display Queue time
+
+	op_code$=callpoint!.getColumnData("SFE_WOOPRTN.OP_CODE")
+	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
+	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
+	move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
+
+	gosub disp_queue
+
 [[SFE_WOOPRTN.AGRN]]
 rem --- Enable/disable comments
 	line_type$=callpoint!.getColumnData("SFE_WOOPRTN.LINE_TYPE")
 	gosub enable_comments
-[[SFE_WOOPRTN.MEMO_1024.BINQ]]
-rem --- (Barista Bug 9179 workaround) If grid cell isn't editable, then abort so new text can't be entered via edit control.
-	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
-	col_hdr$=callpoint!.getTableColumnAttribute("SFE_WOOPRTN.MEMO_1024","LABS")
-	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
-	this_row=callpoint!.getValidationRow()
-	isEditable=maintGrid!.isCellEditable(this_row,memo_1024_col)
-	if !isEditable then callpoint!.setStatus("ABORT")
-[[SFE_WOOPRTN.MEMO_1024.AVAL]]
-rem --- Store first part of memo_1024 in ext_comment.
-rem --- This AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor.
-rem --- If use Comment field, or use ctrl-C or Comments button, code in the comment_entry subroutine is hit instead.
-	disp_text$=callpoint!.getUserInput()
-	if disp_text$<>callpoint!.getColumnUndoData("SFE_WOOPRTN.MEMO_1024")
-		dim ext_comments$(60)
-		ext_comments$(1)=disp_text$(1,pos($0A$=disp_text$+$0A$)-1)
-		callpoint!.setColumnData("SFE_WOOPRTN.MEMO_1024",disp_text$,1)
-		callpoint!.setColumnData("SFE_WOOPRTN.EXT_COMMENTS",ext_comments$,1)
-		callpoint!.setStatus("MODIFIED")
-	endif
+
 [[SFE_WOOPRTN.AOPT-COMM]]
 rem --- Launch Comments dialog
 	gosub comment_entry
-[[SFE_WOOPRTN.EXT_COMMENTS.BINP]]
-rem --- Launch Comments dialog
-	gosub comment_entry
-	callpoint!.setStatus("ABORT")
+
+[[SFE_WOOPRTN.BDEL]]
+rem --- Before deleting, check to make sure the op isn't used in a material or subcontract line
+	wo_location$=callpoint!.getColumnData("SFE_WOOPRTN.WO_LOCATION")
+	wo_no$=callpoint!.getColumnData("SFE_WOOPRTN.WO_NO")
+	opUsed=0
+	sfe22_dev=fnget_dev("SFE_WOMATL")
+	dim sfe22a$:fnget_tpl$("SFE_WOMATL")
+	read(sfe22_dev,key=firm_id$+wo_location$+wo_no$,dom=*next)
+	while 1
+		sfe22_key$=key(sfe22_dev,end=*break)
+		if pos(firm_id$+wo_location$+wo_no$=sfe22_key$)<>1 then break
+		readrecord(sfe22_dev)sfe22a$
+		if cvs(sfe22a.oper_seq_ref$,2)=callpoint!.getColumnData("SFE_WOOPRTN.INTERNAL_SEQ_NO") then
+			opUsed=1
+			break
+		endif
+	wend
+	if opUsed then
+		msg_id$="WO_OP_CANNOT_DEL"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=Translate!.getTranslation("AON_MATERIALS")
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+	sfe32_dev=fnget_dev("SFE_WOSUBCNT")
+	dim sfe32a$:fnget_tpl$("SFE_WOSUBCNT")
+	read(sfe32_dev,key=firm_id$+wo_location$+wo_no$,dom=*next)
+	while 1
+		sfe32_key$=key(sfe32_dev,end=*break)
+		if pos(firm_id$+wo_location$+wo_no$=sfe32_key$)<>1 then break
+		readrecord(sfe32_dev)sfe32a$
+		if cvs(sfe32a.oper_seq_ref$,2)=callpoint!.getColumnData("SFE_WOOPRTN.INTERNAL_SEQ_NO") then
+			opUsed=1
+			break
+		endif
+	wend
+	if opUsed then
+		msg_id$="WO_OP_CANNOT_DEL"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=Translate!.getTranslation("AON_SUBCONTRACTS")
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Update refnumMap!
+	refnumMap!=callpoint!.getDevObject("refnumMap")
+	wo_op_ref$=callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF")
+	refnumMap!.remove(wo_op_ref$)
+
+[[SFE_WOOPRTN.BFMC]]
+rem --- set validation table for op codes to use sf codes if no bom interface (or bom not installed)
+
+	if callpoint!.getDevObject("bm")<>"Y"
+		callpoint!.setTableColumnAttribute("SFE_WOOPRTN.OP_CODE","DTAB","SFC_OPRTNCOD")
+	endif
+
+[[SFE_WOOPRTN.BSHO]]
+use ::ado_util.src::util
+use ::sfo_SfUtils.aon::SfUtils
+declare SfUtils sfUtils!
+
+
+rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
+
+	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	col_hdr$=callpoint!.getTableColumnAttribute("SFE_WOOPRTN.MEMO_1024","LABS")
+	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
+	maintGrid!.setColumnWidth(memo_1024_col,15)
+
+rem --- init data
+
+	refnumMap!=new java.util.HashMap()
+	callpoint!.setDevObject("refnumMap",refnumMap!)
+	callpoint!.setDevObject("lastOpRef",0)
+
+rem --- Disable grid if Closed Work Order
+
+	if callpoint!.getDevObject("wo_status")="C"
+		opts$=callpoint!.getTableAttribute("OPTS")
+		callpoint!.setTableAttribute("OPTS",opts$+"BID")
+
+		x$=callpoint!.getTableColumns()
+		for x=1 to len(x$) step 40
+			opts$=callpoint!.getTableColumnAttribute(cvs(x$(x,40),2),"OPTS")
+			callpoint!.setTableColumnAttribute(cvs(x$(x,40),2),"OPTS",opts$+"C"); rem - makes cells read only
+		next x
+	endif
+
+rem --- Disable WO_OP_REF when locked
+	if callpoint!.getDevObject("lock_ref_num")="Y" then
+		opts$=callpoint!.getTableColumnAttribute("SFE_WOOPRTN.WO_OP_REF","OPTS")
+		callpoint!.setTableColumnAttribute("SFE_WOOPRTN.WO_OP_REF","OPTS",opts$+"C"); rem --- makes read only
+	endif
+
 [[SFE_WOOPRTN.BUDE]]
 rem --- Verify wo_op_ref is unique
 	refnumMap!=callpoint!.getDevObject("refnumMap")
@@ -49,88 +142,51 @@ rem --- Verify wo_op_ref is unique
 	else
 		refnumMap!.put(wo_op_ref$,"")
 	endif
-[[SFE_WOOPRTN.WO_OP_REF.AVAL]]
-rem --- Verify wo_op_ref is unique
-	wo_op_ref$=callpoint!.getUserInput()
-	prev_wo_op_ref$=callpoint!.getDevObject("prev_wo_op_ref")
-	refnumMap!=callpoint!.getDevObject("refnumMap")
-	if wo_op_ref$<>prev_wo_op_ref$ then
-		if refnumMap!.containsKey(wo_op_ref$) then
-			msg_id$="SF_DUP_REF_NUM"
-			dim msg_tokens$[1]
-			msg_tokens$[1]=wo_op_ref$
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			break
-		else
-			refnumMap!.remove(prev_wo_op_ref$)
-			refnumMap!.put(wo_op_ref$,"")
-			if num(prev_wo_op_ref$)=callpoint!.getDevObject("lastOpRef") then
-				callpoint!.setDevObject("lastOpRef",num(prev_wo_op_ref$)-1)
-			endif
-			if num(wo_op_ref$)>callpoint!.getDevObject("lastOpRef") then
-				callpoint!.setDevObject("lastOpRef",num(wo_op_ref$))
-			endif
-		endif
-	endif
 
+[[SFE_WOOPRTN.EXT_COMMENTS.BINP]]
+rem --- Launch Comments dialog
+	gosub comment_entry
+	callpoint!.setStatus("ABORT")
+
+[[SFE_WOOPRTN.HRS_PER_PCE.AVAL]]
+rem --- Calculate totals
+
+	hrs_per_pc=num(callpoint!.getUserInput())
+	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
+	dir_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.DIRECT_RATE"))
+	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
+	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
+	gosub calc_totals
+
+[[SFE_WOOPRTN.LINE_TYPE.AVAL]]
 rem --- Enable/disable comments field
-	line_type$=callpoint!.getColumnData("SFE_WOOPRTN.LINE_TYPE")
-	gosub enable_comments
-[[SFE_WOOPRTN.WO_OP_REF.BINP]]
-rem ---  Initialize and capture starting wo_op_ref
-	prev_wo_op_ref$=callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF")
-
-	rem --- initialize wo_op_ref
-	dim sfe_wooprtn$:fnget_tpl$("SFE_WOOPRTN")
-	wk$=fattr(sfe_wooprtn$,"WO_OP_REF")
-	opRef_mask$=fill(dec(wk$(10,2)),"0")
-	maxOpRef=num(fill(dec(wk$(10,2)),"9"))
-	refnumMap!=callpoint!.getDevObject("refnumMap")
-	while cvs(prev_wo_op_ref$,2)=""
-		rem --- with 6 digit wo_op_ref, would need 1,000,000 operations to create an endless loop
-		nextOpRef=1+callpoint!.getDevObject("lastOpRef")
-		if nextOpRef>maxOpRef then nextOpRef=1
-		callpoint!.setDevObject("lastOpRef",nextOpRef)
-
-		rem --- new wo_op_ref must be unique
-		newOpRef$=str(nextOpRef,opRef_mask$)
-		if !refnumMap!.containsKey(newOpRef$) then
-			refnumMap!.put(newOpRef$,"")
-			prev_wo_op_ref$=newOpRef$
-		endif
-	wend
-
-	callpoint!.setColumnData("SFE_WOOPRTN.WO_OP_REF",prev_wo_op_ref$,1)
-	callpoint!.setDevObject("prev_wo_op_ref",prev_wo_op_ref$)
-[[SFE_WOOPRTN.BFMC]]
-rem --- set validation table for op codes to use sf codes if no bom interface (or bom not installed)
-
-	if callpoint!.getDevObject("bm")<>"Y"
-		callpoint!.setTableColumnAttribute("SFE_WOOPRTN.OP_CODE","DTAB","SFC_OPRTNCOD")
+	if cvs(callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF"),2)<>"" then
+		line_type$=callpoint!.getUserInput()
+		gosub enable_comments
 	endif
 
-[[SFE_WOOPRTN.BDEL]]
-rem --- Update refnumMap!
-	refnumMap!=callpoint!.getDevObject("refnumMap")
-	wo_op_ref$=callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF")
-	refnumMap!.remove(wo_op_ref$)
-
-rem --- v6 didn't do this, but before deleting, check to make sure the op isn't used in a material or subcontract line
-[[SFE_WOOPRTN.REQUIRE_DATE.AVAL]]
-rem --- Deal with Schedule Records
-
-	if callpoint!.getUserInput()<>callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
-		gosub remove_sched
-		setup_time=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
-		hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
-		pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
-		yield=num(callpoint!.getDevObject("wo_est_yield"))
-		run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
-		move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
-		add_date$=callpoint!.getUserInput()
-		gosub add_sched
+[[SFE_WOOPRTN.MEMO_1024.AVAL]]
+rem --- Store first part of memo_1024 in ext_comment.
+rem --- This AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor.
+rem --- If use Comment field, or use ctrl-C or Comments button, code in the comment_entry subroutine is hit instead.
+	disp_text$=callpoint!.getUserInput()
+	if disp_text$<>callpoint!.getColumnUndoData("SFE_WOOPRTN.MEMO_1024")
+		dim ext_comments$(60)
+		ext_comments$(1)=disp_text$(1,pos($0A$=disp_text$+$0A$)-1)
+		callpoint!.setColumnData("SFE_WOOPRTN.MEMO_1024",disp_text$,1)
+		callpoint!.setColumnData("SFE_WOOPRTN.EXT_COMMENTS",ext_comments$,1)
+		callpoint!.setStatus("MODIFIED")
 	endif
+
+[[SFE_WOOPRTN.MEMO_1024.BINQ]]
+rem --- (Barista Bug 9179 workaround) If grid cell isn't editable, then abort so new text can't be entered via edit control.
+	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	col_hdr$=callpoint!.getTableColumnAttribute("SFE_WOOPRTN.MEMO_1024","LABS")
+	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
+	this_row=callpoint!.getValidationRow()
+	isEditable=maintGrid!.isCellEditable(this_row,memo_1024_col)
+	if !isEditable then callpoint!.setStatus("ABORT")
+
 [[SFE_WOOPRTN.MOVE_TIME.AVAL]]
 rem --- Deal with Schedule Records
 
@@ -154,30 +210,20 @@ rem --- Calculate totals
 	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
 	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
 	gosub calc_totals
-[[SFE_WOOPRTN.SETUP_TIME.AVAL]]
-rem --- Deal with Schedule Records
 
-	setup_time=num(callpoint!.getUserInput())
-	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
-	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
-	yield=num(callpoint!.getDevObject("wo_est_yield"))
-	run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
-	move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
-	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
+[[SFE_WOOPRTN.OP_CODE.AVAL]]
+rem --- Display Queue time
 
-	if callpoint!.getUserInput()<>callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME")
-		gosub remove_sched
-		gosub add_sched
-	endif
-
-rem --- Calculate totals
+	op_code$=callpoint!.getUserInput()
+	gosub disp_queue
 
 	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
 	dir_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.DIRECT_RATE"))
 	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
-	setup=num(callpoint!.getUserInput())
+	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
 	gosub calc_totals
+
 [[SFE_WOOPRTN.PCS_PER_HOUR.AVAL]]
 rem --- Check for valid quantity
 
@@ -211,27 +257,103 @@ rem --- Calculate totals
 	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
 	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
 	gosub calc_totals
-[[SFE_WOOPRTN.HRS_PER_PCE.AVAL]]
-rem --- Calculate totals
 
-	hrs_per_pc=num(callpoint!.getUserInput())
+[[SFE_WOOPRTN.REQUIRE_DATE.AVAL]]
+rem --- Deal with Schedule Records
+
+	if callpoint!.getUserInput()<>callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
+		gosub remove_sched
+		setup_time=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
+		hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
+		pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
+		yield=num(callpoint!.getDevObject("wo_est_yield"))
+		run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
+		move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
+		add_date$=callpoint!.getUserInput()
+		gosub add_sched
+	endif
+
+[[SFE_WOOPRTN.SETUP_TIME.AVAL]]
+rem --- Deal with Schedule Records
+
+	setup_time=num(callpoint!.getUserInput())
+	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
-	dir_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.DIRECT_RATE"))
-	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
-	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
-	gosub calc_totals
-[[SFE_WOOPRTN.OP_CODE.AVAL]]
-rem --- Display Queue time
+	yield=num(callpoint!.getDevObject("wo_est_yield"))
+	run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
+	move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
+	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
 
-	op_code$=callpoint!.getUserInput()
-	gosub disp_queue
+	if callpoint!.getUserInput()<>callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME")
+		gosub remove_sched
+		gosub add_sched
+	endif
+
+rem --- Calculate totals
 
 	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
 	dir_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.DIRECT_RATE"))
 	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
-	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
+	setup=num(callpoint!.getUserInput())
 	gosub calc_totals
+
+[[SFE_WOOPRTN.WO_OP_REF.AVAL]]
+rem --- Verify wo_op_ref is unique
+	wo_op_ref$=callpoint!.getUserInput()
+	prev_wo_op_ref$=callpoint!.getDevObject("prev_wo_op_ref")
+	refnumMap!=callpoint!.getDevObject("refnumMap")
+	if wo_op_ref$<>prev_wo_op_ref$ then
+		if refnumMap!.containsKey(wo_op_ref$) then
+			msg_id$="SF_DUP_REF_NUM"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=wo_op_ref$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		else
+			refnumMap!.remove(prev_wo_op_ref$)
+			refnumMap!.put(wo_op_ref$,"")
+			if num(prev_wo_op_ref$)=callpoint!.getDevObject("lastOpRef") then
+				callpoint!.setDevObject("lastOpRef",num(prev_wo_op_ref$)-1)
+			endif
+			if num(wo_op_ref$)>callpoint!.getDevObject("lastOpRef") then
+				callpoint!.setDevObject("lastOpRef",num(wo_op_ref$))
+			endif
+		endif
+	endif
+
+rem --- Enable/disable comments field
+	line_type$=callpoint!.getColumnData("SFE_WOOPRTN.LINE_TYPE")
+	gosub enable_comments
+
+[[SFE_WOOPRTN.WO_OP_REF.BINP]]
+rem ---  Initialize and capture starting wo_op_ref
+	prev_wo_op_ref$=callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF")
+
+	rem --- initialize wo_op_ref
+	dim sfe_wooprtn$:fnget_tpl$("SFE_WOOPRTN")
+	wk$=fattr(sfe_wooprtn$,"WO_OP_REF")
+	opRef_mask$=fill(dec(wk$(10,2)),"0")
+	maxOpRef=num(fill(dec(wk$(10,2)),"9"))
+	refnumMap!=callpoint!.getDevObject("refnumMap")
+	while cvs(prev_wo_op_ref$,2)=""
+		rem --- with 6 digit wo_op_ref, would need 1,000,000 operations to create an endless loop
+		nextOpRef=1+callpoint!.getDevObject("lastOpRef")
+		if nextOpRef>maxOpRef then nextOpRef=1
+		callpoint!.setDevObject("lastOpRef",nextOpRef)
+
+		rem --- new wo_op_ref must be unique
+		newOpRef$=str(nextOpRef,opRef_mask$)
+		if !refnumMap!.containsKey(newOpRef$) then
+			refnumMap!.put(newOpRef$,"")
+			prev_wo_op_ref$=newOpRef$
+		endif
+	wend
+
+	callpoint!.setColumnData("SFE_WOOPRTN.WO_OP_REF",prev_wo_op_ref$,1)
+	callpoint!.setDevObject("prev_wo_op_ref",prev_wo_op_ref$)
+
 [[SFE_WOOPRTN.<CUSTOM>]]
 rem ===============================================================
 disp_queue:
@@ -417,63 +539,6 @@ rem ========================================================
 	endif
 
 	return
-[[SFE_WOOPRTN.AGDR]]
-rem --- Enable/disable comments
-	line_type$=callpoint!.getColumnData("SFE_WOOPRTN.LINE_TYPE")
-	gosub enable_comments
-
-rem --- Track wo_op_ref in Map to insure they are unique
-	refnumMap!=callpoint!.getDevObject("refnumMap")
-	lastOpRef=callpoint!.getDevObject("lastOpRef")
-	wo_op_ref$=callpoint!.getColumnData("SFE_WOOPRTN.WO_OP_REF")
-	refnumMap!.put(wo_op_ref$,"")
-	if num(wo_op_ref$)>lastOpRef then
-		callpoint!.setDevObject("lastOpRef",num(wo_op_ref$))
-	endif
 
 
-rem --- Display Queue time
 
-	op_code$=callpoint!.getColumnData("SFE_WOOPRTN.OP_CODE")
-	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
-	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
-	move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
-
-	gosub disp_queue
-[[SFE_WOOPRTN.BSHO]]
-use ::ado_util.src::util
-use ::sfo_SfUtils.aon::SfUtils
-declare SfUtils sfUtils!
-
-
-rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
-
-	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
-	col_hdr$=callpoint!.getTableColumnAttribute("SFE_WOOPRTN.MEMO_1024","LABS")
-	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
-	maintGrid!.setColumnWidth(memo_1024_col,15)
-
-rem --- init data
-
-	refnumMap!=new java.util.HashMap()
-	callpoint!.setDevObject("refnumMap",refnumMap!)
-	callpoint!.setDevObject("lastOpRef",0)
-
-rem --- Disable grid if Closed Work Order
-
-	if callpoint!.getDevObject("wo_status")="C"
-		opts$=callpoint!.getTableAttribute("OPTS")
-		callpoint!.setTableAttribute("OPTS",opts$+"BID")
-
-		x$=callpoint!.getTableColumns()
-		for x=1 to len(x$) step 40
-			opts$=callpoint!.getTableColumnAttribute(cvs(x$(x,40),2),"OPTS")
-			callpoint!.setTableColumnAttribute(cvs(x$(x,40),2),"OPTS",opts$+"C"); rem - makes cells read only
-		next x
-	endif
-
-rem --- Disable WO_OP_REF when locked
-	if callpoint!.getDevObject("lock_ref_num")="Y" then
-		opts$=callpoint!.getTableColumnAttribute("SFE_WOOPRTN.WO_OP_REF","OPTS")
-		callpoint!.setTableColumnAttribute("SFE_WOOPRTN.WO_OP_REF","OPTS",opts$+"C"); rem --- makes read only
-	endif

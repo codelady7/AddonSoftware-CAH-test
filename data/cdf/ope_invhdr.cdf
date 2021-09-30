@@ -19,6 +19,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 			case 2; rem --- ON_TAB_SELECT
 				gosub isTotalsTab
 				if isTotalsTab then
+					callpoint!.setFocus("OPE_INVHDR.FREIGHT_AMT",1)
 					if num(callpoint!.getColumnData("OPE_INVHDR.NO_SLS_TAX_CALC"))=1 then
 						taxAmount_warn!=callpoint!.getDevObject("taxAmount_warn")
 						taxAmount_warn!.setVisible(1)
@@ -996,6 +997,26 @@ rem --- setup messages
 
 	call user_tpl.pgmdir$+"opc_creditmsg.aon","H",callpoint!,UserObj!
 
+rem --- Show OP Invoice Print Report Controls
+	admRptCtlRcp=fnget_dev("ADM_RPTCTL_RCP")
+	dim admRptCtlRcp$:fnget_tpl$("ADM_RPTCTL_RCP")
+	admRptCtlRcp.dd_table_alias$="OPR_INVOICE"
+	customer_id$=callpoint!.getColumnData("OPE_INVHDR.CUSTOMER_ID")
+	readrecord(admRptCtlRcp,key=firm_id$+customer_id$+admRptCtlRcp.dd_table_alias$,knum="AO_CUST_ALIAS",dom=*next)admRptCtlRcp$
+	if admRptCtlRcp.email_yn$<>"Y" and admRptCtlRcp.fax_yn$<>"Y" then
+		callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_NONE"))
+	else
+		if admRptCtlRcp.email_yn$="Y" and admRptCtlRcp.fax_yn$="Y" then
+			callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_EMAIL")+" + "+Translate!.getTranslation("AON_FAX"))
+		else
+			if admRptCtlRcp.email_yn$="Y" then
+				callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_EMAIL")+" "+Translate!.getTranslation("AON_ONLY"))
+			else
+				callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_FAX")+" "+Translate!.getTranslation("AON_ONLY"))
+			endif
+		endif
+	endif
+
 [[OPE_INVHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
@@ -1691,7 +1712,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=43
+	num_files=44
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -1734,6 +1755,7 @@ rem --- Open needed files
 	open_tables$[41]="IVM_ITEMSYN",open_opts$[41]="OTA"
 	open_tables$[42]="OPT_SHIPTRACK",open_opts$[42]="OTA"
 	open_tables$[43]="ARM_CUSTPMTS",   open_opts$[43]="OTA"
+	open_tables$[44]="ADM_RPTCTL_RCP",open_opts$[44]="OTA"
 
 	gosub open_tables
 

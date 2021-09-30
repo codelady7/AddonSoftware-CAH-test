@@ -37,16 +37,16 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=8,begfile=1,endfile=files
+    files=9,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS";rem aps-01
     files$[2]="apm-01",ids$[2]="APM_VENDMAST"
     files$[4]="apc_typecode";ids$[4]="APC_TYPECODE";rem apm-10A
     files$[5]="apt-01",ids$[5]="APT_INVOICEHDR"
     files$[6]="apt-11",ids$[6]="APT_INVOICEDET"
-    files$[7]="apw-02",ids$[7]="APW_INVOICENAME"
-    options$[7]="C"
+    files$[7]="apw-02",ids$[7]="APW_INVOICENAME",options$[7]="C"
     files$[8]="gls_calendar",ids$[8]="GLS_CALENDAR"
+    files$[9]="aps_ach",ids$[9]="APS_ACH"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
@@ -57,13 +57,13 @@ rem --- Open/Lock files
     apt11_dev=channels[6]
     apw02_dev=channels[7]
     gls_calendar_dev=channels[8]
+    apsACH_dev=channels[9]
 
 rem --- Dimension string templates
 
-    dim aps01a$:templates$[1]
-    dim apm01a$:templates$[2],apm10a$:templates$[4],
-:       apt01a$:templates$[5],apt11a$:templates$[6],apw02a$:templates$[7],
-:       gls_calendar$:templates$[8]
+    dim aps01a$:templates$[1],apm01a$:templates$[2],apm10a$:templates$[4]
+    dim apt01a$:templates$[5],apt11a$:templates$[6],apw02a$:templates$[7]
+    dim gls_calendar$:templates$[8],apsACH$:templates$[9]
 
 rem --- Assign form input values to local variables
 
@@ -74,6 +74,7 @@ rem --- Assign form input values to local variables
     level$=Option!.getOptionData("REPORT_SUMM_DET")
     method$=Option!.getOptionData("REPORT_TYPE")
     days$=Option!.getOptionData("PICK_INTEGER")
+    ach_pay$=Option!.getOptionData("ACH_PAY")
     export_format$=Option!.getOptionData("EXPORT_FORMAT")
     rd_alias_id$=Option!.getAlias()    
     if export_format$="Y"
@@ -90,6 +91,7 @@ rem --- Retrieve parameter records
 
     aps01a_key$=firm_id$+"AP00"
     find record (aps01_dev,key=aps01a_key$,err=std_missing_params) aps01a$
+    find record (apsACH_dev,key=firm_id$+"AP00",err=std_missing_params)apsACH$
     find record (gls_calendar_dev,key=firm_id$+aps01a.current_year$,err=*next) gls_calendar$
     if cvs(gls_calendar.firm_id$,2)="" then
         msg_id$="AD_NO_FISCAL_CAL"
@@ -106,6 +108,8 @@ rem --- Retrieve parameter records
     m0=len(m0$)
     m1=len(m1$)
     maxperiods=num(gls_calendar.total_pers$)
+    doACH=0
+    if cvs(apsACH.bnk_acct_cd$,2)<>"" then doACH=1
 
 rem --- Initializations
 
@@ -249,20 +253,22 @@ rem --- Headings and print positions
 
     if export_format$="Y"
         if summary
-            columns=9
+            columns=10
         else    
-            columns=14
+            columns=15
         endif    
         dim columns$[columns,10]
         columns$[0,0]=Translate!.getTranslation("AON_VENDOR_ID"),          columns$[0,1]="C",columns$[0,2]="10"
-        columns$[1,0]=Translate!.getTranslation("AON_NAME"),               columns$[1,1]="C",columns$[1,2]="20"
-        columns$[2,0]=Translate!.getTranslation("AON_PHONE"),              columns$[2,1]="C",columns$[2,2]="10"
-        columns$[3,0]=Translate!.getTranslation("AON_ALT_SEQ"),            columns$[3,1]="C",columns$[3,2]="10"
+        columns$[1,0]=Translate!.getTranslation("AON_ACH")+"?",            columns$[1,1]="C",columns$[1,2]="4"
+        columns$[2,0]=Translate!.getTranslation("AON_NAME"),               columns$[2,1]="C",columns$[2,2]="20"
+        columns$[3,0]=Translate!.getTranslation("AON_PHONE"),              columns$[3,1]="C",columns$[3,2]="10"
+        columns$[4,0]=Translate!.getTranslation("AON_ALT_SEQ"),            columns$[4,1]="C",columns$[4,2]="10"
     else
-        columns=12
+        columns=13
         dim columns$[columns,10]
         columns$[0,0]=Translate!.getTranslation("AON_VENDOR_ID^NAME"),          columns$[0,1]="C",columns$[0,2]="20"
-        columns$[1,0]=Translate!.getTranslation("AON_ALT_SEQ^PHONE"),           columns$[1,1]="C",columns$[1,2]="10"
+        columns$[1,0]=Translate!.getTranslation("AON_ACH")+"?",                 columns$[1,1]="C",columns$[1,2]="4"
+        columns$[2,0]=Translate!.getTranslation("AON_ALT_SEQ^PHONE"),           columns$[2,1]="C",columns$[2,2]="10"
 
     endif    
 
@@ -404,6 +410,12 @@ rem --- Read next Invoice Header (apt-01) record
 :            apt01a.ap_inv_no$
           endif
           read record (apt01_dev,key=k$,dom=*continue) apt01a$
+          if ach_pay$="N" then
+              rem --- Skip vendors not being paid via ACH
+              redim apm01a$
+              findrecord(apm01_dev,key=firm_id$+apt01a.vendor_id$,dom=*next)apm01a$
+              if apm01a.payment_type$="A" then continue
+          endif
           total_recs=total_recs+1
           if mod(total_recs,milestone)=0 then call stbl("+DIR_PGM")+"adc_progress.aon","S","","","","",0,0,milestone,meter_num,status
 
@@ -480,6 +492,7 @@ rem --- Read next Invoice Header (apt-01) record
 
           if export_format$="Y"
             OutVect!.addItem(apm01a.vendor_id$)
+            OutVect!.addItem(ach$)
             OutVect!.addItem(apm01a.vendor_name$)
             OutVect!.addItem(phone$)
             OutVect!.addItem(apm01a.alt_sequence$)
@@ -487,14 +500,16 @@ rem --- Read next Invoice Header (apt-01) record
             if vendor$<>""
                 xwk = fnblank(columns+1)
                 OutVect!.addItem(apm01a.vendor_id$)
+                OutVect!.addItem(ach$)
                 OutVect!.addItem(apm01a.alt_sequence$)
-                xwk=fnblank(columns-1)
+                xwk=fnblank(columns-2)
                 OutVect!.addItem(apm01a.vendor_name$)
+                OutVect!.addItem("")
                 OutVect!.addItem(phone$)
                 lines=lines+2
                 vendor$=""
             else
-                xwk=fnblank(2)
+                xwk=fnblank(3)
             endif
           endif
  
@@ -548,7 +563,7 @@ print_total: rem --- Print totals
     if export_format$="Y"
         xwk=fnblank(8)
     else
-        xwk=fnblank(6)
+        xwk=fnblank(7)
     endif 
 
     Outvect!.addItem(str(pt[0]))
@@ -621,9 +636,11 @@ vendor_break: rem --- Vendor break
     
                 xwk = fnblank(columns+1)
                 OutVect!.addItem(apm01a.vendor_id$)
+                OutVect!.addItem(ach$)
                 OutVect!.addItem(apm01a.alt_sequence$)
-                xwk=fnblank(columns-1)
+                    xwk=fnblank(columns-2)
                 OutVect!.addItem(apm01a.vendor_name$)
+                OutVect!.addItem("")
                 OutVect!.addItem(phone$)
 				
                 xwk = fnblank(5)
@@ -643,6 +660,7 @@ vendor_break: rem --- Vendor break
                 next x
     
                 OutVect!.addItem(apm01a.vendor_id$)
+                OutVect!.addItem(ach$)
                 OutVect!.addItem(apm01a.vendor_name$)
                 OutVect!.addItem(phone$)
                 OutVect!.addItem(apm01a.alt_sequence$)
@@ -663,6 +681,7 @@ vendor_break: rem --- Vendor break
     dim vt[4],vr[4]
     lastvendor$=apt01a.vendor_id$
     altseq$=""
+    ach$=""
     printed=0
     dim apm01a$:fattr(apm01a$)
     apm01a.firm_id$=apt01a.firm_id$
@@ -678,6 +697,7 @@ vendor_break: rem --- Vendor break
     phone$=str(phone$:phone_mask$,err=*next)
     vendorid$=fnmask$(apm01a.vendor_id$(1,vendor_size),m0$)
     vendor$=altseq$+vendorid$+" "+apm01a.vendor_name$
+    if doACH and apm01a.payment_type$="A" then ach$=Translate!.getTranslation("AON_ACH")
 return
 
 rem --- Functions
