@@ -6,9 +6,6 @@ rem ---
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem ==========================================================================
 
-
-AO_GitRepoInterface.sdhTest()
-
 rem /**
 rem  * This class uses JGit to interface with Addon's Git repository to perform
 rem  * tasks needed during upgrades and updates.
@@ -35,11 +32,13 @@ rem  */
     use java.text.SimpleDateFormat
     use java.util.Date
     use java.util.HashMap
+    use java.util.Map
     use java.util.TreeSet
     use java.util.ArrayList
     use java.util.Arrays
     use java.util.Iterator
     use java.util.stream.Collectors
+    use java.util.TreeMap
 
     use com.jcraft.jsch.JSch
     use com.jcraft.jsch.Session
@@ -62,6 +61,12 @@ rem  */
     use org.eclipse.jgit.lib.ObjectReader
     use org.eclipse.jgit.lib.Repository
     use org.eclipse.jgit.lib.Ref
+    use org.eclipse.jgit.merge.Merger
+    use org.eclipse.jgit.merge.MergeResult
+    use org.eclipse.jgit.merge.MergeStrategy
+    use org.eclipse.jgit.merge.ThreeWayMerger
+    use org.eclipse.jgit.merge.ResolveMerger
+    use org.eclipse.jgit.merge.RecursiveMerger
     use org.eclipse.jgit.revwalk.RevCommit
     use org.eclipse.jgit.revwalk.RevWalk
     use org.eclipse.jgit.transport.CredentialsProvider
@@ -478,6 +483,68 @@ cherryPick_error:rem --- Method error trap/handler (11Oct2017)
             x$=stbl("+THROWN_ERR","TRUE")
             throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
         methodend
+
+        rem /**
+        rem  * Cherry picks Git repository commit given as a RevCommit object.
+        rem  *
+        rem  * @param RevCommit commit! -- Git repository commits
+        rem  *
+        rem  * @return HashMap failures! --  key: path
+        rem  *                             value: failure reason
+        rem  */
+        method public FetchResult fetch()
+        methodend 
+                
+        method public FetchResult fetch(BBjNumber dryRun)
+            methodret #git!.fetch().setDryRun(dryRun).setCredentialsProvider(#credentials!).call()
+        methodend 
+        
+        
+        rem /**
+        rem  * This method performs a dry-run merge. 
+        rem  * Performs a test merge in memory without modifying any files in the work area and returns the results 
+        rem  * of the merge.  This method can be used to test what would happen in the event of an actual merge. If 
+        rem  * the merge would fail or result in conflicts, we can know about that result before we perform the actual 
+        rem  * operation. 
+        rem  **/
+        method public AO_MergeStatus testMerge(BBjString head1Name!, BBjString head2Name!)
+            
+            seterr handle_error
+            
+            declare AnyObjectId head1!
+            declare AnyObjectId head2!
+            declare Repository repository!
+            declare RecursiveMerger merger!
+            declare BBjNumber inMemory!
+            
+            repository!=#git!.getRepository()
+            
+            head1!=repository!.resolve(head1Name!)
+            head2!=repository!.resolve(head2Name!)
+            
+            inMemory!=1
+            merger!=cast(RecursiveMerger,MergeStrategy.RECURSIVE.newMerger(repository!,inMemory!))
+            
+            merger!.merge(head1!,head2!)
+            
+            methodret new AO_MergeStatus(merger!)
+            
+            handle_error: rem --- Method error trap/handler (11Oct2017)
+            rem --- SDH: It might be possible to wrap this body into a method that we just call after the label.
+            rd_err_text$="", err_num=err
+            if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+            if err_num=252 then
+                E!=BBjAPI().getLastBBjException()
+                rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+                if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+            endif
+            call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+            if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+            if pos("RETRY"=rd_err_act$)<>0 retry
+            x$=stbl("+THROWN_ERR","TRUE")
+            throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+        methodend 
+
 
         rem /**
         rem  * If the repository is in a conflicted state, resolves a particular conflicted
@@ -1388,6 +1455,57 @@ class public AO_FixedIssuesReader
     methodend
 classend
 
+
+REM Class to hold merge results
+class public AO_MergeStatus
+    
+    field public ResolveMerger Merger!
+    
+    REM make default constructor uncallable
+    method private AO_MergeStatus()
+    methodend
+    
+    method public AO_MergeStatus(ResolveMerger merger!)
+        if (merger!=null()) then 
+            throw "Merger can not be null!",255
+        endif 
+        #Merger!=merger!
+    methodend
+    
+    method public BBjNumber failed() 
+        methodret #Merger!.failed()
+    methodend 
+    
+    rem --- getMergeResults 
+    rem  See https://archive.eclipse.org/jgit/site/5.6.0.201912101111-r/apidocs/org/eclipse/jgit/merge/ResolveMerger.html#getMergeResults--
+    method public Map getMergeResults()
+        methodret #Merger!.getMergeResults()
+    methodend 
+    
+    rem --- getUnmergedPaths
+    rem "Unmerged Paths" is otherwise known as "Files in a conflicted state."  This is going to give you your list of conflicted files and 
+    rem with some additional processing, where the conflicts occur. 
+    method public Map getUnmergedPaths()
+        declare Map results!
+        declare java.util.List filesWithConflicts!
+        declare Iterator conflictIter!
+        declare BBjString conflictedFile!
+        declare MergeResult mergeResult!
+        declare Map umergedPaths!
+        
+        results!=#getMergeResults()
+        filesWithConflicts!=#Merger!.getUnmergedPaths()
+        conflictIter!=filesWithConflicts!.iterator()
+        unmergedPaths!=new TreeMap()
+        while (conflictIter!.hasNext()) 
+            conflictedFile!=cast(BBjString,conflictIter!.next())
+            mergeResult!=cast(MergeResult,results!.get(conflictedFile!))
+            unmergedPaths!.put(conflictedFile!,mergeResult!.getSequences().size())
+        wend 
+        methodret unmergedPaths!
+    methodend  
+    
+classend 
 
 class public SSH extends JschConfigSessionFactory implements TransportConfigCallback
     field private BBjString sshKey!

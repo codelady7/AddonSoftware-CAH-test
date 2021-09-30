@@ -53,5 +53,9 @@ class public AO_UpdaterStatus
         methodret cast(BBjString,#Properties!.get("commit"))
     methodend 
     
+    method public void setState(BBjString state!)
+        #Properties!.put(#STATE_PROPERTY_NAME!,state!)
+    methodend 
+    
 classend 
     

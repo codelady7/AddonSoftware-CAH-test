@@ -14,6 +14,7 @@ class public AO_UpdateLogger
     
     field protected BBjString BaseName!="updater_"
     field protected BBjString DatePattern!="yyyyMM"
+    field protected BBjString EntryDatePattern!="yyyy/MM/dd hh:mm:ss Z:  "
     field protected BBjString Extension!=".log"
     
     method public AO_UpdateLogger()
@@ -34,13 +35,14 @@ class public AO_UpdateLogger
         
         string #logName!,err=*next 
         #logChan!=unt
-        open (#logChan!) #logName!
+        open (#logChan!,mode="O_APPEND") #logName!
         
     methodend 
     
     
     method public void log(BBjString message$)
-        write(#logChan!) message$
+        format!=new SimpleDateFormat(#EntryDatePattern!)
+        write(#logChan!) format!.format(new java.util.Date()) + message$
     methodend 
     
     method public void close()
