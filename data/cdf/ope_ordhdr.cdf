@@ -2962,39 +2962,6 @@ rem --- Existing record
 			break; rem --- exit callpoint
 		endif
 
-	rem --- Check if reprintable ***DISABLED***
-
-	goto end_of_reprintable
-
-		if callpoint!.getColumnData("OPE_ORDHDR.REPRINT_FLAG") <> "Y" then
-			reprint = 0
-			gosub check_if_reprintable
-
-			if reprintable then 
-				msg_id$="OP_REPRINT_ORDER"
-				gosub disp_message
-				
-				if msg_opt$ = "Y" then
-					if user_tpl.credit_installed$ = "Y" and user_tpl.pick_hold$ = "N" and ope01a.credit_flag$ = "C" then
-						msg_id$="OP_ORD_ON_CR_HOLD"
-					else
-						msg_id$="OP_ORD_PRINT_BATCH"
-						callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG", "Y")
-						print "---Reprint_flag set to Y"; rem debug
-						callpoint!.setColumnData("OPE_ORDHDR.PRINT_STATUS", "N")
-						gosub add_to_batch_print
-					endif
-
-					gosub disp_message
-				else
-					rem callpoint!.setStatus("NEWREC")
-					rem break; rem ---- exit callpoint
-				endif
-			endif
-		endif
-
-end_of_reprintable:
-        
 	rem --- Set Codes		
         
 		user_tpl.price_code$   = ope01a.price_code$
