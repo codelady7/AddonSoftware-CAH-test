@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.bme_order">1A347E66EF3C8DE50EF031D0F5EFE7EF</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bme_order">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bme_order">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bme_order">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bme_order">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bme_order">154822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bme_order">20211001</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bme_order">20211001</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bme_order">170252</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bme_order"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.bme_order">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.bme_order">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bme_order">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.bme_order"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.bme_order">T</DD_ATTR_FTYP>
@@ -356,7 +356,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_order002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_order002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_order002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_order002">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_order002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_order002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_order002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_order002"></DD_ATTR_CTLY>
@@ -407,7 +407,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_order003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_order003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_order003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_order003">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_order003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_order003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_order003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_order003"></DD_ATTR_CTLY>
@@ -458,7 +458,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.bme_order004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.bme_order004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.bme_order004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.bme_order004">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.bme_order004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.bme_order004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.bme_order004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.bme_order004"></DD_ATTR_CTLY>
@@ -707,6 +707,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.bme_orderorder_nou">BME_ORDER       </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.bme_orderorder_nou">ORDER_NO        </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.bme_orderorder_nou">u</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.bme_orderorder_nov">
+			<DD_TABLE_ALIAS id="ddm_column_opts.bme_orderorder_nov">BME_ORDER       </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.bme_orderorder_nov">ORDER_NO        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.bme_orderorder_nov">v</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.bme_orderorder_datec">
 			<DD_TABLE_ALIAS id="ddm_column_opts.bme_orderorder_datec">BME_ORDER       </DD_TABLE_ALIAS>

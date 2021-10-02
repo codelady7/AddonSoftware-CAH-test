@@ -273,6 +273,8 @@ rem --- or returned.
             gosub get_process
         endif
 
+        if status then break
+
     rem --- The variables process and notprocess are boolean values
     rem --- If this table/program is a process    : process=1/notprocess=0
     rem --- If this table/program is NOT a process: process=0/notprocess=1
@@ -498,7 +500,7 @@ error_message: rem --- Disable GL if an error was encountered and display any me
     dim msg_tokens$[1]
     msg_tokens$[1]=message$
     gosub disp_message
-    if pos("PASSVALID"=msg_opt$)<>0then
+    if pos("PASSVALID"=msg_opt$)<>0
         print Translate!.getTranslation("AON_ERROR_"),err,Translate!.getTranslation("AON_/LINE_"),tcb(5)
         escape; rem --- Allow debugging when correct password is entered
     endif
@@ -517,9 +519,15 @@ rem --- process id and sequence number from the process detail (adm-19) file.
         sequence$=k$((len(k$)-sequence)+1)
         process$=stbl("+PROCESS",err=*proceed)
         xwk$=stbl("+PROCESS_ID",err=*next)
-        if xwk$<>"" and xwk$<>process_id$ then escape;rem --- probably don't have process set up correctly.CAH
-        x$=stbl("+PROCESS_ID",process_id$)
-        notprocess=0
+        if xwk$<>"" and xwk$<>process_id$
+            message$=Translate!.getTranslation("AON_PROCESS_RECORDS_FOR")+" "+cvs(process_id$,2)+" "+Translate!.getTranslation("AON_DO_NOT_MATCH")+" stbl(+PROCESS_ID) "+cvs(xwk$,2)+"."
+            status=999;rem --- may have process set up correctly, or calling glc_ctlcreate when it shouldn't be (process within a process)
+        else
+            message$=""
+            status=0
+            x$=stbl("+PROCESS_ID",process_id$)
+            notprocess=0
+        endif
     endif
 
     return
