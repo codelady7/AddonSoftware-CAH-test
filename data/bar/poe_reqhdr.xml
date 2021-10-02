@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_reqhdr">F9FC21F71215048005A59538BE93E299</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_reqhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_reqhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_reqhdr">20210309</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_reqhdr">20210309</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_reqhdr">153048</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_reqhdr">20211001</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_reqhdr">20211001</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_reqhdr">170604</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_reqhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.poe_reqhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_reqhdr"></DD_ATTR_DKNM>
@@ -2329,6 +2329,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.poe_reqhdrorder_nou">POE_REQHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.poe_reqhdrorder_nou">ORDER_NO        </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.poe_reqhdrorder_nou">u</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.poe_reqhdrorder_nov">
+			<DD_TABLE_ALIAS id="ddm_column_opts.poe_reqhdrorder_nov">POE_REQHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.poe_reqhdrorder_nov">ORDER_NO        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.poe_reqhdrorder_nov">v</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.poe_reqhdrds_namec">
 			<DD_TABLE_ALIAS id="ddm_column_opts.poe_reqhdrds_namec">POE_REQHDR      </DD_TABLE_ALIAS>
