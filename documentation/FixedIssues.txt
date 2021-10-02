@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-09-28
+ Report Date:   2021-10-01
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -335,3 +335,25 @@ Deleted: data/sync/adm_query_cols~gl_amount_inq___015.xml
 Deleted: data/sync/adm_query_cols~gl_amount_inq___016.xml
 Rename: data/sync/adm_query~[01007514GL].xml (from data/sync/adm_query~gl_amount_inq.xml)
 Added: data/sync/ddm_drill_defs~[01007514GL].xml
+
+=======================================================================================================================================
+Revision: 4988c97c01e699719d7666d1e6d6b08e411e8d67
+Author: Christine <chawkins@basis.com>
+Date: 10/1/2021 5:29:53 PM
+Message:
+Bug 10249 - GL - Escape in glc_ctlcreate.aon
+Bug 10295 - Disable master record in several queries using ORDER_NO_LK element type
+
+ - Set the Disallow Master Record Display in tables using ORDER_NO_LK
+ - Altered glc_ctlcreate to display a message rather than escape in the event of a +PROCESS_ID mismatch with process record.
+----
+Modified: data/bar/bme_order.xml
+Modified: data/bar/poe_pohdr.xml
+Modified: data/bar/poe_rechdr.xml
+Modified: data/bar/poe_reqhdr.xml
+Modified: data/bar/sfe_woclose.xml
+Modified: data/bar/sfe_womastr.xml
+Modified: gl/src/glc_ctlcreate.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
