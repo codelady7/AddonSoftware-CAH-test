@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-10-01
+ Report Date:   2021-10-04
  Report Branch: AddonSoftware 21.11
  Last Release:  AddonSoftware 21.10
 =======================================================================================================================================
@@ -357,3 +357,14 @@ Modified: gl/src/glc_ctlcreate.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
 
+=======================================================================================================================================
+Revision: 7ba635694e7e380998a3f3e9621ffb35220f65f0
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 10/4/2021 11:05:03 AM
+Message:
+Bug 10294: Disabled Load Image and View Images buttons on AP Invoice
+Entry form when not using Payment Authorization.
+----
+Modified: ap/src/apc_imageupload.aon
+Modified: data/bar/ape_invoicehdr.xml
+Modified: data/cdf/ape_invoicehdr.cdf
