@@ -247,8 +247,8 @@ rem --- Do Google Docs
             gosub update_image_table			
     	endif
     	
-    	goto done
     endif; rem --- Do Google Docs
+    goto done
     
 get_sequence:
     rem --- Get next sequence number
