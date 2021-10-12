@@ -20,3 +20,13 @@ Modified: data/bar/apx_export1099.xml
 Modified: data/cdf/apx_export1099.cdf
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 91715e76132a5bf9c24863d26c6f11862ff86b77
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 10/12/2021 3:46:59 PM
+Message:
+ER 2909: Used ListButtons to show both code and description for Status
+Code and Pending Action Code on the Physical Inv Cycle Code form.
+----
+Modified: data/bar/ivc_physcode.xml
