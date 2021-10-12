@@ -8,4 +8,15 @@
 BBjBaristaAddonDemos2111_10-07-2021_1112.jar
 
 =======================================================================================================================================
+Revision: 71e024a78dcced04f9bd30c6e2e88b41737bee56
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 10/12/2021 11:36:21 AM
+Message:
+ER 9881: Added Client Directory to the Export 1099 To Text form.
 
+----
+Modified: ap/src/apx_export_1099.aon
+Modified: data/bar/apx_export1099.xml
+Modified: data/cdf/apx_export1099.cdf
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
