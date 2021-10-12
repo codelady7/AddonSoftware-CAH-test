@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apx_export1099">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apx_export1099">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apx_export1099">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apx_export1099">21.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apx_export1099">21.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apx_export1099">84D9EF146ADFB920A999DFC1516DFFCA</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apx_export1099">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apx_export1099">20071014</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apx_export1099">20210222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apx_export1099">20200318</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apx_export1099">142036</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apx_export1099">20211011</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apx_export1099">20211011</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apx_export1099">091902</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apx_export1099"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.apx_export1099">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.apx_export1099">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apx_export1099"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.apx_export1099"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.apx_export1099">S</DD_ATTR_FTYP>
@@ -49,17 +49,21 @@
 			<DD_ATTR_RSET id="ddm_tables.apx_export1099"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.apx_export1099"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.apx_export1099"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.apx_export1099"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.apx_export1099"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.apx_export1099"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.apx_export1099"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.apx_export1099"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.apx_export1099"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.apx_export1099"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.apx_export1099">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.apx_export1099">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.apx_export1099">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.apx_export1099">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.apx_export1099">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.apx_export1099">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.apx_export1099">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.apx_export1099arec">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apx_export1099arec">APX_EXPORT1099  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apx_export1099arec">AREC</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.apx_export1099asva">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.apx_export1099asva">APX_EXPORT1099  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.apx_export1099asva">ASVA</DD_ATTR_CPRO>
@@ -105,7 +109,7 @@
 		<RECORD id="ddm_table_tpls.apx_export1099">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apx_export1099">APX_EXPORT1099  </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apx_export1099"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.apx_export1099">firm_id:c(2),minimum_amt:n(7*),export_loc:c(256*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.apx_export1099">firm_id:c(2),minimum_amt:n(7*),export_loc:c(256*),client_dir:c(256*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -228,7 +232,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apx_export1099003">20190208</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apx_export1099003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apx_export1099003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apx_export1099003"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apx_export1099003">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apx_export1099003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apx_export1099003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apx_export1099003"></DD_ATTR_CTLY>
@@ -238,10 +242,10 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.apx_export1099003"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apx_export1099003"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apx_export1099003"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apx_export1099003"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.apx_export1099003"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.apx_export1099003">Server Directory</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apx_export1099003">Server Dir</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apx_export1099003">N</DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.apx_export1099003"></DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.apx_export1099003">1</DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apx_export1099003"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.apx_export1099003"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.apx_export1099003"></DD_ATTR_MAXV>
@@ -262,6 +266,80 @@
 			<DD_ATTR_RADG id="ddm_table_cols.apx_export1099003"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.apx_export1099003">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apx_export1099003">F</DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.apx_export1099004">
+			<DD_TABLE_ALIAS id="ddm_table_cols.apx_export1099004">APX_EXPORT1099  </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.apx_export1099004">004</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.apx_export1099004">DIR_BROWSE      </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.apx_export1099004">CLIENT_DIR      </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.apx_export1099004">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apx_export1099004">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.apx_export1099004">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.apx_export1099004">0A</DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.apx_export1099004"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.apx_export1099004"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.apx_export1099004"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.apx_export1099004">20211006</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apx_export1099004">20211006</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.apx_export1099004"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.apx_export1099004"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.apx_export1099004">C:/dev_projects/aon_v2111/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.apx_export1099004">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.apx_export1099004"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.apx_export1099004"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.apx_export1099004"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.apx_export1099004"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.apx_export1099004"></DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.apx_export1099004"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.apx_export1099004"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.apx_export1099004"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.apx_export1099004">Client Directory</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apx_export1099004">Client Dir</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.apx_export1099004">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.apx_export1099004"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.apx_export1099004"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.apx_export1099004"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.apx_export1099004"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.apx_export1099004"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.apx_export1099004"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.apx_export1099004"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.apx_export1099004"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.apx_export1099004">4</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.apx_export1099004"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.apx_export1099004">CLIENT_DIR</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.apx_export1099004"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.apx_export1099004"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.apx_export1099004">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.apx_export1099004">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.apx_export1099004">3003</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apx_export1099004">ine_client_dir</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apx_export1099004">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.apx_export1099004"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.apx_export1099004">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.apx_export1099004">F</DD_ATTR_BTNS>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.apx_export1099export_locainq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.apx_export1099export_locainq">APX_EXPORT1099  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.apx_export1099export_locainq">EXPORT_LOC      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.apx_export1099export_locainq">AINQ</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.apx_export1099export_locbinq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.apx_export1099export_locbinq">APX_EXPORT1099  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.apx_export1099export_locbinq">EXPORT_LOC      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.apx_export1099export_locbinq">BINQ</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.apx_export1099client_dirainq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.apx_export1099client_dirainq">APX_EXPORT1099  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.apx_export1099client_dirainq">CLIENT_DIR      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.apx_export1099client_dirainq">AINQ</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.apx_export1099client_dirbinq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.apx_export1099client_dirbinq">APX_EXPORT1099  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.apx_export1099client_dirbinq">CLIENT_DIR      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.apx_export1099client_dirbinq">BINQ</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
