@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-10-12
+ Report Date:   2021-10-13
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -30,3 +30,19 @@ ER 2909: Used ListButtons to show both code and description for Status
 Code and Pending Action Code on the Physical Inv Cycle Code form.
 ----
 Modified: data/bar/ivc_physcode.xml
+
+=======================================================================================================================================
+Revision: eef9693bb67f3966be29b3633e55986f32a6f3af
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 10/13/2021 8:57:41 AM
+Message:
+ER 4398: Added "Zero Count Quantity" checkbox to the Physical Count
+Register form to control whether the physical count should be zero or
+the freeze quantity when a count is not entered for the item.
+----
+Modified: data/bar/ivr_physreg.xml
+Modified: data/cdf/ivr_physreg.cdf
+Modified: iv/src/ivr_physregister.aon
+Modified: iv/src/ivu_physupdate.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
