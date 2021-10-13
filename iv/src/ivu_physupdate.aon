@@ -161,16 +161,21 @@ rem --- Get next cycle
             
         rem --- Update Item Warehouse Detail
         
-            if physical_rec.entered_flag$ = "Y" then 
-                lotser$ = ""
-                
-                if freezeqty <> countqty then 
-                    gosub atamo
-                    gosub clear_whse_rec
-                    remove (physical_dev, key=physical_key$)
-                    read (itemwhse_dev,end=*next)
-                    continue
+            if physical_rec.entered_flag$ <> "Y" then
+                if zeroCntQty$="Y"
+                    countqty = 0
+                else
+                    countqty = freezeqty
                 endif
+            endif
+                
+            if freezeqty <> countqty then 
+                lotser$ = ""
+                gosub atamo
+                gosub clear_whse_rec
+                remove (physical_dev, key=physical_key$)
+                read (itemwhse_dev,end=*next)
+                continue
             endif
 
         rem --- No Change In On-Hand Quantity

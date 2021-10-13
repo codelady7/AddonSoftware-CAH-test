@@ -36,6 +36,7 @@ rem --- Retrieve sysinfo data
 rem --- Assign form input values to local variables
 
     whse$ = option!.getOptionData("WAREHOUSE_ID")	
+    zeroCntQty$ = option!.getOptionData("ZERO_COUNT_QTY")   
     ot! = BBjAPI().getObjectTable()
     selected_all = num( ot!.get("IVR_PHYSREG.SELECTED_ALL") )
 
@@ -261,7 +262,13 @@ rem --- Get next cycle
         rem --- Calculate total value and variance
 
             dim t[6]
-            if physical_rec.entered_flag$ <> "Y" then physical_rec.act_phys_cnt = physical_rec.freeze_qty
+            if physical_rec.entered_flag$ <> "Y" then
+                if zeroCntQty$="Y"
+                    physical_rec.act_phys_cnt = 0
+                else
+                    physical_rec.act_phys_cnt = physical_rec.freeze_qty
+                endif
+            endif
             t[0] = physical_rec.act_phys_cnt
             t[1] = t[0]*cost
             t[2] = physical_rec.freeze_qty
