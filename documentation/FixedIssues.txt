@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-10-13
+ Report Date:   2021-10-18
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -46,3 +46,16 @@ Modified: iv/src/ivr_physregister.aon
 Modified: iv/src/ivu_physupdate.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 23a8ef94e888fa5990e64671b2484a59c353748e
+Author: Christine <chawkins@basis.com>
+Date: 10/18/2021 4:32:26 PM
+Message:
+Bug 10299 - AD - Process Batch Control Maintenance does not detect when a batch contains data
+ - corrected the trip read in the ADIS
+ 
+ (cherry picked from commit e7d071ef7af8e029d1422206d8d87e65d442db2b)
+----
+Modified: data/bar/adm_procbatchmnt.xml
+Modified: data/cdf/adm_procbatchmnt.cdf
