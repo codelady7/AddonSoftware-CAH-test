@@ -42,7 +42,7 @@ while 1
 		rem --- need to use a knum for a firm_id+batch_no+trans_status key, like opt_invhdr's AO_BATCH_STAT key,
 		rem --- and set tripKey$irm_id$+batch_no$+"E". (Check file_tpl$ for trans_status column.)
 		tripKey$=firm_id$+batch_no$
-		read (file_dev,key=tripKey$,knum=num(dd_key_number$),dom=*endif)
+		read (file_dev,key=tripKey$,knum=num(dd_key_number$),dom=*next,err=*endif)
 		k$=key(file_dev,end=*endif)
 		if pos(tripKey$=k$)=1 then 	
 			if pos("trans_status:(c1)"=open_tpls$[1]) then
