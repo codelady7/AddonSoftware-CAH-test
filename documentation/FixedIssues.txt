@@ -103,6 +103,18 @@ Modified: data/bar/pom_cal_maint.xml
 Modified: data/bar/pow_cal_colors.xml
 Modified: data/cdf/pom_cal_maint.cdf
 
+=======================================================================================================================================
+Revision: ba348bdfbc92a7b8182d88827f9b025c8a506ad5
+Author: Christine <chawkins@basis.com>
+Date: 10/19/2021 11:58:28 AM
+Message:
+ER 10300 - PO - Refactor Purchase Calendar Maintenance to use BBjCalendarWidget
+ - deleting old pom_calendar.aon code, no longer used
+
+(cherry picked from commit c29635c00c302e39a976acdfdb0212904a7029b5)
+----
+Deleted: po/src/pom_calendar.aon
+
 
 
 
