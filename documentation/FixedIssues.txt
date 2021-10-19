@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-10-18
+ Report Date:   2021-10-19
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -59,3 +59,16 @@ Bug 10299 - AD - Process Batch Control Maintenance does not detect when a batch 
 ----
 Modified: data/bar/adm_procbatchmnt.xml
 Modified: data/cdf/adm_procbatchmnt.cdf
+
+=======================================================================================================================================
+Revision: 55c246b97f1d7b9d3bb8d8c1888bd1d7426e9c2a
+Author: Christine <chawkins@basis.com>
+Date: 10/19/2021 8:53:55 AM
+Message:
+ER 10300 - PO - Refactor Purchase Calendar Maintenance to use BBjCalendarWidget
+ - forgot to commit this with the other files
+
+(cherry picked from commit 3f592a6e75908253141fcb87e76f8a965c8b61ff)
+----
+Modified: data/sync/adm_mnu_trans~[01007514PO].xml
+
