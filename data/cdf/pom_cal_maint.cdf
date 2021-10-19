@@ -40,15 +40,10 @@ rem --- Handle events (Calendar ready, calendar select, calendar dates set, popu
 				rem If the user selected dates outside of the current month, then don't bother showing the popup
 				if (selectedEndDate! > monthEnd!) or (selectedStartDate! < monthStart!) then break
 
-				if (info(3,6) = "1") then
-					xPos=mySelectEvent!.getClientX()
-					yPos=mySelectEvent!.getClientY()
-				else
-					xPos=mySelectEvent!.getCalendarX()
-					yPos=mySelectEvent!.getCalendarY()
-				endif
-					myPopupMenu!=callpoint!.getDevObject("myPopupMenu")
-					myPopupMenu!.show(Form!, xPos, yPos)
+				xPos=mySelectEvent!.getCalendarX()
+				yPos=mySelectEvent!.getCalendarY()
+				myPopupMenu!=callpoint!.getDevObject("myPopupMenu")
+				myPopupMenu!.show(Form!, xPos, yPos)
 			else
 				if pos("CalendarDatesSetEvent"=str(eventObj!.getClass()))
 					myCal!=callpoint!.getDevObject("myCal")
