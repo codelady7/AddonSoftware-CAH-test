@@ -61,6 +61,22 @@ Modified: data/bar/adm_procbatchmnt.xml
 Modified: data/cdf/adm_procbatchmnt.cdf
 
 =======================================================================================================================================
+Revision: 1588d68c33e0e5efcf4241fb00358e3354e20471
+Author: Christine <chawkins@basis.com>
+Date: 10/18/2021 7:11:21 PM
+Message:
+ER 10300 - PO - Refactor Purchase Calendar Maintenance to use BBjCalendarWidget
+
+(cherry picked from commit 4105d90e09a357e489325f28833f173ac3ccdfa0)
+----
+Added: data/bar/pom_cal_maint.xml
+Added: data/bar/pow_cal_colors.xml
+Added: data/cdf/pom_cal_maint.cdf
+Modified: data/sync/adm_mnu_item~[01007514PO].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
 Revision: 55c246b97f1d7b9d3bb8d8c1888bd1d7426e9c2a
 Author: Christine <chawkins@basis.com>
 Date: 10/19/2021 8:53:55 AM
@@ -71,4 +87,23 @@ ER 10300 - PO - Refactor Purchase Calendar Maintenance to use BBjCalendarWidget
 (cherry picked from commit 3f592a6e75908253141fcb87e76f8a965c8b61ff)
 ----
 Modified: data/sync/adm_mnu_trans~[01007514PO].xml
+
+=======================================================================================================================================
+Revision: 2906f1010bfc0e1aeecb54ebcb8ad3ba67e1a77b
+Author: Christine <chawkins@basis.com>
+Date: 10/19/2021 11:46:27 AM
+Message:
+ER 10300 - PO - Refactor Purchase Calendar Maintenance to use BBjCalendarWidget
+ - fine-tune popup menu logic to use getCalendarX()/getCalendarY() for both BUI and GUI
+ - re-built pow_cal_colors to include template info.
+
+(cherry picked from commit 08ec32f9e45e0361d88498a8643108a1b25b0eb6)
+----
+Modified: data/bar/pom_cal_maint.xml
+Modified: data/bar/pow_cal_colors.xml
+Modified: data/cdf/pom_cal_maint.cdf
+
+
+
+
 
