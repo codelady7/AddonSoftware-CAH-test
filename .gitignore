@@ -1,8 +1,12 @@
 /callpoints
+/classes
 /config/adx_conversionCtrl
 /data/admin_backup
 /data/arc
 /data/arm-01.textsearch
+/data/ivm-01.textsearch
+/data/sync/base
+/data/sync/new
 /documents
 /logs
 /prop/addonprop.jar
