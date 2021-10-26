@@ -125,3 +125,14 @@ didn't get included in the committed fix for Bug 10130.
 ----
 Modified: data/sync/adm_query_cols~[01007514AD].xml
 Modified: data/sync/adm_query~[01007514AD].xml
+
+=======================================================================================================================================
+Revision: 49e57990509850ecc3c8f1b78d62abff4c129ef8
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 10/26/2021 4:27:53 PM
+Message:
+Bug 10307: Prevented poe_reqdet AGRE callpoint from accessing SF files
+when SF is not installed.
+----
+Modified: data/bar/poe_reqdet.xml
+Modified: data/cdf/poe_reqdet.cdf
