@@ -211,7 +211,7 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 endif
 
 rem --- look at wo number; if different than it was when we entered the row, update and/or remove link in corresponding wo detail line
-
+if callpoint!.getDevObject("SF_installed")="Y" then
 	poc_linecode_dev=fnget_dev("POC_LINECODE")
 	dim poc_linecode$:fnget_tpl$("POC_LINECODE")
 	po_line_code$=callpoint!.getColumnData("POE_REQDET.PO_LINE_CODE")
@@ -270,6 +270,7 @@ rem --- look at wo number; if different than it was when we entered the row, upd
 			endif
 		endif
 	endif
+endif
 
 [[POE_REQDET.AGRN]]
 rem --- save current qty/price this row
