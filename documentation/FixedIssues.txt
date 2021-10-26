@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-10-19
+ Report Date:   2021-10-26
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -115,7 +115,13 @@ ER 10300 - PO - Refactor Purchase Calendar Maintenance to use BBjCalendarWidget
 ----
 Deleted: po/src/pom_calendar.aon
 
-
-
-
-
+=======================================================================================================================================
+Revision: 61959770ac17d7c39cdcdafc0e2fb175a4f8259a
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 10/26/2021 3:21:25 PM
+Message:
+Bug 10306: Added the new IV_ITEM_WHSE_LK custom query that accidentally
+didn't get included in the committed fix for Bug 10130.
+----
+Modified: data/sync/adm_query_cols~[01007514AD].xml
+Modified: data/sync/adm_query~[01007514AD].xml
