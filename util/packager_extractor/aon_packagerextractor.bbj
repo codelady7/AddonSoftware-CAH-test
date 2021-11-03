@@ -1,11 +1,13 @@
-REM /**
-REM  * MoveUtils.bbj
-REM  * @author shaun
-REM  *
-REM  * 
-REM  *  This is a utility for moving an Addon installation between two machines
-REM  * 
-REM  */
+rem ==========================================================================
+rem --- aon_packagerextractor.bbj 
+rem --- 
+rem --- AddonSoftware Version 21.0
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+rem ==========================================================================
+
+rem /**
+rem  * This is a utility for moving an Addon installation between two machines.
+rem  */
 
 use java.io.File
 use java.nio.file.Files
@@ -38,8 +40,10 @@ class public PackagerExtractor
     field private BBjRadioButton PackagerProductionRB!=#PackagerWin!.addRadioButton(#PackagerWin!.getAvailableControlID(),150,10,450,17,"Production Use: Include applications, but not data",$0024$)
     field private BBjRadioButton PackagerTestingRB!=#PackagerWin!.addRadioButton(#PackagerWin!.getAvailableControlID(),150,30,450,17,"Testing Use: Include data as well as applications",$0020$)
     field private BBjStaticText PackagerInstallationLocationST!=#PackagerWin!.addStaticText(#PackagerWin!.getAvailableControlID(),5,50,160,17,"Installation Base Directory:",$8000$)
-    field private BBjInputE PackagerInstallationLocationEB!=#PackagerWin!.addInputE(#PackagerWin!.getAvailableControlID(),170,49,430,19)
-    field private BBjToolButton PackagerInstallationBrowseBtn!=#PackagerWin!.addToolButton(#PackagerWin!.getAvailableControlID(),600,49,20,19,"...")
+    field private BBjInt PackagerInstallationLocationEBCtlID!=#PackagerWin!.getAvailableControlID()
+    field private BBjInputE PackagerInstallationLocationEB!=#PackagerWin!.addInputE(#PackagerInstallationLocationEBCtlID!,170,49,430,19)
+    field private BBjInt PackagerInstallationBrowseBtnCtlID!=#PackagerWin!.getAvailableControlID()
+    field private BBjToolButton PackagerInstallationBrowseBtn!=#PackagerWin!.addToolButton(#PackagerInstallationBrowseBtnCtlID!,600,49,20,19,"...")
     field private BBjStaticText PackagerBaristaLocationST!=#PackagerWin!.addStaticText(#PackagerWin!.getAvailableControlID(),5,70,160,17,"Barista Directory:",$8000$)
     field private BBjInputE PackagerBaristaLocationEB!=#PackagerWin!.addInputE(#PackagerWin!.getAvailableControlID(),170,69,430,19)
     field private BBjToolButton PackagerBaristaBrowseBtn!=#PackagerWin!.addToolButton(#PackagerWin!.getAvailableControlID(),600,69,20,19,"...")
@@ -55,11 +59,11 @@ class public PackagerExtractor
     field private BBjStaticText ExtractorInstallationLocationST!=#ExtractorWin!.addStaticText(#ExtractorWin!.getAvailableControlID(),5,50,160,17,"Installation Base Directory:",$8000$)
     field private BBjInputE ExtractorInstallationLocationEB!=#ExtractorWin!.addInputE(#ExtractorWin!.getAvailableControlID(),170,49,430,19)
     field private BBjToolButton ExtractorInstallationBrowseBtn!=#ExtractorWin!.addToolButton(#ExtractorWin!.getAvailableControlID(),600,49,20,19,"...")
-    field private BBjStaticText ExtractorBaristaLocationST!=#ExtractorWin!.addStaticText(#ExtractorWin!.getAvailableControlID(),5,70,160,17,"Barista Directory:",$8000$)
-    field private BBjInputE ExtractorBaristaLocationEB!=#ExtractorWin!.addInputE(#ExtractorWin!.getAvailableControlID(),170,69,430,19)
-    field private BBjStaticText ExtractorArchiveLocationST!=#ExtractorWin!.addStaticText(#ExtractorWin!.getAvailableControlID(),5,90,160,17,"Archive File:",$8000$)
-    field private BBjInputE ExtractorArchiveLocationEB!=#ExtractorWin!.addInputE(#ExtractorWin!.getAvailableControlID(),170,89,430,19)
-    field private BBjToolButton ExtractorArchiveBrowseBtn!=#ExtractorWin!.addToolButton(#ExtractorWin!.getAvailableControlID(),600,89,20,19,"...")
+    field private BBjStaticText ExtractorArchiveLocationST!=#ExtractorWin!.addStaticText(#ExtractorWin!.getAvailableControlID(),5,70,160,17,"Archive File:",$8000$)
+    field private BBjInputE ExtractorArchiveLocationEB!=#ExtractorWin!.addInputE(#ExtractorWin!.getAvailableControlID(),170,69,430,19)
+    field private BBjToolButton ExtractorArchiveBrowseBtn!=#ExtractorWin!.addToolButton(#ExtractorWin!.getAvailableControlID(),600,69,20,19,"...")
+    field private BBjStaticText ExtractorBaristaLocationST!=#ExtractorWin!.addStaticText(#ExtractorWin!.getAvailableControlID(),5,90,160,17,"Barista Directory:",$8000$)
+    field private BBjInputE ExtractorBaristaLocationEB!=#ExtractorWin!.addInputE(#ExtractorWin!.getAvailableControlID(),170,89,430,19)
     field private BBjButton ExtractorBtn!=#ExtractorWin!.addButton(#ExtractorWin!.getAvailableControlID(),490,160,110,23,"Extract")
 
     rem --- Packager state fields 
@@ -80,6 +84,7 @@ class public PackagerExtractor
     field private BBjString ArchiveBaseName!="aoninstall_"
     field private BBjString ArchiveDatePattern!="yyyyMMdd_HHmmss"
     field private BBjString ArchiveExtension!=".tgz"
+    field private BBjString sysguiTpl$
 
     method public PackagerExtractor()
         rem -- Add the directory this program resides in to the prefix.  We should be able to find any other 
@@ -87,6 +92,12 @@ class public PackagerExtractor
         declare BBjString programFileName!
         declare File programFile!
         declare String programDirName!
+
+        rem --- Get string template for SysGui
+        sysgui=unt
+        open(sysgui)"X0"
+        #sysguiTpl$=tmpl(sysgui)
+        close(sysgui)
 
         rem -- get the full path to the program file using fid
         programFileName!=pgm(-2)
@@ -107,12 +118,10 @@ class public PackagerExtractor
         #TabCtrl!.addTab("Packager",#PackagerWin!)
         #TabCtrl!.addTab("Extractor",#ExtractorWin!)
 
-        rem -- adjust our control states 
-        #PackagerBaristaLocationEB!.setEnabled(#PackagerPackagingType=#TESTING_PACKAGING_TYPE)
-        #PackagerBaristaBrowseBtn!.setEnabled(#PackagerPackagingType=#TESTING_PACKAGING_TYPE)
+        rem -- adjust our control states
         #PackagerArchiveLocationEB!.setEnabled(0)
         #PackagerBtn!.setEnabled(0)
-        rem #ExtractorBaristaLocationEB!.setEnabled(0)
+        #ExtractorBaristaLocationEB!.setEnabled(0)
         #ExtractorBtn!.setEnabled(0)
 
         rbList!=BBjAPI().makeVector()
@@ -139,6 +148,9 @@ class public PackagerExtractor
         #ExtractorArchiveLocationEB!.setCallback(BBjInputE.ON_CONTROL_VALIDATION,#this!,"handleValidateExtractor")
         #ExtractorBtn!.setCallback(BBjButton.ON_BUTTON_PUSH,#this!,"extract")
 
+        #PackagerWin!.setEnterAsTab(1)
+        #ExtractorWin!.setEnterAsTab(1)
+
         rem -- make window visible and start event loop
         #Win!.setVisible(1)
         process_events
@@ -157,8 +169,6 @@ class public PackagerExtractor
             #PackagerPackagingType=#TESTING_PACKAGING_TYPE
         endif
 
-        #PackagerBaristaLocationEB!.setEnabled(#PackagerPackagingType=#TESTING_PACKAGING_TYPE)
-        #PackagerBaristaBrowseBtn!.setEnabled(#PackagerPackagingType=#TESTING_PACKAGING_TYPE)
         #PackagerBtn!.setEnabled(#readyForPackaging())
     methodend
 
@@ -214,20 +224,16 @@ class public PackagerExtractor
     methodend
 
     rem /**
-    rem  * Validates the installation path for the Addon installation.  The installation path is valid 
-    rem  * for testing installations if:
+    rem  * Validates the installation path for the Addon installation. The installation path is valid if:
     rem  *      The path is an existing directory on the server's file system. 
-    rem  *      Somewhere under the file system are an addon and barista directory. 
-    rem  * The installation path is valid for production installations if: 
-    rem  *      The path is an existing directory on the server's file system. 
-    rem  *      There is an aon directory and a barista directory directly under the specified path. 
+    rem  *      Somewhere under the installation path is the barista directory. 
     rem  * 
     rem  * @param installationLocation! An absolute path to the base directory above the aon and barista directory in an Addon installation. 
     rem  * 
     rem  * @return A string indicating the validation error.  A blank string means success. 
     rem  */    
     method public BBjString validatePackageInstallationLocation(BBjString installationLocation!)
-        print "validatePackageInstallationLocation"
+
         declare BBjString baristaLocation!
         declare File installationLocationFile!
         declare BBjString statusString!
@@ -245,14 +251,16 @@ class public PackagerExtractor
             installationLocation!=installationLocation!+File.separator
         endif
 
-        REM How we check the location of the Barista directory is going to depend on whether we're 
-        REM packaging for production or testing. 
-        if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
-            REM installation directory must contain a barista installation (well, at least a barista directory)
-            baristaLocation!=installationLocation!+"barista"
-            if (!#directoryExists(baristaLocation!)) then
-                methodret "The Barista directory "+$22$+baristaLocation!+$22$+" must exist, but does not."
-            endif
+
+        baristaLocation!=#PackagerBaristaLocationEB!.getText()
+        if baristaLocation!<>"" and !baristaLocation!.startsWith(installationLocation!) then
+            dim event$:#sysguiTpl$
+            event!=#Sysgui!.getLastEvent()
+            event$=event!.getEventString()
+            ctlID=dec(event.ID$)
+                if ctlID=#PackagerInstallationLocationEBCtlID! or ctlID=#PackagerInstallationBrowseBtnCtlID! then
+                    methodret "Barista directory is not under the installation directory."
+                endif
         endif
 
         methodret ""
@@ -271,35 +279,26 @@ class public PackagerExtractor
     rem  * @return A string indicating the validation error.  A blank string means success. 
     rem  */    
     method public BBjString validatePackageBaristaLocation(BBjString baristaLocation!)
-
-        print "validatePackageBaristaLocation"
         declare BBjString baristaLocation!
 
         if (! baristaLocation!.matches("[^\s]*[/\\]barista[/\\]?$")) then
             methodret $22$+baristaLocation!+$22$+" does not end with "+$22$+"barista"+$22$
         endif
+        if (!#directoryExists(baristaLocation!)) then
+            methodret "The Barista directory "+$22$+baristaLocation!+$22$+" must exist, but does not."
+        endif
 
         installationLocation!=#PackagerInstallationLocationEB!.getText()
-        if (#PackagerPackagingType=#TESTING_PACKAGING_TYPE) then
-            valid=installationLocation!<>"" and baristaLocation!.startsWith(installationLocation!)
-            if (!valid) then
-                methodret "Barista directory is not under the installation directory."
-            endif
+        valid=installationLocation!<>"" and baristaLocation!.startsWith(installationLocation!)
+        if (!valid) then
+            methodret "Barista directory is not under the installation directory."
         endif
 
-        if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
-            baristaLocationForComparison!=baristaLocation!.replaceAll("[/\\]",File.separator)
-            valid=(baristaLocationForCompariston!=installationLocation!.replaceAll("[/\\",File.separator)+"barista")
-            if (!valid) then
-                methodret "Barista directory is not immediately under installation directory."
-            endif
-        endif
         methodret ""
     methodend
 
 
     method public BBjNumber readyForPackaging()
-        print "readyForPackaging"
         declare BBjString installationLocation!
         declare BBjString baristaLocation!
         declare BBjString archiveLocation!
@@ -330,48 +329,127 @@ class public PackagerExtractor
             methodret 0
         endif
 
-        rem -- If we're in packaging for production, verify the installation location.  If it's valid, then 
-        rem -- set the barista location and the archive location and then enable the packager button because 
-        rem -- we're ready to archive. 
-        if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
-            baristaLocation!=installationLocation!.replaceAll("[/\\]","\"+File.separator)
+        rem --- Verify the Barista installation location is under the base installation location.
+        baristaLocation!=#PackagerBaristaLocationEB!.getText()
+        if (baristaLocation!<>"") then
+            baristaLocation!=new File(baristaLocation!).getCanonicalPath()
             if (!baristaLocation!.endsWith(File.separator)) then
-                baristaLocation!=baristaLocation!+File.separator
+                baristaLocation!=baristaLocation!.concat(File.separator)
             endif
-            baristaLocation!=baristaLocation!+"barista"
             #PackagerBaristaLocationEB!.setText(baristaLocation!)
+
+            status$=#validatePackageBaristaLocation(baristaLocation!)
+            if (status$<>"") then
+                #markInputEInvalid(#PackagerBaristaLocationEB!,status$)
+                #isPackagerBaristaDirectoryValid!=0
+                methodret 0
+            endif
             #markInputEValid(#PackagerBaristaLocationEB!)
             #isPackagerBaristaDirectoryValid!=1
+        else
+            #isPackagerBaristaDirectoryValid!=0
+            methodret 0
         endif
 
-        rem -- if we're in test mode, then verify that the installation path is neither empty nor invalid.  Also verify that 
-        rem -- the barista installation location is neither empty nor invalid.  
-        if (#PackagerPackagingType=#TESTING_PACKAGING_TYPE) then
-            baristaLocation!=#PackagerBaristaLocationEB!.getText()
-            if (baristaLocation!<>"") then
-                baristaLocation!=new File(baristaLocation!).getCanonicalPath()
-                if (!baristaLocation!.endsWith(File.separator)) then
-                    baristaLocation!=baristaLocation!.concat(File.separator)
+        rem --- Sanity check installation base directory using paths in addon.syn
+        if (#isPackagerBaseDirectoryValid! and #isPackagerBaristaDirectoryValid!) then
+            barDir$=baristaLocation!
+            barPos=pos(File.separator+"barista"+File.separator=barDir$+File.separator,-1)
+            barDir$=barDir$(1,barPos)
+            aonSyn_dev=unt
+            open(aonSyn_dev,isz=-1)barDir$+"/aon/config/addon.syn"; rem --- Error if not found, something is wrong.
+        
+            rem --- Get addon.syn paths for +AON_IMAGES and +CUST_IMAGES
+            while 1
+                read(aonSyn_dev,end=*break)record$
+                key$ = record$(1, pos("="=record$) - 1)
+                switch (BBjAPI().TRUE)
+                    case key$ = "STBL"
+                    case key$ = "SYSSTBL"
+                        xpos = pos(" "=record$)
+                        ypos = pos("="=record$,1,2)
+                        stbl$ = cvs(record$(xpos+1, ypos-xpos-1),3)
+                        path$ = cvs(record$(ypos+1),3)
+                        if stbl$="+AON_IMAGES" then aonImages_path$=path$
+                        if stbl$="+CUST_IMAGES" then custImages_path$=path$
+                        break
+                    case default
+                        rem --- skip other lines
+                        break
+                swend
+                if aonImages_path$<>"" and custImages_path$<>"" then break
+            wend
+            close(aonSyn_dev)
+        
+            rem --- Is this a version neutral installationg?
+            verNeutral=0
+            aonImagesPath!=new File(aonImages_path$)
+            aonImagesPath$=aonImagesPath!.getCanonicalPath()
+            imagesPos=pos(File.separator+"images"+File.separator=aonImagesPath$+File.separator,-1)
+            imagesDir$=aonImagesPath$(1,imagesPos)
+            if imagesDir$=installationLocation! then verNeutral=1
+        
+            if !verNeutral then
+                custImagesPath!=new File(custImages_path$)
+                custImagesPath$=custImagesPath!.getCanonicalPath()
+                imagesPos=pos(File.separator+"cust_images"+File.separator=custImagesPath$+File.separator,-1)
+                imagesDir$=aonImagesPath$(1,imagesPos)
+                if imagesDir$=installationLocation! then verNeutral=1
+            endif
+        
+            rem --- Is the installation base directory correct for this type of installation?
+            barDir$=baristaLocation!
+            barPos=pos(File.separator+"barista"+File.separator=barDir$+File.separator,-1)
+            barDir$=barDir$(1,barPos)
+            if !verNeutral then
+                rem --- For non-version neutral installations, the Barista directory should be directly under the installation base directory.
+                if barDir$<>installationLocation! then
+                    msg_id$="AD_BAD_NON_VER_NTRL"
+                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+                    if msg_opt$="C" then
+                        #isPackagerBaseDirectoryValid!=0
+                        methodret 0
+                    endif
+        
+                    msg_id$="AD_CHK_EXTRACT_PATHS"
+                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
                 endif
-                status$=#validatePackageBaristaLocation(baristaLocation!)
-                if (status$<>"") then
-                    #markInputEInvalid(#PackagerBaristaLocationEB!,status$)
-                    #isPackagerBaristaDirectoryValid!=0
-                    methodret 0
-                endif
-                #markInputEValid(#PackagerBaristaLocationEB!)
-                #isPackagerBaristaDirectoryValid!=1
             else
-                #isPackagerBaristaDirectoryValid!=0
+                rem --- For version neutral installations, the Barista directory should NOT be directly under the installation base directory.
+                if barDir$=installationLocation! then
+                    msg_id$="AD_BAD_VER_NEUTRAL"
+                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+                    if msg_opt$="C" then
+                        #isPackagerBaseDirectoryValid!=0
+                        methodret 0
+                    endif
+                    
+                    msg_id$="AD_CHK_EXTRACT_PATHS"
+                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+                endif
             endif
         endif
 
-        rem --- set the name of the archive if it hasn't already been set and we have a valid base directory
-        if (#isPackagerBaseDirectoryValid!) then
-            format!=new SimpleDateFormat(#ArchiveDatePattern!)
-            #ArchiveLocation!=installationLocation!+#ArchiveBaseName!+format!.format(new java.util.Date())+#ArchiveExtension!
-            #PackagerArchiveLocationEB!.setText(#ArchiveLocation!)
-            #isPackagerArchiveFileValid!=1
+        rem --- Set the archive file name when a valid location directory has been entered for it's path.
+        if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
+            rem --- For a Production package use Barista Directory for archive file path
+            if (#isPackagerBaristaDirectoryValid!) then
+                format!=new SimpleDateFormat(#ArchiveDatePattern!)
+                barDir$=baristaLocation!
+                barPos=pos(File.separator+"barista"+File.separator=barDir$+File.separator,-1)
+                barDir$=barDir$(1,barPos)
+                #ArchiveLocation!=barDir$+#ArchiveBaseName!+"prodPkg_"+format!.format(new java.util.Date())+#ArchiveExtension!
+                #PackagerArchiveLocationEB!.setText(#ArchiveLocation!)
+                #isPackagerArchiveFileValid!=1
+            endif
+        else
+            rem --- For a Test package use Installation Base Directory for achive file path
+            if (#isPackagerBaseDirectoryValid!) then
+                format!=new SimpleDateFormat(#ArchiveDatePattern!)
+                #ArchiveLocation!=installationLocation!+#ArchiveBaseName!+"testPkg_"+format!.format(new java.util.Date())+#ArchiveExtension!
+                #PackagerArchiveLocationEB!.setText(#ArchiveLocation!)
+                #isPackagerArchiveFileValid!=1
+            endif
         endif
 
         rem --- enable packaging if everything is ready and return status
@@ -403,19 +481,30 @@ class public PackagerExtractor
         #PackagerBtn!.setEnabled(0)
 
         REM Get values needed for packaging
-        baseDir$=#PackagerInstallationLocationEB!.getText()
-        barDir$=#PackagerBaristaLocationEB!.getText()
-        jarFile$=#PackagerArchiveLocationEB!.getText()
+        aonProdDir$=#PackagerInstallationLocationEB!.getText()
+        aonProdDirFile!=new File(aonProdDir$)
+        aonProdDir$=aonProdDirFile!.getCanonicalPath()
+        baseDir$=aonProdDir$
 
-        baseDirFile!=new File(baseDir$)
-        baseDir$=baseDirFile!.getCanonicalPath()
+        barDir$=#PackagerBaristaLocationEB!.getText()
+        barDirFile!=new File(barDir$)
+        barDir$=barDirFile!.getCanonicalPath()
+
+        jarFile$=#PackagerArchiveLocationEB!.getText()
+        jarFile!=new File(jarFile$)
+        jarFile$=jarFile!.getCanonicalPath()
+
+        rem --- For production installs, change baseDir$ to directory that contains Barista
+        if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
+            barPos=pos(File.separator+"barista"+File.separator=barDir$+File.separator,-1)
+            baseDir$=barDir$(1,barPos-1)
+        endif
 
     rem --- Initializations
         declare Vector copyPath!
         declare Vector firmsVect!
         declare Vector prefixVect!
         declare Properties sourcePaths!
-        declare Properties stblPaths!
         declare BBjSysGui sysGUI!
         declare Properties systems!
         declare BBjString savedDir$
@@ -425,7 +514,6 @@ class public PackagerExtractor
         firmsVect!=new Vector()
         prefixVect!=new Vector()
         sourcePaths!=new Properties()
-        stblPaths!=new Properties()
         stblValues!=new Properties()
         sysGUI! = BBjAPI().getSysGui()
         systems!=new Properties()
@@ -498,8 +586,7 @@ class public PackagerExtractor
         mainMeterTotalRecs=meter_total_recs
 
     rem --- Open log file
-        location$ = baseDir$
-        log$ = baseDir$+File.separator+"adx_jaraon.log"
+        log$ = baseDir$+File.separator+"packager.log"
         erase log$,err=*next
         string log$
         log_dev=unt
@@ -509,10 +596,15 @@ class public PackagerExtractor
         print(log_dev)"Copy Addon Installation Utility log started: " + date(0:"%Yd-%Mz-%Dz@%Hz:%mz:%sz")
         print(log_dev)
         print(log_dev)"Source Operating System: " + info(0,0)
-        print (log_dev) "Source BBj Installation Directory: " + System.getProperty("basis.BBjHome")
-        print(log_dev)"Source Installation Base Directory: " + baseDir$
+        print(log_dev)"Source BBj Installation Directory: " + System.getProperty("basis.BBjHome")
+        print(log_dev)"Source Installation Base Directory: " + aonProdDir$
         print(log_dev)"Source Barista Installation Location: " + barDir$
         print(log_dev)"Archive Filename: " + jarFile$
+        if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
+            print(log_dev)"Packager Packaging Type: " + str(#PackagerPackagingType) + " (Production to Test)"
+        else
+            print(log_dev)"Packager Packaging Type: " + str(#PackagerPackagingType) + " (Test to Production)"
+        endif
 
     rem --- Build sourcePaths! Properties object of directories and files used by each system (application) installed in source Barista
         systemsIter!=systems!.keySet().iterator()
@@ -596,9 +688,8 @@ class public PackagerExtractor
                         gosub verify_path
                         meter_text$=key$
                         if skip_path then
-                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+path$+")"
                         endif
-                        stblPaths!.setProperty(key$,canonicalPath$)
                         break
                     case key$ = "APROD"
                     case key$ = "SYSAPP"
@@ -611,7 +702,7 @@ class public PackagerExtractor
                         gosub verify_path
                         meter_text$=key$+": "+app$
                         if skip_path then
-                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+path$+")"
                         endif
                         break
                     case key$ = "STBL"
@@ -628,10 +719,9 @@ class public PackagerExtractor
                                 if stbl$="+DIR_INV_IMAGES" then
                                     skipped=skipped-1
                                 else
-                                    meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                                    meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+path$+")"
                                 endif
                             endif
-                            stblPaths!.setProperty(stbl$,canonicalPath$)
                         endif
                         break
                     case key$ = "PREFIX"
@@ -642,7 +732,7 @@ class public PackagerExtractor
                         gosub verify_path
                         meter_text$=key$+" "+path$
                         if skip_path then
-                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+path$+")"
                         endif
                         prefixVect!.add(path$)
                         break
@@ -656,7 +746,7 @@ class public PackagerExtractor
                         gosub verify_path
                         meter_text$=key$+": "+stbl$
                         if skip_path then
-                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                            meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+path$+")"
                         endif
                         break
                     case default
@@ -739,7 +829,7 @@ class public PackagerExtractor
                                     gosub verify_path
                                     meter_text$=admModuleFile$+": "+startLocalePath$
                                     if skip_path then
-                                        meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                                        meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+cvs(path$,3)+")"
                                     endif
                                 endif
 
@@ -751,7 +841,7 @@ class public PackagerExtractor
                                     gosub verify_path
                                     meter_text$=admModuleFile$+": "+startDdMountDir$
                                     if skip_path then
-                                        meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$
+                                        meter_text$="***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "+meter_text$+" ("+cvs(path$,3)+")"
                                     endif
                                 endif
 
@@ -987,9 +1077,6 @@ class public PackagerExtractor
             keyPath!=new java.io.File(keyPath$)
             canonicalKeyPath$=keyPath!.getCanonicalPath()
 
-            rem --- Use keyPath$ if canonicalKeyPath$ does not start with baseDir$
-            if len(canonicalKeyPath$)<baseDirLen or pos("["=canonicalKeyPath$(1,baseDirLen)) then canonicalKeyPath$=keyPath$
-
             rem --- As needed add ending file separator to directory paths
             if pos(keyPath$(len(keyPath$),1)="/\") and canonicalKeyPath$(len(canonicalKeyPath$),1)<>File.separator then
                 canonicalKeyPath$=canonicalKeyPath$+File.separator
@@ -1003,13 +1090,13 @@ class public PackagerExtractor
         pathIter!=sourcePaths!.keySet().iterator()
         while pathIter!.hasNext()
             path$=pathIter!.next()
-
             canonicalPath$=sourcePaths!.getProperty(path$)
 
-            rem --- Check whether the file exists
-            declare File testFile!
-            testFile!=new File(canonicalPath$)
-            if !testFile!.exists() then continue
+            rem --- Don't copy paths not under baseDir$
+            rem --- For production installs, the baseDir$ is the directory that contains Barista
+            rem --- For test installs, the baseDir$ is the installation base directory aonProdDir$
+            if pos(baseDir$=canonicalPath$)<>1 then continue
+
 
             rem --- Is this canonical path redundant (i.e. begins with canoncial path already in copyPath!)?
             declare Iterator copyPathIter!
@@ -1103,18 +1190,17 @@ class public PackagerExtractor
             declare TGZFile tgzFile!
             declare BBjString osname!
             tgzFile!=new TGZFile(jarFile$)
-            REM chmod 777 all entries in the tar file. 
+            rem --- chmod 777 all entries in the tar file. 
             tgzFile!.setDefaultFilePermissions("rwxrwxrwx")
             tgzFile!.openForWriting()
 
-            rem --- Remove baseDir$ from copyPath! canonical path before adding it to the jar
+            rem --- Add canonical path to the jar
             jarList$=""
             for i=0 to copyPath!.size()-1
                 canonicalPath$=copyPath!.get(i)
-                shortPath$=canonicalPath$(baseDirLen+2)
 
                 rem --- Increment secondary progress meter
-                meter_text$=shortpath$
+                meter_text$=canonicalPath$
                 meterWin!=detailMeter!
                 meter_proc_recs=meter_proc_recs+1
                 meter_action$="MTR-LST"
@@ -1149,7 +1235,7 @@ class public PackagerExtractor
         endif
 
         rem --- Log adding log file to jar
-        print(log_dev)"    adx_jaraon.log"
+        print(log_dev)"    packager.log"
 
         rem --- Stop main progress meter
         meterWin!=mainMeter!
@@ -1167,7 +1253,7 @@ class public PackagerExtractor
         busyImage!=#Win!.addImageCtrl(nxt_ctlID,250,20,33,33,System.getProperty("basis.BBjHome")+"/utils/reporting/bbjasper/images/CreatingReport.gif")
 
         rem --- Add log file to jar and close jar
-        tgzFile!.addFile(baseDir$+File.separator+"adx_jaraon.log",baseDir$)
+        tgzFile!.addFile(baseDir$+File.separator+"packager.log",baseDir$)
         tgzFile!.closeForWriting()
 
     done: rem --- All done
@@ -1209,7 +1295,7 @@ verify_path: rem --- Verify path is located under installation base directory
             canonicalPath$=resolvedPath!.getCanonicalPath()
         endif
 
-        if !isUrl and pos(baseDir$=canonicalPath$)=1 then
+        if !isUrl and pos(aonProdDir$=canonicalPath$)=1 then
             rem --- Good path
             sourcePaths!.setProperty(path$,canonicalPath$)
         else
@@ -1218,6 +1304,7 @@ verify_path: rem --- Verify path is located under installation base directory
             skipped=skipped+1
         endif
         return
+
 resolvePathStbls: rem --- Resolve embedded STBLs, except not [+FIRM_ID]. (Based on ado_util.src resolvePathStbls(BBjString pathName$) method)
         resolvedPath$=pathName$
 
@@ -1247,6 +1334,10 @@ std_exit:
     method public BBjString validateExtractorNewDatabaseName(BBjString databaseName!)
         declare BBjString databaseListString!
         declare java.util.List databaseList!
+
+        rem --- Convert database name to upper case
+        databaseName!=databaseName!.toUpperCase()
+        #ExtractorNewDatabaseNameEB!.setText(databaseName!)
 
         rem --- Get the list of existing database names and the new database name
         databaseListString!=sqllist(0)
@@ -1395,6 +1486,7 @@ std_exit:
         declare BBjNumber isExtractorBaristaLocationReady!
         declare BBjNumber isExtractorArchiveFileReady!
         declare BBjString status$
+        savedDir$=dir("")
 
         rem -- initialize our status variables
         isExtractorNewDatabaseNameReady!=0
@@ -1453,28 +1545,11 @@ std_exit:
            isExtractorInstallationLocationReady!=0
         endif
 
-        rem -- validate barista directory 
-        baristaLocation!=#ExtractorBaristaLocationEB!.getText()
-        if (baristaLocation!<>"") then
-            baristaLocation!=new File(baristaLocation!).getCanonicalPath()
-            if (! baristaLocation!.endsWith(File.separator)) then
-                baristaLocation!=baristaLocation!.concat(File.separator)
-            endif
-            #ExtractorBaristaLocationEB!.setText(baristaLocation!)
-            status$=#validateExtractorBaristaLocation(baristaLocation!)
-            isExtractorBaristaLocationReady!=(status$="")
-            if (isExtractorBaristaLocationReady!) then
-                #markInputEValid(#ExtractorBaristaLocationEB!)
-            else
-                #markInputEInvalid(#ExtractorBaristaLocationEB!,status$)
-            endif
-        else
-            isExtractorBaristaLocationReady!=0
-        endif
-
         rem -- validate archive file 
         archiveFile!=#ExtractorArchiveLocationEB!.getText()
         if (archiveFile!<>"") then
+            archiveFile!=new File(archiveFile!).getCanonicalPath()
+            #ExtractorArchiveLocationEB!.setText(archiveFile!)
             status$=#validateExtractorArchiveFile(archiveFile!)
             isExtractorArchiveFileReady!=(status$="")
             if (isExtractorArchiveFileReady!) then
@@ -1484,6 +1559,84 @@ std_exit:
             endif
         else
             isExtractorArchiveFileReady!=0
+        endif
+
+        rem --- Set Barista directory using Barista location in packager.log
+        if isExtractorInstallationLocationReady! and isExtractorArchiveFileReady! then
+            rem --- Show busy/working image
+            height=33
+            width=33
+            xpos=int((#ExtractorWin!.getWidth()-width)/2)
+            ypos=int((#ExtractorWin!.getHeight()-height)/2)
+            nextCtrlID=#ExtractorWin!.getAvailableControlID()
+            busyImage!=#ExtractorWin!.addImageCtrl(nextCtrlID,xpos,ypos,width,height,System.getProperty("basis.BBjHome")+"/utils/reporting/bbjasper/images/CreatingReport.gif")
+            busyImage!.setVisible(1)
+
+            rem --- Extract packager.log in archive file
+            jarFile$=#ExtractorArchiveLocationEB!.getText()
+            declare TGZFile tgzFile!
+            tgzFile!=new TGZFile(jarFile$)
+            tgzFile!.setDefaultFilePermissions("rwxrwxrwx")
+            
+            jarFile$=#ExtractorArchiveLocationEB!.getText()
+            jarPos=pos(File.separator+"aoninstall_"=jarFile$,-1)
+            jarFileDir$=jarFile$(1,jarPos)
+            chdir jarFileDir$
+            tgzFile!.extract("packager.log",jarFileDir$)
+            chdir savedDir$
+            
+            rem --- Process "Canonical Key Path:" lines in packager.log file
+            sourceLog$=jarFileDir$+File.separator+"packager.log"
+            sourceLog_dev=unt
+            open(sourceLog_dev,isz=-1)sourceLog$; rem --- Error if not found, something is wrong.
+            while 1
+                read(sourceLog_dev,end=*break)line$
+                key$=line$(1,pos(":"=line$))
+                switch (BBjAPI().TRUE)
+                    case key$="Source Installation Base Directory:"
+                        sourceBaseDir$=cvs(line$(pos(":"=line$)+1),3)
+                        break
+                    case key$="Source Barista Installation Location:"
+                        sourceBarDir$=cvs(line$(pos(":"=line$)+1),3)
+                        break
+                    case key$="Archive Filename:"
+                        sourceArchivFile$=cvs(line$(pos(":"=line$)+1),3)
+                        break
+                    case key$="Packager Packaging Type:"
+                        packagingType$=cvs(line$(pos(":"=line$)+1),3)
+                        #PackagerPackagingType=num(packagingType$(1,1))
+                        break
+                    case default
+                        break
+                swend
+                if len(sourceBaseDir$)>0 and len(sourceBarDir$)>0 and len(sourceArchiveFile$)>0 then break
+            wend
+            close(sourceLog_dev,err=*next)
+            
+            rem --- Set Barista directory
+            #ExtractorBaristaLocationEB!.setText(installationLocation!+sourceBarDir$(len(sourceBaseDir$)+2))
+
+            rem -- validate barista directory 
+            baristaLocation!=#ExtractorBaristaLocationEB!.getText()
+            if (baristaLocation!<>"") then
+                baristaLocation!=new File(baristaLocation!).getCanonicalPath()
+                if (! baristaLocation!.endsWith(File.separator)) then
+                    baristaLocation!=baristaLocation!.concat(File.separator)
+                endif
+                #ExtractorBaristaLocationEB!.setText(baristaLocation!)
+                status$=#validateExtractorBaristaLocation(baristaLocation!)
+                isExtractorBaristaLocationReady!=(status$="")
+                if (isExtractorBaristaLocationReady!) then
+                    #markInputEValid(#ExtractorBaristaLocationEB!)
+                else
+                    #markInputEInvalid(#ExtractorBaristaLocationEB!,status$)
+                endif
+            else
+                isExtractorBaristaLocationReady!=0
+            endif
+
+            rem --- Hide busy/working image
+            busyImage!.setVisible(0)
         endif
 
         rem -- allow extraction if all fields are ready
@@ -1518,12 +1671,12 @@ std_exit:
       rem --- Get and validate user input 
       dbName$=#ExtractorNewDatabaseNameEB!.getText()
       appDesc$=#ExtractorApplicationDescriptionEB!.getText()
-      baseDir$=#ExtractorInstallationLocationEB!.getText()
+      aonProdDir$=#ExtractorInstallationLocationEB!.getText()
       jarFile$=#ExtractorArchiveLocationEB!.getText()
       barDir$=#ExtractorBaristaLocationEB!.getText()
       rd_dir_syp$=dsk("")+dir("")+stblValues!.getProperty("+DIR_SYP")
 
-      if (dbName$="" or appDesc$="" or baseDir$="" or jarFile$="" or barDir$="") then
+      if (dbName$="" or appDesc$="" or aonProdDir$="" or jarFile$="" or barDir$="") then
           x=msgbox("Please fill in all values.")
           return
       endif
@@ -1531,7 +1684,7 @@ std_exit:
       call rd_dir_syp$+"bac_em_login.bbj",#Sysgui!,#Win!,rdAdmin!,status$,user$,password$
 
       rem --- Remove trailing slash (/ or \) from directory paths
-      if baseDir$(len(baseDir$))=File.separator then baseDir$=baseDir$(1,len(baseDir$)-1)
+      if aonProdDir$(len(aonProdDir$))=File.separator then aonProdDir$=aonProdDir$(1,len(aonProdDir$)-1)
       if barDir$(len(barDir$))=File.separator then barDir$=barDir$(1,len(barDir$)-1)
 
       rem --- Start main progress meter
@@ -1545,8 +1698,7 @@ std_exit:
       mainMeterTotalRecs=meter_total_recs
 
       rem --- Open log file
-      location$ = baseDir$
-      log$ = baseDir$+File.separator+"adx_unjaraon.log"
+      log$ = aonProdDir$+File.separator+"extractor.log"
       erase log$,err=*next
       string log$
       log_dev=unt
@@ -1555,12 +1707,12 @@ std_exit:
       rem --- write log header info
       print(log_dev)"Install Copied Addon Installation Utility log started: " + date(0:"%Yd-%Mz-%Dz@%Hz:%mz:%sz")
       print(log_dev)"Destination BBj Installation: "+System.getProperty("basis.BBjHome")
-      print(log_dev)"Source Operating System: " + info(0,0)
+      print(log_dev)"Target Operating System: " + info(0,0)
       print(log_dev)
       print(log_dev)"New Database Name: " + dbName$
-      print(log_dev)"Source Installation Base Directory: " + baseDir$
-      print(log_dev)"Jar Filename: " + jarFile$
-      print(log_dev)"Source Barista Installation Location: " + barDir$
+      print(log_dev)"Target Installation Base Directory: " + aonProdDir$
+      print(log_dev)"Archive Filename: " + jarFile$
+      print(log_dev)"Target Barista Installation Location: " + barDir$
 
       rem --- Un-package existing Barista installation jar file at the new installation base directory
       rem --- Increment main progress meter
@@ -1579,6 +1731,21 @@ std_exit:
       busyImage!=mainMeter!.addImageCtrl(nxt_ctlID,150,75,33,33,bbjHome$+"/utils/reporting/bbjasper/images/CreatingReport.gif")
 
       rem --- Un-package archive file
+      if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
+          rem --- For production un-package in Barista base directory
+          baseDir$=barDir$(1,pos(File.separator+"barista"=barDir$,-1)-1)
+            
+          rem --- Create the diretory if it doesn't exist
+          baseDir!=new File(baseDir$)
+          if !baseDir!.exists() then
+              baseDir!.mkdirs()
+              baseDir!.setReadable(1,0)
+              baseDir!.setWritable(1,0)
+          endif
+      else
+          rem --- For test un-package in installation base directory
+          baseDir$=aonProdDir$
+      endif
       chdir baseDir$
       declare TGZFile tgzFile!
       declare java.util.List failedToExtract!
@@ -1607,13 +1774,13 @@ std_exit:
       open(ddmTableTpls_dev)barDir$+"/sys/data/ddm_table_tpls.dat"; rem --- Error if not found, something is wrong.
       dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
 
-      rem --- Open DDM_TABLES in source Barista installation
+      rem --- Open DDM_TABLES in target Barista installation
       ddmTables_dev=unt
       open(ddmTables_dev)barDir$+"/sys/data/ddm_tables.dat"; rem --- Error if not found, something is wrong.
       findrecord(ddmTableTpls_dev,key=pad("DDM_TABLES",16))ddm_table_tpls$; rem --- Error if not found, something is wrong.
       dim ddmTables$:ddm_table_tpls.template$
 
-      rem --- Open DDM_TABLE_COLS in source Barista installation
+      rem --- Open DDM_TABLE_COLS in target Barista installation
       ddmTableCols_dev=unt
       open(ddmTableCols_dev)barDir$+"/sys/data/ddm_table_cols.dat"; rem --- Error if not found, something is wrong.
       findrecord(ddmTableTpls_dev,key=pad("DDM_TABLE_COLS",16))ddm_table_tpls$; rem --- Error if not found, something is wrong.
@@ -1676,8 +1843,8 @@ std_exit:
       print(log_dev)
       print(log_dev)meter_text$
 
-      rem --- Process "Canonical Key Path:" lines in adx_jaraon.log file
-      sourceLog$=baseDir$+File.separator+"adx_jaraon.log"
+      rem --- Process "Canonical Key Path:" lines in packager.log file
+      sourceLog$=baseDir$+File.separator+"packager.log"
       sourceLog_dev=unt
       open(sourceLog_dev,isz=-1)sourceLog$; rem --- Error if not found, something is wrong.
       while 1
@@ -1702,6 +1869,7 @@ std_exit:
                   sourceBBjDir!=cvs(line$(pos(":"=line$)+1),3)
                   sourceBBjDir$=SourceBBjDir!.replace("\","/")
                   sourceBBjDirLen=len(sourceBBjDir$)
+                  break
               case default
                   break
           swend
@@ -1730,7 +1898,7 @@ std_exit:
           sourceCanonicalMountDir$=sourcePaths!.getProperty(sourceMountDir$)
           targetMountDir$=sourceCanonicalMountDir$
           if pos(sourceBaseDir$=sourceCanonicalMountDir$)=1 then
-              targetMountDir!=baseDir$+sourceCanonicalMountDir$(sourceBaseDirLen+1)
+              targetMountDir!=aonProdDir$+sourceCanonicalMountDir$(sourceBaseDirLen+1)
               targetMountDir$=targetMountDir!.replace("\","/")
           endif
           print(log_dev)"    "+targetMountDir$
@@ -1757,7 +1925,8 @@ std_exit:
                       if sourcePaths!.containsKey(path$) then
                           sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                           if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                              path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path$=path!.replace("\","/")
                           endif
                           record$=record$(1,xpos)+path$
                       endif
@@ -1775,7 +1944,8 @@ std_exit:
                       if sourcePaths!.containsKey(path$) then
                           sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                           if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                              path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path$=path!.replace("\","/")
                           endif
                           record$=record$(1,xpos)+path$+record$(ypos)
                       endif
@@ -1795,7 +1965,8 @@ std_exit:
                           if sourcePaths!.containsKey(path$) then
                               sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                               if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                  path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                  path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                  path$=path!.replace("\","/")
                               endif
                               record$=record$(1,ypos)+path$
                           endif
@@ -1810,8 +1981,8 @@ std_exit:
                       if sourcePaths!.containsKey(path$) then
                           sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                           if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                              path!=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
-                              path$=path!
+                              path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path$=path!.replace("\","/")
                           endif
                           record$=record$(1,xpos)+path$
                       endif
@@ -1827,7 +1998,8 @@ std_exit:
                       if sourcePaths!.containsKey(path$) then
                           sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                           if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                              path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path$=path!.replace("\","/")
                           endif
                           record$=record$(1,ypos)+path$
                           rem --- also store the SYSCFG info in configIni! so we can use it to update the database! (i.e., config.ini) later
@@ -1880,7 +2052,7 @@ std_exit:
               if pos(sourceBaseDir$=sourceCanonicalMountDir$)=1 then
                   sourceCanonicalMountDir!=sourceCanonicalMountDir$
                   sourceCanonicalMountDir$=sourceCanonicalMountDir!.replace("\","/")
-                  targetMountDir!=baseDir$+sourceCanonicalMountDir$(sourceBaseDirLen+1)
+                  targetMountDir!=aonProdDir$+sourceCanonicalMountDir$(sourceBaseDirLen+1)
                   targetMountDir$=targetMountDir!.replace("\","/")
               endif
 
@@ -1922,7 +2094,8 @@ std_exit:
                                   if sourcePaths!.containsKey(path$) then
                                       sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                                       if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                          path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                          path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                          path$=path!.replace("\","/")
                                       endif
                                       record$=record$(1,startLocalePath + startLocalePathLen - 1)+path$+record$(pos(endLocalePath$=cvs(record$,4), -1))
                                   endif
@@ -1937,7 +2110,8 @@ std_exit:
                                   if sourcePaths!.containsKey(path$) then
                                       sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                                       if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                          path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                          path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                          path$=path!.replace("\","/")
                                       endif
                                       record$=record$(1,startDdMountDir + startDdMountDirLen - 1)+path$+record$(pos(endDdMountDir$=cvs(record$,4), -1))
                                   endif
@@ -2057,7 +2231,8 @@ std_exit:
                               if sourcePaths!.containsKey(path$) then
                                   sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                                   if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                      path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                      path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                      path$=path!.replace("\","/")
                                   endif
                               endif
                               new_cpgm_paths$=new_cpgm_paths$+path$+";"
@@ -2067,7 +2242,8 @@ std_exit:
                           if sourcePaths!.containsKey(path$) then
                               sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                               if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                  path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                  path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                  path$=path!.replace("\","/")
                               endif
                           endif
                       endif
@@ -2109,7 +2285,8 @@ std_exit:
               sourceCanonicalMountDir$=sourcePaths!.getProperty(sourceMountDir$)
               targetMountDir$=sourceCanonicalMountDir$
               if pos(sourceBaseDir$=sourceCanonicalMountDir$)=1 then
-                  targetMountDir$=baseDir$+sourceCanonicalMountDir$(sourceBaseDirLen+1)
+                  targetMountDir!=aonProdDir$+sourceCanonicalMountDir$(sourceBaseDirLen+1)
+                  targetMountDir$=targetMountDir!.replace("\","/")
               endif
 
               print(log_dev)"    "+system$
@@ -2228,7 +2405,8 @@ std_exit:
                                                   if sourcePaths!.containsKey(path$) then
                                                       sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                                                       if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                                          path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                                          path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                                          path$=path!.replace("\","/")
                                                       endif
                                                   endif
                                                   new_cpgm_paths$=new_cpgm_paths$+path$+";"
@@ -2251,7 +2429,8 @@ std_exit:
                                                   if sourcePaths!.containsKey(path$) then
                                                       sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                                                       if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                                                          path$=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                                          path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                                                          path$=path!.replace("\","/")
                                                       endif
                                                   endif
                                                   new_cpgm_paths$=new_cpgm_paths$+path$+";"
@@ -2320,7 +2499,7 @@ std_exit:
                       if sourcePaths!.containsKey(path$) then
                           sourceCanonicalPath$=sourcePaths!.getProperty(path$)
                           if pos(sourceBaseDir$=sourceCanonicalPath$)=1 then
-                              path!=baseDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
+                              path!=aonProdDir$+sourceCanonicalPath$(sourceBaseDirLen+1)
                               path$=path!.replace("\","/")
                           endif
                           record$=record$(1,pos("="=record$))+path$
@@ -2702,7 +2881,7 @@ std_exit:
 
       goto std_exit
 
-      resolvePathStbls: rem --- Resolve embedded STBLs, except not [+FIRM_ID]. (Based on ado_util.src resolvePathStbls(BBjString pathName$) method)
+resolvePathStbls: rem --- Resolve embedded STBLs, except not [+FIRM_ID]. (Based on ado_util.src resolvePathStbls(BBjString pathName$) method)
       resolvedPath$=pathName$
 
       occurrence=1
