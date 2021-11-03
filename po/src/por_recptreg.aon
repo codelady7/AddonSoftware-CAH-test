@@ -243,6 +243,7 @@ rem --- Initializations
     lotser=0
     errors=0
     dif$=""
+    receivedZero$=""
 
 rem --- Headings and print positions
 
@@ -727,6 +728,10 @@ l3800: rem --- Loop back for next detail record
 
 rem --- Loop back for next header record
 
+        if receipt[1]=0 then
+            if receivedZero$<>"" then receivedZero$=receivedZero$+" "+Translate!.getTranslation("AON_AND")+" "
+            receivedZero$=receivedZero$+poe04a.po_no$
+        endif
         totals$=Translate!.getTranslation("AON_TOTAL_FOR_PO_#_")+poe04a.po_no$
         next_hdr$=""
         totals[all]=receipt[all]
