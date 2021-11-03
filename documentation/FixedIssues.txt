@@ -187,3 +187,33 @@ Modified: data/sync/ads_messages~[01007514PO].xml
 Modified: po/src/por_recptreg_o3.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: bb45e50bc264e4c7cf187dd74a9ebfc43a258622
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/3/2021 2:49:37 PM
+Message:
+ER 10309: Modified the IV_ITEM_WHSE_LK custom query to allow the user to
+filter the query on any or all warehouses.
+----
+Modified: data/bar/ive_transdet.xml
+Modified: data/bar/mpe_pegging.xml
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/bar/poe_orddet.xml
+Modified: data/bar/poe_podet.xml
+Modified: data/bar/poe_recdet.xml
+Modified: data/bar/poe_reqdet.xml
+Modified: data/bar/sfe_womatdtl.xml
+Modified: data/bar/sfe_womatisd.xml
+Modified: data/cdf/ive_transdet.cdf
+Modified: data/cdf/mpe_pegging.cdf
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
+Modified: data/cdf/poe_orddet.cdf
+Modified: data/cdf/poe_podet.cdf
+Modified: data/cdf/poe_recdet.cdf
+Modified: data/cdf/poe_reqdet.cdf
+Modified: data/cdf/sfe_womatdtl.cdf
+Modified: data/cdf/sfe_womatisd.cdf
+Modified: data/sync/adm_query_cols~[01007514AD].xml
