@@ -1,8 +1,9 @@
-REM /**
-REM  * TarGZUtil.bbj
-REM  * @author shaun
-REM  *
-REM  */
+rem ==========================================================================
+rem --- TGZUtil.bbj 
+rem --- 
+rem --- AddonSoftware Version 21.0
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+rem ==========================================================================
 
 use org.apache.commons.compress.archivers.tar.TarArchiveEntry
 use org.apache.commons.compress.archivers.tar.TarArchiveInputStream
