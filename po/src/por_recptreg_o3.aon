@@ -211,6 +211,13 @@ l4500: rem --- Close files before proceeding to update
 
 rem --- Run next overlay
 
+    if receivedZero$<>"" then
+        msg_id$="PO_EMPTY_RCPT_NO_UPD"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=receivedZero$
+        gosub disp_message
+    endif
+
     update$="pou_recptreg.aon"    
     overlay$=update$
     if gl$="Y" and gl_posting overlay$=pgmdir$+"glr_recap.aon"
@@ -276,6 +283,15 @@ l6300:
     let totals[4]=totals[2]-totals[3],totals[7]=totals[5]-totals[6]
 l6390:
     return
+
+rem #include disp_message.src
+
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+return
+
+rem #endinclude disp_message.src
 
 rem #include std_functions.src
 rem --- Standard AddonSoftware functions (01Mar2006)
