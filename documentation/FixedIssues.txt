@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-11-02
+ Report Date:   2021-11-03
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -157,3 +157,20 @@ Modified: prop/addon.properties
 Modified: prop/addon_en.properties
 Modified: util/packager_extractor/TGZUtil.bbj
 Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+=======================================================================================================================================
+Revision: 6e2ccbb751f1a8e0769a3971ab2dcd6a82ca7914
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/3/2021 10:58:43 AM
+Message:
+Bug 10308: Prevented updating a PO Receipt that didn't receive anything.
+----
+Modified: data/bar/poe_recdet.xml
+Modified: data/bar/poe_rechdr.xml
+Modified: data/cdf/poe_recdet.cdf
+Modified: data/cdf/poe_rechdr.cdf
+Modified: data/sync/ads_messages~[01007514PO].xml
+Modified: po/src/por_recptreg.aon
+Modified: po/src/pou_recptreg.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
