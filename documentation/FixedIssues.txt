@@ -174,3 +174,16 @@ Modified: po/src/por_recptreg.aon
 Modified: po/src/pou_recptreg.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 95384248b9d25c4ef25dd6543384746375db3a7d
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/3/2021 1:13:04 PM
+Message:
+Bug 10308: Added message to PO Receipt Register that empty receipts
+(nothing received) will not be updated.
+----
+Modified: data/sync/ads_messages~[01007514PO].xml
+Modified: po/src/por_recptreg_o3.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
