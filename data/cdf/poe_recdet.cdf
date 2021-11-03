@@ -1116,8 +1116,8 @@ if pos(".AUDE"=callpoint!.getCallpointEvent())
 	callpoint!.setDevObject("qty_this_row",0)
 	callpoint!.setDevObject("cost_this_row",0)
 	gosub calculate_header_tots
-	callpoint!.setDevObject("qty_this_row",new_cost)
-	callpoint!.setDevObject("cost_this_row",new_qty)
+	callpoint!.setDevObject("qty_this_row",new_qty)
+	callpoint!.setDevObject("cost_this_row",new_cost)
 endif
 
 return
