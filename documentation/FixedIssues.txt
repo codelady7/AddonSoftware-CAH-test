@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-10-26
+ Report Date:   2021-11-02
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -136,3 +136,24 @@ when SF is not installed.
 ----
 Modified: data/bar/poe_reqdet.xml
 Modified: data/cdf/poe_reqdet.cdf
+
+=======================================================================================================================================
+Revision: 22421f028b2029b2fcb12a44ecec9f050d67b33a
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/2/2021 6:06:02 PM
+Message:
+Bug 10237: Modified the Extractor, to get the archived barista directory
+location and use it to set the Barista Directory field once the archive
+and base directory have been specified.
+----
+Deleted: ad/src/adx_jaraon.aon
+Deleted: ad/src/adx_unjaraon.aon
+Deleted: data/bar/adx_jaraon.xml
+Deleted: data/bar/adx_unjaraon.xml
+Deleted: data/cdf/adx_jaraon.cdf
+Deleted: data/cdf/adx_unjaraon.cdf
+Modified: data/sync/ads_messages~[01007514AD].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+Modified: util/packager_extractor/TGZUtil.bbj
+Modified: util/packager_extractor/aon_packagerextractor.bbj
