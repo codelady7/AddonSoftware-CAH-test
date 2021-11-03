@@ -30,7 +30,7 @@ rem --- Inventory Item/Whse Lookup
 	filter_defs$[1,2]="LOCK"
 	filter_defs$[2,0]="IVM_ITEMWHSE.WAREHOUSE_ID"
 	filter_defs$[2,1]="='"+callpoint!.getColumnData("POE_ORDDET.WAREHOUSE_ID")+"'"
-	filter_defs$[2,2]="LOCK"
+	filter_defs$[2,2]=""
 	
 	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"IV_ITEM_WHSE_LK","",table_chans$[all],ivmItemWhse_key$,filter_defs$[all]
 
