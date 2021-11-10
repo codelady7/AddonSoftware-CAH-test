@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-11-03
+ Report Date:   2021-11-10
  Report Branch: AddonSoftware 21.12
  Last Release:  AddonSoftware 21.11
 =======================================================================================================================================
@@ -217,3 +217,13 @@ Modified: data/cdf/poe_reqdet.cdf
 Modified: data/cdf/sfe_womatdtl.cdf
 Modified: data/cdf/sfe_womatisd.cdf
 Modified: data/sync/adm_query_cols~[01007514AD].xml
+
+=======================================================================================================================================
+Revision: f6915cf304c8780972daedc184b2fd4c1b30a2ef
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/10/2021 10:20:47 AM
+Message:
+Bug 10318: Removed test for blank GL account that caused skipping sales
+tax history update.
+----
+Modified: op/src/opu_updateinventory.aon
