@@ -1187,7 +1187,6 @@ rem --- Get the main tax code and calculate amount
 
     redim opm06a$
     find record (opm06_dev,key=firm_id$+ope01a.tax_code$,dom=*next) opm06a$
-    if cvs(opm06a.gl_account$,2)="" then return
     if opm06a.use_tax_service and ope01a.no_sls_tax_calc=0 then
         rem --- Used sales tax service to calculate the tax amount
         total_tax = tax_amt
