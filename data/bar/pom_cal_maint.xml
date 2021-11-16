@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.pom_cal_maint"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pom_cal_maint">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pom_cal_maint">2459499</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pom_cal_maint">20211019</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pom_cal_maint">20211019</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pom_cal_maint">102544</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pom_cal_maint">20211112</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pom_cal_maint">20211112</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pom_cal_maint">175934</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pom_cal_maint"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pom_cal_maint">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pom_cal_maint"></DD_ATTR_DKNM>
