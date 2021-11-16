@@ -9,3 +9,14 @@ BBjBaristaAddonDemos2112_11-12-2021_1448.jar
 
 =======================================================================================================================================
 
+Revision: b90b74b710aea7e6811c8e827d25de2c46d1c4bd
+Author: Christine <chawkins@basis.com>
+Date: 11/16/2021 1:54:05 PM
+Message:
+Bug 10324 - PO - New PO Calendar not creating gap months
+ - corrected to add an empty month if/as needed
+
+(cherry picked from commit 95b91414cf3362d7e9260acb6eecbfd13fe2af63)
+----
+Modified: data/bar/pom_cal_maint.xml
+Modified: data/cdf/pom_cal_maint.cdf
