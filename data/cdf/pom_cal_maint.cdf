@@ -51,9 +51,13 @@ rem --- Handle events (Calendar ready, calendar select, calendar dates set, popu
 					myCalView!=myDatesSetEvent!.getCalendarView()
 
 					rem --- get start/end dates for the selected month/year and load in corresponding pom_calendar entries
+					rem --- if selected month/year isn't yet in pom_calendar, add it
 					startDate$=fnYMD$(myCalView!.getCurrentStart())
+					curr_mo=num(startDate$(5,2))
+					curr_yr=num(startDate$(1,4))
+					gosub create_new_month
 					callpoint!.setDevObject("curr_mo",startDate$(5,2))
-					callpoint!.setDevObject("curr_yr",startDate$(1,4))
+					callpoint!.setDevObject("curr_yr",startDate$(1,4))				
 					gosub AddEntries
 				endif
 			endif
@@ -147,8 +151,10 @@ rem --- Misc init
 
 	curr_mo=num(stbl("+SYSTEM_DATE")(5,2))
 	curr_yr=num(stbl("+SYSTEM_DATE")(1,4))
+	day_str$="312831303130313130313031"
 	callpoint!.setDevObject("curr_mo",str(curr_mo:"00"))
 	callpoint!.setDevObject("curr_yr",str(curr_yr:"0000"))
+	callpoint!.setDevObject("day_str",day_str$)
 	callpoint!.setDevObject("color_tmpl","desc:c(30*=40),r:c(3*=44),g:c(3*=44),b:c(3*=44),a:c(3*=41)")
 
 	callpoint!.setDevObject("closedText",Translate!.getTranslation("AON_CLOSED2"))
@@ -173,19 +179,8 @@ rem --- Misc init
 		endif
 
 rem --- If current month doesn't exist, create an empty current month
-	day_str$="312831303130313130313031"
-	while 1
-		try_mo=curr_mo
-		try_yr=curr_yr  
-		read record(pom_calendar,key=firm_id$+str(try_yr:"0000")+str(try_mo:"00"),dom=*next)pom_calendar$;break
-		pom_calendar.firm_id$=firm_id$
-		pom_calendar.year$=str(curr_yr:"0000")
-		pom_calendar.month$=str(curr_mo:"00")
-		pom_calendar.days_in_mth=num(day_str$(curr_mo*2-1,2))
-		if mod(curr_yr,4)=0 and curr_mo=2 then pom_calendar.days_in_mth=29
-		writerecord(pom_calendar)pom_calendar$
-		break
-	wend
+
+	gosub create_new_month
 
 [[POM_CAL_MAINT.CAL_GAPS.AVAL]]
 rem --- get the listbutton control, getSelectedIndex, then getItemAt(index) to get the mm/dd/yyyy
@@ -323,6 +318,7 @@ rem --- the start of gap date, and need set stop dates until we hit a non-space 
 	gap_start$=""
 	gap_stop$=""
 	last_key$=""
+	day_str$=callpoint!.getDevObject("day_str")
 
 	read(pom_calendar,key=firm_id$,dom=*next)
 
@@ -455,7 +451,7 @@ rem --- Note: to update an entry, we currently have to remove it then add it bac
 	pom_calendar.firm_id$=firm_id$
 	pom_calendar.year$=curr_yr$
 	pom_calendar.month$=curr_mo$
-	day_str$="312831303130313130313031"
+	day_str$=callpoint!.getDevObject("day_str")
 	pom_calendar.days_in_mth=num(day_str$(num(curr_mo$)*2-1,2))
 	if mod(num(curr_yr$),4)=0 and num(curr_mo$)=2 then pom_calendar.days_in_mth=29
 
@@ -492,6 +488,26 @@ rem --- Note: to update an entry, we currently have to remove it then add it bac
 	callpoint!.setDevObject("myCal",myCal!)
 	callpoint!.setDevObject("myCalendarEntries",myCalendarEntries!)
 
+	return
+
+create_new_month: rem ========================================================
+rem in: curr_yr, curr_mo
+
+	day_str$=callpoint!.getDevObject("day_str")
+	pom_calendar=fnget_dev("POM_CALENDAR")
+	dim pom_calendar$:fnget_tpl$("POM_CALENDAR")
+
+	found=0
+	read record(pom_calendar,key=firm_id$+str(curr_yr:"0000")+str(curr_mo:"00"),dom=*next)pom_calendar$; found=1
+
+	if !found
+		pom_calendar.firm_id$=firm_id$
+		pom_calendar.year$=str(curr_yr:"0000")
+		pom_calendar.month$=str(curr_mo:"00")
+		pom_calendar.days_in_mth=num(day_str$(curr_mo*2-1,2))
+		if mod(curr_yr,4)=0 and curr_mo=2 then pom_calendar.days_in_mth=29
+		writerecord(pom_calendar)pom_calendar$
+	endif
 	return
 
 ChooseColors: rem =============================================================
