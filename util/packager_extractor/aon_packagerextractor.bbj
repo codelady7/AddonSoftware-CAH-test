@@ -358,7 +358,11 @@ class public PackagerExtractor
             barDir$=barDir$(1,barPos)
             aonSyn_dev=unt
             open(aonSyn_dev,isz=-1)barDir$+"/aon/config/addon.syn"; rem --- Error if not found, something is wrong.
-        
+
+            ad_chk_extract_paths$="Prior to launching the new instance after the Extractor has finished,"+$0A$+"check to make sure paths are correct for the extract location."
+            ad_bad_non_ver_ntrl$="This appears to be a non-version neutral installation where the Barista directory should be directly"+$0A$+"under the Installation Base Directory. This needs to be corrected before continuing. Continue?"
+            ad_bad_ver_ntrl$="This appears to be a version neutral installation where the Barista directory should NOT be directly"+$0A$+"under the Installation Base Directory. This needs to be corrected before continuing. Continue?"
+
             rem --- Get addon.syn paths for +AON_IMAGES and +CUST_IMAGES
             while 1
                 read(aonSyn_dev,end=*break)record$
@@ -381,7 +385,7 @@ class public PackagerExtractor
             wend
             close(aonSyn_dev)
         
-            rem --- Is this a version neutral installationg?
+            rem --- Is this a version neutral installation?
             verNeutral=0
             aonImagesPath!=new File(aonImages_path$)
             aonImagesPath$=aonImagesPath!.getCanonicalPath()
@@ -396,7 +400,7 @@ class public PackagerExtractor
                 imagesDir$=aonImagesPath$(1,imagesPos)
                 if imagesDir$=installationLocation! then verNeutral=1
             endif
-        
+
             rem --- Is the installation base directory correct for this type of installation?
             barDir$=baristaLocation!
             barPos=pos(File.separator+"barista"+File.separator=barDir$+File.separator,-1)
@@ -404,28 +408,28 @@ class public PackagerExtractor
             if !verNeutral then
                 rem --- For non-version neutral installations, the Barista directory should be directly under the installation base directory.
                 if barDir$<>installationLocation! then
-                    msg_id$="AD_BAD_NON_VER_NTRL"
-                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
-                    if msg_opt$="C" then
+                    rem AD_BAD_NON_VER_NTRL
+                    rtn_val=msgbox(ad_bad_non_ver_ntrl$,(1+48+256+0),"AddonSoftware")
+                    if rtn_val=2 then
                         #isPackagerBaseDirectoryValid!=0
                         methodret 0
                     endif
         
-                    msg_id$="AD_CHK_EXTRACT_PATHS"
-                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+                    rem AD_CHK_EXTRACT_PATHS
+                    rtn_val=msgbox(ad_chk_extract_paths$,(0+64+0+0),"AddonSoftware")
                 endif
             else
                 rem --- For version neutral installations, the Barista directory should NOT be directly under the installation base directory.
                 if barDir$=installationLocation! then
-                    msg_id$="AD_BAD_VER_NEUTRAL"
-                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
-                    if msg_opt$="C" then
+                    rem AD_BAD_VER_NEUTRAL
+                    rtn_val=msgbox(ad_bad_ver_ntrl$,(1+48+256+0),"AddonSoftware")
+                    if rtn_val=2 then
                         #isPackagerBaseDirectoryValid!=0
                         methodret 0
                     endif
                     
-                    msg_id$="AD_CHK_EXTRACT_PATHS"
-                    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+                    rem AD_CHK_EXTRACT_PATHS
+                    rtn_val=msgbox(ad_chk_extract_paths$,(0+64+0+0),"AddonSoftware")
                 endif
             endif
         endif
@@ -1268,11 +1272,9 @@ class public PackagerExtractor
 
         rem --- Warn if paths were skipped, i.e. skipped>0
         if skipped then
-            msg_id$="AD_SKIPPED_PATHS"
-            dim msg_tokens$[2]
-            msg_tokens$[1]=str(skipped)
-            msg_tokens$[2]=log$
-            call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+            rem AD_SKIPPED_PATHS
+            msg_text$=str(skipped)+" paths and/or files skipped since not under the Installation Base Directory."+$0A$+"See log file for details: "+log$
+            rtn_val=msgbox(msg_text$,(0+64+0+0),"AddonSoftware")
         endif
 
         rem --- Remove busy/working image from form
