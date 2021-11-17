@@ -20,3 +20,16 @@ Bug 10324 - PO - New PO Calendar not creating gap months
 ----
 Modified: data/bar/pom_cal_maint.xml
 Modified: data/cdf/pom_cal_maint.cdf
+
+=======================================================================================================================================
+Revision: b70e4035ce55370ce50a34d7379eca6efa72fd84
+Author: Christine <chawkins@basis.com>
+Date: 11/16/2021 4:56:17 PM
+Message:
+Bug 10325 - AD - Packager/Extractor should not use ads_messages records that the "old" install may not have
+ - revised to use msgbox() instead of Barista messages
+
+(cherry picked from commit 10de1aee71f0178f9c605b422b96c6142c978020)
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
