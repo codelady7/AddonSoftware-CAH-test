@@ -605,9 +605,9 @@ class public PackagerExtractor
         print(log_dev)"Source Barista Installation Location: " + barDir$
         print(log_dev)"Archive Filename: " + jarFile$
         if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
-            print(log_dev)"Packager Packaging Type: " + str(#PackagerPackagingType) + " (Production to Test)"
+            print(log_dev)"Packager Packaging Type: " + str(#PackagerPackagingType) + " (Packaging for Production)"
         else
-            print(log_dev)"Packager Packaging Type: " + str(#PackagerPackagingType) + " (Test to Production)"
+            print(log_dev)"Packager Packaging Type: " + str(#PackagerPackagingType) + " (Packaging for Test)"
         endif
 
     rem --- Build sourcePaths! Properties object of directories and files used by each system (application) installed in source Barista
