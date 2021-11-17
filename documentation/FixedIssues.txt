@@ -33,3 +33,16 @@ Bug 10325 - AD - Packager/Extractor should not use ads_messages records that the
 ----
 Modified: util/packager_extractor/aon_packagerextractor.bbj
 
+=======================================================================================================================================
+Revision: a633e5d826e1c090014d0061e43c3b3e463419ee
+Author: Christine <chawkins@basis.com>
+Date: 11/16/2021 5:54:00 PM
+Message:
+Bug 10325 - AD - Packager/Extractor should not use ads_messages records that the "old" install may not have
+ - no-op clarification of log text describing package type
+
+(cherry picked from commit 39a4f986ca7f4f9128555b32641c5b0d93306b0c)
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+
