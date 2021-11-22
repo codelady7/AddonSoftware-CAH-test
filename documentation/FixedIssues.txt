@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-11-16
+ Report Date:   2021-11-22
  Report Branch: AddonSoftware 21.13
  Last Release:  AddonSoftware 21.12
 =======================================================================================================================================
@@ -45,4 +45,18 @@ Bug 10325 - AD - Packager/Extractor should not use ads_messages records that the
 ----
 Modified: util/packager_extractor/aon_packagerextractor.bbj
 
+=======================================================================================================================================
+Revision: 65e7f213c5891f5c3c72e23697a11bbdf76eed6f
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/22/2021 10:40:07 AM
+Message:
+Bug 10327: Modified OPE_ORDDET and OPE_INVDET AWRI callpoint code to
+handle changes in previous order quantity for lotted/serialized and
+inventoried items.
 
+(cherry picked from commit 05f9f8e5029c34a2dfd42acaf8b54231f6764294)
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
