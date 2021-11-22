@@ -288,7 +288,7 @@ rem --- Set previous values
 	user_tpl.prev_unitprice  = num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))
 	callpoint!.setDevObject("prior_whse",callpoint!.getColumnData("OPE_ORDDET.WAREHOUSE_ID"))
 	callpoint!.setDevObject("prior_item",callpoint!.getColumnData("OPE_ORDDET.ITEM_ID"))
-	callpoint!.setDevObject("prior_qty",user_tpl.prev_qty_ord)
+	callpoint!.setDevObject("prior_qty",user_tpl.prev_qty_ord*num(callpoint!.getColumnData("OPE_ORDDET.CONV_FACTOR")))
 	callpoint!.setDevObject("prior_commit",callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG"))
 
 	callpoint!.setDevObject("whse_item_warned","")
@@ -726,7 +726,7 @@ rem --- Turn off the print flag in the header?
 rem --- Is this row deleted?
 
 	if callpoint!.getGridRowModifyStatus( callpoint!.getValidationRow() ) <> "Y" then 
-		goto awri_update_hdr; rem --- exit callpoint
+		break; rem --- exit callpoint
 	endif
 
 rem --- Get current and prior values
@@ -734,7 +734,6 @@ rem --- Get current and prior values
 	curr_whse$ = callpoint!.getColumnData("OPE_ORDDET.WAREHOUSE_ID")
 	curr_item$ = callpoint!.getColumnData("OPE_ORDDET.ITEM_ID")
 	curr_qty   = num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED"))
-	line_ship_date$=callpoint!.getColumnData("OPE_ORDDET.EST_SHP_DATE")
 	curr_commit$=callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")
 
 	prior_whse$ = callpoint!.getDevObject("prior_whse")
@@ -742,7 +741,12 @@ rem --- Get current and prior values
 	prior_qty   = callpoint!.getDevObject("prior_qty")
 	prior_commit$=callpoint!.getDevObject("prior_commit")
 
-	conv_factor=num(callpoint!.getColumnData("OPE_ORDDET.CONV_FACTOR"))
+	line_ship_date$=callpoint!.getColumnData("OPE_ORDDET.EST_SHP_DATE")
+	cust$    = callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
+	ar_type$ = callpoint!.getColumnData("OPE_ORDDET.AR_TYPE")
+	order$   = callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
+	invoice_no$= callpoint!.getColumnData("OPE_ORDDET.AR_INV_NO")
+	seq$     = callpoint!.getColumnData("OPE_ORDDET.INTERNAL_SEQ_NO")
 
 rem --- Don't commit/uncommit Quotes or DropShips
 
@@ -754,11 +758,19 @@ rem --- Has there been any change?
 :		((curr_whse$ <> prior_whse$ or  curr_item$ <> prior_item$ or curr_qty   <> prior_qty) and curr_commit$ = prior_commit$)
 :	then
 
-rem --- Initialize inventory item update
+		rem --- Initialize inventory item update
 
 		status=999
 		call user_tpl.pgmdir$+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 		if status then goto awri_update_hdr
+
+		ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+		dim curr_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+		read record (ivm_itemmast_dev, key=firm_id$+curr_item$, dom=awri_update_hdr) curr_itemmast$
+		if cvs(prior_item$,2)<>"" then
+			dim prior_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+			read record (ivm_itemmast_dev, key=firm_id$+prior_item$, dom=awri_update_hdr) prior_itemmast$
+		endif
 
 rem --- Items or warehouses are different: uncommit previous
 
@@ -766,36 +778,58 @@ rem --- Items or warehouses are different: uncommit previous
 :		   (prior_item$<>"" and prior_item$<>curr_item$)
 :		then
 
-rem --- Uncommit prior item and warehouse
+			rem --- Uncommit prior item and warehouse
 
 			if prior_whse$<>"" and prior_item$<>"" and prior_qty<>0 then
 				items$[1] = prior_whse$
 				items$[2] = prior_item$
-				refs[0]   = prior_qty*conv_factor
+				refs[0]   = prior_qty
 
-				print "---Uncommit: item = ", cvs(items$[2], 2), ", WH: ", items$[1], ", qty =", refs[0]; rem debug
+				if prior_itemmast.lotser_item$<>"Y" or prior_itemmast.inventoried$<>"Y" then
+					if line_ship_date$<=user_tpl.def_commit$				
+						call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+				else
+					found_lot=0
+					ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+					dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+					read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+					while 1
+						read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
+						if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
+						if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
+						found_lot=1
+						items$[3] = ope_ordlsdet.lotser_no$
+						refs[0]   = ope_ordlsdet.qty_ordered
+						if line_ship_date$<=user_tpl.def_commit$
+							call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							if status then goto awri_update_hdr
+						endif
+						remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+					wend
 
-				if line_ship_date$<=user_tpl.def_commit$				
-					call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-					if status then goto awri_update_hdr
+					if found_lot=0
+						if line_ship_date$<=user_tpl.def_commit$
+							call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							if status then goto awri_update_hdr
+						endif
+					endif
 				endif
 			endif
 
-rem --- Commit quantity for current item and warehouse
+			rem --- Commit quantity for current item and warehouse
 
 			if curr_whse$<>"" and curr_item$<>"" and curr_qty<>0 then
 				items$[1] = curr_whse$
 				items$[2] = curr_item$
-				refs[0]   = curr_qty*conv_factor
-
-				print "-----Commit: item = ", cvs(items$[2], 2), ", WH: ", items$[1], ", qty =", refs[0]; rem debug
+				refs[0]   = curr_qty
 
 				if line_ship_date$<=user_tpl.def_commit$				
 					call user_tpl.pgmdir$+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 					if status then goto awri_update_hdr
 				endif
 			endif
-
 		endif
 
 rem --- New record or item and warehouse haven't changed: commit difference
@@ -804,23 +838,69 @@ rem --- New record or item and warehouse haven't changed: commit difference
 :			(prior_item$="" or prior_item$=curr_item$) 
 :		then
 
-rem --- Commit quantity for current item and warehouse
+			rem --- Commit quantity for current item and warehouse
 
 			if curr_whse$<>"" and curr_item$<>"" and curr_qty - prior_qty <> 0
 				items$[1] = curr_whse$
 				items$[2] = curr_item$
-				refs[0]   = (curr_qty - prior_qty)*conv_factor
+				refs[0]   = curr_qty - prior_qty
 
-				print "-----Commit: item = ", cvs(items$[2], 2), ", WH: ", items$[1], ", qty =", refs[0]; rem debug
+				if curr_qty - prior_qty > 0 then
+					rem --- Commit
+					if line_ship_date$<=user_tpl.def_commit$
+						call user_tpl.pgmdir$+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+				else
+					rem --- Uncommit
+					refs[0]=abs(refs[0])
+					if curr_itemmast.lotser_item$<>"Y" or curr_itemmast.inventoried$<>"Y" then
+						if line_ship_date$<=user_tpl.def_commit$
+							call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							if status then goto awri_update_hdr
+						endif
+					else
+						rem --- Uncommit lotted/serialized and inventoried items
+						found_lot=0
+						committed_qty=0
+						ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+						dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+						read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+						while 1
+							extractrecord (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
+							if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then read(ope_ordlsdet_dev); break
+							if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
+							found_lot=1
+							if committed_qty + ope_ordlsdet.qty_ordered <= curr_qty then
+								 committed_qty=committed_qty + ope_ordlsdet.qty_ordered
+								continue
+							else
+								refs[0]=ope_ordlsdet.qty_ordered - (curr_qty - committed_qty)
+								committed_qty = curr_qty
+							endif
+							items$[3] = ope_ordlsdet.lotser_no$
+							if line_ship_date$<=user_tpl.def_commit$
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+								if status then goto awri_update_hdr
+							endif
+							if ope_ordlsdet.qty_ordered=refs[0] then
+								remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+							else
+								ope_ordlsdet.qty_ordered=ope_ordlsdet.qty_ordered-refs[0]
+								writerecord(ope_ordlsdet_dev)ope_ordlsdet$
+							endif
+						wend
 
-				if line_ship_date$<=user_tpl.def_commit$
-					call user_tpl.pgmdir$+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-					if status then goto awri_update_hdr
+						if found_lot=0
+							if line_ship_date$<=user_tpl.def_commit$
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+								if status then goto awri_update_hdr
+							endif
+						endif
+					endif
 				endif
 			endif
-
 		endif
-
 	endif
 
 rem --- Only do the next if the commit flag has been changed (i.e. via Additional button/form)
@@ -830,7 +910,7 @@ rem --- and that's when this code should be hit.
 
 	if curr_commit$ <> prior_commit$
 
-rem --- Initialize inventory item update
+		rem --- Initialize inventory item update
 		status=999
 		call user_tpl.pgmdir$+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 		if status then goto awri_update_hdr
@@ -844,11 +924,38 @@ rem --- Initialize inventory item update
 		if curr_qty<>0 and action$<>"" and curr_item$<>"" then
 			items$[1] = curr_whse$
 			items$[2] = curr_item$
-			refs[0]   = curr_qty*conv_factor
-			call user_tpl.pgmdir$+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-			if status then goto awri_update_hdr
-		endif
+			refs[0]   = curr_qty
+			if action$="CO" or curr_itemmast.lotser_item$<>"Y" or curr_itemmast.inventoried$<>"Y" then
+				call user_tpl.pgmdir$+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				if status then goto awri_update_hdr
+			else
+				rem --- Uncommitted lotted/serialized and inventoried items
+				found_lot=0
+				ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+				dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+				read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+				while 1
+					read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
+					if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
+					if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
+					found_lot=1
+					items$[3] = ope_ordlsdet.lotser_no$
+					refs[0]   = ope_ordlsdet.qty_ordered
+					if line_ship_date$<=user_tpl.def_commit$
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+					remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+				wend
 
+				if found_lot=0
+					if line_ship_date$<=user_tpl.def_commit$
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+				endif
+			endif
+		endif
 	endif
 
 rem --- When OP parameter set for asking about creating Work Order, check if SO detail line is a validate candidate to create a WO.
