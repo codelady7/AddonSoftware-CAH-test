@@ -25,6 +25,7 @@ ar_type$ =     sp!.getParameter("AR_TYPE")
 customer_id$ = sp!.getParameter("CUSTOMER_ID")
 order_no$ =    sp!.getParameter("ORDER_NO")
 ar_inv_no$ =   sp!.getParameter("AR_INV_NO")
+selected_whse$=cvs(sp!.getParameter("SELECTED_WHSE"),2)
 cust_mask$ =   sp!.getParameter("CUST_MASK")
 cust_size = num(sp!.getParameter("CUST_SIZE"))
 barista_wd$ =  sp!.getParameter("BARISTA_WD")
@@ -42,7 +43,7 @@ datatemplate$ = datatemplate$ + "ship_addr_line1:C(30),ship_addr_line2:C(30),shi
 datatemplate$ = datatemplate$ + "ship_addr_line4:C(30),ship_addr_line5:C(30),ship_addr_line6:C(30),"
 datatemplate$ = datatemplate$ + "ship_addr_line7:C(30),"
 dataTemplate$ = dataTemplate$ + "salesrep_code:C(3),salesrep_desc:C(20),cust_po_num:C(20),ship_via:C(10),shipping_id:C(15),"
-dataTemplate$ = dataTemplate$ + "fob:C(15),ship_date:C(10),terms_code:C(3),terms_desc:C(20),price_code:C(2),"
+dataTemplate$ = dataTemplate$ + "fob:C(15),ship_date:C(10),terms_code:C(3),terms_desc:C(20),price_code:C(2),reprint_revised:c(1*),"
 datatemplate$ = datatemplate$ + "inv_std_message:C(1024*=1)"
 
 rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
@@ -76,7 +77,7 @@ rem --- Init
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
 
-    files=13,begfile=1,endfile=files
+    files=14,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
     files$[1]="arm-01",       ids$[1]="ARM_CUSTMAST"
@@ -92,6 +93,7 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     files$[11]="opt-41",      ids$[11]="OPE_INVCASH"    
     files$[12]="opm-09",      ids$[12]="OPM_CUSTJOBS"
     files$[13]="opc_message", ids$[13]="OPC_MESSAGE"
+    files$[14]="opt-11",      ids$[14]="OPE_INVDET"
 
 	call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 
@@ -116,6 +118,7 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     ope41_dev = channels[11]
     opm09_dev = channels[12]
     opc_message = channels[13]
+    ope11_dev = channels[14]
     
 	
     dim arm01a$:templates$[1]
@@ -132,6 +135,7 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     dim ope41a$:templates$[11]
     dim opm09a$:templates$[12]
     dim opc_message$:templates$[13]
+    dim ope11a$:templates$[14]
 	
 rem --- Initialize Data
 
@@ -179,6 +183,21 @@ rem --- Main Read
 	fob$ =          ope01a.fob$
 	ship_date$ =    func.formatDate(ope01a.shipmnt_date$)
     price_code$ =   ope01a.price_code$
+
+rem --- Revised or Reprint?
+    reprint_revised$=""
+    read(ope11_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$, knum="AO_STATUS", dom=*next)
+    while 1
+        ope11_key$=key(ope11_dev,end=*break)
+        if pos(firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$=ope11_key$)<>1 then break
+        readrecord(ope11_dev)ope11a$
+        if selected_whse$<>"" and selected_whse$<>ope11a.warehouse_id$ then continue
+        if ope11a.pick_flag$="M" then
+            reprint_revised$="*** REVISED ***"
+            break
+        endif
+        if ope11a.pick_flag$="Y" then reprint_revised$="*** REPRINT ***"
+    wend
 
 rem --- Heading (bill-to address)
         
@@ -306,6 +325,7 @@ rem --- Format addresses to be bottom justified
     data!.setFieldValue("TERMS_CODE", terms_code$)
     data!.setFieldValue("TERMS_DESC", terms_desc$)
     data!.setFieldValue("PRICE_CODE", price_code$)
+    data!.setFieldValue("REPRINT_REVISED", reprint_revised$)
 
     memo_1024$=opc_message.memo_1024$
     if len(memo_1024$) and memo_1024$(len(memo_1024$))=$0A$ then memo_1024$=memo_1024$(1,len(memo_1024$)-1); rem --- trim trailing newline

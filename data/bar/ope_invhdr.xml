@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_invhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_invhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_invhdr">20090501</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_invhdr">20210915</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_invhdr">20210915</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_invhdr">182524</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_invhdr">20211115</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_invhdr">20211115</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_invhdr">133232</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_invhdr">OPT_INVHDR      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_invhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_invhdr">AO_STATUS</DD_ATTR_DKNM>
@@ -98,37 +98,30 @@
 		<RECORD id="ddm_table_aopt.ope_invhdr06">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invhdr06">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invhdr06">06</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr06">&Reprint Next Run</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr06">RPRT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr06">&Cash Sale</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr06">CASH</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invhdr06">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_invhdr07">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invhdr07">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invhdr07">07</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr07">&Cash Sale</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr07">CASH</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invhdr07">B</DD_ATTR_AOPT_FM>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr07">Shipment &Tracking</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr07">SHPT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invhdr07">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_invhdr08">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invhdr08">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invhdr08">08</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr08">Shipment &Tracking</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr08">SHPT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr08">Refresh Aging</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr08">AGNG</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invhdr08">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_invhdr09">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invhdr09">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invhdr09">09</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr09">Refresh Aging</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr09">AGNG</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr09">Recalculate Ta&x</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr09">RTAX</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invhdr09">M</DD_ATTR_AOPT_FM>
-		</RECORD>
-		<RECORD id="ddm_table_aopt.ope_invhdr10">
-			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invhdr10">OPE_INVHDR      </DD_TABLE_ALIAS>
-			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invhdr10">10</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invhdr10">Recalculate Ta&x</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invhdr10">RTAX</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invhdr10">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -172,10 +165,6 @@
 		<RECORD id="ddm_table_cpro.ope_invhdraopt-prnt">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_invhdraopt-prnt">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ope_invhdraopt-prnt">AOPT-PRNT</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.ope_invhdraopt-rprt">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_invhdraopt-rprt">OPE_INVHDR      </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.ope_invhdraopt-rprt">AOPT-RPRT</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ope_invhdraopt-rtax">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_invhdraopt-rtax">OPE_INVHDR      </DD_TABLE_ALIAS>

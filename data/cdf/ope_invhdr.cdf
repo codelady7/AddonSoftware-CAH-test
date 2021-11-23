@@ -470,25 +470,6 @@ rem --- Remove temporary soft lock used just for this print task
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 	endif
 
-[[OPE_INVHDR.AOPT-RPRT]]
-rem --- Check for printing in next batch and set
-
-	if user_tpl.credit_installed$="Y" and user_tpl.pick_hold$<>"Y" and
-:		callpoint!.getColumnData("OPE_INVHDR.CREDIT_FLAG")="C"
-:	then
-		msg_id$ = "OP_CR_HOLD_NOPRINT"
-	else
-		order_no$ = callpoint!.getColumnData("OPE_INVHDR.ORDER_NO")
-		gosub add_to_batch_print
-		callpoint!.setColumnData("OPE_INVHDR.REPRINT_FLAG","Y")
-		callpoint!.setStatus("SAVE")
-		msg_id$ = "OP_BATCH_PRINT"
-	endif
-
-	dim msg_tokens$[1]
-	msg_tokens$[1] = Translate!.getTranslation("AON_INVOICE")
-	gosub disp_message
-
 [[OPE_INVHDR.AOPT-RTAX]]
 rem --- Recalculate sales tax now
 	disc_amt = num(callpoint!.getColumnData("OPE_INVHDR.DISCOUNT_AMT"))
@@ -789,7 +770,6 @@ rem --- Enable / Disable buttons
 		callpoint!.setOptionEnabled("CINV",0)
 		callpoint!.setOptionEnabled("DINV",0)
 		callpoint!.setOptionEnabled("PRNT",0)
-		callpoint!.setOptionEnabled("RPRT",0)
 		callpoint!.setOptionEnabled("UINV",0)
 		callpoint!.setOptionEnabled("RTAX",0)
 	endif
@@ -927,7 +907,6 @@ rem --- Set flags
 
 	callpoint!.setOptionEnabled("DINV",0)
 	callpoint!.setOptionEnabled("CINV",0)
-	callpoint!.setOptionEnabled("RPRT",0)
 	callpoint!.setOptionEnabled("PRNT",0)
 	callpoint!.setOptionEnabled("CRCH",0)
 	callpoint!.setOptionEnabled("TTLS",0)
@@ -1183,7 +1162,6 @@ rem --- Disable buttons/options
 		callpoint!.setOptionEnabled("CASH",0)
 		callpoint!.setOptionEnabled("CINV",0)
 		callpoint!.setOptionEnabled("DINV",0)
-		callpoint!.setOptionEnabled("RPRT",0)
 		callpoint!.setOptionEnabled("RTAX",0)
 	endif
 
@@ -3979,6 +3957,40 @@ rem ==========================================================================
 				remove(ope31_dev,key=ope31_key$)
 			endif
 
+			rem --- Replace ope_invdet ope-11 records
+			skipNewOpe21Records$=""
+			ope11_dev = fnget_dev("OPE_INVDET")
+			dim ope11a$:fnget_tpl$("OPE_INVDET")
+			ope11_trip$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
+			read (ope11_dev, key=ope11_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+			while 1
+				ope11_key$=key(ope11_dev,end=*break)
+				if pos(ope11_trip$=ope11_key$)<>1 then break
+				extractrecord(ope11_dev)ope11a$; rem Advisory locking
+				rem --- Skip new ope_invdet ope-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, except for "M" and "O" line types.
+				skipNewOpe11Record=0
+				if ope11a.qty_ordered=0 and ope11a.qty_shipped=0 and ope11a.qty_backord=0 then
+					opc_linecode_dev = fnget_dev("OPC_LINECODE")
+					dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
+					read record (opc_linecode_dev, key=firm_id$+ope11a.line_code$, dom=*next) opc_linecode$
+					if pos(opc_linecode.line_type$="MO")=0 then
+						skipNewOpe11Record=1
+						skipNewOpe21Records$=skipNewOpe21Records$+ope11a.internal_seq_no$+";"
+					endif
+				endif
+				if !skipNewOpe11Record then
+					ope11a.ar_inv_no$=inv_no$
+					ope11a.mod_user$=sysinfo.user_id$
+					ope11a.mod_date$=date(0:"%Yd%Mz%Dz")
+					ope11a.mod_time$=date(0:"%Hz%mz")
+					ope11a$=field(ope11a$)
+					writerecord(ope11_dev)ope11a$
+				endif
+				ope11_primary$=ope11a.firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+old_inv_no$+ope11a.internal_seq_no$
+				remove(ope11_dev,key=ope11_primary$)
+				read(ope11_dev,key=ope11_key$,dom=*next)
+			wend
+
 			rem --- Replace ope_ordlsdet ope-21 records
 			ope21_dev = fnget_dev("OPE_ORDLSDET")
 			dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
@@ -3990,35 +4002,18 @@ rem ==========================================================================
 				ope21_key$=key(ope21_dev,end=*break)
 				if pos(ope21_trip$=ope21_key$)<>1 then break
 				extractrecord(ope21_dev)ope21a$; rem Advisory locking
-				ope21a.ar_inv_no$=inv_no$
-				ope21a.mod_user$=sysinfo.user_id$
-				ope21a.mod_date$=date(0:"%Yd%Mz%Dz")
-				ope21a.mod_time$=date(0:"%Hz%mz")
-				ope21a$=field(ope21a$)
-				writerecord(ope21_dev)ope21a$
+				rem --- Remove ope_ordlsdet ope-21 records that don't have matching ope_invdet ope-11 records.
+				if pos(ope21a.orddet_seq_ref$+";"=skipNewOpe21Records$)=0 then
+					ope21a.ar_inv_no$=inv_no$
+					ope21a.mod_user$=sysinfo.user_id$
+					ope21a.mod_date$=date(0:"%Yd%Mz%Dz")
+					ope21a.mod_time$=date(0:"%Hz%mz")
+					ope21a$=field(ope21a$)
+					writerecord(ope21_dev)ope21a$
+				endif
 				ope21_primary$=ope21a.firm_id$+ope21a.ar_type$+ope21a.customer_id$+ope21a.order_no$+old_inv_no$+ope21a.orddet_seq_ref$+ope21a.sequence_no$
 				remove(ope21_dev,key=ope21_primary$)
 				read(ope21_dev,key=ope21_key$,dom=*next)
-			wend
-
-			rem --- Replace ope_invdet ope-11 records
-			ope11_dev = fnget_dev("OPE_INVDET")
-			dim ope11a$:fnget_tpl$("OPE_INVDET")
-			ope11_trip$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
-			read (ope11_dev, key=ope11_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
-			while 1
-				ope11_key$=key(ope11_dev,end=*break)
-				if pos(ope11_trip$=ope11_key$)<>1 then break
-				extractrecord(ope11_dev)ope11a$; rem Advisory locking
-				ope11a.ar_inv_no$=inv_no$
-				ope11a.mod_user$=sysinfo.user_id$
-				ope11a.mod_date$=date(0:"%Yd%Mz%Dz")
-				ope11a.mod_time$=date(0:"%Hz%mz")
-				ope11a$=field(ope11a$)
-				writerecord(ope11_dev)ope11a$
-				ope11_primary$=ope11a.firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+old_inv_no$+ope11a.internal_seq_no$
-				remove(ope11_dev,key=ope11_primary$)
-				read(ope11_dev,key=ope11_key$,dom=*next)
 			wend
 
 			rem --- Replace ope_invhdr ope-01 record
