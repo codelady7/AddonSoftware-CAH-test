@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-11-22
+ Report Date:   2021-11-23
  Report Branch: AddonSoftware 21.13
  Last Release:  AddonSoftware 21.12
 =======================================================================================================================================
@@ -8,7 +8,6 @@
 BBjBaristaAddonDemos2112_11-12-2021_1448.jar
 
 =======================================================================================================================================
-
 Revision: b90b74b710aea7e6811c8e827d25de2c46d1c4bd
 Author: Christine <chawkins@basis.com>
 Date: 11/16/2021 1:54:05 PM
@@ -60,3 +59,36 @@ Modified: data/bar/ope_invdet.xml
 Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_invdet.cdf
 Modified: data/cdf/ope_orddet.cdf
+
+=======================================================================================================================================
+Revision: d4f5480e660c6d49d636f736f3c7efbfd2784b91
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 11/23/2021 9:06:50 AM
+Message:
+ER 4300: Modified Order Picking List to automatically reprint when
+changes are made, and clearly identify the changes on the "Reprinted"
+Picking List.
+
+(cherry picked from commit ff0d194e2a037c6f58554ae8760ae5f559fdf9cb)
+----
+Modified: ad/src/adx_build_sproc.aon
+Modified: data/bar/ope_addl_opts.xml
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_invhdr.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_addl_opts.cdf
+Modified: data/cdf/ope_invhdr.cdf
+Modified: data/cdf/ope_orddet.cdf
+Modified: data/cdf/ope_ordhdr.cdf
+Modified: data/sync/ads_messages~[01007514OP].xml
+Modified: op/src/opc_picklist.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+Modified: reports/OPPickListDet-LotSer.jasper
+Modified: reports/OPPickListDet.jasper
+Modified: reports/OPPickListDet.jrxml
+Modified: reports/OPPickListHdr.jasper
+Modified: reports/OPPickListHdr.jrxml
+Modified: sprocs/OPPICKLIST_DET.prc
+Modified: sprocs/OPPICKLIST_HDR.prc
