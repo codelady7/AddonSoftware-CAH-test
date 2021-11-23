@@ -134,9 +134,9 @@ rem --- Returns
 		callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP", "0")
 	endif
 
-rem --- Verify Qty Ordered is not 0
+rem --- Verify Qty Ordered is not 0 for unprinted S, N or P line types
 
-	if pos(user_tpl.line_type$="SNP") then
+	if pos(user_tpl.line_type$="SNP") and cvs(callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG"),2)="" then
 		if num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) = 0
 			msg_id$="OP_QTY_ZERO"
 			gosub disp_message
@@ -395,6 +395,12 @@ rem --- Write back here
 	callpoint!.setColumnData("OPE_ORDDET.MAN_PRICE",    a!.getFieldAsString("MAN_PRICE"))
 	callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG",    a!.getFieldAsString("PRINT_FLAG"))
 
+rem --- Does a revised picking list need to be printed?
+	if a!.getFieldAsString("PRINT_FLAG")="N" and
+:	callpoint!.getHeaderColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" and 
+:	callpoint!.getHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG")="Y" then
+		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M",1)
+	endif
 rem --- Need to commit?
 
 	committed_changed=0
@@ -719,7 +725,9 @@ rem --- Turn off the print flag in the header?
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) = "Y" or
 :	   callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" or
 :	   callpoint!.getGridRowDeleteStatus(callpoint!.getValidationRow()) = "Y"
-		callpoint!.setHeaderColumnData("OPE_ORDHDR.PRINT_STATUS","N")
+		rem --- Set ReprintFlag devObject used for workaround to Barista Bug 10297
+		rem ... callpoint!.setHeaderColumnData( "OPE_ORDHDR.PRINT_STATUS","N")
+		callpoint!.setDevObject("ReprintFlag","Y")
 		callpoint!.setDevObject("msg_printed","N")
 	endif
 
@@ -1040,6 +1048,31 @@ rem --- Require existing modified rows be saved before deleting so can't uncommi
 		break
 	endif
 
+rem --- Set qty_ordered to zero rather than deleting the detail line if it's already been printed on a picking list.
+	if pos(user_tpl.line_type$="NSP") then
+		pick_flag$=callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")
+		if pos(pick_flag$="YM") then
+			msg_id$="OP_DELETE_ZEROED"
+			gosub disp_message
+			if msg_opt$="O" then
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_ORDERED_DSP","0",1)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP","0",1)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP","0",1)
+				callpoint!.setColumnData("OPE_ORDDET.QTY_ORDERED","0")
+				callpoint!.setColumnData("OPE_ORDDET.QTY_BACKORD","0")
+				callpoint!.setColumnData("OPE_ORDDET.QTY_SHIPPED","0")
+				callpoint!.setColumnData("OPE_ORDDET.EXT_PRICE","0",1)
+				callpoint!.setColumnData("OPE_ORDDET.TAXABLE_AMT","0")
+				callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M")
+				callpoint!.setHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
+				callpoint!.setStatus("ACTIVATE-MODIFIED-ABORT")
+			else
+				callpoint!.setStatus("ACTIVATE-ABORT")
+			endif
+			break
+		endif
+	endif
+
 rem --- remove and uncommit Lot/Serial records (if any) and detail lines if not
 
 	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" and
@@ -1143,9 +1176,9 @@ rem --- Clear quantities if line type is Memo or Other
 		callpoint!.setColumnData("OPE_ORDDET.QTY_SHIPPED", "0")
 	endif
 
-rem --- Order quantity is required for S, N and P line types
+rem --- Order quantity is required for unprinted S, N and P line types
 
-	if pos(linecode_rec.line_type$="SNP") then
+	if pos(linecode_rec.line_type$="SNP") and cvs(callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG"),2)="" then
 		if num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED")) = 0 then
 			msg_id$="OP_QTY_ZERO"
 			gosub disp_message
@@ -1171,6 +1204,12 @@ rem --- Initialize RTP modified fields for modified existing records
 		callpoint!.setColumnData("OPE_ORDDET.MOD_USER", sysinfo.user_id$)
 		callpoint!.setColumnData("OPE_ORDDET.MOD_DATE", date(0:"%Yd%Mz%Dz"))
 		callpoint!.setColumnData("OPE_ORDDET.MOD_TIME", date(0:"%Hz%mz"))
+	endif
+
+rem --- Does a revised picking list need to be printed?
+	if callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" and
+:	callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="Y" then
+		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M",1)
 	endif
 
 [[OPE_ORDDET.EXT_PRICE.AVAL]]
@@ -1228,9 +1267,36 @@ rem --- Check for item synonyms
 	endif
 
 [[OPE_ORDDET.ITEM_ID.AVAL]]
+rem --- Don't allow changing the item if the detail line has already been printed on a picking list.
+	item$=callpoint!.getUserInput()
+	if pos(user_tpl.line_type$="NSP") and cvs(item$,3)<>cvs(user_tpl.prev_item$,3) then
+		pick_flag$=callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")
+		if pos(pick_flag$="YM") then
+			msg_id$="OP_CANNOT_CHG_ITEM"
+			gosub disp_message
+			if msg_opt$="O" then
+				item$=user_tpl.prev_item$
+				callpoint!.setUserInput(user_tpl.prev_item$)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_ORDERED_DSP","0",1)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP","0",1)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP","0",1)
+				callpoint!.setColumnData("OPE_ORDDET.QTY_ORDERED","0")
+				callpoint!.setColumnData("OPE_ORDDET.QTY_BACKORD","0")
+				callpoint!.setColumnData("OPE_ORDDET.QTY_SHIPPED","0")
+				callpoint!.setColumnData("OPE_ORDDET.EXT_PRICE","0",1)
+				callpoint!.setColumnData("OPE_ORDDET.TAXABLE_AMT","0")
+				callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M")
+				callpoint!.setHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
+				callpoint!.setStatus("ACTIVATE-MODIFIED")
+			else
+				callpoint!.setColumnData("OPE_ORDDET.ITEM_ID",user_tpl.prev_item$,1)
+				callpoint!.setStatus("ACTIVATE-ABORT")
+				break
+			endif
+		endif
+	endif
 rem "Inventory Inactive Feature"
 
-	item$=callpoint!.getUserInput()
 	ivm01_dev=fnget_dev("IVM_ITEMMAST")
 	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
 	dim ivm01a$:ivm01_tpl$
@@ -1557,7 +1623,7 @@ rem --- Skip if qty_ordered not changed
 	qty_ord  = num(callpoint!.getUserInput())
 	if qty_ord = user_tpl.prev_qty_ord then break
 
-	if qty_ord = 0 then
+	if qty_ord = 0 and cvs(callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG"),2)="" then
 		msg_id$="OP_QTY_ZERO"
 		gosub disp_message
 		callpoint!.setStatus("ABORT")

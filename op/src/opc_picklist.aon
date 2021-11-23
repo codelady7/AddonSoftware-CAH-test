@@ -348,14 +348,12 @@ rem --- Misc setup and qualification
         if ope01a.invoice_type$="V" then continue
         if credit_rec.sys_install$="Y" and ope01a.credit_flag$="C" and credit_rec.pick_hold$="N" then continue
 
+        rem --- Check for valid lines to print
         after$="NO"
-		if type = batch_pick then
-			gosub valid_lines
-			if print$="NO" then continue
-		endif
+		gosub valid_lines
+		if print$="NO" then continue
 
         if type = batch_pick then
-		
 			if ope01a.reprint_flag$="Y"
 				ope01a.print_status$=reprint$ 
 			else 
@@ -982,17 +980,15 @@ rem --- Clear Print Flags
 				extract record (ordhdr_dev, key=ope04a.firm_id$+"E"+ope04a.ar_type$+ope04a.customer_id$+ope04a.order_no$+ope01a.ar_inv_no$,knum="AO_STATUS", dom=*endif) ope01a$
 				if (print_what$="P" and ope01a.invoice_type$<>"S") or (print_what$="Q" and ope01a.invoice_type$<>"P") then continue
 
-				if ope01a.reprint_flag$="Y" then
-					ope01a.reprint_flag$=""
-					ope01a.lock_status$="N" 
-				else
-					if pos(ope01a.print_status$="B")=0 then continue
-					if pos(ope01a.lock_status$="YS123")<>0 then continue
-					after$="YES"
-					gosub valid_lines
-					ope01a.lock_status$="N"
-					if print$="YES" and allprint$="YES" then ope01a.print_status$="Y"
-				endif
+                if ope01a.reprint_flag$<>"Y" then
+                    if pos(ope01a.print_status$="B")=0 then continue
+                    if pos(ope01a.lock_status$="YS123")<>0 then continue
+                endif
+				after$="YES"
+				gosub valid_lines
+                if print$="YES" and allprint$="YES" then ope01a.print_status$="Y"
+				ope01a.reprint_flag$=""
+				ope01a.lock_status$="N"
 
 				if ope01a.print_status$<>"Y" then ope01a.print_status$="N"
                 ope01a.mod_user$=sysinfo.user_id$
@@ -1022,9 +1018,9 @@ rem --- Clear Print Flags
 
 		after$="YES"
         gosub valid_lines
-		ope01a.print_status$="Y"
-        ope01a.lock_status$="N"
+        if print$="YES" and allprint$="YES" then ope01a.print_status$="Y"
         ope01a.reprint_flag$=""
+        ope01a.lock_status$="N"
 
         ope01a.mod_user$=sysinfo.user_id$
         ope01a.mod_date$=date(0:"%Yd%Mz%Dz")
@@ -1098,16 +1094,13 @@ valid_lines: rem --- Look for valid lines here
         endif
 
         if ope01a.invoice_type$<>"P"
-            if ope11a.commit_flag$="N" then read(orddet_dev); continue
+            if ope11a.commit_flag$="N" and after$<>"YES" then read(orddet_dev); continue
             if whse$<>"" and ope11a.warehouse_id$<>whse$
                 if ope11a.pick_flag$<>"Y" then allprint$="NO"
                 read(orddet_dev)
                 continue 
             endif
         endif
-        
-        if ope01a.reprint_flag$<>"Y" and ope11a.pick_flag$="Y" then read(orddet_dev); continue; rem "Not a reprint and already printed for selected warehouse(s)
-        if ope01a.reprint_flag$="Y" and ope11a.pick_flag$<>"Y" then read(orddet_dev); continue; rem "A reprint and not printed yet for selected warehouse(s)
 
         if after$="YES" then 
             ope11a.pick_flag$ = "Y"

@@ -34,7 +34,6 @@ rem --- Get 'IN' SPROC parameters
     ivIMask$ =       sp!.getParameter("ITEM_MASK")
 	selected_whse$ = sp!.getParameter("SELECTED_WHSE")
     pick_or_quote$ = sp!.getParameter("PICK_OR_QUOTE")
-    reprint$ =       sp!.getParameter("REPRINT")
     print_prices$ =  sp!.getParameter("PRINT_PRICES")
     mult_wh$ =       sp!.getParameter("MULT_WH")
 	barista_wd$ =    sp!.getParameter("BARISTA_WD")
@@ -44,13 +43,13 @@ rem --- Get 'IN' SPROC parameters
 
 rem --- create the in memory recordset for return
 	dataTemplate$ = ""
-	dataTemplate$ = dataTemplate$ + "order_qty_masked:c(1*), ship_qty:c(1*), bo_qty:c(1*), "
+	dataTemplate$ = dataTemplate$ + "order_qty_raw:c(1*),order_qty_masked:c(1*), ship_qty:c(1*), bo_qty:c(1*), "
 	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), whse:c(2*), "
 	dataTemplate$ = dataTemplate$ + "price_raw:c(1*), price_masked:c(1*), "
 	dataTemplate$ = dataTemplate$ + "location:c(1*), internal_seq_no:c(1*), um_sold:c(6*), "
 	dataTemplate$ = dataTemplate$ + "item_is_ls:c(1), linetype_allows_ls:c(1), carton:c(1*), "
     dataTemplate$ = dataTemplate$ + "whse_message:c(1*), whse_msg_sfx:c(1*), ship_qty_raw:c(1*), "
-    dataTemplate$ = dataTemplate$ + "wo_info1:c(1*), wo_info2:c(1*)"
+    dataTemplate$ = dataTemplate$ + "wo_info1:c(1*), wo_info2:c(1*), pick_flag:c(1*), line_type:c(1*)"
 
 	rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
 	
@@ -122,6 +121,7 @@ rem --- Main
 
         while 1
 
+            order_qty_raw$ =      ""
 			order_qty_masked$ =   ""
             ship_qty$ =           ""
             bo_qty$ =             ""
@@ -141,6 +141,7 @@ rem --- Main
             wo_info1$ =           ""
             wo_info2$ =           ""
             um_sold$ =            ""
+            pick_flag$ =          ""
             qtyOrdered_purchaseUM = 0
             qtyOrdered_salesUM    = 0
             			
@@ -153,10 +154,9 @@ rem --- Main
             if ar_inv_no$   <> ope11a.ar_inv_no$   then break
 
 			internal_seq_no$ = ope11a.internal_seq_no$
+            pick_flag$=ope11a.pick_flag$
+            order_qty_raw$ =str(ope11a.qty_ordered)
             if !whse_len then whse_len=len(ope11a.warehouse_id$);rem store len of wh field on first detail read for later use in warehouse message routine (to avoid hard-coding '2')
-
-            if reprint$<>"Y" and ope11a.pick_flag$="Y" then continue; rem --- Not a reprint and already printed
-            if reprint$="Y" and ope11a.pick_flag$<>"Y" then continue; rem --- A reprint and not printed yet
 		
         rem --- Type
 		
@@ -296,6 +296,7 @@ line_detail: rem --- Item Detail
                 if line=2 then internal_seq_no$=ope11a.line_no$
 
     			data! = rs!.getEmptyRecordData()
+                data!.setFieldValue("ORDER_QTY_RAW", order_qty_raw$)
     			data!.setFieldValue("ORDER_QTY_MASKED", order_qty_masked$)
     			data!.setFieldValue("SHIP_QTY", ship_qty$)
     			data!.setFieldValue("BO_QTY", bo_qty$)
@@ -315,6 +316,8 @@ line_detail: rem --- Item Detail
                 data!.setFieldValue("SHIP_QTY_RAW", ship_qty_raw$)
                 data!.setFieldValue("WO_INFO1", wo_info1$)
                 data!.setFieldValue("WO_INFO2", wo_info2$)
+                data!.setFieldValue("PICK_FLAG", pick_flag$)
+                data!.setFieldValue("LINE_TYPE", opm02a.line_type$)
     
     			rs!.insert(data!)
 			next line		

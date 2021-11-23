@@ -1110,6 +1110,11 @@ rem --- Update sales tax calculation if it was previously deferred
 		gosub calculate_tax
 	endif
 
+rem --- Update REPRINT_FLAG for workaround to Barista Bug 10297
+	if callpoint!.getDevObject("ReprintFlag")="Y" and callpoint!.getColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" then
+		callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG","Y",1)
+	endif
+
 [[OPE_ORDHDR.ARAR]]
 rem --- If First/Last Record was used, did it return an Order?
 
@@ -1768,6 +1773,9 @@ rem --- Capture current totals so we can tell later if they were changed in the 
 		callpoint!.setDevObject("total_sales",callpoint!.getColumnData("OPE_ORDHDR.TOTAL_SALES"))
 	endif
 
+rem --- Initialize ReprintFlag devObject used for workaround to Barista Bug 10297
+	callpoint!.setDevObject("ReprintFlag","")
+
 [[OPE_ORDHDR.BPRI]]
 rem --- Check for Order Total
 
@@ -2381,6 +2389,9 @@ rem --- Set callback for a tab being selected, and save the tab control ID
 		rem --- If the index was changed, then change the isTotalsTab subroutine for the new index.
 	endif
 
+rem --- Initialize ReprintFlag devObject used for workaround to Barista Bug 10297
+	callpoint!.setDevObject("ReprintFlag","")
+
 [[OPE_ORDHDR.BWAR]]
 rem --- Has customer and order number been entered?
 	ordHelp! = cast(OrderHelper, callpoint!.getDevObject("order_helper_object"))
@@ -2491,6 +2502,10 @@ rem --- Initialize RTP modified fields for modified existing records
 		rem --- For immediate write forms must compare initial record to current record to see if modified.
 		dim initial_rec_data$:fattr(rec_data$)
 		initial_rec_data$=callpoint!.getDevObject("initial_rec_data$")
+		if callpoint!.getColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" then
+			callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG","Y",1)
+			rec_data.reprint_flag$="Y"
+		endif
 		if rec_data$<>initial_rec_data$ then
 			rec_data.mod_user$=sysinfo.user_id$
 			rec_data.mod_date$=date(0:"%Yd%Mz%Dz")
