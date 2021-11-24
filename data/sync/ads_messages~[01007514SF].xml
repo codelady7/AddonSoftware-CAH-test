@@ -13,4 +13,15 @@
 		<MSG_TEXT>This Operation is being used in %1 and cannot be deleted.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </MSG_TEXT>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
+	<barista_record>
+		<MSG_ID>SF_NO_OP_CODES      </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>64</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>SF </ASC_PROD_ID>
+		<MSG_TEXT>No Operation Codes are defined. Set up Operation Codes in Bill of Materials and/or Shop Floor in order to view or maintain the Operations Calendar.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
 </barista_admin_records>
