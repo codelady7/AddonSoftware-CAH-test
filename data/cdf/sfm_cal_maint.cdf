@@ -636,6 +636,7 @@ rem in: start_date$, end_date$, sel_key$, hr_mask$, and template/channel for sfm
 	this_op_desc$=callpoint!.getDevObject("this_op_desc")
 	opCodeColor!=callpoint!.getDevObject("opCodeColor")
 	opCodeTextColor!=callpoint!.getDevObject("opCodeTextColor")
+	title$=this_op_desc$+": "+str(num(callpoint!.getUserInput()):hr_mask$)+Translate!.getTranslation("AON__HRS")
 
 	redim sfm_opcalndr$
 	sfm_opcalndr.firm_id$=firm_id$
@@ -643,7 +644,6 @@ rem in: start_date$, end_date$, sel_key$, hr_mask$, and template/channel for sfm
 	sfm_opcalndr.year$=sel_key$(len(firm_id$)+len(sfm_opcalndr.op_code$)+1,len(sfm_opcalndr.year$))
 	sfm_opcalndr.month$=sel_key$(len(firm_id$)+len(sfm_opcalndr.op_code$)+len(sfm_opcalndr.year$)+1,len(sfm_opcalndr.month$))
 
-	title$=title$(1,pos(": "=title$)+1)+str(num(callpoint!.getUserInput()):hr_mask$)+Translate!.getTranslation("AON__HRS")
 	extractrecord(sfm_opcalndr,key=sel_key$,err=*next)sfm_opcalndr$
 
 	for entry_dt=num(start_date$(7,2)) to num(end_date$(7,2))
