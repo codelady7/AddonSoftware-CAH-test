@@ -23,6 +23,8 @@ rem 			myCal!.injectCss(" .fc-event div { font-size: 12px ; font-weight: bold;} 
 			progWin!=callpoint!.getDevObject("progress_spinner")
 			progWin!.destroy()
 
+			callpoint!.setColumnEnabled("<<DISPLAY>>.TEMP_TAB_STOP",0);rem disable so tab/shift-tab won't cycle back and try to re-create widget
+
 		else
 			if pos("CalendarEntryClickEvent"=str(eventObj!.getClass()))
 				mySelectEvent! = event!.getObject()
@@ -434,7 +436,6 @@ rem --- in: myCal! calendar object
 					useText$=""
 				else
 					useText$=op_code_short_desc$+": "+str(day_hrs:hr_mask$)+Translate!.getTranslation("AON__HRS")
-					rem CAH useText$=cvs(op_code$,2)+": "+str(day_hrs:hr_mask$)+Translate!.getTranslation("AON__HRS")
 				endif
 				if useText$<>""
 					myCalEntry! = CalendarAPI.createCalendarEntry(useText$, start$, end$)
