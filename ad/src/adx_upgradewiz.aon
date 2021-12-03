@@ -806,6 +806,7 @@ moveModsDataBarDelta: rem --- Move mods/data/bar/delta XMLs to Addon location
         parent$=cast(BBjString, aList!.get(1))
         if parent$<>"ADDON" then continue
 
+        modsAppName$=cvs(cast(BBjString, aList!.get(0)),8)
         newModsDir$=cast(BBjString, aList!.get(5))
         newModsDir$=FileObject.fixPath(newModsDir$, "/")
         modsDataBarDelta!=new File(newModsDir$+"data/bar/delta",err=*next)
@@ -997,7 +998,7 @@ moveModifiedCore: rem --- Move any core Addon files customized by a mods project
         if !newAonDir!.exists() or !newAonDir!.isDirectory() then newAonDir!.mkdirs()
 
         rem --- Move mods customized Addon files back into Addon
-        merger!=new ModMerger(newModsDir$, newAonDir$)
+        merger!=new ModMerger(newModsDir$, newAonDir$, modsAppName$)
         status!=merger!.moveProgFilesFromModProject()
         messagesIter!=status!.getMessages().iterator()
         while messagesIter!.hasNext()
