@@ -35,15 +35,17 @@ class public AO_ModMerger
     REM Directories for mods and core 
     field protected BBjString modsDirectoryName!
     field protected BBjString aonDirectoryName!
+    field protected BBjString modsAppName!
     
     REM Default constructor
     method private AO_ModMerger() 
     methodend 
     
     REM Public constructor
-    method public AO_ModMerger(BBjString modsDirectoryName!, BBjString aonDirectoryName!)
+    method public AO_ModMerger(BBjString modsDirectoryName!, BBjString aonDirectoryName!, BBjString modsAppName!)
         #modsDirectoryName!=modsDirectoryName!
         #aonDirectoryName!=aonDirectoryName!
+        #modsAppName!=modsAppName!
         
         #createPrefix()
     methodend 
@@ -154,7 +156,7 @@ class public AO_ModMerger
     methodend 
     
     REM createPrefix 
-    REM Reads the prefix from the mods addon.syn file
+    REM Reads the prefix from the mods .syn file
     method public void createPrefix() 
     
         declare BBjString modsSynFileName!
@@ -170,8 +172,7 @@ class public AO_ModMerger
         declare java.io.File prefixEntryFile! 
         declare Iterator prefixIter! 
         
-        REM .. Is it always going to be called mods.syn? 
-        modsSynFileName!=#modsDirectoryName!+"/config/mods.syn"
+        modsSynFileName!=#modsDirectoryName!+"/config/"+#modsAppName!+".syn"
         modsSynFile!=new java.io.File(modsSynFileName!)
         if (! modsSynFile!.exists()) then
             throw "Can't find mods.syn file at "+modsSynFileName!,12
