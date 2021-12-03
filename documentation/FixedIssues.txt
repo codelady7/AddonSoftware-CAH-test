@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-11-23
+ Report Date:   2021-12-03
  Report Branch: AddonSoftware 21.13
  Last Release:  AddonSoftware 21.12
 =======================================================================================================================================
@@ -92,3 +92,17 @@ Modified: reports/OPPickListHdr.jasper
 Modified: reports/OPPickListHdr.jrxml
 Modified: sprocs/OPPICKLIST_DET.prc
 Modified: sprocs/OPPICKLIST_HDR.prc
+
+=======================================================================================================================================
+Revision: 2172041ced3a085617b44f18984d4bef0fd484d1
+Author: Christine <chawkins@basis.com>
+Date: 12/3/2021 2:30:01 PM
+Message:
+Bug 10333 - AD - Addon's ModMerger class used in upgrades contains hard-coded reference to mods.syn
+ - changed to use actual name of mods project
+
+(cherry picked from commit 2088047651da32ce516e03c854a9d155853d1392)
+----
+Modified: ad/src/ado_AO_ModMerger.aon
+Modified: ad/src/ado_ModMerger.aon
+Modified: ad/src/adx_upgradewiz.aon
