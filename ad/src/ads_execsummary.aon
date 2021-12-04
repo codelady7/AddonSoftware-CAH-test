@@ -221,7 +221,7 @@ adjust_date:rem --- Adjust Date
 display_date:rem --- Display Current Date
 
 	CurrDate!.setText(months$[curr_mo]+" "+str(curr_yr))
-		ChartBar!.setSeriesName(0,months$[curr_mo]+" "+str(curr_yr))
+rem bug 10335 ChartBar!.setSeriesName(0,months$[curr_mo]+" "+str(curr_yr))
 rem		ChartBar!.setSeriesName(1,months$[curr_mo]+" "+str(curr_yr-1))
 
 	start_day=num(date(jul(curr_yr,curr_mo,1):"%W"))
