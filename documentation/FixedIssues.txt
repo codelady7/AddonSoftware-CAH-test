@@ -106,3 +106,16 @@ Bug 10333 - AD - Addon's ModMerger class used in upgrades contains hard-coded re
 Modified: ad/src/ado_AO_ModMerger.aon
 Modified: ad/src/ado_ModMerger.aon
 Modified: ad/src/adx_upgradewiz.aon
+
+=======================================================================================================================================
+Revision: 622e49ade27025f6333e9eeb854248d849317ee9
+Author: Christine <chawkins@basis.com>
+Date: 12/3/2021 6:21:09 PM
+Message:
+Bug 10335 - AD - Executive Summary Chart incorrect when changing period
+ - corrected chart when changing month/year
+
+(cherry picked from commit e56af06fdccb3d240c027caaad48edcaeaf5db52)
+----
+Modified: ad/src/ads_execsummary.aon
+
