@@ -873,6 +873,7 @@ check_stub_detail:
 	
     apw_chkprn.firm_id$=       firm_id$
     apw_chkprn.ap_type$=       ape04a.ap_type$
+    apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
     apw_chkprn.check_no$=      check_no$
     apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
     apw_chkprn.section_type$=  section_type$
@@ -920,6 +921,7 @@ stub_total: rem --- Stub Total
 	
     apw_chkprn.firm_id$=       firm_id$
     apw_chkprn.ap_type$=       prev_aptype_vend_t1$
+    apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
     apw_chkprn.check_no$=      check_no$
     apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
     apw_chkprn.section_type$=  section_type$
@@ -979,6 +981,7 @@ check_face: rem --- Print Check
     dim apw01a$:fattr(apw01a$)
     apw01a.firm_id$=firm_id$
     apw01a.ap_type$=prev_aptype_vend_t1$(1,2)
+    apw01a.bnk_acct_cd$=bnkAcctCd$
     apw01a.check_no$=check_no$
     if ach_payment$="N" then
         apw01a.comp_or_void$="C"
@@ -988,7 +991,7 @@ check_face: rem --- Print Check
     apw01a.check_date$=check_date$
     apw01a.vendor_id$=prev_aptype_vend_t1$(3,6)
     apw01a.ap_inv_no$=t2.ap_inv_no$
-    if aps01a.multi_types$="Y" remove (apw01_dev,key=firm_id$+"  "+apw01a.check_no$,dom=*next)
+    if aps01a.multi_types$="Y" remove (apw01_dev,key=firm_id$+"  "+bnkAcctCd$+apw01a.check_no$,dom=*next)
     write record (apw01_dev) apw01a$
 
     rem --- If using Payment Authorization and it's NOT an ACH payment, put signature(s) on the check.
@@ -1029,6 +1032,7 @@ check_face: rem --- Print Check
 	
     apw_chkprn.firm_id$=       firm_id$
     apw_chkprn.ap_type$=       prev_aptype_vend_t1$(1,2)
+    apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
     apw_chkprn.check_no$=      check_no$
     apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
     apw_chkprn.section_type$=  "C"
@@ -1109,6 +1113,7 @@ rem --- Write Void
 
     apw01a.firm_id$=     firm_id$
     apw01a.ap_type$=     ape04a.ap_type$
+    apw01a.bnk_acct_cd$= bnkAcctCd$
     apw01a.check_no$=    check_no$
     if ach_payment$="N" then
         apw01a.comp_or_void$="V"
@@ -1126,6 +1131,7 @@ rem --- Write Void
 	
     apw_chkprn.firm_id$=       firm_id$
     apw_chkprn.ap_type$=       ape04a.ap_type$
+    apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
     apw_chkprn.check_no$=      check_no$
     apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
     apw_chkprn.section_type$=  "C"

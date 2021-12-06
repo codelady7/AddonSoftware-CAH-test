@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2019-04-22T12:41:28 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ACHPaymentDtl" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="addon" uuid="b87e9e94-d7bd-4136-94f1-bf75da8d1f09">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<parameter name="FIRM_ID" class="java.lang.String"/>
 	<parameter name="AP_TYPE" class="java.lang.String"/>
+	<parameter name="BNK_ACCT_CD" class="java.lang.String"/>
 	<parameter name="CHECK_NO" class="java.lang.String"/>
 	<parameter name="AMT_MASK" class="java.lang.String"/>
 	<parameter name="BARISTA_WD" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL APACH_PAYMENT_DET($P{FIRM_ID},$P{AP_TYPE},$P{CHECK_NO},$P{AMT_MASK},$P{BARISTA_WD})]]>
+		<![CDATA[CALL APACH_PAYMENT_DET($P{FIRM_ID},$P{AP_TYPE},$P{BNK_ACCT_CD},$P{CHECK_NO},$P{AMT_MASK},$P{BARISTA_WD})]]>
 	</queryString>
 	<field name="INVOICE_DATE" class="java.lang.String"/>
 	<field name="INVOICE" class="java.lang.String"/>
@@ -121,7 +123,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 			</line>
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement x="105" y="1" width="130" height="20" uuid="2908451f-d5f1-4238-b85b-23834892f1e5">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>

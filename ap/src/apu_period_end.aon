@@ -216,10 +216,9 @@ remove_invoice: rem --- Remove Invoice
     remove (apt01_dev,key=apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$+apt01a.sequence_00$,dom=*next)
     read (apt02_dev,key=apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+"I"+apt01a.ap_inv_no$,dom=*next)
     while more
-        read record(apt02_dev,end=*break)apt02a$
-        if apt02a.firm_id$+apt02a.ap_type$+apt02a.vendor_id$+apt02a.invoice_type$+apt02a.ap_inv_no$<>
-:           apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+"I"+apt01a.ap_inv_no$ break
-        remove (apt02_dev,key=apt02a.firm_id$+apt02a.ap_type$+apt02a.vendor_id$+apt02a.invoice_type$+apt02a.ap_inv_no$)
+        apt02_key$=key(apt02_dev,end=*break)
+        if pos(apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+"I"+apt01a.ap_inv_no$=apt02_key$)<>1 then break
+        remove (apt02_dev,key=apt02_key$)
     wend
 
     return

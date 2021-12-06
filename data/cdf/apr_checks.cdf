@@ -269,14 +269,15 @@ rem --- Warn if this check number has been previously used
 	aptCheckHistory_dev=fnget_dev("APT_CHECKHISTORY")
 	dim aptCheckHistory$:fnget_tpl$("APT_CHECKHISTORY")
 	ap_type$=pad(callpoint!.getColumnData("APR_CHECKS.AP_TYPE"),len(aptCheckHistory.ap_type$))
+	bnkAcctCd$=callpoint!.getDevObject("bnkAcctCd")
 
 	next_ap_type$=ap_type$
-	read(aptCheckHistory_dev,key=firm_id$+next_ap_type$+check_no$,dom=*next)
+	read(aptCheckHistory_dev,key=firm_id$+next_ap_type$+bnkAcctCd$+check_no$,dom=*next)
 	while 1
 		readrecord(aptCheckHistory_dev,end=*break)aptCheckHistory$
 		if aptCheckHistory.firm_id$<>firm_id$ then break
 		callpoint!.setDevObject("reuse_check_num","")		
-		if aptCheckHistory.ap_type$+aptCheckHistory.check_no$=next_ap_type$+check_no$ then
+		if aptCheckHistory.ap_type$+aptCheckHistory.bnk_acct_cd$+aptCheckHistory.check_no$=next_ap_type$+bnkAcctCd$+check_no$ then
 			rem --- This check number was previously used
 			msg_id$="AP_CHECK_NUM_USED"
 			dim msg_tokens$[1]
@@ -288,6 +289,7 @@ rem --- Warn if this check number has been previously used
 			else
 				callpoint!.setDevObject("reuse_check_num","Y")		
 			endif
+			break
 		else
 			rem --- Must check all AP Types when ap_type is blank/empty
 			if cvs(ap_type$,2)="" then
@@ -300,10 +302,9 @@ rem --- Warn if this check number has been previously used
 				readrecord(aptCheckHistory_dev,end=*break)aptCheckHistory$
 				if aptCheckHistory.firm_id$<>firm_id$ then break
 				next_ap_type$=aptCheckHistory.ap_type$
-				read(aptCheckHistory_dev,key=firm_id$+next_ap_type$+check_no$,dom=*continue)
+				read(aptCheckHistory_dev,key=firm_id$+next_ap_type$+bnkAcctCd$+check_no$,dom=*continue)
 			endif
 		endif
-		break
 	wend
 
 [[APR_CHECKS.PICK_CHECK.AVAL]]

@@ -153,21 +153,22 @@ rem --- OutVect! for DocOut, date/time
         rep_prog$=pgm(-2)
 
 rem --- column headings
-        columns=12
-        dim columns$[12,10]
-        columns$[0,0]=Translate!.getTranslation("AON_CHK_NO"),       columns$[0,1]="C",columns$[0,2]="7"
-        columns$[1,0]=Translate!.getTranslation("AON_CHK_DATE"),     columns$[1,1]="C",columns$[1,2]="8"
-        columns$[2,0]=Translate!.getTranslation("AON_TYPE"),         columns$[2,1]="C",columns$[2,2]="7"
-        columns$[3,0]=Translate!.getTranslation("AON_VENDOR"),       columns$[3,1]="C",columns$[3,2]="25"
-        columns$[4,0]=Translate!.getTranslation("AON_INVOICE_NO"),   columns$[4,1]="C",columns$[4,2]="10"
-        columns$[5,0]=Translate!.getTranslation("AON_INV_DATE"),     columns$[5,1]="C",columns$[5,2]="8"
-        columns$[6,0]=Translate!.getTranslation("AON_INVOICE_AMT"),  columns$[6,1]="N",columns$[6,2]="10",columns$[6,3]=m1$,columns$[6,10]="T"
-        columns$[7,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"), columns$[7,1]="N",columns$[7,2]="10",columns$[7,3]=m1$,columns$[7,10]="T"
-        columns$[8,0]=Translate!.getTranslation("AON_PAYMENT_AMT"),  columns$[8,1]="N",columns$[8,2]="10",columns$[8,3]=m1$,columns$[8,10]="T"
-        columns$[9,0]=Translate!.getTranslation("AON_RETENTION_AMT"),columns$[9,1]="N",columns$[9,2]="10",columns$[9,3]=m1$,columns$[9,10]="T"
-        columns$[10,0]=Translate!.getTranslation("AON_GL_ACCOUNT"),  columns$[10,1]="C",columns$[10,2]="10"
-        columns$[11,0]=Translate!.getTranslation("AON_GL_AMOUNT"),   columns$[11,1]="N",columns$[11,2]="10",columns$[11,3]=m1$,columns$[11,10]="T"
-        columns$[12,0]=Translate!.getTranslation("AON_ERROR"),       columns$[12,1]="C",columns$[12,2]="8"
+        columns=13
+        dim columns$[13,10]
+        columns$[0,0]=Translate!.getTranslation("AON_CHK_ACCT_BNK_CD"),columns$[0,1]="C",columns$[0,2]="9"
+        columns$[1,0]=Translate!.getTranslation("AON_CHK_NO"),       columns$[1,1]="C",columns$[1,2]="7"
+        columns$[2,0]=Translate!.getTranslation("AON_CHK_DATE"),     columns$[2,1]="C",columns$[2,2]="7"
+        columns$[3,0]=Translate!.getTranslation("AON_TYPE"),         columns$[3,1]="C",columns$[3,2]="7"
+        columns$[4,0]=Translate!.getTranslation("AON_VENDOR"),       columns$[4,1]="C",columns$[4,2]="25"
+        columns$[5,0]=Translate!.getTranslation("AON_INVOICE_NO"),   columns$[5,1]="C",columns$[5,2]="10"
+        columns$[6,0]=Translate!.getTranslation("AON_INV_DATE"),     columns$[6,1]="C",columns$[6,2]="7"
+        columns$[7,0]=Translate!.getTranslation("AON_INVOICE_AMT"),  columns$[7,1]="N",columns$[7,2]="10",columns$[7,3]=m1$,columns$[7,10]="T"
+        columns$[8,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"), columns$[8,1]="N",columns$[8,2]="10",columns$[8,3]=m1$,columns$[8,10]="T"
+        columns$[9,0]=Translate!.getTranslation("AON_PAYMENT_AMT"),  columns$[9,1]="N",columns$[9,2]="10",columns$[9,3]=m1$,columns$[9,10]="T"
+        columns$[10,0]=Translate!.getTranslation("AON_RETENTION_AMT"),columns$[10,1]="N",columns$[10,2]="10",columns$[10,3]=m1$,columns$[10,10]="T"
+        columns$[11,0]=Translate!.getTranslation("AON_GL_ACCOUNT"),  columns$[11,1]="C",columns$[11,2]="10"
+        columns$[12,0]=Translate!.getTranslation("AON_GL_AMOUNT"),   columns$[12,1]="N",columns$[12,2]="10",columns$[12,3]=m1$,columns$[12,10]="T"
+        columns$[13,0]=Translate!.getTranslation("AON_ERROR"),       columns$[13,1]="C",columns$[13,2]="5"
 
         call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
 
@@ -281,7 +282,7 @@ rem --- Read next Manual Check Header (ape-02) record
 		recs=recs+1
 		read record (ape02_dev) ape02a$
 		call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
-		check$=ape02a.firm_id$+ape02a.ap_type$+ape02a.check_no$+ape02a.vendor_id$
+		check$=ape02a.firm_id$+ape02a.ap_type$+ape02a.bnk_acct_cd$+ape02a.check_no$+ape02a.vendor_id$
 		gldate$=ape02a.check_date$
         glstatus=0
 		if gl$="Y" call pgmdir$+"glc_datecheck.aon",gldate$,"N",period$,year$,glstatus
@@ -319,6 +320,7 @@ rem --- Voided check
 			case void
 				voids=voids+1
 				xwk=fnblank(13);rem --- blank line
+                OutVect!.addItem(ape02a.bnk_acct_cd$)
 				OutVect!.addItem(ape02a.check_no$)
 				OutVect!.addItem(fndate$(ape02a.check_date$))
 				OutVect!.addItem(Translate!.getTranslation("AON_VOID"))
@@ -330,6 +332,7 @@ rem --- bulk of reversal routine is missing? 4/30.CAH; added based on v6 code 5/
 rem --- note: v6 used ape-05, but v7/8 use apt-05.CAH
 			case reversal
 				non_voids=non_voids+1
+                OutVect!.addItem(ape02a.bnk_acct_cd$)
 				OutVect!.addItem(ape02a.check_no$)
 				OutVect!.addItem(fndate$(ape02a.check_date$))
 				OutVect!.addItem(Translate!.getTranslation("AON_REVERSAL"))
@@ -467,6 +470,7 @@ rem --- Manual check
 
 				case manual
 					non_voids=non_voids+1
+                    OutVect!.addItem(ape02a.bnk_acct_cd$)
 					OutVect!.addItem(ape02a.check_no$)
 					OutVect!.addItem(fndate$(ape02a.check_date$))
 					OutVect!.addItem(Translate!.getTranslation("AON_MANUAL"))
@@ -593,7 +597,7 @@ rem --- Position GL distribution detail (ape-12) file
 						total=0
 						account$=""
 						posting$="";rem --- 11/3/07.CH -- in wrong place below?
-						detail$=ape22a.firm_id$+ape22a.ap_type$+
+						detail$=ape22a.firm_id$+ape22a.ap_type$+ape22a.bnk_acct_cd$+
 :							ape22a.check_no$+ape22a.vendor_id$+ape22a.ap_inv_no$
 
 rem --- Process miscellaneous GL entries
@@ -641,7 +645,7 @@ rem --- we posted the GL dist ourselves).CAH
 						else
 rem --- if GL dist <> invoice, change last cell just added to OutVect! to carry err cd
 							xwk=OutVect!.size()
-							if xwk OutVect!.setItem(xwk-1,Translate!.getTranslation("AON_ERROR_CD_1"))
+							if xwk OutVect!.setItem(xwk-1,Translate!.getTranslation("AON_ERROR"))
 							headings$[3]=Translate!.getTranslation("AON_ERRORS_ENCOUNTERED_IN_REGISTER:")
 							headings$[4]=Translate!.getTranslation("AON_ERROR_CODE_1:_GL_DISTRIBUTION_OUT_OF_BALANCE")
 							errors=errors+1
@@ -753,7 +757,7 @@ rem --- used?.CAH
 
 print_invoice: rem --- Print invoice detail line
 
-    xwk=fnblank(4)
+    xwk=fnblank(5)
     OutVect!.addItem(invoice$)
     OutVect!.addItem(invdate$)
     OutVect!.addItem(amount$)

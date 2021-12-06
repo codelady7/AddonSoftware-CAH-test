@@ -188,8 +188,9 @@ rem --- Read next Invoice Header (ape-01) record
         rem --- ****** another section of missing code.CH
         rem --- Invoice Detail
 
+            redim apt02a$
             apt02_key$=ape11a.firm_id$+ape11a.ap_type$+ape11a.vendor_id$+"I"+
-:               ape11a.ap_inv_no$+ape11a.gl_account$+ape01a.accting_date$
+:               ape11a.ap_inv_no$+ape11a.gl_account$+ape01a.accting_date$+apt02a.bnk_acct_cd$
             apt02a.gl_post_amt=0
             apt02a.units=0
             extract record (apt02_dev,key=apt02_key$,dom=*next) apt02a$

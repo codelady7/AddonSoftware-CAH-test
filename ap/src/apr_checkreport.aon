@@ -145,19 +145,20 @@ rem --- OutVect! for DocOut, date/time
 	rep_prog$=pgm(-2)
 
 rem --- column headings
-    dim columns$[7,10]
-    columns=7
-    if retention dim columns$[8,10]; columns=8
-    columns$[0,0]=Translate!.getTranslation("AON_CHK_NO"),       columns$[0,1]="C",columns$[0,2]="10"
-    columns$[1,0]=Translate!.getTranslation("AON_CHK_DATE"),     columns$[1,1]="C",columns$[1,2]="10"
-    columns$[2,0]=Translate!.getTranslation("AON_TYPE"),         columns$[2,1]="C",columns$[2,2]="10"
-    columns$[3,0]=Translate!.getTranslation("AON_VENDOR"),       columns$[3,1]="C",columns$[3,2]="10"
-    columns$[4,0]=Translate!.getTranslation("AON_NAME"),         columns$[4,1]="C",columns$[4,2]="30"
-    columns$[5,0]=Translate!.getTranslation("AON_PAYMENT_AMT"),  columns$[5,1]="N",columns$[5,2]="12",columns$[5,3]=m1$,columns$[5,10]="T"
-    columns$[6,0]=Translate!.getTranslation("AON_INVOICE_AMT"),  columns$[6,1]="N",columns$[6,2]="12",columns$[6,3]=m1$,columns$[6,10]="T"
-    columns$[7,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"), columns$[7,1]="N",columns$[7,2]="12",columns$[7,3]=m1$,columns$[7,10]="T"
+    dim columns$[8,10]
+    columns=8
+    if retention dim columns$[9,10]; columns=9
+    columns$[0,0]=Translate!.getTranslation("AON_CHK_ACCT_BNK_CD"),columns$[0,1]="C",columns$[0,2]="10"
+    columns$[1,0]=Translate!.getTranslation("AON_CHK_NO"),       columns$[1,1]="C",columns$[1,2]="10"
+    columns$[2,0]=Translate!.getTranslation("AON_CHK_DATE"),     columns$[2,1]="C",columns$[2,2]="10"
+    columns$[3,0]=Translate!.getTranslation("AON_TYPE"),         columns$[3,1]="C",columns$[3,2]="10"
+    columns$[4,0]=Translate!.getTranslation("AON_VENDOR"),       columns$[4,1]="C",columns$[4,2]="10"
+    columns$[5,0]=Translate!.getTranslation("AON_NAME"),         columns$[5,1]="C",columns$[5,2]="30"
+    columns$[6,0]=Translate!.getTranslation("AON_PAYMENT_AMT"),  columns$[6,1]="N",columns$[6,2]="12",columns$[6,3]=m1$,columns$[6,10]="T"
+    columns$[7,0]=Translate!.getTranslation("AON_INVOICE_AMT"),  columns$[7,1]="N",columns$[7,2]="12",columns$[7,3]=m1$,columns$[7,10]="T"
+    columns$[8,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"), columns$[8,1]="N",columns$[8,2]="12",columns$[8,3]=m1$,columns$[8,10]="T"
     if retention
-        columns$[8,0]=Translate!.getTranslation("AON_RETENTION_AMT"),columns$[8,1]="N",columns$[8,2]="12",columns$[8,3]=m1$,columns$[8,10]="T"
+        columns$[9,0]=Translate!.getTranslation("AON_RETENTION_AMT"),columns$[9,1]="N",columns$[9,2]="12",columns$[9,3]=m1$,columns$[9,10]="T"
     endif
 
     call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
@@ -202,6 +203,7 @@ rem --- Read the next Check History (apt-05) record
           rem --- Initializations for this check
 
           dim detail[3]
+          bnk_acct_cd$=apt05a.bnk_acct_cd$
           check$=apt05a.check_no$
           paid$=fndate$(apt05a.check_date$)
           vendor$=""
@@ -229,11 +231,11 @@ rem --- Read the next Check History (apt-05) record
                 detail[1]=apt05a.invoice_amt
                 detail[2]=apt05a.discount_amt
                 detail[3]=apt05a.retention
-    if type_breaks
-        thischeck$=apt05a.firm_id$+apt05a.ap_type$+apt05a.check_no$+apt05a.vendor_id$
-    else
-        thischeck$=apt05a.firm_id$+apt05a.check_no$+apt05a.vendor_id$
-    endif
+                if type_breaks
+                    thischeck$=apt05a.firm_id$+apt05a.ap_type$+apt05a.bnk_acct_cd$+apt05a.check_no$+apt05a.vendor_id$
+                else
+                    thischeck$=apt05a.firm_id$+apt05a.bnk_acct_cd$+apt05a.check_no$+apt05a.vendor_id$
+                endif
 
                 rem --- Additional records for this check?
 
@@ -274,6 +276,7 @@ rem --- Read the next Check History (apt-05) record
 
           rem --- Print detail line
 
+          OutVect!.addItem(bnk_acct_cd$)
           OutVect!.addItem(check$+mark$)
           OutVect!.addItem(paid$)
           OutVect!.addItem(type$)
@@ -320,7 +323,7 @@ print_total: rem --- Print totals
     retention$=""
     if retention retention$=str(totals[3])
     TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-    xwk=fnblank(4)
+    xwk=fnblank(5)
     OutVect!.addItem(total$)
     OutVect!.addItem(str(totals[0]))
     OutVect!.addItem(str(totals[1]))

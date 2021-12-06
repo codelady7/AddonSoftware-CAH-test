@@ -20,7 +20,6 @@ ape-01A                  |APE_INVOICEHDR    |
 ape-02A                  |APE_MANCHECKHDR   |
 ape-03A                  |APE_RECURRINGHDR  |
 ape-04A                  |APE_CHECKS        |
-ape-05A                  |APE_OPENCHECKS    |
 ape-06A                  |APE_SELECTIONHDR  |
 ape-11A                  |APE_INVOICEDET    |
 ape-12A                  |APE_MANCHECKDIST  |
@@ -49,9 +48,7 @@ apw-01A                  |APW_CHECKINVOICE  |
 apw-02A                  |APW_INVOICENAME   |
 apw-04A                  |APW_PURCHASEGL    |
 apw-05A                  |APW_DISBURSEMNTS  |
-apw-06A                  |APW_INVOICEPURGE  |
 apw-14A                  |APW_PURCHASENAME  |
-apw-16A                  |APW_CHECKPURGE    |
 are-01A                  |ARE_CASHHDR       |
 are-02A                  |ARE_FINCHG        |
 are-05A                  |ARE_INVHDR        |

@@ -368,8 +368,9 @@ l6000: rem --- Generate apt-02 record
     apt02a.reference$=poe05a.ap_inv_no$
     apt02a.gl_account$=distaccnt$
     apt02a.accting_date$=gldate$
+    apt02a.bnk_acct_cd$=""
     extract record (apt02_dev,key=apt02a.firm_id$+apt02a.ap_type$+apt02a.vendor_id$+
-:       apt02a.invoice_type$+apt02a.reference$+apt02a.gl_account$+apt02a.accting_date$,dom=*next) apt02a$
+:       apt02a.invoice_type$+apt02a.reference$+apt02a.gl_account$+apt02a.accting_date$+apt02a.bnk_acct_cd$,dom=*next) apt02a$
     apt02a.gl_post_amt=apt02a.gl_post_amt+distamnt
     apt02a.units=apt02a.units+distqty
     write record (apt02_dev) apt02a$

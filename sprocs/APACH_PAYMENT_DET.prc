@@ -18,6 +18,7 @@ rem --- Get the infomation object for the Stored Procedure
 rem --- Get 'IN' SPROC parameters 
     firm_id$ = sp!.getParameter("FIRM_ID")
     ap_type$ = sp!.getParameter("AP_TYPE")
+    bnk_acct_cd$ = sp!.getParameter("BNK_ACCT_CD")
     check_no$ = sp!.getParameter("CHECK_NO")
     amt_mask$ = sp!.getParameter("AMT_MASK")
     barista_wd$ = sp!.getParameter("BARISTA_WD")
@@ -40,6 +41,7 @@ rem --- Get data from work file
     sql_prep$=sql_prep$+"FROM APW_CHKJASPERPRN "
     sql_prep$=sql_prep$+"WHERE firm_id='"+firm_id$+"' "
     sql_prep$=sql_prep$+"  AND ap_type='"+ap_type$+"' "
+    sql_prep$=sql_prep$+"  AND bnk_acct_cd='"+bnk_acct_cd$+"' "
     sql_prep$=sql_prep$+"  AND check_no='"+check_no$+"' "
     
     sql_chan=sqlunt

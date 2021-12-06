@@ -84,7 +84,7 @@ rem --- Remove Paid Checks
 				if glt05a.gl_account$<>gl_acct$ break
 				if glt05a.paid_code$<>"P" and glt05a.paid_code$<>"V" continue
 				if glt05a.bnk_chk_date$>st_date$ continue
-				remove (glt05_dev,key=glt05a.firm_id$+glt05a.gl_account$+glt05a.check_no$,dom=*next)
+				remove (glt05_dev,key=glt05a.firm_id$+glt05a.gl_account$+glt05a.bnk_acct_cd$+glt05a.check_no$,dom=*next)
 			wend
 
 rem --- Remove Paid Transactions

@@ -40,6 +40,7 @@ rem --- Get 'IN' SPROC parameters
 
 	firm_id$ =       sp!.getParameter("FIRM_ID")
 	barista_wd$ =    sp!.getParameter("BARISTA_WD")
+    bnk_acct_cd$ =   sp!.getParameter("BNK_ACCT_CD")
 	check_no$ =      sp!.getParameter("CHECK_NUM")
 	ap_type$ =       sp!.getParameter("AP_TYPE")
 	vendor_id$ =     sp!.getParameter("VENDOR_ID")
@@ -86,6 +87,7 @@ rem --- Get data from work file
 	sql_prep$=sql_prep$+"FROM APW_CHKJASPERPRN "
 	sql_prep$=sql_prep$+"WHERE firm_id='"+firm_id$+"' "
 	sql_prep$=sql_prep$+"  AND ap_type='"+ap_type$+"' "
+    sql_prep$=sql_prep$+"  AND bnk_acct_cd='"+bnk_acct_cd$+"' "
 	sql_prep$=sql_prep$+"  AND check_no='"+check_no$+"' "
 	sql_prep$=sql_prep$+"  AND chk_pagenum='"+curr_page$+"' "; rem Though a APType-Vendor may have multi checks (overflow), process only one pg at a time
 	sql_prep$=sql_prep$+"  AND section_type='C' "

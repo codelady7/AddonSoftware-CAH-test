@@ -46,7 +46,7 @@ rem --- Get 'IN' SPROC parameters
 rem --- Create the memory recordset for return to jasper
 
 	dataTemplate$ = ""
-	dataTemplate$ = dataTemplate$ + "firm_id:C(2), ap_type:C(1*), check_num:C(1*), check_date:C(10), "
+	dataTemplate$ = dataTemplate$ + "firm_id:C(2), ap_type:C(1*), bnk_acct_cd:C(1*), check_num:C(1*), check_date:C(10), "
 	dataTemplate$ = dataTemplate$ + "aptype_vend_pagenum:C(3), vendor_id:C(1*), vend_name:C(30), "
 	dataTemplate$ = dataTemplate$ + "vend_addr1:C(35), vend_addr2:C(35), vend_addr3:C(35), vend_addr4:C(35)  "
 
@@ -93,6 +93,7 @@ rem ---           format the address.
 	sql_prep$=""
 	sql_prep$=sql_prep$+"SELECT DISTINCT wk.firm_id "
 	sql_prep$=sql_prep$+"      ,wk.ap_type "
+    sql_prep$=sql_prep$+"      ,wk.bnk_acct_cd "
 	sql_prep$=sql_prep$+"      ,wk.check_no "
 	sql_prep$=sql_prep$+"      ,wk.check_date "
 	sql_prep$=sql_prep$+"      ,wk.chk_pagenum "
@@ -117,6 +118,7 @@ rem --- Process SQL results
 		
 		firm_id$=   read_tpl.firm_id$
 		ap_type$=   read_tpl.ap_type$
+        bnk_acct_cd$= read_tpl.bnk_acct_cd$
 		vendor_id$= read_tpl.vendor_id$
 		check_no$=  read_tpl.check_no$
 		aptype_vend_pagenum$=  read_tpl.chk_pagenum$
@@ -142,6 +144,7 @@ rem --- Process SQL results
 			
 			data!.setFieldValue("FIRM_ID", firm_id$)
 			data!.setFieldValue("AP_TYPE", ap_type$)
+            data!.setFieldValue("BNK_ACCT_CD", bnk_acct_cd$)
 			data!.setFieldValue("CHECK_NUM", check_no$)
 			data!.setFieldValue("APTYPE_VEND_PAGENUM", aptype_vend_pagenum$)
 			data!.setFieldValue("CHECK_DATE", fndate$(check_date$))

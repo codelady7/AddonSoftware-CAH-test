@@ -245,6 +245,7 @@ open_checks: rem --- Open Checks
         dim apt05a$:fattr(apt05a$)
         apt05a.firm_id$=firm_id$
         apt05a.ap_type$=apw01a.ap_type$
+        apt05a.bnk_acct_cd$=apw01a.bnk_acct_cd$
         apt05a.check_no$=apw01a.check_no$
         apt05a.vendor_id$=ape04a.vendor_id$
         apt05a.ap_inv_no$=ape04a.ap_inv_no$
@@ -275,6 +276,7 @@ void_check: rem --- Void Check
         dim apt05a$:fattr(apt05a$)
         apt05a.firm_id$=firm_id$
         apt05a.ap_type$=apw01a.ap_type$
+        apt05a.bnk_acct_cd$=apw01a.bnk_acct_cd$
         apt05a.check_no$=apw01a.check_no$
         apt05a.check_date$=apw01a.check_date$
         apt05a.trans_type$="V"
@@ -374,11 +376,11 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
     findrecord(apm01_dev,key=firm_id$+apw01a.vendor_id$,dom=*next)apm01a$
 
     rem --- Get info for this check
-    read(apwChkJasperPrn_dev,key=firm_id$+apw01a.ap_type$+apw01a.check_no$,dom=*next)
+    read(apwChkJasperPrn_dev,key=firm_id$+apw01a.ap_type$+apw01a.bnk_acct_cd$+apw01a.check_no$,dom=*next)
     while 1
         redim apwChkJasperPrn$
         thisKey$=key(apwChkJasperPrn_dev,end=*break)
-        if pos(firm_id$+apw01a.ap_type$+apw01a.check_no$=thisKey$)<>1 then break
+        if pos(firm_id$+apw01a.ap_type$+apw01a.bnk_acct_cd$+apw01a.check_no$=thisKey$)<>1 then break
         readrecord(apwChkJasperPrn_dev)apwChkJasperPrn$
         if apwChkJasperPrn.section_type$<>"C" then continue
         break
@@ -612,13 +614,14 @@ update_bank_rec: rem --- Update glt-05
         if x9$="" break
         glt05a.firm_id$=firm_id$
         glt05a.gl_account$=apm10b.gl_cash_acct$(1,max_acct_len)
+        glt05a.bnk_acct_cd$=apt05a.bnk_acct_cd$
         glt05a.check_no$=x9$(1,7)
         glt05a.check_type$="A"
         glt05a.paid_code$="V"
         glt05a.bnk_chk_date$=apt05a.check_date$
         glt05a.description$="VOID"
         
-        extract record (glt05_dev,key=firm_id$+glt05a.gl_account$+glt05a.check_no$,dom=*next)xwk$;rem Advisory Locking
+        extract record (glt05_dev,key=firm_id$+glt05a.gl_account$+glt05a.bnk_acct_cd$+glt05a.check_no$,dom=*next)xwk$;rem Advisory Locking
         glt05a$=field(glt05a$)
         write record (glt05_dev) glt05a$
         if len(x9$)>7 x9$=x9$(8) else x9$=""
@@ -628,6 +631,7 @@ rem --- Detail
 
     glt05a.firm_id$=firm_id$
     glt05a.gl_account$=apm10b.gl_cash_acct$(1,max_acct_len)
+    glt05a.bnk_acct_cd$=apt05a.bnk_acct_cd$
     glt05a.check_no$=apt05a.check_no$
     glt05a.check_type$="A"
     glt05a.paid_code$="O"
@@ -637,7 +641,7 @@ rem --- Detail
     let glt05a.description$=apm01a.vendor_name$
     let q$=glt05a.description$
     let glt05a.check_amount=ape04a.payment_amt
-    extract record (glt05_dev,key=firm_id$+glt05a.gl_account$+glt05a.check_no$,dom=*next) glt05a$;
+    extract record (glt05_dev,key=firm_id$+glt05a.gl_account$+glt05a.bnk_acct_cd$+glt05a.check_no$,dom=*next) glt05a$;
 :      let glt05a.check_amount=glt05a.check_amount+ape04a.payment_amt,glt05a.description$=q$;rem Advisory Locking
     glt05a$=field(glt05a$)
     write record (glt05_dev) glt05a$

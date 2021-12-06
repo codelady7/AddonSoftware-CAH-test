@@ -181,29 +181,30 @@ rem --- Initializations
 rem --- Headings and print positions
     
     if type_breaks and export_format$="Y"
-        columns=11
+        columns=12
         dim columns$[columns,10]
-        columns$[0,0]=Translate!.getTranslation("AON_AP_TYPE"),       columns$[0,1]="C",columns$[0,2]="8"
+        columns$[0,0]="AP^"+Translate!.getTranslation("AON_TYPE"),       columns$[0,1]="C",columns$[0,2]="4"
         rpt_cols=1
     else
-        columns=10
+        columns=11
         dim columns$[columns,10]
         rpt_cols=0
     endif
     
     
 
-    columns$[rpt_cols,0]=Translate!.getTranslation("AON_CHECK_NO"),       columns$[rpt_cols,1]="C",columns$[rpt_cols,2]="10"
-    columns$[rpt_cols+1,0]=Translate!.getTranslation("AON_CHECK_TP"),         columns$[rpt_cols+1,1]="C",columns$[rpt_cols+1,2]="10"
-    columns$[rpt_cols+2,0]=Translate!.getTranslation("AON_CHECK_DT"),         columns$[rpt_cols+2,1]="C",columns$[rpt_cols+2,2]="10"
-    columns$[rpt_cols+3,0]=Translate!.getTranslation("AON_VENDOR_ID"),        columns$[rpt_cols+3,1]="C",columns$[rpt_cols+3,2]="10"
-    columns$[rpt_cols+4,0]=Translate!.getTranslation("AON_NAME"),           columns$[rpt_cols+4,1]="C",columns$[rpt_cols+4,2]="20"
-    columns$[rpt_cols+5,0]=Translate!.getTranslation("AON_ALT_SEQ"),        columns$[rpt_cols+5,1]="C",columns$[rpt_cols+5,2]="10"
-    columns$[rpt_cols+6,0]=Translate!.getTranslation("AON_INVOICE_NO"),     columns$[rpt_cols+6,1]="C",columns$[rpt_cols+6,2]="10"
-    columns$[rpt_cols+7,0]=Translate!.getTranslation("AON_ACCOUNT"),            columns$[rpt_cols+7,1]="C",columns$[rpt_cols+7,2]="10"
-    columns$[rpt_cols+8,0]=Translate!.getTranslation("AON_DISTRIB_AMT"),     columns$[rpt_cols+8,1]="N",columns$[rpt_cols+8,2]=str(len(m1$)),columns$[rpt_cols+8,3]=m1$,columns$[rpt_cols+8,10]="T"
-    columns$[rpt_cols+9,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"),    columns$[rpt_cols+9,1]="N",columns$[rpt_cols+9,2]=str(len(m1$)),columns$[rpt_cols+9,3]=m1$,columns$[rpt_cols+9,10]="T"
-    columns$[rpt_cols+10,0]=Translate!.getTranslation("AON_CHECK_AMT"),       columns$[rpt_cols+10,1]="N",columns$[rpt_cols+10,2]=str(len(m1$)),columns$[rpt_cols+10,3]=m1$,columns$[rpt_cols+10,10]="T"
+    columns$[rpt_cols,0]=Translate!.getTranslation("AON_CHK_ACCT_BNK_CD"),columns$[rpt_cols,1]="C",columns$[rpt_cols,2]="10"
+    columns$[rpt_cols+1,0]=Translate!.getTranslation("AON_CHECK_NO"),     columns$[rpt_cols+1,1]="C",columns$[rpt_cols+1,2]="8"
+    columns$[rpt_cols+2,0]=Translate!.getTranslation("AON_CHECK_TP"),     columns$[rpt_cols+2,1]="C",columns$[rpt_cols+2,2]="8"
+    columns$[rpt_cols+3,0]=Translate!.getTranslation("AON_CHECK_DT"),     columns$[rpt_cols+3,1]="C",columns$[rpt_cols+3,2]="8"
+    columns$[rpt_cols+4,0]=Translate!.getTranslation("AON_VENDOR_ID"),    columns$[rpt_cols+4,1]="C",columns$[rpt_cols+4,2]="10"
+    columns$[rpt_cols+5,0]=Translate!.getTranslation("AON_NAME"),         columns$[rpt_cols+5,1]="C",columns$[rpt_cols+5,2]="20"
+    columns$[rpt_cols+6,0]=Translate!.getTranslation("AON_ALT_SEQ"),      columns$[rpt_cols+6,1]="C",columns$[rpt_cols+6,2]="10"
+    columns$[rpt_cols+7,0]=Translate!.getTranslation("AON_INVOICE_NO"),   columns$[rpt_cols+7,1]="C",columns$[rpt_cols+7,2]="10"
+    columns$[rpt_cols+8,0]=Translate!.getTranslation("AON_ACCOUNT"),      columns$[rpt_cols+8,1]="C",columns$[rpt_cols+8,2]="10"
+    columns$[rpt_cols+9,0]=Translate!.getTranslation("AON_DISTRIB_AMT"),  columns$[rpt_cols+9,1]="N",columns$[rpt_cols+9,2]=str(len(m1$)),columns$[rpt_cols+9,3]=m1$,columns$[rpt_cols+9,10]="T"
+    columns$[rpt_cols+10,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"),columns$[rpt_cols+10,1]="N",columns$[rpt_cols+10,2]=str(len(m1$)),columns$[rpt_cols+10,3]=m1$,columns$[rpt_cols+10,10]="T"
+    columns$[rpt_cols+11,0]=Translate!.getTranslation("AON_CHECK_AMT"),   columns$[rpt_cols+11,1]="N",columns$[rpt_cols+11,2]=str(len(m1$)),columns$[rpt_cols+11,3]=m1$,columns$[rpt_cols+11,10]="T"
 
     call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
    
@@ -299,11 +300,12 @@ rem --- Sort Check History (apt-05) by vendor ID or alternate sequence
                 apw05a.ap_type$=apt05a.ap_type$
                 apw05a.alt_sequence$=apm01a.alt_sequence$
                 apw05a.vendor_id$=apt05a.vendor_id$
+                apw05a.bnk_acct_cd$=apt05a.bnk_acct_cd$
                 apw05a.check_no$=apt05a.check_no$
                 apw05a.ap_inv_no$=apt05a.ap_inv_no$
                 apw05a$=field(apw05a$)
                 k$=apw05a.firm_id$+apw05a.ap_type$+apw05a.alt_sequence$+
-:                  apw05a.vendor_id$+apw05a.check_no$+apw05a.ap_inv_no$
+:                  apw05a.vendor_id$+apw05a.bnk_acct_cd$+apw05a.check_no$+apw05a.ap_inv_no$
                 write record (apw05_dev) apw05a$
 
                 rem --- Loop back for next invoice record
@@ -347,9 +349,10 @@ rem --- Start progress meter and position the driver file
              apt05a.ap_type$=apw05a.ap_type$
              apt05a.vendor_name$=apm01a.alt_sequence$
              apt05a.vendor_id$=apw05a.vendor_id$
+             apt05a.bnk_acct_cd$=apw05a.bnk_acct_cd$
              apt05a.check_no$=apw05a.check_no$
              apt05a.ap_inv_no$=apw05a.ap_inv_no$
-             k$=apt05a.firm_id$+apt05a.ap_type$+apt05a.check_no$+
+             k$=apt05a.firm_id$+apt05a.ap_type$+apt05a.bnk_acct_cd$+apt05a.check_no$+
 :               apt05a.vendor_id$+apt05a.ap_inv_no$
              readrecord(apt05_dev,key=k$)apt05a$
           endif
@@ -435,6 +438,7 @@ rem --- Start progress meter and position the driver file
                 if type_breaks and export_format$="Y"
                     OutVect!.addItem(lasttype$)
                 endif
+                OutVect!.addItem(bnk_acct_cd$)
                 OutVect!.addItem(check$)
                 OutVect!.addItem(type$)
                 OutVect!.addItem(paid$)
@@ -453,6 +457,7 @@ rem --- Start progress meter and position the driver file
             OutVect!.addItem(lasttype$)
           endif
 
+          OutVect!.addItem(bnk_acct_cd$)
           OutVect!.addItem(check$)
           OutVect!.addItem(type$)
           OutVect!.addItem(paid$)
@@ -481,6 +486,7 @@ rem --- Start progress meter and position the driver file
           rem --- Initialize fields for the next record
 
           if export_format$<>"Y"
+            bnk_acct_cd$=""
             check$=""
             type$=""
             paid$=""
@@ -528,6 +534,7 @@ print_total: rem --- Print subtotal/total
         if type_breaks
             OutVect!.addItem(lasttype$)
         endif
+        OutVect!.addItem(bnk_acct_cd$)
         OutVect!.addItem(check$)
         OutVect!.addItem(type$)
         OutVect!.addItem(paid$)
@@ -539,7 +546,7 @@ print_total: rem --- Print subtotal/total
         OutVect!.addItem(str(totals[2]))        
     else
         TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-        xwk = fnblank(4)
+        xwk = fnblank(5)
         OutVect!.addItem(total$)
         xwk=fnblank(3)        
         OutVect!.addItem(str(totals[0]))
@@ -560,6 +567,7 @@ print_distribution: rem --- Print GL distribution
         if type_breaks
             OutVect!.addItem(lasttype$)
         endif
+        OutVect!.addItem(bnk_acct_cd$)
         OutVect!.addItem(check$)
         OutVect!.addItem(type$)
         OutVect!.addItem(paid$)
@@ -568,7 +576,7 @@ print_distribution: rem --- Print GL distribution
         OutVect!.addItem(altseq$)
         OutVect!.addItem(invoice$)
     else
-        xwk=fnblank(7)
+        xwk=fnblank(8)
     endif
         OutVect!.addItem(str(fnmask$(account$(1,acct_length),g0$)))
         OutVect!.addItem(str(amount))
@@ -673,6 +681,7 @@ check_break: rem --- Check break
     if done return
     dim ct[2]
     lastcheck$=apt05a.check_no$
+    bnk_acct_cd$=apt05a.bnk_acct_cd$
     check$=lastcheck$
     paid$=fndate$(apt05a.check_date$)
     type$=Translate!.getTranslation("AON_COMPUTER")

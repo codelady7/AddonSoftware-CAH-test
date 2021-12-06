@@ -12,7 +12,7 @@ rem --- one or more ape-12 recs, then come back to main form and abort, which wo
 		for reccnt=0 to numrecs-1
 			gridrec$=recVect!.getItem(reccnt)
 			if cvs(gridrec$,3)<>""
-				remove_ky$=firm_id$+gridrec.ap_type$+gridrec.check_no$+gridrec.vendor_id$+gridrec.ap_inv_no$
+				remove_ky$=firm_id$+gridrec.ap_type$+gridrec.bnk_acct_cd$+gridrec.check_no$+gridrec.vendor_id$+gridrec.ap_inv_no$
 				ape22_ky$=remove_ky$+"00"
 				read(ape22_dev,key=ape22_ky$,dom=*next);continue
 				read (ape12_dev,key=remove_ky$,dom=*next)
@@ -25,15 +25,49 @@ rem --- one or more ape-12 recs, then come back to main form and abort, which wo
 		next reccnt		
 	endif
 
+[[APE_MANCHECKHDR.ACUS]]
+rem --- Process custom event
+rem This routine is executed when callbacks have been set to run a 'custom event'.
+rem Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind of event it is.
+rem See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ctl_ID=dec(gui_event.ID$)
+
+	notify_base$=notice(gui_dev,gui_event.x%)
+	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
+	notice$=notify_base$
+
+	rem --- The CHECK_ACCTS ListButton
+	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
+	if ctl_ID=chkAcctCtl!.getID() then
+		switch notice.code
+			case 2; rem --- ON_LIST_SELECT
+				rem --- Initialize CHECK_NO for the selected checking account
+				index=chkAcctCtl!.getSelectedIndex()
+				nextChkList!=callpoint!.getDevObject("nextCheckList")
+				callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO",nextChkList!.getItem(index),1)
+
+				rem --- Initialize BNK_ACCT_CD for the selected checking account
+				bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
+				bnkAcctCd$=bnkAcctCdList!.getItem(index)
+				callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnkAcctCd$)
+			break
+		swend
+	endif
+
 [[APE_MANCHECKHDR.ADEL]]
 rem --- Verify all G/L Distribution records get deleted
 
 	ape12_dev=fnget_dev("APE_MANCHECKDIST")
 	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+	bnk_acct_cd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
 	check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
 	vend$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
 
-	read(ape12_dev,key=firm_id$+ap_type$+check_no$+vend$,dom=*next)
+	read(ape12_dev,key=firm_id$+ap_type$+bnk_acct_cd$+check_no$+vend$,dom=*next)
 	while 1
 		ape12_key$=key(ape12_dev,end=*break)
 		read(ape12_dev)
@@ -81,7 +115,6 @@ user_tpl.dflt_ap_type$=callpoint!.getUserInput()
 if user_tpl.dflt_ap_type$=""
 	user_tpl.dflt_ap_type$="  "
 	callpoint!.setUserInput(user_tpl.dflt_ap_type$)
-	callpoint!.setStatus("REFRESH")
 endif
 
 apm10_dev=fnget_dev("APC_TYPECODE")
@@ -105,6 +138,24 @@ if user_tpl.multi_types$="N" then
 	callpoint!.setColumnData("APE_MANCHECKHDR.AP_TYPE",user_tpl.dflt_ap_type$)
 endif
 
+[[APE_MANCHECKHDR.ARER]]
+rem --- Initialize BNK_ACCT_CD for the selected checking account
+	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
+	index=chkAcctCtl!.getSelectedIndex()
+	bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
+	bnkAcctCd$=bnkAcctCdList!.getItem(index)
+	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnkAcctCd$)
+
+rem --- Initialize check_no if next check number is available
+	nextChkList!=callpoint!.getDevObject("nextCheckList")
+	if nextChkList!.size()>0 then
+		rem --- Initialize CHECK_NO for the first Checking Account in ListButton
+		callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO",nextChkList!.getItem(0),1)
+	else
+		rem --- Clear CHECK_NO
+		callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO","",1)
+	endif
+
 [[APE_MANCHECKHDR.ARNF]]
 if num(stbl("+BATCH_NO"),err=*next)<>0
 	rem --- Check if this record exists in a different batch
@@ -117,13 +168,33 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
 endif
 
-[[APE_MANCHECKHDR.AWIN]]
-rem print 'show',; rem debug
+[[APE_MANCHECKHDR.ASVA]]
+rem --- Update next check number
+	adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
+	dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
 
+	bnkAcctCd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+	extractrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$; rem Advisory Locking
+	if cvs(adcBnkAcct.bnk_acct_cd$,2)<>"" then
+		check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
+		nextCheck$=cvs(str(num(check_no$)+1),3)
+		adcBnkAcct.nxt_check_no$=pad(nextCheck$,len(check_no$),"R","0")
+		writerecord(adcBnkAcct_dev)adcBnkAcct$
+
+		rem --- Update list of next check numbers for the current checking account
+		chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
+		index=chkAcctCtl!.getSelectedIndex()
+		nextChkList!=callpoint!.getDevObject("nextCheckList")
+		nextChkList!.setItem(index,adcBnkAcct.nxt_check_no$)
+	endif
+
+[[APE_MANCHECKHDR.AWIN]]
+rem --- Inits
+	use ::ado_func.src::func
 	use ::BBUtils.bbj::BBUtils
 
 rem --- Open/Lock files
-	files=30,begfile=1,endfile=15
+	files=30,begfile=1,endfile=17
 	dim files$[files],options$[files],chans$[files],templates$[files]
 	files$[1]="APE_MANCHECKHDR",options$[1]="OTA"
 	files$[2]="APE_MANCHECKDIST",options$[2]="OTA"
@@ -140,6 +211,8 @@ rem --- Open/Lock files
 	files$[13]="APS_PAYAUTH",options$[13]="OTA@"
 	files$[14]="APT_INVIMAGE",options$[14]="OTA[1]"
 	files$[15]="APE_MANCHECKDET",options$[15]="OTA@";rem --- "ape-22, used in AABO to compare grid against what's on disk
+	files$[16]="ADC_BANKACCTCODE",options$[16]="OTA"
+	files$[17]="APC_DISTRIBUTION",options$[17]="OTA"
 
 	call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :		begfile,
@@ -228,10 +301,11 @@ rem --- Additional File Opens
 	user_tpl.glworkfile$=glw11$
 
 	if gl$="Y"
-		files=21,begfile=20,endfile=21
+		files=22,begfile=20,endfile=22
 		dim files$[files],options$[files],chans$[files],templates$[files]
 		files$[20]="GLM_ACCT",options$[20]="OTA";rem --- "glm-01"
-		files$[21]=glw11$,options$[21]="OTAS";rem --- s means no err if tmplt not found
+		files$[21]="GLM_BANKMASTER",options$[21]="OTA"
+		files$[22]=glw11$,options$[22]="OTAS";rem --- s means no err if tmplt not found
 
 		call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :			begfile,
@@ -342,6 +416,50 @@ rem --- Disable button
 
 	callpoint!.setOptionEnabled("OINV",0)
 
+rem --- Initialize Checking Account ListButton with all checking accounts
+	chkAcctList!=BBjAPI().makeVector()
+	bnkAcctCdList!=BBjAPI().makeVector()
+	nextChkLIst!=BBjAPI().makeVector()
+	codeList!=BBjAPI().makeVector()
+
+	adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
+	dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
+	read(adcBnkAcct_dev,key=firm_id$,dom=*next)
+	while 1
+		readrecord(adcBnkAcct_dev,end=*break)adcBnkAcct$
+		if adcBnkAcct.firm_id$<>firm_id$ then break
+		if adcBnkAcct.bnk_acct_type$="C" then
+			bnkAcctCdList!.addItem(adcBnkAcct.bnk_acct_cd$)
+			chkAcctList!.addItem(adcBnkAcct.acct_desc$)
+			nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
+			codeList!.addItem("")
+		endif
+	wend
+	callpoint!.setDevObject("bnkAcctCdList",bnkAcctCdList!)
+	callpoint!.setDevObject("nextCheckList",nextChkList!)
+
+	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
+	chkAcctCtl!.removeAllItems()
+	chkAcctCtl!.insertItems(0,chkAcctList!)
+	chkAcctCtl!.selectIndex(0)
+	ldat$=func.buildListButtonList(chkAcctList!,codeList!)
+	callpoint!.setTableColumnAttribute("<<DISPLAY>>.CHECK_ACCTS","LDAT",ldat$)
+
+	if bnkAcctCdList!.size()>0 then
+		rem --- Initialize CHECK_NO for the selected checking account
+		bnkAcctCd$=bnkAcctCdList!.getItem(0)
+		callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnkAcctCd$)
+	else
+		rem --- Initialize CHECK_NO for the selected checking account
+		callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD","")
+
+		rem --- Disable Checking Account ListButton
+		callpoint!.setColumnEnabled("<<DISPLAY>>.CHECK_ACCTS",0)
+	endif
+
+rem --- Set callback for ON_LIST_SELECT event from CHECK_ACCTS ListButton
+	chkAcctCtl!.setCallback(BBjListButton.ON_LIST_SELECT,"custom_event")
+
 [[APE_MANCHECKHDR.BTBL]]
 rem --- Get Batch information
 
@@ -402,14 +520,15 @@ rem --- (if open Computer or Manual check, can reverse; if already a Void or Rev
 
 	batch_no$=callpoint!.getColumnData("APE_MANCHECKHDR.BATCH_NO")
 	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+	bnk_acct_cd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
 	check_no$=callpoint!.getUserInput()
 	tmpky$=""
 
 	ape_mancheckhdr=fnget_dev("APE_MANCHECKHDR")
 
-	read (ape_mancheckhdr,key=firm_id$+batch_no$+ap_type$+check_no$,dom=*next)
+	read (ape_mancheckhdr,key=firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$,dom=*next)
 	tmpky$=key(ape_mancheckhdr,end=*next)
-	if pos(firm_id$+batch_no$+ap_type$+check_no$=tmpky$)=1
+	if pos(firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$=tmpky$)=1
 		callpoint!.setStatus("RECORD:["+tmpky$+"]")
 		break
 	endif
@@ -420,10 +539,10 @@ rem --- not found in entry file, so see if in open checks
 		apt05_dev = fnget_dev("APT_CHECKHISTORY")
 		dim apt05a$:fnget_tpl$("APT_CHECKHISTORY")
 
-		read (apt05_dev,key=firm_id$+ap_type$+check_no$,dom=*next)
+		read (apt05_dev,key=firm_id$+ap_type$+bnk_acct_cd$+check_no$,dom=*next)
 		readrecord (apt05_dev,end=*next)apt05a$
 
-		if apt05a.firm_id$=firm_id$  and apt05a.ap_type$=ap_type$  and apt05a.check_no$=check_no$
+		if apt05a.firm_id$=firm_id$  and apt05a.ap_type$=ap_type$  and apt05a.bnk_acct_cd$=bnk_acct_cd$ and apt05a.check_no$=check_no$
 
 			vendor_id$=apt05a.vendor_id$
 
@@ -462,7 +581,7 @@ rem --- not found in entry file, so see if in open checks
 						tot_reten=tot_reten+apt05a.retention
 
 						readrecord (apt05_dev,end=*break)apt05a$
-						if apt05a.firm_id$<>firm_id$ or apt05a.ap_type$<>ap_type$ or apt05a.check_no$<>check_no$ then break
+						if apt05a.firm_id$<>firm_id$ or apt05a.ap_type$<>ap_type$ or apt05a.bnk_acct_cd$<>bnk_acct_cd$ or apt05a.check_no$<>check_no$ then break
 					wend
 
 					callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_INV",str(tot_inv),1)
@@ -487,8 +606,7 @@ rem --- not found in entry file, so see if in open checks
 
 					if msg_opt$="Y"
 						user_tpl.reuse_chk$="Y"
-						callpoint!.setColumnData("APE_MANCHECKHDR.TRANS_TYPE","M")
-						callpoint!.setStatus("REFRESH")
+						callpoint!.setColumnData("APE_MANCHECKHDR.TRANS_TYPE","M",1)
 					else
 						callpoint!.setStatus("ABORT")
 					endif
@@ -628,7 +746,7 @@ disable_fields:
 	wpos=pos(wctl$=wmap$,8)
 	wmap$(wpos+6,1)=ctl_stat$
 	callpoint!.setAbleMap(wmap$)
-	callpoint!.setStatus("ABLEMAP-REFRESH")
+	callpoint!.setStatus("ABLEMAP")
 return
 
 calc_tots:

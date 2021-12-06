@@ -4,6 +4,8 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="240"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="98"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="891"/>
 	<parameter name="FIRM_ID" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -12,6 +14,7 @@
 	<parameter name="AMT_MASK" class="java.lang.String"/>
 	<parameter name="INVOICE_DATE" class="java.lang.String"/>
 	<parameter name="AP_TYPE" class="java.lang.String"/>
+	<parameter name="BNK_ACCT_CD" class="java.lang.String"/>
 	<parameter name="CHECK_NO" class="java.lang.String"/>
 	<parameter name="VENDOR_ID" class="java.lang.String"/>
 	<parameter name="VEND_MASK" class="java.lang.String"/>
@@ -22,7 +25,7 @@
 	<parameter name="FIRM_PHONE_NO" class="java.lang.String"/>
 	<parameter name="FIRM_FAX_NO" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL APACH_PAYMENT_HDR($P{FIRM_ID},$P{AP_TYPE},$P{CHECK_NO},$P{VENDOR_ID},$P{VEND_MASK},$P{AMT_MASK},$P{BARISTA_WD})]]>
+		<![CDATA[CALL APACH_PAYMENT_HDR($P{FIRM_ID},$P{AP_TYPE},$P{BNK_ACCT_CD},$P{CHECK_NO},$P{VENDOR_ID},$P{VEND_MASK},$P{AMT_MASK},$P{BARISTA_WD})]]>
 	</queryString>
 	<field name="ADDRESS1" class="java.lang.String"/>
 	<field name="ADDRESS2" class="java.lang.String"/>
@@ -352,6 +355,9 @@
 				</subreportParameter>
 				<subreportParameter name="AP_TYPE">
 					<subreportParameterExpression><![CDATA[$P{AP_TYPE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BNK_ACCT_CD">
+					<subreportParameterExpression><![CDATA[$P{BNK_ACCT_CD}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="CHECK_NO">
 					<subreportParameterExpression><![CDATA[$P{CHECK_NO}]]></subreportParameterExpression>

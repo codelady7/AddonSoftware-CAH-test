@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2019-07-10T14:41:13 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="APChecks-Stub" language="groovy" pageWidth="612" pageHeight="258" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="addon" uuid="2f85780c-d2bf-44ac-bacb-d99ce871b0e1">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<parameter name="FIRM_ID" class="java.lang.String"/>
 	<parameter name="BARISTA_WD" class="java.lang.String"/>
 	<parameter name="CHECK_NUM" class="java.lang.String"/>
@@ -26,8 +27,9 @@
 	<parameter name="GL_ACCT_MASK" class="java.lang.String"/>
 	<parameter name="STUB_AMT_MASK" class="java.lang.String"/>
 	<parameter name="MAX_STUB_ROWS" class="java.lang.String"/>
+	<parameter name="BNK_ACCT_CD" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[call APCHECKS_STUB($P{FIRM_ID},$P{BARISTA_WD},$P{CHECK_NUM},$P{CURR_PAGE},$P{AP_TYPE},$P{VENDOR_ID},$P{STUB_TYPE},$P{AP_ADDRESS1_NAME},$P{AP_ADDRESS2},$P{AP_ADDRESS3},$P{AP_ADDRESS4},$P{AP_ADDR3_STUB},$P{LOGO_FILE},$P{VEND_NAME},$P{VEND_ADDR1},$P{VEND_ADDR2},$P{VEND_ADDR3},$P{VEND_MASK},$P{GL_ACCT_MASK},$P{STUB_AMT_MASK},$P{MAX_STUB_ROWS})]]>
+		<![CDATA[call APCHECKS_STUB($P{FIRM_ID},$P{BARISTA_WD},$P{BNK_ACCT_CD},$P{CHECK_NUM},$P{CURR_PAGE},$P{AP_TYPE},$P{VENDOR_ID},$P{STUB_TYPE},$P{AP_ADDRESS1_NAME},$P{AP_ADDRESS2},$P{AP_ADDRESS3},$P{AP_ADDRESS4},$P{AP_ADDR3_STUB},$P{LOGO_FILE},$P{VEND_NAME},$P{VEND_ADDR1},$P{VEND_ADDR2},$P{VEND_ADDR3},$P{VEND_MASK},$P{GL_ACCT_MASK},$P{STUB_AMT_MASK},$P{MAX_STUB_ROWS})]]>
 	</queryString>
 	<field name="CHECK_DATE" class="java.lang.String"/>
 	<field name="INVOICE_NUMBER" class="java.lang.String"/>

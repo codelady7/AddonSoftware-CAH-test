@@ -1,10 +1,8 @@
-[[APE_MANCHECKDET.AREC]]
-rem --- Enable/disable RET_FLAG column
-	if user_tpl.ret_flag$="Y"
-		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",1)
-	else
-		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",0)
-	endif
+[[APE_MANCHECKDET.ADEL]]
+rem --- Recalc totals for header
+	gosub calc_tots
+	gosub disp_tots
+
 [[APE_MANCHECKDET.ADGE]]
 rem --- Enable/disable RET_FLAG column
 	if user_tpl.ret_flag$="Y"
@@ -12,6 +10,12 @@ rem --- Enable/disable RET_FLAG column
 	else
 		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",0)
 	endif
+
+[[APE_MANCHECKDET.AGCL]]
+rem --- Set preset val for batch_no
+
+	callpoint!.setTableColumnAttribute("APE_MANCHECKDET.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
 [[APE_MANCHECKDET.AGDR]]
 rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
 	apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")
@@ -32,6 +36,11 @@ rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
 		endif
 	endif
+
+[[APE_MANCHECKDET.AGRE]]
+gosub calc_tots
+gosub disp_tots
+
 [[APE_MANCHECKDET.AGRN]]
 rem --- Enable Load Image and View Images options as needed
 
@@ -45,44 +54,7 @@ rem --- Enable Load Image and View Images options as needed
 		callpoint!.setOptionEnabled("VIMG",0)
 		callpoint!.setOptionEnabled("LIMG",0)
 	endif
-[[APE_MANCHECKDET.AOPT-VIMG]]
-rem --- Displaye invoice images in the browser
-	curr_row=callpoint!.getValidationRow()
-	rowstatus$ = callpoint!.getGridRowNewStatus(curr_row) + callpoint!.getGridRowModifyStatus(curr_row) + callpoint!.getGridRowDeleteStatus(curr_row)
 
-	if pos("Y" = rowstatus$) = 0 then 
-		invimage_dev=fnget_dev("1APT_INVIMAGE")
-		dim invimage$:fnget_tpl$("1APT_INVIMAGE")
-		vendor_id$ = callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")
-		ap_inv_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
-
-		read record(invimage_dev, key=firm_id$+vendor_id$+ap_inv_no$, dom=*next)
-		while 1
-			invimage_key$=key(invimage_dev,end=*break)
-			if pos(firm_id$+vendor_id$+ap_inv_no$=invimage_key$)<>1 then break
-			invimage$=fattr(invimage$)
-			read record(invimage_dev)invimage$
-
-			switch (BBjAPI().TRUE)
-				case invimage.scan_docs_to$="BDA"
-					rem --- Do Barista Doc Archive
-					sslReq = BBUtils.isWebServerSSLEnabled()
-					url$ = BBUtils.copyFileToWebServer(cvs(invimage.doc_url$,2),"appreviewtemp", sslReq)
-					BBjAPI().getThinClient().browse(url$)
-					urlVect!=callpoint!.getDevObject("urlVect")
-					urlVect!.add(url$)
-					callpoint!.setDevObject("urlVect",urlVect!)
-					break
-				case invimage.scan_docs_to$="GD "
-					rem --- Do Google Docs
-					BBjAPI().getThinClient().browse(cvs(invimage.doc_url$,2))
-					break
-				case default
-					rem --- Unknown ... skip
-					break
-			swend
-		wend
-	endif
 [[APE_MANCHECKDET.AOPT-LIMG]]
 rem --- Select invoice image and upload for current grid row
 	curr_row=callpoint!.getValidationRow()
@@ -101,31 +73,7 @@ rem --- Select invoice image and upload for current grid row
 
 	call "apc_imageupload.aon", channels[all],templates$[all],ap_type$,vendor_id$,ap_inv_no$,man_check$,scan_docs_to$,status
 	endif
-[[APE_MANCHECKDET.BDGX]]
-rem --- Disable buttons when going to header
 
-	callpoint!.setOptionEnabled("OINV",0)
-	callpoint!.setOptionEnabled("VIMG",0)
-	callpoint!.setOptionEnabled("LIMG",0)
-[[APE_MANCHECKDET.AP_INV_NO.BINP]]
-rem --- Should Open Invoice button be enabled?
-
-	trans_type$ = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.TRANS_TYPE")
-	invoice_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
-
-	if trans_type$ = "M" and cvs(invoice_no$, 2) = "" then
-		callpoint!.setOptionEnabled("OINV",1)
-	else
-		callpoint!.setOptionEnabled("OINV",0)
-	endif
-[[APE_MANCHECKDET.BGDS]]
-rem --- Inits
-
-	use ::ado_util.src::util
-	use ::BBUtils.bbj::BBUtils
-
-
-	
 [[APE_MANCHECKDET.AOPT-OINV]]
 rem -- Call inquiry program to view open invoices this vendor
 rem -- only allow if trans_type is manual (vs reversal/void)
@@ -189,7 +137,7 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					ape22_key$ = key(ape22_dev1, end=*next)
 
 					if pos(firm_id$+ap_type$+vendor_id$+apt01a.ap_inv_no$ = ape22_key$) = 1 and
-:						ape22_key.check_no$ <> callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
+:						ape22_key.bnk_acct_cd$+ape22_key.check_no$ <> callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD")+callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
 :					then
 						callpoint!.setMessage("AP_INV_IN_USE:Manual Check")
 						break
@@ -242,131 +190,54 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 		callpoint!.setMessage("AP_NO_INV_INQ")
 		callpoint!.setStatus("ABORT")
 	endif
-[[APE_MANCHECKDET.AGRE]]
-gosub calc_tots
-gosub disp_tots
-[[APE_MANCHECKDET.AGCL]]
-rem --- Set preset val for batch_no
 
-	callpoint!.setTableColumnAttribute("APE_MANCHECKDET.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
-[[APE_MANCHECKDET.AUDE]]
-rem --- Recalc totals for header
-	gosub calc_tots
-	gosub disp_tots
+[[APE_MANCHECKDET.AOPT-VIMG]]
+rem --- Displaye invoice images in the browser
+	curr_row=callpoint!.getValidationRow()
+	rowstatus$ = callpoint!.getGridRowNewStatus(curr_row) + callpoint!.getGridRowModifyStatus(curr_row) + callpoint!.getGridRowDeleteStatus(curr_row)
 
-rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
-	apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")
-	ap_type$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.AP_TYPE")
-	vendor_id$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.VENDOR_ID")
-	invoice_no$=callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
-	invoice_found=0
-	find(apt_invoicehdr_dev,key=firm_id$+ap_type$+vendor_id$+invoice_no$, dom=*next); invoice_found=1
+	if pos("Y" = rowstatus$) = 0 then 
+		invimage_dev=fnget_dev("1APT_INVIMAGE")
+		dim invimage$:fnget_tpl$("1APT_INVIMAGE")
+		vendor_id$ = callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")
+		ap_inv_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
 
-	if invoice_found then
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",0)
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
-	else
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",1)
-		if user_tpl.multi_dist$="Y"
-			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",1)
-		else
-			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
-		endif
+		read record(invimage_dev, key=firm_id$+vendor_id$+ap_inv_no$, dom=*next)
+		while 1
+			invimage_key$=key(invimage_dev,end=*break)
+			if pos(firm_id$+vendor_id$+ap_inv_no$=invimage_key$)<>1 then break
+			invimage$=fattr(invimage$)
+			read record(invimage_dev)invimage$
+
+			switch (BBjAPI().TRUE)
+				case invimage.scan_docs_to$="BDA"
+					rem --- Do Barista Doc Archive
+					sslReq = BBUtils.isWebServerSSLEnabled()
+					url$ = BBUtils.copyFileToWebServer(cvs(invimage.doc_url$,2),"appreviewtemp", sslReq)
+					BBjAPI().getThinClient().browse(url$)
+					urlVect!=callpoint!.getDevObject("urlVect")
+					urlVect!.add(url$)
+					callpoint!.setDevObject("urlVect",urlVect!)
+					break
+				case invimage.scan_docs_to$="GD "
+					rem --- Do Google Docs
+					BBjAPI().getThinClient().browse(cvs(invimage.doc_url$,2))
+					break
+				case default
+					rem --- Unknown ... skip
+					break
+			swend
+		wend
 	endif
 
-rem --- Enable/disable RET_FLAG column
-	if user_tpl.ret_flag$="Y"
-		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",1)
-	else
-		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",0)
+[[APE_MANCHECKDET.AP_DIST_CODE.AVAL]]
+rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
+	ap_dist_code$=callpoint!.getUserInput()
+	gosub validateDistCd
+	if badDistCd then
+		callpoint!.setStatus("ABORT")
+		break
 	endif
-[[APE_MANCHECKDET.BDEL]]
-rem --- need to delete the GL dist recs here (but don't try if nothing in grid row/rec_data$)
-if cvs(rec_data$,3)<>"" gosub delete_gldist
-	
-	
-[[APE_MANCHECKDET.INVOICE_AMT.AVEC]]
-gosub calc_tots
-gosub disp_tots
-[[APE_MANCHECKDET.ADEL]]
-rem --- Recalc totals for header
-	gosub calc_tots
-	gosub disp_tots
-[[APE_MANCHECKDET.DISCOUNT_AMT.AVEC]]
-gosub calc_tots
-gosub disp_tots
-[[APE_MANCHECKDET.DISCOUNT_AMT.AVAL]]
-net_paid=num(callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))-num(callpoint!.getUserInput())
-callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(net_paid))
-
-callpoint!.setDevObject("dist_amt",callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
-callpoint!.setDevObject("dflt_dist",user_tpl.dflt_dist_cd$)
-callpoint!.setDevObject("dflt_gl",user_tpl.dflt_gl_account$)
-callpoint!.setDevObject("tot_inv",callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
-callpoint!.setStatus("MODIFIED-REFRESH")
-[[APE_MANCHECKDET.INVOICE_AMT.AVAL]]
-rem --- if invoice # isn't in open invoice file, invoke GL Dist grid
-
-net_paid=num(callpoint!.getUserInput())-num(callpoint!.getColumnData("APE_MANCHECKDET.DISCOUNT_AMT"))
-callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(net_paid))
-
-callpoint!.setDevObject("dist_amt",callpoint!.getUserInput())
-callpoint!.setDevObject("dflt_dist",user_tpl.dflt_dist_cd$)
-callpoint!.setDevObject("dflt_gl",user_tpl.dflt_gl_account$)
-callpoint!.setDevObject("tot_inv",callpoint!.getUserInput())
-
-apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")			
-dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
-ap_type$=field(apt01a$,"AP_TYPE")
-vendor_id$=field(apt01a$,"VENDOR_ID")
-ap_type$(1)=UserObj!.getItem(num(user_tpl.ap_type_vpos$)).getText()
-vendor_id$(1)=UserObj!.getItem(num(user_tpl.vendor_id_vpos$)).getText()
-
-apt01ak1$=firm_id$+ap_type$+vendor_id$+callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
-
-readrecord(apt_invoicehdr_dev,key=apt01ak1$,dom=*next)apt01a$
-if apt01a$(1,len(apt01ak1$))<>apt01ak1$ and num(callpoint!.getUserInput())<>0
-
-	rem --- make sure fields (ap type, vendor ID, check#) needed to build GL Dist recs are present, and that AP type/Vendor go together
-	dont_allow$=""	
-	gosub validate_mandatory_data
-
-	if dont_allow$="Y"
-		msg_id$="AP_MANCHKWRITE"
-		gosub disp_message
-	else	
-		rem --- Save current context so we'll know where to return from GL Dist
-		declare BBjStandardGrid grid!
-		grid! = util.getGrid(Form!)
-		grid_ctx=grid!.getContextID()
-		curr_row=grid!.getSelectedRow()
-		curr_col=grid!.getSelectedColumn()
-		rem --- invoke GL Dist form
-		gosub get_gl_tots
-		callpoint!.setDevObject("invoice_amt",callpoint!.getUserInput())
-		user_id$=stbl("+USER_ID")
-		dim dflt_data$[1,1]
-		dflt_data$[1,0]="GL_ACCOUNT"
-		dflt_data$[1,1]=user_tpl.dflt_gl_account$
-		key_pfx$=callpoint!.getColumnData("APE_MANCHECKDET.FIRM_ID")+callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE")+
-:			callpoint!.getColumnData("APE_MANCHECKDET.CHECK_NO")+callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")+
-:			callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
-		callpoint!.setDevObject("key_pfx",key_pfx$)
-		call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:			"APE_MANCHECKDIST",
-:			user_id$,
-:			"MNT",
-:			key_pfx$,
-:			table_chans$[all],
-:			"",
-:			dflt_data$[all]
-		rem --- Reset focus on detail row where GL Dist was executed
-		sysgui!.setContext(grid_ctx)
-		grid!.startEdit(curr_row,curr_col)
-		callpoint!.setStatus("ACTIVATE")
-	endif	
-endif
-callpoint!.setStatus("MODIFIED-REFRESH")
 
 [[APE_MANCHECKDET.AP_INV_NO.AVAL]]
 rem --- Skip AVAL if AP_INV_NO wasn't changed to avoid re-initializing INVOICE_AMT, etc.
@@ -411,11 +282,13 @@ rem --- Look for Open Invoice
 	ret_amt  = 0
 
 	ap_type$    = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.AP_TYPE")
+	batch_no$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BATCH_NO")
 	vendor_id$  = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.VENDOR_ID")
 	invoice_no$ = callpoint!.getUserInput()
+	bnk_acct_cd$ = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
 	check_no$   = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
 
-	ape02_key$ = firm_id$ + ap_type$ + check_no$ + vendor_id$
+	ape02_key$ = firm_id$ + batch_no$ + ap_type$ + bnk_acct_cd$ + check_no$ + vendor_id$
 	apt01ak1$ = firm_id$ + ap_type$ + vendor_id$ + invoice_no$ 
 	ape22_dev1 = user_tpl.ape22_dev1
 
@@ -451,11 +324,19 @@ rem --- Look for Open Invoice
 		read (ape22_dev1, key=firm_id$+ap_type$+vendor_id$+invoice_no$, knum="AO_VEND_INV", dom=*next)
 		ape22_key$ = key(ape22_dev1, end=*next)
 		if pos(firm_id$+ap_type$+vendor_id$+invoice_no$ = ape22_key$) = 1 and
-:			ape22_key.check_no$ <> check_no$
+:			ape22_key.bnk_acct_cd$+ape22_key.check_no$ <> bnk_acct_cd$+check_no$
 :		then
 			callpoint!.setMessage("AP_INV_IN_USE:Manual Check")
 			callpoint!.setStatus("ABORT-RECORD:["+ape02_key$+"]")
 			goto end_of_inv_aval
+		endif
+
+		rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
+		ap_dist_code$=apt01a.ap_dist_code$
+		gosub validateDistCd
+		if badDistCd then
+			callpoint!.setStatus("ABORT")
+			break
 		endif
 
 	rem --- Accumulate totals
@@ -503,7 +384,7 @@ rem --- Look for Open Invoice
 		read (ape22_dev1, key=firm_id$+ap_type$+vendor_id$+invoice_no$, knum="AO_VEND_INV", dom=*next)
 		ape22_key$ = key(ape22_dev1, end=*next)
 		if pos(firm_id$+ap_type$+vendor_id$+invoice_no$ = ape22_key$) = 1 and
-:			ape22_key.check_no$ <> check_no$
+:			ape22_key.bnk_acct_cd$+ape22_key.check_no$ <> bnk_acct_cd$+check_no$
 :		then
 			callpoint!.setMessage("AP_INV_IN_USE:Manual Check")
 			callpoint!.setStatus("ABORT-RECORD:["+ape02_key$+"]")
@@ -525,9 +406,16 @@ rem --- Look for Open Invoice
 		else
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
 		endif
-		callpoint!.setColumnData("APE_MANCHECKDET.AP_DIST_CODE",user_tpl.dflt_dist_cd$)
-		callpoint!.setColumnData("APE_MANCHECKDET.INVOICE_DATE",callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_DATE"))
+		callpoint!.setColumnData("APE_MANCHECKDET.AP_DIST_CODE",user_tpl.dflt_dist_cd$,1)
+		callpoint!.setColumnData("APE_MANCHECKDET.INVOICE_DATE",callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_DATE"),1)
 
+		rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
+		ap_dist_code$=user_tpl.dflt_dist_cd$
+		gosub validateDistCd
+		if badDistCd then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
 	endif
 
 	callpoint!.setColumnData("APE_MANCHECKDET.INVOICE_AMT",str(inv_amt))
@@ -540,7 +428,166 @@ rem --- Look for Open Invoice
 	callpoint!.setStatus("MODIFIED-REFRESH")
 
 end_of_inv_aval:
+
+[[APE_MANCHECKDET.AP_INV_NO.BINP]]
+rem --- Should Open Invoice button be enabled?
+
+	trans_type$ = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.TRANS_TYPE")
+	invoice_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
+
+	if trans_type$ = "M" and cvs(invoice_no$, 2) = "" then
+		callpoint!.setOptionEnabled("OINV",1)
+	else
+		callpoint!.setOptionEnabled("OINV",0)
+	endif
+
+[[APE_MANCHECKDET.AREC]]
+rem --- Enable/disable RET_FLAG column
+	if user_tpl.ret_flag$="Y"
+		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",1)
+	else
+		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",0)
+	endif
+
+[[APE_MANCHECKDET.AUDE]]
+rem --- Recalc totals for header
+	gosub calc_tots
+	gosub disp_tots
+
+rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
+	apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")
+	ap_type$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.AP_TYPE")
+	vendor_id$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.VENDOR_ID")
+	invoice_no$=callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
+	invoice_found=0
+	find(apt_invoicehdr_dev,key=firm_id$+ap_type$+vendor_id$+invoice_no$, dom=*next); invoice_found=1
+
+	if invoice_found then
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",0)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
+	else
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",1)
+		if user_tpl.multi_dist$="Y"
+			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",1)
+		else
+			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
+		endif
+	endif
+
+rem --- Enable/disable RET_FLAG column
+	if user_tpl.ret_flag$="Y"
+		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",1)
+	else
+		callpoint!.setColumnEnabled(-1,"APE_MANCHECKDET.RETENTION",0)
+	endif
+
+[[APE_MANCHECKDET.BDEL]]
+rem --- need to delete the GL dist recs here (but don't try if nothing in grid row/rec_data$)
+if cvs(rec_data$,3)<>"" gosub delete_gldist
+	
+	
+
+[[APE_MANCHECKDET.BDGX]]
+rem --- Disable buttons when going to header
+
+	callpoint!.setOptionEnabled("OINV",0)
+	callpoint!.setOptionEnabled("VIMG",0)
+	callpoint!.setOptionEnabled("LIMG",0)
+
+[[APE_MANCHECKDET.BGDS]]
+rem --- Inits
+
+	use ::ado_util.src::util
+	use ::BBUtils.bbj::BBUtils
+
+
+	
+
+[[APE_MANCHECKDET.DISCOUNT_AMT.AVAL]]
+net_paid=num(callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))-num(callpoint!.getUserInput())
+callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(net_paid))
+
+callpoint!.setDevObject("dist_amt",callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
+callpoint!.setDevObject("dflt_dist",user_tpl.dflt_dist_cd$)
+callpoint!.setDevObject("dflt_gl",user_tpl.dflt_gl_account$)
+callpoint!.setDevObject("tot_inv",callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
+callpoint!.setStatus("MODIFIED-REFRESH")
+
+[[APE_MANCHECKDET.DISCOUNT_AMT.AVEC]]
+gosub calc_tots
+gosub disp_tots
+
+[[APE_MANCHECKDET.INVOICE_AMT.AVAL]]
+rem --- if invoice # isn't in open invoice file, invoke GL Dist grid
+
+net_paid=num(callpoint!.getUserInput())-num(callpoint!.getColumnData("APE_MANCHECKDET.DISCOUNT_AMT"))
+callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(net_paid))
+
+callpoint!.setDevObject("dist_amt",callpoint!.getUserInput())
+callpoint!.setDevObject("dflt_dist",user_tpl.dflt_dist_cd$)
+callpoint!.setDevObject("dflt_gl",user_tpl.dflt_gl_account$)
+callpoint!.setDevObject("tot_inv",callpoint!.getUserInput())
+
+apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")			
+dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
+ap_type$=field(apt01a$,"AP_TYPE")
+vendor_id$=field(apt01a$,"VENDOR_ID")
+ap_type$(1)=UserObj!.getItem(num(user_tpl.ap_type_vpos$)).getText()
+vendor_id$(1)=UserObj!.getItem(num(user_tpl.vendor_id_vpos$)).getText()
+
+apt01ak1$=firm_id$+ap_type$+vendor_id$+callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
+
+readrecord(apt_invoicehdr_dev,key=apt01ak1$,dom=*next)apt01a$
+if apt01a$(1,len(apt01ak1$))<>apt01ak1$ and num(callpoint!.getUserInput())<>0
+
+	rem --- make sure fields (ap type, vendor ID, check#) needed to build GL Dist recs are present, and that AP type/Vendor go together
+	dont_allow$=""	
+	gosub validate_mandatory_data
+
+	if dont_allow$="Y"
+		msg_id$="AP_MANCHKWRITE"
+		gosub disp_message
+	else	
+		rem --- Save current context so we'll know where to return from GL Dist
+		declare BBjStandardGrid grid!
+		grid! = util.getGrid(Form!)
+		grid_ctx=grid!.getContextID()
+		curr_row=grid!.getSelectedRow()
+		curr_col=grid!.getSelectedColumn()
+		rem --- invoke GL Dist form
+		gosub get_gl_tots
+		callpoint!.setDevObject("invoice_amt",callpoint!.getUserInput())
+		user_id$=stbl("+USER_ID")
+		dim dflt_data$[1,1]
+		dflt_data$[1,0]="GL_ACCOUNT"
+		dflt_data$[1,1]=user_tpl.dflt_gl_account$
+		key_pfx$=callpoint!.getColumnData("APE_MANCHECKDET.FIRM_ID")+callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE")+
+:			callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD")+callpoint!.getColumnData("APE_MANCHECKDET.CHECK_NO")+
+:			callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")+callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
+		callpoint!.setDevObject("key_pfx",key_pfx$)
+		call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:			"APE_MANCHECKDIST",
+:			user_id$,
+:			"MNT",
+:			key_pfx$,
+:			table_chans$[all],
+:			"",
+:			dflt_data$[all]
+		rem --- Reset focus on detail row where GL Dist was executed
+		sysgui!.setContext(grid_ctx)
+		grid!.startEdit(curr_row,curr_col)
+		callpoint!.setStatus("ACTIVATE")
+	endif	
+endif
+callpoint!.setStatus("MODIFIED-REFRESH")
+
+[[APE_MANCHECKDET.INVOICE_AMT.AVEC]]
+gosub calc_tots
+gosub disp_tots
+
 [[APE_MANCHECKDET.<CUSTOM>]]
+#include [+ADDON_LIB]std_functions.aon
+
 calc_tots:
 	recVect!=GridVect!.getItem(0)
 	dim gridrec$:dtlg_param$[1,3]
@@ -580,7 +627,7 @@ get_gl_tots:
 	ape12_dev=fnget_dev("APE_MANCHECKDIST")				
 	dim ape12a$:fnget_tpl$("APE_MANCHECKDIST")
 	amt_dist=0
-	ape12ak1$=firm_id$+callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE")+
+	ape12ak1$=firm_id$+callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE")+callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD")+
 :	callpoint!.getColumnData("APE_MANCHECKDET.CHECK_NO")+callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")+
 :	callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
 	read(ape12_dev,key=ape12ak1$,dom=*next)
@@ -600,6 +647,7 @@ delete_gldist:
 	ape12_dev=fnget_dev("APE_MANCHECKDIST")
 	dim ape12a$:fnget_tpl$("APE_MANCHECKDIST")
 	remove_ky$=firm_id$+callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE") +
+:		callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD") +
 :		callpoint!.getColumnData("APE_MANCHECKDET.CHECK_NO") +
 :		callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID") +
 :		callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
@@ -637,3 +685,35 @@ get_vendor_history:
 			vend_hist$="Y"
 	endif
 return
+
+validateDistCd:
+rem --- When AP uses GL, the GL Cash Account for the invoice's Distribution Code must match the 
+rem --- GLM_BANKMASTER GL Account for the BNK_ACCT_CD
+	badDistCd=0
+	if user_tpl.glint$="Y" then
+		apcDistribution_dev = fnget_dev("APC_DISTRIBUTION")
+		dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
+		apcDistribution.ap_dist_code$=ap_dist_code$
+		readrecord(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
+
+		glm05_dev = fnget_dev("GLM_BANKMASTER")
+		dim glm05a$:fnget_tpl$("GLM_BANKMASTER")
+		readrecord(glm05_dev,key=firm_id$+apcDistribution.gl_cash_acct$,dom=*next)glm05a$
+
+		bnkAcctCd$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+		if cvs(bnkAcctCd$,2)<>cvs(glm05a.bnk_acct_cd$,2) then
+			badDistCd=1
+			call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
+
+			msg_id$="AP_BAD_DIST_CD"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=ap_dist_code$
+			msg_tokens$[2]=fnmask$(apcDistribution.gl_cash_acct$(1,gl_size),m0$)
+			msg_tokens$[3]=cvs(bnkAcctCd$,2)
+			gosub disp_message
+		endif
+	endif
+return
+
+
+

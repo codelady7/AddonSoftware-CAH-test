@@ -274,7 +274,7 @@ rem --- Sort Invoice History (apt-02) by alternate sequence
     
         sql_prep$ = ""
         sql_prep$ = sql_prep$ + "SELECT apm_vendmast.alt_sequence, apt_invoicedist.ap_type, apt_invoicedist.vendor_id, apt_invoicedist.invoice_type, "
-        sql_prep$ = sql_prep$ + "       apt_invoicedist.reference, apt_invoicedist.gl_account, apt_invoicedist.accting_date "
+        sql_prep$ = sql_prep$ + "       apt_invoicedist.reference, apt_invoicedist.gl_account, apt_invoicedist.accting_date, apt_invoicedist.bnk_acct_amt "
         sql_prep$ = sql_prep$ + "  FROM apt_invoicedist INNER JOIN apm_vendmast "
         sql_prep$ = sql_prep$ + "    ON apt_invoicedist.firm_id = apm_vendmast.firm_id AND "
         sql_prep$ = sql_prep$ + "       apt_invoicedist.vendor_id = apm_vendmast.vendor_id "
@@ -312,9 +312,10 @@ rem --- Read next invoice history or sort record
             apt02a.reference$    = read_tpl.reference$
             apt02a.gl_account$   = read_tpl.gl_account$
             apt02a.accting_date$ = read_tpl.accting_date$
+            apt02a.bnk_acct_cd$  = read_tpl.bnk_acct_cd$
             
             k$ = apt02a.firm_id$ + apt02a.ap_type$ + apt02a.vendor_id$ + apt02a.invoice_type$ +
-:                apt02a.reference$ + apt02a.gl_account$ + apt02a.accting_date$
+:                apt02a.reference$ + apt02a.gl_account$ + apt02a.accting_date$ + apt02a.bnk_acct_cd$
             find record (apt02_dev,key=k$,dom=*continue) apt02a$
             
         else
@@ -564,10 +565,11 @@ detail_break: rem --- Invoice type/reference (Invoice/Check) break
     dim apt05a$:fattr(apt05a$)
     apt05a.firm_id$=apt02a.firm_id$
     apt05a.ap_type$=apt02a.ap_type$
+    apt05a.bnk_acct_cd$=apt02a.bnk_acct_cd$
     apt05a.check_no$=apt02a.reference$(1,7)
     apt05a.vendor_id$=apt02a.vendor_id$
     apt05a.vendor_name$=nf$
-    apt05_key$=apt05a.firm_id$+apt05a.ap_type$+apt05a.check_no$+apt05a.vendor_id$
+    apt05_key$=apt05a.firm_id$+apt05a.ap_type$+apt05a.bnk_acct_cd$+apt05a.check_no$+apt05a.vendor_id$
     read (apt05_dev,key=apt05_key$,dom=*next)
     k$=key(apt05_dev,end=*return)
     if pos(apt05_key$=k$)=1 read record (apt05_dev) apt05a$
