@@ -1,36 +1,3 @@
-[[APR_CHECKS.ACUS]]
-rem --- Process custom event
-rem This routine is executed when callbacks have been set to run a 'custom event'.
-rem Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind of event it is.
-rem See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
-
-	dim gui_event$:tmpl(gui_dev)
-	dim notify_base$:noticetpl(0,0)
-	gui_event$=SysGUI!.getLastEventString()
-	ctl_ID=dec(gui_event.ID$)
-
-	notify_base$=notice(gui_dev,gui_event.x%)
-	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
-	notice$=notify_base$
-
-	rem --- The CHECK_ACCTS ListButton
-	chkAcctCtl!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
-	if ctl_ID=chkAcctCtl!.getID() then
-		switch notice.code
-			case 2; rem --- ON_LIST_SELECT
-				rem --- Initialize CHECK_NO for the selected checking account
-				index=chkAcctCtl!.getSelectedIndex()
-				nextChkList!=callpoint!.getDevObject("nextCheckList")
-				callpoint!.setColumnData("APR_CHECKS.CHECK_NO",nextChkList!.getItem(index),1)
-
-				rem --- Hold on to selected Bank Account Code, i.e. Checking Account
-				bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
-				bnkAcctCd$=bnkAcctCdList!.getItem(index)
-				callpoint!.setDevObject("bnkAcctCd",bnkAcctCd$)
-			break
-		swend
-	endif
-
 [[APR_CHECKS.ADIS]]
 rem --- Refresh Checking Account ListButton when using previously saved selections.
 	gosub initCheckAccts
@@ -259,9 +226,17 @@ rem --- Abort if a check run is actively running
 rem --- Initializations
 	callpoint!.setDevObject("reuse_check_num","")		
 
-rem --- Set callback for ON_LIST_SELECT event from CHECK_ACCTS ListButton
+[[APR_CHECKS.CHECK_ACCTS.AVAL]]
+rem --- Initialize CHECK_NO for the selected checking account
+
 	chkAcctCtl!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
-	chkAcctCtl!.setCallback(BBjListButton.ON_LIST_SELECT,"custom_event")
+	index=chkAcctCtl!.getSelectedIndex()
+	nextChkList!=callpoint!.getDevObject("nextCheckList")
+	callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO",nextChkList!.getItem(index),1)
+
+rem --- Hold on to selected Bank Account Code, i.e. Checking Account
+	bnkAcctCdList!=callpoint!.setDevObject("bnkAcctCdList")
+	callpoint!.setDevObject("bnkAcctCd",bnkAcctCdList!.getItem(index))
 
 [[APR_CHECKS.CHECK_NO.AVAL]]
 rem --- Warn if this check number has been previously used
@@ -453,7 +428,7 @@ rem ==========================================================================
 								bnkAcctCdList!.addItem(glm05.bnk_acct_cd$)
 								chkAcctList!.addItem(adcBnkAcct.acct_desc$)
 								nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
-								codeList!.addItem("")
+								codeList!.addItem(glm05.bnk_acct_cd$)
 							endif
 							invVect!.addItem(ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$)
 							acctInvMap!.put(glm05.bnk_acct_cd$,invVect!)
@@ -474,7 +449,7 @@ rem ==========================================================================
 				bnkAcctCdList!.addItem(adcBnkAcct.bnk_acct_cd$)
 				chkAcctList!.addItem(adcBnkAcct.acct_desc$)
 				nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
-				codeList!.addItem("")
+				codeList!.addItem(adcBnkAcct.bnk_acct_cd$)
 			endif
 		wend
 	endif
@@ -485,11 +460,11 @@ rem ==========================================================================
 	chkAcctCtl!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
 	chkAcctCtl!.removeAllItems()
 	chkAcctCtl!.insertItems(0,chkAcctList!)
-	chkAcctCtl!.selectIndex(0)
 	ldat$=func.buildListButtonList(chkAcctList!,codeList!)
 	callpoint!.setTableColumnAttribute("APR_CHECKS.CHECK_ACCTS","LDAT",ldat$)
 
 	if chkAcctList!.size()>0 then
+		callpoint!.setColumnData("APR_CHECKS.CHECK_ACCTS",bnkAcctCdList!.getItem(0),1)
 		if chkAcctList!.size()=1 then
 			callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",0)
 		else

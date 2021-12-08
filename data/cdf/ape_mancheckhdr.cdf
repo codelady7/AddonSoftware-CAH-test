@@ -25,39 +25,6 @@ rem --- one or more ape-12 recs, then come back to main form and abort, which wo
 		next reccnt		
 	endif
 
-[[APE_MANCHECKHDR.ACUS]]
-rem --- Process custom event
-rem This routine is executed when callbacks have been set to run a 'custom event'.
-rem Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind of event it is.
-rem See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
-
-	dim gui_event$:tmpl(gui_dev)
-	dim notify_base$:noticetpl(0,0)
-	gui_event$=SysGUI!.getLastEventString()
-	ctl_ID=dec(gui_event.ID$)
-
-	notify_base$=notice(gui_dev,gui_event.x%)
-	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
-	notice$=notify_base$
-
-	rem --- The CHECK_ACCTS ListButton
-	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
-	if ctl_ID=chkAcctCtl!.getID() then
-		switch notice.code
-			case 2; rem --- ON_LIST_SELECT
-				rem --- Initialize CHECK_NO for the selected checking account
-				index=chkAcctCtl!.getSelectedIndex()
-				nextChkList!=callpoint!.getDevObject("nextCheckList")
-				callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO",nextChkList!.getItem(index),1)
-
-				rem --- Initialize BNK_ACCT_CD for the selected checking account
-				bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
-				bnkAcctCd$=bnkAcctCdList!.getItem(index)
-				callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnkAcctCd$)
-			break
-		swend
-	endif
-
 [[APE_MANCHECKHDR.ADEL]]
 rem --- Verify all G/L Distribution records get deleted
 
@@ -139,11 +106,10 @@ if user_tpl.multi_types$="N" then
 endif
 
 [[APE_MANCHECKHDR.ARER]]
-rem --- Initialize BNK_ACCT_CD for the selected checking account
-	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
-	index=chkAcctCtl!.getSelectedIndex()
+rem --- Initialize BNK_ACCT_CD for the first checking account in the list
 	bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
-	bnkAcctCd$=bnkAcctCdList!.getItem(index)
+	bnkAcctCd$=bnkAcctCdList!.getItem(0)
+	callpoint!.setColumnData("<<DISPLAY>>.CHECK_ACCTS",bnkAcctCd$,1)
 	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnkAcctCd$)
 
 rem --- Initialize check_no if next check number is available
@@ -432,7 +398,7 @@ rem --- Initialize Checking Account ListButton with all checking accounts
 			bnkAcctCdList!.addItem(adcBnkAcct.bnk_acct_cd$)
 			chkAcctList!.addItem(adcBnkAcct.acct_desc$)
 			nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
-			codeList!.addItem("")
+			codeList!.addItem(adcBnkAcct.bnk_acct_cd$)
 		endif
 	wend
 	callpoint!.setDevObject("bnkAcctCdList",bnkAcctCdList!)
@@ -456,9 +422,6 @@ rem --- Initialize Checking Account ListButton with all checking accounts
 		rem --- Disable Checking Account ListButton
 		callpoint!.setColumnEnabled("<<DISPLAY>>.CHECK_ACCTS",0)
 	endif
-
-rem --- Set callback for ON_LIST_SELECT event from CHECK_ACCTS ListButton
-	chkAcctCtl!.setCallback(BBjListButton.ON_LIST_SELECT,"custom_event")
 
 [[APE_MANCHECKHDR.BTBL]]
 rem --- Get Batch information
@@ -489,6 +452,18 @@ if dont_write$="Y"
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
 endif
+
+[[<<DISPLAY>>.CHECK_ACCTS.AVAL]]
+rem --- Initialize CHECK_NO for the selected checking account
+
+	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
+	index=chkAcctCtl!.getSelectedIndex()
+	nextChkList!=callpoint!.getDevObject("nextCheckList")
+	callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO",nextChkList!.getItem(index),1)
+
+rem --- Initialize BNK_ACCT_CD for the selected checking account
+
+	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",callpoint!.getUserInput())
 
 [[APE_MANCHECKHDR.CHECK_DATE.AVAL]]
 print "in check date aval"
