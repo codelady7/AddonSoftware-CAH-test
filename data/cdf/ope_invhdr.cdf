@@ -699,17 +699,24 @@ rem --- Reset the print file
 	dim ope31a$:fnget_tpl$("OPE_ORDSHIP")
 	old_inv_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
 	ordship_found=0
-	ope31_key$=firm_id$+cust_id$+order_no$+old_inv_no$
-	extractrecord(ope31_dev,key=ope31_key$,dom=*next)ope31a$; ordship_found=1; rem Advisory locking
-	if ordship_found and ope31a.trans_status$="E" then
-		ope31a.ar_inv_no$=""
-		ope31a.mod_user$=sysinfo.user_id$
-		ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
-		ope31a.mod_time$=date(0:"%Hz%mz")
-		ope31a$=field(ope31a$)
-		writerecord(ope31_dev)ope31a$
-		remove(ope31_dev,key=ope31_key$)
-	endif
+	for i=1 to 2
+		if i=1 then
+			address_type$="B"
+		else
+			address_type$="S"
+		endif
+		ope31_key$=firm_id$+cust_id$+order_no$+old_inv_no$+address_type$
+		extractrecord(ope31_dev,key=ope31_key$,dom=*next)ope31a$; ordship_found=1; rem Advisory locking
+		if ordship_found and ope31a.trans_status$="E" then
+			ope31a.ar_inv_no$=""
+			ope31a.mod_user$=sysinfo.user_id$
+			ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
+			ope31a.mod_time$=date(0:"%Hz%mz")
+			ope31a$=field(ope31a$)
+			writerecord(ope31_dev)ope31a$
+			remove(ope31_dev,key=ope31_key$)
+		endif
+	next i
 
 rem --- All Done
 
@@ -1307,7 +1314,8 @@ rem --- Remove committments for detail records by calling ATAMO
 
 	wend
 
-	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$, dom=*next)
+	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$+"B", dom=*next)
+	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$+"S", dom=*next)
 	remove (cashrct_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$, err=*next)
 
 	if user_tpl.credit_installed$="Y" then
@@ -2108,23 +2116,55 @@ rem --- Has customer and order number been entered?
 		break; rem --- exit callpoint
 	endif
 
-rem --- Write/Remove manual ship to file
-rem --- Moved from AWRI for Bug 10196
+rem --- Write Order Addresses file
 	cust_id$    = callpoint!.getColumnData("OPE_INVHDR.CUSTOMER_ID")
 	order_no$   = callpoint!.getColumnData("OPE_INVHDR.ORDER_NO")
 	invoice_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
 	ordship_dev = fnget_dev("OPE_ORDSHIP")
-	
-	if callpoint!.getColumnData("OPE_INVHDR.SHIPTO_TYPE") <> "M" then 
-		remove (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*next)
-	else
-		dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
-		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*next) ordship_tpl$; rem Advisory Locking
 
-		ordship_tpl.firm_id$     = firm_id$
-		ordship_tpl.customer_id$ = cust_id$
-		ordship_tpl.order_no$    = order_no$
-		ordship_tpl.ar_inv_no$ = invoice_no$
+	rem --- Capture bill-to address
+	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
+	extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$; rem Advisory Locking
+	ordship_tpl.firm_id$     = firm_id$
+	ordship_tpl.customer_id$ = cust_id$
+	ordship_tpl.order_no$    = order_no$
+	ordship_tpl.ar_inv_no$ = invoice_no$
+	ordship_tpl.address_type$ = "B"
+	ordship_tpl.name$        = ""
+	ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.BADD1")
+	ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.BADD2")
+	ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.BADD3")
+	ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.BADD4")
+	ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.BCITY")
+	ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.BSTATE")
+	ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.BZIP")
+	ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID")
+	ordship_tpl.created_user$   = sysinfo.user_id$
+	ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
+	ordship_tpl.created_time$   = date(0:"%Hz%mz")
+	ordship_tpl.mod_user$   = ""
+	ordship_tpl.mod_date$   = ""
+	ordship_tpl.mod_time$   = ""
+	ordship_tpl.trans_status$   = "E"
+	ordship_tpl.arc_user$   = ""
+	ordship_tpl.arc_date$   = ""
+	ordship_tpl.arc_time$   = ""
+	ordship_tpl.batch_no$   = ""
+	ordship_tpl.audit_number   = 0
+	ordship_tpl$ = field(ordship_tpl$)
+	write record (ordship_dev) ordship_tpl$
+	
+	if callpoint!.getColumnData("OPE_INVHDR.SHIPTO_TYPE") = "B" then 
+		rem --- Ship-to address is the same as the bill-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
+		ordship_tpl.name$ = Translate!.getTranslation("AON_SAME")
+		ordship_tpl$ = field(ordship_tpl$)
+		write record (ordship_dev) ordship_tpl$
+	else
+		rem --- Capture ship-to, or manual ship-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
 		ordship_tpl.name$        = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
 		ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
 		ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
@@ -2134,20 +2174,6 @@ rem --- Moved from AWRI for Bug 10196
 		ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
 		ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
 		ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
-
-		ordship_tpl.created_user$   = sysinfo.user_id$
-		ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
-		ordship_tpl.created_time$   = date(0:"%Hz%mz")
-		ordship_tpl.mod_user$   = ""
-		ordship_tpl.mod_date$   = ""
-		ordship_tpl.mod_time$   = ""
-		ordship_tpl.trans_status$   = "E"
-		ordship_tpl.arc_user$   = ""
-		ordship_tpl.arc_date$   = ""
-		ordship_tpl.arc_time$   = ""
-		ordship_tpl.batch_no$   = ""
-		ordship_tpl.audit_number   = 0
-
 		ordship_tpl$ = field(ordship_tpl$)
 		write record (ordship_dev) ordship_tpl$
 	endif
@@ -2837,7 +2863,7 @@ rem --- Remove manual ship-record, if necessary
 	invoice_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
 
 	if user_tpl.prev_ship_to$ = "000099" and shipto_no$ <> "000099" then
-		remove (fnget_dev("OPE_ORDSHIP"), key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*next)
+		remove (fnget_dev("OPE_ORDSHIP"), key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next)
 	endif
 
 rem --- Display Ship to information
@@ -3072,7 +3098,7 @@ rem ==========================================================================
 	return
 
 rem ==========================================================================
-ship_to_info: rem --- Get and display Bill To Information
+ship_to_info: rem --- Get and display Ship-To Information
               rem      IN: cust_id$
               rem          ship_to_type$
               rem          ship_to_no$
@@ -3163,7 +3189,7 @@ rem ==========================================================================
 		ordship_dev = fnget_dev("OPE_ORDSHIP")
 		dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
 		invoice_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
-		read record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*endif) ordship_tpl$
+		read record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*endif) ordship_tpl$
 
 		callpoint!.setColumnData("<<DISPLAY>>.SNAME",ordship_tpl.name$)
 		callpoint!.setColumnData("<<DISPLAY>>.SADD1",ordship_tpl.addr_line_1$)
@@ -3551,7 +3577,7 @@ rem ==========================================================================
 				dim opt31a$:fnget_tpl$("OPT_INVSHIP")
 				opt31_dev=fnget_dev("OPT_INVSHIP")
 
-				read record (opt31_dev, key=firm_id$+opt01a.customer_id$+opt01a.order_no$+opt01a.ar_inv_no$, dom=*endif) opt31a$
+				read record (opt31_dev, key=firm_id$+opt01a.customer_id$+opt01a.order_no$+opt01a.ar_inv_no$+"S", dom=*endif) opt31a$
 				if opt31a.trans_status$="U" then
 					ope31a$=opt31a$
 					ope31a.order_no$ = ope01a.order_no$
@@ -3570,7 +3596,7 @@ rem ==========================================================================
 					ope31a.batch_no$   = ""
 					ope31a.audit_number   = 0
 
-					ope31_key$=ope31a.firm_id$+ope31a.customer_id$+ope31a.order_no$+ope31a.ar_inv_no$
+					ope31_key$=ope31a.firm_id$+ope31a.customer_id$+ope31a.order_no$+ope31a.ar_inv_no$+"S"
 					extractrecord(ope31_dev,key=ope31_key$,dom=*next)x$; rem Advisory Locking
 					ope31a$ = field(ope31a$)
 					write record (ope31_dev) ope31a$
@@ -3944,18 +3970,25 @@ rem ==========================================================================
 			ope31_dev=fnget_dev("OPE_ORDSHIP")
 			dim ope31a$:fnget_tpl$("OPE_ORDSHIP")
 			old_inv_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
-			ordship_found=0
-			ope31_key$=firm_id$+customer_id$+order_no$+old_inv_no$
-			extractrecord(ope31_dev,key=ope31_key$,dom=*next)ope31a$; ordship_found=1; rem Advisory locking
-			if ordship_found and ope31a.trans_status$="E" then
-				ope31a.ar_inv_no$=inv_no$
-				ope31a.mod_user$=sysinfo.user_id$
-				ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
-				ope31a.mod_time$=date(0:"%Hz%mz")
-				ope31a$=field(ope31a$)
-				writerecord(ope31_dev)ope31a$
-				remove(ope31_dev,key=ope31_key$)
-			endif
+			address_type$=callpoint!.getColumnData("OPE_INVHDR.SHIPTO_TYPE")
+			for i=1 to 2
+				if i=1 then
+					address_type$="B"
+				else
+					address_type$="S"
+				endif
+				ope31_key$=firm_id$+customer_id$+order_no$+old_inv_no$+address_type$
+				extractrecord(ope31_dev,key=ope31_key$,dom=*next)ope31a$; ordship_found=1; rem Advisory locking
+				if ordship_found and ope31a.trans_status$="E" then
+					ope31a.ar_inv_no$=inv_no$
+					ope31a.mod_user$=sysinfo.user_id$
+					ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
+					ope31a.mod_time$=date(0:"%Hz%mz")
+					ope31a$=field(ope31a$)
+					writerecord(ope31_dev)ope31a$
+					remove(ope31_dev,key=ope31_key$)
+				endif
+			next i
 
 			rem --- Replace ope_invdet ope-11 records
 			skipNewOpe21Records$=""

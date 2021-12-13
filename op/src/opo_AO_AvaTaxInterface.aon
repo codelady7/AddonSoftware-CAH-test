@@ -1133,7 +1133,7 @@ getShipFrom_error:rem --- Method error trap/handler (11Oct2017)
                 case 3; rem --- Manual
                     shiptoDev=#devOpeOrdShip
                     dim shiptoTpl$:#tplOpeOrdShip$
-                    shiptoKey$=#firmID$+optInvHdr.customer_id$+optInvHdr.order_no$+optInvHdr.ar_inv_no$
+                    shiptoKey$=#firmID$+optInvHdr.customer_id$+optInvHdr.order_no$+optInvHdr.ar_inv_no$+"S"
                 break
             swend
             if pos(optInvHdr.shipto_type$="BSM") then

@@ -421,20 +421,27 @@ rem --- Check to see if record is in use in Invoice Entry
         write record (ope01_dev) ope01a$
 
         rem --- Set trans_status for OPE_ORDSHIP
-        dim ope31a$:fattr(ope31a$)
-        extract record (ope31_dev, key=firm_id$+read_tpl.customer_id$+read_tpl.order_no$+read_tpl.ar_inv_no$, dom=*next) ope31a$; rem Advisory Locking
-        if pos(ope31a.trans_status$="ER") then
-            ope31a.trans_status$="R"     
-            ope31a.mod_user$=sysinfo.user_id$
-            ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
-            ope31a.mod_time$=date(0:"%Hz%mz")
-            ope31a.batch_no$=batch_no$
-            if gl_adt_no then ope31a.audit_number=gl_adt_no
-            ope31a$ = field(ope31a$)
-            write record (ope31_dev) ope31a$
-        else
-            read(ope31_dev,end=*next); rem release extract
-        endif
+        for i=1 to 2
+            if i=1 then
+                address_type$="B"
+            else
+                address_type$="S"
+            endif
+            dim ope31a$:fattr(ope31a$)
+            extract record (ope31_dev, key=firm_id$+read_tpl.customer_id$+read_tpl.order_no$+read_tpl.ar_inv_no$+address_type$, dom=*next) ope31a$; rem Advisory Locking
+            if pos(ope31a.trans_status$="ER") then
+                ope31a.trans_status$="R"     
+                ope31a.mod_user$=sysinfo.user_id$
+                ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
+                ope31a.mod_time$=date(0:"%Hz%mz")
+                ope31a.batch_no$=batch_no$
+                if gl_adt_no then ope31a.audit_number=gl_adt_no
+                ope31a$ = field(ope31a$)
+                write record (ope31_dev) ope31a$
+            else
+                read(ope31_dev,end=*next); rem release extract
+            endif
+        next i
 
     rem --- Breaks
 

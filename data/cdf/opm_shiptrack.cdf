@@ -1,153 +1,3 @@
-[[OPM_SHIPTRACK.ORDER_NO.AINP]]
-rem --- As necessary, get customer for this order
-	if cvs(callpoint!.getColumnData("OPM_SHIPTRACK.CUSTOMER_ID"),2)="" then
-		optInvHdr_dev=fnget_dev("@OPT_INVHDR")
-		dim optInvHdr$:fnget_tpl$("@OPT_INVHDR")
-		order_no$=pad(callpoint!.getUserInput(),len(optInvHdr.order_no$),"R","0")
-		trip_key$=firm_id$+"  "+order_no$
-		read(optInvHdr_dev,key=trip_key$,knum="AO_ORD_CUST",dom=*next)
-		while 1
-			optInvHdr_key$=key(optInvHdr_dev,end=*break)
-			if pos(trip_key$=optInvHdr_key$)<>1 then break
-			readrecord(optInvHdr_dev)optInvHdr$
-			if optInvHdr.trans_status$<>"E" then continue
-			callpoint!.setColumnData("OPM_SHIPTRACK.CUSTOMER_ID",optInvHdr.customer_id$,1)
-			break
-		wend
-	endif
-[[OPM_SHIPTRACK.ASVA]]
-rem --- Launch Shipment Tracking Maintenance form
-	ar_type$=callpoint!.getDevObject("ar_type")
-	if ar_type$="" then
-		rem --- Get shipping and tracking information for this order
-		order_no$=callpoint!.getColumnData("OPM_SHIPTRACK.ORDER_NO")
-		gosub getShippingInfo
-		if abort then
-			callpoint!.setStatus("ABORT")
-			break
-		endif
-	endif
-	customer_id$=callpoint!.getDevObject("customer_id")
-	order_no$=callpoint!.getDevObject("order_no")
-	ship_seq_no$=callpoint!.getDevObject("ship_seq_no")
-	key_pfx$=firm_id$+ar_type$+customer_id$+order_no$+ship_seq_no$
-
-	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:		"OPT_SHIPTRACK",
-:		stbl("+USER_ID"),
-:       	"MNT",
-:      		key_pfx$,
-:       	table_chans$[all]
-
-	callpoint!.setStatus("ACTIVATE-ABORT")
-[[OPM_SHIPTRACK.ORDER_NO.AINV]]
-rem --- Warn order not found without allowing user to create it.
-	msg_id$="OP_ORDER_TYPE"
-	gosub disp_message
-	callpoint!.setStatus("ABORT-QUIET")
-	callpoint!.setStatus("QUIET")
-[[OPM_SHIPTRACK.ORDER_NO.BINQ]]
-rem --- Use AR_OPEN_ORDERS custom quiry instead of default order_no lookup in order to parse selected key
-	customer_id$=callpoint!.getColumnData("OPM_SHIPTRACK.CUSTOMER_ID")
-
-	dim filter_defs$[3,2]
-	filter_defs$[0,0]="OPT_INVHDR.FIRM_ID"
-	filter_defs$[0,1]="='"+firm_id$+"'"
-	filter_defs$[0,2]="LOCK"
-	filter_defs$[1,0]="OPT_INVHDR.AR_TYPE"
-	filter_defs$[1,1]="='"+callpoint!.getColumnData("OPM_SHIPTRACK.AR_TYPE")+"'"
-	filter_defs$[1,2]="LOCK"
-	if cvs(customer_id$,2)<>"" then
-		filter_defs$[2,0]="OPT_INVHDR.CUSTOMER_ID"
-		filter_defs$[2,1]="='"+customer_id$+"'"
-		filter_defs$[2,2]="LOCK"
-	endif
-	filter_defs$[3,0]="OPT_INVHDR.INVOICE_TYPE"
-	filter_defs$[3,1]="='S'"
-	filter_defs$[3,2]="LOCK"
-
-	call STBL("+DIR_SYP")+"bax_query.bbj",
-:		gui_dev, 
-:		Form!,
-:		"AR_OPEN_ORDERS",
-:		"DEFAULT",
-:		table_chans$[all],
-:		sel_key$,
-:		filter_defs$[all]
-
-	if sel_key$<>""
-		call stbl("+DIR_SYP")+"bac_key_template.bbj",
-:			"OPT_INVHDR",
-:			"PRIMARY",
-:			optInvHdr_key$,
-:			table_chans$[all],
-:			status$
-		dim optInvHdr_key$:optInvHdr_key$
-		optInvHdr_key$=sel_key$
-		callpoint!.setColumnData("OPM_SHIPTRACK.CUSTOMER_ID",optInvHdr_key.customer_id$,1)
-		callpoint!.setColumnData("OPM_SHIPTRACK.ORDER_NO",optInvHdr_key.order_no$,1)
-	endif	
-
-rem --- Set ar_type DevObject blank so ASVA knows the following ABORT skips AVAL
-	callpoint!.setDevObject("ar_type","")
-	callpoint!.setStatus("ACTIVATE-ABORT")
-[[OPM_SHIPTRACK.AOPT-SHPT]]
-rem --- Launches carrier's shipment tracking web page for a package (tracking number)
-	shipTrack_grid!=callpoint!.getDevObject("shipTrack_grid")
-	trackingCell!=shipTrack_grid!.getCell(shipTrack_grid!.getSelectedRow(),0)
-	carrierCell!=shipTrack_grid!.getCell(shipTrack_grid!.getSelectedRow(),6)
-	tracking_no$=trackingCell!.getText()
-	carrier_code$=carrierCell!.getText()
-
-	rem --- Get carrier's website URL from arc_carriercode
-	arcCarrierCode_dev=fnget_dev("@ARC_CARRIERCODE")
-	dim arcCarrierCode$:fnget_tpl$("@ARC_CARRIERCODE")
-	readrecord(arcCarrierCode_dev,key=firm_id$+carrier_code$,dom=*next)arcCarrierCode$
-
-	rem --- Launch web page for the tracking number
-	carrier_url$=cvs(arcCarrierCode.carrier_url$,3)
-	if carrier_url$<>"" then
-		if carrier_url$(len(carrier_url$))<>"=" then carrier_url$=carrier_url$+"="
-		tracking_url$=carrier_url$+cvs(tracking_no$,2)
-		webpageCounter!=callpoint!.getDevObject("webpageCounter")
-		if webpageCounter!=null() then webpageCounter!="0"
-		webpageCounter$=str(1+num(webpageCounter!))
-
-		frameMode!=BBjAPI().getConfig().getCurrentCommandLineObject().getChildFrameMode()
-		if frameMode! <> null() then
-			rem --- Using MDI or SDI
-			cmd$=$22$+"opt_shiptrack.aon"+$22$+" - -u"+tracking_url$+" -c"+webpageCounter$+" &"
-			cmdObj!=BBjAPI().getConfig().getCommandLineObject(cmd$)
-			cmdObj!.setChildFrameMode(frameMode!)
-			returnCode=BBjAPI().newBBjSession(cmdObj!)
-		else
-			rem --- Using BUI
-			BBjAPI().getThinClient().browse(tracking_url$)
-		endif
-
-		callpoint!.setDevObject("webpageCounter",webpageCounter$)
-	else
-		msg_id$="AR_MISSING_CARRIER_C"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=carrier_code$
-		gosub disp_message
-	endif
-[[OPM_SHIPTRACK.AOPT-EDIT]]
-rem --- Launch Shipment Tracking Maintenance form
-	ar_type$=callpoint!.getDevObject("ar_type")
-	customer_id$=callpoint!.getDevObject("customer_id")
-	order_no$=callpoint!.getDevObject("order_no")
-	ship_seq_no$=callpoint!.getDevObject("ship_seq_no")
-	key_pfx$=firm_id$+ar_type$+customer_id$+order_no$+ship_seq_no$
-
-	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:		"OPT_SHIPTRACK",
-:		stbl("+USER_ID"),
-:       	"MNT",
-:      		key_pfx$,
-:       	table_chans$[all]
-
-	callpoint!.setStatus("ACTIVATE")
 [[OPM_SHIPTRACK.ACUS]]
 rem --- Process custom event
 rem This routine is executed when callbacks have been set to run a 'custom event'.
@@ -205,6 +55,66 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 			break
 		swend
 	endif
+
+[[OPM_SHIPTRACK.AOPT-EDIT]]
+rem --- Launch Shipment Tracking Maintenance form
+	ar_type$=callpoint!.getDevObject("ar_type")
+	customer_id$=callpoint!.getDevObject("customer_id")
+	order_no$=callpoint!.getDevObject("order_no")
+	ship_seq_no$=callpoint!.getDevObject("ship_seq_no")
+	key_pfx$=firm_id$+ar_type$+customer_id$+order_no$+ship_seq_no$
+
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:		"OPT_SHIPTRACK",
+:		stbl("+USER_ID"),
+:       	"MNT",
+:      		key_pfx$,
+:       	table_chans$[all]
+
+	callpoint!.setStatus("ACTIVATE")
+
+[[OPM_SHIPTRACK.AOPT-SHPT]]
+rem --- Launches carrier's shipment tracking web page for a package (tracking number)
+	shipTrack_grid!=callpoint!.getDevObject("shipTrack_grid")
+	trackingCell!=shipTrack_grid!.getCell(shipTrack_grid!.getSelectedRow(),0)
+	carrierCell!=shipTrack_grid!.getCell(shipTrack_grid!.getSelectedRow(),6)
+	tracking_no$=trackingCell!.getText()
+	carrier_code$=carrierCell!.getText()
+
+	rem --- Get carrier's website URL from arc_carriercode
+	arcCarrierCode_dev=fnget_dev("@ARC_CARRIERCODE")
+	dim arcCarrierCode$:fnget_tpl$("@ARC_CARRIERCODE")
+	readrecord(arcCarrierCode_dev,key=firm_id$+carrier_code$,dom=*next)arcCarrierCode$
+
+	rem --- Launch web page for the tracking number
+	carrier_url$=cvs(arcCarrierCode.carrier_url$,3)
+	if carrier_url$<>"" then
+		if carrier_url$(len(carrier_url$))<>"=" then carrier_url$=carrier_url$+"="
+		tracking_url$=carrier_url$+cvs(tracking_no$,2)
+		webpageCounter!=callpoint!.getDevObject("webpageCounter")
+		if webpageCounter!=null() then webpageCounter!="0"
+		webpageCounter$=str(1+num(webpageCounter!))
+
+		frameMode!=BBjAPI().getConfig().getCurrentCommandLineObject().getChildFrameMode()
+		if frameMode! <> null() then
+			rem --- Using MDI or SDI
+			cmd$=$22$+"opt_shiptrack.aon"+$22$+" - -u"+tracking_url$+" -c"+webpageCounter$+" &"
+			cmdObj!=BBjAPI().getConfig().getCommandLineObject(cmd$)
+			cmdObj!.setChildFrameMode(frameMode!)
+			returnCode=BBjAPI().newBBjSession(cmdObj!)
+		else
+			rem --- Using BUI
+			BBjAPI().getThinClient().browse(tracking_url$)
+		endif
+
+		callpoint!.setDevObject("webpageCounter",webpageCounter$)
+	else
+		msg_id$="AR_MISSING_CARRIER_C"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=carrier_code$
+		gosub disp_message
+	endif
+
 [[OPM_SHIPTRACK.AREC]]
 rem --- Clear the grid for a new order
 	SysGUI!.setRepaintEnabled(0)
@@ -215,6 +125,7 @@ rem --- Clear the grid for a new order
 rem --- Disable Additional Options
 	callpoint!.setOptionEnabled("EDIT",0)
 	
+
 [[OPM_SHIPTRACK.ASIZ]]
 rem --- Resize grids
 	formHeight=Form!.getHeight()
@@ -226,6 +137,153 @@ rem --- Resize grids
 
 	shipTrack_grid!.setSize(formWidth-2*gridXpos,availableHeight-8)
 	shipTrack_grid!.setFitToGrid(1)
+
+[[OPM_SHIPTRACK.ASVA]]
+rem --- Launch Shipment Tracking Maintenance form
+	ar_type$=callpoint!.getDevObject("ar_type")
+	if ar_type$="" then
+		rem --- Get shipping and tracking information for this order
+		order_no$=callpoint!.getColumnData("OPM_SHIPTRACK.ORDER_NO")
+		gosub getShippingInfo
+		if abort then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+	customer_id$=callpoint!.getDevObject("customer_id")
+	order_no$=callpoint!.getDevObject("order_no")
+	ship_seq_no$=callpoint!.getDevObject("ship_seq_no")
+	key_pfx$=firm_id$+ar_type$+customer_id$+order_no$+ship_seq_no$
+
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:		"OPT_SHIPTRACK",
+:		stbl("+USER_ID"),
+:       	"MNT",
+:      		key_pfx$,
+:       	table_chans$[all]
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
+[[OPM_SHIPTRACK.AWIN]]
+rem --- Declare classes used
+	use ::ado_util.src::util
+
+rem --- Add shipment tracking grid to form
+	nxt_ctlID = util.getNextControlID()
+	tmpCtl!=callpoint!.getControl("<<DISPLAY>>.SCNTRY")
+	grid_y=tmpCtl!.getY()+tmpCtl!.getHeight()+5
+	shipTrack_grid! = Form!.addGrid(nxt_ctlID,5,grid_y,895,125); rem --- ID, x, y, width, height
+	callpoint!.setDevObject("shipTrack_grid",shipTrack_grid!)
+	callpoint!.setDevObject("shipTrack_grid_id",str(nxt_ctlID))
+	callpoint!.setDevObject("shipTrack_grid_def_cols",8)
+	callpoint!.setDevObject("shipTrack_grid_min_rows",5)
+
+	gosub format_grid
+
+	shipTrack_grid!.setTabAction(SysGUI!.GRID_NAVIGATE_GRID)
+	shipTrack_grid!.setTabActionSkipsNonEditableCells(1)
+
+rem --- Set minimum form size
+	Form!.setSize(max(Form!.getWidth(),905), max(Form!.getHeight(),290))
+
+rem --- Set callbacks - processed in ACUS callpoint
+	Form!.setCallback(Form!.ON_WINDOW_GAINED_FOCUS,"custom_event")
+	shipTrack_grid!.setCallback(shipTrack_grid!.ON_GRID_LOST_FOCUS,"custom_event")
+	shipTrack_grid!.setCallback(shipTrack_grid!.ON_GRID_SELECT_ROW,"custom_event")
+
+[[OPM_SHIPTRACK.BSHO]]
+rem --- Open files
+	num_files=6
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="OPT_SHIPTRACK",open_opts$[1]="OTA"
+	open_tables$[2]="OPT_INVHDR",open_opts$[2]="OTA@"
+	open_tables$[3]="ARM_CUSTMAST",open_opts$[3]="OTA@"
+	open_tables$[4]="ARM_CUSTSHIP",open_opts$[4]="OTA@"
+	open_tables$[5]="OPE_ORDSHIP",open_opts$[5]="OTA@"
+	open_tables$[6]="ARC_CARRIERCODE",open_opts$[6]="OTA@"
+
+	gosub open_tables
+
+[[OPM_SHIPTRACK.ORDER_NO.AINP]]
+rem --- As necessary, get customer for this order
+	if cvs(callpoint!.getColumnData("OPM_SHIPTRACK.CUSTOMER_ID"),2)="" then
+		optInvHdr_dev=fnget_dev("@OPT_INVHDR")
+		dim optInvHdr$:fnget_tpl$("@OPT_INVHDR")
+		order_no$=pad(callpoint!.getUserInput(),len(optInvHdr.order_no$),"R","0")
+		trip_key$=firm_id$+"  "+order_no$
+		read(optInvHdr_dev,key=trip_key$,knum="AO_ORD_CUST",dom=*next)
+		while 1
+			optInvHdr_key$=key(optInvHdr_dev,end=*break)
+			if pos(trip_key$=optInvHdr_key$)<>1 then break
+			readrecord(optInvHdr_dev)optInvHdr$
+			if optInvHdr.trans_status$<>"E" then continue
+			callpoint!.setColumnData("OPM_SHIPTRACK.CUSTOMER_ID",optInvHdr.customer_id$,1)
+			break
+		wend
+	endif
+
+[[OPM_SHIPTRACK.ORDER_NO.AINV]]
+rem --- Warn order not found without allowing user to create it.
+	msg_id$="OP_ORDER_TYPE"
+	gosub disp_message
+	callpoint!.setStatus("ABORT-QUIET")
+	callpoint!.setStatus("QUIET")
+
+[[OPM_SHIPTRACK.ORDER_NO.AVAL]]
+rem --- Get shipping and tracking information for this order
+	order_no$=callpoint!.getUserInput()
+	gosub getShippingInfo
+	if abort then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[OPM_SHIPTRACK.ORDER_NO.BINQ]]
+rem --- Use AR_OPEN_ORDERS custom quiry instead of default order_no lookup in order to parse selected key
+	customer_id$=callpoint!.getColumnData("OPM_SHIPTRACK.CUSTOMER_ID")
+
+	dim filter_defs$[3,2]
+	filter_defs$[0,0]="OPT_INVHDR.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+	filter_defs$[1,0]="OPT_INVHDR.AR_TYPE"
+	filter_defs$[1,1]="='"+callpoint!.getColumnData("OPM_SHIPTRACK.AR_TYPE")+"'"
+	filter_defs$[1,2]="LOCK"
+	if cvs(customer_id$,2)<>"" then
+		filter_defs$[2,0]="OPT_INVHDR.CUSTOMER_ID"
+		filter_defs$[2,1]="='"+customer_id$+"'"
+		filter_defs$[2,2]="LOCK"
+	endif
+	filter_defs$[3,0]="OPT_INVHDR.INVOICE_TYPE"
+	filter_defs$[3,1]="='S'"
+	filter_defs$[3,2]="LOCK"
+
+	call STBL("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev, 
+:		Form!,
+:		"AR_OPEN_ORDERS",
+:		"DEFAULT",
+:		table_chans$[all],
+:		sel_key$,
+:		filter_defs$[all]
+
+	if sel_key$<>""
+		call stbl("+DIR_SYP")+"bac_key_template.bbj",
+:			"OPT_INVHDR",
+:			"PRIMARY",
+:			optInvHdr_key$,
+:			table_chans$[all],
+:			status$
+		dim optInvHdr_key$:optInvHdr_key$
+		optInvHdr_key$=sel_key$
+		callpoint!.setColumnData("OPM_SHIPTRACK.CUSTOMER_ID",optInvHdr_key.customer_id$,1)
+		callpoint!.setColumnData("OPM_SHIPTRACK.ORDER_NO",optInvHdr_key.order_no$,1)
+	endif	
+
+rem --- Set ar_type DevObject blank so ASVA knows the following ABORT skips AVAL
+	callpoint!.setDevObject("ar_type","")
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
 [[OPM_SHIPTRACK.<CUSTOM>]]
 rem ==========================================================================
 format_grid: rem --- Use Barista program to format the grid
@@ -352,7 +410,7 @@ rem ==========================================================================
 			case 2; rem --- Use manual ship-to address
 				opeOrdShip_dev=fnget_dev("@OPE_ORDSHIP")
 				dim tpl$:fnget_tpl$("@OPE_ORDSHIP")
-				findrecord(opeOrdShip_dev, key=firm_id$+optInvHdr.customer_id$+optInvHdr.order_no$+optInvHdr.ar_inv_no$, dom=*next)tpl$
+				findrecord(opeOrdShip_dev, key=firm_id$+optInvHdr.customer_id$+optInvHdr.order_no$+optInvHdr.ar_inv_no$+"S", dom=*next)tpl$
 				sname$=tpl.name$
 			break
 			case 3; rem --- use Ship-To address
@@ -426,49 +484,6 @@ rem ==========================================================================
 	SysGUI!.setRepaintEnabled(1)
 
 	return
-[[OPM_SHIPTRACK.ORDER_NO.AVAL]]
-rem --- Get shipping and tracking information for this order
-	order_no$=callpoint!.getUserInput()
-	gosub getShippingInfo
-	if abort then
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-[[OPM_SHIPTRACK.BSHO]]
-rem --- Open files
-	num_files=6
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="OPT_SHIPTRACK",open_opts$[1]="OTA"
-	open_tables$[2]="OPT_INVHDR",open_opts$[2]="OTA@"
-	open_tables$[3]="ARM_CUSTMAST",open_opts$[3]="OTA@"
-	open_tables$[4]="ARM_CUSTSHIP",open_opts$[4]="OTA@"
-	open_tables$[5]="OPE_ORDSHIP",open_opts$[5]="OTA@"
-	open_tables$[6]="ARC_CARRIERCODE",open_opts$[6]="OTA@"
 
-	gosub open_tables
-[[OPM_SHIPTRACK.AWIN]]
-rem --- Declare classes used
-	use ::ado_util.src::util
 
-rem --- Add shipment tracking grid to form
-	nxt_ctlID = util.getNextControlID()
-	tmpCtl!=callpoint!.getControl("<<DISPLAY>>.SCNTRY")
-	grid_y=tmpCtl!.getY()+tmpCtl!.getHeight()+5
-	shipTrack_grid! = Form!.addGrid(nxt_ctlID,5,grid_y,895,125); rem --- ID, x, y, width, height
-	callpoint!.setDevObject("shipTrack_grid",shipTrack_grid!)
-	callpoint!.setDevObject("shipTrack_grid_id",str(nxt_ctlID))
-	callpoint!.setDevObject("shipTrack_grid_def_cols",8)
-	callpoint!.setDevObject("shipTrack_grid_min_rows",5)
 
-	gosub format_grid
-
-	shipTrack_grid!.setTabAction(SysGUI!.GRID_NAVIGATE_GRID)
-	shipTrack_grid!.setTabActionSkipsNonEditableCells(1)
-
-rem --- Set minimum form size
-	Form!.setSize(max(Form!.getWidth(),905), max(Form!.getHeight(),290))
-
-rem --- Set callbacks - processed in ACUS callpoint
-	Form!.setCallback(Form!.ON_WINDOW_GAINED_FOCUS,"custom_event")
-	shipTrack_grid!.setCallback(shipTrack_grid!.ON_GRID_LOST_FOCUS,"custom_event")
-	shipTrack_grid!.setCallback(shipTrack_grid!.ON_GRID_SELECT_ROW,"custom_event")

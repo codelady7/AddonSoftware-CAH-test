@@ -94,9 +94,9 @@ rem --- Finish changing customer for this order
 
 			rem --- Remove OPE_ORDSHIP record for the previous customer
 			opeOrdShip_dev=fnget_dev("OPE_ORDSHIP")
-			opeOrdShip_key$=firm_id$+previous_customerId$+previous_orderNo$+previous_invoiceNo$
 			find(opeOrdShip_dev,key=opeOrdShip_key$,knum="PRIMARY", dom=*next)x$
-			remove(opeOrdShip_dev,key=opeOrdShip_key$,dom=*next)
+			remove(opeOrdShip_dev,key=firm_id$+previous_customerId$+previous_orderNo$+previous_invoiceNo$+"B",dom=*next)
+			remove(opeOrdShip_dev,key=firm_id$+previous_customerId$+previous_orderNo$+previous_invoiceNo$+"S",dom=*next)
 
 			rem --- Remove OPE_PRNTLIST record for the previous customer
 			opePrntList_dev=fnget_dev("OPE_PRNTLIST")
@@ -1571,7 +1571,8 @@ rem --- Remove committments for detail records by calling ATAMO
 
 	wend
 
-	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$, dom=*next)
+	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$+"B", dom=*next)
+	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$+"S", dom=*next)
 	remove (cashrct_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$, err=*next)
 
 	if user_tpl.credit_installed$="Y" then
@@ -2400,23 +2401,55 @@ rem --- Has customer and order number been entered?
 		break; rem --- exit callpoint
 	endif
 
-rem --- Write/Remove manual ship to file
-rem --- Moved from AWRI for Bug 10196
+rem --- Write Order Addresses file
 	cust_id$    = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
 	order_no$   = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
 	invoice_no$=callpoint!.getColumnData("OPE_ORDHDR.AR_INV_NO")
 	ordship_dev = fnget_dev("OPE_ORDSHIP")
-	
-	if callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE") <> "M" then 
-		remove (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*next)
-	else
-		dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
-		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*next) ordship_tpl$; rem Advisory Locking
 
-		ordship_tpl.firm_id$     = firm_id$
-		ordship_tpl.customer_id$ = cust_id$
-		ordship_tpl.order_no$    = order_no$
-		ordship_tpl.ar_inv_no$=invoice_no$
+	rem --- Capture Bill-To address
+	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
+	extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$; rem Advisory Locking
+	ordship_tpl.firm_id$     = firm_id$
+	ordship_tpl.customer_id$ = cust_id$
+	ordship_tpl.order_no$    = order_no$
+	ordship_tpl.ar_inv_no$=invoice_no$
+	ordship_tpl.address_type$ = "B"
+	ordship_tpl.name$ = ""
+	ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.BADD1")
+	ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.BADD2")
+	ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.BADD3")
+	ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.BADD4")
+	ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.BCITY")
+	ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.BSTATE")
+	ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.BZIP")
+	ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID")
+	ordship_tpl.created_user$   = sysinfo.user_id$
+	ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
+	ordship_tpl.created_time$   = date(0:"%Hz%mz")
+	ordship_tpl.mod_user$   = ""
+	ordship_tpl.mod_date$   = ""
+	ordship_tpl.mod_time$   = ""
+	ordship_tpl.trans_status$   = "E"
+	ordship_tpl.arc_user$   = ""
+	ordship_tpl.arc_date$   = ""
+	ordship_tpl.arc_time$   = ""
+	ordship_tpl.batch_no$   = ""
+	ordship_tpl.audit_number   = 0
+	ordship_tpl$ = field(ordship_tpl$)
+	write record (ordship_dev) ordship_tpl$
+	
+	if callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE") = "B" then 
+		rem --- Ship-to address is the same as the bill-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
+		ordship_tpl.name$ = Translate!.getTranslation("AON_SAME")
+		ordship_tpl$ = field(ordship_tpl$)
+		write record (ordship_dev) ordship_tpl$
+	else
+		rem --- Capture ship-to, or manual ship-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
 		ordship_tpl.name$        = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
 		ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
 		ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
@@ -2426,20 +2459,6 @@ rem --- Moved from AWRI for Bug 10196
 		ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
 		ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
 		ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
-
-		ordship_tpl.created_user$   = sysinfo.user_id$
-		ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
-		ordship_tpl.created_time$   = date(0:"%Hz%mz")
-		ordship_tpl.mod_user$   = ""
-		ordship_tpl.mod_date$   = ""
-		ordship_tpl.mod_time$   = ""
-		ordship_tpl.trans_status$   = "E"
-		ordship_tpl.arc_user$   = ""
-		ordship_tpl.arc_date$   = ""
-		ordship_tpl.arc_time$   = ""
-		ordship_tpl.batch_no$   = ""
-		ordship_tpl.audit_number   = 0
-
 		ordship_tpl$ = field(ordship_tpl$)
 		write record (ordship_dev) ordship_tpl$
 	endif
@@ -3498,7 +3517,7 @@ rem ==========================================================================
 		ordship_dev=fnget_dev("OPE_ORDSHIP")
 		dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
 		invoice_no$=callpoint!.getColumnData("OPE_ORDHDR.AR_INV_NO")
-		read record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*endif) ordship_tpl$
+		read record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*endif) ordship_tpl$
 
 		callpoint!.setColumnData("<<DISPLAY>>.SNAME",ordship_tpl.name$)
 		callpoint!.setColumnData("<<DISPLAY>>.SADD1",ordship_tpl.addr_line_1$)
@@ -3738,7 +3757,7 @@ rem ==========================================================================
 				dim opt31a$:fnget_tpl$("OPT_INVSHIP")
 				opt31_dev=fnget_dev("OPT_INVSHIP")
 
-				read record (opt31_dev, key=firm_id$+opt01a.customer_id$+opt01a.order_no$+opt01a.ar_inv_no$, dom=*endif) opt31a$
+				read record (opt31_dev, key=firm_id$+opt01a.customer_id$+opt01a.order_no$+opt01a.ar_inv_no$+"S", dom=*endif) opt31a$
 				if opt31a.trans_status$="U" then
 					ope31a$=opt31a$
 					ope31a.order_no$ = ope01a.order_no$
@@ -3757,7 +3776,7 @@ rem ==========================================================================
 					ope31a.batch_no$   = ""
 					ope31a.audit_number   = 0
 
-					ope31_key$=ope31a.firm_id$+ope31a.customer_id$+ope31a.order_no$+ope31a.ar_inv_no$
+					ope31_key$=ope31a.firm_id$+ope31a.customer_id$+ope31a.order_no$+ope31a.ar_inv_no$+"S"
 					extractrecord(ope31_dev,key=ope31_key$,dom=*next)x$; rem Advisory Locking
 					ope31a$ = field(ope31a$)
 					write record (ope31_dev) ope31a$

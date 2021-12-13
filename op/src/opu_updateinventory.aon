@@ -843,16 +843,21 @@ ar_open_invoice_detail: rem --- AR Open Invoice Detail
 		
         if ope01a.invoice_type$="V" then something_backord=0,something_commit=0
 
-        if something_backord then
-            rem --- Retain Manual Ship-To info for backorders
-            extract record (ope31_dev,key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$,dom=*endif) ope31a$; rem Advisory Locking
-            ope31a.ar_inv_no$=""
-            ope31a.trans_status$="E"     
-            write record (ope31_dev) ope31a$
-        endif
-        if ih$="Y" and inv_hist_flg$="Y" then
-            rem --- Write Manual Ship-To History
-            extract record (ope31_dev,key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$,dom=*endif) ope31a$; rem Advisory Locking
+        for i=1 to 2
+            if i=1 then
+                address_type$="B"
+            else
+                address_type$="S"
+            endif
+            if something_backord then
+                rem --- Retain Address info for backorders
+                extract record (ope31_dev,key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+address_type$,dom=*endif) ope31a$; rem Advisory Locking
+                ope31a.ar_inv_no$=""
+                ope31a.trans_status$="E"     
+                write record (ope31_dev) ope31a$
+            endif
+            rem --- Write Address to History
+            extract record (ope31_dev,key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+address_type$,dom=*endif) ope31a$; rem Advisory Locking
             if ope31a.trans_status$="R" then
                 ope31a.trans_status$="U"     
                 ope31a.mod_user$=sysinfo.user_id$
@@ -863,9 +868,7 @@ ar_open_invoice_detail: rem --- AR Open Invoice Detail
             else
                 read(ope31_dev)
             endif
-        else
-            remove (ope31_dev, key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$, dom=*next)
-        endif
+        next i
 
         if (!something_backord and !something_commit) or ope01a.customer_id$=ars01a.customer_id$ then
             if ope03_dev gosub remove_tickler

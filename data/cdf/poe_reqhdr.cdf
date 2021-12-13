@@ -521,7 +521,7 @@ dropship_shipto: rem --- get and display shipto from Sales Order if dropship ind
 		gosub shipto_cust
 	endif
 	if num(shipto_no$,err=*endif)=99
-		read record (ope_ordship_dev,key=firm_id$+tmp_customer_id$+tmp_order_no$+ope_ordhdr.ar_inv_no$,dom=*next)ope_ordship$
+		read record (ope_ordship_dev,key=firm_id$+tmp_customer_id$+tmp_order_no$+ope_ordhdr.ar_inv_no$+"S",dom=*next)ope_ordship$
 		dim rec$:fattr(ope_ordship$)
 		if pos(ope_ordship.trans_status$="ER") then rec$=ope_ordship$
 		gosub fill_dropship_address

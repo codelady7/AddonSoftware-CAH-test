@@ -224,7 +224,7 @@ rem --- Main Read
             shipto$ = ""
 
             if start_block then
-                find record (ope31_dev, key=firm_id$+"E"+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$,knum="AO_STATUS", dom=*endif) ope31!
+                find record (ope31_dev, key=firm_id$+"E"+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S",knum="AO_STATUS", dom=*endif) ope31!
                 c$ = func.formatAddress(table_chans$[all], ope31!, cust_addrLine_len, max_custAddr_lines)
             endif
         else

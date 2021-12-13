@@ -109,9 +109,7 @@ Remove_Record: remove (ope11_dev,key=ope11a_key$)
             if pos(k1$=ope11a_key$)=1 then goto Remove_Record
     wend
 
-Read_manual_Record: rem --- Read Manual Ship-To Records
-
-
+    rem --- Read Address Records
     while more 
             ope31a_key$=key(ope31_dev,end=*break)
             if pos(ope31a_key.firm_id$=firm_id$)=0 then break
@@ -120,7 +118,6 @@ Read_manual_Record: rem --- Read Manual Ship-To Records
             gosub check_header
             if header$="YES" then continue
             remove (ope31_dev,key=ope31a_key$)
-
     wend
 
 Read_Lot_Serial: rem --- Read Lot/Serial Detail Records

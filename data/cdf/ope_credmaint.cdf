@@ -163,7 +163,8 @@ remove_line:
 	wend
 
 rem	 --- Remove Header
-	remove(ope_ordship_dev,key=firm_id$+cust$+ord$+ope01a.ar_inv_no$,dom=*next)
+	remove(ope_ordship_dev,key=firm_id$+cust$+ord$+ope01a.ar_inv_no$+"B",dom=*next)
+	remove(ope_ordship_dev,key=firm_id$+cust$+ord$+ope01a.ar_inv_no$+"S",dom=*next)
 	remove(ope01_dev,key=ope01_key$)
 	remove(ope_prntlist_dev,key=firm_id$+"O"+ope01a.ar_type$+cust$+ord$,dom=*next)
 

@@ -2464,6 +2464,12 @@ convert_po_files:
                     if pos(trip_key$=opt_invhdr_key$)<>1 then break
                     read record (opt_invhdr_dev)opt_invhdr$
                     read record (opt_invship_dev,key=po_hdr_rec.firm_id$+po_hdr_rec.customer_id$+opt_invhdr.ar_inv_no$,knum="AO_CUST_INV",dom=*break)rec$
+                    if rec.address_type$="B" then
+                        rem --- Skip bill-to addresses
+                        read record (opt_invship_dev,end=*break)rec$
+                        if rec.firm_id$+rec.customer_id$+rec.ar_inv_no$<>po_hdr_rec.firm_id$+po_hdr_rec.customer_id$+opt_invhdr.ar_inv_no$ then break
+                        if pos(rec.address_type$="S ")=0 then break
+                    endif
                     po_hdr_rec.ds_name$=rec.name$            
                     gosub fill_dropship_address
                     break

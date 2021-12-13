@@ -1,15 +1,79 @@
+[[OPT_INVHDR.ACUS]]
+rem --- Process custom event -- used in this pgm to select/de-select checkboxes in grid
+rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
+rem --- This routine is executed when callbacks have been set to run a 'custom event'
+rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
+rem --- of event it is... in this case, we're toggling checkboxes on/off in form grid control
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ev!=BBjAPI().getLastEvent()
+
+	if ev!.getEventName()="BBjTimerEvent" and gui_event.y=10000
+		BBjAPI().removeTimer(10000)
+		highlightBillTo=callpoint!.getDevObject("highlightBillTo")
+		highlightShipTo=callpoint!.getDevObject("highlightSipTo")
+
+		if highlightBillto then
+			valRGB!=SysGUI!.makeColor(255,255,102); rem --- yellow
+			badd1!=callpoint!.getControl("<<DISPLAY>>.BADD1")
+			badd1!.setBackColor(valRGB!)
+
+			badd2!=callpoint!.getControl("<<DISPLAY>>.BADD2")
+			badd2!.setBackColor(valRGB!)
+
+			badd3!=callpoint!.getControl("<<DISPLAY>>.BADD3")
+			badd3!.setBackColor(valRGB!)
+
+			badd4!=callpoint!.getControl("<<DISPLAY>>.BADD4")
+			badd4!.setBackColor(valRGB!)
+
+			bcity!=callpoint!.getControl("<<DISPLAY>>.BCITY")
+			bcity!.setBackColor(valRGB!)
+
+			bstate!=callpoint!.getControl("<<DISPLAY>>.BSTATE")
+			bstate!.setBackColor(valRGB!)
+
+			bzip!=callpoint!.getControl("<<DISPLAY>>.BZIP")
+			bzip!.setBackColor(valRGB!)
+
+			bcntry_id!=callpoint!.getControl("<<DISPLAY>>.BCNTRY_ID")
+			bcntry_id!.setBackColor(valRGB!)
+		endif
+
+		if highlightShipto then
+			valRGB!=SysGUI!.makeColor(255,255,102); rem --- yellow
+			sname!=callpoint!.getControl("<<DISPLAY>>.SNAME")
+			sname!.setBackColor(valRGB!)
+
+			sadd1!=callpoint!.getControl("<<DISPLAY>>.SADD1")
+			sadd1!.setBackColor(valRGB!)
+
+			sadd2!=callpoint!.getControl("<<DISPLAY>>.SADD2")
+			sadd2!.setBackColor(valRGB!)
+
+			sadd3!=callpoint!.getControl("<<DISPLAY>>.SADD3")
+			sadd3!.setBackColor(valRGB!)
+
+			sadd4!=callpoint!.getControl("<<DISPLAY>>.SADD4")
+			sadd4!.setBackColor(valRGB!)
+
+			scity!=callpoint!.getControl("<<DISPLAY>>.SCITY")
+			scity!.setBackColor(valRGB!)
+
+			sstate!=callpoint!.getControl("<<DISPLAY>>.SSTATE")
+			sstate!.setBackColor(valRGB!)
+
+			szip!=callpoint!.getControl("<<DISPLAY>>.SZIP")
+			szip!.setBackColor(valRGB!)
+
+			scntry_id!=callpoint!.getControl("<<DISPLAY>>.SCNTRY_ID")
+			scntry_id!.setBackColor(valRGB!)
+		endif
+	endif
+
 [[OPT_INVHDR.ADIS]]
-rem --- Display Ship to information
-
-	cust_id$ = callpoint!.getColumnData("OPT_INVHDR.CUSTOMER_ID")
-	gosub display_customer
-
-	ship_to_type$ = callpoint!.getColumnData("OPT_INVHDR.SHIPTO_TYPE")
-	ship_to_no$    = callpoint!.getColumnData("OPT_INVHDR.SHIPTO_NO")
-	order_no$       = callpoint!.getColumnData("OPT_INVHDR.ORDER_NO")
-	invoice_no$     = callpoint!.getColumnData("OPT_INVHDR.AR_INV_NO")
-	gosub ship_to_info
-
 rem --- Display invoice total
 
 	net_sales=num(callpoint!.getColumnData("OPT_INVHDR.TOTAL_SALES"))-
@@ -34,6 +98,23 @@ rem --- Enable SHPT additional options if shipment tracking info exists
 
 rem --- Enable Print button for this record
 	callpoint!.setOptionEnabled("PRNT",1)
+
+rem --- Display bill-to and ship-to information
+	cust_id$ = callpoint!.getColumnData("OPT_INVHDR.CUSTOMER_ID")
+	ship_to_type$ = callpoint!.getColumnData("OPT_INVHDR.SHIPTO_TYPE")
+	ship_to_no$    = callpoint!.getColumnData("OPT_INVHDR.SHIPTO_NO")
+	order_no$       = callpoint!.getColumnData("OPT_INVHDR.ORDER_NO")
+	invoice_no$     = callpoint!.getColumnData("OPT_INVHDR.AR_INV_NO")
+	gosub display_customer
+	gosub ship_to_info
+
+	if highlightBillTo or highlightShipTo then
+		callpoint!.setDevObject("highlightBillTo",highlightBillTo)
+		callpoint!.setDevObject("highlightSipTo",highlightShipTo)
+		timerKey=10000
+		waitTime=0.1
+		BBjAPI().createTimer(timerKey,waitTime,"custom_event")
+	endif
 
 [[OPT_INVHDR.AFMC]]
 rem --- Inits
@@ -260,7 +341,6 @@ rem --- Disable display fields
 	column!.addItem("<<DISPLAY>>.SSTATE")
 	column!.addItem("<<DISPLAY>>.SZIP")
 	column!.addItem("<<DISPLAY>>.SCNTRY_ID")
-	callpoint!.setColumnEnabled(column!, -1)
 
 	callpoint!.setColumnEnabled(column!, -1)
 
@@ -434,78 +514,96 @@ rem --- Disable Print button when in edit mode (this is the only editable field)
 [[OPT_INVHDR.<CUSTOM>]]
 rem ==========================================================================
 display_customer: rem --- Get and display Bill To Information
-                  rem      IN: cust_id$
+              rem     IN: cust_id$
+              rem          order_no$
+              rem          invoice_no$
+              rem  OUT: highlightBillTo
 rem ==========================================================================
 
-	custmast_dev = fnget_dev("ARM_CUSTMAST")
-	dim custmast_tpl$:fnget_tpl$("ARM_CUSTMAST")
-	find record (custmast_dev, key=firm_id$+cust_id$) custmast_tpl$
-
-	callpoint!.setColumnData("<<DISPLAY>>.BADD1",  custmast_tpl.addr_line_1$)
-	callpoint!.setColumnData("<<DISPLAY>>.BADD2",  custmast_tpl.addr_line_2$)
-	callpoint!.setColumnData("<<DISPLAY>>.BADD3",  custmast_tpl.addr_line_3$)
-	callpoint!.setColumnData("<<DISPLAY>>.BADD4",  custmast_tpl.addr_line_4$)
-	callpoint!.setColumnData("<<DISPLAY>>.BCITY",  custmast_tpl.city$)
-	callpoint!.setColumnData("<<DISPLAY>>.BSTATE", custmast_tpl.state_code$)
-	callpoint!.setColumnData("<<DISPLAY>>.BZIP",   custmast_tpl.zip_code$)
-	callpoint!.setColumnData("<<DISPLAY>>.BCNTRY_ID",   custmast_tpl.cntry_id$)
+	highlightBillTo=0
+	invship_dev = fnget_dev("OPT_INVSHIP")
+	dim invship_tpl$:fnget_tpl$("OPT_INVSHIP")
+	find record (invship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) invship_tpl$
+	if cvs(invship_tpl.customer_id$,2)<>"" then
+		rem --- Use the invoice historical bill-to info when available
+		callpoint!.setColumnData("<<DISPLAY>>.BADD1",invship_tpl.addr_line_1$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BADD2",invship_tpl.addr_line_2$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BADD3",invship_tpl.addr_line_3$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BADD4",invship_tpl.addr_line_4$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BCITY",invship_tpl.city$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BSTATE",invship_tpl.state_code$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BZIP",invship_tpl.zip_code$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BCNTRY_ID",invship_tpl.cntry_id$,1)
+	else
+		custmast_dev = fnget_dev("ARM_CUSTMAST")
+		dim custmast_tpl$:fnget_tpl$("ARM_CUSTMAST")
+		find record (custmast_dev, key=firm_id$+cust_id$,dom=*next) custmast_tpl$
+		callpoint!.setColumnData("<<DISPLAY>>.BADD1",  custmast_tpl.addr_line_1$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BADD2",  custmast_tpl.addr_line_2$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BADD3",  custmast_tpl.addr_line_3$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BADD4",  custmast_tpl.addr_line_4$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BCITY",  custmast_tpl.city$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BSTATE", custmast_tpl.state_code$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BZIP",   custmast_tpl.zip_code$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.BCNTRY_ID",   custmast_tpl.cntry_id$,1)
+		highlightBillTo=1
+	endif
 
 	return
 
 rem ==========================================================================
-ship_to_info: rem --- Get and display Bill To Information
-              rem      IN: cust_id$
+ship_to_info: rem --- Get and display Ship To Information
+              rem     IN: cust_id$
               rem          ship_to_type$
               rem          ship_to_no$
+              rem          order_no$
               rem          invoice_no$
+              rem  OUT: highlightShipTo
 rem ==========================================================================
 
-	if ship_to_type$<>"M" then
-
-		if ship_to_type$="S" then
-			custship_dev = fnget_dev("ARM_CUSTSHIP")
-			dim custship_tpl$:fnget_tpl$("ARM_CUSTSHIP")
-			read record (custship_dev, key=firm_id$+cust_id$+ship_to_no$, dom=*next) custship_tpl$
-
-			callpoint!.setColumnData("<<DISPLAY>>.SNAME",custship_tpl.name$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD1",custship_tpl.addr_line_1$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD2",custship_tpl.addr_line_2$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD3",custship_tpl.addr_line_3$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD4",custship_tpl.addr_line_4$)
-			callpoint!.setColumnData("<<DISPLAY>>.SCITY",custship_tpl.city$)
-			callpoint!.setColumnData("<<DISPLAY>>.SSTATE",custship_tpl.state_code$)
-			callpoint!.setColumnData("<<DISPLAY>>.SZIP",custship_tpl.zip_code$)
-			callpoint!.setColumnData("<<DISPLAY>>.SCNTRY_ID",custship_tpl.cntry_id$)
-		else
-			callpoint!.setColumnData("<<DISPLAY>>.SNAME",Translate!.getTranslation("AON_SAME"))
-			callpoint!.setColumnData("<<DISPLAY>>.SADD1","")
-			callpoint!.setColumnData("<<DISPLAY>>.SADD2","")
-			callpoint!.setColumnData("<<DISPLAY>>.SADD3","")
-			callpoint!.setColumnData("<<DISPLAY>>.SADD4","")
-			callpoint!.setColumnData("<<DISPLAY>>.SCITY","")
-			callpoint!.setColumnData("<<DISPLAY>>.SSTATE","")
-			callpoint!.setColumnData("<<DISPLAY>>.SZIP","")
-			callpoint!.setColumnData("<<DISPLAY>>.SCNTRY_ID","")
-		endif
-
+	highlightShipTo=0
+	if ship_to_type$="B" then
+		callpoint!.setColumnData("<<DISPLAY>>.SNAME",Translate!.getTranslation("AON_SAME"),1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD1","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD2","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD3","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD4","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SCITY","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SSTATE","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SZIP","",1)
+		callpoint!.setColumnData("<<DISPLAY>>.SCNTRY_ID","",1)
+		if highlightBillTo then highlightShipTo=1
 	else
-
 		invship_dev = fnget_dev("OPT_INVSHIP")
 		dim invship_tpl$:fnget_tpl$("OPT_INVSHIP")
-		read record (invship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$, dom=*endif) invship_tpl$
-		if invship_tpl.trans_status$="U" then
-			callpoint!.setColumnData("<<DISPLAY>>.SNAME",invship_tpl.name$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD1",invship_tpl.addr_line_1$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD2",invship_tpl.addr_line_2$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD3",invship_tpl.addr_line_3$)
-			callpoint!.setColumnData("<<DISPLAY>>.SADD4",invship_tpl.addr_line_4$)
-			callpoint!.setColumnData("<<DISPLAY>>.SCITY",invship_tpl.city$)
-			callpoint!.setColumnData("<<DISPLAY>>.SSTATE",invship_tpl.state_code$)
-			callpoint!.setColumnData("<<DISPLAY>>.SZIP",invship_tpl.zip_code$)
+		find record (invship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) invship_tpl$
+		if cvs(invship_tpl.customer_id$,2)<>"" or ship_to_type$="M" then
+			rem --- Use the invoice historical ship-to info when available
+			callpoint!.setColumnData("<<DISPLAY>>.SNAME",invship_tpl.name$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD1",invship_tpl.addr_line_1$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD2",invship_tpl.addr_line_2$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD3",invship_tpl.addr_line_3$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD4",invship_tpl.addr_line_4$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SCITY",invship_tpl.city$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SSTATE",invship_tpl.state_code$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SZIP",invship_tpl.zip_code$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SCNTRY_ID",invship_tpl.cntry_id$,1)
+		else
+			custship_dev = fnget_dev("ARM_CUSTSHIP")
+			dim custship_tpl$:fnget_tpl$("ARM_CUSTSHIP")
+			find record (custship_dev, key=firm_id$+cust_id$+ship_to_no$, dom=*next) custship_tpl$
+			callpoint!.setColumnData("<<DISPLAY>>.SNAME",custship_tpl.name$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD1",custship_tpl.addr_line_1$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD2",custship_tpl.addr_line_2$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD3",custship_tpl.addr_line_3$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SADD4",custship_tpl.addr_line_4$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SCITY",custship_tpl.city$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SSTATE",custship_tpl.state_code$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SZIP",custship_tpl.zip_code$,1)
+			callpoint!.setColumnData("<<DISPLAY>>.SCNTRY_ID",custship_tpl.cntry_id$,1)
+			highlightShipTo=1
 		endif
 	endif
-
-	callpoint!.setStatus("REFRESH")
 
 	return
 

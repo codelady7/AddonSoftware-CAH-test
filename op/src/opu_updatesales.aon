@@ -895,18 +895,25 @@ no_to_update: rem --- NO to Update: Clear On-Sales-Register Flags
                 wend
             wend
 
-            ope31_found=0
-            extract record (ope31_dev,key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$,dom=*next) ope31a$; ope31_found=1; rem Advisory Locking
-            if ope31_found and ope31a.trans_status$="R" then
-                ope31a.trans_status$="E"     
-                ope31a.mod_user$=sysinfo.user_id$
-                ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
-                ope31a.mod_time$=date(0:"%Hz%mz")
-                ope31a$ = field(ope31a$)
-                write record (ope31_dev) ope31a$
-            else
-                read(ope31_dev,end=*next)
-            endif
+            for i=1 to 2
+                if i=1 then
+                    address_type$="B"
+                else
+                    address_type$="S"
+                endif
+                redim ope31a$
+                extract record (ope31_dev,key=ope01a.firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+address_type$,dom=*next) ope31a$; ope31_found=1; rem Advisory Locking
+                if ope31a.trans_status$="R" then
+                    ope31a.trans_status$="E"     
+                    ope31a.mod_user$=sysinfo.user_id$
+                    ope31a.mod_date$=date(0:"%Yd%Mz%Dz")
+                    ope31a.mod_time$=date(0:"%Hz%mz")
+                    ope31a$ = field(ope31a$)
+                    write record (ope31_dev) ope31a$
+                else
+                    read(ope31_dev,end=*next)
+                endif
+            next i
 
             ope41_found=0
             extract record (ope41_dev,key=ope01_key$,dom=*next) ope41a$; ope41_found=1; rem Advisory Locking
