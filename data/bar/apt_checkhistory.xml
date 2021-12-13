@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apt_checkhistory">01A1F00CEDA3DEE1C7C78AA7B93F4482</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apt_checkhistory">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_checkhistory">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apt_checkhistory">20211201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_checkhistory">20211201</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_checkhistory">153142</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apt_checkhistory">20211207</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_checkhistory">20211211</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_checkhistory">124520</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_checkhistory"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_checkhistory"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_checkhistory"></DD_ATTR_DKNM>
@@ -162,6 +162,13 @@
 			<DD_KEY_DESC id="ddm_keys.apt_checkhistory01">Firm+Check+Vendor+Invoice+Type</DD_KEY_DESC>
 			<DD_KEY_ID id="ddm_keys.apt_checkhistory01">CHECK_VENDOR_INV</DD_KEY_ID>
 			<DD_KEY_AUTO_GEN id="ddm_keys.apt_checkhistory01"></DD_KEY_AUTO_GEN>
+		</RECORD>
+		<RECORD id="ddm_keys.apt_checkhistory02">
+			<DD_TABLE_ALIAS id="ddm_keys.apt_checkhistory02">APT_CHECKHISTORY</DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_keys.apt_checkhistory02">02</DD_KEY_NUMBER>
+			<DD_KEY_DESC id="ddm_keys.apt_checkhistory02">BnkAcctCd + CheckNo</DD_KEY_DESC>
+			<DD_KEY_ID id="ddm_keys.apt_checkhistory02">AO_BNKACCT_CHECK</DD_KEY_ID>
+			<DD_KEY_AUTO_GEN id="ddm_keys.apt_checkhistory02"></DD_KEY_AUTO_GEN>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_key_segs">
@@ -321,6 +328,45 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.apt_checkhistory0106">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.apt_checkhistory0106">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.apt_checkhistory0106">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.apt_checkhistory0201">
+			<DD_TABLE_ALIAS id="ddm_key_segs.apt_checkhistory0201">APT_CHECKHISTORY</DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.apt_checkhistory0201">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.apt_checkhistory0201">01</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.apt_checkhistory0201">FIRM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.apt_checkhistory0201"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.apt_checkhistory0201"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.apt_checkhistory0201"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.apt_checkhistory0201">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.apt_checkhistory0201">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.apt_checkhistory0201">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.apt_checkhistory0201">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.apt_checkhistory0202">
+			<DD_TABLE_ALIAS id="ddm_key_segs.apt_checkhistory0202">APT_CHECKHISTORY</DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.apt_checkhistory0202">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.apt_checkhistory0202">02</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.apt_checkhistory0202">BNK_ACCT_CD</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.apt_checkhistory0202"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.apt_checkhistory0202"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.apt_checkhistory0202"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.apt_checkhistory0202">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.apt_checkhistory0202">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.apt_checkhistory0202">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.apt_checkhistory0202">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.apt_checkhistory0203">
+			<DD_TABLE_ALIAS id="ddm_key_segs.apt_checkhistory0203">APT_CHECKHISTORY</DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.apt_checkhistory0203">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.apt_checkhistory0203">03</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.apt_checkhistory0203">CHECK_NO</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.apt_checkhistory0203"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.apt_checkhistory0203"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.apt_checkhistory0203"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.apt_checkhistory0203">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.apt_checkhistory0203">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.apt_checkhistory0203">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.apt_checkhistory0203">N</DD_SEGMENT_NUM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">

@@ -162,7 +162,7 @@ rem --- Inits
 rem --- Open/Lock files
 	files=30,begfile=1,endfile=17
 	dim files$[files],options$[files],chans$[files],templates$[files]
-	files$[1]="APE_MANCHECKHDR",options$[1]="OTA"
+	files$[1]="APE_MANCHECKHDR",options$[1]="OTA@"
 	files$[2]="APE_MANCHECKDIST",options$[2]="OTA"
 	files$[3]="APE_MANCHECKDET",options$[3]="OTAN";rem --- "ape-22, channel stored in user_tpl$ and used in detail grid callpoints when reading by AO_VEND_INV key
 	files$[4]="APM_VENDMAST",options$[4]="OTA"
@@ -499,12 +499,13 @@ rem --- (if open Computer or Manual check, can reverse; if already a Void or Rev
 	check_no$=callpoint!.getUserInput()
 	tmpky$=""
 
-	ape_mancheckhdr=fnget_dev("APE_MANCHECKHDR")
+	ape_mancheckhdr=fnget_dev("@APE_MANCHECKHDR")
 
-	read (ape_mancheckhdr,key=firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$,dom=*next)
+escape; rem wgh ... 10332 ... RECORD need the vendor_id from the read
+	read (ape_mancheckhdr,key=firm_id$+bnk_acct_cd$+check_no$,knum="AO_BNKACCT_CHECK",dir=0,dom=*next)
 	tmpky$=key(ape_mancheckhdr,end=*next)
-	if pos(firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$=tmpky$)=1
-		callpoint!.setStatus("RECORD:["+tmpky$+"]")
+	if pos(firm_id$+bnk_acct_cd$+check_no$=tmpky$)=1
+		callpoint!.setStatus("RECORD:["+firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$+"]")
 		break
 	endif
 
@@ -514,10 +515,9 @@ rem --- not found in entry file, so see if in open checks
 		apt05_dev = fnget_dev("APT_CHECKHISTORY")
 		dim apt05a$:fnget_tpl$("APT_CHECKHISTORY")
 
-		read (apt05_dev,key=firm_id$+ap_type$+bnk_acct_cd$+check_no$,dom=*next)
-		readrecord (apt05_dev,end=*next)apt05a$
+		readrecord(apt05_dev,key=firm_id$+bnk_acct_cd$+check_no$,knum="AO_BNKACCT_CHECK",dom=*next)apt05a$
 
-		if apt05a.firm_id$=firm_id$  and apt05a.ap_type$=ap_type$  and apt05a.bnk_acct_cd$=bnk_acct_cd$ and apt05a.check_no$=check_no$
+		if apt05a.firm_id$=firm_id$  and apt05a.bnk_acct_cd$=bnk_acct_cd$ and apt05a.check_no$=check_no$
 
 			vendor_id$=apt05a.vendor_id$
 
