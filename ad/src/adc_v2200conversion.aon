@@ -58,6 +58,150 @@ rem --- Start progress meter
     meter_action$="WIN-LST"
     gosub disp_meter
 
+rem --- For version 22.00, initialize new START_DATE and PERIOD_END_nn fields and remove obsolete CAL_START_DATE and PER_ENDING_nn fields in GLS_CALENDAR
+    this_module$="GL"
+    if installMap!.get(this_module$)="Y" then
+        if convCtrl!.getProperty("data_source")="OCJ" then
+            task$="2200_GL_gls_calendar"
+            if convCtrl!.getProperty(task$)<>"Completed" then
+    
+                rem --- Increment progress meter
+                meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+    
+                rem --- Open File(s)
+                num_files=1
+                dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                open_tables$[1]="GLS_CALENDAR",   open_opts$[1]="OTA"
+        
+                gosub open_tables
+        
+                glsCalendar_dev=num(open_chans$[1])
+                
+                dim glsCalendar$:open_tpls$[1]
+    
+                rem --- Need to initialize new START_DATE and PERIOD_END_nn fields from CAL_START_DATE and PER_ENDING_nn fields in the old GLS_CALENDAR
+                oldStbl$="+GLDATA"
+                oldFile$="gls_calendar"
+                gosub get_path_to_old_file
+                old_glsCalendar$=oldPathToFile$
+                open_success=0
+                old_glsCalendar_dev=unt
+                open(old_glsCalendar_dev,err=*next)old_glsCalendar$; open_success=1
+                if open_success then
+                    rem --- Increment progress meter
+                    meter_text$=Translate!.getTranslation("AON_UPDATING","Updating")+": GLS_CALENDAR "
+                    meter_proc_recs=meter_proc_recs+1
+                    meter_action$="MTR-LST"
+                    gosub disp_meter
+                    print(log_dev)meter_text$
+                        
+                    rem --- Get record template for old source GLS_CALENDAR file
+                    ddm_table_tpls$=convCtrl!.getProperty("barista_source")+"/barista/sys/data/ddm_table_tpls.dat"
+                    open_success=0
+                    ddm_table_tpls=unt
+                    open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
+                    if open_success then
+                        dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
+                        tpl_found=0
+                        findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
+                        if tpl_found then
+                            dim old_glsCalendar_tpl$:ddm_table_tpls.template$
+                        else
+                            rem --- Required template missing
+                            err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
+:                               " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+oldFile$+" *****"
+                            goto done
+                        endif
+                    else
+                        rem --- Required file missing
+                        msg_id$="AD_FILE_MISSING"
+                        dim msg_tokens$[1]
+                        msg_tokens$[1]=ddm_table_tpls$
+                        gosub disp_message
+                        err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                           Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+ddm_table_tpls$+" *****"
+                        goto done
+                    endif
+           
+                    rem --- Initialize blank START_DATE and PERIOD_END_nn fields from CAL_START_DATE and PER_ENDING_nn fields in the old GLS_CALENDAR
+                    read(glsCalendar_dev,key="",dom=*next)
+                    while 1
+                        readrecord(glsCalendar_dev,end=*break)glsCalendar$
+    
+                        rem --- NOTE: START_DATE and PERIOD_END_nn fields may have been initialized already in upgrades to v21.02 thru v21.14.
+                        newFields$=glsCalendar.start_date$
+                        for i=1 to 13
+                            period_end$="period_end_"+str(i:"00")
+                            newFields$=newFields$+field(glsCalendar$,period_end$)
+                        next i
+                        if cvs(newFields$,2)<>"" then continue
+    
+                        rem --- Get CAL_START_DATE and PER_ENDING_nn fields from the old GLS_CALENDAR for this fiscal year.
+                        redim old_glsCalendar_tpl$
+                        readrecord(old_glsCalendar_dev,key=glsCalendar.firm_id$+glsCalendar.year$,dom=*continue)old_glsCalendar_tpl$
+                
+                        rem --- Process only blank START_DATE dates
+                        if cvs(glsCalendar.start_date$,2)="" and cvs(old_glsCalendar_tpl.cal_start_date$,2)<>"" then
+                            rem --- Get the YYYYMMDD START_DATE by combining YEAR$+CAL_START_DATE$ from the old GLS_CALENDAR for this fiscal year
+                            glsCalendar.start_date$=old_glsCalendar_tpl.year$+old_glsCalendar_tpl.cal_start_date$
+                        endif
+    
+                        rem --- Process only blank PERIOD_END_nn dates
+                        for per=1 to num(glsCalendar.total_pers$)
+                            period_end$=field(glsCalendar$,"PERIOD_END_"+str(per:"00"))
+                            per_ending$=field(old_glsCalendar_tpl$,"PER_ENDING_"+str(per:"00"))
+                            if cvs(period_end$,2)="" and cvs(per_ending$,2)<>"" then
+                                rem --- Get the YYYYMMDD PER_ENDING_nn by combining YEAR$+PER_ENDING_nn$ from the old GLS_CALENDAR for this fiscal year
+                                field glsCalendar$,"PERIOD_END_"+str(per:"00")=old_glsCalendar_tpl.year$+per_ending$
+                                rem --- Increment the year when new calendar year starts.
+                                if per>1 and old_glsCalendar_tpl.year$+per_ending$<field(glsCalendar$,"PERIOD_END_01") then
+                                    rem --- The current period end is less than the first peiod end, so it's in the next year.
+                                    field glsCalendar$,"PERIOD_END_"+str(per:"00")=str(num(old_glsCalendar_tpl.year$)+1)+per_ending$
+                                endif
+                            endif
+                        next per
+                        
+                        rem --- Write new GLS_CALENDAR record
+                        glsCalendar$=field(glsCalendar$)
+                        writerecord(glsCalendar_dev)glsCalendar$
+                    wend
+                    write(convCtrlFileChan)task$+"=Completed"
+                
+                    close(old_glsParams_dev,err=*next)
+                else
+                    rem --- Required file missing
+                    msg_id$="AD_FILE_MISSING"
+                    dim msg_tokens$[1]
+                    msg_tokens$[1]=old_glsParams$
+                    gosub disp_message
+                    err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                           Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+old_glsCalendar$+" *****"
+                    goto done
+                endif
+            else
+                rem --- Increment progress meter
+                meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+            endif
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
 rem --- For version 22.00, initialize new ADDRESS_TYPE field in OPT_INVSHIP
     this_module$="OP"
     if installMap!.get(this_module$)="Y" then

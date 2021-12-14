@@ -1879,31 +1879,67 @@ write_gls_calendar_recs: rem --- Write GLS_CALENDAR for GLS-01A records
     gosub fix_yymmdd_date
     gls_calendar_rec.year$=value$
     gls_calendar_rec.total_pers$=old_rec.total_pers$
-    gls_calendar_rec.cal_start_date$=""
+    gls_calendar_rec.start_date$=""
     total_pers=num(gls_calendar_rec.total_pers$)
+
+    rem --- Calculate calendar start date based on last date of last period.
+    value$=field(old_rec$,"per_ending_01")
+    if len(cvs(value$,3)) then
+        firstMMDD$=str(asc(value$)-32:"00")+str(mod(asc(value$(2))-32,100):"00")
+    else
+        firstMMDD$=pad("",4)
+    endif
+    value$=field(old_rec$,"per_ending_"+str(total_pers:"00"))
+    if len(cvs(value$,3)) then
+        lastMMDD$=str(asc(value$)-32:"00")+str(mod(asc(value$(2))-32,100):"00")
+    else
+        lastMMDD$=pad("",4)
+    endif
+    calendar_year=num(gls_calendar_rec.year$)-1
+    if lastMMDD$<firstMMDD$ then calendar_year=calendar_year+1
+    rem --- Adjust last day of February for leap year
+    if lastMMDD$(1,2)="02" then
+        if lastMMDD$(3,2)="29" and !Calendar!.isLeapYear(calendar_year) then lastMMDD$(3,2)="28"
+        if lastMMDD$(3,2)="28" and Calendar!.isLeapYear(calendar_year) then lastMMDD$(3,2)="29"
+    endif
+    julian=jul(calendar_year,num(lastMMDD$(1,2)),num(lastMMDD$(3,2)))+1
+    startdate$=date(julian:"%Yl%Mz%Dz")
+    gls_calendar_rec.start_date$=startdate$
+    calendarYear$=startdate$(1,4)
+
     for i=1 to total_pers
         period_name$="period_name_"+str(i:"00")
         field gls_calendar_rec$,period_name$=field(old_rec$,period_name$)
     next i
+
     for i=1 to total_pers
         abbr_name$="abbr_name_"+str(i:"00")
         field gls_calendar_rec$,abbr_name$=field(old_rec$,abbr_name$)
     next i
+
     for i=1 to total_pers
         rem --- Convert packed MD to unpacked MMDD 
         per_ending$="per_ending_"+str(i:"00")
         value$=field(old_rec$,per_ending$)
         if len(cvs(value$,3)) then
-            value$=str(asc(value$)-32:"00")+str(mod(asc(value$(2))-32,100):"00")
+            value$=calendarYear$+str(asc(value$)-32:"00")+str(mod(asc(value$(2))-32,100):"00")
         else
-            value$=pad("",4)
+            value$=pad("",8)
         endif
-        field gls_calendar_rec$,per_ending$=value$
+        period_end$="period_end_"+str(i:"00")
+        field gls_calendar_rec$,period_end$=value$
+        rem --- Increment the year when new calendar year starts.
+        if i>1 and cvs(value$,2)<>"" and value$<field(gls_calendar_rec$,"PERIOD_END_01") then
+            rem --- The current period end is less than the first peiod end, so it's in the next year.
+            field gls_calendar_rec$,period_end$=str(num(value$(1,4))+1)+value$(5)
+        endif
     next i
+
     for i=1 to total_pers
         locked_flag$="locked_flag_"+str(i:"00")
         field gls_calendar_rec$,locked_flag$=field(old_rec$,locked_flag$)
     next i
+
     for i=1 to total_pers
         rem --- Convert packed YMD to unpacked YYYYMMDD
         locked_date$="locked_date_"+str(i:"00")
@@ -1915,20 +1951,6 @@ write_gls_calendar_recs: rem --- Write GLS_CALENDAR for GLS-01A records
         endif
         field gls_calendar_rec$,locked_date$=value$
     next i
-
-    rem --- Calculate calendar start date based on last date of last period.
-    calendar_year=num(gls_calendar_rec.year$)-1
-    begdate$=field(gls_calendar_rec$,"per_ending_"+str(total_pers:"00"))
-    if begdate$(1,4)<gls_calendar_rec.per_ending_01$ then calendar_year=calendar_year+1
-    dd$=begdate$(3,2)
-    rem --- Adjust last day of February for leap year
-    if begdate$(1,2)="02" then
-        if begdate$(3,2)="29" and !Calendar!.isLeapYear(calendar_year) then begdate$(3,2)="28"
-        if begdate$(3,2)="28" and Calendar!.isLeapYear(calendar_year) then begdate$(3,2)="29"
-    endif
-    julian=jul(calendar_year,num(begdate$(1,2)),num(begdate$(3,2)))+1
-    begdate$=date(julian:"%Yl%Mz%Dz")
-    gls_calendar_rec.cal_start_date$=begdate$(5)
 
     rem --- Write GLS_CALENDAR record
     gls_calendar_rec$=field(gls_calendar_rec$)
