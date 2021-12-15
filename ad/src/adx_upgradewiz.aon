@@ -354,9 +354,6 @@ rem --- Update new sync XML files (and copy old barista/settings dir)
 rem --- Remove adm_module_tbls*.xml from admin_backup dir, if it exists
     gosub deleteAdmModuleTbls
 
-rem --- Build addonprop.jar and put it in the aon/prop directory
-    gosub buildAddonJar
-
 rem --- Use old modified menus instead of new standard menus.
     if useOldMenu% then gosub useOldMenu
 
@@ -388,6 +385,9 @@ rem --- Need to restart if there were Git conflicts, or a Git cherry pick failur
         gosub createRestartFile
         goto done
     endif
+
+rem --- Build addonprop.jar and put it in the aon/prop directory
+    gosub buildAddonJar
 
 restartUpgrade2:
 rem --- Launch auto-sync in new barista for the new addon.syn

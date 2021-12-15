@@ -71,6 +71,7 @@ class public AO_Updater
     REM      Dry-run fetching branch
     REM      Check fetched refs list to see if we're getting updates
     REM      Check fetch result to see if conflicts will result.
+rem ... Need to make sure conflicts are resolved before creating addonprop.jar.
     method public UpdateResult checkForUpdates()
         
         declare AO_UpdaterStatus status!
