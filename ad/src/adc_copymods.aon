@@ -424,6 +424,12 @@ method_error:rem --- Method error trap/handler (11Oct2017)
                     close(sourceChan)
                     close(targetChan)
                     target!.setLastModified(sourceModTime!)
+            
+                    rem -- Git tracks the executable bit on files, so if the source file is executable, 
+                    rem -- the target file needs to be as well. 
+                    if (source!.canExecute()) then 
+                        target!.setExecutable(1,0) 
+                    endif
                 endif
                 #log("    " + source!.getPath())
                
