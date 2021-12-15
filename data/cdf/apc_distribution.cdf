@@ -1,10 +1,70 @@
+[[APC_DISTRIBUTION.BDEL]]
+rem --- Do NOT allow deleting this Distribution Code when still in use.
+	thisDistCd$=callpoint!.getColumnData("APC_DISTRIBUTION.AP_DIST_CODE")
+	usedInTable$=""
+
+	checkTables!=BBjAPI().makeVector()
+	checkTables!.addItem("APC_TYPECODE")
+	checkTables!.addItem("APE_INVOICEHDR")
+	checkTables!.addItem("APE_MANCHECKDET")
+	checkTables!.addItem("APE_OPENCHECKS")
+	checkTables!.addItem("APE_RECURRINGHDR")
+	checkTables!.addItem("APM_VENDHIST")
+	checkTables!.addItem("APS_PARAMS")
+	checkTables!.addItem("APT_CHECKHISTORY")
+	checkTables!.addItem("APT_INVOICEHDR")
+	if callpoint!.getDevObject("usingPO")="Y" then
+		checkTables!.addItem("POE_INVHDR")
+		checkTables!.addItem("POT_INVHDR")
+	endif
+	for i=0 to checkTables!.size()-1
+		table_dev = fnget_dev(checkTables!.getItem(i))
+		dim table_tpl$:fnget_tpl$(checkTables!.getItem(i))
+		read(table_dev,key=firm_id$,dom=*next)
+		while 1
+			readrecord(table_dev,end=*break)table_tpl$
+			if table_tpl.firm_id$<>firm_id$ then break
+			if table_tpl.ap_dist_code$=thisDistCd$ then
+				if usedInTable$<>"" then usedInTable$=usedInTable$+", "
+				usedInTable$=usedInTable$+checkTables!.getItem(i)
+				break
+			endif
+		wend
+	next i
+
+	rem --- Report tables where this Distribution Code is currently being used.
+	if usedInTable$<>"" then
+		msg_id$="AP_DIST_CD_USED"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=usedInTable$
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APC_DISTRIBUTION.BSHO]]
+rem --- This firm using Purchase Orders?
+	call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
+	callpoint!.setDevObject("usingPO",info$[20])
+
 rem --- Open/Lock files
-
-
-files=1,begfile=1,endfile=files
+files=11
+if callpoint!.getDevObject("usingPO")<>"Y" then files=9
+begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APS_PARAMS";rem --- aps-01
+files$[2]="APC_TYPECODE"
+files$[3]="APE_INVOICEHDR"
+files$[4]="APE_MANCHECKDET"
+files$[5]="APE_OPENCHECKS"
+files$[6]="APE_RECURRINGHDR"
+files$[7]="APM_VENDHIST"
+files$[8]="APT_CHECKHISTORY"
+files$[9]="APT_INVOICEHDR"
+if callpoint!.getDevObject("usingPO")="Y" then
+	files$[10]="POE_INVHDR"
+	files$[11]="POT_INVHDR"
+endif
 
 for wkx=begfile to endfile
 	options$[wkx]="OTA"
@@ -107,4 +167,6 @@ disable_fields:
  callpoint!.setStatus("ABLEMAP-REFRESH-ACTIVATE")
  
 return
+
+
 
