@@ -76,6 +76,12 @@ rem --- Initialize and enable/disable prnt_signature and signature_file
 rem --- Initialize Checking Account ListButton for all selected invoices
 	gosub initCheckAccts
 
+rem --- Set the defalut AP Type when not multi-type
+	if callpoint!.getDevObject("multi_types")="N" then
+		dflt_ap_type$=callpoint!.getDevObject("dflt_ap_type")
+		callpoint!.setColumnData("APR_CHECKS.AP_TYPE",dflt_ap_type$)
+	endif
+
 [[APR_CHECKS.ASVA]]
 rem --- Validate Check Number unless only ACH payments selected, i.e. there are no printed checks
 if num(callpoint!.getColumnData("APR_CHECKS.CHECK_NO")) = 0 then
@@ -213,6 +219,7 @@ rem --- Get parameters
 	readrecord(aps01_dev,key=aps01_key$,dom=std_missing_params)aps01a$
 	callpoint!.setDevObject("post_to_gl",aps01a.post_to_gl$)
 	callpoint!.setDevObject("multi_types",aps01a.multi_types$)
+	callpoint!.setDevObject("dflt_ap_type",aps01a.ap_type$)
 	callpoint!.setDevObject("default_form_order",aps01a.form_order$)
 	callpoint!.setDevObject("aps01_prnt_signature",aps01a.prnt_signature$)
 	callpoint!.setDevObject("aps01_signature_file",aps01a.signature_file$)
@@ -305,18 +312,6 @@ rem --- Warn if this check number has been previously used
 		endif
 		break
 	wend
-
-[[APR_CHECKS.PICK_CHECK.AVAL]]
-if callpoint!.getUserInput()="Y"
-	if callpoint!.getDevObject("multi_types")<>"Y"
-		ctl_name$="APR_CHECKS.AP_TYPE"
-		ctl_stat$="D"
-		gosub disable_fields
-	else
-		ctl_name$="APR_CHECKS.AP_TYPE"
-		ctl_stat$=" "
-		gosub disable_fields
-endif
 
 [[APR_CHECKS.PRNT_SIGNATURE.AVAL]]
 rem --- Enable/disable signature_file
