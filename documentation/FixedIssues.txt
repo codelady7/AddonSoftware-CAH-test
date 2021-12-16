@@ -1,121 +1,12 @@
 =======================================================================================================================================
- Report Date:   2021-12-03
- Report Branch: AddonSoftware 21.13
- Last Release:  AddonSoftware 21.12
+ Report Date:   2021-12-16
+ Report Branch: AddonSoftware 21.14
+ Last Release:  AddonSoftware 21.13
 =======================================================================================================================================
 
-21.12 release 11/15/2021
-BBjBaristaAddonDemos2112_11-12-2021_1448.jar
+21.13 release 12/14/2021
+BBjBaristaAddonDemos2113_12-13-2021_1941.jar
 
 =======================================================================================================================================
-Revision: b90b74b710aea7e6811c8e827d25de2c46d1c4bd
-Author: Christine <chawkins@basis.com>
-Date: 11/16/2021 1:54:05 PM
-Message:
-Bug 10324 - PO - New PO Calendar not creating gap months
- - corrected to add an empty month if/as needed
 
-(cherry picked from commit 95b91414cf3362d7e9260acb6eecbfd13fe2af63)
-----
-Modified: data/bar/pom_cal_maint.xml
-Modified: data/cdf/pom_cal_maint.cdf
-
-=======================================================================================================================================
-Revision: b70e4035ce55370ce50a34d7379eca6efa72fd84
-Author: Christine <chawkins@basis.com>
-Date: 11/16/2021 4:56:17 PM
-Message:
-Bug 10325 - AD - Packager/Extractor should not use ads_messages records that the "old" install may not have
- - revised to use msgbox() instead of Barista messages
-
-(cherry picked from commit 10de1aee71f0178f9c605b422b96c6142c978020)
-----
-Modified: util/packager_extractor/aon_packagerextractor.bbj
-
-=======================================================================================================================================
-Revision: a633e5d826e1c090014d0061e43c3b3e463419ee
-Author: Christine <chawkins@basis.com>
-Date: 11/16/2021 5:54:00 PM
-Message:
-Bug 10325 - AD - Packager/Extractor should not use ads_messages records that the "old" install may not have
- - no-op clarification of log text describing package type
-
-(cherry picked from commit 39a4f986ca7f4f9128555b32641c5b0d93306b0c)
-----
-Modified: util/packager_extractor/aon_packagerextractor.bbj
-
-=======================================================================================================================================
-Revision: 65e7f213c5891f5c3c72e23697a11bbdf76eed6f
-Author: Bill Halsted <bhalsted@basis.com>
-Date: 11/22/2021 10:40:07 AM
-Message:
-Bug 10327: Modified OPE_ORDDET and OPE_INVDET AWRI callpoint code to
-handle changes in previous order quantity for lotted/serialized and
-inventoried items.
-
-(cherry picked from commit 05f9f8e5029c34a2dfd42acaf8b54231f6764294)
-----
-Modified: data/bar/ope_invdet.xml
-Modified: data/bar/ope_orddet.xml
-Modified: data/cdf/ope_invdet.cdf
-Modified: data/cdf/ope_orddet.cdf
-
-=======================================================================================================================================
-Revision: d4f5480e660c6d49d636f736f3c7efbfd2784b91
-Author: Bill Halsted <bhalsted@basis.com>
-Date: 11/23/2021 9:06:50 AM
-Message:
-ER 4300: Modified Order Picking List to automatically reprint when
-changes are made, and clearly identify the changes on the "Reprinted"
-Picking List.
-
-(cherry picked from commit ff0d194e2a037c6f58554ae8760ae5f559fdf9cb)
-----
-Modified: ad/src/adx_build_sproc.aon
-Modified: data/bar/ope_addl_opts.xml
-Modified: data/bar/ope_invdet.xml
-Modified: data/bar/ope_invhdr.xml
-Modified: data/bar/ope_orddet.xml
-Modified: data/bar/ope_ordhdr.xml
-Modified: data/cdf/ope_addl_opts.cdf
-Modified: data/cdf/ope_invhdr.cdf
-Modified: data/cdf/ope_orddet.cdf
-Modified: data/cdf/ope_ordhdr.cdf
-Modified: data/sync/ads_messages~[01007514OP].xml
-Modified: op/src/opc_picklist.aon
-Modified: prop/addon.properties
-Modified: prop/addon_en.properties
-Modified: reports/OPPickListDet-LotSer.jasper
-Modified: reports/OPPickListDet.jasper
-Modified: reports/OPPickListDet.jrxml
-Modified: reports/OPPickListHdr.jasper
-Modified: reports/OPPickListHdr.jrxml
-Modified: sprocs/OPPICKLIST_DET.prc
-Modified: sprocs/OPPICKLIST_HDR.prc
-
-=======================================================================================================================================
-Revision: 2172041ced3a085617b44f18984d4bef0fd484d1
-Author: Christine <chawkins@basis.com>
-Date: 12/3/2021 2:30:01 PM
-Message:
-Bug 10333 - AD - Addon's ModMerger class used in upgrades contains hard-coded reference to mods.syn
- - changed to use actual name of mods project
-
-(cherry picked from commit 2088047651da32ce516e03c854a9d155853d1392)
-----
-Modified: ad/src/ado_AO_ModMerger.aon
-Modified: ad/src/ado_ModMerger.aon
-Modified: ad/src/adx_upgradewiz.aon
-
-=======================================================================================================================================
-Revision: 622e49ade27025f6333e9eeb854248d849317ee9
-Author: Christine <chawkins@basis.com>
-Date: 12/3/2021 6:21:09 PM
-Message:
-Bug 10335 - AD - Executive Summary Chart incorrect when changing period
- - corrected chart when changing month/year
-
-(cherry picked from commit e56af06fdccb3d240c027caaad48edcaeaf5db52)
-----
-Modified: ad/src/ads_execsummary.aon
 
