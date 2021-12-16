@@ -8,5 +8,12 @@
 BBjBaristaAddonDemos2113_12-13-2021_1941.jar
 
 =======================================================================================================================================
-
-
+Revision: 0403856034bdd951ca1e4367ff8134f98e9f8c09
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 12/14/2021 5:18:58 PM
+Message:
+Bug 10281: Modified upgrade wiz to do checkForGitConflicts subroutine
+before the buildAddonJar subroutine.
+----
+Added: ad/src/ado_AO_Updater.bbj
+Modified: ad/src/adx_upgradewiz.aon
