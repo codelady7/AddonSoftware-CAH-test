@@ -17,3 +17,13 @@ before the buildAddonJar subroutine.
 ----
 Added: ad/src/ado_AO_Updater.bbj
 Modified: ad/src/adx_upgradewiz.aon
+
+=======================================================================================================================================
+Revision: 8839ce81b02d44fdedc7cfcacd5af208e397e35d
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 12/14/2021 5:58:24 PM
+Message:
+Bug 10250: Added set executable logic from adc_copyaon.aon to
+adc_copymods.aon.
+----
+Modified: ad/src/adc_copymods.aon
