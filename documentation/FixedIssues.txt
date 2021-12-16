@@ -27,3 +27,14 @@ Bug 10250: Added set executable logic from adc_copyaon.aon to
 adc_copymods.aon.
 ----
 Modified: ad/src/adc_copymods.aon
+
+=======================================================================================================================================
+Revision: 03447ed92fbd0ca0e46e144bc889716593c16704
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 12/16/2021 3:25:38 PM
+Message:
+Bug 10322: Set AP Type to the default when multiple AP types aren't
+used.
+----
+Modified: data/bar/apr_checks.xml
+Modified: data/cdf/apr_checks.cdf
