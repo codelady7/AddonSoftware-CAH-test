@@ -139,6 +139,8 @@ continues its history of constant improvement - additional features, increased f
                         <li>Improved filtering in GL Transaction History Report so Audit Number filter can be coupled with Account Number and/or Journal ID filters.</li>
                         <li>Added the GL Account Description to the Export Format of the GL Transaction History Report.</li>
                         <li>Enhanced the Order lookup on the Customer form to include Salesperson and Credit Flag.</li>
+                        <li>Added Audit Control Number drilldown to the "Detail" view query on the GL Account Summary Activity form.</li>
+                        <li>Enhanced the AP Export 1099 To Text form so user can specify both a server and client-side save directory.</li>
                     </ul>
                     <li>Distribution</li>
                     <ul>
@@ -152,6 +154,9 @@ continues its history of constant improvement - additional features, increased f
                         <li>Added an "Include Zero Balance Items" option to the Inventory Stock Status Report.</li>
                         <li>Focus directly on Freight Amount in Order/Invoice Entry's Totals tab rather than Discount Amount, since the latter isn't often changed.</li>
                         <li>Added the Order or Invoice number to the saved document name for on-demand Pick Lists and Invoices, respectively.</li>
+                        <li>In grids where warehouse is entered before the item, restrict the IV Item lookup to show only those items for the currently entered warehouse.</li>
+                        <li>Added option to Inventory Physical Count Register to control whether the count should be set to zero vs the current freeze quantity, when a count is not entered for an item.</li>
+                        <li>Refactored the Purchase Order Calendar to use the new BBjCalendarWidget. Allows users to set their own colors for Workday, Holiday, Closed.</li>
                     </ul>
                     <li>Manufacturing</li>
                     <ul>
