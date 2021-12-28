@@ -1,7 +1,11 @@
 [[OPC_TAXCODE.ADIS]]
 rem --- Enable G/L Account"
-	if user_tpl.gl$="Y" then 
-		enableit$=""
+	if user_tpl.gl$="Y" then
+		if num(callpoint!.getColumnData("OPC_TAXCODE.TAX_RATE"))<>0 
+			enableit$=""
+		else
+			enableit$="I"
+		endif
 		gosub able_gl
 	endif
 
