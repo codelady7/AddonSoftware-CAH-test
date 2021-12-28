@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2021-12-16
+ Report Date:   2021-12-28
  Report Branch: AddonSoftware 21.14
  Last Release:  AddonSoftware 21.13
 =======================================================================================================================================
@@ -38,3 +38,16 @@ used.
 ----
 Modified: data/bar/apr_checks.xml
 Modified: data/cdf/apr_checks.cdf
+
+=======================================================================================================================================
+Revision: b34da37c2930c70ba6714f9c49e13566ec5c81b8
+Author: Christine <chawkins@basis.com>
+Date: 12/28/2021 1:55:56 PM
+Message:
+Bug 10348 - BM - Inventory Production Update cannot lock IVW_LFDET
+ - changed register to open/clear/lock ivw-04 instead of open/lock, then clear, which leaves it unlocked.
+
+(cherry picked from commit aa05bcdb8c0c91e2c2be19066dd6d1ac336480c1)
+----
+Modified: bm/src/bmr_invproduction.aon
+
