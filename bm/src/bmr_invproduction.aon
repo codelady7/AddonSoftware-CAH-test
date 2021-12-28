@@ -264,7 +264,7 @@ rem --- Open Additional Files
 		num_files=3
 		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
         open_tables$[1]="IVM_ITEMTIER",open_opts$[1]="OTA"
-        open_tables$[2]="IVW_LFDET",open_opts$[2]="OTAL"
+        open_tables$[2]="IVW_LFDET",open_opts$[2]="OTALI";rem --- lock and initfile ivw-04
 
 		gosub open_tables
         
@@ -274,8 +274,6 @@ rem --- Open Additional Files
 		template$[12]=open_tpls$[1]; rem ivm04 IVM_ITEMTIER
 		template$[13]=open_tpls$[2]; rem ivw04 IVW_LFDET
 
-		rem --- Clear LIFO/FIFO Work Files
-        call pgmdir$+"adc_clearfile.aon",ivw04_dev
     endif   
 
     if gl$="Y" then 
