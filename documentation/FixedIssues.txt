@@ -51,3 +51,20 @@ Bug 10348 - BM - Inventory Production Update cannot lock IVW_LFDET
 ----
 Modified: bm/src/bmr_invproduction.aon
 
+=======================================================================================================================================
+Revision: eb840ebc2d7393231dc70cbb23d15aec50d3c2fb
+Author: Christine <chawkins@basis.com>
+Date: 12/28/2021 3:44:32 PM
+Message:
+Bug 10349 - OP - Tax Code maintenance lets you mouse into the GL Account field when tax rate is zero
+ - made ADIS check the tax rate in addition to the gl interface flag it was already checking.
+
+(cherry picked from commit d416fcc4d49352fa26be15f470551332abca1e96)
+
+# Conflicts:
+#	data/bar/opc_taxcode.xml
+----
+Modified: data/bar/opc_taxcode.xml
+Modified: data/cdf/opc_taxcode.cdf
+
+
