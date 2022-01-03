@@ -7,7 +7,6 @@ rem --- Do NOT allow deleting this Distribution Code when still in use.
 	checkTables!.addItem("APC_TYPECODE")
 	checkTables!.addItem("APE_INVOICEHDR")
 	checkTables!.addItem("APE_MANCHECKDET")
-	checkTables!.addItem("APE_OPENCHECKS")
 	checkTables!.addItem("APE_RECURRINGHDR")
 	checkTables!.addItem("APM_VENDHIST")
 	checkTables!.addItem("APS_PARAMS")
@@ -48,7 +47,7 @@ rem --- This firm using Purchase Orders?
 	callpoint!.setDevObject("usingPO",info$[20])
 
 rem --- Open/Lock files
-files=11
+files=10
 if callpoint!.getDevObject("usingPO")<>"Y" then files=9
 begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
@@ -56,14 +55,13 @@ files$[1]="APS_PARAMS";rem --- aps-01
 files$[2]="APC_TYPECODE"
 files$[3]="APE_INVOICEHDR"
 files$[4]="APE_MANCHECKDET"
-files$[5]="APE_OPENCHECKS"
-files$[6]="APE_RECURRINGHDR"
-files$[7]="APM_VENDHIST"
-files$[8]="APT_CHECKHISTORY"
-files$[9]="APT_INVOICEHDR"
+files$[5]="APE_RECURRINGHDR"
+files$[6]="APM_VENDHIST"
+files$[7]="APT_CHECKHISTORY"
+files$[8]="APT_INVOICEHDR"
 if callpoint!.getDevObject("usingPO")="Y" then
-	files$[10]="POE_INVHDR"
-	files$[11]="POT_INVHDR"
+	files$[9]="POE_INVHDR"
+	files$[10]="POT_INVHDR"
 endif
 
 for wkx=begfile to endfile
