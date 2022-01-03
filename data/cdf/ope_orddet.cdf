@@ -794,7 +794,7 @@ rem --- Items or warehouses are different: uncommit previous
 				refs[0]   = prior_qty
 
 				if prior_itemmast.lotser_item$<>"Y" or prior_itemmast.inventoried$<>"Y" then
-					if line_ship_date$<=user_tpl.def_commit$				
+					if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 						call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 						if status then goto awri_update_hdr
 					endif
@@ -810,15 +810,15 @@ rem --- Items or warehouses are different: uncommit previous
 						found_lot=1
 						items$[3] = ope_ordlsdet.lotser_no$
 						refs[0]   = ope_ordlsdet.qty_ordered
-						if line_ship_date$<=user_tpl.def_commit$
-							call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 							if status then goto awri_update_hdr
 						endif
 						remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
 					wend
 
 					if found_lot=0
-						if line_ship_date$<=user_tpl.def_commit$
+						if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 							call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 							if status then goto awri_update_hdr
 						endif
@@ -863,7 +863,7 @@ rem --- New record or item and warehouse haven't changed: commit difference
 					rem --- Uncommit
 					refs[0]=abs(refs[0])
 					if curr_itemmast.lotser_item$<>"Y" or curr_itemmast.inventoried$<>"Y" then
-						if line_ship_date$<=user_tpl.def_commit$
+						if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 							call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 							if status then goto awri_update_hdr
 						endif
@@ -887,7 +887,7 @@ rem --- New record or item and warehouse haven't changed: commit difference
 								committed_qty = curr_qty
 							endif
 							items$[3] = ope_ordlsdet.lotser_no$
-							if line_ship_date$<=user_tpl.def_commit$
+							if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 								if status then goto awri_update_hdr
 							endif
@@ -900,7 +900,7 @@ rem --- New record or item and warehouse haven't changed: commit difference
 						wend
 
 						if found_lot=0
-							if line_ship_date$<=user_tpl.def_commit$
+							if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 								if status then goto awri_update_hdr
 							endif
@@ -949,7 +949,7 @@ rem --- and that's when this code should be hit.
 					found_lot=1
 					items$[3] = ope_ordlsdet.lotser_no$
 					refs[0]   = ope_ordlsdet.qty_ordered
-					if line_ship_date$<=user_tpl.def_commit$
+					if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 						if status then goto awri_update_hdr
 					endif
@@ -957,7 +957,7 @@ rem --- and that's when this code should be hit.
 				wend
 
 				if found_lot=0
-					if line_ship_date$<=user_tpl.def_commit$
+					if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 						if status then goto awri_update_hdr
 					endif
@@ -2387,7 +2387,8 @@ rem ==========================================================================
 		refs[0]=ord_qty*conv_factor
 
 		if ivm_itemmast.lotser_item$<>"Y" or ivm_itemmast.inventoried$<>"Y" then
-			if line_ship_date$<=user_tpl.def_commit$
+			if (action$="CO" and line_ship_date$<=user_tpl.def_commit$) or
+:			(callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y") then
 				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 			endif
 		else
@@ -2400,22 +2401,22 @@ rem ==========================================================================
 				if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
 				items$[3] = ope_ordlsdet.lotser_no$
 				refs[0]   = ope_ordlsdet.qty_ordered
-				if line_ship_date$<=user_tpl.def_commit$
+				if (action$="CO" and line_ship_date$<=user_tpl.def_commit$) or
+:				(callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y") then
 					call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 				endif
-				remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+				if action$="UC" then remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
 				found_lot=1
 			wend
 
 			if found_lot=0
-				if line_ship_date$<=user_tpl.def_commit$
+				if (action$="CO" and line_ship_date$<=user_tpl.def_commit$) or
+:				(callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y") then
 					call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 				endif
 			endif
 		endif
 	endif
-
-	rem print "out"; rem debug
 
 	return
 
