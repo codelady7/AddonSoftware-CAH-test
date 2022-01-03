@@ -48,7 +48,7 @@ rem --- This firm using Purchase Orders?
 
 rem --- Open/Lock files
 files=10
-if callpoint!.getDevObject("usingPO")<>"Y" then files=9
+if callpoint!.getDevObject("usingPO")<>"Y" then files=8
 begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APS_PARAMS";rem --- aps-01
