@@ -458,7 +458,9 @@ if dont_write$="Y"
 endif
 
 [[<<DISPLAY>>.CHECK_ACCTS.AVAL]]
-rem --- Initialize CHECK_NO for the selected checking account
+rem --- Initialize CHECK_NO for the selected checking account if it has changed
+	bnk_acct_cd$=callpoint!.getUserInput()
+	if callpoint!.getColumnData("<<DISPLAY>>.CHECK_ACCTS")=bnk_acct_cd$ then break
 
 	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
 	index=chkAcctCtl!.getSelectedIndex()
@@ -467,7 +469,7 @@ rem --- Initialize CHECK_NO for the selected checking account
 
 rem --- Initialize BNK_ACCT_CD for the selected checking account
 
-	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",callpoint!.getUserInput())
+	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnk_acct_cd$)
 
 [[APE_MANCHECKHDR.CHECK_DATE.AVAL]]
 print "in check date aval"
@@ -537,7 +539,7 @@ rem --- not found in entry file, so see if in open checks
 				gosub disp_message
 
 				if msg_opt$="Y"
-					callpoint!.setColumnData("APE_MANCHECKHDR.TRANS_TYPE","R")
+					callpoint!.setColumnData("APE_MANCHECKHDR.TRANS_TYPE","R",1)
 					callpoint!.setColumnUndoData("APE_MANCHECKHDR.TRANS_TYPE","R")
 					ctl_name$="APE_MANCHECKHDR.AP_TYPE"
 					ctl_stat$="D"
@@ -550,8 +552,8 @@ rem --- not found in entry file, so see if in open checks
 					gosub disable_fields
 					ctl_name$="APE_MANCHECKHDR.VENDOR_ID"
 					gosub disable_fields
-					callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_DATE",apt05a.check_date$)
-					callpoint!.setColumnData("APE_MANCHECKHDR.VENDOR_ID",vendor_id$)
+					callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_DATE",apt05a.check_date$,1)
+					callpoint!.setColumnData("APE_MANCHECKHDR.VENDOR_ID",vendor_id$,1)
 
 					rem --- Sum totals for this check
 					while 1
