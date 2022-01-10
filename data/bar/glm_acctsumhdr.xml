@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glm_acctsumhdr">7BF72C176100CB915982E0D83A98F97E</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_acctsumhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_acctsumhdr">20130117</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_acctsumhdr">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_acctsumhdr">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_acctsumhdr">154822</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_acctsumhdr">20220110</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_acctsumhdr">20220110</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_acctsumhdr">142738</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_acctsumhdr">GLM_ACCT        </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glm_acctsumhdr">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glm_acctsumhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_acctsumhdr"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glm_acctsumhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glm_acctsumhdr">T</DD_ATTR_FTYP>
@@ -420,7 +420,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glm_acctsumhdr002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glm_acctsumhdr002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glm_acctsumhdr002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glm_acctsumhdr002">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glm_acctsumhdr002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glm_acctsumhdr002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glm_acctsumhdr002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glm_acctsumhdr002"></DD_ATTR_CTLY>
@@ -831,7 +831,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.glm_acctsumhdr003">ine_current_year</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glm_acctsumhdr003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glm_acctsumhdr003"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.glm_acctsumhdr003">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.glm_acctsumhdr003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.glm_acctsumhdr004">
 			<DD_TABLE_ALIAS id="ddm_table_disp.glm_acctsumhdr004">GLM_ACCTSUMHDR  </DD_TABLE_ALIAS>
@@ -854,7 +854,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.glm_acctsumhdr004">ine_current_per</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glm_acctsumhdr004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glm_acctsumhdr004"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.glm_acctsumhdr004">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.glm_acctsumhdr004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.glm_acctsumhdr005">
 			<DD_TABLE_ALIAS id="ddm_table_disp.glm_acctsumhdr005">GLM_ACCTSUMHDR  </DD_TABLE_ALIAS>
@@ -946,7 +946,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.glm_acctsumhdr008">cbx_align_periods</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glm_acctsumhdr008">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glm_acctsumhdr008"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.glm_acctsumhdr008">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.glm_acctsumhdr008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.glm_acctsumhdr009">
 			<DD_TABLE_ALIAS id="ddm_table_disp.glm_acctsumhdr009">GLM_ACCTSUMHDR  </DD_TABLE_ALIAS>

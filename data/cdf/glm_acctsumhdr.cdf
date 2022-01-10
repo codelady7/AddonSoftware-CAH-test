@@ -1,187 +1,3 @@
-[[GLM_ACCTSUMHDR.ADIS]]
-rem --- Must manually keep track if the grid has been modified so that changes will get saved
-	callpoint!.setDevObject("gridModified","0")
-[[GLM_ACCTSUMHDR.ASVA]]
-rem --- Save changes to grid
-	gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
-	numRows=gridActivity!.getNumRows()
-	for curr_row=0 to numRows-1
-		vectGLSummary!=SysGUI!.makeVector() 
-		for x=1 to num(user_tpl.pers$)+1
-			vectGLSummary!.addItem(gridActivity!.getCellText(curr_row,x))
-		next x
-		gosub update_glm_acctsummary
-	next curr_row
-[[<<DISPLAY>>.ALIGN_PERIODS.AMOD]]
-rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
-
-	gosub check_modified
-[[<<DISPLAY>>.ALIGN_PERIODS.AVAL]]
-rem --- Update grid data when leave checkbox and value has changed
-
-	alignPeriods$=callpoint!.getUserInput()
-	alignPeriods_before$=callpoint!.getColumnData("<<DISPLAY>>.ALIGN_PERIODS")
-	if alignPeriods$<>alignPeriods_before$ then
-		callpoint!.setDevObject("align_fiscal_periods",alignPeriods$)
-
-		rem --- If aligning fiscal periods, need to update GLW_ACCTSUMMARY using
-		rem --- transactions from GLT_TRANSDETAIL for non-aligned selected fiscal years.
-		if alignPeriods$="Y" then
-			cols!=UserObj!.getItem(num(user_tpl.cols_ofst$))
-			recordType$=":"
-			for i=0 to cols!.size()-1
-				recordType$=recordType$+cols!.getItem(i)+":"
-			next i
-			alignCalendar! = callpoint!.getDevObject("alignCalendar")
-			gls_cur_yr=num(callpoint!.getDevObject("gls_cur_yr"))
-			if pos(":4:"=recordType$) then
-				nextYear$=str(gls_cur_yr+1:"0000")
-				align_next=alignCalendar!.canAlignCalendar(nextYear$)
-				if align_next then
-					Form!.setCursor(Form!.CURSOR_WAIT)
-					nextTripKey$=alignCalendar!.alignCalendar(nextYear$)
-					Form!.setCursor(Form!.CURSOR_NORMAL)
-				endif
-			endif
-			for i=1 to user_tpl.years_to_display
-				priorYear$=str(gls_cur_yr-i:"0000")
-				align_prior=alignCalendar!.canAlignCalendar(priorYear$)
-				if align_prior then
-					Form!.setCursor(Form!.CURSOR_WAIT)
-					priorTripKey$=alignCalendar!.alignCalendar(priorYear$)
-					Form!.setCursor(Form!.CURSOR_NORMAL)
-					if priorTripKey$="" then break
-				endif
-			next i
-			rem --- Check tripKey$ in case of error
-			if (align_prior and priorTripKey$="") or (align_next and nextTripKey$="") then
-				msg_id$="GL_CANNOT_ALIGN_PERS"
-				dim msg_tokens$[1]
-				msg_tokens$[1]=callpoint!.getDevObject("gls_cur_yr")
-				gosub disp_message
-				callpoint!.setStatus("ABORT")
-				break
-			endif
-
-			rem --- Update grid rows from not aligned to aligned
-			gosub fill_gridActivity
-		else
-			rem --- Update grid rows from aligned to not aligned
-			gosub fill_gridActivity
-		endif
-	endif
-[[GLM_ACCTSUMHDR.BFST]]
-rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
-
-	gosub check_modified
-[[GLM_ACCTSUMHDR.BLST]]
-rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
-
-	gosub check_modified
-[[GLM_ACCTSUMHDR.BPRI]]
-rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
-
-	gosub check_modified
-[[GLM_ACCTSUMHDR.BNEX]]
-rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
-
-	gosub check_modified
-[[GLM_ACCTSUMHDR.GL_ACCOUNT.AVAL]]
-rem "GL INACTIVE FEATURE"
-   glm01_dev=fnget_dev("GLM_ACCT")
-   glm01_tpl$=fnget_tpl$("GLM_ACCT")
-   dim glm01a$:glm01_tpl$
-   glacctinput$=callpoint!.getUserInput()
-   glm01a_key$=firm_id$+glacctinput$
-   find record (glm01_dev,key=glm01a_key$,err=*break) glm01a$
-   if glm01a.acct_inactive$="Y" then
-      call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
-      msg_id$="GL_ACCT_INACTIVE"
-      dim msg_tokens$[2]
-      msg_tokens$[1]=fnmask$(glm01a.gl_account$(1,gl_size),m0$)
-      msg_tokens$[2]=cvs(glm01a.gl_acct_desc$,2)
-      gosub disp_message
-      callpoint!.setStatus("ACTIVATE")
-   endif
-[[GLM_ACCTSUMHDR.AOPT-DETL]]
-rem --- Run the custom query to show details about the current cell
-
-	gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
-	curr_row=gridActivity!.getSelectedRow()
-	curr_col=gridActivity!.getSelectedColumn()
-
-	record_type$=""
-	cols!=UserObj!.getItem(num(user_tpl.cols_ofst$))
-	if curr_row<cols!.size() then
-		label$=gridActivity!.getCellText(curr_row,0)
-		if label$<>"" then
-			record_type$=label$(pos(" ("=label$,-1)+2)
-			record_type$=record_type$(1,len(record_type$)-2)
-		endif
-	else
-		extraRows!=callpoint!.getDevObject("extraRows")
-		extraRow$=extraRows!.getItem(curr_row-cols!.size())
-		thisYear$=extraRow$(1,pos(":"=extraRow$)-1)
-		extra_row_type$=extraRow$(pos(":"=extraRow$)+1)
-		if extra_row_type$(1,1)="A" then record_type$="A"
-	endif
-
-	if len(cvs(record_type$,2))=1 and pos(record_type$="024A") then
-		if record_type$="A" then
-			current_year=num(thisYear$)
-		else
-			current_year=num(callpoint!.getDevObject("gls_cur_yr"))
-			if record_type$="2"
-				current_year=current_year-1
-			else
-				if record_type$="4"
-					current_year=current_year+1
-				endif
-			endif
-			if callpoint!.getDevObject("gl_yr_closed") <> "Y"
-				current_year=current_year+1
-			endif
-		endif
-		posting_year$=str(current_year:"0000")
-		posting_per$=str(curr_col-1:"00")
-
-		if callpoint!.getDevObject("align_fiscal_periods")="Y" then
-			fiscalYear=num(callpoint!.getDevObject("cur_year"))
-			call stbl("+DIR_PGM")+"adc_perioddates.aon",num(posting_per$),fiscalYear,begdate$,enddate$,table_chans$[all],status
-			delta=num(begdate$(1,4))-fiscalYear
-			start_trns_date$=str(num(posting_year$)+delta:"0000")+begdate$(5)
-			delta=num(enddate$(1,4))-fiscalYear
-			end_trns_date$=str(num(posting_year$)+delta:"0000")+enddate$(5)
-		endif
-
-		dim filter_defs$[3,2]
-		filter_defs$[0,0]="GLT_TRANSDETAIL.FIRM_ID"
-		filter_defs$[0,1]="='"+firm_id$+"'"
-		filter_defs$[0,2]="LOCK"
-		filter_defs$[1,0]="GLT_TRANSDETAIL.GL_ACCOUNT"
-		filter_defs$[1,1]="='"+callpoint!.getColumnData("GLM_ACCTSUMHDR.GL_ACCOUNT")+"'"
-		filter_defs$[1,2]="LOCK"
-		if callpoint!.getDevObject("align_fiscal_periods")<>"Y" then
-			filter_defs$[2,0]="GLT_TRANSDETAIL.POSTING_YEAR"
-			filter_defs$[2,1]="='"+posting_year$+"'"
-			filter_defs$[2,2]="LOCK"
-			filter_defs$[3,0]="GLT_TRANSDETAIL.POSTING_PER"
-			filter_defs$[3,1]="='"+posting_per$+"'"
-			filter_defs$[3,2]="LOCK"
-		else
-			filter_defs$[2,0]="GLT_TRANSDETAIL.TRNS_DATE"
-			filter_defs$[2,1]=">='"+start_trns_date$+"' AND  GLT_TRANSDETAIL.TRNS_DATE<='"+end_trns_date$+"'"
-			filter_defs$[2,2]="LOCK"
-		endif
-
-		call stbl("+DIR_SYP")+"bax_query.bbj",
-:			gui_dev, form!,
-:			"GL_AMOUNT_INQ",
-:			"DEFAULT",
-:			table_chans$[all],
-:			sel_key$,
-:			filter_defs$[all]
-	endif
 [[GLM_ACCTSUMHDR.ACUS]]
 rem process custom event
 rem see basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
@@ -381,11 +197,185 @@ rem analyze gui_event$ and notice$ to see which control's callback triggered the
 			swend
 		endif
 	endif
-[[GLM_ACCTSUMHDR.ASIZ]]
-	if UserObj!<>null()
-		gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
-		gridActivity!.setSize(Form!.getWidth()-(gridActivity!.getX()*2),Form!.getHeight()-(gridActivity!.getY()+10))
+
+[[GLM_ACCTSUMHDR.ADIS]]
+rem --- Must manually keep track if the grid has been modified so that changes will get saved
+	callpoint!.setDevObject("gridModified","0")
+
+[[<<DISPLAY>>.ALIGN_PERIODS.AMOD]]
+rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
+
+	gosub check_modified
+
+[[<<DISPLAY>>.ALIGN_PERIODS.AVAL]]
+rem --- Update grid data when leave checkbox and value has changed
+
+	alignPeriods$=callpoint!.getUserInput()
+	alignPeriods_before$=callpoint!.getColumnData("<<DISPLAY>>.ALIGN_PERIODS")
+	if alignPeriods$<>alignPeriods_before$ then
+		callpoint!.setDevObject("align_fiscal_periods",alignPeriods$)
+
+		rem --- If aligning fiscal periods, need to update GLW_ACCTSUMMARY using
+		rem --- transactions from GLT_TRANSDETAIL for non-aligned selected fiscal years.
+		if alignPeriods$="Y" then
+			cols!=UserObj!.getItem(num(user_tpl.cols_ofst$))
+			recordType$=":"
+			for i=0 to cols!.size()-1
+				recordType$=recordType$+cols!.getItem(i)+":"
+			next i
+			alignCalendar! = callpoint!.getDevObject("alignCalendar")
+			gls_cur_yr=num(callpoint!.getDevObject("gls_cur_yr"))
+			if pos(":4:"=recordType$) then
+				nextYear$=str(gls_cur_yr+1:"0000")
+				align_next=alignCalendar!.canAlignCalendar(nextYear$)
+				if align_next then
+					Form!.setCursor(Form!.CURSOR_WAIT)
+					nextTripKey$=alignCalendar!.alignCalendar(nextYear$)
+					Form!.setCursor(Form!.CURSOR_NORMAL)
+				endif
+			endif
+			for i=1 to user_tpl.years_to_display
+				priorYear$=str(gls_cur_yr-i:"0000")
+				align_prior=alignCalendar!.canAlignCalendar(priorYear$)
+				if align_prior then
+					Form!.setCursor(Form!.CURSOR_WAIT)
+					priorTripKey$=alignCalendar!.alignCalendar(priorYear$)
+					Form!.setCursor(Form!.CURSOR_NORMAL)
+					if priorTripKey$="" then break
+				endif
+			next i
+			rem --- Check tripKey$ in case of error
+			if (align_prior and priorTripKey$="") or (align_next and nextTripKey$="") then
+				msg_id$="GL_CANNOT_ALIGN_PERS"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=callpoint!.getDevObject("gls_cur_yr")
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+				break
+			endif
+
+			rem --- Update grid rows from not aligned to aligned
+			gosub fill_gridActivity
+		else
+			rem --- Update grid rows from aligned to not aligned
+			gosub fill_gridActivity
+		endif
 	endif
+
+[[GLM_ACCTSUMHDR.AOPT-DETL]]
+rem --- Run the custom query to show details about the current cell
+
+	gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
+	curr_row=gridActivity!.getSelectedRow()
+	curr_col=gridActivity!.getSelectedColumn()
+
+	record_type$=""
+	cols!=UserObj!.getItem(num(user_tpl.cols_ofst$))
+	if curr_row<cols!.size() then
+		label$=gridActivity!.getCellText(curr_row,0)
+		if label$<>"" then
+			record_type$=label$(pos(" ("=label$,-1)+2)
+			record_type$=record_type$(1,len(record_type$)-2)
+		endif
+	else
+		extraRows!=callpoint!.getDevObject("extraRows")
+		extraRow$=extraRows!.getItem(curr_row-cols!.size())
+		thisYear$=extraRow$(1,pos(":"=extraRow$)-1)
+		extra_row_type$=extraRow$(pos(":"=extraRow$)+1)
+		if extra_row_type$(1,1)="A" then record_type$="A"
+	endif
+
+	if len(cvs(record_type$,2))=1 and pos(record_type$="024A") then
+		if record_type$="A" then
+			current_year=num(thisYear$)
+		else
+			current_year=num(callpoint!.getDevObject("gls_cur_yr"))
+			if record_type$="2"
+				current_year=current_year-1
+			else
+				if record_type$="4"
+					current_year=current_year+1
+				endif
+			endif
+			if callpoint!.getDevObject("gl_yr_closed") <> "Y"
+				current_year=current_year+1
+			endif
+		endif
+		posting_year$=str(current_year:"0000")
+		posting_per$=str(curr_col-1:"00")
+
+		if callpoint!.getDevObject("align_fiscal_periods")="Y" then
+			fiscalYear=num(callpoint!.getDevObject("cur_year"))
+			call stbl("+DIR_PGM")+"adc_perioddates.aon",num(posting_per$),fiscalYear,begdate$,enddate$,table_chans$[all],status
+			delta=num(begdate$(1,4))-fiscalYear
+			start_trns_date$=str(num(posting_year$)+delta:"0000")+begdate$(5)
+			delta=num(enddate$(1,4))-fiscalYear
+			end_trns_date$=str(num(posting_year$)+delta:"0000")+enddate$(5)
+		endif
+
+		dim filter_defs$[3,2]
+		filter_defs$[0,0]="GLT_TRANSDETAIL.FIRM_ID"
+		filter_defs$[0,1]="='"+firm_id$+"'"
+		filter_defs$[0,2]="LOCK"
+		filter_defs$[1,0]="GLT_TRANSDETAIL.GL_ACCOUNT"
+		filter_defs$[1,1]="='"+callpoint!.getColumnData("GLM_ACCTSUMHDR.GL_ACCOUNT")+"'"
+		filter_defs$[1,2]="LOCK"
+		if callpoint!.getDevObject("align_fiscal_periods")<>"Y" then
+			filter_defs$[2,0]="GLT_TRANSDETAIL.POSTING_YEAR"
+			filter_defs$[2,1]="='"+posting_year$+"'"
+			filter_defs$[2,2]="LOCK"
+			filter_defs$[3,0]="GLT_TRANSDETAIL.POSTING_PER"
+			filter_defs$[3,1]="='"+posting_per$+"'"
+			filter_defs$[3,2]="LOCK"
+		else
+			filter_defs$[2,0]="GLT_TRANSDETAIL.TRNS_DATE"
+			filter_defs$[2,1]=">='"+start_trns_date$+"' AND  GLT_TRANSDETAIL.TRNS_DATE<='"+end_trns_date$+"'"
+			filter_defs$[2,2]="LOCK"
+		endif
+
+		call stbl("+DIR_SYP")+"bax_query.bbj",
+:			gui_dev, form!,
+:			"GL_AMOUNT_INQ",
+:			"DEFAULT",
+:			table_chans$[all],
+:			sel_key$,
+:			filter_defs$[all]
+	endif
+
+[[GLM_ACCTSUMHDR.ARAR]]
+rem --- Set initial values for period and year
+
+	fiscal_per$=callpoint!.getDevObject("gls_cur_per")
+	fiscal_yr$=callpoint!.getDevObject("gls_cur_yr")
+	callpoint!.setColumnData("<<DISPLAY>>.CURRENT_PER",stbl("+PER"),1)
+	callpoint!.setColumnData("<<DISPLAY>>.CURRENT_YEAR",stbl("+YEAR"),1)
+	callpoint!.setColumnData("<<DISPLAY>>.FISCAL_PER",fiscal_per$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.FISCAL_YEAR",fiscal_yr$,1)
+
+	gosub display_mtd_ytd
+
+rem --- Set current selection in summ_dtl list 
+	callpoint!.setColumnData("<<DISPLAY>>.SUMM_DTL",callpoint!.getColumnData("GLM_ACCTSUMHDR.DETAIL_FLAG"),1)
+
+	if cvs(callpoint!.getColumnData("GLM_ACCTSUMHDR.GL_ACCOUNT"),2)<>"" then
+		gosub fill_gridActivity
+	else
+		rem --- Clear gridActivity data
+		gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
+		vectGLSummary!=SysGUI!.makeVector()
+		for col=1 to gridActivity!.getNumColumns()-1
+			vectGLSummary!.addItem("")
+		next col
+		for row=0 to gridActivity!.getNumRows()-1
+			gridActivity!.setCellText(row,1,vectGLSummary!)
+		next row
+	endif
+
+rem --- Initialize align_periods
+
+	pick_year$=fiscal_yr$
+	gosub init_align_periods
+
 [[GLM_ACCTSUMHDR.AREC]]
 rem --- Set Default value for Detail Flag
 
@@ -439,6 +429,25 @@ rem set the 4 listbuttons accordingly, and read/display corres glm02 data
 		wend
 	
 	next x
+
+[[GLM_ACCTSUMHDR.ASIZ]]
+	if UserObj!<>null()
+		gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
+		gridActivity!.setSize(Form!.getWidth()-(gridActivity!.getX()*2),Form!.getHeight()-(gridActivity!.getY()+10))
+	endif
+
+[[GLM_ACCTSUMHDR.ASVA]]
+rem --- Save changes to grid
+	gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
+	numRows=gridActivity!.getNumRows()
+	for curr_row=0 to numRows-1
+		vectGLSummary!=SysGUI!.makeVector() 
+		for x=1 to num(user_tpl.pers$)+1
+			vectGLSummary!.addItem(gridActivity!.getCellText(curr_row,x))
+		next x
+		gosub update_glm_acctsummary
+	next curr_row
+
 [[GLM_ACCTSUMHDR.AWIN]]
 rem --- Needed classes
 
@@ -491,6 +500,12 @@ rem ---  load up budget column codes and types from gls_params
 			tps!.addItem(acct_mn_type$)
 		endif
 	next x
+	if cols!.size()=0 then
+		msg_id$="GL_MISSING_RECORD_CD"
+		gosub disp_message
+		callpoint!.setStatus("EXIT")
+		break
+	endif
 
 rem --- Get number of years to display in the grid
 	years_to_display=5
@@ -616,39 +631,27 @@ rem format the grid, and set first column to be a pull-down
 	util.resizeWindow(Form!, SysGui!)
 
 	callpoint!.setOptionEnabled("DETL",0)
-[[GLM_ACCTSUMHDR.ARAR]]
-rem --- Set initial values for period and year
 
-	fiscal_per$=callpoint!.getDevObject("gls_cur_per")
-	fiscal_yr$=callpoint!.getDevObject("gls_cur_yr")
-	callpoint!.setColumnData("<<DISPLAY>>.CURRENT_PER",stbl("+PER"),1)
-	callpoint!.setColumnData("<<DISPLAY>>.CURRENT_YEAR",stbl("+YEAR"),1)
-	callpoint!.setColumnData("<<DISPLAY>>.FISCAL_PER",fiscal_per$,1)
-	callpoint!.setColumnData("<<DISPLAY>>.FISCAL_YEAR",fiscal_yr$,1)
+[[GLM_ACCTSUMHDR.BFST]]
+rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
 
-	gosub display_mtd_ytd
+	gosub check_modified
 
-rem --- Set current selection in summ_dtl list 
-	callpoint!.setColumnData("<<DISPLAY>>.SUMM_DTL",callpoint!.getColumnData("GLM_ACCTSUMHDR.DETAIL_FLAG"),1)
+[[GLM_ACCTSUMHDR.BLST]]
+rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
 
-	if cvs(callpoint!.getColumnData("GLM_ACCTSUMHDR.GL_ACCOUNT"),2)<>"" then
-		gosub fill_gridActivity
-	else
-		rem --- Clear gridActivity data
-		gridActivity!=UserObj!.getItem(num(user_tpl.grid_ofst$))
-		vectGLSummary!=SysGUI!.makeVector()
-		for col=1 to gridActivity!.getNumColumns()-1
-			vectGLSummary!.addItem("")
-		next col
-		for row=0 to gridActivity!.getNumRows()-1
-			gridActivity!.setCellText(row,1,vectGLSummary!)
-		next row
-	endif
+	gosub check_modified
 
-rem --- Initialize align_periods
+[[GLM_ACCTSUMHDR.BNEX]]
+rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
 
-	pick_year$=fiscal_yr$
-	gosub init_align_periods
+	gosub check_modified
+
+[[GLM_ACCTSUMHDR.BPRI]]
+rem --- Only need to SAVE record if gl_acct_desc, gl_acct_type or detail_flag changed
+
+	gosub check_modified
+
 [[GLM_ACCTSUMHDR.BSHO]]
 rem --- Open/Lock files
 
@@ -718,6 +721,17 @@ rem --- Create Yes-No version of summ_dtl list
 	summ_dtl!.removeAllItems()
 	summ_dtl!.addItem(Translate!.getTranslation("AON_DETAIL"))
 	summ_dtl!.addItem(Translate!.getTranslation("AON_SUMMARY"))
+
+[[<<DISPLAY>>.CURRENT_PER.AINP]]
+rem -- Ensure valid period
+
+	period$=callpoint!.getUserInput()
+	if num(period$)<1 or num(period$)>num(callpoint!.getDevObject("tot_pers"))
+		msg_id$="INVALID_PERIOD"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+	endif
+
 [[<<DISPLAY>>.CURRENT_PER.AVAL]]
 rem --- set variables
 
@@ -729,15 +743,7 @@ rem --- set variables
 	gosub check_modified
 
 	gosub display_mtd_ytd
-[[<<DISPLAY>>.CURRENT_PER.AINP]]
-rem -- Ensure valid period
 
-	period$=callpoint!.getUserInput()
-	if num(period$)<1 or num(period$)>num(callpoint!.getDevObject("tot_pers"))
-		msg_id$="INVALID_PERIOD"
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-	endif
 [[<<DISPLAY>>.CURRENT_YEAR.AVAL]]
 rem --- set variables
 
@@ -772,6 +778,25 @@ rem --- Set proper record ID
 	gosub check_modified
 
 	gosub display_mtd_ytd
+
+[[GLM_ACCTSUMHDR.GL_ACCOUNT.AVAL]]
+rem "GL INACTIVE FEATURE"
+   glm01_dev=fnget_dev("GLM_ACCT")
+   glm01_tpl$=fnget_tpl$("GLM_ACCT")
+   dim glm01a$:glm01_tpl$
+   glacctinput$=callpoint!.getUserInput()
+   glm01a_key$=firm_id$+glacctinput$
+   find record (glm01_dev,key=glm01a_key$,err=*break) glm01a$
+   if glm01a.acct_inactive$="Y" then
+      call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
+      msg_id$="GL_ACCT_INACTIVE"
+      dim msg_tokens$[2]
+      msg_tokens$[1]=fnmask$(glm01a.gl_account$(1,gl_size),m0$)
+      msg_tokens$[2]=cvs(glm01a.gl_acct_desc$,2)
+      gosub disp_message
+      callpoint!.setStatus("ACTIVATE")
+   endif
+
 [[GLM_ACCTSUMHDR.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
 rem ======================================================
@@ -1257,3 +1282,6 @@ rem ==========================================================================
 	return
 
 #include [+ADDON_LIB]std_missing_params.aon
+
+
+
