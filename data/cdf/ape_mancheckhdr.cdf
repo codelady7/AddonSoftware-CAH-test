@@ -103,6 +103,7 @@ user_tpl.reuse_chk$=""
 user_tpl.reuse_chk$=""
 user_tpl.dflt_gl_account$=""
 callpoint!.setColumnData("<<DISPLAY>>.comments","")
+callpoint!.setColumnData("APE_MANCHECKHDR.RETAIN_APPROVALS","Y")
 
 rem --- if not multi-type then set the defalut AP Type
 if user_tpl.multi_types$="N" then
@@ -573,6 +574,14 @@ rem --- not found in entry file, so see if in open checks
 					gosub disp_vendor_comments
 					gosub disable_grid
 					callpoint!.setStatus("MODIFIED")
+
+					rem --- Retain invoice payment approvals?
+					if callpoint!.getDevObject("use_pay_auth") then
+						msg_id$="AP_RETAIN_PAY_APPROV"
+						msg_opt$=""
+						gosub disp_message
+						callpoint!.setColumnData("APE_MANCHECKHDR.RETAIN_APPROVALS","N")
+					endif
 				else
 					callpoint!.setStatus("ABORT")
 				endif
