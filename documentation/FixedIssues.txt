@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-01-03
+ Report Date:   2022-01-11
  Report Branch: AddonSoftware 21.14
  Last Release:  AddonSoftware 21.13
 =======================================================================================================================================
@@ -78,3 +78,28 @@ Commit date.
 ----
 Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_orddet.cdf
+
+=======================================================================================================================================
+Revision: 5e53cde90de4fdc4db6b3d5e084d9113743460cc
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 1/11/2022 3:06:53 PM
+Message:
+Bug 10323: Modified the Lot/Serial Detail File form, ope_ordlsdet.cdf,
+to allow entering lot/serial numbers for inventoried items that are drop
+shipped.
+
+This change should allow the drop shipped serial numbers to be manually
+entered in Invoice Entry using the Serial Entry button to launch the
+Lot/Serial Detail File form. However, you cannot use the Serial Lookup
+button on the Lot/Serial Detail File form because the PO Receipt
+Register Update did NOT add the drop ship serial numbers to the
+ivm_lsmaster table. This is actually an ivc_itemupdt.aon (ATAMO) thing.
+ATAMO does write the received drop shipped serial numbers to the
+ivt_lstrans table. Also, the drop shipped serial numbers manually
+entered in Invoice Entry are written to the opt_invlsdet table. During
+the Sales Register Update ATAMO does write those manually entered drop
+shipped serial number transactions to the ivt_lstrans table, but again
+NOT to the ivm_lsmaster table.
+----
+Modified: data/bar/ope_ordlsdet.xml
+Modified: data/cdf/ope_ordlsdet.cdf
