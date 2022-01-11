@@ -221,6 +221,7 @@ use_application: rem --- Set period/year equal to current application period/yea
     year$=apyear$
     period=apperiod
     year=apyear
+    if status then goto message
     goto prior_period
 
 use_next_application: rem --- Set period/year equal to next application period/year
