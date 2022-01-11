@@ -355,7 +355,7 @@ rem --- Set a flag for non-inventoried items
 	file_name$="IVM_ITEMMAST"
 	dim itemmast_rec$:fnget_tpl$(file_name$)
 	find record (fnget_dev(file_name$), key=firm_id$+item$, dom=*endif) itemmast_rec$
-	if itemmast_rec.inventoried$ = "N" then user_tpl.non_inventory = 1
+	if itemmast_rec.inventoried$ = "N" or callpoint!.getDevObject("dropship_line")="Y" then user_tpl.non_inventory = 1
 
 rem --- No Serial/lot lookup for non-invent items
 	
