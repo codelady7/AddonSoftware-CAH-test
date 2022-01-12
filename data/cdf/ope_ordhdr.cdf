@@ -3748,39 +3748,44 @@ rem ==========================================================================
 			user_tpl.pricing_code$ = ope01a.pricing_code$
 			user_tpl.order_date$   = ope01a.order_date$
 
-		rem --- Copy Manual Ship To if any
-
-			if opt01a.shipto_type$="M" then 
+			rem --- Copy historical bill-to and ship-to addresses
+			if line_sign=-1 then
 				dim ope31a$:fnget_tpl$("OPE_ORDSHIP")
 				ope31_dev=fnget_dev("OPE_ORDSHIP")
-
 				dim opt31a$:fnget_tpl$("OPT_INVSHIP")
 				opt31_dev=fnget_dev("OPT_INVSHIP")
 
-				read record (opt31_dev, key=firm_id$+opt01a.customer_id$+opt01a.order_no$+opt01a.ar_inv_no$+"S", dom=*endif) opt31a$
-				if opt31a.trans_status$="U" then
-					ope31a$=opt31a$
-					ope31a.order_no$ = ope01a.order_no$
-					ope31a.ar_inv_no$=""
+				for i=1 to 2
+					if i=1 then
+						address_type$="B"
+					else
+						address_type$="S"
+					endif
+					read record (opt31_dev, key=firm_id$+opt01a.customer_id$+opt01a.order_no$+opt01a.ar_inv_no$+address_type$, dom=*continue) opt31a$
+					if opt31a.trans_status$="U" then
+						ope31a$=opt31a$
+						ope31a.order_no$ = ope01a.order_no$
+						ope31a.ar_inv_no$=""
 
-					ope31a.created_user$   = sysinfo.user_id$
-					ope31a.created_date$   = date(0:"%Yd%Mz%Dz")
-					ope31a.created_time$   = date(0:"%Hz%mz")
-					ope31a.mod_user$   = ""
-					ope31a.mod_date$   = ""
-					ope31a.mod_time$   = ""
-					ope31a.trans_status$   = "E"
-					ope31a.arc_user$   = ""
-					ope31a.arc_date$   = ""
-					ope31a.arc_time$   = ""
-					ope31a.batch_no$   = ""
-					ope31a.audit_number   = 0
+						ope31a.created_user$   = sysinfo.user_id$
+						ope31a.created_date$   = date(0:"%Yd%Mz%Dz")
+						ope31a.created_time$   = date(0:"%Hz%mz")
+						ope31a.mod_user$   = ""
+						ope31a.mod_date$   = ""
+						ope31a.mod_time$   = ""
+						ope31a.trans_status$   = "E"
+						ope31a.arc_user$   = ""
+						ope31a.arc_date$   = ""
+						ope31a.arc_time$   = ""
+						ope31a.batch_no$   = ""
+						ope31a.audit_number   = 0
 
-					ope31_key$=ope31a.firm_id$+ope31a.customer_id$+ope31a.order_no$+ope31a.ar_inv_no$+"S"
-					extractrecord(ope31_dev,key=ope31_key$,dom=*next)x$; rem Advisory Locking
-					ope31a$ = field(ope31a$)
-					write record (ope31_dev) ope31a$
-				endif
+						ope31_key$=ope31a.firm_id$+ope31a.customer_id$+ope31a.order_no$+ope31a.ar_inv_no$+address_type$
+						extractrecord(ope31_dev,key=ope31_key$,dom=*next)x$; rem Advisory Locking
+						ope31a$ = field(ope31a$)
+						write record (ope31_dev) ope31a$
+					endif
+				next i
 			endif
 
 		rem --- Copy detail lines
