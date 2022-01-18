@@ -63,7 +63,7 @@
 		<a name="TOP" id="TOP"></a>
 		<center>
 			<br />
-            <span class="title">RELNOTES for AddonSoftware 21.10</span>
+            <span class="title">RELNOTES for AddonSoftware 22.10</span>
 		</center>
 		<br />
 
@@ -123,62 +123,55 @@
 		<br />
 		<div class="indent1">
 			<br />
-			Version 21.10 takes advantage of the technological advancements provided by Barista&reg; and BBj&reg; to deliver an innovative software package known for its structural quality. Together with Barista, AddonSoftware offers a leap forward in the efficiency of software customization and the creation of vertical applications. AddonSoftware
+			Version 22.10 takes advantage of the technological advancements provided by Barista&reg; and BBj&reg; to deliver an innovative software package known for its structural quality. Together with Barista, AddonSoftware offers a leap forward in the efficiency of software customization and the creation of vertical applications. AddonSoftware
 continues its history of constant improvement - additional features, increased functionality, and updated technology - in this release.
 			<ul>
-            <li>Preview features for version 22.00</li>
+            <li>Preview features for version 23.00</li>
             <ul>
                 <li> </li>
             </ul>
-            <li>New for version 21.00</li>
-            <br />
+                <li>New for version 22.00</li>
                 <ul>
-                    <li>General</li>
-                    <ul>
-                        <li>Addon installs and upgrades are now version controlled using Git. Features of this new Git-based model include:</li>
-                        <ul>
-                            <li>Installs and upgrades automatically create the recommended version-neutral file structure.</li>
-                            <li>Facilitates making Addon customizations directly in the Addon file structure, eliminating the need for a separate "mods project."</li>
-                            <li>The Upgrade Wizard uses Barista's "Saved Selection Options" feature to save and quickly restore grid entries when resuming/restarting.</li>
-                            <li>The new Packager/Extractor utility simplifies moving a Barista/Addon instance between production and test servers.</li>
-                            <li>Automatically incorporates customizations from mods projects directly into Addon.</li>
-                        </ul>
-                        <li>All address and city fields have been expanded to 30 characters.</li>
-                        <li>Email address, subject, and message fields in the Report Control forms have been expanded.</li>
-                    </ul>
                     <li>Accounting</li>
                     <ul>
-                        <li>Added a new column to the AP Payment Selection Report to flag ACH vendors, and show Total ACH and Total Check payments in final report totals.</li>
-                        <li>Added Barista's "Saved Selection Option" feature to the Payment Selection Entry form.</li>
-                        <li>Report Control Recipients form can be accessed from Vendor Maintenance.</li>
-                        <li>Bank Account field in the Bank Accounts and Vendors tables has been encrypted, and new VIEWs created to show account last 4 if accessing data externally (i.e., via SQL from outside of Addon).</li>
-                        <li>Added aging criterion information to the Credit Maintenance form and the Totals tab on Order/Invoice Entry form.</li>
-                        <li>Modified the AR Aging Report to require 30-day fixed periods, and always aging credits and future invoices when the "Update Customer Aging Summary" option is selected.</li>
-                        <li>A new option is available in the Customers, Credit Maintenance, and Order/Invoice Entry forms that allows users to refresh the customer's aged balances on demand. The option is enabled or disabled via a new "On-demand Aging?" parameter.</li>
-                        <li>The new Default Age By parameter supplies the default aging basis (I=Invoice Date, D=Due Date) for the Aging Report, Age Transactions, and Statements tasks as well as for back-end aging updates when no aging basis has yet been established for a given customer.</li>
-                        <li>The Customer form's Aging/Sales Summary tab has a new drill down on the Last Payment Date to quickly see how the payment was applied.</li>
-                        <li>Report Control Recipients form can be accessed directly from Customer Maintenance.</li>
-                        <li>Description for Chart of Accounts breaks expanded to 50 characters.</li>
+                        <li>Four new AR parameters allow users to specify the default period sizes for all AR agings. The AR Aging Report is further enhanced so users can override the defaults to specify unique period sizes for each report.</li>
+                        <li>The Start Date and Period End Dates in the Fiscal Calendar are now full YYYYMMDD format to provide accuracy and flexibility, particularly when working in a non-calendar fiscal year.</li>
+                        <li>AP Checks can apply a stored electronic signature regardless of whether or not Payment Authorization is used. Default signature is supplied and can be overridden.</li>
+                        <li>Modified Bank Reconciliation to skip listing checks and other transactions later than the current statement date.</li>
+                        <li>The Bank Account Codes table now keeps track of the next check number, and uses it as the default for AP Check Printing.</li>
+                        <li>The Cash Requirements Report has a new option to include and flag, or exclude, vendors paid via Automated Clearing House (ACH).</li>
+                        <li>Improved filtering in GL Transaction History Report so Audit Number filter can be coupled with Account Number and/or Journal ID filters.</li>
+                        <li>Added the GL Account Description to the Export Format of the GL Transaction History Report.</li>
+                        <li>Enhanced the Order lookup on the Customer form to include Salesperson and Credit Flag.</li>
+                        <li>Added Audit Control Number drilldown to the "Detail" view query on the GL Account Summary Activity form.</li>
+                        <li>Enhanced the AP Export 1099 To Text form so user can specify both a server and client-side save directory.</li>
+                        <li>Different checking accounts can use the same check numbers.</li> 
                     </ul>
                     <li>Distribution</li>
                     <ul>
-                        <li>Interface with Avalara's AvaTax sales tax service:</li>
-                        <ul>
-                            <li>Send Orders to AvaTax for estimated tax.</li>
-                            <li>Send Invoices to AvaTax for final tax calculation.</li>
-                            <li>Commit/finalize transactions during Sales Register/Update.</li>
-                            <li>Automatically updates new Customer Sales Tax Exemptions table.</li>
-                            <li>Associate items with AvaTax tax service codes via Item Master, Product Type, Item Type, and/or Item Class .</li>
-                            <li>Committed transaction history and complete JSON response available for research, reporting, or auditing.</li>
-                            <li>Supports using AvaTax sales tax service together with traditional Addon sales tax codes.</li>
-                        </ul>
-                        <li>Added a "Sequence" ListButton to the Invoice Printing form so that invoices can be printed in Customer ID sequence or Invoice Number sequence.</li>
-                        <li>New hand-held application for Physical Inventory Counting to use instead of or in conjunction with traditional count sheets.</li>
-                        <li>Expanded Item Class to 6 characters.</li>
-                        <li>Expanded Customer Pricing Code to 6 characters.</li>
-                        <li>Expanded Unit of Measure to 6 characters and validate it against a new Unit of Measures table.</li>
-                        <li>A new parameter controls whether or not to display the "shipping more than available" warning in Order/Invoice Entry.</li>
-                    </ul>                                                                                                                                                                                                                                                                           
+                        <li>New "Change Customer" Additional Option in Order Entry allows users to change the Customer ID on an open order/quote.</li>
+                        <li>Send customers an Order Acknowledgement via email or fax. Supports generating acknowledgements automatically or manually, on demand or in batch mode. Interfaces with Addon Report Control.</li>
+                        <li>Added Pricing Basis and Amount fields to the Pricing Table form to allow quantity price breaks based on a specific amount as well as a percentage.</li>
+                        <li>Modified the Open Order Detail report to allow more intuitive and granular selections for Orders vs Quotes.</li>
+                        <li>Added the Fiscal Period abbreviations to row labels on Sales Analysis screens for more clarity.</li>
+                        <li>Added an Amount Received column to the Purchase Receipt query in Purchase Order Invoice Entry to make finding the correct PO/Receipt easier when there are multiple receivers.</li>
+                        <li>Added Report Control Status (Email/Fax/None) to Order/Invoice Entry and Purchase Order Entry.</li>
+                        <li>Added an "Include Zero Balance Items" option to the Inventory Stock Status Report.</li>
+                        <li>Focus directly on Freight Amount in Order/Invoice Entry's Totals tab rather than Discount Amount, since the latter isn't often changed.</li>
+                        <li>Added the Order or Invoice number to the saved document name for on-demand Pick Lists and Invoices, respectively.</li>
+                        <li>In grids where warehouse is entered before the item, restrict the IV Item lookup to show only those items for the currently entered warehouse.</li>
+                        <li>Added option to Inventory Physical Count Register to control whether the count should be set to zero vs the current freeze quantity, when a count is not entered for an item.</li>
+                        <li>Refactored the Purchase Order Calendar to use the new BBjCalendarWidget. Allows users to set their own colors for Workday, Holiday, Closed.</li>
+                        <li>Modified the Order Picking List to automatically reprint when changes are made, and clearly identify those changes on the "Reprinted" Picking List.</li>
+                        <li>Invoice Bill-to and Ship-to addresses are saved for accuracy on Historical Invoices or Invoice History Inquiry.</li>
+                    </ul>
+                    <li>Manufacturing</li>
+                    <ul>
+                        <li>Disallow deletion of Operations records in Bill of Materials and Work Order Entry when the Operation is referenced in a Subcontract or Materials record.</li>
+                        <li>When releasing a Work Order, automatically select all checkboxes (Release Work Order, Print Traveler, Print Pick List).</li>
+                        <li>The Shop Floor Calendar uses the new BBjCalendarWidget and has added functionality so user can display hours for more than one operations code at a time, add/edit hours for a range of days, and control the display color for each operation.</li>
+                    </ul>
+                </ul>
                     <li>Testing</li>
                     <ul>
                         <li>This version passes all QF-Test suites.</li>
@@ -194,7 +187,7 @@ continues its history of constant improvement - additional features, increased f
 		<span class="style1"><a name="KNOWNISSUES" id="KNOWNISSUES">3. KNOWN ISSUES</a></span><span class="style6"><a href="#TOP">(top of page)</a></span>
 		<div class="indent1">
 			<ul>
-				<li>BBj version 21.10 and the Barista Application Framework version 21.10 are both required to run AddonSoftware version 21.10.</li>
+				<li>BBj version 22.10 and the Barista Application Framework version 22.10 are both required to run AddonSoftware version 22.10.</li>
 				<li>When running under Linux, the KDE desktop environment must be used.</li>
 			</ul>
 
