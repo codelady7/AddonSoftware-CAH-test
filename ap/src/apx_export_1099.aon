@@ -60,7 +60,7 @@ rem --- Parameters
     export_path$=export_path!.replace("\","/")
     client_dir$=client_dir!.replace("\","/")
     if export_path$(len(export_path$))<>"/" then export_path$=export_path$+"/"
-    if client_dir$(len(client_dir$))<>"/" then client_dir$=client_dir$+"/"
+    if client_dir$<>"" and client_dir$(len(client_dir$))<>"/" then client_dir$=client_dir$+"/"
     call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
 
 rem --- Init Data
@@ -286,6 +286,7 @@ rem --- Write record. Loop up for next Vendor
         rec$=rec$+","+str(substitute_payments)
         rec$=rec$+","+str(crop_insurance_proceeds)
         rec$=rec$+","+str(gross_paid_to_attorney)
+        rec$=rec$+","+str(fish_purchased_for_resale)
         rec$=rec$+","+str(section_409_deferrals)
         rec$=rec$+","+str(golden_parachute_payments)   
         rec$=rec$+","+str(nonqualified_deferred_compensation)        
@@ -390,6 +391,7 @@ init_1099: rem --- Init variables for 1099 text file
     substitute_payments=0
     crop_insurance_proceeds=0
     gross_paid_to_attorney=0
+    fish_purchased_for_resale=0
     section_409_deferrals=0
     golden_parachute_payments=0
     nonqualified_deferred_compensation=0
