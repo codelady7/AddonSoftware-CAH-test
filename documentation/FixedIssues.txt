@@ -1,10 +1,72 @@
 =======================================================================================================================================
-Report Branch: AddonSoftware Development Build
+ Report Date:   2022-01-18
+ Report Branch: AddonSoftware 22.00
+ Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
-Development builds are generated daily.
 
-AddonSoftware Co-op Developers can access code changes and bug fixes for the Development Builds via Git.
+21.14 release 01/17/2022
+BBjBaristaAddonDemos2114_01-13-2022_1207.jar
 
-Information about code changes and bug fixes for RELEASE builds can be found at:
+=======================================================================================================================================
+Revision: 33c35cf52c25bb74513d363e89eb853266b59928
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 12/13/2021 9:23:34 AM
+Message:
+Bug 10332: Modified Manual Check Entry to excluded AP Type when search
+if a check number has been used before.
+----
+Modified: data/apt-05
+Modified: data/bar/ape_mancheckhdr.xml
+Modified: data/bar/apt_checkhistory.xml
+Modified: data/cdf/ape_mancheckhdr.cdf
+Modified: documentation/readme.htm
 
-https://bugs.basis.com
+=======================================================================================================================================
+Revision: f54aad8bbba10827cdc98f14b187b1c5413ca12e
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 1/5/2022 11:18:02 AM
+Message:
+Bug 10352: Corrected ape_mancheckhdr (ape-02) key in the Manual Check
+Register Update to include the new bnk_acct_cd key field.
+----
+Modified: ap/src/apu_manualchecks.aon
+
+=======================================================================================================================================
+Revision: c132de5dbe09295c2595b3fcf2299a85c46b68c9
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 1/10/2022 3:03:50 PM
+Message:
+Bug 10354: Require at least one Record Code, or Budget Code, for forms
+that use the codes entered in the Default Display Columns parameter
+form.
+----
+Modified: data/bar/glm_acctsumhdr.xml
+Modified: data/bar/glm_budgetmaint.xml
+Modified: data/bar/glm_summactivity.xml
+Modified: data/cdf/glm_acctsumhdr.cdf
+Modified: data/cdf/glm_budgetmaint.cdf
+Modified: data/cdf/glm_summactivity.cdf
+Modified: data/sync/ads_messages~[01007514GL].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 76df00ff999f17c38afbca638cf8b275acdd7e94
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 1/17/2022 11:44:47 AM
+Message:
+Bug 10353: Updated reformat_address subroutine to better handle various
+address formats in all Addon tables that include the addr_line_1 column.
+----
+Modified: util/dataport/DataPort_main.bbj
+
+=======================================================================================================================================
+Revision: 5fc035e94df8366265a80a1620fddd4a5101cada
+Author: Christine <chawkins@basis.com>
+Date: 1/17/2022 4:46:31 PM
+Message:
+Bug 10357 - AP - Export 1099 to Text fails with error 47
+ - test if client_dir$<>"" before testing client_dir$(len(client_dir$))...
+ - this commit also contains a new field added for Account Ability 2021
+----
+Modified: ap/src/apx_export_1099.aon
