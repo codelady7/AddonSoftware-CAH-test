@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apm_vendmast"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apm_vendmast">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apm_vendmast">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apm_vendmast">21.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apm_vendmast">22.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendmast">3BB1D20D5EEBAE71E979758B43E819AD</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendmast">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendmast">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendmast">154820</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendmast">20220118</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendmast">20220118</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendmast">172412</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendmast"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.apm_vendmast">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.apm_vendmast">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendmast"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.apm_vendmast"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.apm_vendmast">T</DD_ATTR_FTYP>
@@ -576,7 +576,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendmast002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendmast002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendmast002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast002">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendmast002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendmast002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendmast002"></DD_ATTR_CTLY>
@@ -627,7 +627,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendmast003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendmast003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendmast003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast003">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendmast003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendmast003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendmast003"></DD_ATTR_CTLY>
@@ -1851,7 +1851,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendmast027">20190219</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendmast027"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendmast027"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast027">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast027">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendmast027">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendmast027"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendmast027"></DD_ATTR_CTLY>
@@ -1953,7 +1953,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendmast029">20190219</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendmast029"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendmast029"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast029">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendmast029">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_vendmast029">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendmast029"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendmast029"></DD_ATTR_CTLY>
@@ -3659,7 +3659,7 @@
 			<DD_DESCRIPTION id="ddm_elements.name">Name</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.name">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.name">30</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.name"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.name"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.name">Y</DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.name">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.name">ADB</ASC_PROD_ID>
@@ -3673,8 +3673,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.name"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.name">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.name"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.name">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.name">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.name"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.name"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.name"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.name"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.name"></DD_ATTR_DKEY>

@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.adm_rptrcp_cust">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.adm_rptrcp_cust">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.adm_rptrcp_cust">AD </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.adm_rptrcp_cust">21.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.adm_rptrcp_cust">22.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.adm_rptrcp_cust"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_rptrcp_cust">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_rptrcp_cust">2459270</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_rptrcp_cust">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptrcp_cust">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptrcp_cust">154820</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_rptrcp_cust">20220118</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptrcp_cust">20220118</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptrcp_cust">172412</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_rptrcp_cust">ADM_RPTCTL_RCP  </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.adm_rptrcp_cust"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_rptrcp_cust">AO_CUST_ALIAS</DD_ATTR_DKNM>
@@ -412,7 +412,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptrcp_cust002">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptrcp_cust002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptrcp_cust002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_cust002">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_cust002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptrcp_cust002">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptrcp_cust002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptrcp_cust002"></DD_ATTR_CTLY>
@@ -667,7 +667,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptrcp_cust007">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptrcp_cust007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptrcp_cust007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_cust007">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_cust007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptrcp_cust007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptrcp_cust007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptrcp_cust007">-8</DD_ATTR_CTLY>
@@ -1075,7 +1075,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptrcp_cust015">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptrcp_cust015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptrcp_cust015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_cust015">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptrcp_cust015">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptrcp_cust015">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptrcp_cust015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptrcp_cust015"></DD_ATTR_CTLY>
