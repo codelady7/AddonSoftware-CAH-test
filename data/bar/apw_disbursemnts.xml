@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apw_disbursemnts"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apw_disbursemnts">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apw_disbursemnts">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apw_disbursemnts">21.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apw_disbursemnts">22.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apw_disbursemnts">8638916B503440975522F38A0A8D1957</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apw_disbursemnts">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apw_disbursemnts">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apw_disbursemnts">20211123</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apw_disbursemnts">20211123</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apw_disbursemnts">151512</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apw_disbursemnts">20220118</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apw_disbursemnts">20220118</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apw_disbursemnts">172412</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apw_disbursemnts"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apw_disbursemnts"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apw_disbursemnts"></DD_ATTR_DKNM>
@@ -68,6 +68,12 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
 		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apw_disbursemntsbnk_acct_cdadc_bankacctcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apw_disbursemntsbnk_acct_cdadc_bankacctcode">APW_DISBURSEMNTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apw_disbursemntsbnk_acct_cdadc_bankacctcode">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apw_disbursemntsbnk_acct_cdadc_bankacctcode">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apw_disbursemntsbnk_acct_cdadc_bankacctcode">FK_APW_DISBURSEMNTS_BNK_ACCT_CD_ADC_BANKACCTCODE                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
 		<RECORD id="ddm_table_ref.apw_disbursemntsvendor_idapm_vendmast">
 			<DD_TABLE_ALIAS id="ddm_table_ref.apw_disbursemntsvendor_idapm_vendmast">APW_DISBURSEMNTS</DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.apw_disbursemntsvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
@@ -77,6 +83,24 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_refcol">
 		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">APW_DISBURSEMNTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">APW_DISBURSEMNTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apw_disbursemntsbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </FK_TABLE_COL>
+		</RECORD>
 		<RECORD id="ddm_table_refcol.apw_disbursemntsvendor_idapm_vendmast0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.apw_disbursemntsvendor_idapm_vendmast0001">APW_DISBURSEMNTS</DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_refcol.apw_disbursemntsvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>

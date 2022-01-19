@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.arc_distcode"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.arc_distcode">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.arc_distcode">AR </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.arc_distcode">21.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.arc_distcode">22.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.arc_distcode">C629009E7C84C7BF74A3C71F7D54F37D</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arc_distcode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arc_distcode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arc_distcode">20210823</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arc_distcode">20210820</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arc_distcode">154820</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arc_distcode">20220118</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arc_distcode">20220118</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arc_distcode">172412</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arc_distcode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arc_distcode">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arc_distcode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arc_distcode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arc_distcode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arc_distcode">T</DD_ATTR_FTYP>
@@ -699,7 +699,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode006">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode006">180</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode006"></DD_ATTR_CTLY>
@@ -750,7 +750,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode007">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode007">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode007"></DD_ATTR_CTLY>
@@ -801,7 +801,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode008">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode008"></DD_ATTR_CTLY>
@@ -852,7 +852,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode009">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode009"></DD_ATTR_CTLY>
@@ -903,7 +903,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode010">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode010"></DD_ATTR_CTLY>
@@ -954,7 +954,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode011">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode011">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode011"></DD_ATTR_CTLY>
@@ -1005,7 +1005,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode012">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode012">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode012"></DD_ATTR_CTLY>
@@ -1056,7 +1056,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode013">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode013"></DD_ATTR_CTLY>
@@ -1107,7 +1107,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode014">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode014"></DD_ATTR_CTLY>
@@ -1158,7 +1158,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode015">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode015">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode015"></DD_ATTR_CTLY>
@@ -1209,7 +1209,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_distcode016">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_distcode016"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_distcode016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode016">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_distcode016">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_distcode016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_distcode016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_distcode016"></DD_ATTR_CTLY>
