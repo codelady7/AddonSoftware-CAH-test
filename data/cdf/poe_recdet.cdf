@@ -867,6 +867,52 @@ callpoint!.setDevObject("cost_this_row",unit_cost);rem re-setting cost because i
 gosub update_header_tots
 callpoint!.setDevObject("qty_this_row",num(callpoint!.getUserInput()))
 
+[[POE_RECDET.SO_INT_SEQ_REF.AVAL]]
+rem --- Warn when dropship OP item does not match the PO item
+	so_int_seq_ref$=callpoint!.getUserInput()
+	if cvs(so_int_seq_ref$,2)="" then break
+
+	ldat!=callpoint!.getDevObject("so_ldat")
+	opItems!=BBjAPI().makeVector()
+	opItems!.addAll(java.util.Arrays.asList(ldat!.split(";")))
+	for i=0 to opItems!.size()-1
+		thisItem$=opItems!.getItem(i)
+		if pos("~"+so_int_seq_ref$=thisItem$) then
+			rem --- This is the selected OP item. Does it match the PO item?
+			opItem$=cvs(thisItem$(1,pos("~"=thisItem$)-1),3)
+			if pos("("=opItem$) then opItem$=opItem$(1,pos("("=opItem$)-1)
+
+			itemsMatch=0
+			poItem$=cvs(callpoint!.getColumnData("POE_RECDET.ITEM_ID"),3)
+			if poItem$<>"" then
+				if poItem$=opItem$ then itemsMatch=1
+			else
+				poItem$=cvs(callpoint!.getColumnData("POE_RECDET.ORDER_MEMO"),7)
+				if poItem$=cvs(opItem$,7) then
+					itemsMatch=1
+				else
+					poItem$=cvs(callpoint!.getColumnData("POE_RECDET.NS_ITEM_ID"),7)
+					if poItem$=cvs(opItem$,7) then
+						itemsMatch=1
+					endif
+				endif
+			endif
+
+			if itemsMatch=0 then
+				msg_id$="PO_DS_ITEM_MISMATCH"
+				msg_opt$=""
+				gosub disp_message
+				if msg_opt$="C" then
+					callpoint!.setColumnData("POE_RECDET.SO_INT_SEQ_REF",callpoint!.getColumnData("POE_RECDET.SO_INT_SEQ_REF"),1)
+					callpoint!.setStatus("ABORT")
+				endif
+			endif
+			callpoint!.setStatus("ACTIVATE-REFRESH")
+
+			break
+		endif
+	next i
+
 [[POE_RECDET.SO_INT_SEQ_REF.BINP]]
 rem --- Refresh display of ListButton selection
 	callpoint!.setColumnData("POE_RECDET.SO_INT_SEQ_REF",callpoint!.getColumnData("POE_RECDET.SO_INT_SEQ_REF"),1)
