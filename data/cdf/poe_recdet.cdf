@@ -215,7 +215,8 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 		callpoint!.setStatus("ABORT")
 		break; rem --- exit callpoint
 	endif
-	
+
+goto 8251; rem --- Bypassing this code per Bug 8251	
 	rem -- now loop thru entire gridVect to make sure SO line reference, if used, isn't used >1 time
 
 	dtl!=gridVect!.getItem(0)
@@ -240,6 +241,7 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 			endif
 		next x
 	endif	
+Bug8251:
 
 	rem --- Disable SO Seq No column if SO line reference is okay
 	if msg_id$<>"PO_DUP_SO_LINE" then
