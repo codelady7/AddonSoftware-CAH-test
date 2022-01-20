@@ -183,6 +183,7 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 		break; rem --- exit callpoint
 	endif
 
+goto Bug8251; rem --- Bypassing this code per Bug 8251
 	rem -- now loop thru entire gridVect to make sure SO line reference, if used, isn't used >1 time
 
 	dtl!=gridVect!.getItem(0)
@@ -207,6 +208,7 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 			endif
 		next x
 	endif
+Bug8251:
 
 endif
 
