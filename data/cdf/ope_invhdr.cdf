@@ -145,6 +145,9 @@ rem --- Set all previous values
 	user_tpl.prev_ship_to$     = callpoint!.getColumnData("OPE_INVHDR.SHIPTO_NO")
 	user_tpl.prev_sales_total  = num(callpoint!.getColumnData("OPE_INVHDR.TOTAL_SALES"))
 
+rem --- Reset default warehouse for existing order
+	user_tpl.warehouse_id$ = callpoint!.getDevObject("defaultWhse")
+
 rem --- Set other codes
         
 	user_tpl.price_code$   = callpoint!.getColumnData("OPE_INVHDR.PRICE_CODE")
@@ -1039,6 +1042,9 @@ rem --- Make sure sales tax gets calculated, and hide possible leftover TAX_AMOU
 	taxAmount_fnote!.setVisible(0)
 	taxAmount_warn!.setVisible(0)
 
+rem --- Reset default warehouse for new order
+	user_tpl.warehouse_id$ = callpoint!.getDevObject("defaultWhse")
+
 [[OPE_INVHDR.AR_DIST_CODE.BINP]]
 rem --- Enable/Disable Cash Sale button
 	gosub able_cash_sale
@@ -1100,6 +1106,7 @@ end_pointofsale:
 
 	user_tpl.skip_whse$    = pointofsale_rec.skip_whse$
 	user_tpl.warehouse_id$ = pointofsale_rec.warehouse_id$	
+	callpoint!.setDevObject("defaultWhse",pointofsale_rec.warehouse_id$)
 
 rem --- When using Sales Tax Service, get connection
 	callpoint!.setDevObject("salesTaxObject",null())

@@ -1952,6 +1952,9 @@ rem --- Check item/warehouse combination, Set Available
 			rem --- Okay to change warehouse
 			gosub clear_all_numerics
 			callpoint!.setStatus("REFRESH")
+
+			rem --- Use just entered warehouse as the new default warehouse.
+			user_tpl.warehouse_id$=wh$
 		endif
 	endif
 
