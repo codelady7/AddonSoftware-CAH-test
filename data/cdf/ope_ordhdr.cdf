@@ -209,6 +209,9 @@ rem --- Set all previous values
 	user_tpl.prev_ship_to$     = callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_NO")
 	user_tpl.prev_sales_total  = num(callpoint!.getColumnData("OPE_ORDHDR.TOTAL_SALES"))
 
+rem --- Reset default warehouse for existing order
+	user_tpl.warehouse_id$ = callpoint!.getDevObject("defaultWhse")
+
 rem --- Set codes	and flags
 
 	user_tpl.price_code$   = callpoint!.getColumnData("OPE_ORDHDR.PRICE_CODE")
@@ -1338,6 +1341,9 @@ rem --- Acknowledgement not printed yet for new order, so save empty HashMap if 
 		callpoint!.setDevObject("ackRecsMap",ackRecsMap!)
 	endif
 
+rem --- Reset default warehouse for new order
+	user_tpl.warehouse_id$ = callpoint!.getDevObject("defaultWhse")
+
 [[OPE_ORDHDR.ASHO]]
 rem --- Get default dates, POS station
 
@@ -1391,7 +1397,8 @@ rem --- Create a default POS record
 end_pointofsale:
 
 	user_tpl.skip_whse$    = pointofsale_rec.skip_whse$
-	user_tpl.warehouse_id$ = pointofsale_rec.warehouse_id$	
+	user_tpl.warehouse_id$ = pointofsale_rec.warehouse_id$
+	callpoint!.setDevObject("defaultWhse",pointofsale_rec.warehouse_id$)
 
 rem --- When using Sales Tax Service, get connection
 	callpoint!.setDevObject("salesTaxObject",null())

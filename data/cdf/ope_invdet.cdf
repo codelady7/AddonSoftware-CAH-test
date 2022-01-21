@@ -1699,6 +1699,9 @@ rem --- Check item/warehouse combination, Set Available
 	if wh$<>callpoint!.getColumnData("OPE_INVDET.WAREHOUSE_ID") then
 		gosub clear_all_numerics
 		callpoint!.setStatus("REFRESH")
+
+		rem --- Use just entered warehouse as the new default warehouse.
+		user_tpl.warehouse_id$=wh$
 	endif
 
 
