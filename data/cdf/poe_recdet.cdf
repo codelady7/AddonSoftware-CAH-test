@@ -901,6 +901,11 @@ rem --- Warn when dropship OP item does not match the PO item
 			endif
 
 			if itemsMatch=0 then
+				rem --- ListButton selection needs to be updated before the message is displayed.
+				col_hdr$=callpoint!.getTableColumnAttribute("POE_RECDET.SO_INT_SEQ_REF","LABS")
+				g!=callpoint!.getDevObject("dtl_grid")
+				g!.setCellListSelection(num(callpoint!.getValidationRow()), util.getGridColumnNumber(g!, col_hdr$), i, 1)
+
 				msg_id$="PO_DS_ITEM_MISMATCH"
 				msg_opt$=""
 				gosub disp_message
@@ -909,7 +914,6 @@ rem --- Warn when dropship OP item does not match the PO item
 					callpoint!.setStatus("ABORT")
 				endif
 			endif
-			callpoint!.setStatus("ACTIVATE-REFRESH")
 
 			break
 		endif
