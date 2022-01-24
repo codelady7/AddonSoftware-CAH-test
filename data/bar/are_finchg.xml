@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_finchg">9E50E08EEE4A6885AB913B5FF3390563</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_finchg">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_finchg">2453755</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_finchg">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_finchg">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_finchg">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_finchg">20220124</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_finchg">20220124</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_finchg">153004</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_finchg"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.are_finchg">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.are_finchg">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_finchg">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.are_finchg"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.are_finchg">T</DD_ATTR_FTYP>
@@ -403,7 +403,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_finchg003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_finchg003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_finchg003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_finchg003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_finchg003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_finchg003"></DD_ATTR_CTLY>
@@ -454,7 +454,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_finchg004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_finchg004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_finchg004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_finchg004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_finchg004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_finchg004"></DD_ATTR_CTLY>
@@ -467,7 +467,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.are_finchg004"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.are_finchg004"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.are_finchg004"></DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.are_finchg004">1</DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.are_finchg004"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.are_finchg004"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.are_finchg004"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.are_finchg004"></DD_ATTR_MAXV>
@@ -556,7 +556,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_finchg006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_finchg006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_finchg006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_finchg006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_finchg006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_finchg006"></DD_ATTR_CTLY>
@@ -760,7 +760,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_finchg010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_finchg010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_finchg010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg010">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_finchg010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_finchg010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_finchg010"></DD_ATTR_CTLY>
@@ -913,7 +913,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_finchg013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_finchg013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_finchg013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_finchg013">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_finchg013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_finchg013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_finchg013"></DD_ATTR_CTLY>
@@ -1110,11 +1110,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.are_finchgcustomer_idu">ARE_FINCHG      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.are_finchgcustomer_idu">CUSTOMER_ID     </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.are_finchgcustomer_idu">u</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.are_finchgar_inv_no#">
-			<DD_TABLE_ALIAS id="ddm_column_opts.are_finchgar_inv_no#">ARE_FINCHG      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.are_finchgar_inv_no#">AR_INV_NO       </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.are_finchgar_inv_no#">#</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.are_finchgar_dist_codeu">
 			<DD_TABLE_ALIAS id="ddm_column_opts.are_finchgar_dist_codeu">ARE_FINCHG      </DD_TABLE_ALIAS>

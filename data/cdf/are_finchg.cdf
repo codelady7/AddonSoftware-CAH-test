@@ -1,3 +1,12 @@
+[[ARE_FINCHG.AENA]]
+rem --- disable invoice type (should only be F for Finance Charge)
+	wctl$=str(num(callpoint!.getTableColumnAttribute("ARE_FINCHG.INVOICE_TYPE","CTLI")):"00000")
+	wmap$=callpoint!.getAbleMap()
+	wpos=pos(wctl$=wmap$,8)
+	wmap$(wpos+6,1)="I"
+	callpoint!.setAbleMap(wmap$)
+	callpoint!.setStatus("ABLEMAP")
+
 [[ARE_FINCHG.ARNF]]
 if num(stbl("+BATCH_NO"),err=*next)<>0
 	rem --- Check if this record exists in a different batch
@@ -9,6 +18,65 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
 	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
 endif
+
+[[ARE_FINCHG.AR_INV_NO.AVAL]]
+rem --- Initialize new ar_inv_no
+	ar_inv_no$=callpoint!.getUserInput()
+	if cvs(ar_inv_no$,2)="" then
+		if user_tpl.op_installed$="Y" then
+			call stbl("+DIR_SYP")+"bas_sequences.bbj", "INVOICE_NO", invoice_no$, table_chans$[all]
+		else
+			call stbl("+DIR_SYP")+"bas_sequences.bbj", "AR_INV_NO", invoice_no$, table_chans$[all]
+		endif
+		callpoint!.setUserInput(invoice_no$)
+		callpoint!.setColumnData("ARE_FINCHG.AR_INV_NO",invoice_no$,1)
+	endif
+
+rem --- check art-01 and be sure invoice# they've entered isn't in use for this cust.
+rem --- otherwise, display the selected invoice...
+rem --- note: this means it's possible to have same inv# assigned to diff customers
+art_invhdr_dev=fnget_dev("ART_INVHDR")
+dim art01a$:fnget_tpl$("ART_INVHDR")
+invhdr_key$=firm_id$+"  "+callpoint!.getColumnData("ARE_FINCHG.CUSTOMER_ID")+callpoint!.getUserInput()
+read(art_invhdr_dev,key=invhdr_key$,dom=*next)
+readrecord(art_invhdr_dev,end=*next)art01a$
+if art01a.firm_id$=firm_id$ and art01a.customer_id$=callpoint!.getColumnData("ARE_FINCHG.CUSTOMER_ID") and
+:                     art01a.ar_inv_no$=callpoint!.getUserInput()
+	msg_id$="AR_INV_USED"
+	dim msg_tokens$[1]
+	gosub disp_message
+	callpoint!.setUserInput("")                            
+	callpoint!.setStatus("ABORT")
+	break
+endif
+
+[[ARE_FINCHG.AR_TERMS_CODE.AVAL]]
+arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+read record(arc_termcode_dev,key=firm_id$+"A"+callpoint!.getUserInput(),dom=*next)arm10a$
+user_tpl.disc_pct$=str(arm10a.disc_percent$)
+user_tpl.inv_days_due$=str(arm10a.inv_days_due$)
+user_tpl.disc_days$=str(arm10a.disc_days$)
+user_tpl.prox_days$=arm10a.prox_or_days$
+if num(callpoint!.getColumnData("ARE_FINCHG.INVOICE_AMT"))<>0
+	wk_amt=round(num(callpoint!.getColumnData("ARE_FINCHG.INVOICE_AMT"))*num(user_tpl.disc_pct$)/100,2)
+	callpoint!.setColumnData("ARE_FINCHG.DISCOUNT_AMT",str(wk_amt))
+	callpoint!.setColumnUndoData("ARE_FINCHG.DISCOUNT_AMT",str(wk_amt))
+	callpoint!.setStatus("REFRESH")
+endif
+if cvs(callpoint!.getColumnData("ARE_FINCHG.INVOICE_DATE"),2)<>""
+	call stbl("+DIR_PGM")+"adc_duedate.aon",user_tpl.prox_days$,callpoint!.getColumnData("ARE_FINCHG.INVOICE_DATE"),
+:                              num(user_tpl.inv_days_due$),wk_date_out$,status
+	if status then callpoint!.setStatus("ABORT")
+	callpoint!.setColumnData("ARE_FINCHG.INV_DUE_DATE",wk_date_out$)
+	callpoint!.setColumnUndoData("ARE_FINCHG.INV_DUE_DATE",wk_date_out$)
+	call stbl("+DIR_PGM")+"adc_duedate.aon",user_tpl.prox_days$,callpoint!.getColumnData("ARE_FINCHG.INVOICE_DATE"),
+:                               num(user_tpl.disc_days$),wk_date_out$,status
+	if status then callpoint!.setStatus("ABORT")
+	callpoint!.setColumnData("ARE_FINCHG.DISC_DATE",wk_date_out$)
+	callpoint!.setColumnUndoData("ARE_FINCHG.DISC_DATE",wk_date_out$)
+	callpoint!.setStatus("REFRESH")
+
 [[ARE_FINCHG.BEND]]
 rem --- remove software lock on batch, if batching
 
@@ -21,25 +89,7 @@ rem --- remove software lock on batch, if batching
 		lock_disp$=""
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 	endif
-[[ARE_FINCHG.BTBL]]
-rem --- Get Batch information
 
-call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
-callpoint!.setTableColumnAttribute("ARE_FINCHG.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
-
-
-[[ARE_FINCHG.AENA]]
-rem --- disable invoice type (should only be F for Finance Charge)
-	wctl$=str(num(callpoint!.getTableColumnAttribute("ARE_FINCHG.INVOICE_TYPE","CTLI")):"00000")
-	wmap$=callpoint!.getAbleMap()
-	wpos=pos(wctl$=wmap$,8)
-	wmap$(wpos+6,1)="I"
-	callpoint!.setAbleMap(wmap$)
-	callpoint!.setStatus("ABLEMAP")
-[[ARE_FINCHG.CUSTOMER_ID.BINQ]]
-dim filter_defs$[0,1]
-filter_defs$[0,0]="INVOICE_TYPE"
-filter_defs$[0,1]="='F'"
 [[ARE_FINCHG.BSHO]]
 rem --- Open/Lock files
 	files=8,begfile=1,endfile=files
@@ -92,49 +142,13 @@ rem --- Retrieve parameter data/see if OP is installed
 	user_tpl.glyr$=gls01a.current_year$
 	user_tpl.glper$=gls01a.current_per$
 	user_tpl.no_glpers$=gls_calendar.total_pers$
-[[ARE_FINCHG.AR_INV_NO.AVAL]]
-rem --- check art-01 and be sure invoice# they've entered isn't in use for this cust.
-rem --- otherwise, display the selected invoice...
-rem --- note: this means it's possible to have same inv# assigned to diff customers
-art_invhdr_dev=fnget_dev("ART_INVHDR")
-dim art01a$:fnget_tpl$("ART_INVHDR")
-invhdr_key$=firm_id$+"  "+callpoint!.getColumnData("ARE_FINCHG.CUSTOMER_ID")+callpoint!.getUserInput()
-read(art_invhdr_dev,key=invhdr_key$,dom=*next)
-readrecord(art_invhdr_dev,end=*next)art01a$
-if art01a.firm_id$=firm_id$ and art01a.customer_id$=callpoint!.getColumnData("ARE_FINCHG.CUSTOMER_ID") and
-:                     art01a.ar_inv_no$=callpoint!.getUserInput()
-		msg_id$="AR_INV_USED"
-		dim msg_tokens$[1]
-		gosub disp_message
-		callpoint!.setUserInput("")                            
-		callpoint!.setStatus("REFRESH-ABORT")
-endif
-[[ARE_FINCHG.AR_TERMS_CODE.AVAL]]
-arc_termcode_dev=fnget_dev("ARC_TERMCODE")
-dim arm10a$:fnget_tpl$("ARC_TERMCODE")
-read record(arc_termcode_dev,key=firm_id$+"A"+callpoint!.getUserInput(),dom=*next)arm10a$
-user_tpl.disc_pct$=str(arm10a.disc_percent$)
-user_tpl.inv_days_due$=str(arm10a.inv_days_due$)
-user_tpl.disc_days$=str(arm10a.disc_days$)
-user_tpl.prox_days$=arm10a.prox_or_days$
-if num(callpoint!.getColumnData("ARE_FINCHG.INVOICE_AMT"))<>0
-	wk_amt=round(num(callpoint!.getColumnData("ARE_FINCHG.INVOICE_AMT"))*num(user_tpl.disc_pct$)/100,2)
-	callpoint!.setColumnData("ARE_FINCHG.DISCOUNT_AMT",str(wk_amt))
-	callpoint!.setColumnUndoData("ARE_FINCHG.DISCOUNT_AMT",str(wk_amt))
-	callpoint!.setStatus("REFRESH")
-endif
-if cvs(callpoint!.getColumnData("ARE_FINCHG.INVOICE_DATE"),2)<>""
-	call stbl("+DIR_PGM")+"adc_duedate.aon",user_tpl.prox_days$,callpoint!.getColumnData("ARE_FINCHG.INVOICE_DATE"),
-:                              num(user_tpl.inv_days_due$),wk_date_out$,status
-	if status then callpoint!.setStatus("ABORT")
-	callpoint!.setColumnData("ARE_FINCHG.INV_DUE_DATE",wk_date_out$)
-	callpoint!.setColumnUndoData("ARE_FINCHG.INV_DUE_DATE",wk_date_out$)
-	call stbl("+DIR_PGM")+"adc_duedate.aon",user_tpl.prox_days$,callpoint!.getColumnData("ARE_FINCHG.INVOICE_DATE"),
-:                               num(user_tpl.disc_days$),wk_date_out$,status
-	if status then callpoint!.setStatus("ABORT")
-	callpoint!.setColumnData("ARE_FINCHG.DISC_DATE",wk_date_out$)
-	callpoint!.setColumnUndoData("ARE_FINCHG.DISC_DATE",wk_date_out$)
-	callpoint!.setStatus("REFRESH")
+
+[[ARE_FINCHG.BTBL]]
+rem --- Get Batch information
+
+call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
+callpoint!.setTableColumnAttribute("ARE_FINCHG.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
 [[ARE_FINCHG.CUSTOMER_ID.AVAL]]
 rem "Customer Inactive Feature"
 customer_id$=callpoint!.getUserInput()
@@ -166,11 +180,18 @@ if cvs(callpoint!.getColumnData("ARE_FINCHG.AR_INV_NO"),2)=""
 		callpoint!.setStatus("REFRESH")
 	endif
 endif
+
+[[ARE_FINCHG.CUSTOMER_ID.BINQ]]
+dim filter_defs$[0,1]
+filter_defs$[0,0]="INVOICE_TYPE"
+filter_defs$[0,1]="='F'"
+
 [[ARE_FINCHG.INVOICE_AMT.AVAL]]
 wk_amt=round(num(callpoint!.getUserInput())*num(user_tpl.disc_pct$)/100,2)
 callpoint!.setColumnData("ARE_FINCHG.DISCOUNT_AMT",str(wk_amt))
 callpoint!.setColumnUndoData("ARE_FINCHG.DISCOUNT_AMT",str(wk_amt))
 callpoint!.setStatus("REFRESH")
+
 [[ARE_FINCHG.INVOICE_DATE.AVAL]]
 call stbl("+DIR_PGM")+"adc_duedate.aon",user_tpl.prox_days$,callpoint!.getUserInput(),num(user_tpl.inv_days_due$),
 :                           wk_date_out$,status
@@ -183,7 +204,10 @@ if status then callpoint!.setStatus("ABORT")
 callpoint!.setColumnData("ARE_FINCHG.DISC_DATE",wk_date_out$)
 callpoint!.setColumnUndoData("ARE_FINCHG.DISC_DATE",wk_date_out$)
 callpoint!.setStatus("REFRESH"  )
+
 [[ARE_FINCHG.<CUSTOM>]]
 #include [+ADDON_LIB]std_missing_params.aon
 #include [+ADDON_LIB]std_functions.aon
+
+
 
