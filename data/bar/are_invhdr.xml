@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_invhdr">126314E9C5352A525AC77100B19C0FE8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_invhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_invhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_invhdr">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_invhdr">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_invhdr">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_invhdr">20220124</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_invhdr">20220124</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_invhdr">150912</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_invhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.are_invhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.are_invhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_invhdr">BATCH_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.are_invhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.are_invhdr">T</DD_ATTR_FTYP>
@@ -340,7 +340,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_invhdr002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_invhdr002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_invhdr002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr002"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_invhdr002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_invhdr002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_invhdr002"></DD_ATTR_CTLY>
@@ -442,7 +442,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_invhdr004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_invhdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_invhdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_invhdr004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_invhdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_invhdr004"></DD_ATTR_CTLY>
@@ -493,7 +493,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_invhdr005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_invhdr005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_invhdr005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_invhdr005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_invhdr005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_invhdr005">+1</DD_ATTR_CTLY>
@@ -646,7 +646,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_invhdr008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_invhdr008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_invhdr008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_invhdr008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_invhdr008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_invhdr008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_invhdr008"></DD_ATTR_CTLY>
@@ -1047,6 +1047,11 @@
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
 		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.are_invhdrar_inv_noaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.are_invhdrar_inv_noaval">ARE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.are_invhdrar_inv_noaval">AR_INV_NO       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.are_invhdrar_inv_noaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_column_cpro.are_invhdrcustomer_idaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.are_invhdrcustomer_idaval">ARE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.are_invhdrcustomer_idaval">CUSTOMER_ID     </DD_DVAR_NAME>
@@ -1069,11 +1074,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.are_invhdrfirm_ido">ARE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.are_invhdrfirm_ido">FIRM_ID         </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.are_invhdrfirm_ido">O</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.are_invhdrar_inv_no#">
-			<DD_TABLE_ALIAS id="ddm_column_opts.are_invhdrar_inv_no#">ARE_INVHDR      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.are_invhdrar_inv_no#">AR_INV_NO       </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.are_invhdrar_inv_no#">#</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.are_invhdrcustomer_idu">
 			<DD_TABLE_ALIAS id="ddm_column_opts.are_invhdrcustomer_idu">ARE_INVHDR      </DD_TABLE_ALIAS>

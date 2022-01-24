@@ -1,44 +1,3 @@
-[[ARE_INVHDR.ARNF]]
-if num(stbl("+BATCH_NO"),err=*next)<>0
-	rem --- Check if this record exists in a different batch
-	tableAlias$=callpoint!.getAlias()
-	primaryKey$=callpoint!.getColumnData("ARE_INVHDR.FIRM_ID")+
-:		callpoint!.getColumnData("ARE_INVHDR.AR_INV_NO")
-	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
-	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
-endif
-[[ARE_INVHDR.AR_DIST_CODE.AVAL]]
-rem --- get gl sales account for this distribution code
-
-	dist_code$ = callpoint!.getUserInput()
-
-	gosub get_gl_sales_acct
-[[ARE_INVHDR.BEND]]
-rem --- remove software lock on batch, if batching
-
-	batch$=stbl("+BATCH_NO",err=*next)
-	if num(batch$)<>0
-		lock_table$="ADM_PROCBATCHES"
-		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
-		lock_type$="X"
-		lock_status$=""
-		lock_disp$=""
-		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-	endif
-[[ARE_INVHDR.BTBL]]
-rem --- Get Batch information
-
-call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
-callpoint!.setTableColumnAttribute("ARE_INVHDR.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
-[[ARE_INVHDR.ARAR]]
-if callpoint!.getColumnData("ARE_INVHDR.PRINT_STATUS") = "Y" then
-	msg_id$="OP_REPRINT_INVOICE"
-	gosub disp_message
-	if msg_opt$="Y"
-		callpoint!.setColumnData("ARE_INVHDR.PRINT_STATUS", "N")
-		callpoint!.setStatus("MODIFIED")
-	endif
-endif
 [[ARE_INVHDR.ADEL]]
 rem --- hdr/dtl have been deleted; now write back header w/ "V" flag
 
@@ -47,6 +6,7 @@ rem --- hdr/dtl have been deleted; now write back header w/ "V" flag
 
 	rec_data$=field(rec_data$)
 	write record(are_invhdr_dev)rec_data$
+
 [[ARE_INVHDR.ADIS]]
 cust_key$=callpoint!.getColumnData("ARE_INVHDR.FIRM_ID")+callpoint!.getColumnData("ARE_INVHDR.CUSTOMER_ID")
 gosub disp_cust_addr
@@ -92,10 +52,80 @@ rem --- get gl sales account for this distribution code
 rem --- Display Comments
 	cust_id$=callpoint!.getColumnData("ARE_INVHDR.CUSTOMER_ID")
 	gosub disp_cust_comments
+
 [[ARE_INVHDR.AGDS]]
 gosub calc_grid_tots
 callpoint!.setColumnData("<<DISPLAY>>.TOT_QTY",str(tqty))
 callpoint!.setColumnData("<<DISPLAY>>.TOT_AMT",str(tamt))
+
+[[ARE_INVHDR.ARAR]]
+if callpoint!.getColumnData("ARE_INVHDR.PRINT_STATUS") = "Y" then
+	msg_id$="OP_REPRINT_INVOICE"
+	gosub disp_message
+	if msg_opt$="Y"
+		callpoint!.setColumnData("ARE_INVHDR.PRINT_STATUS", "N")
+		callpoint!.setStatus("MODIFIED")
+	endif
+endif
+
+[[ARE_INVHDR.ARNF]]
+if num(stbl("+BATCH_NO"),err=*next)<>0
+	rem --- Check if this record exists in a different batch
+	tableAlias$=callpoint!.getAlias()
+	primaryKey$=callpoint!.getColumnData("ARE_INVHDR.FIRM_ID")+
+:		callpoint!.getColumnData("ARE_INVHDR.AR_INV_NO")
+	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
+	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
+endif
+
+[[ARE_INVHDR.AR_DIST_CODE.AVAL]]
+rem --- get gl sales account for this distribution code
+
+	dist_code$ = callpoint!.getUserInput()
+
+	gosub get_gl_sales_acct
+
+[[ARE_INVHDR.AR_INV_NO.AVAL]]
+rem --- Initialize new ar_inv_no, or validate entered one exists
+	ar_inv_no$=callpoint!.getUserInput()
+	if cvs(ar_inv_no$,2)="" then
+		op$=callpoint!.getDevObject("op")
+		if op$="Y" then
+			call stbl("+DIR_SYP")+"bas_sequences.bbj", "INVOICE_NO", invoice_no$, table_chans$[all]
+		else
+			call stbl("+DIR_SYP")+"bas_sequences.bbj", "AR_INV_NO", invoice_no$, table_chans$[all]
+		endif
+		callpoint!.setUserInput(invoice_no$)
+		callpoint!.setColumnData("ARE_INVHDR.AR_INV_NO",invoice_no$,1)
+	else
+		rem --- Entered ar_inv_no must already exist
+		found=0
+		batch_no$=callpoint!.getColumnData("ARE_INVHDR.BATCH_NO")
+		are_invhdr_dev=fnget_dev("ARE_INVHDR")
+		findrecord(are_invhdr_dev,key=firm_id$+batch_no$+ar_inv_no$,dom=*next); found=1
+		if !found then
+			msg_id$="AR_INV_NOT_FND"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=ar_inv_no$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+[[ARE_INVHDR.BEND]]
+rem --- remove software lock on batch, if batching
+
+	batch$=stbl("+BATCH_NO",err=*next)
+	if num(batch$)<>0
+		lock_table$="ADM_PROCBATCHES"
+		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
+		lock_type$="X"
+		lock_status$=""
+		lock_disp$=""
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
 [[ARE_INVHDR.BSHO]]
 rem --- Use statements
 
@@ -160,6 +190,7 @@ rem --- Additional init
 rem --- Retrieve parameter data - not keeping any of it here, just make sure params exist
 	ars01a_key$=firm_id$+"AR00"
 	find record (ads01_dev,key=ars01a_key$,err=std_missing_params) ars01a$
+
 rem --- Disable display only columns
 	dim dctl$[8]
 	dctl$[1]="<<DISPLAY>>.CUST_ADDR1"
@@ -171,6 +202,19 @@ rem --- Disable display only columns
 	dctl$[7]="<<DISPLAY>>.TOT_QTY"
 	dctl$[8]="<<DISPLAY>>.TOT_AMT"
 	gosub disable_ctls
+
+rem --- Is OP installed?
+	dim info$[20]
+	call stbl("+DIR_PGM")+"adc_application.aon","OP",info$[all]
+	op$=info$[20]
+	callpoint!.setDevObject("op",op$)
+
+[[ARE_INVHDR.BTBL]]
+rem --- Get Batch information
+
+call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
+callpoint!.setTableColumnAttribute("ARE_INVHDR.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
 [[ARE_INVHDR.CUSTOMER_ID.AVAL]]
 rem "Customer Inactive Feature"
 customer_id$=callpoint!.getUserInput()
@@ -218,6 +262,7 @@ endif
 rem --- Display Comments
 	cust_id$=customer_id$
 	gosub disp_cust_comments
+
 [[ARE_INVHDR.INV_DATE.AVAL]]
 gl$=user_tpl.glint$
 invdate$=callpoint!.getUserInput()        
@@ -230,6 +275,7 @@ if gl$="Y"
 		user_tpl.glper$=per$
 	endif
 endif
+
 [[ARE_INVHDR.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
 calc_grid_tots:
@@ -325,3 +371,6 @@ disp_cust_comments: rem --- You must pass in cust_id$ because we don't know whet
 	return
 
 #include [+ADDON_LIB]std_missing_params.aon
+
+
+
