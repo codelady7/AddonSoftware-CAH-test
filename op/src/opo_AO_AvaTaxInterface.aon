@@ -352,17 +352,19 @@ AO_AvaTaxInterface_error:rem --- Method error trap/handler (11Oct2017)
         rem  */
         method public void busyImageStart(BBjTopLevelWindow form!)
             seterr busyImageStart_error
-            height=33
-            width=33
-            xpos=int((form!.getWidth()-width)/2)
-            ypos=int((form!.getHeight()-height)/2)
-
-            rem --- Show busy/working image
-            if #busyImage!=null() then
-                nextCtrlID=util.getNextControlID()
-                #busyImage!=form!.addImageCtrl(nextCtrlID,xpos,ypos,width,height,System.getProperty("basis.BBjHome")+"/utils/reporting/bbjasper/images/CreatingReport.gif")
+            if form!<>null() then
+                height=33
+                width=33
+                xpos=int((form!.getWidth()-width)/2)
+                ypos=int((form!.getHeight()-height)/2)
+    
+                rem --- Show busy/working image
+                if #busyImage!=null() then
+                    nextCtrlID=util.getNextControlID()
+                    #busyImage!=form!.addImageCtrl(nextCtrlID,xpos,ypos,width,height,System.getProperty("basis.BBjHome")+"/utils/reporting/bbjasper/images/CreatingReport.gif")
+                endif
+                #busyImage!.setVisible(1)
             endif
-            #busyImage!.setVisible(1)
 
             methodret
             
@@ -388,7 +390,7 @@ busyImageStart_error:rem --- Method error trap/handler (11Oct2017)
             seterr busyImageStop_error
             
             rem --- Hide busy/working image
-            #busyImage!.setVisible(0)
+            if #busyImage!<>null() then #busyImage!.setVisible(0)
 
             methodret
             
@@ -690,7 +692,7 @@ calculateTax_error:rem --- Error trap/handler for AvaTax methods and client side
             #busyImageStart()
             ping! = tmpClient!.ping()
             #busyImageStop()
-            if(ping!.getAuthenticated()) then
+            if (ping!.getAuthenticated()) then
                 if #logClient then
                     logSource$="new AvaTaxClient"
                     print(#devClientLog) "<<< REQUEST "+logSource$+" (firm ID:  "+#firmID$+") "+date(0:"%Yd%Mz%Dz%Hz%mz%sz")+" >>>"
@@ -1470,7 +1472,11 @@ stringJSON_error:rem --- Method error trap/handler (11Oct2017)
                         rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
                         if E!.getMessage()<>null() and pos("EntityNotFoundError"=E!.getMessage()) then customerNotFound=1
                     endif
-                    if !customerNotFound then exemptStatusModel!=#avaTaxClient!.listValidCertificatesForCustomer(companyId!,customerCode$,country$,region$)
+                    if !customerNotFound then 
+                        customerNotFound=0
+                        exemptStatusModel!=#avaTaxClient!.listValidCertificatesForCustomer(companyId!,customerCode$,country$,region$,err=*endif)
+                        customerNotFound=1
+                    endif
                 endif
                 if #logClient then
                     endTime!=new Date()

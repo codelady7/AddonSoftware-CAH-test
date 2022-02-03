@@ -103,7 +103,7 @@ rem --- Open/Lock files
     ope41_dev=channels[23]
     opm02_dev=channels[24]
     opm06_dev=channels[25]
-    ops10s_dev=channels[27]
+    ops10_dev=channels[27]
     rem opt01_dev=channels[28]
     rem opt21_dev=channels[29]
     opt71_dev=channels[30]
