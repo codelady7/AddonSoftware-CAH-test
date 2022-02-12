@@ -18,6 +18,7 @@ rem ==========================================================================
     use ::bbtranslator.bbj::BBTranslator
     use ::adc_copyaon.aon::CopyAonDir
     use ::ado_file.src::FileObject
+    use ::ado_util.src::util
     use ::ado_GitRepoInterface.aon::GitRepoInterface
 
     setesc std_error
@@ -81,15 +82,16 @@ rem --- There's nothing to do if data/adx_conversionCtrl isn’t found, i.e. new i
     fileReader!.close()
 
 rem --- Verify Git repository exists and is using the correct branch for this installation.
+rem --- If adx_conversionCtrl exists, but data_source=DataPort, i.e., not an actual Addon-to-Addon upgrade, but a new install doing DataPort, then it's ok to skip this test.
 rem *** WARNING: Do NOT remove, or alter, the following test for the correct Git branch. It is required to assure the correct version of software is being executed. *** 
     rem --- Assume this is a Quick Copy installation if Git repository isn't found.
     gitRepo$=aonDir$+".git"
     gitRepo!=new File(gitRepo$,err=*next)
-    if gitRepo!.exists() then
+    if gitRepo!.exists() and convCtrl!.getProperty("data_source")<>"DataPort" then
     
         rem --- Get GIT_AUTH_ID from adx_conversionCtrl
         git_auth_id$=convCtrl!.getProperty("git_auth_id")
-    
+        
         rem --- Skip if NOT using version-neutral installation, i.e. a development install
         aonDir!=new String(cvs(aonDir$,2))
         if aonDir!.matches(".*/v../v..../aon/$") then
@@ -196,7 +198,14 @@ rem --- If no conversions detected, update log and done
         print(log_dev)meter_text$        
         goto done
     endif
-    
+
+rem --- Disable triggers if this is a V6Hybrid install
+    if stbl("+V6DATA",err=*endif)<>""
+        enable%=0
+        util.setTriggersEnabled(enable%)
+        print (log_dev)"Disabled triggers in "+stbl("+V6DATA")+" and "+stbl("+DIR_DAT")+"."
+    endif
+
 rem --- Determine which modules are installed
 
     installMap!=new HashMap()
@@ -483,6 +492,13 @@ done: rem --- All done
         ads_autolaunch$ = field(ads_autolaunch$)
         writerecord(ads_autolaunch_dev)ads_autolaunch$
 
+    endif
+
+    rem --- Enable disabled triggers
+    if stbl("+V6DATA",err=*endif)<>""
+        enable%=1
+        util.setTriggersEnabled(enable%)
+        print (log_dev)"Enabled triggers in "+stbl("+V6DATA")+" and "+stbl("+DIR_DAT")+"."
     endif
 
     rem --- Complete and close log file
