@@ -11,6 +11,8 @@ rem ==========================================================================
     use ::bbtranslator.bbj::BBTranslator
     
     use java.util.HashMap
+    use java.util.Vector
+    use java.io.File
 
     class public util
 
@@ -1905,6 +1907,78 @@ changeControlLabel_error:rem --- Method error trap/handler (11Oct2017)
             throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
         methodend
 
+        rem =========================================================================================
+        rem  * setTriggersEnabled
+        rem  * Enable or Disable triggers if running V6Hybrid
+        rem =========================================================================================
+
+        method public static void setTriggersEnabled(BBjInt enable%)
+            seterr method_error
+            
+            rdNSGroup!=BBjAPI().getGroupNamespace()
+            rdAdmin!=rdNSGroup!.getValue("+bar_admin_"+cvs(stbl("+USER_ID",err=*next),11),err=*next)
+            if rdAdmin!<>null() then
+                disabledTriggers!=BBjAPI().makeVector()
+                dataDirs!=BBjAPI().makeVector()
+                dataDirs!.addItem(stbl("+V6DATA")); rem --- V6Hybrid data directory
+                dataDirs!.addItem(stbl("+DIR_DAT")); rem --- Data directory for current Addon instance
+                dirsIter!=dataDirs!.iterator()
+                while dirsIter!.hasNext()
+                    triggerDir!=new File(dirsIter!.next())
+                    triggers!=new Vector(java.util.Arrays.asList(triggerDir!.listFiles(new TriggerFilter())))
+                    if triggers!.size() then
+                        iter!=triggers!.iterator()
+                        while iter!.hasNext()
+                            trigger$=iter!.next().getAbsolutePath()
+                            trigger$=trigger$(1,pos(".trigger"=trigger$,-1)-1)
+                            aAdminTriggers!=rdAdmin!.getTriggers(trigger$)
+                            if enable% then
+                                aAdminTriggers!.setBoolean(BBjAdminTriggers.ENABLED, 1)
+                            else
+                                aAdminTriggers!.setBoolean(BBjAdminTriggers.ENABLED, 0)
+                            endif
+                            aAdminTriggers!.commit() 
+                        wend
+                    endif
+                wend
+            else
+                seterr 0
+                x$=stbl("+THROWN_ERR","TRUE")   
+                throw #className$+": Unable to retrieve Admin object to enable/disable triggers.", 275
+            endif
+           
+            methodret 
+           
+method_error:rem --- Method error trap/handler (11Oct2017)
+            rd_err_text$="", err_num=err
+            if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+            if err_num=252 then
+                E!=BBjAPI().getLastBBjException()
+                rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+                if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+            endif
+            call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+            if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+            if pos("RETRY"=rd_err_act$)<>0 retry
+            x$=stbl("+THROWN_ERR","TRUE")   
+            throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+        methodend
+
     classend
+
+rem /**
+rem  * TriggerFilter Class to filter *.trigger files.
+rem  */
+class public TriggerFilter implements java.io.FilenameFilter
+
+    method public boolean accept(File dir!, String file!)
+        if file!.endsWith(".trigger")
+            methodret Boolean.valueOf("true")
+        else
+            methodret Boolean.valueOf("false")
+        endif
+    methodend
+    
+classend
 
     end
