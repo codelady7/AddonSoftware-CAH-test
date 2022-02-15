@@ -1691,7 +1691,6 @@ updateSalesTaxTransHistory_error:rem --- Method error trap/handler (11Oct2017)
                     rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
                     if E!.getMessage()<>null() and pos("EntityNotFoundError"=E!.getMessage()) then transactionNotFound=1
                 endif
-                if !transactionNotFound then transaction!=#avaTaxClient!.getTransactionByCode(companyCode$, transactionCode$, documentType!, "")
             endif
             if #logClient then
                 endTime!=new Date()

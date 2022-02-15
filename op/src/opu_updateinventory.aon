@@ -1020,21 +1020,6 @@ rem --- Set LOCK_STATUS and TRANS_STATUS for update completed, and remove comple
                         break
                     endif
                 endif
-            else
-                rem --- Void possible uncommitted transaction that have been orphaned
-                rem --- Order/Invoice Tax Code changed to one NOT using AvaTax after first using AvaTax
-                if cvs(ope01a.credit_invoice$,2)="" then
-                    transType$="SalesInvoice"
-                else
-                    transType$="ReturnInvoice"
-                endif
-                success=0
-                salesTax!.voidTransaction(customer_id$, order_no$, ar_inv_no$, transType$, err=*next); success=1
-
-                if !success then
-                    read(ope01_dev); rem --- release extract
-                    break
-                endif
             endif
 
             ope01a.lock_status$="3"
