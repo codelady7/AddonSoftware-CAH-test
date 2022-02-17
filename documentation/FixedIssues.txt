@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-01-18
+ Report Date:   2022-02-16
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -70,3 +70,15 @@ Bug 10357 - AP - Export 1099 to Text fails with error 47
  - this commit also contains a new field added for Account Ability 2021
 ----
 Modified: ap/src/apx_export_1099.aon
+
+=======================================================================================================================================
+Revision: 9a7903f29c3308c3a78adb60d64d85e85da1a826
+Author: Christine <chawkins@basis.com>
+Date: 2/16/2022 5:17:54 PM
+Message:
+Bug 10370 - AD - Upgrade Wizard throwing an error 26 checking for committed conflicts
+ - removed declaration on BBjVector
+
+(cherry picked from commit b9b8edd72554ce43f6bb53e7375c56cfed8912b5)
+----
+Modified: ad/src/adx_upgradewiz.aon
