@@ -103,7 +103,6 @@ rem --- Open log file
     gosub open_log
 
 rem --- Is this a restart after resolving Git conflicts?
-    declare BBjVector filesWithEmbeddedConflicts!
     declare Iterator fileIterator!
     restartFile$=newAonDir$+"/logs/restartUpgradeWizard.txt"
     restartFlag=0
