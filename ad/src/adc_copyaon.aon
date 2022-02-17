@@ -393,10 +393,14 @@ method_error:rem --- Method error trap/handler (11Oct2017)
                 requiredFiles!.add("adm-09"); rem --- adm_procmaster
                 requiredFiles!.add("adm-19"); rem --- adm_procdetail
                 requiredFiles!.add("adm-39"); rem --- adm_proctables
+                requiredFiles!.add("ars_gatewaydet")
+                requiredFiles!.add("ars_gatewayhdr")
                 requiredFiles!.add("glm-03"); rem --- glc_journalcode
                 requiredFiles!.add("glm-06"); rem --- adm_auditcontrol
                 requiredFiles!.add("ivc_whsecode")
                 requiredFiles!.add("opm_pointofsale")
+                requiredFiles!.add("ops_slstaxsvcdet")
+                requiredFiles!.add("ops_slstaxsvchdr")
             endif
 
             rem --- Files with firm ZZ default data.
