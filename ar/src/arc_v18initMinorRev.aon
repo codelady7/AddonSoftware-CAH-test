@@ -153,6 +153,7 @@ rem --- Initialize ARC_SHIPVIACODE with existing AR_SHIP_VIA codes
                 redim arcShipViaCode$
                 arcShipViaCode.firm_id$=srcTbl.firm_id$
                 arcShipViaCode.ar_ship_via$=srcTbl.ar_ship_via$
+                arcShipViaCode.description$=srcTbl.ar_ship_via$
                 writerecord(arcShipViaCode_dev,dom=*next)arcShipViaCode$
             endif
         wend
