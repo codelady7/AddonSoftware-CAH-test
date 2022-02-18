@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-02-16
+ Report Date:   2022-02-17
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -82,3 +82,16 @@ Bug 10370 - AD - Upgrade Wizard throwing an error 26 checking for committed conf
 (cherry picked from commit b9b8edd72554ce43f6bb53e7375c56cfed8912b5)
 ----
 Modified: ad/src/adx_upgradewiz.aon
+
+=======================================================================================================================================
+Revision: b4caad339694977fb5c1b1c26e18b9018889467a
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 2/17/2022 1:01:46 PM
+Message:
+Bug 10365: Provided Bank Deposit Entry with a password override when the
+deposit is currently on the Cash Receipts Register.
+----
+Modified: data/bar/are_deposit.xml
+Modified: data/cdf/are_deposit.cdf
+Modified: data/sync/ads_messages~[01007514AR].xml
+Deleted: data/sync/ads_messages~ar_deposit_status_r.xml
