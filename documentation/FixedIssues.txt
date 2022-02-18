@@ -84,6 +84,16 @@ Bug 10370 - AD - Upgrade Wizard throwing an error 26 checking for committed conf
 Modified: ad/src/adx_upgradewiz.aon
 
 =======================================================================================================================================
+Revision: 4734516e83d036dfbf4d1f1aee6c447328e5b4b6
+Author: Christine <chawkins@basis.com>
+Date: 2/17/2022 2:08:17 PM
+Message:
+Bug 10369 - AD - Add ops_slstaxsvchdr/det and ars_gatewayhdr/det to list of required files for installs
+
+----
+Modified: ad/src/adc_copyaon.aon
+
+=======================================================================================================================================
 Revision: b4caad339694977fb5c1b1c26e18b9018889467a
 Author: Bill Halsted <bhalsted@basis.com>
 Date: 2/17/2022 1:01:46 PM
@@ -95,3 +105,4 @@ Modified: data/bar/are_deposit.xml
 Modified: data/cdf/are_deposit.cdf
 Modified: data/sync/ads_messages~[01007514AR].xml
 Deleted: data/sync/ads_messages~ar_deposit_status_r.xml
+
