@@ -58,6 +58,9 @@ rem --- Enable/disable and Payment Information fields
 		callpoint!.setColumnData("<<DISPLAY>>.CHKSTUB_FAX","",1)
 	endif
 
+rem --- Hold on to vendor_1099 for apm_vendhist
+	callpoint!.setDevObject("vendor_1099",callpoint!.getColumnData("APM_VENDMAST.VENDOR_1099"))
+
 [[APM_VENDMAST.AOPT-HCPY]]
 rem --- Go run the Hard Copy form
 
@@ -553,6 +556,10 @@ rem --- Enable Payment Information fields when paying via ACH
 			callpoint!.setColumnData("<<DISPLAY>>.CHKSTUB_FAX","",1)
 		endif
 	endif
+
+[[APM_VENDMAST.VENDOR_1099.AVAL]]
+rem --- Hold on to vendor_1099 for apm_vendhist
+	callpoint!.setDevObject("vendor_1099",callpoint!.getUserInput())
 
 [[APM_VENDMAST.VENDOR_ID.AVAL]]
 if num(callpoint!.getUserInput(),err=*endif)=0

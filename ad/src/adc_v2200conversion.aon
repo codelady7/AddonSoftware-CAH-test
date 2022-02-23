@@ -58,6 +58,89 @@ rem --- Start progress meter
     meter_action$="WIN-LST"
     gosub disp_meter
 
+rem --- For version 22.00, initialize IRS1099_TYPE_BOX field in APM_VENDHIST
+    this_module$="AP"
+    if installMap!.get(this_module$)="Y" then
+        task$="2200_AP_apm_vendhist"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=2
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="APM_VENDMAST",   open_opts$[1]="OTA"
+            open_tables$[2]="APM_VENDHIST",   open_opts$[2]="OTA"
+    
+            gosub open_tables
+    
+            apmVendMast_dev=num(open_chans$[1])
+            apmVendHist_dev=num(open_chans$[2])
+            
+            dim apmVendMast$:open_tpls$[1]
+            dim apmVendHist$:open_tpls$[2]
+
+            read(apmVendMast_dev,dom=*next)
+            while 1
+                readrecord(apmVendMast_dev,end=*break)apmVendMast$
+                
+                apmVendHist_key$=apmVendMast.firm_id$+apmVendMast.vendor_id$
+                read(apmVendHist_dev,key=apmVendHist_key$,dom=*next)
+                while 1
+                    readrecord(apmVendHist_dev,end=*break)apmVendHist$
+                    if apmVendHist.firm_id$+apmVendHist.vendor_id$<>apmVendHist_key$ then break
+                    if apmVendMast.vendor_1099$="Y" then
+                        rem --- Currently using 1099-MISC form
+                        ampVendHist.irs1099_type_box$="M"
+                    else
+                        rem --- Currently not using a 1099 form
+                        ampVendHist.irs1099_type_box$="X"
+                    endif
+                    writerecord(apmVendHist_dev)apmVendHist$
+                wend
+            wend
+            
+            rem --- close files opened for this conversion
+            num_files=2
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="APM_VENDMAST",   open_opts$[1]="C"
+            open_tables$[2]="APM_VENDHIST",   open_opts$[2]="C"
+            gosub open_tables
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
 rem --- For version 22.00, initialize new START_DATE and PERIOD_END_nn fields and remove obsolete CAL_START_DATE and PER_ENDING_nn fields in GLS_CALENDAR
     this_module$="GL"
     if installMap!.get(this_module$)="Y" then
