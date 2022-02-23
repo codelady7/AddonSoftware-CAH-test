@@ -86,7 +86,7 @@ rem --- For version 22.00, initialize IRS1099_TYPE_BOX field in APM_VENDHIST
             dim apmVendMast$:open_tpls$[1]
             dim apmVendHist$:open_tpls$[2]
 
-            read(apmVendMast_dev,dom=*next)
+            read(apmVendMast_dev,key="",dom=*next)
             while 1
                 readrecord(apmVendMast_dev,end=*break)apmVendMast$
                 
@@ -97,10 +97,10 @@ rem --- For version 22.00, initialize IRS1099_TYPE_BOX field in APM_VENDHIST
                     if apmVendHist.firm_id$+apmVendHist.vendor_id$<>apmVendHist_key$ then break
                     if apmVendMast.vendor_1099$="Y" then
                         rem --- Currently using 1099-MISC form
-                        ampVendHist.irs1099_type_box$="M"
+                        apmVendHist.irs1099_type_box$="M"
                     else
                         rem --- Currently not using a 1099 form
-                        ampVendHist.irs1099_type_box$="X"
+                        apmVendHist.irs1099_type_box$="X"
                     endif
                     writerecord(apmVendHist_dev)apmVendHist$
                 wend
