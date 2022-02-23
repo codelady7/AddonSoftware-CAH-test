@@ -7,15 +7,6 @@ else
 	irs1099!.setEnabled(0)
 endif
 
-rem --- Initialize 1099 Type ListButton when not set yet
-if cvs(callpoint!.getColumnData("APM_VENDHIST.IRS1099_TYPE_BOX"),2)="" then
-	if callpoint!.getDevObject("vendor_1099")="Y" then
-		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","M",1)
-	else
-		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","X",1)
-	endif
-endif
-
 rem --- Enable/disable Edit History option
 if callpoint!.getDevObject("vendor_1099")="Y" and callpoint!.getColumnData("APM_VENDHIST.IRS1099_TYPE_BOX")<>"X" then
 	callpoint!.setOptionEnabled("EDIT",1)	
