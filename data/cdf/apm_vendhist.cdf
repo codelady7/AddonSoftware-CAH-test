@@ -1,20 +1,91 @@
-[[APM_VENDHIST.GL_ACCOUNT.AVAL]]
-rem "GL INACTIVE FEATURE"
-   glm01_dev=fnget_dev("GLM_ACCT")
-   glm01_tpl$=fnget_tpl$("GLM_ACCT")
-   dim glm01a$:glm01_tpl$
-   glacctinput$=callpoint!.getUserInput()
-   glm01a_key$=firm_id$+glacctinput$
-   find record (glm01_dev,key=glm01a_key$,err=*break) glm01a$
-   if glm01a.acct_inactive$="Y" then
-      call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
-      msg_id$="GL_ACCT_INACTIVE"
-      dim msg_tokens$[2]
-      msg_tokens$[1]=fnmask$(glm01a.gl_account$(1,gl_size),m0$)
-      msg_tokens$[2]=cvs(glm01a.gl_acct_desc$,2)
-      gosub disp_message
-      callpoint!.setStatus("ACTIVATE-ABORT")
-   endif
+[[APM_VENDHIST.ADIS]]
+rem --- Enable/disable 1099 Type ListButton
+irs1099!=callpoint!.getControl("APM_VENDHIST.IRS1099_TYPE_BOX")
+if callpoint!.getDevObject("vendor_1099")="Y" then
+	irs1099!.setEnabled(1)
+else
+	irs1099!.setEnabled(0)
+endif
+
+rem --- Initialize 1099 Type ListButton when not set yet
+if cvs(callpoint!.getColumnData("APM_VENDHIST.IRS1099_TYPE_BOX"),2)="" then
+	if callpoint!.getDevObject("vendor_1099")="Y" then
+		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","M",1)
+	else
+		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","X",1)
+	endif
+endif
+
+rem --- Enable/disable Edit History option
+if callpoint!.getDevObject("vendor_1099")="Y" and callpoint!.getColumnData("APM_VENDHIST.IRS1099_TYPE_BOX")<>"X" then
+	callpoint!.setOptionEnabled("EDIT",1)	
+else
+	callpoint!.setOptionEnabled("EDIT",0)	
+endif
+
+rem --- Disable editable Purchase History fields
+callpoint!.setColumnEnabled("APM_VENDHIST.YTD_PURCH",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PYR_PURCH",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NYR_PURCH",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.YTD_DISCS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PRI_YR_DISCS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NYR_DISC",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.YTD_PAYMENTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PYR_PAYMENTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NYR_PAYMENTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.CUR_CAL_PMTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PRI_CAL_PMT",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NXT_CYR_PMTS",0)
+
+[[APM_VENDHIST.AENA]]
+rem --- see if interfacing to GL
+	call stbl("+DIR_PGM")+"adc_application.aon","AP",info$[all]
+	gl$=info$[9];rem --- gl interface?
+
+if gl$<>"Y"
+	ctl_name$="APM_VENDHIST.GL_ACCOUNT"
+	ctl_stat$="I"
+	gosub disable_fields
+endif
+
+[[APM_VENDHIST.AOPT-EDIT]]
+rem --- For IRS 1099 forms, allow updating Purchase History when password entered
+if callpoint!.getDevObject("vendor_1099")="Y" and callpoint!.getColumnData("APM_VENDHIST.IRS1099_TYPE_BOX")<>"X" then
+	if callpoint!.isEditMode()=0 then
+		msg_id$="AD_EDIT_MODE_REQUIRE"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+	msg_id$="AP_EDIT_PURCH_HIST"
+	gosub disp_message
+	if pos("PASSVALID"=msg_opt$)<>0
+		rem --- Enable editable Purchase History fields
+		callpoint!.setColumnEnabled("APM_VENDHIST.YTD_PURCH",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.PYR_PURCH",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.NYR_PURCH",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.YTD_DISCS",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.PRI_YR_DISCS",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.NYR_DISC",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.YTD_PAYMENTS",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.PYR_PAYMENTS",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.NYR_PAYMENTS",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.CUR_CAL_PMTS",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.PRI_CAL_PMT",1)
+		callpoint!.setColumnEnabled("APM_VENDHIST.NXT_CYR_PMTS",1)
+	endif
+endif
+
+[[APM_VENDHIST.AP_TYPE.AVAL]]
+rem --- get default distribution code	
+	apc_typecode_dev=fnget_dev("APC_TYPECODE")
+	dim apc_typecode$:fnget_tpl$("APC_TYPECODE")
+	find record (apc_typecode_dev,key=firm_id$+"A"+callpoint!.getUserInput(),err=*next)apc_typecode$
+rem	if cvs(apc_typecode$,2)<>""
+rem		user_tpl.dflt_dist_code$=apc_typecode.ap_dist_code$
+rem	endif
+
 [[APM_VENDHIST.ARAR]]
 rem --- Get correct Open Invoice amount
 
@@ -43,6 +114,42 @@ rem --- Main process
 	wend
 
 	callpoint!.setColumnData("APM_VENDHIST.OPEN_INVS",str(open_invs),1)
+
+[[APM_VENDHIST.AREC]]
+if user_tpl.multi_types$<>"Y" 
+	callpoint!.setColumnData("APM_VENDHIST.AP_TYPE",user_tpl.dflt_ap_type$)
+	callpoint!.setStatus("REFRESH")
+endif
+
+[[APM_VENDHIST.ARER]]
+rem --- Enable/disable 1099 Type ListButton
+irs1099!=callpoint!.getControl("APM_VENDHIST.IRS1099_TYPE_BOX")
+if callpoint!.getDevObject("vendor_1099")="Y" then
+	irs1099!.setEnabled(1)
+else
+	irs1099!.setEnabled(0)
+endif
+
+rem --- Initialize 1099 Type ListButton
+callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","X",1)
+
+rem --- Disable Edit History option
+callpoint!.setOptionEnabled("EDIT",0)	
+
+rem --- Disable editable Purchase History fields
+callpoint!.setColumnEnabled("APM_VENDHIST.YTD_PURCH",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PYR_PURCH",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NYR_PURCH",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.YTD_DISCS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PRI_YR_DISCS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NYR_DISC",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.YTD_PAYMENTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PYR_PAYMENTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NYR_PAYMENTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.CUR_CAL_PMTS",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.PRI_CAL_PMT",0)
+callpoint!.setColumnEnabled("APM_VENDHIST.NXT_CYR_PMTS",0)
+
 [[APM_VENDHIST.ARNF]]
 rem --- initialize new record
 
@@ -60,54 +167,7 @@ rem --- initialize new record
 	callpoint!.setColumnData("APM_VENDHIST.PAYMENT_GRP",apc_typecode.payment_grp$,1)
 	callpoint!.setColumnData("APM_VENDHIST.AP_TERMS_CODE",apc_typecode.ap_terms_code$,1)
 	callpoint!.setStatus("MODIFIED")
-[[APM_VENDHIST.AREC]]
-if user_tpl.multi_types$<>"Y" 
-	callpoint!.setColumnData("APM_VENDHIST.AP_TYPE",user_tpl.dflt_ap_type$)
-	callpoint!.setStatus("REFRESH")
-endif
-[[APM_VENDHIST.BSHO]]
-if user_tpl.multi_dist$="N"
-	callpoint!.setColumnEnabled("APM_VENDHIST.AP_DIST_CODE",-1)
-endif
-[[APM_VENDHIST.BTBL]]
-rem --- Retrieve parameter data
 
-	aps01_dev=fnget_dev("APS_PARAMS")
-	dim aps01a$:fnget_tpl$("APS_PARAMS")
-	aps01a_key$=firm_id$+"AP00"
-	find record (aps01_dev,key=aps01a_key$,err=std_missing_params) aps01a$ 
-
-rem -- store info needed for validation, etc., in user_tpl$
-	dim user_tpl$:"multi_types:c(1),multi_dist:c(1),ret_flag:c(1),dflt_ap_type:c(2),dflt_dist_code:c(2)"
-	user_tpl.multi_types$=aps01a.multi_types$
-	user_tpl.multi_dist$=aps01a.multi_dist$
-	user_tpl.ret_flag$=aps01a.ret_flag$
- 	user_tpl.dflt_ap_type$=aps01a.ap_type$
-	user_tpl.dflt_dist_code$=aps01a.ap_dist_code$
-
-rem --- if not using multi AP types, disable access to AP Type and get default distribution code
-
-	if user_tpl.multi_types$<>"Y"
-		callpoint!.setTableColumnAttribute("APM_VENDHIST.AP_TYPE","PVAL",$22$+user_tpl.dflt_ap_type$+$22$)
-
-		rem --- get default distribution code	
-		apc_typecode_dev=fnget_dev("APC_TYPECODE")
-		dim apc_typecode$:fnget_tpl$("APC_TYPECODE")
-		find record (apc_typecode_dev,key=firm_id$+"A"+user_tpl.dflt_ap_type$,err=*next)apc_typecode$
-		if cvs(apc_typecode$,2)<>""
-			user_tpl.dflt_dist_code$=apc_typecode.ap_dist_code$
-		endif
-
-		rem --- if not using multi distribution codes, initialize and disable Distribution Code
-		if user_tpl.multi_dist$<>"Y"
-			callpoint!.setTableColumnAttribute("APM_VENDHIST.AP_DIST_CODE","PVAL",$22$+user_tpl.dflt_dist_code$+$22$)
-		endif
-	endif
-[[APM_VENDHIST.PAYMENT_GRP.AVAL]]
-if callpoint!.getUserInput()=""
-	callpoint!.setUserInput("  ")
-	callpoint!.setStatus("REFRESH")
-endif
 [[APM_VENDHIST.BDEL]]
 rem --- disallow deletion of apm-02 if any of the buckets are non-zero, or if referenced in apt-01 (open invoices)
 
@@ -152,24 +212,71 @@ if can_delete$="N"
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
 endif
-[[APM_VENDHIST.AENA]]
-rem --- see if interfacing to GL
-	call stbl("+DIR_PGM")+"adc_application.aon","AP",info$[all]
-	gl$=info$[9];rem --- gl interface?
 
-if gl$<>"Y"
-	ctl_name$="APM_VENDHIST.GL_ACCOUNT"
-	ctl_stat$="I"
-	gosub disable_fields
+[[APM_VENDHIST.BSHO]]
+if user_tpl.multi_dist$="N"
+	callpoint!.setColumnEnabled("APM_VENDHIST.AP_DIST_CODE",-1)
 endif
-[[APM_VENDHIST.AP_TYPE.AVAL]]
-rem --- get default distribution code	
-	apc_typecode_dev=fnget_dev("APC_TYPECODE")
-	dim apc_typecode$:fnget_tpl$("APC_TYPECODE")
-	find record (apc_typecode_dev,key=firm_id$+"A"+callpoint!.getUserInput(),err=*next)apc_typecode$
-rem	if cvs(apc_typecode$,2)<>""
-rem		user_tpl.dflt_dist_code$=apc_typecode.ap_dist_code$
-rem	endif
+
+[[APM_VENDHIST.BTBL]]
+rem --- Retrieve parameter data
+
+	aps01_dev=fnget_dev("APS_PARAMS")
+	dim aps01a$:fnget_tpl$("APS_PARAMS")
+	aps01a_key$=firm_id$+"AP00"
+	find record (aps01_dev,key=aps01a_key$,err=std_missing_params) aps01a$ 
+
+rem -- store info needed for validation, etc., in user_tpl$
+	dim user_tpl$:"multi_types:c(1),multi_dist:c(1),ret_flag:c(1),dflt_ap_type:c(2),dflt_dist_code:c(2)"
+	user_tpl.multi_types$=aps01a.multi_types$
+	user_tpl.multi_dist$=aps01a.multi_dist$
+	user_tpl.ret_flag$=aps01a.ret_flag$
+ 	user_tpl.dflt_ap_type$=aps01a.ap_type$
+	user_tpl.dflt_dist_code$=aps01a.ap_dist_code$
+
+rem --- if not using multi AP types, disable access to AP Type and get default distribution code
+
+	if user_tpl.multi_types$<>"Y"
+		callpoint!.setTableColumnAttribute("APM_VENDHIST.AP_TYPE","PVAL",$22$+user_tpl.dflt_ap_type$+$22$)
+
+		rem --- get default distribution code	
+		apc_typecode_dev=fnget_dev("APC_TYPECODE")
+		dim apc_typecode$:fnget_tpl$("APC_TYPECODE")
+		find record (apc_typecode_dev,key=firm_id$+"A"+user_tpl.dflt_ap_type$,err=*next)apc_typecode$
+		if cvs(apc_typecode$,2)<>""
+			user_tpl.dflt_dist_code$=apc_typecode.ap_dist_code$
+		endif
+
+		rem --- if not using multi distribution codes, initialize and disable Distribution Code
+		if user_tpl.multi_dist$<>"Y"
+			callpoint!.setTableColumnAttribute("APM_VENDHIST.AP_DIST_CODE","PVAL",$22$+user_tpl.dflt_dist_code$+$22$)
+		endif
+	endif
+
+[[APM_VENDHIST.GL_ACCOUNT.AVAL]]
+rem "GL INACTIVE FEATURE"
+   glm01_dev=fnget_dev("GLM_ACCT")
+   glm01_tpl$=fnget_tpl$("GLM_ACCT")
+   dim glm01a$:glm01_tpl$
+   glacctinput$=callpoint!.getUserInput()
+   glm01a_key$=firm_id$+glacctinput$
+   find record (glm01_dev,key=glm01a_key$,err=*break) glm01a$
+   if glm01a.acct_inactive$="Y" then
+      call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
+      msg_id$="GL_ACCT_INACTIVE"
+      dim msg_tokens$[2]
+      msg_tokens$[1]=fnmask$(glm01a.gl_account$(1,gl_size),m0$)
+      msg_tokens$[2]=cvs(glm01a.gl_acct_desc$,2)
+      gosub disp_message
+      callpoint!.setStatus("ACTIVATE-ABORT")
+   endif
+
+[[APM_VENDHIST.PAYMENT_GRP.AVAL]]
+if callpoint!.getUserInput()=""
+	callpoint!.setUserInput("  ")
+	callpoint!.setStatus("REFRESH")
+endif
+
 [[APM_VENDHIST.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
 disable_fields:
@@ -201,3 +308,6 @@ display_default_rec:
 return
 
 #include [+ADDON_LIB]std_missing_params.aon
+
+
+
