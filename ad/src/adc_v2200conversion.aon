@@ -97,7 +97,7 @@ rem --- For version 22.00, initialize IRS1099_TYPE_BOX field in APM_VENDHIST
                     if apmVendHist.firm_id$+apmVendHist.vendor_id$<>apmVendHist_key$ then break
                     if apmVendMast.vendor_1099$="Y" then
                         rem --- Currently using 1099-MISC form
-                        apmVendHist.irs1099_type_box$="M"
+                        apmVendHist.irs1099_type_box$="MISC"
                     else
                         rem --- Currently not using a 1099 form
                         apmVendHist.irs1099_type_box$="X"
