@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendhist">D879CB11C862689876536F5DAEAA40A8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendhist">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendhist">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20220223</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20220223</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">121500</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20220228</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20220228</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">084732</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendhist"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apm_vendhist">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendhist"></DD_ATTR_DKNM>
@@ -3098,26 +3098,116 @@
 		<RECORD id="ddm_element_ldat.irs1099_type_box02">
 			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box02">IRS1099_TYPE_BOX</DD_DATA_NAME>
 			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box02">02</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box02">DIV</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box02">Form 1099 Dividends and Distributions</DD_ATTR_LDAT_DS>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box02">DIV1</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box02">1099-DIV: Ordinary Dividend</DD_ATTR_LDAT_DS>
 		</RECORD>
 		<RECORD id="ddm_element_ldat.irs1099_type_box03">
 			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box03">IRS1099_TYPE_BOX</DD_DATA_NAME>
 			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box03">03</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box03">INT</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box03">Form 1099 Interest</DD_ATTR_LDAT_DS>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box03">DIV2</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box03">1099-DIV: Qualified Dividend</DD_ATTR_LDAT_DS>
 		</RECORD>
 		<RECORD id="ddm_element_ldat.irs1099_type_box04">
 			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box04">IRS1099_TYPE_BOX</DD_DATA_NAME>
 			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box04">04</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box04">MISC</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box04">Form 1099 Miscellaneous Income</DD_ATTR_LDAT_DS>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box04">DIV3</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box04">1099-DIV: Capital Gain Distribution</DD_ATTR_LDAT_DS>
 		</RECORD>
 		<RECORD id="ddm_element_ldat.irs1099_type_box05">
 			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box05">IRS1099_TYPE_BOX</DD_DATA_NAME>
 			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box05">05</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box05">NEC</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box05">Form 1099 Nonemloyee Compensation</DD_ATTR_LDAT_DS>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box05">DIV4</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box05">1099-DIV: Unrecap Sec 1250 Gain</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box06">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box06">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box06">06</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box06">DIV5</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box06">1099-DIV: Nondividend Distribution</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box07">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box07">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box07">07</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box07">INT1</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box07">1099-INT: Interest</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box08">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box08">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box08">08</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box08">MISC1</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box08">1099-MISC: Rent</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box09">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box09">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box09">09</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box09">MISC2</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box09">1099-MISC: Royalty</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box10">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box10">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box10">10</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box10">MISC3</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box10">1099-MISC: Other Income</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box11">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box11">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box11">11</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box11">MISC4</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box11">1099-MISC: Fishing Boat Proceeds</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box12">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box12">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box12">12</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box12">MISC5</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box12">1099-MISC: Medical and Health Care Pay</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box13">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box13">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box13">13</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box13">MISC6</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box13">1099-MISC: Substitute Payments</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box14">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box14">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box14">14</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box14">MISC7</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box14">1099-MISC: Crop Insurance</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box15">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box15">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box15">15</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box15">MISC8</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box15">1099-MISC: Gross Proceeds to Attorney</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box16">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box16">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box16">16</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box16">MISC9</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box16">1099-MISC: Fish Purchased for Resale</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box17">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box17">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box17">17</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box17">MISC10</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box17">1099-MISC: Section 409A Deferrals</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box18">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box18">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box18">18</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box18">MISC11</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box18">1099-MISC: Golden Parachute</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box19">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box19">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box19">19</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box19">MISC12</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box19">1099-MISC: NonQualified Deferred Comp</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.irs1099_type_box20">
+			<DD_DATA_NAME id="ddm_element_ldat.irs1099_type_box20">IRS1099_TYPE_BOX</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.irs1099_type_box20">20</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.irs1099_type_box20">NEC1</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.irs1099_type_box20">1099-NEC: Nonemployee Compensation</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_drill_defs">
