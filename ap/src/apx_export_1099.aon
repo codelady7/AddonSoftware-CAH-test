@@ -6,6 +6,9 @@ rem --- AddonSoftware Version 8.0.0 - 01Jan2007
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem --- All Rights Reserved
 
+    use java.util.HashMap
+    use java.util.Properties
+
     setesc std_error
     seterr std_error
 
@@ -65,27 +68,28 @@ rem --- Parameters
 
 rem --- Init Data
 
-    more=1
     dim msgs$[5],msg_tokens$[3]
     m1$="#######.00-"
     phonem$="XXX-XXX-XXXX"
     sysyear$=aps01a.cur_1099_yr$
-    ten99file$="ap1099data_"+firm_id$+"_"+sysyear$+".txt"
+    ten99file$="ap1099?_"+firm_id$+"_"+sysyear$+".txt"
     clientfile$="apclient_"+firm_id$+"_"+sysyear$+".txt"
+    formTypes! = new Properties()
+    formTypes!.setProperty("DIV","")
+    formTypes!.setProperty("INT","")
+    formTypes!.setProperty("MISC","")
+    formTypes!.setProperty("NEC","")
 
     gosub init_client; rem "Initialize export variables
 
 rem --- Display file information
 
-    while more
-        msg_id$="1099_EXPORT_NOTE"
-        msg_tokens$[1]=firm_id$
-        msg_tokens$[2]=export_path$+clientfile$
-        msg_tokens$[3]=export_path$+ten99file$
-        gosub disp_message
-        if msg_opt$="N" exitto std_exit_no_update
-        if msg_opt$="Y" break
-    wend    
+    msg_id$="1099_EXPORT_NOTE"
+    msg_tokens$[1]=firm_id$
+    msg_tokens$[2]=export_path$+clientfile$
+    msg_tokens$[3]=export_path$+ten99file$
+    gosub disp_message
+    if msg_opt$="N" then goto std_exit_no_update
 
 rem --- Check for company phone number
 
@@ -97,17 +101,49 @@ rem --- Check for company phone number
 
 start_export:
 
+rem --- Get list of 1099 Forms this company is using
+    read(apm02_dev,key=firm_id$,dom=*next)
+    while 1
+        readrecord(apm02_dev,end=*break)apm02a$
+        if apm02a.firm_id$<>firm_id$ then break
+        if cvs(apm02a.irs1099_type_box$,2)="X" then continue
+
+        iter!=formTypes!.keySet().iterator()
+        while iter!.hasNext()
+            typeKey$=iter!.next()
+            if pos(typeKey$=apm02a.irs1099_type_box$) then
+                typeBoxes$=formTypes!.getProperty(typeKey$)
+                type_box$=apm02a.irs1099_type_box$
+                if pos(type_box$+";"=typeBoxes$)=0 then
+                    typeBoxes$=typeBoxes$+type_box$+";"
+                    formTypes!.setProperty(typeKey$,typeBoxes$)
+                endif
+            endif
+        wend
+    wend
 
 rem --- Initialize the text export files
 
-    erase export_path$+ten99file$,err=*next
     erase export_path$+clientfile$,err=*next; rem "'Client' equates to Employer
-    string export_path$+ten99file$
     string export_path$+clientfile$
-    ten99_dev=unt
-    open (ten99_dev,isz=-1,err=open_error)export_path$+ten99file$
     client_dev=unt
     open (client_dev,isz=-1,err=open_error)export_path$+clientfile$
+
+    formDevs! = new HashMap()
+    ten99file!=ten99file$
+    iter!=formTypes!.keySet().iterator()
+    while iter!.hasNext()
+        formKey$=iter!.next()
+        typeBoxes$=formTypes!.getProperty(formKey$)
+        if typeBoxes$="" then continue
+        
+        fileName$=ten99file!.replace("?",formKey$)
+        erase export_path$+fileName$,err=*next
+        string export_path$+fileName$
+        ten99_dev=unt
+        open (ten99_dev,isz=-1,err=open_error)export_path$+fileName$
+        formDevs!.put(formKey$,ten99_dev)
+    wend
     goto fix_fed
 
 open_error: rem --- Error on open of text files
@@ -207,7 +243,7 @@ rem --- Write to Client export file
 rem --- Now do 1099 file
 
     call pgmdir$+"adc_progress.aon","NC","","","","",0,apm01_dev,1,meter_num,status
-    while more
+    while 1
         gosub init_1099; rem "Init text file variables
         k$=key(apm01_dev,end=*break)
         if k$(1,2)<>firm_id$ break
@@ -218,88 +254,174 @@ rem --- Now do 1099 file
         optional_acct_num$=fnmask$(apm01a.vendor_id$(1,vendor_size),m0$)
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
 
-rem --- Accumulate
+rem --- Accumulate payments
 
-        read (apm02_dev,key=k$,dom=*next)
-        curr_calendar_paymts=0
+        rem --- Must handle multiple boxes being used for the same 1099 type
+        iter!=formTypes!.keySet().iterator()
+        while iter!.hasNext()
+            formKey$=iter!.next()
+            typeBoxes$=formTypes!.getProperty(formKey$)
+            if typeBoxes$="" then continue
+            boxAmts! = new HashMap()
 
-rem --- Get vendor detail
+            while len(typeBoxes$)
+                type_box$=typeBoxes$(1,pos(";"=typeBoxes$)-1)
+                typeBoxes$=typeBoxes$(pos(";"=typeBoxes$)+1)
+            
+                curr_calendar_paymts=0
+                read (apm02_dev,key=k$,dom=*next)
+                while 1
+                    apm02_k$=key(apm02_dev,end=*break)
+                    if apm02_k$(1,8)<>k$ break
+                    readrecord(apm02_dev,end=*break)apm02a$
+                    if apm02a.firm_id$+apm02a.vendor_id$<>k$ then continue
+                    if apm02a.irs1099_type_box$<>type_box$ then continue
+                    curr_calendar_paymts=curr_calendar_paymts+apm02a.cur_cal_pmts
+                wend    
 
-        while more
-            apm02_k$=key(apm02_dev,end=*break)
-            if apm02_k$(1,8)<>k$ break
-            read record (apm02_dev) apm02a$
-            curr_calendar_paymts=curr_calendar_paymts+apm02a.cur_cal_pmts
-        wend    
-
+                if curr_calendar_paymts<minimum continue
+                boxAmts!.put(cvs(type_box$,2),curr_calendar_paymts)
+            wend
+    
 rem --- Assign export variables
 
-        if curr_calendar_paymts<minimum continue
-        nonemployee_compensation=curr_calendar_paymts
+            iter!=boxAmts!.keySet().iterator()
+            while iter!.hasNext()
+                type_box$=iter!.next()
 
+                if type_box$="DIV1" then ordinary_dividends=boxAmts!.getProperty(type_box$)
+                if type_box$="DIV2" then qualified_dividends=boxAmts!.getProperty(type_box$)
+                if type_box$="DIV3" then cap_gain_distributions=boxAmts!.getProperty(type_box$)
+                if type_box$="DIV4" then unrecaptured_1250_gain=boxAmts!.getProperty(type_box$)
+                if type_box$="DIV5" then nondividend_distribution=boxAmts!.getProperty(type_box$)
+
+                if type_box$="INT1" then interest_income=boxAmts!.getProperty(type_box$)
+
+                if type_box$="MISC1" then rents=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC2" then royalties=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC3" then other_income=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC4" then fishing_boat_proceeds=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC5" then medical_health_care=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC6" then substitute_payments=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC7" then crop_insurance_proceeds=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC8" then gross_paid_to_attorney=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC9" then fish_purchased_for_resale=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC10" then section_409_deferrals=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC11" then golden_parachute_payments=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC12" then nonqualified_deferred_compensation=boxAmts!.getProperty(type_box$)
+    
+                if type_box$="NEC1" then nonemployee_compensation=boxAmts!.get(type_box$)
+            wend
+    
 rem --- Fix Up Fed ID Number (Strip out all but the 9 digits)
-
-        tmp_fedid$=cvs(apm01a.federal_id$,2)
-        taxpayer_id$=""
-        tin_type$="N/A"
-        if len(tmp_fedid$)=0 goto address
-        tin_type$="EIN"
-        for i=1 to len(tmp_fedid$)
-            if tmp_fedid$(i,1)>="0" and tmp_fedid$(i,1)<="9" taxpayer_id$=taxpayer_id$+tmp_fedid$(i,1)
-        next i
-        taxpayer_id$=pad(taxpayer_id$,9)
-
+    
+            tmp_fedid$=cvs(apm01a.federal_id$,2)
+            taxpayer_id$=""
+            tin_type$="N/A"
+            if len(tmp_fedid$)=0 goto address
+            tin_type$="EIN"
+            for i=1 to len(tmp_fedid$)
+                if tmp_fedid$(i,1)>="0" and tmp_fedid$(i,1)<="9" taxpayer_id$=taxpayer_id$+tmp_fedid$(i,1)
+            next i
+            taxpayer_id$=pad(taxpayer_id$,9)
+    
 address: rem --- Address
-
-        street_addr1$=fndequote$(apm01a.addr_line_1$)
-        street_addr2$=fndequote$(apm01a.addr_line_2$)
-        city$=fndequote$(apm01a.city$)
-        state$=apm01a.state_code$
-        zip$=apm01a.zip_code$
-
+    
+            street_addr1$=fndequote$(apm01a.addr_line_1$)
+            street_addr2$=fndequote$(apm01a.addr_line_2$)
+            city$=fndequote$(apm01a.city$)
+            state$=apm01a.state_code$
+            zip$=apm01a.zip_code$
+    
 rem --- Write record. Loop up for next Vendor
-
-        rec$=rec$+$22$+name_line_1$+$22$
-        rec$=rec$+","+$22$+name_line_2$+$22$
-        rec$=rec$+","+$22$+street_addr1$+$22$
-        rec$=rec$+","+$22$+street_addr2$+$22$
-        rec$=rec$+","+$22$+city$+$22$
-        rec$=rec$+","+$22$+state$+$22$
-        rec$=rec$+","+$22$+zip$+$22$
-        rec$=rec$+","+$22$+usps_delivery_point$+$22$
-        rec$=rec$+","+$22$+foreign_addr_flag$+$22$
-        rec$=rec$+","+$22$+foreign_postal_code$+$22$
-        rec$=rec$+","+$22$+tin_type$+$22$
-        rec$=rec$+","+$22$+taxpayer_id$+$22$
-        rec$=rec$+","+$22$+name_control$+$22$
-        rec$=rec$+","+$22$+optional_acct_num$+$22$
-        rec$=rec$+","+$22$+cfsp_code$+$22$
-        rec$=rec$+","+$22$+second_tin_notice_flag$+$22$
-        rec$=rec$+","+$22$+fatca_filing_req_flag$+$22$
-        rec$=rec$+","+str(rents)
-        rec$=rec$+","+str(royalties)
-        rec$=rec$+","+str(other_income)
-        rec$=rec$+","+str(fed_income_tax_withheld)
-        rec$=rec$+","+str(fishing_boat_proceeds)
-        rec$=rec$+","+str(medical_health_care)
-        rec$=rec$+","+$22$+direct_sales_flag$+$22$
-        rec$=rec$+","+str(substitute_payments)
-        rec$=rec$+","+str(crop_insurance_proceeds)
-        rec$=rec$+","+str(gross_paid_to_attorney)
-        rec$=rec$+","+str(fish_purchased_for_resale)
-        rec$=rec$+","+str(section_409_deferrals)
-        rec$=rec$+","+str(golden_parachute_payments)   
-        rec$=rec$+","+str(nonqualified_deferred_compensation)        
-        rec$=rec$+","+$22$+state1$+$22$
-        rec$=rec$+","+str(state1_income)
-        rec$=rec$+","+str(state1_tax_withheld)
-        rec$=rec$+","+$22$+state2$+$22$
-        rec$=rec$+","+str(state2_income)
-        rec$=rec$+","+str(state2_tax_withheld)
-        rec$=rec$+","+$22$+do_not_print_indicator$+$22$
-        rec$=rec$+","+$22$+email_address$+$22$
-        rec$=rec$+","+$22$+idms$+$22$
-        print (ten99_dev)rec$,$0D0A$,
+    
+            rec$=rec$+$22$+name_line_1$+$22$
+            rec$=rec$+","+$22$+name_line_2$+$22$
+            rec$=rec$+","+$22$+street_addr1$+$22$
+            rec$=rec$+","+$22$+street_addr2$+$22$
+            rec$=rec$+","+$22$+city$+$22$
+            rec$=rec$+","+$22$+state$+$22$
+            rec$=rec$+","+$22$+zip$+$22$
+            rec$=rec$+","+$22$+usps_delivery_point$+$22$
+            rec$=rec$+","+$22$+foreign_addr_flag$+$22$
+            rec$=rec$+","+$22$+foreign_postal_code$+$22$
+            rec$=rec$+","+$22$+tin_type$+$22$
+            rec$=rec$+","+$22$+taxpayer_id$+$22$
+            rec$=rec$+","+$22$+name_control$+$22$
+            rec$=rec$+","+$22$+optional_acct_num$+$22$
+            rec$=rec$+","+$22$+cfsp_code$+$22$
+            rec$=rec$+","+$22$+second_tin_notice_flag$+$22$
+            if formkey$<>"NEC" then rec$=rec$+","+$22$+fatca_filing_req_flag$+$22$
+            if formkey$="DIV" then
+                rec$=rec$+","+str(ordinary_dividends)
+                rec$=rec$+","+str(qualified_dividends)
+                rec$=rec$+","+str(cap_gain_distributions)
+                rec$=rec$+","+str(unrecaptured_1250_gain)
+                rec$=rec$+","+str(section_1202_gain)
+                rec$=rec$+","+str(collectibles_gain)
+                rec$=rec$+","+str(section_897_ordinary_dividends)
+                rec$=rec$+","+str(section_897_cap_gain)
+                rec$=rec$+","+str(nondividend_distribution)
+                rec$=rec$+","+str(fed_income_tax_withheld)
+                rec$=rec$+","+str(section_199A_dividends)
+                rec$=rec$+","+str(investment_expenses)
+                rec$=rec$+","+str(foreign_tax_paid)
+                rec$=rec$+","+$22$+foreign_country$+$22$
+                rec$=rec$+","+str(cash_liquidation_dist)
+                rec$=rec$+","+str(noncash_liquidation_dist)
+                rec$=rec$+","+str(exempt_dividends)
+                rec$=rec$+","+str(private_activity_bond_dividends)
+            endif
+            if formkey$="INT" then
+                rec$=rec$+","+str(interest_income)
+                rec$=rec$+","+str(early_withdraw_penalty)
+                rec$=rec$+","+str(US_savings_bond_interest)
+                rec$=rec$+","+str(fed_income_tax_withheld)
+                rec$=rec$+","+str(investment_expenses)
+                rec$=rec$+","+str(foreign_tax_paid)
+                rec$=rec$+","+$22$+foreign_country$+$22$
+                rec$=rec$+","+str(exempt_interest)
+                rec$=rec$+","+str(private_activity_bond_interest)
+                rec$=rec$+","+str(market_discount)
+                rec$=rec$+","+str(bond_premium)
+                rec$=rec$+","+str(Treasury_obligation_bond_premium)
+                rec$=rec$+","+str(tax_exempt_bond_premium)
+                rec$=rec$+","+$22$+tax_exempt_bond_CUSIP$+$22$
+            endif
+            if formkey$="MISC" then
+                rec$=rec$+","+str(rents)
+                rec$=rec$+","+str(royalties)
+                rec$=rec$+","+str(other_income)
+                rec$=rec$+","+str(fed_income_tax_withheld)
+                rec$=rec$+","+str(fishing_boat_proceeds)
+                rec$=rec$+","+str(medical_health_care)
+                rec$=rec$+","+$22$+direct_sales_flag$+$22$
+                rec$=rec$+","+str(substitute_payments)
+                rec$=rec$+","+str(crop_insurance_proceeds)
+                rec$=rec$+","+str(gross_paid_to_attorney)
+                rec$=rec$+","+str(fish_purchased_for_resale)
+                rec$=rec$+","+str(section_409_deferrals)
+                rec$=rec$+","+str(golden_parachute_payments)   
+                rec$=rec$+","+str(nonqualified_deferred_compensation)
+            endif       
+            if formkey$="NEC" then
+                rec$=rec$+","+str(nonemployee_compensation)
+                rec$=rec$+","+$22$+direct_sales_indicator$+$22$
+                rec$=rec$+","+str(fed_income_tax_withheld)
+            endif
+            rec$=rec$+","+$22$+state1$+$22$
+            if formkey$="MISC" or formkey$="NEC" then rec$=rec$+","+str(state1_income)
+            rec$=rec$+","+str(state1_tax_withheld)
+            rec$=rec$+","+$22$+state2$+$22$
+            if formkey$="MISC" or formkey$="NEC" then rec$=rec$+","+str(state2_income)
+            rec$=rec$+","+str(state2_tax_withheld)
+            rec$=rec$+","+$22$+do_not_print_indicator$+$22$
+            rec$=rec$+","+$22$+email_address$+$22$
+            rec$=rec$+","+$22$+idms$+$22$
+    
+            ten99_dev=formDevs!.get(formKey$)
+            print (ten99_dev)rec$,$0D0A$,
+        wend
     wend
     
     if client_dir$<>"" then
@@ -381,6 +503,34 @@ init_1099: rem --- Init variables for 1099 text file
     cfsp_code$=""
     second_tin_notice_flag$=""
     fatca_filing_req_flag$=""
+    ordinary_dividends=0
+    qualified_dividends=0
+    cap_gain_distributions=0
+    unrecaptured_1250_gain=0
+    section_1202_gain=0
+    collectibles_gain=0
+    section_897_ordinary_dividends=0
+    section_897_cap_gain=0
+    nondividend_distribution=0
+    fed_income_tax_withheld=0
+    section_199A_dividends=0
+    investment_expenses=0
+    foreign_tax_paid=0
+    foreign_country$=""
+    cash_liquidation_dist=0
+    noncash_liquidation_dist=0
+    exempt_dividends=0
+    private_activity_bond_dividends=0
+    interest_income=0
+    early_withdraw_penalty=0
+    US_savings_bond_interest=0
+    exempt_interest=0
+    private_activity_bond_interest=0
+    market_discount=0
+    bond_premium=0
+    Treasury_obligation_bond_premium=0
+    tax_exempt_bond_premium=0
+    tax_exempt_bond_CUSIP$=""
     rents=0
     royalties=0
     other_income=0
@@ -395,6 +545,8 @@ init_1099: rem --- Init variables for 1099 text file
     section_409_deferrals=0
     golden_parachute_payments=0
     nonqualified_deferred_compensation=0
+    nonemployee_compensation=0
+    direct_sales_indicator$=""
     state1$=""
     state1_income=0
     state1_tax_withheld=0
