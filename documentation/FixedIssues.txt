@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-02-17
+ Report Date:   2022-03-01
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -106,3 +106,12 @@ Modified: data/cdf/are_deposit.cdf
 Modified: data/sync/ads_messages~[01007514AR].xml
 Deleted: data/sync/ads_messages~ar_deposit_status_r.xml
 
+=======================================================================================================================================
+Revision: 01847f8985943d9f40ea6f9a263966ef0c94857b
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 3/1/2022 9:30:12 AM
+Message:
+Bug 10373: Adjusted field positions on Fiscal Calendar form to make room
+to display the complete field labels.
+----
+Modified: data/bar/gls_calendar.xml
