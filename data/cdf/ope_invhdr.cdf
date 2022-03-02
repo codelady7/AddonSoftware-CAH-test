@@ -2247,14 +2247,11 @@ rem --- Initialize RTP modified fields for modified existing records
 	endif
 
 [[OPE_INVHDR.CUSTOMER_ID.AINP]]
-print "Hdr:CUSTOMER_ID.AINP"; rem debug
-
 rem --- If cash customer, get correct customer number
 
 	if user_tpl.cash_sale$="Y" and cvs(callpoint!.getUserInput(),1+2+4)="C" then
-		callpoint!.setColumnData("OPE_INVHDR.CUSTOMER_ID", user_tpl.cash_cust$)
+		callpoint!.setColumnData("OPE_INVHDR.CUSTOMER_ID", user_tpl.cash_cust$,1)
 		callpoint!.setColumnData("OPE_INVHDR.CASH_SALE", "Y")
-		callpoint!.setStatus("REFRESH")
 	endif
 
 [[OPE_INVHDR.CUSTOMER_ID.AVAL]]
