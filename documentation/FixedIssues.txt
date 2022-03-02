@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-03-01
+ Report Date:   2022-03-02
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -115,3 +115,14 @@ Bug 10373: Adjusted field positions on Fiscal Calendar form to make room
 to display the complete field labels.
 ----
 Modified: data/bar/gls_calendar.xml
+
+=======================================================================================================================================
+Revision: 40ce0f0acc2bb3cfa5ff4e25b4e1bc61a2d3637f
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 3/2/2022 11:12:04 AM
+Message:
+Bug 10376: Converted a Customer ID entry of "C" to the Cash Customer ID
+set in OP Parameters when OP using Cash Sales.
+----
+Modified: data/bar/ope_invhdr.xml
+Modified: data/cdf/ope_invhdr.cdf
