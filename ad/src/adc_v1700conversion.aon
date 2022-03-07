@@ -745,6 +745,7 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
             if convCtrl!.getProperty(task$)<>"Completed" then
                 rem --- Data upgraded via EM Update Wizard (OCJ)
                 rem --- Need to build re-purposed GLS_CALENDAR from old GLS_PARAMS
+                rem --- In v22, CAL_START_DATE and PER_ENDING_nn fields in GLS_CALENDAR replaced with new START_DATE and PERIOD_END_nn fields                
                 oldStbl$="+GLDATA"
                 oldFile$="gls_params"
                 gosub get_path_to_old_file
@@ -790,6 +791,7 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                     endif
        
                     rem --- Copy calendar info in old GLS_PARAMS to new re-purposed GLS_CALENDAR
+                    rem --- For v22, initialize new START_DATE and PERIOD_END_nn fields from CAL_START_DATE and PER_ENDING_nn fields in the old GLS_CALENDAR
                     read(admFirms_dev,key="",dom=*next)
                     while 1
                         readrecord(admFirms_dev,end=*break)admFirms$
@@ -801,8 +803,23 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                         glsCalendar.firm_id$=old_glsParams_tpl.firm_id$
                         glsCalendar.year$=old_glsParams_tpl.current_year$
                         glsCalendar.total_pers$=old_glsParams_tpl.total_pers$
-                        glsCalendar.cal_start_date$=""
+                        glsCalendar.start_date$=""
+
+                        rem --- Calculate calendar start date based on last date of last period.
+                        calendar_year=num(glsCalendar.year$)-1
                         total_pers=num(glsCalendar.total_pers$)
+                        enddateMMDD$=field(old_glsParams_tpl$,"per_ending_"+str(total_pers:"00"))
+                        if enddateMMDD$<old_glsParams_tpl.per_ending_01$ then calendar_year=calendar_year+1
+                        rem --- Adjust last day of February for leap year
+                        if enddateMMDD$(1,2)="02" then
+                            if enddateMMDD$(3,2)="29" and !Calendar!.isLeapYear(calendar_year) then enddateMMDD$(3,2)="28"
+                            if enddateMMDD$(3,2)="28" and Calendar!.isLeapYear(calendar_year) then enddateMMDD$(3,2)="29"
+                        endif
+                        julian=jul(calendar_year,num(enddateMMDD$(1,2)),num(enddateMMDD$(3,2)))+1
+                        startdate$=date(julian:"%Yl%Mz%Dz")
+                        glsCalendar.start_date$=startdate$
+                        calendarYear$=startdate$(1,4)
+
                         for i=1 to total_pers
                             period_name$="period_name_"+str(i:"00")
                             field glsCalendar$,period_name$=field(old_glsParams_tpl$,period_name$)
@@ -813,7 +830,19 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                         next i
                         for i=1 to total_pers
                             per_ending$="per_ending_"+str(i:"00")
-                            field glsCalendar$,per_ending$=field(old_glsParams_tpl$,per_ending$)
+                            value$=field(old_glsParams_tpl$,per_ending$)
+                            if len(cvs(value$,3)) then
+                                value$=calendarYear$+value$
+                            else
+                                value$=pad("",8)
+                            endif
+                            period_end$="period_end_"+str(i:"00")
+                            field glsCalendar$,period_end$=value$
+                            rem --- Increment the year when new calendar year starts.
+                            if i>1 and cvs(value$,2)<>"" and value$<field(glsCalendar$,"PERIOD_END_01") then
+                                rem --- The current period end is less than the first peiod end, so it's in the next year.
+                                field glsCalendar$,period_end$=str(num(value$(1,4))+1)+value$(5)
+                            endif
                         next i
                         for i=1 to total_pers
                             locked_flag$="locked_flag_"+str(i:"00")
@@ -823,19 +852,6 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                             locked_date$="locked_date_"+str(i:"00")
                             field glsCalendar$,locked_date$=field(old_glsParams_tpl$,locked_date$)
                         next i
-    
-                        rem --- Calculate calendar start date based on last date of last period.
-                        calendar_year=num(glsCalendar.year$)-1
-                        begdate$=field(glsCalendar$,"per_ending_"+str(total_pers:"00"))
-                        if begdate$(1,4)<glsCalendar.per_ending_01$ then calendar_year=calendar_year+1
-                        rem --- Adjust last day of February for leap year
-                        if begdate$(1,2)="02" then
-                            if begdate$(3,2)="29" and !Calendar!.isLeapYear(calendar_year) then begdate$(3,2)="28"
-                            if begdate$(3,2)="28" and Calendar!.isLeapYear(calendar_year) then begdate$(3,2)="29"
-                        endif
-                        julian=jul(calendar_year,num(begdate$(1,2)),num(begdate$(3,2)))+1
-                        begdate$=date(julian:"%Yl%Mz%Dz")
-                        glsCalendar.cal_start_date$=begdate$(5)
     
                         rem --- Write new GLS_CALENDAR record
                         glsCalendar$=field(glsCalendar$)
@@ -884,7 +900,7 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                 if glsParams.gl$+glsParams.sequence_00$<>"GL00" then continue
                 prior_yr$=str(num(glsParams.current_year$)-1)
                 gl_yr_closed$=glsParams.gl_yr_closed$
-                if gl_yer_close$<>"Y" then prior_yr$=str(num(prior_yr$)-1)
+                if gl_yr_closed$<>"Y" then prior_yr$=str(num(prior_yr$)-1)
                 
                 rem --- Copy current fiscal year's calendar only if there are no GLT_TRANSDETAIL transactions for the prior year.
                 read(gltTransdetail_dev,key=glsParams.firm_id$+prior_yr$,knum="BY_TRANS_DATE",dom=*next)
@@ -899,29 +915,28 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                 endif
                 rem --- Do NOT have GLT_TRANSDETAIL transactions, so copy current fiscal year's calendar.
                 readrecord(glsCalendar_dev,key=glsParams.firm_id$+glsParams.current_year$,dom=*continue)glsCalendar$
-                total_pers=num(glsCalendar.total_pers$)
                 glsCalendar.year$=prior_yr$
     
                 rem --- Adjust last day of February for leap year
-                calendar_year=num(glsCalendar.year$)
                 total_pers=num(glsCalendar.total_pers$)
                 for i=1 to total_pers
-                    per_ending$="per_ending_"+str(i:"00")
-                    enddate$=field(glsCalendar$,per_ending$)
-                    if enddate$(1,2)="02" then
-                        if enddate$(1,2)<glsCalendar.per_ending_01$(1,2) then calendar_year=calendar_year+1
-                        if enddate$="0229" and !Calendar!.isLeapYear(calendar_year) then field glsCalendar$,per_ending$="0228"
-                        if enddate$="0228" and Calendar!.isLeapYear(calendar_year) and glsParams.adjust_february then field glsCalendar$,per_ending$="0229"
+                    period_end$="period_end_"+str(i:"00")
+                    enddateYYYYMMDD$=field(glsCalendar$,period_end$)
+                    priorYear$=str(num(enddateYYYYMMDD$(1,4))-1:"0000")
+                    if enddateYYYYMMDD$(5,2)="02" then
+                        if enddateYYYYMMDD$(5)="0229" and !Calendar!.isLeapYear(num(priorYear$)) then field glsCalendar$,period_end$=priorYear$+"0228"
+                        if enddateYYYYMMDD$(5)="0228" and Calendar!.isLeapYear(num(priorYear$)) and glsParams.adjust_february then field glsCalendar$,period_end$=priorYear$+"0229"
                     endif
+                    field glsCalendar$,period_end$=priorYear$+enddateYYYYMMDD$(5)
                 next i
                 
                 rem --- Calculate calendar start date based on last date of last period.
                 calendar_year=num(glsCalendar.year$)-1
-                begdate$=field(glsCalendar$,"per_ending_"+str(total_pers:"00"))
-                if begdate$(1,4)<glsCalendar.per_ending_01$ then calendar_year=calendar_year+1
-                julian=jul(calendar_year,num(begdate$(1,2)),num(begdate$(3,2)))+1
-                begdate$=date(julian:"%Yl%Mz%Dz")
-                glsCalendar.cal_start_date$=begdate$(5)
+                enddateYYYYMMDD$=field(glsCalendar$,"period_end_"+str(total_pers:"00"))
+                if enddateYYYYMMDD$(5)<glsCalendar.period_end_01$(5) then calendar_year=calendar_year+1
+                julian=jul(calendar_year,num(enddateYYYYMMDD$(5,2)),num(enddateYYYYMMDD$(7,2)))+1
+                startdate$=date(julian:"%Yl%Mz%Dz")
+                glsCalendar.start_date$=startdate$
     
                 rem --- Set or clear locked periods in prior year's fiscal calendar
                 if gl_yr_closed$="Y" then
@@ -985,7 +1000,7 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                 if glsParams.gl$+glsParams.sequence_00$<>"GL00" then continue
                 next_yr$=str(num(glsParams.current_year$)+1)
                 gl_yr_closed$=glsParams.gl_yr_closed$
-                if gl_yer_close$<>"Y" then next_yr$=str(num(next_yr$)-1)
+                if gl_yr_closed$<>"Y" then next_yr$=str(num(next_yr$)-1)
                 
                 rem --- Copy current fiscal year's calendar only if there are no GLT_TRANSDETAIL transactions for the next year.
                 read(gltTransdetail_dev,key=glsParams.firm_id$+next_yr$,knum="BY_TRANS_DATE",dom=*next)
@@ -1004,25 +1019,24 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                 glsCalendar.year$=next_yr$
     
                 rem --- Adjust last day of February for leap year
-                calendar_year=num(glsCalendar.year$)
                 total_pers=num(glsCalendar.total_pers$)
                 for i=1 to total_pers
-                    per_ending$="per_ending_"+str(i:"00")
-                    enddate$=field(glsCalendar$,per_ending$)
-                    if enddate$(1,2)="02" then
-                        if enddate$(1,2)<glsCalendar.per_ending_01$(1,2) then calendar_year=calendar_year+1
-                        if enddate$="0229" and !Calendar!.isLeapYear(calendar_year) then field glsCalendar$,per_ending$="0228"
-                        if enddate$="0228" and Calendar!.isLeapYear(calendar_year) and glsParams.adjust_february then field glsCalendar$,per_ending$="0229"
+                    period_end$="period_end_"+str(i:"00")
+                    enddateYYYYMMDD$=field(glsCalendar$,period_end$)
+                    nextYear$=str(num(enddateYYYYMMDD$(1,4))+1:"0000")
+                    if enddateYYYYMMDD$(5,2)="02" then
+                        if enddateYYYYMMDD$(5)="0229" and !Calendar!.isLeapYear(num(nextYear$)) then field glsCalendar$,period_end$=nextYear$+"0228"
+                        if enddateYYYYMMDD$(5)="0228" and Calendar!.isLeapYear(num(nextYear$)) and glsParams.adjust_february then field glsCalendar$,period_end$=nextYear$+"0229"
                     endif
+                    field glsCalendar$,period_end$=nextYear$+enddateYYYYMMDD$(5)
                 next i
-                
                 rem --- Calculate calendar start date based on last date of last period.
                 calendar_year=num(glsCalendar.year$)-1
-                begdate$=field(glsCalendar$,"per_ending_"+str(total_pers:"00"))
-                if begdate$(1,4)<glsCalendar.per_ending_01$ then calendar_year=calendar_year+1
-                julian=jul(calendar_year,num(begdate$(1,2)),num(begdate$(3,2)))+1
-                begdate$=date(julian:"%Yl%Mz%Dz")
-                glsCalendar.cal_start_date$=begdate$(5)
+                enddateYYYYMMDD$=field(glsCalendar$,"period_end_"+str(total_pers:"00"))
+                if enddateYYYYMMDD$(5)<glsCalendar.period_end_01$(5) then calendar_year=calendar_year+1
+                julian=jul(calendar_year,num(enddateYYYYMMDD$(5,2)),num(enddateYYYYMMDD$(7,2)))+1
+                startdate$=date(julian:"%Yl%Mz%Dz")
+                glsCalendar.start_date$=startdate$
     
                 rem --- Clear locked periods in next year's fiscal calendar
                 for i=1 to total_pers
@@ -1121,16 +1135,6 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                     open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
                     if open_success then
                         dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
-                        tpl_found=0
-                        findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
-                        if tpl_found then
-                            dim old_glsParams_tpl$:ddm_table_tpls.template$
-                        else
-                            rem --- Required template missing
-                            err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
-:                               " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+oldFile$+" *****"
-                            goto done
-                        endif
                     else
                         rem --- Required file missing
                         msg_id$="AD_FILE_MISSING"
@@ -1166,7 +1170,7 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                             displayColumns!=new DisplayColumns(firm_id$,err=*next); valid_firm=1
                             if !valid_firm then continue
                         endif
-    
+   
                         if displayColumns!.getActBud(old_glm02_tpl.record_id$)="A" then
                             rem --- Actuals, GLM_ACCTSUMMARY
                             redim glmAcctSummary$

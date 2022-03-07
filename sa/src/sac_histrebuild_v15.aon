@@ -37,7 +37,8 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=32,begfile=1,endfile=files
+    files=iff(convCtrl!.getProperty("data_source")="DataPort",33,32)
+    begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="sas_params",ids$[1]="SAS_PARAMS"
     files$[2]="arm-01",ids$[2]="ARM_CUSTMAST"
@@ -71,6 +72,9 @@ rem --- Open/Lock files
     files$[30]="sam_vendor_tot",ids$[30]="SAM_VENDOR_TOT"
     files$[31]="sam_distcode_tot",ids$[31]="SAM_DISTCODE_TOT"
     files$[32]="sam_nonstock_tot",ids$[32]="SAM_NONSTOCK_TOT"
+    
+    if files=33 then files$[33]="gls_calendar",ids$[33]="GLS_CALENDAR"
+    
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
@@ -106,6 +110,8 @@ rem --- Open/Lock files
     sam09tot_dev=channels[30]
     sam10tot_dev=channels[31]
     sam11tot_dev=channels[32]
+    
+    if files=33 then glsCalendar_dev=channels[33]
 
 rem --- Dimension string templates
 
@@ -121,6 +127,8 @@ rem --- Dimension string templates
 :       sam07tot$:templates$[28],sam08tot$:templates$[29],sam09tot$:templates$[30],
 :       sam10tot$:templates$[31],sam11tot$:templates$[32]
 
+    if files=33 then dim glsCalendar$:templates$[33]
+
 rem --- Get types of sales analysis to rebuild
 
     opt_cust$=typeSA!.get("BY_CUSTOMER")
@@ -135,65 +143,72 @@ rem --- Get types of sales analysis to rebuild
     opt_distcode$=typeSA!.get("BY_DIST_CODE")
     opt_nonstock$=typeSA!.get("BY_NONSTOCK")
 
-rem --- Get correct gls_params channel and template for this upgrade
+rem --- Get correct gls_params channel and template for this upgrade in order to get total_pers and per_ending dates
+rem --- If DataPorting, SYS-01/GL00 has already been converted to gls_params and gls_calendar, so will get total_pers/period_end dates from gls_calendar in the init_firm routine
 
-    v17=1
-    tmp$=field(glsParams$,"total_pers",err=*next); v17=0
-    if v17 then
-        rem --- Upgrading to v17 or later, so total_pers and per_ending_xx no longer in gls_params and not
-        rem --- added to gls_calendar yet during this upgrade. Must get from old installation's gls_params.
+    if convCtrl!.getProperty("data_source")<>"DataPort"
+        v17=1
+        tmp$=field(glsParams$,"total_pers",err=*next); v17=0
+        if v17 then
+            rem --- Upgrading to v17 or later, so total_pers and per_ending_xx no longer in gls_params and not
+            rem --- added to gls_calendar yet during this upgrade. Must get from old installation's gls_params.
 
-        oldStbl$="+GLDATA"
-        oldFile$="gls_params"
-        gosub get_path_to_old_file
-        old_glsParams$=oldPathToFile$
-        open_success=0
-        old_glsParams_dev=unt
-        open(old_glsParams_dev,err=*next)old_glsParams$; open_success=1
-        if open_success then
-            rem --- Get record template for old source GLS_PARAMS file
-            ddm_table_tpls$=convCtrl!.getProperty("barista_source")+"/barista/sys/data/ddm_table_tpls.dat"
+            oldStbl$="+GLDATA"
+            oldFile$="gls_params"
+            gosub get_path_to_old_file
+            old_glsParams$=oldPathToFile$
             open_success=0
-            ddm_table_tpls=unt
-            open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
+            old_glsParams_dev=unt
+            open(old_glsParams_dev,err=*next)old_glsParams$; open_success=1
             if open_success then
-                dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
-                tpl_found=0
-                findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
-                if tpl_found then
-                    dim old_glsParams_tpl$:ddm_table_tpls.template$
-                else
-                    rem --- Required template missing
-                    err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
+                rem --- Get record template for old source GLS_PARAMS file
+                ddm_table_tpls$=convCtrl!.getProperty("barista_source")+"/barista/sys/data/ddm_table_tpls.dat"
+                open_success=0
+                ddm_table_tpls=unt                
+                open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
+                if open_success then
+                    dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
+                    tpl_found=0
+                    findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
+                    if tpl_found then
+                        dim old_glsParams_tpl$:ddm_table_tpls.template$
+                    else
+                        rem --- Required template missing
+                        err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
 :                       " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+oldFile$+" *****"
-                    msg_id$="GENERIC_WARN"
+                        msg_id$="GENERIC_WARN"
+                        dim msg_tokens$[1]
+                        msg_tokens$[1]=err_msg$
+                        gosub disp_message
+                        goto done
+                    endif
+
+                    rem --- Get total_pers and per_ending_xx from old installation's gls_params
+                    dim gls01a$:fattr(old_glsParams_tpl$)
+                    gls01_dev=old_glsParams_dev
+                else
+                    rem --- Required file missing
+                    msg_id$="AD_FILE_MISSING"
                     dim msg_tokens$[1]
-                    msg_tokens$[1]=err_msg$
+                    msg_tokens$[1]=ddm_table_tpls$
                     gosub disp_message
                     goto done
                 endif
-
-                rem --- Get total_pers and per_ending_xx from old installation's gls_params
-                dim gls01a$:fattr(old_glsParams_tpl$)
-                gls01_dev=old_glsParams_dev
             else
                 rem --- Required file missing
                 msg_id$="AD_FILE_MISSING"
                 dim msg_tokens$[1]
-                msg_tokens$[1]=ddm_table_tpls$
+                msg_tokens$[1]=old_glsParams$
                 gosub disp_message
                 goto done
             endif
         else
-            rem --- Required file missing
-            msg_id$="AD_FILE_MISSING"
-            dim msg_tokens$[1]
-            msg_tokens$[1]=old_glsParams$
-            gosub disp_message
-            goto done
+            rem --- Upgrading to v15 or v15, so total_pers and per_ending_xx are in existing gls_params
+            dim gls01a$:fattr(glsParams$)
+            gls01_dev=glsParams_dev
         endif
     else
-        rem --- Upgrading to v15 or v15, so total_pers and per_ending_xx are in existing gls_params
+        rem --- DataPorting; use gls_params to get current per/year, then in init_firm routine use gls_calendar to get total_pers/period_end dates
         dim gls01a$:fattr(glsParams$)
         gls01_dev=glsParams_dev
     endif
@@ -696,12 +711,22 @@ init_firm: rem --- Firm specific initializations
     ivprecision=num(ivs01a.precision$)
     precision ivprecision
 
-    rem --- Put this firm's fiscal calendar period end dates in a string array
-    totalPers=num(gls01a.total_pers$)
-    dim periodEndDates$[totalPers]
-    for per=1 to totalPers
-        periodEndDates$[per]=field(gls01a$,"per_ending_"+str(per:"00"))
-    next per
+    rem --- For this firm, get total_pers and put fiscal calendar period end dates in a string array
+    if convCtrl!.getProperty("data_source")<>"DataPort"
+        totalPers=num(gls01a.total_pers$)
+        dim periodEndDates$[totalPers]
+        for per=1 to totalPers
+            periodEndDates$[per]=field(gls01a$,"per_ending_"+str(per:"00"))
+        next per
+    else
+        find record (glsCalendar_dev,key=gls01a.firm_id$+gls01a.current_year$,err=std_missing_params)glsCalendar$
+        totalPers=num(glsCalendar.total_pers$)
+        dim periodEndDates$[totalPers]
+        for per=1 to totalPers
+            periodEndDates$[per]=field(glsCalendar$,"period_end_"+str(per:"00"))(5,4);rem cut down to mmdd from yyyymmdd
+        next per
+
+    endif
 
     rem --- Clear out records from selected files for this firm
     if opt_cust$="Y" then
