@@ -206,6 +206,9 @@ rem --- Using a sales tax service?
 	tax_code$=callpoint!.getColumnData("OPE_INVHDR.TAX_CODE")
 	gosub usingTaxService
 
+rem --- Write Order Addresses file
+	gosub write_address_file
+
 [[OPE_INVHDR.AFMC]]
 rem --- Inits
 
@@ -2124,66 +2127,7 @@ rem --- Has customer and order number been entered?
 	endif
 
 rem --- Write Order Addresses file
-	cust_id$    = callpoint!.getColumnData("OPE_INVHDR.CUSTOMER_ID")
-	order_no$   = callpoint!.getColumnData("OPE_INVHDR.ORDER_NO")
-	invoice_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
-	ordship_dev = fnget_dev("OPE_ORDSHIP")
-
-	rem --- Capture bill-to address
-	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
-	extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$; rem Advisory Locking
-	ordship_tpl.firm_id$     = firm_id$
-	ordship_tpl.customer_id$ = cust_id$
-	ordship_tpl.order_no$    = order_no$
-	ordship_tpl.ar_inv_no$ = invoice_no$
-	ordship_tpl.address_type$ = "B"
-	ordship_tpl.name$        = ""
-	ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.BADD1")
-	ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.BADD2")
-	ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.BADD3")
-	ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.BADD4")
-	ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.BCITY")
-	ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.BSTATE")
-	ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.BZIP")
-	ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID")
-	ordship_tpl.created_user$   = sysinfo.user_id$
-	ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
-	ordship_tpl.created_time$   = date(0:"%Hz%mz")
-	ordship_tpl.mod_user$   = ""
-	ordship_tpl.mod_date$   = ""
-	ordship_tpl.mod_time$   = ""
-	ordship_tpl.trans_status$   = "E"
-	ordship_tpl.arc_user$   = ""
-	ordship_tpl.arc_date$   = ""
-	ordship_tpl.arc_time$   = ""
-	ordship_tpl.batch_no$   = ""
-	ordship_tpl.audit_number   = 0
-	ordship_tpl$ = field(ordship_tpl$)
-	write record (ordship_dev) ordship_tpl$
-	
-	if callpoint!.getColumnData("OPE_INVHDR.SHIPTO_TYPE") = "B" then 
-		rem --- Ship-to address is the same as the bill-to address
-		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
-		ordship_tpl.address_type$ = "S"
-		ordship_tpl.name$ = Translate!.getTranslation("AON_SAME")
-		ordship_tpl$ = field(ordship_tpl$)
-		write record (ordship_dev) ordship_tpl$
-	else
-		rem --- Capture ship-to, or manual ship-to address
-		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
-		ordship_tpl.address_type$ = "S"
-		ordship_tpl.name$        = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
-		ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
-		ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
-		ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.SADD3")
-		ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.SADD4")
-		ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.SCITY")
-		ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
-		ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
-		ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
-		ordship_tpl$ = field(ordship_tpl$)
-		write record (ordship_dev) ordship_tpl$
-	endif
+	gosub write_address_file
 
 rem --- Calculate Taxes
 	disc_amt = num(callpoint!.getColumnData("OPE_INVHDR.DISCOUNT_AMT"))
@@ -4662,6 +4606,98 @@ rem ==========================================================================
 		if opc_taxcode.use_tax_service then use_tax_service$="Y"
 	endif
 	callpoint!.setDevObject("use_tax_service",use_tax_service$)
+
+	return
+
+rem ==========================================================================
+write_address_file: rem ---  Write Order Addresses file
+rem IN: - none -
+rem OUT: - none -
+rem ==========================================================================
+	cust_id$    = callpoint!.getColumnData("OPE_INVHDR.CUSTOMER_ID")
+	order_no$   = callpoint!.getColumnData("OPE_INVHDR.ORDER_NO")
+	invoice_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
+	ordship_dev = fnget_dev("OPE_ORDSHIP")
+
+	rem --- Capture bill-to address
+	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
+	extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$; rem Advisory Locking
+	ordship_tpl.firm_id$     = firm_id$
+	ordship_tpl.customer_id$ = cust_id$
+	ordship_tpl.order_no$    = order_no$
+	ordship_tpl.ar_inv_no$ = invoice_no$
+	ordship_tpl.address_type$ = "B"
+	ordship_tpl.name$        = ""
+	ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.BADD1")
+	ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.BADD2")
+	ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.BADD3")
+	ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.BADD4")
+	ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.BCITY")
+	ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.BSTATE")
+	ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.BZIP")
+	ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID")
+	ordship_tpl.created_user$   = sysinfo.user_id$
+	ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
+	ordship_tpl.created_time$   = date(0:"%Hz%mz")
+	ordship_tpl.mod_user$   = ""
+	ordship_tpl.mod_date$   = ""
+	ordship_tpl.mod_time$   = ""
+	ordship_tpl.trans_status$   = "E"
+	ordship_tpl.arc_user$   = ""
+	ordship_tpl.arc_date$   = ""
+	ordship_tpl.arc_time$   = ""
+	ordship_tpl.batch_no$   = ""
+	ordship_tpl.audit_number   = 0
+	ordship_tpl$ = field(ordship_tpl$)
+	write record (ordship_dev) ordship_tpl$
+	
+	if callpoint!.getColumnData("OPE_INVHDR.SHIPTO_TYPE") = "B" then 
+		rem --- Ship-to address is the same as the bill-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
+		ordship_tpl.name$ = Translate!.getTranslation("AON_SAME")
+		ordship_tpl$ = field(ordship_tpl$)
+		ordship_tpl.created_user$   = sysinfo.user_id$
+		ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
+		ordship_tpl.created_time$   = date(0:"%Hz%mz")
+		ordship_tpl.mod_user$   = ""
+		ordship_tpl.mod_date$   = ""
+		ordship_tpl.mod_time$   = ""
+		ordship_tpl.trans_status$   = "E"
+		ordship_tpl.arc_user$   = ""
+		ordship_tpl.arc_date$   = ""
+		ordship_tpl.arc_time$   = ""
+		ordship_tpl.batch_no$   = ""
+		ordship_tpl.audit_number   = 0
+		write record (ordship_dev) ordship_tpl$
+	else
+		rem --- Capture ship-to, or manual ship-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
+		ordship_tpl.name$        = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
+		ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
+		ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
+		ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.SADD3")
+		ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.SADD4")
+		ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.SCITY")
+		ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
+		ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
+		ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
+		ordship_tpl.created_user$   = sysinfo.user_id$
+		ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
+		ordship_tpl.created_time$   = date(0:"%Hz%mz")
+		ordship_tpl.mod_user$   = ""
+		ordship_tpl.mod_date$   = ""
+		ordship_tpl.mod_time$   = ""
+		ordship_tpl.trans_status$   = "E"
+		ordship_tpl.arc_user$   = ""
+		ordship_tpl.arc_date$   = ""
+		ordship_tpl.arc_time$   = ""
+		ordship_tpl.batch_no$   = ""
+		ordship_tpl.audit_number   = 0
+		ordship_tpl$ = field(ordship_tpl$)
+		write record (ordship_dev) ordship_tpl$
+	endif
 
 	return
 

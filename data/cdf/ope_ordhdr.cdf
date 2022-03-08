@@ -313,6 +313,54 @@ rem --- Using a sales tax service?
 rem --- Capture order records used for the Acknowledgement
 	gosub getOrdAckRecs
 
+rem --- Have ship-to or bill-to address changed?
+	ordship_dev = fnget_dev("OPE_ORDSHIP")
+	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
+	cust_id$ = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
+	order_no$ = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
+	invoice_no$=callpoint!.getColumnData("OPE_ORDHDR.AR_INV_NO")
+	addressChanged=0
+	if callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE")<>"B" then
+		readrecord (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$
+		if cvs(ordship_tpl.name$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SNAME"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_1$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SADD1"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_2$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SADD2"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_3$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SADD3"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_4$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SADD4"),2) then addressChanged=1
+		if cvs(ordship_tpl.city$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SCITY"),2) then addressChanged=1
+		if cvs(ordship_tpl.state_code$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SSTATE"),2) then addressChanged=1
+		if cvs(ordship_tpl.zip_code$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SZIP"),2) then addressChanged=1
+		if cvs(ordship_tpl.cntry_id$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID"),2) then addressChanged=1
+	endif
+
+	if addressChanged=0 then
+		rem --- Ship-to address didn't change, so check the bill-to address
+		redim ordship_tpl$
+		readrecord (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$
+		if cvs(ordship_tpl.name$,2)<> "" then addressChanged=1
+		if cvs(ordship_tpl.addr_line_1$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BADD1"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_2$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BADD2"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_3$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BADD3"),2) then addressChanged=1
+		if cvs(ordship_tpl.addr_line_4$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BADD4"),2) then addressChanged=1
+		if cvs(ordship_tpl.city$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BCITY"),2) then addressChanged=1
+		if cvs(ordship_tpl.state_code$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BSTATE"),2) then addressChanged=1
+		if cvs(ordship_tpl.zip_code$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BZIP"),2) then addressChanged=1
+		if cvs(ordship_tpl.cntry_id$,2)<>cvs(callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID"),2) then addressChanged=1
+	endif
+
+	if addressChanged then
+		rem --- Write Order Addresses file
+		gosub write_address_file
+
+		rem --- Force a reprint of the Picking List
+		if callpoint!.getColumnData("OPE_ORDHDR.PRINT_STATUS")<>"N" then
+			order_no$ = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
+			gosub add_to_batch_print
+			callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
+			callpoint!.setStatus("SAVE")
+		endif
+	endif
+
 [[OPE_ORDHDR.AFMC]]
 rem --- Inits
 
@@ -2409,66 +2457,7 @@ rem --- Has customer and order number been entered?
 	endif
 
 rem --- Write Order Addresses file
-	cust_id$    = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
-	order_no$   = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
-	invoice_no$=callpoint!.getColumnData("OPE_ORDHDR.AR_INV_NO")
-	ordship_dev = fnget_dev("OPE_ORDSHIP")
-
-	rem --- Capture Bill-To address
-	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
-	extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$; rem Advisory Locking
-	ordship_tpl.firm_id$     = firm_id$
-	ordship_tpl.customer_id$ = cust_id$
-	ordship_tpl.order_no$    = order_no$
-	ordship_tpl.ar_inv_no$=invoice_no$
-	ordship_tpl.address_type$ = "B"
-	ordship_tpl.name$ = ""
-	ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.BADD1")
-	ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.BADD2")
-	ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.BADD3")
-	ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.BADD4")
-	ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.BCITY")
-	ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.BSTATE")
-	ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.BZIP")
-	ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID")
-	ordship_tpl.created_user$   = sysinfo.user_id$
-	ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
-	ordship_tpl.created_time$   = date(0:"%Hz%mz")
-	ordship_tpl.mod_user$   = ""
-	ordship_tpl.mod_date$   = ""
-	ordship_tpl.mod_time$   = ""
-	ordship_tpl.trans_status$   = "E"
-	ordship_tpl.arc_user$   = ""
-	ordship_tpl.arc_date$   = ""
-	ordship_tpl.arc_time$   = ""
-	ordship_tpl.batch_no$   = ""
-	ordship_tpl.audit_number   = 0
-	ordship_tpl$ = field(ordship_tpl$)
-	write record (ordship_dev) ordship_tpl$
-	
-	if callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE") = "B" then 
-		rem --- Ship-to address is the same as the bill-to address
-		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
-		ordship_tpl.address_type$ = "S"
-		ordship_tpl.name$ = Translate!.getTranslation("AON_SAME")
-		ordship_tpl$ = field(ordship_tpl$)
-		write record (ordship_dev) ordship_tpl$
-	else
-		rem --- Capture ship-to, or manual ship-to address
-		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
-		ordship_tpl.address_type$ = "S"
-		ordship_tpl.name$        = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
-		ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
-		ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
-		ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.SADD3")
-		ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.SADD4")
-		ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.SCITY")
-		ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
-		ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
-		ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
-		ordship_tpl$ = field(ordship_tpl$)
-		write record (ordship_dev) ordship_tpl$
-	endif
+	gosub write_address_file
 
 rem --- Calculate Taxes
 	disc_amt = num(callpoint!.getColumnData("OPE_ORDHDR.DISCOUNT_AMT"))
@@ -4725,6 +4714,92 @@ rem ==========================================================================
 				endif
 			endif
 		endif
+	endif
+
+	return
+
+rem ==========================================================================
+write_address_file: rem --- Write Order Addresses file
+rem IN: - none -
+rem OUT: - none -
+rem ==========================================================================
+	cust_id$    = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
+	order_no$   = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
+	invoice_no$=callpoint!.getColumnData("OPE_ORDHDR.AR_INV_NO")
+	ordship_dev = fnget_dev("OPE_ORDSHIP")
+
+	rem --- Capture Bill-To address
+	dim ordship_tpl$:fnget_tpl$("OPE_ORDSHIP")
+	extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"B", dom=*next) ordship_tpl$; rem Advisory Locking
+	ordship_tpl.firm_id$     = firm_id$
+	ordship_tpl.customer_id$ = cust_id$
+	ordship_tpl.order_no$    = order_no$
+	ordship_tpl.ar_inv_no$=invoice_no$
+	ordship_tpl.address_type$ = "B"
+	ordship_tpl.name$ = ""
+	ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.BADD1")
+	ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.BADD2")
+	ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.BADD3")
+	ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.BADD4")
+	ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.BCITY")
+	ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.BSTATE")
+	ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.BZIP")
+	ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.BCNTRY_ID")
+	ordship_tpl.created_user$   = sysinfo.user_id$
+	ordship_tpl.created_date$   = date(0:"%Yd%Mz%Dz")
+	ordship_tpl.created_time$   = date(0:"%Hz%mz")
+	ordship_tpl.mod_user$   = ""
+	ordship_tpl.mod_date$   = ""
+	ordship_tpl.mod_time$   = ""
+	ordship_tpl.trans_status$   = "E"
+	ordship_tpl.arc_user$   = ""
+	ordship_tpl.arc_date$   = ""
+	ordship_tpl.arc_time$   = ""
+	ordship_tpl.batch_no$   = ""
+	ordship_tpl.audit_number   = 0
+	ordship_tpl$ = field(ordship_tpl$)
+	write record (ordship_dev) ordship_tpl$
+	
+	if callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE") = "B" then 
+		rem --- Ship-to address is the same as the bill-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
+		ordship_tpl.name$ = Translate!.getTranslation("AON_SAME")
+		ordship_tpl.mod_user$   = ""
+		ordship_tpl.mod_date$   = ""
+		ordship_tpl.mod_time$   = ""
+		ordship_tpl.trans_status$   = "E"
+		ordship_tpl.arc_user$   = ""
+		ordship_tpl.arc_date$   = ""
+		ordship_tpl.arc_time$   = ""
+		ordship_tpl.batch_no$   = ""
+		ordship_tpl.audit_number   = 0
+		ordship_tpl$ = field(ordship_tpl$)
+		write record (ordship_dev) ordship_tpl$
+	else
+		rem --- Capture ship-to, or manual ship-to address
+		extract record (ordship_dev, key=firm_id$+cust_id$+order_no$+invoice_no$+"S", dom=*next) ordship_tpl$; rem Advisory Locking
+		ordship_tpl.address_type$ = "S"
+		ordship_tpl.name$        = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
+		ordship_tpl.addr_line_1$ = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
+		ordship_tpl.addr_line_2$ = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
+		ordship_tpl.addr_line_3$ = callpoint!.getColumnData("<<DISPLAY>>.SADD3")
+		ordship_tpl.addr_line_4$ = callpoint!.getColumnData("<<DISPLAY>>.SADD4")
+		ordship_tpl.city$        = callpoint!.getColumnData("<<DISPLAY>>.SCITY")
+		ordship_tpl.state_code$  = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
+		ordship_tpl.zip_code$    = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
+		ordship_tpl.cntry_id$    = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
+		ordship_tpl.mod_user$   = ""
+		ordship_tpl.mod_date$   = ""
+		ordship_tpl.mod_time$   = ""
+		ordship_tpl.trans_status$   = "E"
+		ordship_tpl.arc_user$   = ""
+		ordship_tpl.arc_date$   = ""
+		ordship_tpl.arc_time$   = ""
+		ordship_tpl.batch_no$   = ""
+		ordship_tpl.audit_number   = 0
+		ordship_tpl$ = field(ordship_tpl$)
+		write record (ordship_dev) ordship_tpl$
 	endif
 
 	return
