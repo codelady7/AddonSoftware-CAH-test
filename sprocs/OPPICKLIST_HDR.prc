@@ -214,7 +214,9 @@ rem --- Heading (bill-to address)
 
     if start_block then
         read record (arm01_dev, key=firm_id$+ope01a.customer_id$, dom=*endif) arm01!
-        b$ = func.formatAddress(table_chans$[all], arm01!, bill_addrLine_len, max_billAddr_lines-1)
+        read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"B", dom=*next) ope31!
+        b$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
+        b$ = pad(arm01!.getFieldAsString("CUSTOMER_NAME"), bill_addrLine_len) + b$
         b$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + b$
         found = 1
     endif
@@ -228,22 +230,14 @@ rem --- Ship-To
     c$ = b$
     start_block = 1
 
-    if ope01a.shipto_type$ = "M" then 
+    if ope01a.shipto_type$ <> "B" then 
         shipto$ = ""
 
         if start_block then
-            find record (ope31_dev, key=firm_id$+"E"+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S",knum="AO_STATUS", dom=*endif) ope31!
+            find record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S",knum="AO_STATUS", dom=*endif) ope31!
             c$ = func.formatAddress(table_chans$[all], ope31!, cust_addrLine_len, max_custAddr_lines)
-        endif
-    else
-        if ope01a.shipto_type$ = "S" then
-            shipto$ = ""
-
-            if start_block then
-                find record (arm03_dev,key=firm_id$+ope01a.customer_id$+ope01a.shipto_no$, dom=*endif) arm03!
-                c$ = func.formatAddress(table_chans$[all], arm03!, cust_addrLine_len, max_custAddr_lines)
-                shipto$ = ope01a.shipto_no$
-            endif
+            c$ = pad(ope31!.getFieldAsString("NAME"), bill_addrLine_len) + c$
+            c$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + c$
         endif
     endif
 
