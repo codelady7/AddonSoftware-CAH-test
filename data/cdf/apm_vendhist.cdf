@@ -40,7 +40,7 @@ if gl$<>"Y"
 endif
 
 [[APM_VENDHIST.AFMC]]
-rem wgh ... 9291 ... testing ... Show fiscal year in field prompts
+rem --- Show fiscal year in field prompts
 apCurrentFiscalYr$=callpoint!.getDevObject("apCurrentFiscalYr")
 apPriorFiscalYr$=str(num(apCurrentFiscalYr$)-1)
 apNextFiscalYr$=str(num(apCurrentFiscalYr$)+1)
@@ -54,7 +54,7 @@ callpoint!.setTableColumnAttribute("APM_VENDHIST.YTD_PAYMENTS","PROM",apCurrentF
 callpoint!.setTableColumnAttribute("APM_VENDHIST.PYR_PAYMENTS","PROM",apPriorFiscalYr$+" Fiscal Year Payments")
 callpoint!.setTableColumnAttribute("APM_VENDHIST.NYR_PAYMENTS","PROM",apNextFiscalYr$+" Fiscal Year Payments")
 
-rem wgh ... 9291 ... testing ... Show 1099 calendar year in field prompts
+rem --- Show 1099 calendar year in field prompts
 current1099Yr$=callpoint!.getDevObject("current1099Yr")
 prior1099Yr$=str(num(current1099Yr$)-1)
 next1099Yr$=str(num(current1099Yr$)+1)
