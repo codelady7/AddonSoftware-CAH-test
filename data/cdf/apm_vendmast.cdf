@@ -434,6 +434,8 @@ rem --- Retrieve parameter data
 	user_tpl.gl_max_len$=str(max(10,len(ape11a.gl_account$)):"00")
 	
 	callpoint!.setDevObject("aps_single_dist_code",aps01a.ap_dist_code$)
+	callpoint!.setDevObject("apCurrentFiscalYr",aps01a.current_year$)
+	callpoint!.setDevObject("current1099Yr",aps01a.cur_1099_yr$)
 
 rem --- used to also open ivm-03 if iv$="Y", but using alt keys on ivm-01 instead
 rem --- knum=3 is firm/vendor/item, knum=9 is firm/buyer/vendor/item

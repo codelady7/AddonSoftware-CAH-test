@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendhist">D879CB11C862689876536F5DAEAA40A8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendhist">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendhist">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20220228</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20220228</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">084732</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20220308</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20220308</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">163706</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendhist"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apm_vendhist">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendhist"></DD_ATTR_DKNM>
@@ -78,6 +78,10 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.apm_vendhistaena">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.apm_vendhistaena">AENA</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.apm_vendhistafmc">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apm_vendhistafmc">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apm_vendhistafmc">AFMC</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.apm_vendhistaopt-edit">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.apm_vendhistaopt-edit">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.apm_vendhistaopt-edit">AOPT-EDIT</DD_ATTR_CPRO>
@@ -117,7 +121,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_labl.apm_vendhist001">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_labl.apm_vendhist001">001</DD_SEQUENCE>
 			<DD_CTRL_NAME id="ddm_table_labl.apm_vendhist001">LBL_PURCH       </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist001">Purchases</DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist001">Fiscal Yr Purchases</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist001">+1</DD_ATTR_CTLY>
 			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist001">13</DD_ATTR_TIND>
@@ -131,7 +135,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_labl.apm_vendhist002">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_labl.apm_vendhist002">002</DD_SEQUENCE>
 			<DD_CTRL_NAME id="ddm_table_labl.apm_vendhist002">LBL_DISC        </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist002">Discounts</DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist002">Fiscal Yr Discounts</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist002">+12</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist002">-4</DD_ATTR_CTLY>
 			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist002">17</DD_ATTR_TIND>
@@ -145,7 +149,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_labl.apm_vendhist003">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_labl.apm_vendhist003">003</DD_SEQUENCE>
 			<DD_CTRL_NAME id="ddm_table_labl.apm_vendhist003">LBL_PMTS        </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist003">Payments</DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist003">Fiscal Yr Payments</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist003">+12</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist003">-4</DD_ATTR_CTLY>
 			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist003">21</DD_ATTR_TIND>
@@ -159,7 +163,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_labl.apm_vendhist004">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_labl.apm_vendhist004">004</DD_SEQUENCE>
 			<DD_CTRL_NAME id="ddm_table_labl.apm_vendhist004">LBL_CAL_PMTS    </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist004">Calendar Payments</DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist004">Calendar Yr Payments</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist004">+12</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist004">-4</DD_ATTR_CTLY>
 			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist004">25</DD_ATTR_TIND>

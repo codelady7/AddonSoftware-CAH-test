@@ -39,6 +39,29 @@ if gl$<>"Y"
 	gosub disable_fields
 endif
 
+[[APM_VENDHIST.AFMC]]
+rem wgh ... 9291 ... testing ... Show fiscal year in field prompts
+apCurrentFiscalYr$=callpoint!.getDevObject("apCurrentFiscalYr")
+apPriorFiscalYr$=str(num(apCurrentFiscalYr$)-1)
+apNextFiscalYr$=str(num(apCurrentFiscalYr$)+1)
+callpoint!.setTableColumnAttribute("APM_VENDHIST.YTD_PURCH","PROM",apCurrentFiscalYr$+" Fiscal YTD Purchases")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.PYR_PURCH","PROM",apPriorFiscalYr$+" Fiscal Year Purchases")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.NYR_PURCH","PROM",apNextFiscalYr$+" Fiscal Year Purchases")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.YTD_DISCS","PROM",apCurrentFiscalYr$+" Fiscal YTD Discounts")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.PRI_YR_DISCS","PROM",apPriorFiscalYr$+" Fiscal Year Discounts")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.NYR_DISC","PROM",apNextFiscalYr$+" Fiscal Year Discounts")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.YTD_PAYMENTS","PROM",apCurrentFiscalYr$+" Fiscal YTD Payments")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.PYR_PAYMENTS","PROM",apPriorFiscalYr$+" Fiscal Year Payments")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.NYR_PAYMENTS","PROM",apNextFiscalYr$+" Fiscal Year Payments")
+
+rem wgh ... 9291 ... testing ... Show 1099 calendar year in field prompts
+current1099Yr$=callpoint!.getDevObject("current1099Yr")
+prior1099Yr$=str(num(current1099Yr$)-1)
+next1099Yr$=str(num(current1099Yr$)+1)
+callpoint!.setTableColumnAttribute("APM_VENDHIST.CUR_CAL_PMTS","PROM",current1099Yr$+" Calendar YTD Payments")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.PRI_CAL_PMT","PROM",prior1099Yr$+" Calendar Year Payments")
+callpoint!.setTableColumnAttribute("APM_VENDHIST.NXT_CYR_PMTS","PROM",next1099Yr$+" Calendar Year Payments")
+
 [[APM_VENDHIST.AOPT-EDIT]]
 rem --- For IRS 1099 forms, allow updating Purchase History when password entered
 if callpoint!.getDevObject("vendor_1099")="Y" and callpoint!.getColumnData("APM_VENDHIST.IRS1099_TYPE_BOX")<>"X" then
