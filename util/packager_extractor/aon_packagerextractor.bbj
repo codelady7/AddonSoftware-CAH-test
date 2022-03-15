@@ -2689,12 +2689,19 @@ std_exit:
       print(log_dev)
       print(log_dev)meter_text$
 
-      rdAdmin!.attachDatabaseOnDisk(cvs(dbName$,3),cvs(barDir$,3)+File.separator+"bbdict"+File.separator)
+      dict_chn=unt
+      exists=0
+      open(dict_chn,err=*next)barDir$+File.separator+"bbdict";exists=1
+      close (dict_chn)
+      if (exists) then
+          rdAdmin!.attachDatabaseOnDisk(cvs(dbName$,3),cvs(barDir$,3)+File.separator+"bbdict"+File.separator)
+      else
+          rdAdmin!.attachDatabaseOnDisk(cvs(dbName$,3),cvs(barDir$,3)+File.separator+"sys"+File.separator+"data"+File.separator)
+      endif
 
       dataBase!=rdAdmin!.getDatabase(cvs(dbName$,3))
 
       dataBase!.setString("DATABASE",cvs(dbName$,2))
-      dataBase!.setString("DICTIONARY",barDir$+File.separator+"bbdict"+File.separator)
       dataBase!.setString("+DIR_BRD",barDir$+File.separator+"sys"+File.separator+"data"+File.separator)
       dataBase!.setString("+DIR_BRA",barDir$+File.separator+"sys"+File.separator+"data"+File.separator)
       dataBase!.setString("ACCESSPOLICY","ALL")
@@ -2731,10 +2738,10 @@ std_exit:
       sscpName$=cvs(dbName$,8)
       copyData%=0
       status=0
+      exists=0
       oldAonLoc$=""
       testChan=unt
-      open(testChan,err=*next) "adc_createsscp.aon"
-      exists=err<>12
+      open(testChan,err=*next) "adc_createsscp.aon"; exists=1
       close (testChan)
       if (exists) then
         version$=rev
