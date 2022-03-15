@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-03-02
+ Report Date:   2022-03-14
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -126,3 +126,17 @@ set in OP Parameters when OP using Cash Sales.
 ----
 Modified: data/bar/ope_invhdr.xml
 Modified: data/cdf/ope_invhdr.cdf
+
+=======================================================================================================================================
+Revision: a8271c8fe1ecdbe923e1b62f9ee7e0b2b9d769d7
+Author: Christine <chawkins@basis.com>
+Date: 3/14/2022 5:17:47 PM
+Message:
+Bug 10314 - AD - Change adc_createsscp.aon to delete a given sscp before (re)creating it
+Bug 10378 - AD - Packager/Extractor needs to know to set extracted DB to either ENHANCED or BARISTA
+
+ - altered these routines to set exists=0 prior to opening desired file, and exists=1 if open is successful, rather than using exists=err<>12, which can end up setting exists=0 erroneously if the file is opened successfully but the last error happened to be an err 12.
+
+(cherry picked from commit 8701fc0f58a14c87cefcdc2f254e416252ab680a)
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
