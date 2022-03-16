@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-03-14
+ Report Date:   2022-03-16
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -140,3 +140,18 @@ Bug 10378 - AD - Packager/Extractor needs to know to set extracted DB to either 
 (cherry picked from commit 8701fc0f58a14c87cefcdc2f254e416252ab680a)
 ----
 Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+=======================================================================================================================================
+Revision: 3d65651a561c57efe48a48277e1cca71f87d31c7
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 3/16/2022 9:47:43 AM
+Message:
+ER 10064: Modified Inventory Transaction Entry to only allow editing
+Lot/Serial No Cmt cells via the Lot/Serial Comments button. The
+Lot/Serial Comments editor is no longer automatically launched when the
+Lot/Serial No Cmt cell has focus.
+----
+Modified: data/bar/ive_transdet.xml
+Modified: data/cdf/ive_transdet.cdf
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
