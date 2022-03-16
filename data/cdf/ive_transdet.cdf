@@ -784,8 +784,6 @@ rem ==========================================================================
 		cols! = BBjAPI().makeVector()
 		cols!.addItem(7); rem --- lot
 		cols!.addItem(8); rem --- location
-		cols!.addItem(9); rem --- comment
-		cols!.addItem(10); rem --- memo_1024
 		this_row = callpoint!.getValidationRow()
 	
 		if user_tpl.this_item_lot_or_ser then
@@ -1068,7 +1066,6 @@ rem ==========================================================================
 	if user_tpl.this_item_lot_or_ser then 
 		cols! = BBjAPI().makeVector()
 		cols!.addItem(8); rem --- lot loc
-		cols!.addItem(9); rem -- lot comment
 
 		if user_tpl.ls_found then
 			util.disableGridCells(Form!, cols!)
