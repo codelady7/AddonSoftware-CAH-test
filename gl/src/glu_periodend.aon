@@ -24,8 +24,8 @@ rem --- Retrieve sysinfo data
         use ::ado_util.src::util
         Translate!=util.initBUIProcess()
         if Translate!=null() then goto std_exit
-    endif
-
+    endif 
+    
     sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
     dim sysinfo$:sysinfo_template$
     sysinfo$=stbl("+SYSINFO",err=*next)
@@ -33,21 +33,27 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=2,begfile=1,endfile=files
+    files=4,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="gls_params",ids$[1]="GLS_PARAMS"
     files$[2]="gls_calendar",ids$[2]="GLS_CALENDAR"
+    files$[3]="gls_suspense",ids$[3]="GLS_SUSPENSE"
+    files$[4]="glm-02",ids$[4]="GLM_ACCTSUMMARY"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
     gls01_dev=channels[1]
     gls_calendar_dev=channels[2]
-
-rem " --- Set templates
+    gls_suspense_dev=channels[3]
+    glm_acctsummary_dev=channels[4]
+    
+rem --- Set templates
 
     dim gls01a$:templates$[1]
     dim gls_calendar$:templates$[2]
-
+    dim gls_suspense$:templates$[3]
+    dim glm_acctsummary$:templates$[4]
+    
 rem --- Retrieve parameter records
 
     gls01a_key$=firm_id$+"GL00"
@@ -60,6 +66,7 @@ rem --- Retrieve parameter records
         gosub disp_message
         goto std_exit_no_update
     endif
+    
     current_period=num(gls01a.current_per$)
     current_year=num(gls01a.current_year$)
     call pgmdir$+"adc_perioddates.aon",current_period,current_year,begdate$,enddate$,table_chans$[all],status
@@ -76,18 +83,39 @@ rem --- Assign input values to local variables
     period=num(period$)
     year$=gls01a.current_year$
     year=num(year$)
-
+ 
 rem --- Initializations
-
+ 
     period_name$=cvs(field(gls_calendar$,"period_name_"+str(period:"00")),2)
-
+ 
 rem --- All transaction files empty?
 
     call pgmdir$+"glc_filecheck.aon",firm_id$,rd_table_chans$[all],status
     if status goto std_exit_no_update
+    
+rem --- Determine GL Suspense account balance -- the balance is calculated using a loop
+rem --- GLC_Balance required the presence GL control set
+    
+    readrecord(gls_suspense_dev,key=firm_id$+"GL03",dom=*next)gls_suspense$
+    if gls_suspense.use_suspense$="Y"
+    
+rem --- A loop is used to calculate the balance because the glc_balance required glcontrol
 
+        readrecord(glm_acctsummary_dev,key=firm_id$+GLs_suspense.gl_account$+year$,dom=*endif)glm_acctsummary$
+        for i = 1 to 13
+           balance=balance + num(field(glm_acctsummary$,"PERIOD_AMT_"+str(i:"00")))
+        next i
+        
+        if balance <> 0
+            msg_id$="SUSP_NOT_ZERO_PER"
+            dim msg_tokens$[1]
+            gosub disp_message 
+            if msg_opt$="C" goto std_exit_no_update
+        endif
+    endif
+    
 rem --- Confirm that this user REALLY wants to close the fiscal period
-
+    
     msg_id$="CLOSE_PERIOD"
     dim msg_tokens$[2]
     msg_tokens$[0]=str(current_period)

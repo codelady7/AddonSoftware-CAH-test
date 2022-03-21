@@ -23,19 +23,24 @@ rem --- Retrieve sysinfo data
     dim sysinfo$:sysinfo_template$
     sysinfo$=stbl("+SYSINFO",err=*next)
     firm_id$=sysinfo.firm_id$
+    system_date$=sysinfo.system_date$
+    
     
     milestone=50
     milestone=num(stbl("+MILESTONE",err=*next),err=*next)  
+    process_id$=stbl("+PROCESS_ID")  
     
 rem --- Open/Lock files
 
-    files=5,begfile=1,endfile=files
+    files=7,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="gls_params",ids$[1]="GLS_PARAMS"
     files$[2]="glm-01",ids$[2]="GLM_ACCT"
     files$[3]="glm-03",ids$[3]="GLC_JOURNALCODE"
     files$[4]="glt-04",ids$[4]="GLE_DAILYDETAIL",options$[4]="L"
     files$[5]="gls_calendar",ids$[5]="GLS_CALENDAR"
+    files$[6]="gls_suspense",ids$[6]="GLS_SUSPENSE"
+    files$[7]="glm-02",ids$[7]="GLM_ACCTSUMMARY"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
@@ -44,11 +49,15 @@ rem --- Open/Lock files
     glm03_dev=channels[3]
     glt04_dev=channels[4]
     gls_calendar_dev=channels[5]
-
+    gls_suspense_dev=channels[6]
+    glm_acctsummary_dev=channels[7]
+    
 rem --- Dimension string templates
 
     dim gls01a$:templates$[1],glm01a$:templates$[2],glm03a$:templates$[3],glt04a$:templates$[4]
     dim gls_calendar$:templates$[5]
+    dim gls_suspense$:templates$[6]
+    dim glm_acctsummary$:templates$[7]
 
 rem --- Assign input values to local variables
 
@@ -121,7 +130,6 @@ rem --- Initializations
     h2$=""
     recs=0
     total_recs=0
-
 rem --- Document columns
 
     if sequence$="A"
@@ -399,7 +407,6 @@ rem --- All done
     gosub print_totals
 
 rem --- In balance?
-
     balance=rt[0]+rt[1]
     debits=0
     credits=0
@@ -408,6 +415,61 @@ rem --- In balance?
     if balance<0 credits=balance
     total$=Translate!.getTranslation("AON_THIS_REPORT_IS_OUT_OF_BALANCE_BY")
     gosub print_totals
+ 
+ rem --- Determine GL Suspense account balance
+ 
+    readrecord(gls_suspense_dev,key=firm_id$+"GL03",dom=*next)gls_suspense$
+    
+    use_suspense$=gls_suspense.use_suspense$
+    suspense_account$=gls_suspense.gl_account$
+    max_limit=gls_suspense.gl_max_limit
+    journal_id$ = gls_suspense.journal_id$
+
+    if gls_suspense.use_suspense$="Y" then
+
+rem --- A loop is used to calculate the balance because the glc_balance required glcontrol
+
+        readrecord(glm_acctsummary_dev,key=firm_id$+GLs_suspense.gl_account$+gls01a.current_year$,dom=*endif)glm_acctsummary$
+        for i = 1 to 13
+           suspense_balance=suspense_balance + num(field(glm_acctsummary$,"PERIOD_AMT_"+str(i:"00")))
+        next i
+        
+rem --- If the suspense acccount is in use, valid, the transaction is not over the post limit, and the resulting
+:       balance is not over the balance limit, post the OOB to suspense 
+
+        if max_balance and abs(suspense_balance) + abs(balance) > max_balance maxbalance = 1
+        if cvs(suspense_account$,2)="" acctblank = 1 
+        if cvs(journal_id$,2)="" journalblank = 1
+        if max_balance and abs(balance)>max_balance maxbalance = 1
+        if max_limit and abs(balance)>max_limit glmaxlimit = 1
+        if !acctblank and !maxbalance and !glmaxlimit and !journalblank then 
+            
+            msg_id$="AON_REG_OOB_SUSP"
+            dim msg_tokens$[1]
+            msg_tokens$[1]=cvs(str(balance:m1$),3)
+            gosub disp_message
+            if msg_opt$="Y" then                
+                rem --- Write to glt04
+                gosub create_suspense
+                goto balanced
+            endif
+        endif
+        
+        if acctblank or maxbalance or glmaxlimit or journalblank then 
+         
+            msg_id$="AON_REG_OOB_SUSP_FL"
+            dim msg_tokens$[1]
+            msg_tokens$[1]=cvs(str(balance:m1$),3)
+            gosub disp_message       
+            
+            oob_cmt$=Translate!.getTranslation("AON_USE_SUSPENSE_FAILED")
+            xwk=fnblank(columns+1)
+            outVect!.addItem(oob_cmt$)
+            xwk=fnblank(columns)
+        endif
+
+    endif
+   
     msg_id$="AON_REG_OOB"
     dim msg_tokens$[1]
     msg_tokens$[1]=cvs(str(balance:m1$),3)
@@ -616,7 +678,43 @@ print_totals: rem --- Print totals line
     endif
 
     return
+    
+create_suspense: rem create suspense entry
 
+    detail$="Y"
+
+update_glt04: rem --- Format glt-04 fields 
+    process_id$=stbl("+PROCESS_ID")
+    glt04a.firm_id$=firm_id$
+    glt04a.process_id$=process_id$
+    glt04a.batch_no$=""
+    glt04a.journal_id$=journal_id$
+    glt04a.gl_adt_no$="0000000"
+    glt04a.posting_year$=gls01a.current_year$
+    glt04a.posting_per$=gls01a.current_per$
+    glt04a.trns_date$=system_date$
+    glt04a.gl_account$=suspense_account$
+    if detail$="Y" sequence=sequence+1
+    glt04a.seq_no$=str(sequence:"00000")
+    glt04a.reference_01$=glref1$
+    glt04a.reference_02$=glref2$
+    glt04a.reference_03$=glref3$
+    glt04a.description$=Translate!.getTranslation("AON_OUT_OF_BALANCE_CORRECTION")
+    glt04a.memo_1024$=Translate!.getTranslation("AON_OUT_OF_BALANCE_CORRECTION")
+    glt04a.trans_amt=balance*-1
+    glt04a.units=0
+
+    rem --- Write glt-04 record
+
+    write record (glt04_dev)glt04a$
+
+    oob_cmt$=Translate!.getTranslation("AON_USE_SUSPENSE_SUCCESS")
+
+	xwk=fnblank(columns+1)
+	outVect!.addItem(oob_cmt$)
+	xwk=fnblank(columns)
+
+	return
 rem --- Functions
 
     def fncenter(q$,q)=int((q-len(q$))/2)

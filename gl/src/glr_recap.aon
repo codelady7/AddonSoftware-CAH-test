@@ -92,9 +92,11 @@ rem --- OutVect! for DocOut, date/time
 rem --- Initializations
 
     dim hdr$(width),o[5],at[1],dt[1],rt[1],gt[1]
+    glprogramname$ = ""
     account_length=num(glcontrol.acct_length$)
     report$=glcontrol.prt_gl_sum$
     gl_post_code$=glcontrol.gl_post_code$
+    glrecapprogram$=glcontrol.program_name$
     use_suspense$=glcontrol.use_suspense$
     suspense_account$=glcontrol.gl_account$
     max_limit=num(glcontrol.max_lim_str$)
@@ -129,7 +131,8 @@ rem    errors=0
     recs=0
     total_recs=0
     if milestone=0 then milestone=50
-
+    glprogramname$ = ""
+    
 rem --- column headings
 
     columns=5
@@ -315,19 +318,42 @@ rem --- Debits = Credits?
     xwk=fnblank(2)
     OutVect!.addItem(Translate!.getTranslation("AON_WARNING:_OUT_OF_BALANCE_BY_")+str(balance:glm1$))
     xwk=fnblank(3)
-    if use_suspense$<>"Y" goto register_errors
-    if cvs(suspense_account$,2)="" goto register_errors
-    if max_limit and abs(balance)>max_limit goto register_errors
+    acctblank = 0
+	maxbalance = 0
+    glmaxlimit = 0
+	oob_cmt$ = ""
+ 
+rem if the suspense account is not in use or the calling program as daily detail then register_errors
 
-rem --- Determine GL Suspense account balance
+    if use_suspense$<>"Y" or cvs(glrecapprogram$,3)="glr_journal.aon" then goto register_errors
+ 
+ rem --- Determine GL Suspense account balance
 
     call pgmdir$+"glc_balance.aon",suspense_account$,suspense_balance,status
     if status goto register_errors
-    if max_balance and abs(suspense_balance)>max_balance goto register_errors
+    
+    oob_cmt$ = Translate!.getTranslation("AON_USE_SUSPENSE_FAILED")
+    
+rem --- If the suspense acccount is in use, valid, the transaction is not over the post limit, and the resulting
+:        balance is not over the balance limit, post the OOB to suspense 
 
+    if max_balance and abs(suspense_balance) + abs(balance) > max_balance maxbalance = 1
+    if cvs(suspense_account$,2)="" acctblank = 1 
+    if max_balance and abs(balance)>max_balance maxbalance = 1
+    if max_limit and abs(balance)>max_limit glmaxlimit = 1
+	if !acctblank and !maxbalance and !glmaxlimit then oob_cmt$ = Translate!.getTranslation("AON_USE_SUSPENSE_SUCCESS")
+    
+	xwk=fnblank(2)
+    OutVect!.addItem(oob_cmt$)
+    xwk=fnblank(3)
+	if acctblank or maxbalance or glmaxlimit then goto register_errors
+	
 rem --- Write to glw-11
 
     when$=glcontrol.trns_date$
+    if when$(1,6)<>glcontrol.current_year$+glcontrol.current_per$
+        when$=field(glcontrol$,"cur_per_end_"+glcontrol.current_per$)
+    endif
     ref1$=glcontrol.process_id$
     ref2$=glcontrol.gl_adt_no$
     ref3$=""
