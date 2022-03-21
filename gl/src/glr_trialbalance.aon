@@ -33,13 +33,14 @@ rem --- Assign input values to local variables
 
 rem --- Open/Lock files
 
-    files=5,begfile=1,endfile=files
+    files=6,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="gls_params",ids$[1]="GLS_PARAMS"
     files$[2]="glm-01",ids$[2]="GLM_ACCT"
     files$[3]="glm-02",ids$[3]="GLM_ACCTSUMMARY"
     files$[4]="glm-10",ids$[4]="GLM_ACCTBREAKS"
     files$[5]="gls_calendar",ids$[5]="GLS_CALENDAR"
+    files$[6]="gls_suspense",ids$[6]="GLS_SUSPENSE"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
@@ -48,11 +49,13 @@ rem --- Open/Lock files
     glm02_dev=channels[3]
     glm10_dev=channels[4]
     gls_calendar_dev=channels[5]
+    gls_suspense_dev=channels[6]
 
 rem --- Dimension string templates
 
     dim gls01a$:templates$[1],glm01a$:templates$[2],glm02a$:templates$[3]
     dim glm10a$:templates$[4],gls_calendar$:templates$[5]
+    dim gls_suspense$:templates$[6]
 
     acct_no_brk_length=dec(fattr(glm10a$,"acct_no_brk")(10,2))
     acct_bk_desc_length=dec(fattr(glm10a$,"acct_bk_desc")(10,2))
@@ -283,11 +286,38 @@ rem need partial underline here... took out u$
     OutVect!.addItem("")
     OutVect!.addItem(str(-(totals[4]+totals[5])))
     abc=fnblank(5)
+    
+    gosub suspense_account
 
 rem --- Return to menu
 
     goto std_exit
+suspense_account: rem - check suspense account balance
 
+rem --- Determine GL Suspense account balance -- the balance is calculated using a loop
+rem --- GLC_Balance required the presence GL control set
+    
+     
+    readrecord(gls_suspense_dev,key=firm_id$+"GL03",dom=*next)gls_suspense$
+    if gls_suspense.use_suspense$="Y"
+    
+ rem --- A loop is used to calculate the balance because the glc_balance required glcontrol
+ 
+        readrecord(glm02_dev,key=firm_id$+GLs_suspense.gl_account$+gls01a.current_year$,dom=*endif)glm02a$
+        for i = 1 to 13
+           balance=balance + num(field(glm02a$,"PERIOD_AMT_"+str(i:"00")))
+        next i
+        
+        if balance <> 0
+            abc=fnblank(8)
+            OutVect!.addItem("*** NOTE: " + Translate!.getTranslation("AON_SUSPENSE_ACCOUNT_NOT_ZERO") +  ".")
+            OutVect!.addItem("")
+            OutVect!.addItem("")
+            abc=fnblank(5)
+        endif
+    endif
+    return
+    
 subheadings: rem --- Subheading
 
     if subhead_count=0

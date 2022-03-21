@@ -32,7 +32,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=6,begfile=1,endfile=files
+    files=7,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="gls_params",ids$[1]="GLS_PARAMS"
     files$[2]="glm-01",ids$[2]="GLM_ACCT"
@@ -41,6 +41,7 @@ rem --- Open/Lock files
     files$[5]="glw-02",ids$[5]="GLW_FINSORT"
     options$[5]="LC"
     files$[6]="gls_calendar",ids$[6]="GLS_CALENDAR"
+    files$[7]="gls_suspense",ids$[7]="GLS_SUSPENSE"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
@@ -50,12 +51,15 @@ rem --- Open/Lock files
     glm10_dev=channels[4]
     glw02_dev=channels[5]
     gls_calendar_dev=channels[6]
+    gls_suspense_dev=channels[7]
+   
 
 rem --- Dimension string templates
 
     dim gls01a$:templates$[1],glm01a$:templates$[2],glm02a$:templates$[3]
     dim glm10a$:templates$[4],glw02a$:templates$[5],gls_calendar$:templates$[6]
-
+    dim gls_suspense$:templates$[7]
+    
     acct_no_brk_length=dec(fattr(glm10a$,"acct_no_brk")(10,2))
     acct_bk_desc_length=dec(fattr(glm10a$,"acct_bk_desc")(10,2))
 
@@ -227,8 +231,10 @@ rem --- and chart of accounts breaks.
         glw02a$=field(glw02a$)
         write record (glw02_dev) glw02a$
         total_recs=total_recs+1
+        
         if mod(total_recs,milestone)=0 then call stbl("+DIR_PGM")+"adc_progress.aon","S","","","","",0,0,milestone,meter_num,status
     wend
+
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
     wait 1; rem give first progress meter a chance to clear; less confusing to the eye
     
@@ -303,6 +309,7 @@ level_break: rem --- Account Break?
                 mtd=s[0]-s[2]
                 ytd=s[1]-s[3]
                 gosub account_break
+
                 if bs$="N" more=0 
              break
              case 3
@@ -355,6 +362,7 @@ calculate_balance: rem --- Calculate current balance
         endif
 
         if bs$="Y"
+      
         OutVect!.addItem(buffer$)
         OutVect!.addItem(ytd$)
         endif
@@ -372,7 +380,11 @@ accumulate_totals: rem --- Accumulate totals
 
 rem --- Totals
 
-    if bs$="N" goto std_exit
+    if bs$="N" 
+        abc=fnblank(3)
+        gosub suspense_account
+        goto std_exit
+    endif
     done=1
     gosub subtotals
     total$=Translate!.getTranslation("AON_CURRENT_PERIOD_RETAINED_EARNINGS")
@@ -385,8 +397,34 @@ rem --- Totals
     mtd=s[6]+s[8]
     ytd=s[7]+s[9]
     gosub account_break
+     abc=fnblank(2)
+    gosub suspense_account
     goto std_exit
 
+suspense_account: rem - check suspense account balance
+
+rem --- Determine GL Suspense account balance -- the balance is calculated using a loop
+rem --- GLC_Balance required the presence GL control set
+
+    readrecord(gls_suspense_dev,key=firm_id$+"GL03",dom=*next)gls_suspense$
+    if gls_suspense.use_suspense$="Y"
+    
+rem --- A loop is used to calculate the balance because the glc_balance required glcontrol
+
+        readrecord(glm02_dev,key=firm_id$+GLs_suspense.gl_account$+gls01a.current_year$,dom=*endif)glm02a$
+        for i = 1 to 13
+           balance=balance + num(field(glm02a$,"PERIOD_AMT_"+str(i:"00")))
+        next i
+        
+        if balance <> 0
+            title$ = "*** NOTE: " + Translate!.getTranslation("AON_SUSPENSE_ACCOUNT_NOT_ZERO")+"."
+            OutVect!.addItem(title$)
+            OutVect!.addItem("")
+            OutVect!.addItem("")
+        endif
+    endif
+    return
+    
 subheading: rem --- Subheading
 
     if bs$="Y" if pos(type$="12") return

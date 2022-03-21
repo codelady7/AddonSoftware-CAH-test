@@ -73,7 +73,7 @@ rem --- set rd_alias_id$, if needed, for DocOut Settings
 
 rem --- Open/Lock files
 
-    files=7,begfile=1,endfile=files
+    files=8,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="gls_params",ids$[1]="GLS_PARAMS"
     files$[2]="glm-01",ids$[2]="GLM_ACCT"
@@ -82,6 +82,7 @@ rem --- Open/Lock files
     files$[5]="gls_earnings",ids$[5]="GLS_EARNINGS"
     files$[6]="glt-04",ids$[6]="GLE_DAILYDETAIL"
     files$[7]="gls_calendar",ids$[7]="GLS_CALENDAR"
+    files$[8]="gls_suspense",ids$[8]="GLS_SUSPENSE"
     options$[4]="LC"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
@@ -93,12 +94,14 @@ rem --- Open/Lock files
     gls_earnings_dev=channels[5]
     glt04_dev=channels[6]
     gls_calendar_dev=channels[7]
+    gls_suspense_dev=channels[8]
 
 rem --- Dimension string templates
 
     dim gls01a$:templates$[1],glm01a$:templates$[2],glm02a$:templates$[3]
     dim glw03a$:templates$[4],gls01b$:templates$[5],gls_calendar$:templates$[7]
-
+    dim gls_suspense$:templates$[8]
+    
 rem --- Retrieve parameter records
 
     gls01a_key$=firm_id$+"GL00"
@@ -124,7 +127,25 @@ rem --- Retrieve parameter records
             goto std_exit_no_print
         endif
     endif
-
+    
+rem --- Determine GL Suspense account balance -- the balance is calculated using a loop
+rem --- GLC_Balance required the presence GL control set
+  
+    readrecord(gls_suspense_dev,key=firm_id$+"GL03",dom=*next)gls_suspense$
+    if gls_suspense.use_suspense$="Y"
+        readrecord(glm02_dev,key=firm_id$+GLs_suspense.gl_account$+gls01a.current_year$,dom=*endif)glm02a$
+        for i = 1 to 13
+           balance=balance + num(field(glm02a$,"PERIOD_AMT_"+str(i:"00")))
+        next i
+        
+        if balance <> 0
+            msg_id$="SUSP_NOT_ZERO_YR"
+            dim msg_tokens$[1]
+            gosub disp_message 
+            if msg_opt$="O" goto std_exit
+        endif
+    endif
+    
     displayColumns!=new DisplayColumns(firm_id$)
 
 rem --- Check Daily Detail file
