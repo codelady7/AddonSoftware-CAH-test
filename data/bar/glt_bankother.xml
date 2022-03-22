@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.glt_bankother">20060609</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.glt_bankother">20220322</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankother">20220322</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankother">125112</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankother">130422</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glt_bankother"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glt_bankother">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glt_bankother"></DD_ATTR_DKNM>
@@ -356,7 +356,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.glt_bankother003"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.glt_bankother003">Number</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.glt_bankother003"></DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.glt_bankother003"></DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.glt_bankother003">1</DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.glt_bankother003"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.glt_bankother003"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.glt_bankother003"></DD_ATTR_MAXV>
@@ -611,7 +611,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.glt_bankother008"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.glt_bankother008"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.glt_bankother008"></DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.glt_bankother008"></DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.glt_bankother008">1</DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.glt_bankother008"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.glt_bankother008"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.glt_bankother008"></DD_ATTR_MAXV>
