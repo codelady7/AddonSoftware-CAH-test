@@ -54,6 +54,7 @@ ctl_name$="APE_MANCHECKHDR.VENDOR_ID"
 gosub disable_fields
 if callpoint!.getColumnData("APE_MANCHECKHDR.TRANS_TYPE")="M"
 	gosub calc_tots
+	gosub disp_tots
 	callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_INV",str(tinv))
    	callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_DISC",str(tdisc))
 	callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_RETEN",str(tret))
