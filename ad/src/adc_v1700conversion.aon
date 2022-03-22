@@ -856,6 +856,10 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                         rem --- Write new GLS_CALENDAR record
                         glsCalendar$=field(glsCalendar$)
                         writerecord(glsCalendar_dev)glsCalendar$
+
+                        rem --- Remove record with blank year created by Online Copy Job    
+                        glsCalendar.year$=""
+                        remove(glsCalendar_dev,key=glsCalendar.firm_id$+glsCalendar.year$,dom=*next)
                     wend
                     write(convCtrlFileChan)task$+"=Completed"
                     
