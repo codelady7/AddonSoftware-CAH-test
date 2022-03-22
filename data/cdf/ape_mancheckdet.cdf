@@ -100,11 +100,6 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 			call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"APT_INVOICEHDR","BUILD",table_chans$[all],apt_invoicehdr_key$,filter_defs$[all]
 
 			if apt_invoicehdr_key$ <>"" then
-				call stbl("+DIR_SYP")+"bac_key_template.bbj","APT_INVOICEHDR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
-				dim rd_key$:key_tpl$
-				apt_invoicehdr_key$=apt_invoicehdr_key$+pad(" ",len(rd_key$))
-				rd_key$=apt_invoicehdr_key$(1,len(rd_key$))
-
 				apt01_dev = fnget_dev("APT_INVOICEHDR")
 				dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
 
@@ -114,73 +109,158 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 				ape22_dev1 = user_tpl.ape22_dev1
 				dim ape22a$:fnget_tpl$("APE_MANCHECKDET")
 
-				call stbl("+DIR_SYP")+"bac_key_template.bbj",
-:					"APE_MANCHECKDET",
-:					"AO_VEND_INV",
-:					ape22_key1_tmpl$,
-:					table_chans$[all],
-:					status$
+				call stbl("+DIR_SYP")+"bac_key_template.bbj","APT_INVOICEHDR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+				dim apt01_key$:key_tpl$
 
-			rem --- Get open invoice record
+				call stbl("+DIR_SYP")+"bac_key_template.bbj","APE_MANCHECKDET","AO_VEND_INV",ape22_key1_tmpl$,table_chans$[all],status$
+				dim ape22_key$:ape22_key1_tmpl$
 
-				while 1
-					read record (apt01_dev, key=rd_key$, dom=*break) apt01a$
-					print "---found rd_key$ (apt-01)..."; rem debug
+				rem --- Process selected invoices
+				detailRecWritten=0
+				totalInvAmt=0
+				totalDiscAmt=0
+				totalRetAmt=0
+				while len(apt_invoicehdr_key$)
+					apt01_key$=apt_invoicehdr_key$(1,pos("^"=apt_invoicehdr_key$)-1)
+					apt_invoicehdr_key$=apt_invoicehdr_key$(pos("^"=apt_invoicehdr_key$)+1)
 
+					rem --- Is invoice already in check register?
+					read record (apt01_dev, key=apt01_key$, dom=*continue) apt01a$
 					if apt01a.selected_for_pay$="Y"
-						callpoint!.setMessage("AP_INV_ON_CHK_REGSTR")
-						break
+						msg_id$="AP_INV_ON_CHK_REGSTR"
+						dim msg_tokens$[1]
+						msg_tokens$[1]=cvs(apt01a.ap_inv_no$,2)
+						gosub disp_message
+						continue
 					endif
 
-					dim ape22_key$:ape22_key1_tmpl$
+					rem --- Is invoice on hold?
+					if apt01a.hold_flag$ = "Y" then
+						msg_id$="AP_INV_HOLD2"
+						dim msg_tokens$[1]
+						msg_tokens$[1]=cvs(apt01a.ap_inv_no$,2)
+						gosub disp_message
+						continue
+					endif
+
+					rem --- Is invoice already in ape_mancheckdet for a different check?
 					read (ape22_dev1, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, knum="AO_VEND_INV", dom=*next)
 					ape22_key$ = key(ape22_dev1, end=*next)
-
 					if pos(firm_id$+ap_type$+vendor_id$+apt01a.ap_inv_no$ = ape22_key$) = 1 and
 :						ape22_key.bnk_acct_cd$+ape22_key.check_no$ <> callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD")+callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
 :					then
-						callpoint!.setMessage("AP_INV_IN_USE:Manual Check")
-						break
+						msg_id$="AP_INV_IN_MANCHCK"
+						dim msg_tokens$[1]
+						msg_tokens$[1]=cvs(apt01a.ap_inv_no$,2)
+						gosub disp_message
+						continue
 					endif
 
-					print "---Found an ape22 key..."; rem debug
+					rem --- Is invoice already in the grid?
+					recVect!=GridVect!.getItem(0)
+					dim gridrec$:dtlg_param$[1,3]
+					numrecs=recVect!.size()
+					if numrecs>0
+						for reccnt=0 to numrecs-1
+							gridrec$=recVect!.getItem(reccnt)
+							if gridrec.ap_inv_no$=apt01_key.ap_inv_no$ then
+								msg_id$="AP_INV_IN_DTL_GRID"
+								dim msg_tokens$[1]
+								msg_tokens$[1]=cvs(apt01_key.ap_inv_no$,2)
+								gosub disp_message
+								continue
+							endif
+						next reccnt
+					endif
 
-				rem --- Set invoice as default
-			
-					rem callpoint!.setTableColumnAttribute("APE_MANCHECKDET.AP_INV_NO","DFLT",apt01a.ap_inv_no$)
-					callpoint!.setColumnData("APE_MANCHECKDET.AP_INV_NO",apt01a.ap_inv_no$,1)
-					callpoint!.setFocus(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_NO",1)
+					rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
+					ap_inv_no$=apt01_key.ap_inv_no$
+					ap_dist_code$=apt01a.ap_dist_code$
+					gosub validateDistCd
+					if badDistCd then continue
+					endif
 
-				rem --- Total open invoice amounts
-
-					apt01_key$ = firm_id$+ap_type$+vendor_id$+apt01a.ap_inv_no$
+					rem --- Total open invoice amounts
 					inv_amt    = num(apt01a.invoice_amt$)
 					disc_amt   = num(apt01a.discount_amt$)
 					ret_amt    = num(apt01a.retention$)
 
 					apt11_key$=apt01_key$
 					read(apt11_dev, key=apt11_key$, dom=*next)
-
 					while 1
 						read record(apt11_dev, end=*break) apt11a$
-
-						if pos(apt11_key$ = apt11a$) = 1 then
-							print "---Found an apt11 key..."; rem debug
-							inv_amt  = inv_amt  + num(apt11a.trans_amt$)
-							disc_amt = disc_amt + num(apt11a.trans_disc$)
-							ret_amt  = ret_amt  + num(apt11a.trans_ret$)
-						else
-							break
-						endif
+						if pos(apt11_key$ = apt11a$)<> 1 then break
+						inv_amt  = inv_amt  + num(apt11a.trans_amt$)
+						disc_amt = disc_amt + num(apt11a.trans_disc$)
+						ret_amt  = ret_amt  + num(apt11a.trans_ret$)
 					wend
+					totalInvAmt=totalInvAmt+inv_amt
+					totalDiscAmt=totalDiscAmt+disc_amt
+					totalRetAmt=totalRetAmt+ret_amt
 
-				rem --- Totals
-
-					gosub calc_tots
-					gosub disp_tots
-
-					break
+					rem --- Write ape_mancheckdet (ope-22) record
+					redim ape22a$
+					ape22a.firm_id$=firm_id$
+					ape22a.ap_type$=ap_type$
+					ape22a.bnk_acct_cd$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+					ape22a.check_no$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
+					ape22a.vendor_id$=vendor_id$
+					ape22a.ap_inv_no$=apt01a.ap_inv_no$
+					ape22a.sequence_00$="00"
+					ape22a.ap_dist_code$=apt01a.ap_dist_code$
+					ape22a.invoice_date$=apt01a.invoice_date$
+					ape22a.invoice_amt=inv_amt
+					ape22a.discount_amt=disc_amt
+					ape22a.retention=ret_amt
+					ape22a.net_paid_amt=inv_amt-disc_amt
+					ape22a.batch_no$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BATCH_NO")
+					ape22a$=field(ape22a$)
+					writerecord(ape22_dev1)ape22a$
+					detailRecWritten=1
 				wend
+
+				rem --- Write ape_mancheckhdr (ope-02) record
+				if detailRecWritten then
+					ape02_dev = fnget_dev("APE_MANCHECKHDR")
+					dim ape02a$:fnget_tpl$("APE_MANCHECKHDR")
+					ape02a.firm_id$=firm_id$
+					ape02a.ap_type$=ap_type$
+					ape02a.bnk_acct_cd$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+					ape02a.check_no$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
+					ape02a.vendor_id$=vendor_id$
+					ape02a.trans_type$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.TRANS_TYPE")
+					ape02a.check_date$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_DATE")
+					ape02a.vendor_name$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.VENDOR_NAME")
+					ape02a.batch_no$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.BATCH_NO")
+					ape02a.retain_approvals$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.RETAIN_APPROVALS")
+					ape02a$=field(ape02a$)
+					writerecord(ape02_dev)ape02a$
+					batch_key$=ape02a.firm_id$+ape02a.batch_no$+ape02a.ap_type$+ape02a.bnk_acct_cd$+
+:						ape02a.check_no$+ape02a.vendor_id$
+					extractrecord (ape02_dev, key=batch_key$)ape02a$; rem Advisory Locking
+
+					rem --- Make sure all grid entries have been written to file.
+					recVect!=GridVect!.getItem(0)
+					dim gridrec$:dtlg_param$[1,3]
+					numrecs=recVect!.size()
+					if numrecs>0
+						for reccnt=0 to numrecs-1
+							gridrec$=recVect!.getItem(reccnt)
+							if cvs(gridrec.ap_inv_no$,2)<>"" then
+								gridrec$=field(gridrec$)
+								writerecord(ape22_dev1)gridrec$
+							endif
+						next reccnt
+					endif
+
+					rem --- Refresh this updated Manual Check Entry
+					gosub calc_tots
+					tinv=tinv+totalInvAmt
+					tdisc=tdisc+totalDiscAmt
+					tret=tret+totalRetAmt
+					gosub disp_tots
+					callpoint!.setStatus("REFGRID")
+				endif
 			endif
 		else
 			callpoint!.setMessage("AP_NO_TYPE_OR_VENDOR")
@@ -233,6 +313,7 @@ rem --- Displaye invoice images in the browser
 [[APE_MANCHECKDET.AP_DIST_CODE.AVAL]]
 rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 	ap_dist_code$=callpoint!.getUserInput()
+	ap_in_no$=callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
 	gosub validateDistCd
 	if badDistCd then
 		callpoint!.setStatus("ABORT")
@@ -306,7 +387,10 @@ rem --- Look for Open Invoice
 	rem --- Open Invoice record found
 
 		if apt01a.selected_for_pay$ = "Y" then
-			callpoint!.setMessage("AP_INV_ON_CHK_REGSTR")
+			msg_id$="AP_INV_ON_CHK_REGSTR"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=apt01a.ap_inv_no$
+			gosub disp_message
 			callpoint!.setStatus("ABORT-RECORD:["+ape02_key$+"]")
 			goto end_of_inv_aval
 		endif
@@ -316,8 +400,6 @@ rem --- Look for Open Invoice
 			callpoint!.setStatus("ABORT-RECORD:["+ape02_key$+"]")
 			goto end_of_inv_aval		
 		endif
-
-		print "---not select for pay; not on hold..."; rem debug
 
 		rem --- Is invoice already in ape_mancheckdet?
 		dim ape22_key$:ape22_key1_tmpl$
@@ -333,6 +415,7 @@ rem --- Look for Open Invoice
 
 		rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 		ap_dist_code$=apt01a.ap_dist_code$
+		ap_inv_no$=invoice_no$
 		gosub validateDistCd
 		if badDistCd then
 			callpoint!.setStatus("ABORT")
@@ -411,6 +494,7 @@ rem --- Look for Open Invoice
 
 		rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 		ap_dist_code$=user_tpl.dflt_dist_cd$
+		ap_inv_no$=invoice_no$
 		gosub validateDistCd
 		if badDistCd then
 			callpoint!.setStatus("ABORT")
@@ -704,12 +788,12 @@ rem --- GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 		if cvs(bnkAcctCd$,2)<>cvs(glm05a.bnk_acct_cd$,2) then
 			badDistCd=1
 			call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
-
 			msg_id$="AP_BAD_DIST_CD"
-			dim msg_tokens$[3]
+			dim msg_tokens$[4]
 			msg_tokens$[1]=ap_dist_code$
 			msg_tokens$[2]=fnmask$(apcDistribution.gl_cash_acct$(1,gl_size),m0$)
 			msg_tokens$[3]=cvs(bnkAcctCd$,2)
+			msg_tokens$[4]=cvs(ap_inv_no$,2)
 			gosub disp_message
 		endif
 	endif
