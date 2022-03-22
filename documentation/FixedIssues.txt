@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-03-16
+ Report Date:   2022-03-22
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -155,3 +155,16 @@ Modified: data/bar/ive_transdet.xml
 Modified: data/cdf/ive_transdet.cdf
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 08e84a9b9406ff811783e657814a76d3e833811d
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 3/22/2022 4:21:56 PM
+Message:
+Bug 10381: Changed Table Alias to IVM_ITEMWHSE for Query Definition
+IV_ITEM_WHSE_LK. Added a callpoint!.setFocus(...) after the custom query
+in POE_PODET ITEM_ID BINQ.
+----
+Modified: data/bar/poe_podet.xml
+Modified: data/cdf/poe_podet.cdf
+Modified: data/sync/adm_query~[01007514AD].xml
