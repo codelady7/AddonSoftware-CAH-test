@@ -89,6 +89,15 @@ rem --- Make grid multi-select with pop-up menu
 	grid!.setSelectionMode(grid!.GRID_SELECT_ROW)
 	grid!.setPopupMenu(popUpMenu!)
 
+rem --- Make Number, Type, Trans Date, Amount, Cash Rec Cd and Code columns sortable by clicking on the Header
+	grid!.setColumnUserSortable(0,1)
+	grid!.setColumnUserSortable(1,1)
+	grid!.setColumnUserSortable(2,1)
+	grid!.setColumnUserSortable(4,1)
+	grid!.setColumnUserSortable(5,1)
+	grid!.setColumnUserSortable(7,1)
+	grid!.setSortByMultipleColumns(1)
+
 [[GLT_BANKOTHER.TRANS_NO.AVAL]]
 rem --- Has the trans_no changed?
 	trans_no$=callpoint!.getUserInput()
