@@ -513,6 +513,7 @@ rem --- Inventory Item/Whse Lookup
 	if cvs(ivmItemWhse_key$,2)<>"" and ivmItemWhse_key.item_id$<>callpoint!.getColumnData("IVE_TRANSDET.ITEM_ID") then 
 		callpoint!.setColumnData("IVE_TRANSDET.ITEM_ID",ivmItemWhse_key.item_id$,1)
 		callpoint!.setStatus("MODIFIED")
+		callpoint!.setFocus(num(callpoint!.getValidationRow()),"IVE_TRANSDET.ITEM_ID",1)
 	endif
 
 	callpoint!.setStatus("ACTIVATE-ABORT")
