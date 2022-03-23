@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apm_vendhist"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apm_vendhist">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apm_vendhist">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apm_vendhist">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apm_vendhist">22.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendhist">D879CB11C862689876536F5DAEAA40A8</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendhist">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendhist">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20220309</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20220309</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">085444</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendhist">20220323</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendhist">20220323</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendhist">155050</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendhist"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apm_vendhist">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendhist"></DD_ATTR_DKNM>
@@ -124,7 +124,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist001">Fiscal Yr Purchases</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist001">+1</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist001">13</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist001">14</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.apm_vendhist001"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.apm_vendhist001"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.apm_vendhist001">2012</DD_ATTR_CTLI>
@@ -138,7 +138,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist002">Fiscal Yr Discounts</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist002">+12</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist002">-4</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist002">17</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist002">18</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.apm_vendhist002"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.apm_vendhist002"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.apm_vendhist002">2016</DD_ATTR_CTLI>
@@ -152,7 +152,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist003">Fiscal Yr Payments</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist003">+12</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist003">-4</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist003">21</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist003">22</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.apm_vendhist003"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.apm_vendhist003"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.apm_vendhist003">2020</DD_ATTR_CTLI>
@@ -166,7 +166,7 @@
 			<DD_ATTR_LABL id="ddm_table_labl.apm_vendhist004">Calendar Yr Payments</DD_ATTR_LABL>
 			<DD_ATTR_CTLX id="ddm_table_labl.apm_vendhist004">+12</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_labl.apm_vendhist004">-4</DD_ATTR_CTLY>
-			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist004">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_labl.apm_vendhist004">26</DD_ATTR_TIND>
 			<DD_ATTR_GHDR id="ddm_table_labl.apm_vendhist004"></DD_ATTR_GHDR>
 			<DD_ATTR_TABG id="ddm_table_labl.apm_vendhist004"></DD_ATTR_TABG>
 			<DD_ATTR_CTLI id="ddm_table_labl.apm_vendhist004">2024</DD_ATTR_CTLI>
@@ -206,7 +206,7 @@
 		<RECORD id="ddm_table_tpls.apm_vendhist">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apm_vendhist">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apm_vendhist">apm-02</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.apm_vendhist">firm_id:c(2),vendor_id:c(6),ap_type:c(2),ap_dist_code:c(2),payment_grp:c(2),ap_terms_code:c(2),reserved_str:c(18),lstinv_date:c(8),lstpay_date:c(8),gl_account:c(10),irs1099_type_box:c(6),open_invs:n(7*),open_ret:n(7*),ytd_purch:n(7*),pyr_purch:n(7*),nyr_purch:n(7*),ytd_discs:n(7*),pri_yr_discs:n(7*),nyr_disc:n(7*),ytd_payments:n(7*),pyr_payments:n(7*),nyr_payments:n(7*),cur_cal_pmts:n(7*),pri_cal_pmt:n(7*),nxt_cyr_pmts:n(7*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.apm_vendhist">firm_id:c(2),vendor_id:c(6),ap_type:c(2),ap_dist_code:c(2),payment_grp:c(2),ap_terms_code:c(2),reserved_str:c(18),lstinv_date:c(8),lstpay_date:c(8),gl_account:c(10),irs1099_type_box:c(6),open_invs:n(7*),open_ret:n(7*),ytd_purch:n(7*),pyr_purch:n(7*),nyr_purch:n(7*),ytd_discs:n(7*),pri_yr_discs:n(7*),nyr_disc:n(7*),ytd_payments:n(7*),pyr_payments:n(7*),nyr_payments:n(7*),cur_cal_pmts:n(7*),pri_cal_pmt:n(7*),nxt_cyr_pmts:n(7*),one_inv_per_chk:c(1*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -726,7 +726,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist007"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist007">29</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist007">30</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist007"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist007">RESERVED_STR</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist007"></DD_ATTR_FONT>
@@ -777,7 +777,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist008">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist008">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist008">LSTINV_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist008"></DD_ATTR_FONT>
@@ -828,7 +828,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist009">12</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist009">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist009">LSTPAY_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist009"></DD_ATTR_FONT>
@@ -981,7 +981,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist012">9</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist012">10</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist012">OPEN_INVS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist012"></DD_ATTR_FONT>
@@ -1032,7 +1032,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist013">10</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist013">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist013">OPEN_RET</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist013"></DD_ATTR_FONT>
@@ -1083,7 +1083,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist014">14</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist014">15</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist014">YTD_PURCH</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist014"></DD_ATTR_FONT>
@@ -1134,7 +1134,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist015"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist015"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist015"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist015">15</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist015">16</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist015"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist015">PYR_PURCH</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist015"></DD_ATTR_FONT>
@@ -1185,7 +1185,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist016"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist016">16</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist016">17</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist016"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist016">NYR_PURCH</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist016"></DD_ATTR_FONT>
@@ -1236,7 +1236,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist017"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist017"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist017"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist017">18</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist017">19</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist017"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist017">YTD_DISCS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist017"></DD_ATTR_FONT>
@@ -1287,7 +1287,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist018"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist018"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist018"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist018">19</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist018">20</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist018"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist018">PRI_YR_DISCS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist018"></DD_ATTR_FONT>
@@ -1338,7 +1338,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist019"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist019"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist019"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist019">20</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist019">21</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist019"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist019">NYR_DISC</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist019"></DD_ATTR_FONT>
@@ -1389,7 +1389,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist020"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist020"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist020"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist020">22</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist020">23</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist020"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist020">YTD_PAYMENTS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist020"></DD_ATTR_FONT>
@@ -1440,7 +1440,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist021"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist021"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist021"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist021">23</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist021">24</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist021"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist021">PYR_PAYMENTS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist021"></DD_ATTR_FONT>
@@ -1491,7 +1491,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist022"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist022"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist022"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist022">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist022">25</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist022"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist022">NYR_PAYMENTS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist022"></DD_ATTR_FONT>
@@ -1542,7 +1542,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist023"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist023"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist023"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist023">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist023">27</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist023"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist023">CUR_CAL_PMTS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist023"></DD_ATTR_FONT>
@@ -1593,7 +1593,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist024"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist024">27</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist024">28</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist024"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist024">PRI_CAL_PMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist024"></DD_ATTR_FONT>
@@ -1644,7 +1644,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist025"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist025"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist025"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist025">28</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist025">29</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist025"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist025">NXT_CYR_PMTS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist025"></DD_ATTR_FONT>
@@ -1657,6 +1657,57 @@
 			<DD_ATTR_RADG id="ddm_table_cols.apm_vendhist025"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.apm_vendhist025">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apm_vendhist025"></DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.apm_vendhist026">
+			<DD_TABLE_ALIAS id="ddm_table_cols.apm_vendhist026">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.apm_vendhist026">026</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.apm_vendhist026">GENERIC_CHK     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.apm_vendhist026">ONE_INV_PER_CHK </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.apm_vendhist026">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apm_vendhist026">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.apm_vendhist026">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.apm_vendhist026">0A</DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.apm_vendhist026"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.apm_vendhist026"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.apm_vendhist026"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.apm_vendhist026">20220323</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apm_vendhist026">20220323</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.apm_vendhist026"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.apm_vendhist026"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.apm_vendhist026">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.apm_vendhist026"></DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.apm_vendhist026"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.apm_vendhist026"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.apm_vendhist026"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_vendhist026">One Invoice per Check</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apm_vendhist026">One Inv per Chk</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.apm_vendhist026">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.apm_vendhist026"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.apm_vendhist026"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.apm_vendhist026"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.apm_vendhist026"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.apm_vendhist026"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendhist026"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendhist026"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.apm_vendhist026"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendhist026">9</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.apm_vendhist026"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendhist026">ONE_INV_PER_CHK</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.apm_vendhist026"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.apm_vendhist026"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.apm_vendhist026">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.apm_vendhist026">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apm_vendhist026"></DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.apm_vendhist026"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.apm_vendhist026">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.apm_vendhist026"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
@@ -1778,6 +1829,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.apm_vendhistnxt_cyr_pmtsl">APM_VENDHIST    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.apm_vendhistnxt_cyr_pmtsl">NXT_CYR_PMTS    </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.apm_vendhistnxt_cyr_pmtsl">L</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.apm_vendhistone_inv_per_chko">
+			<DD_TABLE_ALIAS id="ddm_column_opts.apm_vendhistone_inv_per_chko">APM_VENDHIST    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.apm_vendhistone_inv_per_chko">ONE_INV_PER_CHK </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.apm_vendhistone_inv_per_chko">O</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
@@ -3081,6 +3137,58 @@
 			<DD_ATTR_OEMD id="ddm_elements.nxt_cyr_pmts"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.nxt_cyr_pmts"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.nxt_cyr_pmts"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.generic_chk">
+			<DD_DATA_NAME id="ddm_elements.generic_chk">GENERIC_CHK     </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.generic_chk">Generic checkbox</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.generic_chk">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.generic_chk">1</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.generic_chk"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.generic_chk"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.generic_chk">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.generic_chk">AD </ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.generic_chk"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.generic_chk">20080326</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.generic_chk">20080326</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.generic_chk"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.generic_chk"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.generic_chk">Y;N</DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.generic_chk"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.generic_chk"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.generic_chk">C</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.generic_chk"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.generic_chk"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.generic_chk"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.generic_chk"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.generic_chk"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.generic_chk"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.generic_chk"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.generic_chk"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.generic_chk"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.generic_chk"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.generic_chk">Generic checkbox</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.generic_chk">Generic checkbox</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.generic_chk"></DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.generic_chk"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.generic_chk"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.generic_chk"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.generic_chk"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.generic_chk"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.generic_chk"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.generic_chk"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.generic_chk"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.generic_chk"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.generic_chk">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.generic_chk"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.generic_chk"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.generic_chk"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.generic_chk"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.generic_chk"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.generic_chk"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.generic_chk"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.generic_chk"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.generic_chk"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.generic_chk"></DD_ATTR_CASB>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_element_cmts">
