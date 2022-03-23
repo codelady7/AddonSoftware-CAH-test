@@ -233,6 +233,7 @@ rem --- Do custom query
 		gosub calc_grid_tots
 		gosub disp_totals
 		callpoint!.setStatus("MODIFIED")
+		callpoint!.setFocus(num(callpoint!.getValidationRow()),"POE_INVSEL.PO_NO",1)
 	endif
 	callpoint!.setStatus("ACTIVATE-ABORT")
 
