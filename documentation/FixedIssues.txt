@@ -168,3 +168,32 @@ in POE_PODET ITEM_ID BINQ.
 Modified: data/bar/poe_podet.xml
 Modified: data/cdf/poe_podet.cdf
 Modified: data/sync/adm_query~[01007514AD].xml
+
+=======================================================================================================================================
+Revision: dc7b1a231e87e3cf214c819b1783142edc6819d6
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 3/22/2022 5:43:37 PM
+Message:
+Bug 10383: Used callpoint!.setFocus(...) to allow description display
+following a custom query lookup in a grid BINQ callpoint.
+----
+Modified: data/bar/ive_transdet.xml
+Modified: data/bar/mpe_pegging.xml
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/bar/poe_invsel.xml
+Modified: data/bar/poe_orddet.xml
+Modified: data/bar/poe_recdet.xml
+Modified: data/bar/poe_reqdet.xml
+Modified: data/bar/sfe_womatdtl.xml
+Modified: data/bar/sfe_womatisd.xml
+Modified: data/cdf/ive_transdet.cdf
+Modified: data/cdf/mpe_pegging.cdf
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
+Modified: data/cdf/poe_invsel.cdf
+Modified: data/cdf/poe_orddet.cdf
+Modified: data/cdf/poe_recdet.cdf
+Modified: data/cdf/poe_reqdet.cdf
+Modified: data/cdf/sfe_womatdtl.cdf
+Modified: data/cdf/sfe_womatisd.cdf
