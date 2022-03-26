@@ -375,6 +375,14 @@ if pos(callpoint!.getColumnData("APE_MANCHECKHDR.TRANS_TYPE")="RV")<>0
 	callpoint!.setStatus("ABORT")
 endif
 
+rem --- Is only one invoice per check allowed?
+	apm02_dev=fnget_dev("APM_VENDHIST")				
+	dim apm02a$:fnget_tpl$("APM_VENDHIST")
+	vendor_id$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
+	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+	readrecord(apm02_dev,key=firm_id$+vendor_id$+ap_type$,dom=*next)apm02a$
+	callpoint!.setDevObject("oneInvPerChk",apm02a.one_inv_per_chk$)
+
 [[APE_MANCHECKHDR.BSHO]]
 rem --- Disable ap type control if param for multi-types is N
 

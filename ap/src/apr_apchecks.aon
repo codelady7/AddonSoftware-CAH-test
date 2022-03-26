@@ -163,7 +163,7 @@ rem --- Set Report Name & Subreport directory
 	
 rem --- Open/Lock files
 
-    files=16,begfile=1,endfile=files
+    files=17,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",  ids$[1]="APS_PARAMS"
     files$[2]="ape-04",      ids$[2]="APE_CHECKS"
@@ -181,6 +181,7 @@ rem --- Open/Lock files
     files$[14]="apt_invapproval",ids$[14]="APT_INVAPPROVAL"
     files$[15]="aps_ach",    ids$[15]="APS_ACH"
     files$[16]="adc_bankacctcode", ids$[16]="ADC_BANKACCTCODE"
+    files$[17]="apm-02",      ids$[17]="APM_VENDHIST"
 	
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
     if status goto all_done
@@ -201,6 +202,7 @@ rem --- Open/Lock files
     apt_invapproval_dev=channels[14]
     apsACH_dev=channels[15]
     adcBnkAcct_dev=channels[16]
+    apm02_dev=channels[17]
 
 rem --- Dimension string templates
 
@@ -209,7 +211,7 @@ rem --- Dimension string templates
     dim apt02a$:templates$[7],apw01a$:templates$[8],aps01b$:templates$[9]
 	dim apw_chkprn$:templates$[10],adxlocks$:templates$[11],payauth$:templates$[12]
     dim apm_approvers$:templates$[13],apt_invapproval$:templates$[14],apsACH$:templates$[15]
-    dim adcBnkAcct$:templates$[16]
+    dim adcBnkAcct$:templates$[16],apm02a$:templates$[17]
 
 rem --- Assign form input values to local variables
 
@@ -437,7 +439,13 @@ rem --- Breaks
         endif
 
         if ape04a.ap_type$<>prev_aptype_t0$ gosub ap_type_break
-        if ape04a.ap_type$+ape04a.vendor_id$<>prev_aptype_vend_t1$ gosub new_vendor
+        if ape04a.ap_type$+ape04a.vendor_id$<>prev_aptype_vend_t1$ then
+            gosub new_vendor
+        else
+            rem --- If only one invoice per check is allowed, treat each invoice for the vendor as a new vendor.
+            if one_inv_per_chk$="Y" then gosub new_vendor
+        endif
+        prev_invoice$=ape04a.ap_inv_no$
         if restart$="Y" and ach_payment$="Y" then continue 
 
         gosub inv_detail
@@ -1196,14 +1204,16 @@ rem --- using the current check number and firm_id$ + prev_aptype_vend_t1$ (ap t
             while 1
                 extract record (ape04_dev2,end=*break) ape04b$;rem Advisory Locking
                 if pos(firm_id$+prev_aptype_vend_t1$=ape04b$)<>1 then read (ape04_dev2); break
+                if one_inv_per_chk$="Y" and ape04b.ap_inv_no$<>prev_invoice$ then
+                    read(ape04_dev2)
+                    continue
+                endif
                 ape04b.check_no$ = check_no$
                 ape04b$ = field(ape04b$)
                 write record (ape04_dev2) ape04b$
             wend
         endif
     endif
-
-vendor_header:
 
     if do_vend_header then
         dim t[3]
@@ -1217,6 +1227,10 @@ vendor_header:
         find record (apm01_dev,key=firm_id$+ape04a.vendor_id$,dom=*next) apm01a$
         address$(1)=apm01a.addr_line_1$+apm01a.addr_line_2$+apm01a.city$+apm01a.state_code$+apm01a.zip_code$
 		vend_name$=apm01a.vendor_name$
+
+        redim apm02a$
+        findrecord(apm02_dev,key=firm_id$+ape04a.vendor_id$+ape04a.ap_type$,dom=*next)apm02a$
+        one_inv_per_chk$=apm02a.one_inv_per_chk$
 
         rem --- Is vendor being paid via ACH?
         if ach_allowed and apm01a.payment_type$="A" then

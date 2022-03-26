@@ -84,6 +84,7 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 
 		rem --- Select an open invoice
 		if cvs(ap_type$, 2) <> "" and cvs(vendor_id$, 2) <> "" then
+
 			dim filter_defs$[4,2]
 			filter_defs$[1,0]="APT_INVOICEHDR.FIRM_ID"
 			filter_defs$[1,1]="='"+firm_id$+"'"
@@ -123,6 +124,18 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 				while len(apt_invoicehdr_key$)
 					apt01_key$=apt_invoicehdr_key$(1,pos("^"=apt_invoicehdr_key$)-1)
 					apt_invoicehdr_key$=apt_invoicehdr_key$(pos("^"=apt_invoicehdr_key$)+1)
+
+					rem --- Warn if only one invoice per check allowed
+					if detailRecWritten then
+						msg_id$="AP_ONE_INV_PER_CHK"
+						dim msg_tokens$[2]
+						msg_tokens$[1]=cvs(ap_type$,2)
+						msg_tokens$[2]=vendor_id$
+						gosub disp_message
+
+						rem --- Stop processing additional selected invoices
+						break
+					endif
 
 					rem --- Is invoice already in check register?
 					read record (apt01_dev, key=apt01_key$, dom=*continue) apt01a$
@@ -515,7 +528,6 @@ end_of_inv_aval:
 
 [[APE_MANCHECKDET.AP_INV_NO.BINP]]
 rem --- Should Open Invoice button be enabled?
-
 	trans_type$ = callpoint!.getHeaderColumnData("APE_MANCHECKHDR.TRANS_TYPE")
 	invoice_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
 
@@ -523,6 +535,25 @@ rem --- Should Open Invoice button be enabled?
 		callpoint!.setOptionEnabled("OINV",1)
 	else
 		callpoint!.setOptionEnabled("OINV",0)
+	endif
+
+rem --- Is only one invoice per check allowed?
+	if cvs(invoice_no$, 2) = "" and callpoint!.getDevObject("oneInvPerChk")="Y" then
+		recVect!=GridVect!.getItem(0)
+		if recVect!.size()>1 then
+			rem --- Disable Open Invoice button
+			callpoint!.setOptionEnabled("OINV",0)
+
+			rem --- Warn only one invoice allowed
+			msg_id$="AP_ONE_INV_PER_CHK"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=cvs(callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE"),2)
+			msg_tokens$[2]=callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")
+			gosub disp_message
+
+			rem --- Set focus on 1st cell of 1st row
+			callpoint!.setFocus(0,"APE_MANCHECKDET.AP_INV_NO",0)
+		endif
 	endif
 
 [[APE_MANCHECKDET.AREC]]

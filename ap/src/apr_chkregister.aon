@@ -346,7 +346,7 @@ rem --- Process apw_checkinvoice (apw01_dev) twice. First for normal printed che
         read (apw01_dev,key=firm_id$,dom=*next)
     
         rem --- Read next Check Detail (apw-01) record
- 
+
         while moreheaders
               k$=key(apw01_dev,end=*break)
               if pos(firm_id$=k$)<>1 break
@@ -409,6 +409,11 @@ rem --- Process apw_checkinvoice (apw01_dev) twice. First for normal printed che
                           ref2$=apw01a.ap_inv_no$
                           ref3$=apw01a.check_no$
                           if multitypes ref3$=ref3$+" "+apw01a.ap_type$
+
+                          redim apm02a$
+                          findrecord(apm02_dev,key=firm_id$+ape04a.vendor_id$+ape04a.ap_type$,dom=*next)apm02a$
+                          one_inv_per_chk$=apm02a.one_inv_per_chk$
+
                           break
                     wend
     
@@ -540,8 +545,8 @@ rem --- Process apw_checkinvoice (apw01_dev) twice. First for normal printed che
                        gosub glrecap
                     endif
     
-                    rem --- Loop back for next invoice detail for this check
-    
+                    rem --- Loop back for next invoice detail for this check, unless only one invoice per check is allowed.
+                    if one_inv_per_chk$="Y" then break
               wend
               if notfound and first continue
     

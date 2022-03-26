@@ -180,6 +180,7 @@ open_invoice: rem --- Open Invoice
 
 rem --- Vendor
 
+        redim apm02a$
         while more
             extract record (apm02_dev,key=firm_id$+ape04a.vendor_id$+ape04a.ap_type$,dom=*break) apm02a$
             apm02a.lstpay_date$=apw01a.check_date$
@@ -209,6 +210,7 @@ rem --- Vendor
             write record (apm02_dev) apm02a$
             break
         wend
+        one_inv_per_chk$=apm02a.one_inv_per_chk$
 
 rem --- G/L Reference Fields
 
@@ -269,6 +271,8 @@ rem --- Remove Check Detail
 
         remove (ape04_dev,key=k1$)
 
+        rem --- Loop back for next invoice detail for this check, unless only one invoice per check is allowed.
+        if one_inv_per_chk$="Y" then goto remove_check
         goto next_invoice
 
 void_check: rem --- Void Check
