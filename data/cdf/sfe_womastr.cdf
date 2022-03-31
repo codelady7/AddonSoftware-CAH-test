@@ -1662,9 +1662,9 @@ rem =========================================================
 				sfe01_key$=""
 				read(sfe01_dev,key=firm_id$+cust$+order$+ope11a.internal_seq_no$,knum="AO_CST_ORD_LINE",dom=*next)
 				sfe01_key$=key(sfe01_dev,end=*next)
-				if pos(firm_id$+cust$+order$+ope11a.internal_seq_no$=sfe01_key$)<>1 then continue
 				wo_no$=callpoint!.getColumnData("SFE_WOMASTR.WO_NO")
-				if sfe01_key$(len(sfe01_key$)-len(wo_no$)+1)<>wo_no$ then continue
+				if pos(firm_id$+cust$+order$+ope11a.internal_seq_no$=sfe01_key$)=1 and 
+:					sfe01_key$(len(sfe01_key$)-len(wo_no$)+1)<>wo_no$ then continue
 
 				dim opc_linecode$:fattr(opc_linecode$)
 				read record (opc_linecode,key=firm_id$+ope11a.line_code$,dom=*next)opc_linecode$
