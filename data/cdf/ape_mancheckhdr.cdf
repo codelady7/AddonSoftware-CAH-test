@@ -26,7 +26,7 @@ rem --- one or more ape-12 recs, then come back to main form and abort, which wo
 	endif
 
 [[APE_MANCHECKHDR.ADEL]]
-rem --- Verify all G/L Distribution records get deleted
+rem --- Verify all G/L Distribution records get deleted. (Workaround to Barista Bug 5979)
 
 	ape12_dev=fnget_dev("APE_MANCHECKDIST")
 	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
@@ -38,7 +38,7 @@ rem --- Verify all G/L Distribution records get deleted
 	while 1
 		ape12_key$=key(ape12_dev,end=*break)
 		read(ape12_dev)
-		if pos(firm_id$+ap_type$+check_no$+vend$=ape12_key$)<>1 break
+		if pos(firm_id$+ap_type$+bnk_acct_cd$+check_no$+vend$=ape12_key$)<>1 break
 		remove (ape12_dev,key=ape12_key$)
 	wend
 
