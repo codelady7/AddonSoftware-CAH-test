@@ -226,3 +226,12 @@ Modified: data/cdf/ape_mancheckhdr.cdf
 Modified: data/sync/ads_messages~[01007514AP].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 378a9a49473e20ab3017a2fc2127b05ad07d7419
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/6/2022 1:02:38 PM
+Message:
+Bug 10400: Adjusted position of columns on totals lines.
+----
+Modified: ap/src/apr_manualchecks.aon
