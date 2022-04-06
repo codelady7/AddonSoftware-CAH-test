@@ -235,3 +235,14 @@ Message:
 Bug 10400: Adjusted position of columns on totals lines.
 ----
 Modified: ap/src/apr_manualchecks.aon
+
+=======================================================================================================================================
+Revision: 0d0f129b81e529953e523ea1e254b2bda842bf0f
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/6/2022 2:32:18 PM
+Message:
+Bug 10398: Corrected key for APE_MANCHECKDIST in ape_mancheckhdr form's
+ADEL workaround for Barista Bug 5979.
+----
+Modified: data/bar/ape_mancheckhdr.xml
+Modified: data/cdf/ape_mancheckhdr.cdf
