@@ -46,6 +46,7 @@ rem --- Verify all G/L Distribution records get deleted
 user_tpl.existing_tran$="Y"
 user_tpl.reuse_chk$=""
 tmp_vendor_id$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
+gosub get_vendor_history
 gosub disp_vendor_comments
 ctl_name$="APE_MANCHECKHDR.TRANS_TYPE"
 ctl_stat$="D"
