@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-03-31
+ Report Date:   2022-04-06
  Report Branch: AddonSoftware 22.00
  Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
@@ -208,3 +208,21 @@ valid candidate SO detail lines.
 ----
 Modified: data/bar/sfe_womastr.xml
 Modified: data/cdf/sfe_womastr.cdf
+
+=======================================================================================================================================
+Revision: b5bd4801af39da43527ac050d97c1d6cc29cf2c1
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/6/2022 12:04:22 PM
+Message:
+Bug 10401: In APE_MANCHECHHDR ADIS, gosub get_vendor_history to set the
+default distribution code and GL account. In APE_MANCHECKDET
+validateDistCd subroutine, use default GL account to verify a new
+invoice that doesn't have a distribution code yet.
+----
+Modified: data/bar/ape_mancheckdet.xml
+Modified: data/bar/ape_mancheckhdr.xml
+Modified: data/cdf/ape_mancheckdet.cdf
+Modified: data/cdf/ape_mancheckhdr.cdf
+Modified: data/sync/ads_messages~[01007514AP].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
