@@ -808,7 +808,7 @@ rem --- GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 	if user_tpl.glint$="Y" then
 		apcDistribution_dev = fnget_dev("APC_DISTRIBUTION")
 		dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
-		apcDistribution.ap_dist_code$=ap_dist_code$
+		apcDistribution.gl_cash_acct$=user_tpl.dflt_gl_account$
 		readrecord(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
 
 		glm05_dev = fnget_dev("GLM_BANKMASTER")
@@ -821,10 +821,10 @@ rem --- GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 			call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
 			msg_id$="AP_BAD_DIST_CD"
 			dim msg_tokens$[4]
-			msg_tokens$[1]=ap_dist_code$
-			msg_tokens$[2]=fnmask$(apcDistribution.gl_cash_acct$(1,gl_size),m0$)
-			msg_tokens$[3]=cvs(bnkAcctCd$,2)
-			msg_tokens$[4]=cvs(ap_inv_no$,2)
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=ap_dist_code$
+			msg_tokens$[3]=fnmask$(apcDistribution.gl_cash_acct$(1,gl_size),m0$)
+			msg_tokens$[4]=cvs(bnkAcctCd$,2)
 			gosub disp_message
 		endif
 	endif
