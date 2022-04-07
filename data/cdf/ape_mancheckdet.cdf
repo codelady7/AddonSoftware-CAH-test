@@ -162,9 +162,12 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					if pos(firm_id$+ap_type$+vendor_id$+apt01a.ap_inv_no$ = ape22_key$) = 1 and
 :						ape22_key.bnk_acct_cd$+ape22_key.check_no$ <> callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD")+callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
 :					then
+						call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
 						msg_id$="AP_INV_IN_MANCHCK"
-						dim msg_tokens$[1]
+						dim msg_tokens$[3]
 						msg_tokens$[1]=cvs(apt01a.ap_inv_no$,2)
+						msg_tokens$[2]=fnmask$(vendor_id$(1,vendor_size),m0$)
+						msg_tokens$[3]=ape22_key.check_no$
 						gosub disp_message
 						continue
 					endif
