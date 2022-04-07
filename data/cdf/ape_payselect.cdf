@@ -512,27 +512,49 @@ rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types 
 					apt01a.selected_for_pay$="N"
 					remove (ape04_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
 				else
-					apt01a.selected_for_pay$="Y"
-					dim ape04a$:fattr(ape04a$)
+					rem --- Skip invoice if currently used in Manual Check Entry
+					ape22_dev = fnget_dev("APE_MANCHECKDET")
+					dim ape22a$:fnget_tpl$("APE_MANCHECKDET")
+					inManualCheckEntry=0
+					read(ape22_dev,key=apt01_key$,knum="AO_VEND_INV",dom=*next)
+					while 1
+						ape22_key$=key(ape22_dev,end=*break)
+						if pos(apt01_key$=ape22_key$)<>1 then break
+						readrecord(ape22_dev)ape22a$
+						inManualCheckEntry=1
+						break
+					wend
+					if inManualCheckEntry then
+						call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
+						msg_id$="AP_INV_IN_MANCHCK"
+						dim msg_tokens$[3]
+						msg_tokens$[1]=cvs(ape22a.ap_inv_no$,2)
+						msg_tokens$[2]=fnmask$(ape22a.vendor_id$(1,vendor_size),m0$)
+						msg_tokens$[3]=ape22a.check_no$
+						gosub disp_message
+					else
+						apt01a.selected_for_pay$="Y"
+						dim ape04a$:fattr(ape04a$)
 
-					ape04a.firm_id$      = firm_id$
-					ape04a.ap_type$      = apt01a.ap_type$
-					ape04a.vendor_id$    = apt01a.vendor_id$
-					ape04a.ap_inv_no$    = apt01a.ap_inv_no$
-					ape04a.reference$    = apt01a.reference$
-					ape04a.ap_inv_memo$  = apt01a.ap_inv_memo$
-					ape04a.invoice_date$ = apt01a.invoice_date$
-					ape04a.inv_due_date$ = apt01a.inv_due_date$
-					ape04a.disc_date$    = apt01a.disc_date$
-					ape04a.invoice_amt   = inv_amt
-					ape04a.discount_amt  = disc_to_take
-					ape04a.retention     = apt01a.retention+retention
-					ape04a.orig_inv_amt  = apt01a.invoice_amt
-					ape04a.payment_amt = amt_to_pay
+						ape04a.firm_id$      = firm_id$
+						ape04a.ap_type$      = apt01a.ap_type$
+						ape04a.vendor_id$    = apt01a.vendor_id$
+						ape04a.ap_inv_no$    = apt01a.ap_inv_no$
+						ape04a.reference$    = apt01a.reference$
+						ape04a.ap_inv_memo$  = apt01a.ap_inv_memo$
+						ape04a.invoice_date$ = apt01a.invoice_date$
+						ape04a.inv_due_date$ = apt01a.inv_due_date$
+						ape04a.disc_date$    = apt01a.disc_date$
+						ape04a.invoice_amt   = inv_amt
+						ape04a.discount_amt  = disc_to_take
+						ape04a.retention     = apt01a.retention+retention
+						ape04a.orig_inv_amt  = apt01a.invoice_amt
+						ape04a.payment_amt = amt_to_pay
 
-					ape04a$=field(ape04a$)
-					extract record (ape04_dev, key=apt01_key$, dom=*next) dummy$; rem Advisory Locking
-					write record (ape04_dev) ape04a$
+						ape04a$=field(ape04a$)
+						extract record (ape04_dev, key=apt01_key$, dom=*next) dummy$; rem Advisory Locking
+						write record (ape04_dev) ape04a$
+					endif
 				endif
 
 				apt01a$ = field(apt01a$)
@@ -575,7 +597,7 @@ rem --- Open/Lock files
 	use ::ado_util.src::util
     use java.util.Iterator
 
-	num_files=13
+	num_files=14
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	open_tables$[1]="APT_INVOICEHDR",open_opts$[1]="OTA"
@@ -591,6 +613,7 @@ rem --- Open/Lock files
 	open_tables$[11]="ADM_USER",open_opts$[11]="OTA@"
 	open_tables$[12]="APM_APPROVERS",open_opts$[12]="OTA@"
 	open_tables$[13]="APS_ACH",open_opts$[13]="OTA"
+	open_tables$[14]="APE_MANCHECKDET",open_opts$[14]="OTA"
 
 	gosub open_tables
 
@@ -2147,10 +2170,24 @@ rem ==========================================================================
 		select_tpl$=sqlfetch(sql_chan,err=*break) 
 		readrecord(apt01_dev,key=select_tpl$,dom=*continue)apt01a$
 		read (ape01_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next); continue
+
+		rem --- Skip invoice if currently used in Manual Check Entry
+		ape22_dev = fnget_dev("APE_MANCHECKDET")
+		dim ape22a$:fnget_tpl$("APE_MANCHECKDET")
+		inManualCheckEntry=0
+		read(ape22_dev,key=select_tpl$,knum="AO_VEND_INV",dom=*next)
+		while 1
+			ape22_key$=key(ape22_dev,end=*break)
+			if pos(select_tpl$=ape22_key$)<>1 then break
+			readrecord(ape22_dev)ape22a$
+			inManualCheckEntry=1
+			break
+		wend
+		if inManualCheckEntry then continue
+
 		dim apm01a$:fattr(apm01a$)
 		read record(apm01_dev, key=firm_id$+apt01a.vendor_id$, dom=*next) apm01a$
 		read record(apt11_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
-
 		while 1
 			readrecord(apt11_dev,end=*break)apt11a$
 
