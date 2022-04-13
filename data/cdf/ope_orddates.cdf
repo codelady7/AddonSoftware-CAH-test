@@ -30,6 +30,9 @@ rem --- Setup default dates
 	temp_stbl$ = stbl("OPE_DEF_SHIP", shpdate$)
 	temp_stbl$ = stbl("OPE_DEF_COMMIT", comdate$)
 
+rem --- Initialize entry_filter devObject
+	callpoint!.setDevObject("entry_filter",callpoint!.getColumnData("OPE_ORDDATES.ENTRY_FILTER"))
+
 [[OPE_ORDDATES.ASVA]]
 rem --- Set STBL
 	ignore$ = stbl("OPE_DEF_STATION",callpoint!.getColumnData("OPE_ORDDATES.DEF_STATION"))
@@ -96,6 +99,10 @@ rem --- Warn if Ship Date isn't in an appropriate GL period
 rem --- Set STBL
 
 	ignore$ = stbl("OPE_DEF_SHIP", ship_date$)
+
+[[OPE_ORDDATES.ENTRY_FILTER.AVAL]]
+rem --- Update entry_filter devObject
+	callpoint!.setDevObject("entry_filter",callpoint!.getUserInput())
 
 
 

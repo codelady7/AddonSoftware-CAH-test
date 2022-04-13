@@ -1173,7 +1173,12 @@ rem --- If First/Last Record was used, did it return an Order?
 		whichRecord$=callpoint!.getDevObject("FirstLastRecord")
 		callpoint!.setDevObject("FirstLastRecord","")
 
-		if callpoint!.getColumnData("OPE_ORDHDR.ORDINV_FLAG")<>"O" or callpoint!.getColumnData("OPE_ORDHDR.INVOICE_TYPE")="V" then
+		rem --- Filter on quotes, or orders, or both
+		entry_filter$=callpoint!.getDevObject("entry_filter")
+
+		invoice_type$=callpoint!.getColumnData("OPE_ORDHDR.INVOICE_TYPE")
+		if callpoint!.getColumnData("OPE_ORDHDR.ORDINV_FLAG")<>"O" or invoice_type$="V" or
+:			(entry_filter$="Q" and invoice_type$<>"P") or (entry_filter$="O" and invoice_type$<>"S") then
 			ope01_dev = fnget_dev("OPE_ORDHDR")
 			dim ope01a$:fnget_tpl$("OPE_ORDHDR")
 			status$=callpoint!.getColumnData("OPE_ORDHDR.TRANS_STATUS")
@@ -1185,7 +1190,8 @@ rem --- If First/Last Record was used, did it return an Order?
 				while 1
 					read record (ope01_dev, dir=0, end=*break) ope01a$
 					if ope01a.firm_id$+ope01a.trans_status$+ope01a.ar_type$<>firm_id$+status$+ar_type$ then break
-					if ope01a.invoice_type$ <> "V" and ope01a.ordinv_flag$ = "O" then
+					if (ope01a.ordinv_flag$ = "O" and ope01a.invoice_type$ <> "V") and
+:					(entry_filter$="B" or (entry_filter$="Q" and ope01a.invoice_type$="P") or (entry_filter$="O" and ope01a.invoice_type$="S")) then
 						rem --- Have a keeper, stop looking
 						next_key$=key(ope01_dev)
 						break
@@ -1203,7 +1209,8 @@ rem --- If First/Last Record was used, did it return an Order?
 					p_key$ = keyp(ope01_dev, end=*break)
 					read record (ope01_dev, key=p_key$) ope01a$
 					if ope01a.firm_id$+ope01a.trans_status$+ope01a.ar_type$<>firm_id$+status$+ar_type$ then break
-					if ope01a.invoice_type$ <> "V" and ope01a.ordinv_flag$ = "O" then
+					if (ope01a.ordinv_flag$ = "O" and ope01a.invoice_type$ <> "V") and
+:					(entry_filter$="B" or (entry_filter$="Q" and ope01a.invoice_type$="P") or (entry_filter$="O" and ope01a.invoice_type$="S")) then
 						rem --- Have a keeper, stop looking
 						next_key$=p_key$
 						break
@@ -1220,7 +1227,11 @@ rem --- If First/Last Record was used, did it return an Order?
 				callpoint!.setStatus("RECORD:["+next_key$+"]")
 				break
 			else
-				msg_id$ = "OP_NO_OPEN_ORDERS"
+				if entry_filter$="Q" then
+					msg_id$ = "OP_NO_OPEN_QUOTES"
+				else
+					msg_id$ = "OP_NO_OPEN_ORDERS"
+				endif
 				gosub disp_message
 				callpoint!.setStatus("ABORT-NEWREC")
 				break
@@ -1692,12 +1703,16 @@ rem --- Position the file at the correct record
 		read(ope01_dev,key=current_key$,dom=*next)
 	endif
 
+	rem --- Filter on quotes, or orders, or both
+	entry_filter$=callpoint!.getDevObject("entry_filter")
+
 	hit_eof=0
 	while 1
 		read record (ope01_dev, dir=0, end=eof) ope01a$
 
 		if ope01a.firm_id$+ope01a.trans_status$+ope01a.ar_type$ = firm_id$+trans_status$+ar_type$ then
-			if ope01a.ordinv_flag$ = "O" and ope01a.invoice_type$ <> "V" then
+			if (ope01a.ordinv_flag$ = "O" and ope01a.invoice_type$ <> "V") and
+:			(entry_filter$="B" or (entry_filter$="Q" and ope01a.invoice_type$="P") or (entry_filter$="O" and ope01a.invoice_type$="S")) then
 				rem --- Have a keeper, stop looking
 				break
 			else
@@ -1749,6 +1764,8 @@ rem --- Check for Order Total
 
 [[OPE_ORDHDR.BOVE]]
 rem --- Restrict lookup to open orders and open invoices
+	rem --- Filter on quotes, or orders, or both
+	entry_filter$=callpoint!.getDevObject("entry_filter")
 
 	rem bug 7564 --- cust_id$  = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
 	custControl!=callpoint!.getControl("OPE_ORDHDR.CUSTOMER_ID")
@@ -1771,7 +1788,20 @@ rem --- Restrict lookup to open orders and open invoices
 		filter_defs$[3,2]="LOCK"
 	endif
 	filter_defs$[4,0]="OPT_INVHDR.INVOICE_TYPE"
-	filter_defs$[4,1]="<>'V'"
+	switch pos(entry_filter$="BOQ")
+		case 1
+			filter_defs$[4,1]="<>'V'"
+			break
+		case 2
+			filter_defs$[4,1]="='S'"
+			break
+		case 3
+			filter_defs$[4,1]="='P'"
+			break
+		case default
+			filter_defs$[4,1]="<>'V'"
+			break
+	swend
 	filter_defs$[4,2]="LOCK"
 
 	dim search_defs$[3]
@@ -1887,13 +1917,17 @@ rem --- Position the file at the correct record
 		read(ope01_dev,key=current_key$,dir=0,dom=*next)
 	endif
 
+	rem --- Filter on quotes, or orders, or both
+	entry_filter$=callpoint!.getDevObject("entry_filter")
+
 	hit_eof=0
 	while 1
 		p_key$ = keyp(ope01_dev, end=eof_pkey)
 		read record (ope01_dev, key=p_key$) ope01a$
 
 		if ope01a.firm_id$+ope01a.trans_status$+ope01a.ar_type$=firm_id$+trans_status$+ar_type$ then 
-			if ope01a.ordinv_flag$ = "O" and ope01a.invoice_type$ <> "V" then
+			if (ope01a.ordinv_flag$ = "O" and ope01a.invoice_type$ <> "V") and
+:			(entry_filter$="B" or (entry_filter$="Q" and ope01a.invoice_type$="P") or (entry_filter$="O" and ope01a.invoice_type$="S")) then
 				rem --- Have a keeper, stop looking
 				break
 			else
