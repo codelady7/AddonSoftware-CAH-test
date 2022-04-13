@@ -8,6 +8,15 @@ rem --- All Rights Reserved
 rem --- This SPROC is called from the OPPickListHdr Jasper report
 
 rem ----------------------------------------------------------------------------
+rem goto wghTrace
+endtrace
+traceFile$="\temp\trace_"+date(0:"%Yz%Mz%Dz%Hz%mz%sz")+".txt"
+erase traceFile$,err=*next
+string traceFile$
+traceChan=unt
+open(traceChan)traceFile$
+settrace(traceChan,mode="UNTIMED")
+wghTrace:
 
 seterr sproc_error
 
@@ -29,6 +38,7 @@ selected_whse$=cvs(sp!.getParameter("SELECTED_WHSE"),2)
 cust_mask$ =   sp!.getParameter("CUST_MASK")
 cust_size = num(sp!.getParameter("CUST_SIZE"))
 barista_wd$ =  sp!.getParameter("BARISTA_WD")
+
 
 chdir barista_wd$
 
@@ -77,7 +87,7 @@ rem --- Init
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
 
-    files=14,begfile=1,endfile=files
+    files=15,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
     files$[1]="arm-01",       ids$[1]="ARM_CUSTMAST"
@@ -87,13 +97,14 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     files$[5]="arc_cashcode", ids$[5]="ARC_CASHCODE"
     files$[6]="arc_salecode", ids$[6]="ARC_SALECODE"
     files$[7]="ivm-01",       ids$[7]="IVM_ITEMMAST"
-    files$[8]="opt-01",      ids$[8]="OPE_INVHDR"
-    files$[9]="ope-04",      ids$[9]="OPE_PRNTLIST"	
+    files$[8]="opt-01",       ids$[8]="OPE_INVHDR"
+    files$[9]="ope-04",       ids$[9]="OPE_PRNTLIST"	
     files$[10]="opt-31",      ids$[10]="OPE_ORDSHIP"
     files$[11]="opt-41",      ids$[11]="OPE_INVCASH"    
     files$[12]="opm-09",      ids$[12]="OPM_CUSTJOBS"
     files$[13]="opc_message", ids$[13]="OPC_MESSAGE"
     files$[14]="opt-11",      ids$[14]="OPE_INVDET"
+    files$[15]="ars_params",  ids$[15]="ARS_PARAMS"
 
 	call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 
@@ -119,6 +130,7 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     opm09_dev = channels[12]
     opc_message = channels[13]
     ope11_dev = channels[14]
+    arsParams_dev = channels[15]
     
 	
     dim arm01a$:templates$[1]
@@ -136,6 +148,7 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     dim opm09a$:templates$[12]
     dim opc_message$:templates$[13]
     dim ope11a$:templates$[14]
+    dim arsParams$:templates$[15]
 	
 rem --- Initialize Data
 
@@ -217,7 +230,9 @@ rem --- Heading (bill-to address)
         read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"B", dom=*next) ope31!
         b$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
         b$ = pad(arm01!.getFieldAsString("CUSTOMER_NAME"), bill_addrLine_len) + b$
-        b$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + b$
+        if cvs(b$((max_billAddr_lines-1)*bill_addrLine_len),2)="" then
+                b$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + b$
+        endif
         found = 1
     endif
 
@@ -231,13 +246,19 @@ rem --- Ship-To
     start_block = 1
 
     if ope01a.shipto_type$ <> "B" then 
-        shipto$ = ""
-
-        if start_block then
-            find record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S",knum="AO_STATUS", dom=*endif) ope31!
-            c$ = func.formatAddress(table_chans$[all], ope31!, cust_addrLine_len, max_custAddr_lines)
-            c$ = pad(ope31!.getFieldAsString("NAME"), bill_addrLine_len) + c$
+        find record (ope31_dev, key=firm_id$+"E"+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S",knum="AO_STATUS", dom=*endif) ope31!
+        c$ = func.formatAddress(table_chans$[all], ope31!, cust_addrLine_len, max_custAddr_lines)
+        if cvs(c$((max_custAddr_lines-1)*cust_addrLine_len),2)="" then
+            rem --- There is room left in the address block to include the customer_id
             c$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + c$
+        endif
+
+        if ope01a.shipto_type$ = "M" then
+            readrecord(arsParams_dev,key=firm_id$+"AR00",dom=*next)arsParams$
+            if ope01a.customer_id$=arsParams.customer_id$ then
+                c$(1,bill_addrLine_len)=func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$)+" "+arm01!.getFieldAsString("CUSTOMER_NAME")
+                b$ = c$
+            endif
         endif
     endif
 
