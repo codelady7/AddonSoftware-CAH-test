@@ -60,11 +60,21 @@ if callpoint!.getColumnData("APE_MANCHECKHDR.TRANS_TYPE")="M"
    	callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_DISC",str(tdisc))
 	callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_RETEN",str(tret))
 	callpoint!.setColumnData("<<DISPLAY>>.DISP_TOT_CHECK",str(tinv-tdisc-tret))
+
+	rem --- Enable Print Check button if manual check is for more than zero and hasn't been printed
+	if tinv-tdisc-tret > 0 and callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_PRINTED")<>"Y" then
+		callpoint!.setOptionEnabled("PCHK",1)
+	else
+		callpoint!.setOptionEnabled("PCHK",0)
+	endif
 else
 	ctl_name$="APE_MANCHECKHDR.CHECK_DATE"
 	ctl_stat$="D"
 	gosub disable_fields
 	gosub disable_grid
+
+rem --- Disable Print Check button
+	callpoint!.setOptionEnabled("PCHK",0)
 endif
 rem --- disable inv#/date/dist code cells corres to existing data -- only allow change on inv/disc cols
 curr_rows!=GridVect!.getItem(0)
@@ -82,6 +92,113 @@ endif
 rem --- Set checking account list to the entered BNK_ACCT_CD
 	bnkAcctCd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
 	callpoint!.setColumnData("<<DISPLAY>>.CHECK_ACCTS",bnkAcctCd$,1)
+
+rem --- Preventing manual check from being modified after it has been printed on-demand, except for changing Trans Type to Void (V).
+	if callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_PRINTED")="Y" then
+		callpoint!.setColumnEnabled("APE_MANCHECKHDR.VENDOR_ID",0)
+		callpoint!.setColumnEnabled("APE_MANCHECKHDR.CHECK_DATE",0)
+		gosub disable_grid
+	endif
+
+[[APE_MANCHECKHDR.AOPT-PCHK]]
+rem --- Make sure modified records are saved before printing
+	if pos("M"=callpoint!.getRecordStatus())
+		msg_id$="AD_SAVE_BEFORE_PRINT"
+		gosub disp_message
+		break
+	endif
+
+rem --- Add Barista soft lock for this record if not already in edit mode
+	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+	bnk_acct_no$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+	check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
+	vendor_id$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
+
+	if !callpoint!.isEditMode() then
+		rem --- Is there an existing soft lock?
+		lock_table$="APE_MANCHECKHDR"
+		lock_record$=firm_id$+ap_type$+bnk_acct_no$+check_no$+vendor_id$
+		lock_type$="C"
+		lock_status$=""
+		lock_disp$=""
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+		if lock_status$="" then
+			rem --- Add temporary soft lock used just for this print task
+			lock_type$="L"
+			call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+		else
+			rem --- Record locked by someone else
+			msg_id$="ENTRY_REC_LOCKED"
+			gosub disp_message
+			break
+		endif
+	endif
+
+rem --- Print check now
+	callpoint!.setDevObject("printMode", "OnDemand")
+
+	rem --- Build invVect! with invoices for this on-demand print check
+	invVect!=BBjAPI().makeVector()
+	dim ape22a$:fnget_tpl$("@APE_MANCHECKDET")
+	gridRows!=GridVect!.getItem(0)
+	if gridRows!.size() then
+		for i=0 to gridRows!.size()-1
+			ape22a$=gridRows!.getItem(i)
+			invVect!.addItem(ape22a.ap_inv_no$)
+			callpoint!.setDevObject("invVect",invVect!)
+		next i
+	endif
+
+	user_id$=stbl("+USER_ID")
+ 
+	dim dflt_data$[5,1]
+	dflt_data$[1,0]="CHECK_DATE"
+	dflt_data$[1,1]=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_DATE")
+	dflt_data$[2,0]="CHECK_NO"
+	dflt_data$[2,1]=check_no$
+	dflt_data$[3,0]="CHECK_ACCTS"
+	dflt_data$[3,1]=bnk_acct_no$
+	dflt_data$[4,0]="VENDOR_ID"
+	dflt_data$[4,1]=vendor_id$
+	dflt_data$[5,0]="AP_TYPE"
+	dflt_data$[5,1]=ap_type$
+
+	ChkObj!=new java.util.HashMap()
+	ChkObj!.put("check_date",callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_DATE"))
+	ChkObj!.put("bnk_acct_cd",callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD"))
+	ChkObj!.put("check_no",check_no$)
+	ChkObj!.put("ap_type",ap_type$)
+	ChkObj!.put("vendor_id",vendor_id$)
+
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:	                       "APR_CHECKS",
+:	                       user_id$,
+:	                       "",
+:	                       "",
+:	                       table_chans$[all],
+:	                       "",
+:	                       dflt_data$[all],
+:	                       "",
+:	                       ChkObj!
+
+rem --- Clear form to make sure check_printed flag is current after on-demand print check
+	callpoint!.setStatus("NEWREC")
+
+rem --- Remove temporary soft lock used just for this print task 
+	if !callpoint!.isEditMode() and lock_type$="L" then
+		lock_type$="U"
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
+[[APE_MANCHECKHDR.APFE]]
+rem  --- Enable Print Check button if manual check is for more than zero and hasn't been printed
+	if callpoint!.getColumnData("APE_MANCHECKHDR.TRANS_TYPE")="M" and 
+:		num(callpoint!.getColumnData("<<DISPLAY>>.DISP_TOT_CHECK"))>0 and
+:		callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_PRINTED")<>"Y" then
+		callpoint!.setOptionEnabled("PCHK",1)
+	else
+		callpoint!.setOptionEnabled("PCHK",0)
+	endif
 
 [[APE_MANCHECKHDR.AP_TYPE.AVAL]]
 user_tpl.dflt_ap_type$=callpoint!.getUserInput()
@@ -346,6 +463,14 @@ rem --- Create vector of urls for viewed invoice images
 	urlVect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("urlVect",urlVect!)
 
+[[APE_MANCHECKHDR.BDEL]]
+rem --- Prevent manual check from being deleted after it has been printed on-demand
+	if callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_PRINTED")="Y" then
+		msg_id$="AP_DELETE_MANCHK"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+	endif
+
 [[APE_MANCHECKHDR.BEND]]
 rem --- remove software lock on batch, if batching
 
@@ -383,6 +508,9 @@ rem --- Is only one invoice per check allowed?
 	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
 	readrecord(apm02_dev,key=firm_id$+vendor_id$+ap_type$,dom=*next)apm02a$
 	callpoint!.setDevObject("oneInvPerChk",apm02a.one_inv_per_chk$)
+
+rem --- Disable Print Check button
+	callpoint!.setOptionEnabled("PCHK",0)
 
 [[APE_MANCHECKHDR.BSHO]]
 rem --- Disable ap type control if param for multi-types is N
@@ -625,17 +753,23 @@ rem --- not found in entry file, so see if in open checks
 	endif
 
 [[APE_MANCHECKHDR.TRANS_TYPE.AVAL]]
-print "in trans type aval"
 if callpoint!.getUserInput()="R"
 	msg_id$="AP_REUSE_ERR"
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
+
+	rem --- Disable Print Check button
+	callpoint!.setOptionEnabled("PCHK",0)
 endif
+
 if callpoint!.getUserInput()="V"
 	ctl_name$="APE_MANCHECKHDR.VENDOR_ID"
 	ctl_stat$="D"
 	gosub disable_fields
 	gosub disable_grid							
+
+	rem --- Disable Print Check button
+	callpoint!.setOptionEnabled("PCHK",0)
 endif
 						
 if callpoint!.getUserInput()="M"
@@ -643,7 +777,18 @@ if callpoint!.getUserInput()="M"
 	ctl_stat$=" "
 	gosub disable_fields
 	gosub enable_grid							
+
+	rem --- Enable Print Check button if manual check is for more than zero and hasn't been printed yet
+	if num(callpoint!.getColumnData("<<DISPLAY>>.DISP_TOT_CHECK"))>0 and 
+:		callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_PRINTED")<>"Y" then callpoint!.setOptionEnabled("PCHK",1)
 endif
+
+rem --- Preventing manual check from being modified after it has been printed on-demand, except for changing Trans Type to Void (V).
+	if callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_PRINTED")="Y" then
+		callpoint!.setColumnEnabled("APE_MANCHECKHDR.VENDOR_ID",0)
+		callpoint!.setColumnEnabled("APE_MANCHECKHDR.CHECK_DATE",0)
+		gosub disable_grid
+	endif
 
 [[APE_MANCHECKHDR.VENDOR_ID.AVAL]]
 	print "Head: VENDOR_ID.AVAL (After Column Validation)"; rem debug

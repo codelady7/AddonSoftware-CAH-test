@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_mancheckhdr">A0B7B345EE56D927E09A408E6C1DFFC4</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_mancheckhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_mancheckhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_mancheckhdr">20220406</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_mancheckhdr">20220406</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_mancheckhdr">142802</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_mancheckhdr">20220411</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_mancheckhdr">20220411</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_mancheckhdr">162908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_mancheckhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_mancheckhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_mancheckhdr">BATCH_KEY</DD_ATTR_DKNM>
@@ -82,6 +82,14 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdradis">APE_MANCHECKHDR </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ape_mancheckhdradis">ADIS</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.ape_mancheckhdraopt-pchk">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdraopt-pchk">APE_MANCHECKHDR </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ape_mancheckhdraopt-pchk">AOPT-PCHK</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ape_mancheckhdrapfe">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdrapfe">APE_MANCHECKHDR </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ape_mancheckhdrapfe">APFE</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.ape_mancheckhdrarea">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdrarea">APE_MANCHECKHDR </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ape_mancheckhdrarea">AREA</DD_ATTR_CPRO>
@@ -105,6 +113,10 @@
 		<RECORD id="ddm_table_cpro.ape_mancheckhdrawin">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdrawin">APE_MANCHECKHDR </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ape_mancheckhdrawin">AWIN</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ape_mancheckhdrbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdrbdel">APE_MANCHECKHDR </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ape_mancheckhdrbdel">BDEL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ape_mancheckhdrbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_mancheckhdrbend">APE_MANCHECKHDR </DD_TABLE_ALIAS>
