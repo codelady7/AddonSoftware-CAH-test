@@ -1,4 +1,16 @@
 [[APR_CHECKS.ADIS]]
+rem --- Previously saved selections cannot be for on-demand print check
+	callpoint!.setDevObject("printMode","Batch")
+	callpoint!.setColumnEnabled("APR_CHECKS.CHECK_DATE",1)
+	callpoint!.setColumnEnabled("APR_CHECKS.CHECK_NO",1)
+	callpoint!.setColumnEnabled("APR_CHECKS.AP_TYPE",1)
+	callpoint!.setColumnEnabled("APR_CHECKS.VENDOR_ID",1)
+	callpoint!.setColumnEnabled("APR_CHECKS.PICK_CHECK",1)
+
+	checkAccts!=callpoint!.getControl("APR_CHECKS.CHECK_ACCTS")
+	checkAcctsVect!=checkAccts!.getAllItems()
+	if checkAcctsVect!.size()>1 then callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",1)
+
 rem --- Refresh Checking Account ListButton when using previously saved selections.
 	gosub initCheckAccts
 
@@ -47,6 +59,23 @@ rem --- Set the defalut AP Type when not multi-type
 	if callpoint!.getDevObject("multi_types")="N" then
 		dflt_ap_type$=callpoint!.getDevObject("dflt_ap_type")
 		callpoint!.setColumnData("APR_CHECKS.AP_TYPE",dflt_ap_type$)
+	endif
+
+rem --- Initialize form for on-demand print check
+	if callpoint!.getDevObject("printMode")="OnDemand" then
+		callpoint!.setColumnData("APR_CHECKS.CHECK_DATE",UserObj!.get("check_date"),1)
+		callpoint!.setColumnData("APR_CHECKS.CHECK_NO",UserObj!.get("check_no"),1)
+		callpoint!.setColumnData("APR_CHECKS.AP_TYPE",UserObj!.get("ap_type"),1)
+		callpoint!.setColumnData("APR_CHECKS.VENDOR_ID",UserObj!.get("vendor_id"),1)
+		callpoint!.setColumnData("APR_CHECKS.PICK_CHECK","N",0); rem --- Restart
+		callpoint!.setColumnData("APR_CHECKS.CHECK_ACCTS",UserObj!.get("bnk_acct_cd"),1)
+
+		callpoint!.setColumnEnabled("APR_CHECKS.CHECK_DATE",0)
+		callpoint!.setColumnEnabled("APR_CHECKS.CHECK_NO",0)
+		callpoint!.setColumnEnabled("APR_CHECKS.AP_TYPE",0)
+		callpoint!.setColumnEnabled("APR_CHECKS.VENDOR_ID",0)
+		callpoint!.setColumnEnabled("APR_CHECKS.PICK_CHECK",0)
+		callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",0)
 	endif
 
 [[APR_CHECKS.ASVA]]
@@ -113,10 +142,12 @@ if len(cvs(check_date$,2))<>8 or check_date=0
 	break
 endif
 rem --- validate Check Date
-gl$="N"
-status=0
-source$=pgm(-2)
-call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"AP",glw11$,gl$,status
+if callpoint!.getDevObject("printMode")<>"OnDemand" then
+	gl$="N"
+	status=0
+	source$=pgm(-2)
+	call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"AP",glw11$,gl$,status
+endif
 call stbl("+DIR_PGM")+"glc_datecheck.aon",check_date$,"Y",per$,yr$,status
 if status>100
 	callpoint!.setStatus("ABORT")
@@ -129,15 +160,11 @@ rem --- If all is well, write the softlock so only one jasper printing per firm 
 	currstatus$=callpoint!.getStatus()
 
 	if len(cvs(currstatus$,2))=0
-		menu_option_id$=callpoint!.getTableAttribute("ALID")
-
 		adxlocks_dev=fnget_dev("ADX_LOCKS")
 		dim adxlocks$:fnget_tpl$("ADX_LOCKS")
-
 		adxlocks.firm_id$=firm_id$
-		adxlocks.menu_option_id$=menu_option_id$
-
-		extract record(adxlocks_dev,key=firm_id$+menu_option_id$,dom=*next)dummy$; rem Advisory Locking
+		adxlocks.menu_option_id$=callpoint!.getDevObject("taskname")
+		extract record(adxlocks_dev,key=adxlocks$,dom=*next)dummy$; rem Advisory Locking
 		write record(adxlocks_dev)adxlocks$
 	endif
 
@@ -145,9 +172,14 @@ rem --- If all is well, write the softlock so only one jasper printing per firm 
 rem --- Make sure softlock is cleared when exiting/aborting
 	adxlocks_dev=fnget_dev("ADX_LOCKS")
 	dim adxlocks$:fnget_tpl$("ADX_LOCKS")
-	menu_option_id$=pad(callpoint!.getTableAttribute("ALID"),len(adxlocks.menu_option_id$))
+	adxlocks.firm_id$=firm_id$
+	adxlocks.menu_option_id$=callpoint!.getDevObject("taskname")
+	remove (adxlocks_dev,key=adxlocks$,dom=*next)
 
-	remove (adxlocks_dev,key=firm_id$+menu_option_id$,dom=*next)
+[[APR_CHECKS.BFMC]]
+rem --- Make sure printMode devObject exists
+	printMode!=callpoint!.getDevObject("printMode")
+	if printMode! = null() then callpoint!.setDevObject("printMode", "Batch")
 
 [[APR_CHECKS.BSHO]]
 rem --- Inits
@@ -210,14 +242,14 @@ rem --- Get parameters
 	callpoint!.setDevObject("use_pay_auth",apsPayAuth.use_pay_auth)
 
 rem --- Abort if a check run is actively running
-	pgm_name_fattr$=fattr(adxlocks$,"MENU_OPTION_ID")
-	len_pgm_name_fattr=dec(pgm_name_fattr$(10,2))
-	
-	dim taskname$(len_pgm_name_fattr)
-	taskname$(1)=callpoint!.getTableAttribute("ALID")
+	taskname$=callpoint!.getTableAttribute("ALID")
+	callpoint!.setDevObject("taskname",taskname$)
 
+	dim adxlocks$:fnget_tpl$("ADX_LOCKS")
+	adxlocks.firm_id$=firm_id$
+	adxlocks.menu_option_id$=taskname$
 	while 1
-		extract record(adxlocks_dev, key=firm_id$+taskname$, dom=*break)
+		extract record(adxlocks_dev, key=adxlocks$, dom=*break)
 		
 		msg_id$="AP_CHKS_PRINTING"
 		dim msg_tokens$[1]
@@ -385,7 +417,7 @@ rem ==========================================================================
 	bnkAcctCdList!=BBjAPI().makeVector()
 	nextChkLIst!=BBjAPI().makeVector()
 	codeList!=BBjAPI().makeVector()
-	if callpoint!.getDevObject("post_to_gl")="Y" then
+	if callpoint!.getDevObject("post_to_gl")="Y" and callpoint!.getDevObject("printMode")<>"OnDemand" then
 		rem --- AP using GL
 		ape04_dev=fnget_dev("APE_CHECKS")
 		dim ape04a$:fnget_tpl$("APE_CHECKS")
@@ -433,20 +465,35 @@ rem ==========================================================================
 			endif
 		wend
 	else
-		rem --- AP is not using GL
 		adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
 		dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
-		read(adcBnkAcct_dev,key=firm_id$,dom=*next)
-		while 1
-			readrecord(adcBnkAcct_dev,end=*break)adcBnkAcct$
-			if adcBnkAcct.firm_id$<>firm_id$ then break
+
+		rem --- AP is not using GL
+		if callpoint!.getDevObject("post_to_gl")<>"Y" then
+			read(adcBnkAcct_dev,key=firm_id$,dom=*next)
+			while 1
+				readrecord(adcBnkAcct_dev,end=*break)adcBnkAcct$
+				if adcBnkAcct.firm_id$<>firm_id$ then break
+				if adcBnkAcct.bnk_acct_type$="C" then
+					bnkAcctCdList!.addItem(adcBnkAcct.bnk_acct_cd$)
+					chkAcctList!.addItem(adcBnkAcct.acct_desc$)
+					nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
+					codeList!.addItem(adcBnkAcct.bnk_acct_cd$)
+				endif
+			wend
+		endif
+
+		rem --- For on-demand print checks, use Checking Account from Manual Check Entry
+		if callpoint!.getDevObject("printMode")="OnDemand" then
+			adcBnkAcct.bnk_acct_cd$=callpoint!.getColumnData("APR_CHECKS.CHECK_ACCTS")
+			readrecord(adcBnkAcct_dev,key=firm_id$+adcBnkAcct.bnk_acct_cd$,end=*endif)adcBnkAcct$
 			if adcBnkAcct.bnk_acct_type$="C" then
 				bnkAcctCdList!.addItem(adcBnkAcct.bnk_acct_cd$)
 				chkAcctList!.addItem(adcBnkAcct.acct_desc$)
 				nextChkList!.addItem(adcBnkAcct.nxt_check_no$)
 				codeList!.addItem(adcBnkAcct.bnk_acct_cd$)
 			endif
-		wend
+		endif
 	endif
 	callpoint!.setDevObject("acctInvMap",acctInvMap!)
 	callpoint!.setDevObject("bnkAcctCdList",bnkAcctCdList!)
@@ -466,8 +513,8 @@ rem ==========================================================================
 			callpoint!.setColumnEnabled("APR_CHECKS.CHECK_ACCTS",1)
 		endif
 
-		rem --- Initialize CHECK_NO for the first Checking Account in ListButton
-		callpoint!.setColumnData("APR_CHECKS.CHECK_NO",nextChkList!.getItem(0))
+		rem --- As needed, initialize CHECK_NO for the first Checking Account in ListButton
+		if callpoint!.getDevObject("printMode")<>"OnDemand" then callpoint!.setColumnData("APR_CHECKS.CHECK_NO",nextChkList!.getItem(0))
 
 		rem --- Hold on to selected Bank Account Code, i.e. Checking Account
 		bnkAcctCd$=bnkAcctCdList!.getItem(0)

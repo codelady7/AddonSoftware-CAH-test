@@ -76,12 +76,24 @@ rem ---         New table, adx_locks, is essentially used to put a softlock on a
 rem ---         We don't want data in apw_chkjasperprn to be changed while a print run is processing,
 rem ---         but locking apw_chkjasperprn directly caused Jasper to err when trying to access the locked table.
 rem ---          - Written to in callpoint ASVA, After Save Validation passes other tests.
-rem ---          - Removed in .aon when exiting program.
+rem ---          - Removed in apr_apchecks.aon when exiting program.
 rem ---                 Note: Old behavior allowed checks to be run repeatedly. This hasn't changed other than the
 rem ---                       requirement that an actual print run be completed before another can start for a firm.
 
     setesc std_error
     seterr std_error
+
+rem --- Capture form's callpoint devObjects
+
+    devObjects! = new java.util.HashMap()
+    printMode$=callpoint!.getDevObject("printMode")
+    devObjects!.put("printMode", printMode$)
+    devObjects!.put("bnkAcctCd", callpoint!.getDevObject("bnkAcctCd"))
+    devObjects!.put("acctInvMap", callpoint!.getDevObject("acctInvMap"))
+    devObjects!.put("taskname", callpoint!.getDevObject("taskname"))
+    if printMode$="OnDemand" then devObjects!.put("invVect", callpoint!.getDevObject("invVect"))
+
+rem --- Use statements and Declares
 
     use java.util.HashMap
 
@@ -120,7 +132,6 @@ rem --- Retrieve sysinfo data
     proc_date$=date(jul(num(sysinfo.system_date$(1,4)),num(sysinfo.system_date$(5,2)),num(sysinfo.system_date$(7,2))):stbl("+DATE_MASK"))
     firm_id$=sysinfo.firm_id$
     firm_name$=sysinfo.firm_name$
-	menu_option_id$=sysinfo.menu_option_id$
 
 rem --- Get logo to go on form; start w/ company logo, fall back to default logo from config if no company logo specified
     logo_filename$=""
@@ -163,7 +174,7 @@ rem --- Set Report Name & Subreport directory
 	
 rem --- Open/Lock files
 
-    files=17,begfile=1,endfile=files
+    files=20,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",  ids$[1]="APS_PARAMS"
     files$[2]="ape-04",      ids$[2]="APE_CHECKS"
@@ -182,6 +193,9 @@ rem --- Open/Lock files
     files$[15]="aps_ach",    ids$[15]="APS_ACH"
     files$[16]="adc_bankacctcode", ids$[16]="ADC_BANKACCTCODE"
     files$[17]="apm-02",      ids$[17]="APM_VENDHIST"
+    files$[18]="ape-02",      ids$[18]="APE_MANCHECKHDR"
+    files$[19]="ape-22",      ids$[19]="APE_MANCHECKDET"
+    files$[20]="ape-12",      ids$[20]="APE_MANCHECKDIST"
 	
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
     if status goto all_done
@@ -203,6 +217,9 @@ rem --- Open/Lock files
     apsACH_dev=channels[15]
     adcBnkAcct_dev=channels[16]
     apm02_dev=channels[17]
+    ape02_dev=channels[18]
+    ape22_dev=channels[19]
+    ape12_dev=channels[20]
 
 rem --- Dimension string templates
 
@@ -212,6 +229,7 @@ rem --- Dimension string templates
 	dim apw_chkprn$:templates$[10],adxlocks$:templates$[11],payauth$:templates$[12]
     dim apm_approvers$:templates$[13],apt_invapproval$:templates$[14],apsACH$:templates$[15]
     dim adcBnkAcct$:templates$[16],apm02a$:templates$[17]
+    dim ape02a$:templates$[18],ape22a$:templates$[19],ape12a$:templates$[20]
 
 rem --- Assign form input values to local variables
 
@@ -229,11 +247,13 @@ rem --- Assign form input values to local variables
 	middle_part$=form_order$(2,1)
 	bottom_part$=form_order$(3,1)
 
-    bnkAcctCd$=callpoint!.getDevObject("bnkAcctCd")
-    acctInvMap!=callpoint!.getDevObject("acctInvMap")
+    bnkAcctCd$=devObjects!.get("bnkAcctCd")
+    acctInvMap!=devObjects!.get("acctInvMap")
+    printMode$=devObjects!.get("printMode")
+
 
     payInvoices$=""
-    if cvs(bnkAcctCd$,2)<>"" then
+    if cvs(bnkAcctCd$,2)<>"" and acctInvMap!.size()>0 then
         invVect!=acctInvMap!.get(bnkAcctCd$)
         invIter!=invVect!.iterator()
         while invIter!.hasNext()
@@ -248,7 +268,8 @@ rem --- Retrieve parameter records
     find record (payauth_dev,key=aps01a_key$,dom=*next) payauth$
     find record (apsACH_dev,key=aps01a_key$,dom=*next) apsACH$
     ach_allowed=0
-    if cvs(apsACH.bnk_acct_cd$,2)<>"" then ach_allowed=1
+    rem --- Always pay via hard copy when on-demand print check, even if vendor normally pays via ACH.
+    if cvs(apsACH.bnk_acct_cd$,2)<>"" and printMode$<>"OnDemand" then ach_allowed=1
     
 	call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",vend_mask$,0,vendor_length
     call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",gl_acct_mask$,0,gl_acct_length
@@ -271,6 +292,17 @@ rem --- Clear any existing (stale) recs for this firm from the jasper print file
     endif
     rem --- Do NOT clear apw_checkinvoice (apw-01) because check printing may have been Restarted.
     rem call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",apw01_dev,firm_id$,status
+    
+rem --- Initializations for on-demand print check
+    if printMode$="OnDemand" then
+        invVect! = devObjects!.get("invVect")
+        
+        rem --- Update ape_mancheckhdr check_printed flag for on-demand print checks
+        check_no$=pad(str(num(check_no$)+1),len(ape02a$.check_no$),"R","0")
+        extractrecord(ape02_dev,key=firm_id$+ap_type$+bnkAcctCd$+check_no$+vendor_id$)ape02a$
+        ape02a.check_printed$="Y"
+        writerecord(ape02_dev)ape02a$
+    endif
     
 rem --- If using Payment Authorization, get all possible signers and their signature files
 
@@ -418,59 +450,95 @@ rem --- Start progress meter and position check File (ape-04)
 
 rem --- Init Read
 
-    invSkipped=0
-    read (ape04_dev,key=firm_id$,dom=*next)
-    if restart$="Y" read (ape04_dev,key=firm_id$+ap_type$+vendor_id$,dom=*next)
+    rem --- Main Read for batch check printing
+    if printMode$="Batch" then 
+        invSkipped=0
+        read (ape04_dev,key=firm_id$,dom=*next)
+        if restart$="Y" read (ape04_dev,key=firm_id$+ap_type$+vendor_id$,dom=*next)
+        while 1
+            ape04Key$=key(ape04_dev,end=*break)
+            if pos(firm_id$=ape04Key$)<>1 break
+            read record (ape04_dev) ape04a$
+    
+            rem --- Skip invoices not being paid with this checking account
+            if aps01a.post_to_gl$="Y" and pos(ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$+"::"=payInvoices$)=0 then
+                invSkipped=1
+                continue
+            endif
+    
+            rem --- Breaks
+            if ape04a.ap_type$<>prev_aptype_t0$ gosub ap_type_break
+            if ape04a.ap_type$+ape04a.vendor_id$<>prev_aptype_vend_t1$ then
+                gosub new_vendor
+            else
+                rem --- If only one invoice per check is allowed, treat each invoice for the vendor as a new vendor.
+                if one_inv_per_chk$="Y" then gosub new_vendor
+            endif
+            prev_invoice$=ape04a.ap_inv_no$
+            if restart$="Y" and ach_payment$="Y" then continue 
+    
+            gosub inv_detail
+    
+            rem --- Accumulate
+            t[0]=t[0]+ape04a.invoice_amt; rem +ape04a.retention
+            t[1]=t[1]+ape04a.discount_amt
+            t[2]=t[2]+ape04a.retention
+    		t[3]=t[3]+ape04a.payment_amt
+            
+            rem --- If using Payment Authorization, get signers that approved this invoice
+            if payauth.use_pay_auth then
+                partialkey$ = ape04a.firm_id$ + ape04a.vendor_id$ + ape04a.ap_inv_no$
+                read (apt_invapproval_dev, key=partialkey$, dom=*next)
+                while 1
+                    apt_invapproval_key$=key(apt_invapproval_dev,end=*break)
+                    if pos(partialkey$ = apt_invapproval_key$) <> 1 then break
+                    read record(apt_invapproval_dev)apt_invapproval$
+                    if apt_invapproval.approval_type$="S" then
+                        signerSet!.add(apt_invapproval.user_id$)
+                    endif
+                wend
+            endif
+        wend
+    endif
 
-rem --- Main Read
-rem --- First pass gets Accounting stub and actual check data
-
-    while 1
-        ape04Key$=key(ape04_dev,end=*break)
-        if pos(firm_id$=ape04Key$)<>1 break
-        read record (ape04_dev) ape04a$
-
-rem --- Breaks
-
-        rem --- Skip invoices not being paid with this checking account
-        if aps01a.post_to_gl$="Y" and pos(ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$+"::"=payInvoices$)=0 then
-            invSkipped=1
-            continue
-        endif
-
-        if ape04a.ap_type$<>prev_aptype_t0$ gosub ap_type_break
-        if ape04a.ap_type$+ape04a.vendor_id$<>prev_aptype_vend_t1$ then
-            gosub new_vendor
-        else
-            rem --- If only one invoice per check is allowed, treat each invoice for the vendor as a new vendor.
-            if one_inv_per_chk$="Y" then gosub new_vendor
-        endif
-        prev_invoice$=ape04a.ap_inv_no$
-        if restart$="Y" and ach_payment$="Y" then continue 
-
-        gosub inv_detail
-
-rem --- Accumulate
-
-        t[0]=t[0]+ape04a.invoice_amt; rem +ape04a.retention
-        t[1]=t[1]+ape04a.discount_amt
-        t[2]=t[2]+ape04a.retention
-		t[3]=t[3]+ape04a.payment_amt
+    rem --- Main Read for on-demand check printing
+    if printMode$="OnDemand" then
+        ape02_key$=firm_id$+ap_type$+bnkAcctCd$+check_no$+vendor_id$
+        readrecord(ape02_dev,key=ape02_key$,dom=*endif)ape02a$
+        gosub ap_type_break
+        gosub new_vendor
         
-        rem --- If using Payment Authorization, get signers that approved this invoice
-        if payauth.use_pay_auth then
-            partialkey$ = ape04a.firm_id$ + ape04a.vendor_id$ + ape04a.ap_inv_no$
-            read (apt_invapproval_dev, key=partialkey$, dom=*next)
-            while 1
-                apt_invapproval_key$=key(apt_invapproval_dev,end=*break)
-                if pos(partialkey$ = apt_invapproval_key$) <> 1 then break
-                read record(apt_invapproval_dev)apt_invapproval$
-                if apt_invapproval.approval_type$="S" then
-                    signerSet!.add(apt_invapproval.user_id$)
-                endif
-            wend
-        endif
-    wend
+        rem --- Process invoices being paid by this on-demand check
+        read(ape22_dev,key=ape02_key$,dom=*next)
+        while 1
+            redim ape22a$
+            readrecord(ape22_dev,end=*break)ape22a$
+            if pos(ape02_key$=ape22a$)<>1 then break
+
+            prev_invoice$=ape22a.ap_inv_no$
+            gosub inv_detail
+    
+            rem --- Accumulate
+            t[0]=t[0]+ape22a.invoice_amt
+            t[1]=t[1]+ape22a.discount_amt
+            t[2]=t[2]+ape22a.retention
+            t[3]=t[3]+ape22a.net_paid_amt
+            
+            rem --- If using Payment Authorization, get signers that approved this invoice
+            if payauth.use_pay_auth then
+                partialkey$ = ape22a.firm_id$ + ape22a.vendor_id$ + ape22a.ap_inv_no$
+                read (apt_invapproval_dev, key=partialkey$, dom=*next)
+                while 1
+                    apt_invapproval_key$=key(apt_invapproval_dev,end=*break)
+                    if pos(partialkey$ = apt_invapproval_key$) <> 1 then break
+                    read record(apt_invapproval_dev)apt_invapproval$
+                    if apt_invapproval.approval_type$="S" then
+                        signerSet!.add(apt_invapproval.user_id$)
+                    endif
+                wend
+            endif
+        wend
+    endif
 
 rem --- Totals
 
@@ -515,7 +583,7 @@ rem --- Fill jasper reports
         check_doc_path$=rd_doc_path$
         
         rem --- Printed checks jasper - contains ALL printed checks, and NO ACH checks
-        viewerWindow! = new BBJasperViewerWindow(checkReport!,5,5,screen_width,screen_height,repTitle$,$00000093$)
+        viewerWindow! = new BBJasperViewerWindow(checkReport!,5,5,screen_width,screen_height,repTitle$,$00080093$)
         viewerControl! = viewerWindow!.getViewerControl()
         viewerControl!.setGoogleDefaultDocument(repTitle$)
         viewerControl!.setDefaultSaveFolder(check_doc_path$)
@@ -593,7 +661,7 @@ rem --- Fill jasper reports
         gosub exportAchToPDF; rem --- force save
         
         rem --- ACH payments jasper - contains ALL printed checks, and NO ACH checks
-        achViewerWindow! = new BBJasperViewerWindow(achReport!,50,50,screen_width,screen_height,repTitle$,$00000093$)
+        achViewerWindow! = new BBJasperViewerWindow(achReport!,50,50,screen_width,screen_height,repTitle$,$00080093$)
         achViewerControl! = achViewerWindow!.getViewerControl()
         achViewerControl!.setGoogleDefaultDocument(repTitle$)
         achViewerControl!.setDefaultSaveFolder(ach_doc_path$)
@@ -620,8 +688,9 @@ rem --- Fill jasper reports
         achViewerWin_closed=1
     endif
 
-rem ---Update next check number for this Bank Account, i.e. Checking Account
-    if cvs(bnkAcctCd$,2)<>"" then
+rem --- Update next check number for this Bank Account, i.e. Checking Account
+rem --- Next check number already updated for on-demand print checks
+    if cvs(bnkAcctCd$,2)<>"" and printMode$<>"OnDemand" then
         extractrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$; rem Advisory Locking
         adcBnkAcct.nxt_check_no$=str(num(printed_check_no$)+1)
         writerecord(adcBnkAcct_dev)adcBnkAcct$
@@ -643,10 +712,22 @@ rem --- Event Control
     endif
 
     process_events,err=*same
-    
-    rem --- Clear softlock on jasper work file, apw_chkjasperprn    
-    remove (adxlocks_dev,key=firm_id$+menu_option_id$,dom=*next)
 
+    rdBBjAPI!=BBjAPI()
+    rdSysGUI!=rdBBjAPI!.getSysGui()
+    rdStatusSpace!=rdBBjAPI!.getGroupNamespace()
+    rdFuncSpace!=rdBBjAPI!.getGroupNamespace()
+rdFuncSpace!.getValue("+active_task")
+
+    
+    rem --- Clear softlock on jasper work file, apw_chkjasperprn
+    call stbl("+DIR_SYP")+"bac_key_template.bbj","ADX_LOCKS","PRIMARY",adxlocks_key_tpl$,table_chans$[all],status$
+    dim adxlocks$:adxlocks_key_tpl$
+    adxlocks.firm_id$=firm_id$
+    adxlocks.menu_option_id$=devObjects!.get("taskname")
+    remove (adxlocks_dev,key=adxlocks$,dom=*next)
+
+    if tcb(13) then exit
     release
 
 document_whse:rem --- Write record to Barista document warehouse (ads_documents)
@@ -780,10 +861,15 @@ close_ACH_win:rem --- ACH Viewer Window Closed
 all_done: rem --- Exit
 
 	rem --- Clear softlock on jasper work file, apw_chkjasperprn	
-	remove (adxlocks_dev,key=firm_id$+menu_option_id$,dom=*next)
+    call stbl("+DIR_SYP")+"bac_key_template.bbj","ADX_LOCKS","PRIMARY",adxlocks_key_tpl$,table_chans$[all],status$
+    dim adxlocks$:adxlocks_key_tpl$
+    adxlocks.firm_id$=firm_id$
+    adxlocks.menu_option_id$=devObjects!.get("taskname")
+	remove (adxlocks_dev,key=adxlocks$,dom=*next)
 
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,ignore_status
-	
+
+    if tcb(13) then exit
     release
 	
 
@@ -795,7 +881,7 @@ inv_detail: rem --- Invoice Detail
 	vendstub_row_has_printed=0; rem Will need to print row if doesn't print in Memo section
 	
 	rem --- Conditionally print invoice's memo on stubs
-	if aps01a.ap_chk_memo$="Y" and cvs(ape04a.ap_inv_memo$, 2) <> "" then 
+	if aps01a.ap_chk_memo$="Y" and printMode$="Batch" and cvs(ape04a.ap_inv_memo$, 2) <> "" then 
 		stub_memo_dist$=ape04a.ap_inv_memo$(1,16)
 		
 		section_type$=  "A"; rem accounting stub
@@ -850,7 +936,48 @@ inv_detail: rem --- Invoice Detail
 
 			acctstub_row_has_printed=1
         wend
+        if printMode$="OnDemand" then 
+            total=ape22a.net_paid_amt + ape22a.discount_amt
+            posted=0
+            factor=1
+            if ape22a.invoice_amt<>0 then factor=total/ape22a.invoice_amt
 
+            rem --- On-demand print checks
+            read (ape12_dev,key=firm_id$+ape22a.ap_type$+ape22a.bnk_acct_cd$+ape22a.check_no$+ape22a.vendor_id$+ape22a.ap_inv_no$,dom=*next)
+            while 1
+                k1$=key(ape12_dev,end=*break)
+                if pos(firm_id$+ape22a.ap_type$+ape22a.bnk_acct_cd$+ape22a.check_no$+ape22a.vendor_id$+ape22a.ap_inv_no$=k1$)<>1 then break
+                read record (ape12_dev) ape12a$
+                gl_account$=fnmask$(ape12a.gl_account$(1,gl_acct_length),gl_acct_mask$)
+                gl_post_amt=round(ape12a.gl_post_amt*factor,2)
+                posted=posted+gl_post_amt
+            
+                rem --- Adjust last distribution for possible penney rounding errors
+                ape12_key$=""
+                ape12_key$=key(ape12_dev,end=*next)
+                if pos(firm_id$+ape22a.ap_type$+ape22a.bnk_acct_cd$+ape22a.check_no$+ape22a.vendor_id$+ape22a.ap_inv_no$=ape12_key$)<>1 then
+                    gl_post_amt=gl_post_amt+(total-posted)
+                endif
+
+                gl_post_amt$=str(gl_post_amt:stub_amt_mask$)
+                gl_post_amt$=gl_post_amt$(pos(" "<>gl_post_amt$))
+    
+                rem --- Split GL Account and Amount to two lines if necessary
+                dim x$(memodist_width)
+                x$(1)=cvs(gl_account$,2)
+                x$(memodist_width-len(gl_post_amt$)+1)=gl_post_amt$
+    
+                if acctstub_rowcnt>max_stub_rows then gosub overflow
+    
+                stub_memo_dist$=x$
+                
+                section_type$=  "A"; rem accounting stub
+                gosub check_stub_detail
+                acctstub_rowcnt=acctstub_rowcnt+1
+    
+                acctstub_row_has_printed=1
+            wend
+        endif
     endif
 	
 	rem --- print invoice data if not already printed w/Memo or GLDist
@@ -878,9 +1005,26 @@ check_stub_detail:
 
 	rem --- Write STUB detail row record to jasper print file
     dim apw_chkprn$:fattr(apw_chkprn$)
-	
+
+    if printMode$="Batch" then 
+        apw_chkprn.ap_type$=        ape04a.ap_type$
+        apw_chkprn.vendor_id$=      ape04a.vendor_id$
+        apw_chkprn.stub_inv_no$=    ape04a.ap_inv_no$
+        apw_chkprn.stub_inv_date$=  ape04a.invoice_date$
+        apw_chkprn.stub_inv_amt=    ape04a.invoice_amt
+        apw_chkprn.stub_inv_discamt=ape04a.discount_amt
+        apw_chkprn.stub_inv_amt_pd= ape04a.payment_amt
+    else
+        apw_chkprn.ap_type$=        ape22a.ap_type$
+        apw_chkprn.vendor_id$=      ape22a.vendor_id$
+        apw_chkprn.stub_inv_no$=    ape22a.ap_inv_no$
+        apw_chkprn.stub_inv_date$=  ape22a.invoice_date$
+        apw_chkprn.stub_inv_amt=    ape22a.invoice_amt
+        apw_chkprn.stub_inv_discamt=ape22a.discount_amt
+        apw_chkprn.stub_inv_amt_pd= ape22a.net_paid_amt
+    endif
+    
     apw_chkprn.firm_id$=       firm_id$
-    apw_chkprn.ap_type$=       ape04a.ap_type$
     apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
     apw_chkprn.check_no$=      check_no$
     apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
@@ -893,25 +1037,14 @@ check_stub_detail:
 	endif
 	
 	apw_chkprn.check_date$=    check_date$
-	apw_chkprn.vendor_id$=     ape04a.vendor_id$
-	
-	apw_chkprn.stub_inv_no$=    ape04a.ap_inv_no$
-	apw_chkprn.stub_inv_date$=  ape04a.invoice_date$
 	apw_chkprn.stub_memo_dist$= stub_memo_dist$
 	apw_chkprn.stub_is_total$=  "N"	
-	
     apw_chkprn.chk_is_void$=   chk_is_void$
 	apw_chkprn.chk_exactly$=   ""
 	apw_chkprn.chk_amt_str$=   ""
-
     apw_chkprn.signature_1$=   ""
     apw_chkprn.signature_2$=   ""
-    
     apw_chkprn.ach_payment$=   ach_payment$
-	
-	apw_chkprn.stub_inv_amt=    ape04a.invoice_amt
-	apw_chkprn.stub_inv_discamt=ape04a.discount_amt
-	apw_chkprn.stub_inv_amt_pd= ape04a.payment_amt
 	
 	apw_chkprn.chk_amt=0
 	
@@ -986,21 +1119,24 @@ check_face: rem --- Print Check
         chk_amt_str$=str(chk_amt:check_amt_mask$)
     endif
 
-    dim apw01a$:fattr(apw01a$)
-    apw01a.firm_id$=firm_id$
-    apw01a.ap_type$=prev_aptype_vend_t1$(1,2)
-    apw01a.bnk_acct_cd$=bnkAcctCd$
-    apw01a.check_no$=check_no$
-    if ach_payment$="N" then
-        apw01a.comp_or_void$="C"
-    else
-        apw01a.comp_or_void$="A"
+    rem --- Don't include on-demand print checks in check register, i.e. don't write APW_CHECKINVOICE apw-01 records.
+    if printMode$<>"OnDemand" then
+        dim apw01a$:fattr(apw01a$)
+        apw01a.firm_id$=firm_id$
+        apw01a.ap_type$=prev_aptype_vend_t1$(1,2)
+        apw01a.bnk_acct_cd$=bnkAcctCd$
+        apw01a.check_no$=check_no$
+        if ach_payment$="N" then
+            apw01a.comp_or_void$="C"
+        else
+            apw01a.comp_or_void$="A"
+        endif
+        apw01a.check_date$=check_date$
+        apw01a.vendor_id$=prev_aptype_vend_t1$(3,6)
+        apw01a.ap_inv_no$=ap_inv_no$
+        if aps01a.multi_types$="Y" remove (apw01_dev,key=firm_id$+"  "+bnkAcctCd$+apw01a.check_no$,dom=*next)
+        write record (apw01_dev) apw01a$
     endif
-    apw01a.check_date$=check_date$
-    apw01a.vendor_id$=prev_aptype_vend_t1$(3,6)
-    apw01a.ap_inv_no$=t2.ap_inv_no$
-    if aps01a.multi_types$="Y" remove (apw01_dev,key=firm_id$+"  "+bnkAcctCd$+apw01a.check_no$,dom=*next)
-    write record (apw01_dev) apw01a$
 
     rem --- If using Payment Authorization and it's NOT an ACH payment, put signature(s) on the check.
     signature1$=""
@@ -1119,26 +1255,37 @@ void_check: rem --- Void check
 
 rem --- Write Void
 
-    apw01a.firm_id$=     firm_id$
-    apw01a.ap_type$=     ape04a.ap_type$
-    apw01a.bnk_acct_cd$= bnkAcctCd$
-    apw01a.check_no$=    check_no$
-    if ach_payment$="N" then
-        apw01a.comp_or_void$="V"
-    else
-        apw01a.comp_or_void$="X"
-    endif
-    apw01a.vendor_id$=   ape04a.vendor_id$
-    apw01a.check_date$=  check_date$
-    apw01a.ap_inv_no$=   ape04a.ap_inv_no$
+    rem --- Don't include on-demand print checks in check register, i.e. don't write APW_CHECKINVOICE apw-01 records.
+    if printMode$<>"OnDemand" then
+        apw01a.firm_id$=     firm_id$
+        apw01a.ap_type$=     ape04a.ap_type$
+        apw01a.bnk_acct_cd$= bnkAcctCd$
+        apw01a.check_no$=    check_no$
+        if ach_payment$="N" then
+            apw01a.comp_or_void$="V"
+        else
+            apw01a.comp_or_void$="X"
+        endif
+        apw01a.vendor_id$=   ape04a.vendor_id$
+        apw01a.check_date$=  check_date$
+        apw01a.ap_inv_no$=   ape04a.ap_inv_no$
     write record (apw01_dev) apw01a$
+    endif
 
 	rem --- Write VOID record to jasper print file
 	
     dim apw_chkprn$:fattr(apw_chkprn$)
-	
+
+    if printMode$="Batch" then
+        ap_type$=ape04a.ap_type$
+        vendor_id$=ape04a.vendor_id$
+    else
+        ap_type$=ape22a.ap_type$
+        vendor_id$=ape22a.vendor_id$
+    endif
+    
     apw_chkprn.firm_id$=       firm_id$
-    apw_chkprn.ap_type$=       ape04a.ap_type$
+    apw_chkprn.ap_type$=       ap_type$
     apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
     apw_chkprn.check_no$=      check_no$
     apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
@@ -1196,22 +1343,25 @@ new_vendor: rem --- New Vendor
 
 		gosub check_face
 
-rem --- Now go back and re-write ape-04 using ape04_dev2 and ape04b$
-rem --- using the current check number and firm_id$ + prev_aptype_vend_t1$ (ap type and vendor number)
-        if !(restart$="Y" and ach_payment$="Y") then
-            dim ape04b$:fattr(ape04b$)
-            read(ape04_dev2,key=firm_id$+prev_aptype_vend_t1$,dom=*next)
-            while 1
-                extract record (ape04_dev2,end=*break) ape04b$;rem Advisory Locking
-                if pos(firm_id$+prev_aptype_vend_t1$=ape04b$)<>1 then read (ape04_dev2); break
-                if one_inv_per_chk$="Y" and ape04b.ap_inv_no$<>prev_invoice$ then
-                    read(ape04_dev2)
-                    continue
-                endif
-                ape04b.check_no$ = check_no$
-                ape04b$ = field(ape04b$)
-                write record (ape04_dev2) ape04b$
-            wend
+        rem --- Don't write ape-04 for on-demand print checks
+        if printMode$<>"OnDemand" then
+            rem --- Now go back and re-write ape-04 using ape04_dev2 and ape04b$
+            rem --- using the current check number and firm_id$ + prev_aptype_vend_t1$ (ap type and vendor number)
+            if !(restart$="Y" and ach_payment$="Y") then
+                dim ape04b$:fattr(ape04b$)
+                read(ape04_dev2,key=firm_id$+prev_aptype_vend_t1$,dom=*next)
+                while 1
+                    extract record (ape04_dev2,end=*break) ape04b$;rem Advisory Locking
+                    if pos(firm_id$+prev_aptype_vend_t1$=ape04b$)<>1 then read (ape04_dev2); break
+                    if one_inv_per_chk$="Y" and ape04b.ap_inv_no$<>prev_invoice$ then
+                        read(ape04_dev2)
+                        continue
+                    endif
+                    ape04b.check_no$ = check_no$
+                    ape04b$ = field(ape04b$)
+                    write record (ape04_dev2) ape04b$
+                wend
+            endif
         endif
     endif
 
@@ -1221,15 +1371,22 @@ rem --- using the current check number and firm_id$ + prev_aptype_vend_t1$ (ap t
 		
         dim address$(81)
         dim apm01a$:fattr(apm01a$)
-        dim t2$:fattr(ape04a$)
-        t2$=ape04a$
         
-        find record (apm01_dev,key=firm_id$+ape04a.vendor_id$,dom=*next) apm01a$
+        if printMode$="Batch" then
+            vendor_id$=ape04a.vendor_id$
+            ap_type$=ape04a.ap_type$
+            ap_inv_no$=ape04a.ap_inv_no$
+        else
+            vendor_id$=ape02a.vendor_id$
+            ap_type$=ape02a.ap_type$
+            ap_inv_no$=ape22a.ap_inv_no$
+        endif
+        find record (apm01_dev,key=firm_id$+vendor_id$,dom=*next) apm01a$
         address$(1)=apm01a.addr_line_1$+apm01a.addr_line_2$+apm01a.city$+apm01a.state_code$+apm01a.zip_code$
 		vend_name$=apm01a.vendor_name$
 
         redim apm02a$
-        findrecord(apm02_dev,key=firm_id$+ape04a.vendor_id$+ape04a.ap_type$,dom=*next)apm02a$
+        findrecord(apm02_dev,key=firm_id$+vendor_id$+ap_type$,dom=*next)apm02a$
         one_inv_per_chk$=apm02a.one_inv_per_chk$
 
         rem --- Is vendor being paid via ACH?
@@ -1254,13 +1411,13 @@ rem --- using the current check number and firm_id$ + prev_aptype_vend_t1$ (ap t
         if payauth.use_pay_auth then
             signerSet!.clear()
         endif
-       
-		prev_aptype_vend_t1$=ape04a.ap_type$+ape04a.vendor_id$
+
+		prev_aptype_vend_t1$=ap_type$+vendor_id$
         
         start_block = 1
 
         if start_block
-            find record (apm08_dev,key=firm_id$+ape04a.vendor_id$,dom=*endif) apm08a$
+            find record (apm08_dev,key=firm_id$+vendor_id$,dom=*endif) apm08a$
             address$(1) = apm08a.addr_line_1$+apm08a.addr_line2$+apm08a.city$+apm08a.state_code$+apm08a.zip_code$
             vend_name$  = apm08a.vendor_name$
         endif
@@ -1270,7 +1427,8 @@ rem --- using the current check number and firm_id$ + prev_aptype_vend_t1$ (ap t
 
 increment_check: rem --- Increment Check #
 
-    if ach_payment$="N" then
+    rem --- Next check number already updated for on-demand print checks
+    if ach_payment$="N" and printMode$<>"OnDemand" then
         p8=num(printed_check_no$)+1
         if p8>9999999 p8=1
         printed_check_no$=str(p8:check_no_mask$)
@@ -1287,7 +1445,11 @@ ap_type_break: rem --- AP Type Break
     while 1
         t9$="A"; do_vend_header=0
         gosub new_vendor
-        prev_aptype_t0$=ape04a.ap_type$
+        if printMode$="Batch" then 
+            prev_aptype_t0$=ape04a.ap_type$
+        else
+            prev_aptype_t0$=ape22a.ap_type$
+        endif
         prev_aptype_vend_t1$=""
         t9$=""; do_vend_header=1
         ap_type$=""
@@ -1453,5 +1615,21 @@ std_missing_params_release:
     release
 
 rem #endinclude std_missing_params.src
+
+rem #include std_end.src
+
+std_exit: rem --- Program end (01Mar2006)
+
+exit
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
+
+std_exit_no_report: 
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    release
+
+rem #endinclude std_end.src
 
     end

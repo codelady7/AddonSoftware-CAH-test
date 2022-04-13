@@ -571,7 +571,7 @@ rem --- AP accrual posting if cash basis isn't being used
 							gosub glrecap
 						endif
         
-rem --- Cash and discount postings for this check
+rem --- Cash, discount and retention postings for this check
 
 						account$=apm10b.gl_cash_acct$
                         amount=-ape22a.net_paid_amt
@@ -579,6 +579,9 @@ rem --- Cash and discount postings for this check
 						account$=apm10b.gl_disc_acct$
 						amount=-ape22a.discount_amt
 						gosub glrecap
+                        account$=apm10b.gl_ret_acct$
+                        amount=-ape22a.retention
+                        gosub glrecap
 
 rem --- Format detail line fields
 

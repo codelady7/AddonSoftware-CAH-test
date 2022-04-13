@@ -162,12 +162,9 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					if pos(firm_id$+ap_type$+vendor_id$+apt01a.ap_inv_no$ = ape22_key$) = 1 and
 :						ape22_key.bnk_acct_cd$+ape22_key.check_no$ <> callpoint!.getColumnData("APE_MANCHECKDET.BNK_ACCT_CD")+callpoint!.getHeaderColumnData("APE_MANCHECKHDR.CHECK_NO")
 :					then
-						call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
 						msg_id$="AP_INV_IN_MANCHCK"
-						dim msg_tokens$[3]
+						dim msg_tokens$[1]
 						msg_tokens$[1]=cvs(apt01a.ap_inv_no$,2)
-						msg_tokens$[2]=fnmask$(vendor_id$(1,vendor_size),m0$)
-						msg_tokens$[3]=ape22_key.check_no$
 						gosub disp_message
 						continue
 					endif
@@ -622,8 +619,11 @@ rem --- Inits
 	
 
 [[APE_MANCHECKDET.DISCOUNT_AMT.AVAL]]
-net_paid=num(callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))-num(callpoint!.getUserInput())
-callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(net_paid))
+rem --- Adjust Net Paid Amt for the Discount amount
+disc_amt=num(callpoint!.getUserInput())
+inv_amt=num(callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
+ret_amt=num(callpoint!.getColumnData("APE_MANCHECKDET.RETENTION"))
+callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(inv_amt-disc_amt-ret_amt),1)
 
 callpoint!.setDevObject("dist_amt",callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
 callpoint!.setDevObject("dflt_dist",user_tpl.dflt_dist_cd$)
@@ -636,16 +636,18 @@ gosub calc_tots
 gosub disp_tots
 
 [[APE_MANCHECKDET.INVOICE_AMT.AVAL]]
-rem --- if invoice # isn't in open invoice file, invoke GL Dist grid
-
-net_paid=num(callpoint!.getUserInput())-num(callpoint!.getColumnData("APE_MANCHECKDET.DISCOUNT_AMT"))
-callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(net_paid))
+rem --- Adjust Net Paid Amt for the Discount amount
+inv_amt=num(callpoint!.getUserInput())
+disc_amt=num(callpoint!.getColumnData("APE_MANCHECKDET.DISCOUNT_AMT"))
+ret_amt=num(callpoint!.getColumnData("APE_MANCHECKDET.RETENTION"))
+callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(inv_amt-disc_amt-ret_amt),1)
 
 callpoint!.setDevObject("dist_amt",callpoint!.getUserInput())
 callpoint!.setDevObject("dflt_dist",user_tpl.dflt_dist_cd$)
 callpoint!.setDevObject("dflt_gl",user_tpl.dflt_gl_account$)
 callpoint!.setDevObject("tot_inv",callpoint!.getUserInput())
 
+rem --- if invoice # isn't in open invoice file, invoke GL Dist grid
 apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")			
 dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
 ap_type$=field(apt01a$,"AP_TYPE")
@@ -702,6 +704,13 @@ callpoint!.setStatus("MODIFIED-REFRESH")
 [[APE_MANCHECKDET.INVOICE_AMT.AVEC]]
 gosub calc_tots
 gosub disp_tots
+
+[[APE_MANCHECKDET.RETENTION.AVAL]]
+rem --- Adjust Net Paid Amt for the Retention amount
+	ret_amt=num(callpoint!.getUserInput())
+	inv_amt=num(callpoint!.getColumnData("APE_MANCHECKDET.INVOICE_AMT"))
+	disc_amt=num(callpoint!.getColumnData("APE_MANCHECKDET.DISCOUNT_AMT"))
+	callpoint!.setColumnData("APE_MANCHECKDET.NET_PAID_AMT",str(inv_amt-disc_amt-ret_amt),1)
 
 [[APE_MANCHECKDET.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
@@ -824,10 +833,10 @@ rem --- GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 			call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,gl_size
 			msg_id$="AP_BAD_DIST_CD"
 			dim msg_tokens$[4]
-			msg_tokens$[1]=cvs(ap_inv_no$,2)
-			msg_tokens$[2]=ap_dist_code$
-			msg_tokens$[3]=fnmask$(apcDistribution.gl_cash_acct$(1,gl_size),m0$)
-			msg_tokens$[4]=cvs(bnkAcctCd$,2)
+			msg_tokens$[1]=ap_dist_code$
+			msg_tokens$[2]=fnmask$(apcDistribution.gl_cash_acct$(1,gl_size),m0$)
+			msg_tokens$[3]=cvs(bnkAcctCd$,2)
+			msg_tokens$[4]=cvs(ap_inv_no$,2)
 			gosub disp_message
 		endif
 	endif
