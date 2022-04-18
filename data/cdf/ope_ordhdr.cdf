@@ -2473,14 +2473,22 @@ rem --- setup message_tpl$
 rem --- Set callback for a tab being selected, and save the tab control ID
 	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
 	tabCtrl!.setCallback(BBjTabCtrl.ON_TAB_SELECT,"custom_event")
-	if tabCtrl!.getTitleAt(2)<>Translate!.getTranslation("AON_TOTALS") then
-		escape; rem --- You need to adjust the code for the change in the Totals tab name and/or index.
-		rem --- If the name was changed, then change the translation above for the new name.
-		rem --- If the index was changed, then change the isTotalsTab subroutine for the new index.
-	endif
 
 rem --- Initialize ReprintFlag devObject used for workaround to Barista Bug 10297
 	callpoint!.setDevObject("ReprintFlag","")
+
+rem --- Use standard magnifying glass lookup image on SNAME drilldown button
+	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+	childWin!=tabCtrl!.getControlAt(0); rem --- Addresses tab
+	ctrlVect!=childWin!.getAllControls()
+	for i=0 to ctrlVect!.size()-1
+		thisCtrl!=ctrlVect!.get(i)
+		if thisCtrl!.getControlType()<>28 then continue
+		if thisCtrl!.getName()="tbnd_sname" then
+			thisCtrl!.setImageFile(stbl("+DIR_IMG")+"im_tb_fnd_f.png",err=*next);buttonType=1
+			break
+		endif
+	next i
 
 [[OPE_ORDHDR.BWAR]]
 rem --- Has customer and order number been entered?
@@ -2617,6 +2625,7 @@ rem --- The cash customer?
 
 	if user_tpl.cash_sale$="Y" and cust_id$ = user_tpl.cash_cust$
 		callpoint!.setColumnData("OPE_ORDHDR.CASH_SALE", "Y")
+		callpoint!.setColumnData("OPE_ORDHDR.SHIPTO_TYPE","M",1)
        else
 		callpoint!.setColumnData("OPE_ORDHDR.CASH_SALE", "N")
 	endif
@@ -3288,7 +3297,7 @@ rem --- Allow changing shipto_type when abort shipto_no
 [[OPE_ORDHDR.SHIPTO_TYPE.AVAL]]
 rem -- Deal with which Ship To type if it has changed
 	ship_to_type$ = callpoint!.getUserInput()
-	if cvs(ship_to_type$,3)=cvs(callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE"),3) then break
+	if cvs(ship_to_type$,3)=cvs(callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE"),3) and callpoint!.getRecordMode()<>"A" then break
 
 	ship_to_no$   = callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_NO")
 	cust_id$      = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
@@ -3307,6 +3316,51 @@ rem --- Set Commission Percent
 
 	slsp$ = callpoint!.getUserInput()
 	gosub get_comm_percent
+
+[[<<DISPLAY>>.SNAME.BDRL]]
+rem --- Skip if not for a manual ship-to in edit mode
+	shipto_type$=callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE")
+	if shipto_type$<>"M" or !callpoint!.isEditMode() then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Manual ship-to historical address lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_INVHDR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim optInvHdr_key$:key_tpl$
+	dim filter_defs$[3,2]
+	filter_defs$[1,0]="OPT_INVHDR.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="OPT_INVHDR.CUSTOMER_ID"
+	filter_defs$[2,1]="='"+callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")+"'"
+	filter_defs$[2,2]="LOCK"
+	filter_defs$[3,0]="OPT_INVHDR.SHIPTO_TYPE"
+	filter_defs$[3,1]="='M'"
+	filter_defs$[3,2]="LOCK"
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"OP_MAN_SHIPTO","",table_chans$[all],optInvHdr_key$,filter_defs$[all]
+
+	rem --- Update manual ship-to address if changed
+	if cvs(optInvHdr_key$,2)<>"" then 
+		opt31_dev=fnget_dev("OPT_INVSHIP")
+		dim opt31a$:fnget_tpl$("OPT_INVSHIP")
+		opt31_key$=firm_id$+optInvHdr_key.customer_id$+optInvHdr_key.order_no$+optInvHdr_key.ar_inv_no$+"S"
+		readrecord(opt31_dev,key=opt31_key$,dom=*next)opt31a$
+		callpoint!.setColumnData("<<DISPLAY>>.SADD1",opt31a.addr_line_1$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD2",opt31a.addr_line_2$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD3",opt31a.addr_line_3$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SADD4",opt31a.addr_line_4$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SCITY",opt31a.city$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SSTATE",opt31a.state_code$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SZIP",opt31a.zip_code$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SCNTRY_ID",opt31a.cntry_id$,1)
+		callpoint!.setColumnData("<<DISPLAY>>.SNAME",opt31a.name$,1)
+
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[<<DISPLAY>>.SSTATE.AVAL]]
 rem --- Update sales tax calculation if SSTATE was changed
@@ -4469,10 +4523,14 @@ rem ==========================================================================
 	endif
 
 	if shipto_type$ = "M" and cvs(ship_addr$, 2) = "" then
-		msg_id$ = "OP_MAN_SHIPTO_NEEDED"
-		gosub disp_message
-		user_tpl.shipto_warned = 1
+		rem --- Don't warn if cash customer
+		if user_tpl.cash_sale$<>"Y" or callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID") <> user_tpl.cash_cust$
+			msg_id$ = "OP_MAN_SHIPTO_NEEDED"
+			gosub disp_message
+			user_tpl.shipto_warned = 1
+		endif
 	endif
+
 	if user_tpl.shipto_warned
 		shiptoType!=callpoint!.getControl("OPE_ORDHDR.SHIPTO_TYPE")
 		shiptoType_ctx=shiptoType!.getContextID()
@@ -4526,7 +4584,7 @@ rem OUT: isTotalsTab
 rem ==========================================================================
 	isTotalsTab=0
 	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
-	if tabCtrl!.getSelectedIndex() = tabCtrl!.getNumTabs()-1 then isTotalsTab=1
+	if tabCtrl!.getSelectedIndex() = tabCtrl!.getNumTabs()-1 then isTotalsTab=1; rem --- Last tab is the Totals tab
 
 	return
 

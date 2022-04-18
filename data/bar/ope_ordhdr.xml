@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_ordhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_ordhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_ordhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20220412</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20220412</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">155138</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20220418</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20220418</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">083534</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_ordhdr">OPT_INVHDR      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_ordhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_ordhdr">AO_STATUS</DD_ATTR_DKNM>
@@ -5516,7 +5516,7 @@
 			<DD_ATTR_CTLY id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_CTLH>
-			<DD_ATTR_DRLE id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_DRLE>
+			<DD_ATTR_DRLE id="ddm_table_disp.ope_ordhdr008">OP_HISTINV</DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_TABG>
@@ -5525,7 +5525,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ope_ordhdr008">ine_sname</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ope_ordhdr008">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr008"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ope_ordhdr008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ope_ordhdr009">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ope_ordhdr009">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -6318,6 +6318,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_ordhdrdiscount_amtbinp">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.ope_ordhdrdiscount_amtbinp">DISCOUNT_AMT    </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.ope_ordhdrdiscount_amtbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.ope_ordhdrsnamebdrl">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_ordhdrsnamebdrl">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.ope_ordhdrsnamebdrl">SNAME           </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.ope_ordhdrsnamebdrl">BDRL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.ope_ordhdrsadd1aval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_ordhdrsadd1aval">OPE_ORDHDR      </DD_TABLE_ALIAS>
@@ -11235,6 +11240,29 @@
 			<DD_ATTR_SEQ id="ddm_element_ldat.trans_status03">03</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_element_ldat.trans_status03">U</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_element_ldat.trans_status03">Update</DD_ATTR_LDAT_DS>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_drill_defs">
+		<ID id="ddm_drill_defs">DDM_DRILL_DEFS</ID>
+		<RECORD id="ddm_drill_defs.op_histinv">
+			<DRILL_DEF_ID id="ddm_drill_defs.op_histinv">OP_HISTINV      </DRILL_DEF_ID>
+			<DESCRIPTION id="ddm_drill_defs.op_histinv">OP Historical Invoices</DESCRIPTION>
+			<DD_ATTR_DTAB id="ddm_drill_defs.op_histinv">OPT_INVHDR      </DD_ATTR_DTAB>
+			<DD_ATTR_DKNM id="ddm_drill_defs.op_histinv"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_drill_defs.op_histinv">[FIRM_ID]+[TRANS_STATUS]+"  "+[CUSTOMER_ID]+[AR_INV_NO]</DD_ATTR_DKEY>
+			<DD_ATTR_SLEV id="ddm_drill_defs.op_histinv"></DD_ATTR_SLEV>
+			<ASC_COMP_ID id="ddm_drill_defs.op_histinv">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_drill_defs.op_histinv">OP </ASC_PROD_ID>
+			<DD_FILTER_COL_01 id="ddm_drill_defs.op_histinv"></DD_FILTER_COL_01>
+			<DD_FILTER_COL_02 id="ddm_drill_defs.op_histinv"></DD_FILTER_COL_02>
+			<DD_FILTER_COL_03 id="ddm_drill_defs.op_histinv"></DD_FILTER_COL_03>
+			<DD_FILTER_DEF_01 id="ddm_drill_defs.op_histinv"></DD_FILTER_DEF_01>
+			<DD_FILTER_DEF_02 id="ddm_drill_defs.op_histinv"></DD_FILTER_DEF_02>
+			<DD_FILTER_DEF_03 id="ddm_drill_defs.op_histinv"></DD_FILTER_DEF_03>
+			<FILTER_PROG id="ddm_drill_defs.op_histinv"></FILTER_PROG>
+			<DD_ATTR_DINQ id="ddm_drill_defs.op_histinv">opd_histinv.aon</DD_ATTR_DINQ>
+			<DD_ATTR_IDEF id="ddm_drill_defs.op_histinv"></DD_ATTR_IDEF>
+			<USER_MODIFIED id="ddm_drill_defs.op_histinv"></USER_MODIFIED>
 		</RECORD>
 	</ALIAS>
 </OPE_ORDHDR>
