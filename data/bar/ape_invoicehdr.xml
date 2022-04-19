@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_invoicehdr">8457477C9CB78B39AE28BA75572C9682</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_invoicehdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_invoicehdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_invoicehdr">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_invoicehdr">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_invoicehdr">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_invoicehdr">20220415</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_invoicehdr">20220415</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_invoicehdr">103344</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_invoicehdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_invoicehdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_invoicehdr">BATCH_KEY</DD_ATTR_DKNM>
@@ -799,7 +799,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ape_invoicehdr009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ape_invoicehdr009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ape_invoicehdr009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr009">21</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr009">26</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ape_invoicehdr009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ape_invoicehdr009">RESERVED_STR</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ape_invoicehdr009"></DD_ATTR_FONT>
@@ -850,7 +850,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ape_invoicehdr010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ape_invoicehdr010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ape_invoicehdr010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr010">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr010">23</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ape_invoicehdr010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ape_invoicehdr010">REFERENCE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ape_invoicehdr010"></DD_ATTR_FONT>
@@ -901,7 +901,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ape_invoicehdr011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ape_invoicehdr011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ape_invoicehdr011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr011">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr011">24</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ape_invoicehdr011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ape_invoicehdr011">AP_INV_MEMO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ape_invoicehdr011"></DD_ATTR_FONT>
@@ -952,7 +952,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ape_invoicehdr012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ape_invoicehdr012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ape_invoicehdr012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr012">23</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr012">22</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ape_invoicehdr012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ape_invoicehdr012">HOLD_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ape_invoicehdr012"></DD_ATTR_FONT>
@@ -1054,7 +1054,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ape_invoicehdr014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ape_invoicehdr014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ape_invoicehdr014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr014">22</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr014">21</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ape_invoicehdr014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ape_invoicehdr014">RESERVED_STR_02</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ape_invoicehdr014"></DD_ATTR_FONT>
@@ -1564,7 +1564,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ape_invoicehdr024"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ape_invoicehdr024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ape_invoicehdr024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr024">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ape_invoicehdr024">25</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ape_invoicehdr024"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ape_invoicehdr024">MEMO_1024</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ape_invoicehdr024"></DD_ATTR_FONT>

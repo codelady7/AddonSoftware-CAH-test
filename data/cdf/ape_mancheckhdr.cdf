@@ -420,6 +420,7 @@ rem --- Retrieve parameter data
 	aps01a_key$=firm_id$+"AP00"
 	find record (aps01_dev,key=aps01a_key$,err=std_missing_params) aps01a$
 	callpoint!.setDevObject("multi_types",aps01a.multi_types$)
+	callpoint!.setDevObject("scan_docs_param",aps01a.scan_docs_to$)
 
 	call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","A","",amt_mask$,0,0
 
@@ -611,8 +612,6 @@ rem --- Initialize BNK_ACCT_CD for the selected checking account
 	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnk_acct_cd$)
 
 [[APE_MANCHECKHDR.CHECK_DATE.AVAL]]
-print "in check date aval"
-
 gl$=user_tpl.glint$
 ckdate$=callpoint!.getUserInput()
 
@@ -791,7 +790,6 @@ rem --- Preventing manual check from being modified after it has been printed on
 	endif
 
 [[APE_MANCHECKHDR.VENDOR_ID.AVAL]]
-	print "Head: VENDOR_ID.AVAL (After Column Validation)"; rem debug
 	rem "VENDOR INACTIVE - FEATURE"
 	vendor_id$ = callpoint!.getUserInput()
 	apm01_dev=fnget_dev("APM_VENDMAST")

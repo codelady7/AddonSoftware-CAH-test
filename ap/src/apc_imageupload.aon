@@ -56,6 +56,7 @@ rem --- Declarations
         BBjAPI().getGroupNamespace().setValue(rdTransSpaceKey$,Translate!)
     endif
 
+escape; rem lac
 
 rem --- Open Files
 

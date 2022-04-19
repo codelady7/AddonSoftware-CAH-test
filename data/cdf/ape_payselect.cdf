@@ -897,7 +897,7 @@ rem --- Disable Payment Methods if ACH Payments aren' allowed
    
 rem --- Disable View Images option as needed
 
-	if !callpoint!.getDevObject("use_pay_auth") or callpoint!.getDevObject("scan_docs_to")="NOT" then
+	if callpoint!.getDevObject("scan_docs_to")="NOT" then
 			callpoint!.setOptionEnabled("VIMG",0)
 	endif
 
