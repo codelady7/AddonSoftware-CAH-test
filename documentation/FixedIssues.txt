@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-04-12
+ Report Date:   2022-04-19
  Report Branch: AddonSoftware 22.01
  Last Release:  AddonSoftware 22.00
 =======================================================================================================================================
@@ -8,4 +8,13 @@
 BBjBaristaAddonDemos2200_04-11-2022_1648.jar
 
 =======================================================================================================================================
-
+Revision: f442e93665be1bc769936e04cadd4565e9e3e2bc
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/19/2022 10:17:29 AM
+Message:
+Bug 10406: Fixed Manual Check Entry's Open Invoice lookup button to
+check the vendor's "One Invoice per Check" setting before limiting the
+number of selected invoices.
+----
+Modified: data/bar/ape_mancheckdet.xml
+Modified: data/cdf/ape_mancheckdet.cdf
