@@ -482,6 +482,57 @@ rem --- Recalculate sales tax now
 	freight_amt = num(callpoint!.getColumnData("OPE_INVHDR.FREIGHT_AMT"))
 	gosub calculate_tax
 
+[[OPE_INVHDR.AOPT-SHP2]]
+rem --- Launch Customer Ship-To Address form
+	customer_id$=callpoint!.getColumnData("OPE_INVHDR.CUSTOMER_ID")
+	key_pfx$=firm_id$+customer_id$
+
+	dim dflt_data$[15,1]
+	dflt_data$[1,0] = "NAME"
+	dflt_data$[1,1] = callpoint!.getColumnData("<<DISPLAY>>.SNAME")
+	dflt_data$[2,0] = "ADDR_LINE_1"
+	dflt_data$[2,1] = callpoint!.getColumnData("<<DISPLAY>>.SADD1")
+	dflt_data$[3,0] = "ADDR_LINE_2"
+	dflt_data$[3,1] = callpoint!.getColumnData("<<DISPLAY>>.SADD2")
+	dflt_data$[4,0] = "ADDR_LINE_3"
+	dflt_data$[4,1] = callpoint!.getColumnData("<<DISPLAY>>.SADD3")
+	dflt_data$[5,0] = "ADDR_LINE_4"
+	dflt_data$[5,1] = callpoint!.getColumnData("<<DISPLAY>>.SADD4")
+	dflt_data$[6,0] = "CITY"
+	dflt_data$[6,1] = callpoint!.getColumnData("<<DISPLAY>>.SCITY")
+	dflt_data$[7,0] = "STATE_CODE"
+	dflt_data$[7,1] = callpoint!.getColumnData("<<DISPLAY>>.SSTATE")
+	dflt_data$[8,0] = "ZIP_CODE"
+	dflt_data$[8,1] = callpoint!.getColumnData("<<DISPLAY>>.SZIP")
+	dflt_data$[9,0] = "CNTRY_ID"
+	dflt_data$[9,1] = callpoint!.getColumnData("<<DISPLAY>>.SCNTRY_ID")
+	dflt_data$[10,0] = "SLSPSN_CODE"
+	dflt_data$[10,1] = callpoint!.getColumnData("OPE_INVHDR.SLSPSN_CODE")
+	dflt_data$[11,0] = "TERRITORY"
+	dflt_data$[11,1] = callpoint!.getColumnData("OPE_INVHDR.TERRITORY")
+	dflt_data$[12,0] = "TAX_CODE"
+	dflt_data$[12,1] = callpoint!.getColumnData("OPE_INVHDR.TAX_CODE")
+	dflt_data$[13,0] = "AR_SHIP_VIA"
+	dflt_data$[13,1] = callpoint!.getColumnData("OPE_INVHDR.AR_SHIP_VIA")
+	dflt_data$[14,0] = "SHIPPING_ID"
+	dflt_data$[14,1] = callpoint!.getColumnData("OPE_INVHDR.SHIPPING_ID")
+	dflt_data$[15,0] = "SHIPPING_EMAIL"
+	dflt_data$[15,1] = callpoint!.getColumnData("OPE_INVHDR.SHIPPING_EMAIL")
+
+	callpoint!.setDevObject("createNewShipToAddr","true")
+
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:		"ARM_CUSTSHIP",
+:		stbl("+USER_ID"),
+:       	"MNT",
+:       	key_pfx$,
+:       	table_chans$[all],
+:		"",
+:		dflt_data$[all]
+
+	rem --- Make sure focus returns to this form
+	callpoint!.setStatus("ACTIVATE")
+
 [[OPE_INVHDR.AOPT-SHPT]]
 rem --- Launch Shipment Tracking maintenance grid
 	ar_type$=callpoint!.getColumnData("OPE_INVHDR.AR_TYPE")
@@ -4474,6 +4525,7 @@ rem ==========================================================================
 	endif
 
 	callpoint!.setColumnEnabled(column!, status)
+	callpoint!.setOptionEnabled("SHP2",status)
 
 	return
 
