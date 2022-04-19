@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.ope_ordhdr">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20220418</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20220418</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">083534</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">182048</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_ordhdr">OPT_INVHDR      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_ordhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_ordhdr">AO_STATUS</DD_ATTR_DKNM>
@@ -144,6 +144,13 @@
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr12">CUST</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr12">M</DD_ATTR_AOPT_FM>
 		</RECORD>
+		<RECORD id="ddm_table_aopt.ope_ordhdr13">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr13">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr13">13</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr13">Create &New Ship-To Address</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr13">SHP2</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr13">M</DD_ATTR_AOPT_FM>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
@@ -202,6 +209,10 @@
 		<RECORD id="ddm_table_cpro.ope_ordhdraopt-rtax">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_ordhdraopt-rtax">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ope_ordhdraopt-rtax">AOPT-RTAX</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ope_ordhdraopt-shp2">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_ordhdraopt-shp2">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ope_ordhdraopt-shp2">AOPT-SHP2</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ope_ordhdraopt-shpt">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_ordhdraopt-shpt">OPE_ORDHDR      </DD_TABLE_ALIAS>
