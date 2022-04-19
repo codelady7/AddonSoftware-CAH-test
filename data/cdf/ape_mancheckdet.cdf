@@ -126,7 +126,7 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					apt_invoicehdr_key$=apt_invoicehdr_key$(pos("^"=apt_invoicehdr_key$)+1)
 
 					rem --- Warn if only one invoice per check allowed
-					if detailRecWritten then
+					if callpoint!.getDevObject("oneInvPerChk")="Y" and detailRecWritten then
 						msg_id$="AP_ONE_INV_PER_CHK"
 						dim msg_tokens$[2]
 						msg_tokens$[1]=cvs(ap_type$,2)
