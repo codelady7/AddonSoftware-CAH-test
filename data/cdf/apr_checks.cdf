@@ -274,7 +274,7 @@ rem --- Initialize CHECK_NO for the selected checking account
 	callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_NO",nextChkList!.getItem(index),1)
 
 rem --- Hold on to selected Bank Account Code, i.e. Checking Account
-	bnkAcctCdList!=callpoint!.setDevObject("bnkAcctCdList")
+	bnkAcctCdList!=callpoint!.getDevObject("bnkAcctCdList")
 	callpoint!.setDevObject("bnkAcctCd",bnkAcctCdList!.getItem(index))
 
 [[APR_CHECKS.CHECK_NO.AVAL]]
