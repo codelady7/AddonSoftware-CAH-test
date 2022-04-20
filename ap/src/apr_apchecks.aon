@@ -298,10 +298,7 @@ rem --- Initializations for on-demand print check
         invVect! = devObjects!.get("invVect")
         
         rem --- Update ape_mancheckhdr check_printed flag for on-demand print checks
-        check_no$=pad(str(num(check_no$)+1),len(ape02a$.check_no$),"R","0")
-        extractrecord(ape02_dev,key=firm_id$+ap_type$+bnkAcctCd$+check_no$+vendor_id$)ape02a$
-        ape02a.check_printed$="Y"
-        writerecord(ape02_dev)ape02a$
+        callpoint!.setDevObject("updateChkPrintFlag","Y")
     endif
     
 rem --- If using Payment Authorization, get all possible signers and their signature files
@@ -503,6 +500,7 @@ rem --- Init Read
 
     rem --- Main Read for on-demand check printing
     if printMode$="OnDemand" then
+        check_no$=pad(str(num(check_no$)+1),len(ape02a$.check_no$),"R","0")
         ape02_key$=firm_id$+ap_type$+bnkAcctCd$+check_no$+vendor_id$
         readrecord(ape02_dev,key=ape02_key$,dom=*endif)ape02a$
         gosub ap_type_break
