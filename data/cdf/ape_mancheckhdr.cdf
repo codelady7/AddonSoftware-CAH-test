@@ -200,6 +200,18 @@ rem  --- Enable Print Check button if manual check is for more than zero and has
 		callpoint!.setOptionEnabled("PCHK",0)
 	endif
 
+rem --- Refresh form with current data on disk that might have been updated elsewhere
+	if callpoint!.getDevObject("updateDiskData")<>null() and callpoint!.getDevObject("updateDiskData")="Y" then
+		batch_no$=callpoint!.getColumnData("APE_MANCHECKHDR.BATCH_NO")
+		ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+		bnk_acct_cd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+		check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
+		vendor_id$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
+		callpoint!.setStatus("RECORD:["+firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$+vendor_id$+"]")
+
+		callpoint!.setDevObject("updateDiskData","N")
+	endif
+
 [[APE_MANCHECKHDR.AP_TYPE.AVAL]]
 user_tpl.dflt_ap_type$=callpoint!.getUserInput()
 if user_tpl.dflt_ap_type$=""
@@ -594,6 +606,7 @@ if dont_write$="Y"
 	msg_id$="AP_MANCHKWRITE"
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
+	break
 endif
 
 [[<<DISPLAY>>.CHECK_ACCTS.AVAL]]
