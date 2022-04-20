@@ -365,6 +365,8 @@ rem --- Add the calendar widget to our window, specifying the window and a true 
 
 	myOpts! = CalendarAPI.createCalendarOptions()
 	myOpts!.setEnableSelectable(1)
+	myOpts!.setEnableEntryStartEditable(0)
+	myOpts!.setEnableEntryDurationEditable(0)
  	rem --- unrem to enable debug --- if (info(3,6) = "1") then chromium_switches$ = stbl("!CHROMIUM_SWITCHES","--remote-debugging-port=9223")
 	myCal! = CalendarAPI.createBBjCalendarWidget(Form!, cal_ctlID,20,ctly+ctlh+10,1200,500,myOpts!,null(),1)
 
