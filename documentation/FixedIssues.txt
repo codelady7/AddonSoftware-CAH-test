@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-04-19
+ Report Date:   2022-04-20
  Report Branch: AddonSoftware 22.01
  Last Release:  AddonSoftware 22.00
 =======================================================================================================================================
@@ -18,3 +18,18 @@ number of selected invoices.
 ----
 Modified: data/bar/ape_mancheckdet.xml
 Modified: data/cdf/ape_mancheckdet.cdf
+
+=======================================================================================================================================
+Revision: 6eed3b0e64296d64955c39fa63bab1e3f1a02fe5
+Author: Christine <chawkins@basis.com>
+Date: 4/20/2022 11:54:10 AM
+Message:
+Bug 10410 - SF - Shop Floor Calendar should not allow drag/drop or extending of events
+ - Corrected by adding additional properties to the CalendarOptions interface object.
+
+(cherry picked from commit 293a1ad0f8b577669c58b1864a98751dc4325f13)
+----
+Modified: data/bar/sfm_cal_maint.xml
+Modified: data/cdf/sfm_cal_maint.cdf
+
+
