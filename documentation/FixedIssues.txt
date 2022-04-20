@@ -32,4 +32,17 @@ Bug 10410 - SF - Shop Floor Calendar should not allow drag/drop or extending of 
 Modified: data/bar/sfm_cal_maint.xml
 Modified: data/cdf/sfm_cal_maint.cdf
 
-
+=======================================================================================================================================
+Revision: 0677578633fd44aa0b653a242bb91bdeecffd8e6
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/20/2022 12:41:00 PM
+Message:
+Bug 10409: After writing apm_mancheckhdr (ope-02) record in
+apm_mancheckdet AOPT-OINV callpoint when invoice is selected from
+lookup, need to use callpoint!.setStatus("RECORD:["+...+"]") to prevent
+"This record was added by another user" message.
+----
+Modified: data/bar/ape_mancheckdet.xml
+Modified: data/bar/ape_mancheckhdr.xml
+Modified: data/cdf/ape_mancheckdet.cdf
+Modified: data/cdf/ape_mancheckhdr.cdf
