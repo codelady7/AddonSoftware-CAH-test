@@ -2531,19 +2531,6 @@ rem --- Set callback for a tab being selected, and save the tab control ID
 rem --- Initialize ReprintFlag devObject used for workaround to Barista Bug 10297
 	callpoint!.setDevObject("ReprintFlag","")
 
-rem --- Use standard magnifying glass lookup image on SNAME drilldown button
-	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
-	childWin!=tabCtrl!.getControlAt(0); rem --- Addresses tab
-	ctrlVect!=childWin!.getAllControls()
-	for i=0 to ctrlVect!.size()-1
-		thisCtrl!=ctrlVect!.get(i)
-		if thisCtrl!.getControlType()<>28 then continue
-		if thisCtrl!.getName()="tbnd_sname" then
-			thisCtrl!.setImageFile(stbl("+DIR_IMG")+"im_tb_fnd_f.png",err=*next);buttonType=1
-			break
-		endif
-	next i
-
 [[OPE_ORDHDR.BWAR]]
 rem --- Has customer and order number been entered?
 	ordHelp! = cast(OrderHelper, callpoint!.getDevObject("order_helper_object"))
