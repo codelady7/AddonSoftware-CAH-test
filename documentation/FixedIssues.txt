@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-04-20
+ Report Date:   2022-04-21
  Report Branch: AddonSoftware 22.01
  Last Release:  AddonSoftware 22.00
 =======================================================================================================================================
@@ -46,3 +46,16 @@ Modified: data/bar/ape_mancheckdet.xml
 Modified: data/bar/ape_mancheckhdr.xml
 Modified: data/cdf/ape_mancheckdet.cdf
 Modified: data/cdf/ape_mancheckhdr.cdf
+
+=======================================================================================================================================
+Revision: d80538435c35cc483ec7f0fb89a3edf745464019
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/21/2022 12:45:30 PM
+Message:
+Bug 10411: Added #docQueue!.close() to Addon's Report Control class
+method destroy() to eliminate channel creep when emailing any on-demand
+document from an entry form.
+----
+Deleted: ad/src/adc_rptcontrol.aon
+Deleted: ad/src/adc_rptcontrol_batch.aon
+Modified: ad/src/ado_rptControl.src
