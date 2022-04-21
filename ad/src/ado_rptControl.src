@@ -262,6 +262,7 @@ class public ReportControl
 
     method public void destroy()
     rem --- close files opened by object, set +AUTO_SEND global to ""
+    #docQueue!.close()
 
         close (#AdmRptctlChan,err=*next)
         close (#AdmRptctlRcpChan,err=*next)
