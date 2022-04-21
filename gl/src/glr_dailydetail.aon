@@ -429,13 +429,13 @@ rem --- In balance?
 
 rem --- A loop is used to calculate the balance because the glc_balance required glcontrol
 
-        readrecord(glm_acctsummary_dev,key=firm_id$+GLs_suspense.gl_account$+gls01a.current_year$,dom=*endif)glm_acctsummary$
+        readrecord(glm_acctsummary_dev,key=firm_id$+gls_suspense.gl_account$+gls01a.current_year$,dom=*next)glm_acctsummary$
         for i = 1 to 13
            suspense_balance=suspense_balance + num(field(glm_acctsummary$,"PERIOD_AMT_"+str(i:"00")))
         next i
         
 rem --- If the suspense acccount is in use, valid, the transaction is not over the post limit, and the resulting
-:       balance is not over the balance limit, post the OOB to suspense 
+rem --- balance is not over the balance limit, post the OOB to suspense 
 
         if max_balance and abs(suspense_balance) + abs(balance) > max_balance maxbalance = 1
         if cvs(suspense_account$,2)="" acctblank = 1 
