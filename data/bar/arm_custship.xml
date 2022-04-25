@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custship">777AC602BEC600EEB292BD70D4270CA7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custship">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custship">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20220419</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20220419</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">120442</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20220425</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20220425</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">123128</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custship"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custship">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custship"></DD_ATTR_DKNM>
@@ -58,11 +58,41 @@
 			<DD_ATTR_PADG id="ddm_tables.arm_custship"></DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.arm_custship01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custship01">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custship01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custship01">Use Manual Ship-To</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custship01">MANS</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custship01">M</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.arm_custshipadis">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshipadis">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshipadis">ADIS</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custshipaopt-mans">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshipaopt-mans">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshipaopt-mans">AOPT-MANS</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custshiparec">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshiparec">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshiparec">AREC</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.arm_custshiparer">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshiparer">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshiparer">ARER</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custshiparnf">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshiparnf">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshiparnf">ARNF</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custshipbsho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshipbsho">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshipbsho">BSHO</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
