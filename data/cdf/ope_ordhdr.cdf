@@ -3809,7 +3809,10 @@ rem ==========================================================================
 			reprice$ = msg_opt$
 		endif
 
-		call stbl("+DIR_SYP")+"bas_sequences.bbj","ORDER_NO",seq_id$,rd_table_chans$[all]
+		seq_id$=cvs(callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO"),2)
+		if seq_id$="" then
+			call stbl("+DIR_SYP")+"bas_sequences.bbj","ORDER_NO",seq_id$,rd_table_chans$[all]
+		endif
 
 		if seq_id$<>"" then 
 			ope01_dev = fnget_dev("OPE_ORDHDR")
