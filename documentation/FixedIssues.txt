@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-04-21
+ Report Date:   2022-04-25
  Report Branch: AddonSoftware 22.01
  Last Release:  AddonSoftware 22.00
 =======================================================================================================================================
@@ -59,3 +59,16 @@ document from an entry form.
 Deleted: ad/src/adc_rptcontrol.aon
 Deleted: ad/src/adc_rptcontrol_batch.aon
 Modified: ad/src/ado_rptControl.src
+
+=======================================================================================================================================
+Revision: 6bef1f0237ef5730541929b6222a43352fd084b0
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 4/25/2022 10:41:43 AM
+Message:
+Bug 10414: Made sure a new order number is gotten only once for a new
+Order so that order numbers don't get skipped.
+----
+Modified: data/bar/ope_invhdr.xml
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_invhdr.cdf
+Modified: data/cdf/ope_ordhdr.cdf
