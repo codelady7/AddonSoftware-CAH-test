@@ -200,7 +200,6 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					ap_dist_code$=apt01a.ap_dist_code$
 					gosub validateDistCd
 					if badDistCd then continue
-					endif
 
 					rem --- Total open invoice amounts
 					inv_amt    = num(apt01a.invoice_amt$)
@@ -260,6 +259,7 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					batch_key$=ape02a.firm_id$+ape02a.batch_no$+ape02a.ap_type$+ape02a.bnk_acct_cd$+
 :						ape02a.check_no$+ape02a.vendor_id$
 					extractrecord (ape02_dev, key=batch_key$)ape02a$; rem Advisory Locking
+					callpoint!.setDevObject("updateDiskData","Y")
 
 					rem --- Make sure all grid entries have been written to file.
 					recVect!=GridVect!.getItem(0)
@@ -283,6 +283,10 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					gosub disp_tots
 					callpoint!.setStatus("REFGRID")
 				endif
+			else
+				rem --- Set focus on first cell of current row if Open Invoice lookup is aborted, i.e. nothing selected.
+				callpoint!.setFocus(num(callpoint!.getValidationRow()),"APE_MANCHECKDET.AP_INV_NO",1)
+				callpoint!.setStatus("ACTIVATE")
 			endif
 		else
 			callpoint!.setMessage("AP_NO_TYPE_OR_VENDOR")

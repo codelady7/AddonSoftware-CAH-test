@@ -181,8 +181,16 @@ rem --- Print check now
 :	                       "",
 :	                       ChkObj!
 
-rem --- Clear form to make sure check_printed flag is current after on-demand print check
-	callpoint!.setStatus("NEWREC")
+rem --- Update check_printed flag
+	if callpoint!.getDevObject("updateChkPrintFlag")<>null() and callpoint!.getDevObject("updateChkPrintFlag")="Y" then
+		callpoint!.setColumnData("APE_MANCHECKHDR.CHECK_PRINTED","Y")
+		callpoint!.setOptionEnabled("PCHK",0)
+		callpoint!.setDevObject("updateChkPrintFlag","N")
+		
+		rem --- Get current form data and write it to disk
+		gosub get_disk_rec
+		writerecord(ape02_dev)ape02a$
+	endif
 
 rem --- Remove temporary soft lock used just for this print task 
 	if !callpoint!.isEditMode() and lock_type$="L" then
@@ -198,6 +206,18 @@ rem  --- Enable Print Check button if manual check is for more than zero and has
 		callpoint!.setOptionEnabled("PCHK",1)
 	else
 		callpoint!.setOptionEnabled("PCHK",0)
+	endif
+
+rem --- Refresh form with current data on disk that might have been updated elsewhere
+	if callpoint!.getDevObject("updateDiskData")<>null() and callpoint!.getDevObject("updateDiskData")="Y" then
+		batch_no$=callpoint!.getColumnData("APE_MANCHECKHDR.BATCH_NO")
+		ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+		bnk_acct_cd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+		check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
+		vendor_id$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
+		callpoint!.setStatus("RECORD:["+firm_id$+batch_no$+ap_type$+bnk_acct_cd$+check_no$+vendor_id$+"]")
+
+		callpoint!.setDevObject("updateDiskData","N")
 	endif
 
 [[APE_MANCHECKHDR.AP_TYPE.AVAL]]
@@ -281,6 +301,7 @@ rem --- Update next check number
 [[APE_MANCHECKHDR.AWIN]]
 rem --- Inits
 	use ::ado_func.src::func
+	use ::ado_util.src::util
 	use ::BBUtils.bbj::BBUtils
 
 rem --- Open/Lock files
@@ -595,6 +616,7 @@ if dont_write$="Y"
 	msg_id$="AP_MANCHKWRITE"
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
+	break
 endif
 
 [[<<DISPLAY>>.CHECK_ACCTS.AVAL]]
@@ -933,6 +955,35 @@ get_vendor_history:
 			callpoint!.setDevObject("dflt_gl",apm02a.gl_account$)
 			callpoint!.setDevObject("dflt_dist",apm02a.ap_dist_code$)
 			vend_hist$="Y"
+	endif
+return
+
+rem ==========================================================================
+get_disk_rec: rem --- Get disk record, update with current form data
+              rem     OUT: found - true/false (1/0)
+              rem          ordhdr_rec$, updated (if record found)
+              rem          ordhdr_dev
+rem ==========================================================================
+	ape02_dev=fnget_dev("APE_MANCHECKHDR")
+	ape02_tpl$=fnget_tpl$("APE_MANCHECKHDR")
+	dim ape02a$:ape02_tpl$
+
+	ap_type$=callpoint!.getColumnData("APE_MANCHECKHDR.AP_TYPE")
+	bnk_acct_cd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+	check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
+	vendor_id$=callpoint!.getColumnData("APE_MANCHECKHDR.VENDOR_ID")
+	found = 0
+	extractrecord(ape02_dev,key=firm_id$+ap_type$+bnk_acct_cd$+check_no$+vendor_id$, dom=*next)ape02a$; found = 1; rem Advisory Locking
+
+	rem --- Copy in any form data that's changed
+	ape02a$ = util.copyFields(ape02_tpl$, callpoint!)
+	ape02a$ = field(ape02a$)
+
+	if !found then 
+		writerecord(ape02_dev,  dom=*endif)ape02a$
+		ape02_key$=firm_id$+ape02a.ap_type$+ape02a.bnk_acct_cd$+ape02a.check_no$+ape02a.vendor_id$
+		extractrecord(ape02_dev,key=ape02_key$)ape02a$; rem Advisory Locking
+		callpoint!.setStatus("SETORIG")
 	endif
 return
 

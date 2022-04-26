@@ -410,7 +410,7 @@ rem --- Read next Invoice Header (ape-01) record
                     endif
                 endif
             endif
-            if !payauth.use_pay_auth and aps01a.scan_docs_to$<>"NOT" and aps01a$.warn_in_reg + "Y" then
+            if !payauth.use_pay_auth and aps01a.scan_docs_to$<>"NOT" and aps01a.warn_in_reg$ = "Y" then
                 found_image=0
                 read(invimage_dev,key=firm_id$+ape01a.vendor_id$+ape01a.ap_inv_no$,dom=*next)
                 invimage_key$=key(invimage_dev,end=*next)
@@ -426,7 +426,7 @@ rem --- Read next Invoice Header (ape-01) record
                     xwk=fnblank(12)
             
                     rem --- Allow update?
-                    if !found_image and !payauth.ok_to_update then
+                    if !found_image and aps01a.ok_to_update$ = "N"
                         errors=errors+1
                     endif
                 endif

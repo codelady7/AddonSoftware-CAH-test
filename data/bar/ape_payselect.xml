@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_payselect">0A768FB460EAEA4E9E25B3C94EFA7E4C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_payselect">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_payselect">20071023</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_payselect">20220407</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_payselect">20220407</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_payselect">100908</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_payselect">20220422</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_payselect">20220422</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_payselect">112244</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_payselect"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_payselect">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_payselect"></DD_ATTR_DKNM>
@@ -111,6 +111,10 @@
 		<RECORD id="ddm_table_cpro.ape_payselectarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_payselectarec">APE_PAYSELECT   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ape_payselectarec">AREC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ape_payselectarer">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_payselectarer">APE_PAYSELECT   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ape_payselectarer">ARER</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ape_payselectasiz">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_payselectasiz">APE_PAYSELECT   </DD_TABLE_ALIAS>

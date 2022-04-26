@@ -444,6 +444,15 @@ rem --- Set default Payment Methods
 rem --- Refresh grid
 	gosub filter_recs
 
+[[APE_PAYSELECT.ARER]]
+rem --- disable view scanned images button and 'undo' option if not using Pay Auth
+    if !callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_param")="NOT"
+        callpoint!.setOptionEnabled("VIEW",0)
+    endif
+    if !callpoint!.getDevObject("use_pay_auth") 
+        callpoint!.setOptionEnabled("UNDO",0)
+    endif
+
 [[APE_PAYSELECT.ASIZ]]
 rem --- Resize the grid
 
@@ -644,7 +653,8 @@ rem --- Get parameter record
 
 	readrecord(aps_params, key=firm_id$+"AP00", dom=std_missing_params) aps_params$
 	callpoint!.setDevObject("multi_types",aps_params.multi_types$)
-
+	callpoint!.setDevObject("scan_docs_param",aps_params.scan_docs_to$)
+	
 	readrecord(aps_ach,key=firm_id$+"AP00",dom=*next)aps_ach$
 	callpoint!.setDevObject("ach_allowed",iff(cvs(aps_ach.bnk_acct_cd$,2)="",0,1))
 
@@ -706,11 +716,11 @@ rem --- Ask if user wants to clear out ape-04 (computer checks) when running wit
 					apt01a$=field(apt01a$)
 					write record (apt01_dev) apt01a$
 				wend
-			endif
+			endif ; rem msgopts
 
 			break
 		wend
-	endif
+	endif;  rem using payauth
 
 rem --- Add grid to store invoices
 
@@ -729,19 +739,20 @@ rem --- Add grid to store invoices
 	vectInvoices! = BBjAPI().makeVector()
 	vectInvoicesMaster! = BBjAPI().makeVector()
 	nxt_ctlID = util.getNextControlID()
-    tmpCtl!=callpoint!.getControl("APE_PAYSELECT.DISC_DATE_DT")
-    grid_y=tmpCtl!.getY()+tmpCtl!.getHeight()+5
+        tmpCtl!=callpoint!.getControl("APE_PAYSELECT.DISC_DATE_DT")
+   	grid_y=tmpCtl!.getY()+tmpCtl!.getHeight()+5
 	gridInvoices! = Form!.addGrid(nxt_ctlID,5,grid_y,800,300); rem --- ID, x, y, width, height
-    popUpMenu!=SysGUI!.addPopupMenu();rem --- define popup menu for making status changes
-    if !callpoint!.getDevObject("use_pay_auth")
-        option_text$=Translate!.getTranslation("AON_SELECT_DESELECT")
-    else
-        option_text$="&"+Translate!.getTranslation("AON_REVIEW_APPROVE")
-        callpoint!.setOptionText("PROC",option_text$)
-    endif
+   	popUpMenu!=SysGUI!.addPopupMenu();rem --- define popup menu for making status changes
+
+    	if !callpoint!.getDevObject("use_pay_auth")
+       		option_text$=Translate!.getTranslation("AON_SELECT_DESELECT")
+   	 else
+       		 option_text$="&"+Translate!.getTranslation("AON_REVIEW_APPROVE")
+		 callpoint!.setOptionText("PROC",option_text$)
+   	 endif
     
-    menuItem_proc!=popUpMenu!.addMenuItem(-(200),option_text$)
-    menuItem_proc!.setCallback(menuItem_proc!.ON_POPUP_ITEM_SELECT,"custom_event")
+	 menuItem_proc!=popUpMenu!.addMenuItem(-(200),option_text$)
+	 menuItem_proc!.setCallback(menuItem_proc!.ON_POPUP_ITEM_SELECT,"custom_event")
 
 	user_tpl.gridInvoicesCtlID$ = str(nxt_ctlID)
 	user_tpl.gridInvoicesCols$ = "15"
@@ -787,7 +798,7 @@ rem --- Misc other init
     statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"));rem text is the same, but the offset in the vector indicates first approval (3) or final approval (4)
     callpoint!.setDevObject("status_vect",statusVect!)
 
-    if callpoint!.getDevObject("use_pay_auth")
+	if callpoint!.getDevObject("use_pay_auth")
 
 		rem --- Read Approvers&Signers table to get approval level for current user
 		rem --- Build popup menu accordingly
@@ -800,24 +811,24 @@ rem --- Misc other init
 		callpoint!.setDevObject("apm_approvers",apm_approvers$)
 
 		if !apm_approvers.prelim_approval and !apm_approvers.check_signer
-		rem --- non-reviewer/approver can make no changes to status or pay/disc
-		menuItem_proc!.setEnabled(0)
-		callpoint!.setOptionEnabled("PROC",0)
+			rem --- non-reviewer/approver can make no changes to status or pay/disc
+			menuItem_proc!.setEnabled(0)
+			callpoint!.setOptionEnabled("PROC",0)
 			gridInvoices!.setColumnEditable(12,0)
 			gridInvoices!.setColumnEditable(13,0)
 		else
 			if apm_approvers.prelim_approval and !apm_approvers.check_signer                  
-                rem --- reviewer cannot change pay/disc
-                gridInvoices!.setColumnEditable(12,0)
-                gridInvoices!.setColumnEditable(13,0)               
-            endif
-		endif
+               			rem --- reviewer cannot change pay/disc
+                			gridInvoices!.setColumnEditable(12,0)
+               			 gridInvoices!.setColumnEditable(13,0)               
+            		endif
+		endif; rem not apm approvers
 
 		rem --- Make a vector to hold Payment Authorization approvals done in the session
 		approvalsEntered! = BBjAPI().makeVector()
 		callpoint!.setDevObject("approvalsEntered",approvalsEntered!)
-        approvalsUndone!=new java.util.HashMap()
-        callpoint!.setDevObject("approvalsUndone",approvalsUndone!)
+ 	       	approvalsUndone!=new java.util.HashMap()
+   	    	callpoint!.setDevObject("approvalsUndone",approvalsUndone!)
 
 		rem --- Get Barista's Document Queue object 
 		use ::sys/prog/bao_docqueue.bbj::DocumentQueue
@@ -833,10 +844,10 @@ rem --- Misc other init
 		popUpMenu!.addSeparator()
 		menuItem_view!=popUpMenu!.addMenuItem(-300,Translate!.getTranslation("AON_VIEW_IMAGES"))
 		menuItem_view!.setCallback(menuItem_view!.ON_POPUP_ITEM_SELECT,"custom_event")
-		if callpoint!.getDevObject("scan_docs_to")="NOT"
+		if callpoint!.getDevObject("scan_docs_to")="NOT" 
 			menuItem_view!.setEnabled(0)
-        endif
-        
+        		endif
+
         if apm_approvers.prelim_approval or apm_approvers.check_signer
             popUpMenu!.addSeparator()
             menuItem_undo!=popUpMenu!.addMenuItem(-400,Translate!.getTranslation("AON_UNDO","Undo"))
@@ -844,11 +855,25 @@ rem --- Misc other init
             callpoint!.setDevObject("menu_undo",menuItem_undo!)
         else
             callpoint!.setOptionEnabled("UNDO",0)
-        endif
-    else
-        callpoint!.setOptionEnabled("UNDO",0)
-        callpoint!.setOptionEnabled("VIEW",0)
-    endif
+        endif; rem apm approvers
+
+    else 
+	rem --- Else for not using payauth
+
+	popUpMenu!.addSeparator()
+	menuItem_view!=popUpMenu!.addMenuItem(-300,Translate!.getTranslation("AON_VIEW_IMAGES"))
+	menuItem_view!.setCallback(menuItem_view!.ON_POPUP_ITEM_SELECT,"custom_event")
+	if callpoint!.getDevObject("scan_docs_param")="NOT" 
+		menuItem_view!.setEnabled(0)
+        	endif
+        
+	callpoint!.setOptionEnabled("UNDO",0)
+
+        if callpoint!.getDevObject("scan_docs_param")="NOT"
+       	 	callpoint!.setOptionEnabled("VIEW",0)
+	endif
+
+    endif; rem using payauth
 
 rem --- Now add the popup menu to the grid
 
@@ -895,17 +920,6 @@ rem --- Don't warn if using pay auth and nothing changed (nothing in approvalsEn
 rem --- Disable Payment Methods if ACH Payments aren' allowed
 	if !callpoint!.getDevObject("ach_allowed") then callpoint!.setColumnEnabled("APE_PAYSELECT.PAYMENT_METHOD",-1)
    
-rem --- Disable View Images option as needed
-
-	if callpoint!.getDevObject("scan_docs_to")="NOT" then
-			callpoint!.setOptionEnabled("VIMG",0)
-	endif
-
-rem --- Disable Approve Invoices option as needed
-
-	if !callpoint!.getDevObject("use_pay_auth")  then
-			callpoint!.setOptionEnabled("AINV",0)
-	endif
 
 [[APE_PAYSELECT.DISC_DATE_DT.AVAL]]
 rem --- Set filters on grid if value was changed
