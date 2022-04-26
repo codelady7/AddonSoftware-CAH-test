@@ -47,7 +47,7 @@ rem --- Enable Load Image and View Images options as needed
 	curr_row=callpoint!.getValidationRow()
 	rowstatus$ = callpoint!.getGridRowNewStatus(curr_row) + callpoint!.getGridRowModifyStatus(curr_row) + callpoint!.getGridRowDeleteStatus(curr_row)
 
-	if callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_to")<>"NOT" and pos("Y"=rowstatus$)=0 then
+    if  ((callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_to")<>"NOT") or (!callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_param")<>"NOT"))  and pos("Y"=rowstatus$)=0 then
 		callpoint!.setOptionEnabled("VIMG",1)
 		callpoint!.setOptionEnabled("LIMG",1)
 	else
