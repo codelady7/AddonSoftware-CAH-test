@@ -441,6 +441,7 @@ rem --- Retrieve parameter data
 	aps01a_key$=firm_id$+"AP00"
 	find record (aps01_dev,key=aps01a_key$,err=std_missing_params) aps01a$
 	callpoint!.setDevObject("multi_types",aps01a.multi_types$)
+    callpoint!.setDevObject("scan_docs_param",aps01a.scan_docs_to$)                                                            
 
 	call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","A","",amt_mask$,0,0
 
