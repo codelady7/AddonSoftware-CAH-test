@@ -387,7 +387,9 @@ rem --- Read next Invoice Header (ape-01) record
             xwk=fnblank(12)
         endif
         
-
+        rem --- Check for missing invoice images if using scanning documents for invoices
+        if ape01a.invoice_amt then
+            if payauth.use_pay_auth and payauth.scan_docs_to$<>"NOT" and payauth.warn_in_register then                                                                                              
                 found_image=0
                 read(invimage_dev,key=firm_id$+ape01a.vendor_id$+ape01a.ap_inv_no$,dom=*next)
                 invimage_key$=key(invimage_dev,end=*next)
