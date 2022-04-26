@@ -387,9 +387,7 @@ rem --- Read next Invoice Header (ape-01) record
             xwk=fnblank(12)
         endif
         
-        rem --- Check for missing invoice images if using Payment Authorization
-        if payauth.use_pay_auth and ape01a.invoice_amt then
-            if payauth.scan_docs_to$<>"NOT" and payauth.warn_in_register then
+
                 found_image=0
                 read(invimage_dev,key=firm_id$+ape01a.vendor_id$+ape01a.ap_inv_no$,dom=*next)
                 invimage_key$=key(invimage_dev,end=*next)
@@ -406,6 +404,27 @@ rem --- Read next Invoice Header (ape-01) record
             
                     rem --- Allow update?
                     if !found_image and !payauth.ok_to_update then
+                        errors=errors+1
+                    endif
+                endif
+            endif
+            if !payauth.use_pay_auth and aps01a.scan_docs_to$<>"NOT" and aps01a.warn_in_reg$ = "Y" then
+                found_image=0
+                read(invimage_dev,key=firm_id$+ape01a.vendor_id$+ape01a.ap_inv_no$,dom=*next)
+                invimage_key$=key(invimage_dev,end=*next)
+                if pos(firm_id$+ape01a.vendor_id$+ape01a.ap_inv_no$=invimage_key$)=1 then found_image=1
+
+                rem --- Missing invoice image?
+                if !found_image then
+                    rem --- Warn on register
+                    warnings=warnings+1
+                    OutVect!.addItem("")
+                    OutVect!.addItem(Translate!.getTranslation("AON_WARNING")+": "+Translate!.getTranslation("AON_MISSING")+
+:                                    " "+Translate!.getTranslation("AON_INVOICE_IMAGE"))
+                    xwk=fnblank(12)
+            
+                    rem --- Allow update?
+                    if !found_image and aps01a.ok_to_update$ = "N"
                         errors=errors+1
                     endif
                 endif
