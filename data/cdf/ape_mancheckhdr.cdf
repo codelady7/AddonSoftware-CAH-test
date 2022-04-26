@@ -633,7 +633,6 @@ rem --- Initialize BNK_ACCT_CD for the selected checking account
 	callpoint!.setColumnData("APE_MANCHECKHDR.BNK_ACCT_CD",bnk_acct_cd$)
 
 [[APE_MANCHECKHDR.CHECK_DATE.AVAL]]
-print "in check date aval"
 
 gl$=user_tpl.glint$
 ckdate$=callpoint!.getUserInput()
