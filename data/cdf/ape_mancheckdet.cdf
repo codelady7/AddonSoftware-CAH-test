@@ -69,9 +69,14 @@ rem --- Select invoice image and upload for current grid row
 		vendor_id$ = callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")
 		ap_inv_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
 		man_check$ ="Y"
-		scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
-
-	call "apc_imageupload.aon", channels[all],templates$[all],ap_type$,vendor_id$,ap_inv_no$,man_check$,scan_docs_to$,status
+		if callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_to")<>"NOT" then
+			scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
+		else
+			if !callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_param")<>"NOT" then
+ 				scan_docs_to$=callpoint!.getDevObject("scan_docs_param")
+			endif
+		endif
+		call "apc_imageupload.aon", channels[all],templates$[all],ap_type$,vendor_id$,ap_inv_no$,man_check$,scan_docs_to$,status
 	endif
 
 [[APE_MANCHECKDET.AOPT-OINV]]
