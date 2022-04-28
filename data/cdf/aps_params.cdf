@@ -582,6 +582,10 @@ rem =========================================================
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_SIG_REQ",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_SIG_AMT",use_pay_auth)
 
+	callpoint!.setColumnEnabled("APS_PARAMS.SCAN_DOCS_TO_LOC",!use_pay_auth)
+	callpoint!.setColumnEnabled("APS_PARAMS.WARN_IN_REG",!use_pay_auth)
+	callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",!use_pay_auth)
+
 	if use_pay_auth then
 		rem --- Initialize SCAN_DOCS_TO
 		if cvs(callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO"),2)="" then
@@ -590,6 +594,7 @@ rem =========================================================
 
 		rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 		scan_docs_to$=callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO")
+		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC")
 		gosub able_scan_docs
 
 		rem --- Initialize ALL_AUTH_COLOR
@@ -611,6 +616,18 @@ rem =========================================================
 		rem --- Enable/Disable TWO_SIG_AMT and TWO_AUTH_COLOR (and initialize TWO_AUTH_COLOR)
 		two_sig_req=num(callpoint!.getColumnData("APS_PAYAUTH.TWO_SIG_REQ"))
 		gosub able_two_sig
+
+	endif
+	if !use_pay_auth then
+		rem --- Initialize SCAN_DOCS_TO
+		if cvs(callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC"),2)="" then
+			callpoint!.setColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC","NOT",1); rem --- Not scanned
+		endif
+
+		rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
+		scan_docs_to$=callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO")
+		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC")
+		gosub able_scan_docs
 
 	endif
 	return
