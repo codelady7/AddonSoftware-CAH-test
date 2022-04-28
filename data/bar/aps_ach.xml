@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.aps_ach"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.aps_ach">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.aps_ach">20190220</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.aps_ach">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.aps_ach">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.aps_ach">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.aps_ach">20220428</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.aps_ach">20220428</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.aps_ach">152648</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.aps_ach"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.aps_ach"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.aps_ach"></DD_ATTR_DKNM>
