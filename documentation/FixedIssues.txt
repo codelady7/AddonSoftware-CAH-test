@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-04-25
+ Report Date:   2022-04-28
  Report Branch: AddonSoftware 22.01
  Last Release:  AddonSoftware 22.00
 =======================================================================================================================================
@@ -72,3 +72,19 @@ Modified: data/bar/ope_invhdr.xml
 Modified: data/bar/ope_ordhdr.xml
 Modified: data/cdf/ope_invhdr.cdf
 Modified: data/cdf/ope_ordhdr.cdf
+
+=======================================================================================================================================
+Revision: 2ae9e2b14a9feed4576786605702a50d7f7fd015
+Author: Christine <chawkins@basis.com>
+Date: 4/28/2022 10:40:53 AM
+Message:
+Bug 10419 - Installing a new copy fails on Linux under client/server session
+ - corrected so on linux, the owner/group are the user running BBj.
+
+(cherry picked from commit c10e0fc592c50d36a18cf88de2182c6923d9c9ec)
+----
+Modified: ad/src/ado_AO_GitRepoInterface.aon
+Modified: ad/src/adx_installwiz.aon
+Modified: ad/src/adx_upgradewiz.aon
+
+
