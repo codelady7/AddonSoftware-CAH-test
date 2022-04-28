@@ -503,6 +503,18 @@ rem --- Restrict selection to currently available options
 rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 	gosub able_scan_docs
 
+[[APS_PARAMS.SCAN_DOCS_TO_LOC.AVAL]]
+rem --- Restrict selection to currently available options
+	scan_docs_nopayauth$=callpoint!.getUserInput()
+	if pos(scan_docs_nopayauth$="NOTGD BDA",3)=0 then
+		callpoint!.setMessage("AD_OPTION_NOT")
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
+	gosub able_scan_docs
+
 [[APS_PARAMS.SIGNATURE_FILE.AVAL]]
 rem --- Verify signature file exists
 	signature_file$=callpoint!.getUserInput()
