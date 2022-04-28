@@ -1604,7 +1604,7 @@ class public OwnerSetter extends SimpleFileVisitor
     field protected UserPrincipal userPrincipal!
 
     method public OwnerSetter()
-        #this!(info(3,2))
+        #this!(java.lang.System.getProperty("user.name"))
     methodend
 
     method public OwnerSetter(BBjString userName!)
