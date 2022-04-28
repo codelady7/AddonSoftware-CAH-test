@@ -144,7 +144,7 @@ rem --- Clone and pull branch(s) from Git repository to newAonLoc
 			permissions!=PosixFilePermissions.fromString("rwxrwxrwx")
 			while (current_dir!<>base_dir!.getParent()) 
 				Files.setPosixFilePermissions(current_dir!,permissions!)
-				userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(info(3,2))
+				userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(java.lang.System.getProperty("user.name"))
 				Files.setOwner(current_dir!,userPrincipal!)
 				current_dir!=current_dir!.getParent()
 			wend
@@ -244,7 +244,7 @@ rem --- Run BIM bai_install_manager.bbj program via synchronous system call beca
 :       +" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
 :       +" "+$22$+bar_dir$+"/sys/prog/bai_install_manager.bbj"+$22$
 	    user_arg$=" - "
-:       +" -u"+info(3,2)
+:       +" -u"+rdAdmin!.getUser()
 :       +" -id"+dbName$
 :       +" -desc"+$22$+appDesc$+$22$
 :       +" -loc"+$22$+newAonLoc$+$22$

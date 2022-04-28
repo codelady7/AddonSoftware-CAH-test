@@ -1035,7 +1035,7 @@ cloneGitRepo: rem --- Clone Git repository and switch/checkout to old branch/tag
            	permissions!=PosixFilePermissions.fromString("rwxrwxrwx")
            	while (current_dir!<>base_dir!.getParent()) 
                	    Files.setPosixFilePermissions(current_dir!,permissions!)
-               	    userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(info(3,2))
+                    userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(java.lang.System.getProperty("user.name"))
                	    Files.setOwner(current_dir!,userPrincipal!)
                	    current_dir!=current_dir!.getParent()
            	wend
