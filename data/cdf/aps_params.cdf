@@ -503,18 +503,6 @@ rem --- Restrict selection to currently available options
 rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 	gosub able_scan_docs
 
-[[APS_PARAMS.SCAN_DOCS_TO_LOC.AVAL]]
-rem --- Restrict selection to currently available options
-	scan_docs_nopayauth$=callpoint!.getUserInput()
-	if pos(scan_docs_nopayauth$="NOTGD BDA",3)=0 then
-		callpoint!.setMessage("AD_OPTION_NOT")
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
-rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
-	gosub able_scan_docs
-
 [[APS_PARAMS.SIGNATURE_FILE.AVAL]]
 rem --- Verify signature file exists
 	signature_file$=callpoint!.getUserInput()
@@ -582,7 +570,7 @@ rem =========================================================
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_SIG_REQ",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_SIG_AMT",use_pay_auth)
 
-	callpoint!.setColumnEnabled("APS_PARAMS.SCAN_DOCS_TO_LOC",!use_pay_auth)
+	callpoint!.setColumnEnabled("APS_PARAMS.SCAN_DOCS_TO",!use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PARAMS.WARN_IN_REG",!use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",!use_pay_auth)
 
@@ -594,7 +582,7 @@ rem =========================================================
 
 		rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 		scan_docs_to$=callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO")
-		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC")
+		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
 		gosub able_scan_docs
 
 		rem --- Initialize ALL_AUTH_COLOR
@@ -620,13 +608,13 @@ rem =========================================================
 	endif
 	if !use_pay_auth then
 		rem --- Initialize SCAN_DOCS_TO
-		if cvs(callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC"),2)="" then
-			callpoint!.setColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC","NOT",1); rem --- Not scanned
+		if cvs(callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO"),2)="" then
+			callpoint!.setColumnData("APS_PARAMS.SCAN_DOCS_TO","NOT",1); rem --- Not scanned
 		endif
 
 		rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 		scan_docs_to$=callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO")
-		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO_LOC")
+		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
 		gosub able_scan_docs
 
 	endif
