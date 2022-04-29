@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.aps_params">FE57BCD7C580014E15D29197353ADF2B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.aps_params">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.aps_params">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.aps_params">20220428</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.aps_params">20220428</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.aps_params">154624</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.aps_params">20220429</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.aps_params">20220429</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.aps_params">125620</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.aps_params"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.aps_params">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.aps_params"></DD_ATTR_DKNM>
@@ -458,7 +458,7 @@
 		<RECORD id="ddm_table_tpls.aps_params">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.aps_params">APS_PARAMS      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.aps_params"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.aps_params">firm_id:c(2),ap:c(2),sequence_00:c(2),vendor_size:c(2),max_vendor_len:c(2),multi_types:c(1),ap_type:c(2),multi_dist:c(1),ap_dist_code:c(2),ret_flag:c(1),cash_basis:c(1),hold_zero:c(1),ap_check_seq:c(1),ap_chk_memo:c(1),ap_chk_dist:c(1),zip_length:c(1),label_across:c(2),label_length:c(2),label_width:c(2),misc_entry:c(1),br_interface:c(1),post_to_gl:c(1),post_closed:c(1),auto_no:c(1),use_replen:c(1),beg_cmt_line:c(2),end_cmt_line:c(2),chk_prnt_pgm:c(10),current_per:c(2),current_year:c(4),cur_1099_yr:c(4),vendor_output:c(10),form_order:c(3),prnt_aba_no:c(1),prnt_bnk_acct_no:c(1),scan_docs_to_loc:c(3),warn_in_reg:c(1),ok_to_update:c(1),prnt_signature:c(1),signature_file:c(80)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.aps_params">firm_id:c(2),ap:c(2),sequence_00:c(2),vendor_size:c(2),max_vendor_len:c(2),multi_types:c(1),ap_type:c(2),multi_dist:c(1),ap_dist_code:c(2),ret_flag:c(1),cash_basis:c(1),hold_zero:c(1),ap_check_seq:c(1),ap_chk_memo:c(1),ap_chk_dist:c(1),zip_length:c(1),label_across:c(2),label_length:c(2),label_width:c(2),misc_entry:c(1),br_interface:c(1),post_to_gl:c(1),post_closed:c(1),auto_no:c(1),use_replen:c(1),beg_cmt_line:c(2),end_cmt_line:c(2),chk_prnt_pgm:c(10),current_per:c(2),current_year:c(4),cur_1099_yr:c(4),vendor_output:c(10),form_order:c(3),prnt_aba_no:c(1),prnt_bnk_acct_no:c(1),scan_docs_to:c(3),warn_in_reg:c(1),ok_to_update:c(1),prnt_signature:c(1),signature_file:c(80)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -2304,7 +2304,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_cols.aps_params036">APS_PARAMS      </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.aps_params036">036</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.aps_params036">SCAN_DOCS_TO    </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.aps_params036">SCAN_DOCS_TO_LOC</DD_DVAR_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.aps_params036">SCAN_DOCS_TO    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.aps_params036">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.aps_params036">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.aps_params036">N</DD_FIELD_DELIM>
@@ -2316,7 +2316,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params036">20210324</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params036"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params036"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params036">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params036"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params036">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params036">-30</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params036">+3</DD_ATTR_CTLY>
@@ -2339,13 +2339,13 @@
 			<DD_ATTR_TABG id="ddm_table_cols.aps_params036"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.aps_params036">29</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.aps_params036"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.aps_params036">SCAN_DOCS_TO_LOC</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.aps_params036">SCAN_DOCS_TO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.aps_params036"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.aps_params036"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.aps_params036">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.aps_params036">0</DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.aps_params036">3121</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.aps_params036">lbn_scan_docs_to_loc</DD_ATTR_CTLN>
+			<DD_ATTR_CTLN id="ddm_table_cols.aps_params036">lbn_scan_docs_to</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.aps_params036">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.aps_params036"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.aps_params036">N</DD_ATTR_RKEY>
@@ -2365,8 +2365,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.aps_params037"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.aps_params037">20210324</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params037">20210324</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.aps_params037"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.aps_params037"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.aps_params037">APS_PARAMS.SCAN_DOCS_TO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.aps_params037">!NOT</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.aps_params037">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params037">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params037"></DD_ATTR_CTLX>
@@ -2416,8 +2416,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.aps_params038"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.aps_params038">20210324</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params038">20210324</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.aps_params038"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.aps_params038"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.aps_params038">APS_PARAMS.WARN_IN_REG</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.aps_params038">Y</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.aps_params038"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params038">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params038"></DD_ATTR_CTLX>
@@ -2782,11 +2782,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.aps_paramscurrent_yearaval">APS_PARAMS      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.aps_paramscurrent_yearaval">CURRENT_YEAR    </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.aps_paramscurrent_yearaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.aps_paramsscan_docs_to_locaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.aps_paramsscan_docs_to_locaval">APS_PARAMS      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.aps_paramsscan_docs_to_locaval">SCAN_DOCS_TO_LOC</DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.aps_paramsscan_docs_to_locaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.aps_paramswarn_in_regaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.aps_paramswarn_in_regaval">APS_PARAMS      </DD_TABLE_ALIAS>
