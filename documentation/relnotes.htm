@@ -130,7 +130,15 @@ continues its history of constant improvement - additional features, increased f
                 <ul>
                     <li>Accounting</li>
                     <ul>
-                        <li>Added "Print Check" button to Manual Check Entry form to allow printing manual checks on-demand.</li>
+                        <li>New "Print Check" button in Manual Check Entry allows printing manual checks on-demand.</li>
+                        <li>Scanned AP Invoice images can now be attached to any invoice, regardless of whether or not Payment Authorization is used, and new parameters can be set to warn on registers and/or disallow updates if an image has not been linked to an invoice.</li>
+                    </ul>
+                    <li>Distribution</li>
+                    <ul>
+                        <li>Picking Lists, Order Acknowledgements and Invoices now show Cash customer manual ship-to addresses in both the Bill-To and Ship-To address boxes.</li>
+                        <li>Order Entry can be filtered to present only Quotes, or only Orders, or both.</li>
+                        <li>A new lookup in Order and Invoice Entry shows historical manual ship-to addresses, and a new option allows creating a Customer ship-to address from the manual ship-to address.</li>
+                        <li>The Customer Ship-To Addresses form has a new "Use Manual Ship-To" option that lets the user create a new ship-to address from a manual ship-to address previously used for the customer.</li>
                     </ul>
                 </ul>
                 <li>New for version 22.00</li>
@@ -149,9 +157,10 @@ continues its history of constant improvement - additional features, increased f
                         <li>Added Audit Control Number drilldown to the "Detail" view query on the GL Account Summary Activity form.</li>
                         <li>Enhanced the AP Export 1099 To Text form so user can specify both a server and client-side save directory.</li>
                         <li>Different checking accounts can use the same check numbers.</li> 
-                        <li>Made the Check Detail and Deposit/Other Transactions grids used in Bank Reconciliation sortable.</li> 
-                        <li>Modified Manual Check Entry to handle selecting multiple invoices from the Open Invoice lookup.</li> 
-                        <li>Modified Accounts Payable to allow limiting a check to paying only one invoice.</li> 
+                        <li>Columns in the Bank Reconciliation Check Detail and Deposit/Other Transactions grids can now be sorted for faster processing</li> 
+                        <li>Manual Check Entry now permits users to select multiple invoices for payment from the Open Invoice lookup grid.</li> 
+                        <li>Accounts Payable has been enhanced so that checks for selected vendors can be limited to paying a single invoice.</li>
+                        <li>The General Ledger Daily Detail Update can now post to the suspense account if applicable. GL reports and month/year-end close processes show if suspense account balance is not zero, and year-end close is prohibited.</li>
                     </ul>
                     <li>Distribution</li>
                     <ul>
