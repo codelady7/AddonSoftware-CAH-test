@@ -8,15 +8,6 @@ rem --- All Rights Reserved
 rem --- This SPROC is called from the OPPickListHdr Jasper report
 
 rem ----------------------------------------------------------------------------
-rem goto wghTrace
-endtrace
-traceFile$="\temp\trace_"+date(0:"%Yz%Mz%Dz%Hz%mz%sz")+".txt"
-erase traceFile$,err=*next
-string traceFile$
-traceChan=unt
-open(traceChan)traceFile$
-settrace(traceChan,mode="UNTIMED")
-wghTrace:
 
 seterr sproc_error
 
