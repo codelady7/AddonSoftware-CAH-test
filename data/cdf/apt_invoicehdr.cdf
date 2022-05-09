@@ -17,7 +17,6 @@ rem --- Enable/Disable View Image button
 
 [[APT_INVOICEHDR.AOPT-VIDI]]
 rem --- Display invoice images
-	urlVect!=callpoint!.getDevObject("urlVect")
 	vendor_id$ = callpoint!.getColumnData("APT_INVOICEHDR.VENDOR_ID")
 	ap_inv_no$ = callpoint!.getColumnData("APT_INVOICEHDR.AP_INV_NO")
 
@@ -32,6 +31,7 @@ rem --- Display invoice images
 	callpoint!.setDevObject("imageCount",imageCount!)
 
 	if urls!.size()>0 then
+		urlVect!=callpoint!.getDevObject("urlVect")
 		for i=0 to urls!.size()-1
 			thisURL$=urls!.getItem(i)
 			urlVect!.add(thisURL$)
