@@ -61,7 +61,6 @@ rem --- Select invoice image and upload
 
 [[APE_INVOICEHDR.AOPT-VIDI]]
 rem --- Display invoice images
-	urlVect!=callpoint!.getDevObject("urlVect")
 	vendor_id$ = callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
 	ap_inv_no$ = callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
 
@@ -76,6 +75,7 @@ rem --- Display invoice images
 	callpoint!.setDevObject("imageCount",imageCount!)
 
 	if urls!.size()>0 then
+		urlVect!=callpoint!.getDevObject("urlVect")
 		for i=0 to urls!.size()-1
 			thisURL$=urls!.getItem(i)
 			urlVect!.add(thisURL$)
@@ -373,6 +373,30 @@ rem --- setup utility
 
 	use ::ado_util.src::util
 	use ::BBUtils.bbj::BBUtils
+
+[[APE_INVOICEHDR.BDEL]]
+rem --- Delete images for invoice ONLY if it's NOT in apt_invoicehdr (apt-01)
+	apt_invoicehdr_dev = fnget_dev("APT_INVOICEHDR")
+	dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
+
+	ap_type$    = callpoint!.getColumnData("APE_INVOICEHDR.AP_TYPE")
+	vendor_id$  = callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
+	invoice_no$ = callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
+
+	apt01_key$ = firm_id$ + ap_type$ + vendor_id$ + invoice_no$ 
+	read record (apt_invoicehdr_dev, key=apt01_key$, dom=*next) apt01a$
+	if pos(apt01_key$ = apt01a$)<>1 then
+		rem --- Open Invoice record NOT found
+		invimage_dev=fnget_dev("1APT_INVIMAGE")
+
+		invimage_trip$ = firm_id$ + vendor_id$ + invoice_no$
+		read(invimage_dev,key=invimage_trip$,dom=*next)
+		while 1
+			invimage_key$=key(invimage_dev,end=*break)
+			if pos(invimage_trip$=invimage_key$)<>1 then break
+			remove(invimage_dev,key=invimage_key$)
+		wend
+	endif
 
 [[APE_INVOICEHDR.BEND]]
 rem --- remove software lock on batch, if batching

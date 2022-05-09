@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_invoicehdr">8457477C9CB78B39AE28BA75572C9682</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_invoicehdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_invoicehdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_invoicehdr">20220508</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_invoicehdr">20220508</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_invoicehdr">160310</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_invoicehdr">20220509</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_invoicehdr">20220509</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_invoicehdr">091614</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_invoicehdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_invoicehdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_invoicehdr">BATCH_KEY</DD_ATTR_DKNM>
@@ -104,6 +104,10 @@
 		<RECORD id="ddm_table_cpro.ape_invoicehdrawin">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_invoicehdrawin">APE_INVOICEHDR  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ape_invoicehdrawin">AWIN</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ape_invoicehdrbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_invoicehdrbdel">APE_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ape_invoicehdrbdel">BDEL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ape_invoicehdrbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_invoicehdrbend">APE_INVOICEHDR  </DD_TABLE_ALIAS>
