@@ -1,0 +1,118 @@
+rem --- AP Invoice Image Viewer
+rem --- Program apc_imageviewer.aon
+
+rem --- AddonSoftware Version 22.01 - April 2022
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- vendor_id$     : ID of vendor the invoice is from (input)
+rem --- ap_inv_no$     : Invoice number the images are for (input)
+rem --- table_chans$[] : Barista table channel info, do not modify (input)
+rem --- imageCount!    : TreeMap of count (number) of previous invoice image files (input/returned)
+rem --- urls!          : Vector of URLs used for each invoice image file (returned)
+
+    seterr std_error
+    setesc std_error
+
+    enter vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+
+rem --- Declarations and initializations
+    use ::BBUtils.bbj::BBUtils
+
+    urls! = BBjAPI().makeVector()
+    
+rem --- Retrieve sysinfo data
+    dim sysinfo$:stbl("+SYSINFO_TPL")
+    sysinfo$=stbl("+SYSINFO")
+    firm_id$=sysinfo.firm_id$
+
+rem --- Put imageCount! TreeMap in Global Namespace
+    processID$=hta(info(3,0))
+    global_ns!=BBjAPI().getGlobalNamespace()
+    global_ns!.setValue("apcImageViewer_imageCount"+processID$,imageCount!)
+
+rem --- Get image files for the invoice
+    invimage_dev=fnget_dev("APT_INVIMAGE")
+    dim invimage$:fnget_tpl$("APT_INVIMAGE")
+
+    read record(invimage_dev, key=firm_id$+vendor_id$+ap_inv_no$, dom=*next)
+    while 1
+        invimage_key$=key(invimage_dev,end=*break)
+        if pos(firm_id$+vendor_id$+ap_inv_no$=invimage_key$)<>1 then break
+        redim invimage$
+        read record(invimage_dev)invimage$
+        thisFile$=cvs(invimage.doc_url$,2)
+
+        rem --- Show the invoice images
+        frameMode!=BBjAPI().getConfig().getCurrentCommandLineObject().getChildFrameMode()
+        if frameMode! = null() then
+            rem --- Using BUI
+            if cvs(invimage.scan_docs_to$,2)<>"GD" then
+                sslReq = BBUtils.isWebServerSSLEnabled()
+                thisFile$ = BBUtils.copyFileToWebServer(thisFile$,"appreviewtemp", sslReq)
+                urls!.addItem(thisFile$)
+            endif
+            
+            BBjAPI().getThinClient().browse(thisFile$)
+
+        else
+
+            rem --- Using MDI or SDI or Google Docs
+            cmd$=$22$+"apr_imageviewer.aon"+$22$+" - -f"+thisFile$+" -i"+ap_inv_no$+" -p"+processID$+" &"
+            cmdObj!=BBjAPI().getConfig().getCommandLineObject(cmd$)
+            cmdObj!.setChildFrameMode(frameMode!)
+            returnCode=BBjAPI().newBBjSession(cmdObj!)
+        endif
+    wend
+
+rem --- Done
+    goto std_exit
+
+rem --- Functions
+
+    def fnget_dev(tmp0$)=num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3))
+    def fnget_tpl$(tmp0$)=table_chans$[num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3)),0]
+    
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_exit.src
+
+std_exit: rem --- Standard called program exit (01Mar2006)
+
+    exit
+
+rem #endinclude std_exit.src
+
+    end

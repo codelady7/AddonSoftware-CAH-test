@@ -51,7 +51,7 @@ rem --- Select invoice image and upload
 	files=2
 	dim channels[files],templates$[files]
 	channels[1]=fnget_dev("APM_VENDMAST"),templates$[1]=fnget_tpl$("APM_VENDMAST")
-	channels[2]=fnget_dev("1APT_INVIMAGE"),templates$[2]=fnget_tpl$("1APT_INVIMAGE")
+	channels[2]=fnget_dev("APT_INVIMAGE"),templates$[2]=fnget_tpl$("APT_INVIMAGE")
 	ap_type$ = callpoint!.getColumnData("APE_INVOICEHDR.AP_TYPE")
 	vendor_id$ = callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
 	ap_inv_no$ = callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
@@ -72,38 +72,28 @@ rem --- Select invoice image and upload
 	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
 
 [[APE_INVOICEHDR.AOPT-VIDI]]
-rem --- Display invoice images in the browser
-	invimage_dev=fnget_dev("1APT_INVIMAGE")
-	dim invimage$:fnget_tpl$("1APT_INVIMAGE")
+rem --- Display invoice images
+	urlVect!=callpoint!.getDevObject("urlVect")
 	vendor_id$ = callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
 	ap_inv_no$ = callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
 
-	read record(invimage_dev, key=firm_id$+vendor_id$+ap_inv_no$, dom=*next)
-	while 1
-		invimage_key$=key(invimage_dev,end=*break)
-		if pos(firm_id$+vendor_id$+ap_inv_no$=invimage_key$)<>1 then break
-		invimage$=fattr(invimage$)
-		read record(invimage_dev)invimage$
+	imageCount!=callpoint!.getDevObject("imageCount")
+	if imageCount!=null() then
+		imageCount! = new java.util.TreeMap()
+		imageCount!.put(0,"")
+	endif
 
-		switch (BBjAPI().TRUE)
-			case invimage.scan_docs_to$="BDA"
-				rem --- Do Barista Doc Archive
-				sslReq = BBUtils.isWebServerSSLEnabled()
-				url$ = BBUtils.copyFileToWebServer(cvs(invimage.doc_url$,2),"appreviewtemp", sslReq)
-				BBjAPI().getThinClient().browse(url$)
-				urlVect!=callpoint!.getDevObject("urlVect")
-				urlVect!.add(url$)
-				callpoint!.setDevObject("urlVect",urlVect!)
-				break
-			case invimage.scan_docs_to$="GD "
-				rem --- Do Google Docs
-				BBjAPI().getThinClient().browse(cvs(invimage.doc_url$,2))
-				break
-			case default
-				rem --- Unknown ... skip
-				break
-		swend
-	wend
+	call stbl("+DIR_PGM")+"apc_imageviewer.aon", vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+
+	callpoint!.setDevObject("imageCount",imageCount!)
+
+	if urls!.size()>0 then
+		for i=0 to urls!.size()-1
+			thisURL$=urls!.getItem(i)
+			urlVect!.add(thisURL$)
+		next i
+		callpoint!.setDevObject("urlVect",urlVect!)
+	endif
 
 [[APE_INVOICEHDR.AP_DIST_CODE.AVAL]]
 if callpoint!.getUserInput()=""
@@ -434,7 +424,7 @@ files$[7]="GLS_PARAMS",options$[7]="OTA"
 files$[8]="APE_CHECKS",options$[8]="OTA"
 files$[9]="APE_MANCHECKDET",options$[9]="OTA"
 files$[10]="APS_PAYAUTH",options$[10]="OTA@"
-files$[11]="APT_INVIMAGE",options$[11]="OTA[1]"
+files$[11]="APT_INVIMAGE",options$[11]="OTA"
 files$[12]="GLS_CALENDAR",options$[12]="OTA"
 call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :	begfile,

@@ -4,29 +4,20 @@ rem --- Program apc_imagepreview
 rem --- AddonSoftware Version 14.00 - Apr2014
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
-rem --- thefile$: Full path to the preview file (input)
-rem --- retval$ : Return value reselect/save/cancel (returned)
+rem --- thefile$     : Full path to the preview file (input)
+rem --- scan_docs_to$: Where the scanned docs are being uploaded to (input)
+rem --- retval$      : Return value reselect/save/cancel (returned)
 
     seterr std_error
     setesc std_error
 
-    enter thefile$,retval$
+    enter thefile$, scan_docs_to$,retval$
 
 rem --- Declarations
 
     use ::BBUtils.bbj::BBUtils
     use ::bbtranslator.bbj::BBTranslator
     
-    declare BBjSysGui sysgui!
-    declare BBjTopLevelWindow win!
-    
-    declare BBjHtmlView htmlviewer!
-    declare BBjImageCtrl imageviewer!
-    declare BBjButton reselect!
-    declare BBjButton save!
-    declare BBjButton cancel!
-
-    declare BBTranslator Translate!
     rdTransSpaceKey$=stbl("+PROPS_NAME")+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
     Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
     if Translate!=null()
@@ -38,57 +29,113 @@ rem --- Verify preview file provided
     retval$ = "reselect"
     if thefile$ = "" then goto reselect
 
-rem --- Create the Window for the program
-    winWidth = 615
-    winHeight = 150
-    
-    sysgui!=BBjAPI().getSysGui()
-    context = sysgui!.getAvailableContext()
-
+rem --- Show the invoice image
     winTitle$=Translate!.getTranslation("AON_INVOICE_IMAGE_PREVIEW")
-    win!=sysgui!.addWindow(context, 50, 50, winWidth, winHeight, winTitle$, $00080010$)
-    font! = sysgui!.makeFont("Tahoma", 8, sysgui!.PLAIN)
+    aon_reselect$=Translate!.getTranslation("AON_RESELECT")
+    aon_save$=Translate!.getTranslation("AON_SAVE")
+    aon_cancel$=Translate!.getTranslation("AON_CANCEL")
 
-rem --- Build web page
-    html$ ="<!DOCTYPE html>" +$0A$
-    html$ = html$ + "<html>" +$0A$
-    html$ = html$ + "<head>" +$0A$
-    html$ = html$ + "</head>" +$0A$
-    html$ = html$ + "<body>" +$0A$
-    html$ = html$ + "<BR><BR><center>Please see your web browser for the document image preview.</center>"+ $0A$
-    html$ = html$ + "</body>" +$0A$
-    html$ = html$ + "</html>" +$0A$
+    frameMode!=BBjAPI().getConfig().getCurrentCommandLineObject().getChildFrameMode()
+    if frameMode! = null()
+        rem --- Using BUI or Google Docs
+        winWidth = 615
+        winHeight = 150
     
-    htmlviewer! = win!.addHtmlView(100, 1, 1, 612, 130, html$, $0800$)
-
-rem --- show all files in the browser
-    sslReq = BBUtils.isWebServerSSLEnabled()
-    url$ = BBUtils.copyFileToWebServer(thefile$,"appreviewtemp", sslReq)
-    BBjAPI().getThinClient().browse(url$)
-	
-rem --- buttons
-    rem --- reselect! = win!.addButton(101, 370, 682, 80, 19, "Reselect")
-    btnLabel$=Translate!.getTranslation("AON_RESELECT")
-    reselect! = win!.addButton(101, 370, 132, 80, 19, btnLabel$)
-    reselect!.setFont(font!)
-
-    rem --- save! = win!.addButton(102, 451, 682, 80, 19, "Save")
-    btnLabel$=Translate!.getTranslation("AON_SAVE")
-    save! = win!.addButton(102, 451, 132, 80, 19, btnLabel$)
-    save!.setFont(font!)
-
-    rem --- cancel! = win!.addButton(103, 532, 682, 80, 19, "Cancel")
-    btnLabel$=Translate!.getTranslation("AON_CANCEL")
-    cancel! = win!.addButton(103, 532, 132, 80, 19, btnLabel$)
-    cancel!.setFont(font!)
-
-rem --- callbacks
-    reselect!.setCallback(reselect!.ON_BUTTON_PUSH, "reselect")
-    save!.setCallback(save!.ON_BUTTON_PUSH, "save")
-    cancel!.setCallback(cancel!.ON_BUTTON_PUSH, "cancel")
+        rem --- Add window for BBjHtmlView control
+        sysgui!=BBjAPI().getSysGui()
+        context = sysgui!.getAvailableContext()
+        win!=sysgui!.addWindow(context, 50, 50, winWidth, winHeight, winTitle$, $00080002$)
+        win!.setCallback(win!.ON_CLOSE,"win_close")
     
-    win!.setVisible(1)
-    save!.focus()
+        rem --- Build web page
+        html$ ="<!DOCTYPE html>" +$0A$
+        html$ = html$ + "<html>" +$0A$
+        html$ = html$ + "<head>" +$0A$
+        html$ = html$ + "</head>" +$0A$
+        html$ = html$ + "<body>" +$0A$
+        html$ = html$ + "<BR><BR><center>Please see your web browser for the document image preview.</center>"+ $0A$
+        html$ = html$ + "</body>" +$0A$
+        html$ = html$ + "</html>" +$0A$
+        
+        htmlviewer! = win!.addHtmlView(100, 1, 1, 612, 130, html$, $0800$)
+    
+        rem --- Show file in the browser
+        sslReq = BBUtils.isWebServerSSLEnabled()
+        url$ = BBUtils.copyFileToWebServer(thefile$,"appreviewtemp", sslReq)
+        BBjAPI().getThinClient().browse(url$)
+    
+        rem --- buttons
+        font! = sysgui!.makeFont("Tahoma", 8, sysgui!.PLAIN)
+
+        rem --- "Reselect" button
+        reselect! = win!.addButton(101, 370, 132, 80, 19, aon_reselect$)
+        reselect!.setFont(font!)
+        reselect!.setCallback(reselect!.ON_BUTTON_PUSH, "reselect")
+    
+        rem --- "Save" button
+        save! = win!.addButton(102, 451, 132, 80, 19, aon_save$)
+        save!.setFont(font!)
+        save!.setCallback(save!.ON_BUTTON_PUSH, "save")
+        save!.focus()
+    
+        rem --- "Cancel" button
+        cancel! = win!.addButton(103, 532, 132, 80, 19, aon_cancel$)
+        cancel!.setFont(font!)
+        cancel!.setCallback(cancel!.ON_BUTTON_PUSH, "cancel")
+
+    else
+
+        rem --- Using MDI or SDI
+        margin=50
+        xpos=margin
+        ypos=margin
+    
+        rem --- Add window for BBjHtmlView control
+        thisGui!=BBjAPI().openSysGui(stbl("+GUI_DEVICE"))
+    
+        if BBjAPI().isInMDI() then
+            mdi!=BBjAPI().getMDI()
+            width=mdi!.getClientWidth()-5*margin
+            height=mdi!.getClientHeight()-3*margin
+        else
+            screenSize!=thisGui!.getSystemMetrics().getScreenSize()
+            width=screenSize!.width-100
+            height=screenSize!.height-100
+        endif
+    
+        htmlWinContext=thisGui!.getAvailableContext()
+        win!=thisGui!.addWindow(htmlWinContext,xpos,ypos,width,height,winTitle$,$00080083$)
+        win!.setCallback(win!.ON_CLOSE,"win_close")
+        win!.setCallback(win!.ON_RESIZE,"win_resize")
+    
+        htmlViewCtrlID=win!.getAvailableControlID()
+        htmlView!=win!.addHtmlView(htmlViewCtrlID,1,1,win!.getWidth()-2,win!.getHeight()-2,"",$0800$)
+
+		rem --- Copy to web server used so file can be viewed if local or connected via Destop App
+        sslReq = BBUtils.isWebServerSSLEnabled()
+        thefile$ = BBUtils.copyFileToWebServer(thefile$,"appreviewtemp", sslReq)
+        htmlView!.setUrl(thefile$)
+
+        rem --- buttons
+        font! = thisGui!.makeFont("Tahoma", 8, thisGui!.PLAIN)
+        menuBar!=win!.addMenuBar()
+
+        rem --- "Reselect" button
+        reselect! = menuBar!.addMenu(-100, aon_reselect$)
+        reselect!.setFont(font!)
+        reselect!.setCallback(reselect!.ON_MENU_ITEM_SELECT, "reselect")
+    
+        rem --- "Save" button
+        save! = menuBar!.addMenu(-100, aon_save$)
+        save!.setFont(font!)
+        save!.setCallback(save!.ON_MENU_ITEM_SELECT, "save")
+        save!.focus()
+    
+        rem --- "Cancel" button
+        cancel! = menuBar!.addMenu(-100, aon_cancel$)
+        cancel!.setFont(font!)
+        cancel!.setCallback(cancel!.ON_MENU_ITEM_SELECT, "cancel")
+    endif
     
     process_events,err=*same
 
@@ -101,8 +148,13 @@ save:
 	goto std_exit
 
 cancel:
+win_close:
 	retval$ = "cancel"
 	goto std_exit
+    
+win_resize:
+    htmlView!.setSize(win!.getWidth()-2,win!.getHeight()-2)
+    return
     
 rem #include std_error.src
 
@@ -143,7 +195,7 @@ rem #include std_exit.src
 
 std_exit: rem --- Standard called program exit (01Mar2006)
 
-    BBUtils.deleteFromWebServer(url$)
+    BBUtils.deleteFromWebServer(url$,err=*next)
     win!.destroy()
     exit
 

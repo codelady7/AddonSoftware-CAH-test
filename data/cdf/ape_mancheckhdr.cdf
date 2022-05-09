@@ -320,7 +320,7 @@ rem --- Open/Lock files
 	files$[11]="APS_PARAMS",options$[11]="OTA"
 	files$[12]="GLS_PARAMS",options$[12]="OTA"
 	files$[13]="APS_PAYAUTH",options$[13]="OTA@"
-	files$[14]="APT_INVIMAGE",options$[14]="OTA[1]"
+	files$[14]="APT_INVIMAGE",options$[14]="OTA"
 	files$[15]="APE_MANCHECKDET",options$[15]="OTA@";rem --- "ape-22, used in AABO to compare grid against what's on disk
 	files$[16]="ADC_BANKACCTCODE",options$[16]="OTA"
 	files$[17]="APC_DISTRIBUTION",options$[17]="OTA"
@@ -506,8 +506,7 @@ rem --- remove software lock on batch, if batching
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 	endif
 
-rem --- remove images copied temporarily to web servier for viewing
-
+rem --- Remove images copied temporarily to web servier for viewing
 	urlVect!=callpoint!.getDevObject("urlVect")
 	if urlVect!.size()
 		for wk=0 to urlVect!.size()-1
