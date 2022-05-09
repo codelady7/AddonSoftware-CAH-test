@@ -384,7 +384,7 @@ rem --- When using pay auth, allow undo on a line-by-line basis
 	gosub  undo_pay_auth
 
 [[APE_PAYSELECT.AOPT-VIEW]]
-rem --- When using pay auth, bring up previously scanned invoice for for review
+rem --- Bring up previously scanned invoice for for review
 
 	gridInvoices! = UserObj!.getItem(num(user_tpl.gridInvoicesOfst$))
 	rowsSelected! = gridInvoices!.getSelectedRows()
@@ -617,7 +617,7 @@ rem --- Open/Lock files
 	open_tables$[6]="APE_INVOICEHDR",open_opts$[6]="OTA"
 	open_tables$[7]="APS_PARAMS",open_opts$[7]="OTA"
 	open_tables$[8]="APS_PAYAUTH",open_opts$[8]="OTA@"
-	open_tables$[9]="APT_INVIMAGE",open_opts$[9]="OTA@"
+	open_tables$[9]="APT_INVIMAGE",open_opts$[9]="OTA"
 	open_tables$[10]="APT_INVAPPROVAL",open_opts$[10]="OTA@"
 	open_tables$[11]="ADM_USER",open_opts$[11]="OTA@"
 	open_tables$[12]="APM_APPROVERS",open_opts$[12]="OTA@"
@@ -2606,59 +2606,53 @@ rem ==========================================================================
 	endif
 
 	rem --- Display invoice images in the browser
-	invimage_dev=fnget_dev("@APT_INVIMAGE")
-	dim invimage$:fnget_tpl$("@APT_INVIMAGE")
+	invimage_dev=fnget_dev("APT_INVIMAGE")
+	dim invimage$:fnget_tpl$("APT_INVIMAGE")
 
-    urlVect!=BBjAPI().makeVector()
-    
-	image_count =0
+	urlVect!=BBjAPI().makeVector()
+
+	imageCount!=callpoint!.getDevObject("imageCount")
+	if imageCount!=null() then
+		imageCount! = new java.util.TreeMap()
+		imageCount!.put(0,"")
+	endif
+
+	startingCount=imageCount!.size()-1
 	for rowCount = 0 to rowsSelected!.size()-1
 		rem --- get the row data needed
 		curr_row = num(rowsSelected!.getItem(rowCount))
 		vendor_id$ = gridInvoices!.getCellText(curr_row,4)
 		ap_inv_no$ = gridInvoices!.getCellText(curr_row,6)
-		read record(invimage_dev, key=firm_id$+vendor_id$+ap_inv_no$, dom=*next)
-		while 1
-			invimage_key$=key(invimage_dev,end=*break)
-			if pos(firm_id$+vendor_id$+ap_inv_no$=invimage_key$)<>1 then break
-			invimage$=fattr(invimage$)
-			read record(invimage_dev)invimage$
 
-			switch (BBjAPI().TRUE)
-				case invimage.scan_docs_to$="BDA"
-					rem --- Do Barista Doc Archive
-                    rem --- show all files in the browser
-                    sslReq = BBUtils.isWebServerSSLEnabled()
-                    url$ = BBUtils.copyFileToWebServer(cvs(invimage.doc_url$,2),"appreviewtemp", sslReq)
-                    urlVect!.add(url$)
-                    BBjAPI().getThinClient().browse(url$)
-					break
-				case invimage.scan_docs_to$="GD "
-					rem --- Do Google Docs
-					BBjAPI().getThinClient().browse(cvs(invimage.doc_url$,2))
-					break
-				case default
-					rem --- Unknown ... skip
-					break
-			swend
-			image_count = image_count + 1
-		wend
+		call stbl("+DIR_PGM")+"apc_imageviewer.aon", vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+		image_count=num(imageCount$)
+
+		callpoint!.setDevObject("imageCount",imageCount!)
+
+		if urls!.size()>0 then
+			for i=0 to urls!.size()-1
+				thisURL$=urls!.getItem(i)
+				urlVect!.add(thisURL$)
+			next i
+		endif
 	next rowCount
+	endingCount=imageCount!.size()-1
 
 	msg_id$="GENERIC_OK"
 	dim msg_tokens$[1]
-	if image_count then
-		msg_tokens$[1] = str(image_count) + " "+Translate!.getTranslation("AON_IMAGES_FOUND")
+	wait 2; rem --- Wait for all images to get added to imageCount!
+	if (imageCount!.size()-1)-startingCount>0 then
+		msg_tokens$[1] = str((imageCount!.size()-1)-startingCount) + " "+Translate!.getTranslation("AON_IMAGES_FOUND")
 	else
 		msg_tokens$[1]=Translate!.getTranslation("AON_NO_IMAGES_FOUND")
 	endif
 	gosub disp_message
     
-    if urlVect!.size()
-        for wk=0 to urlVect!.size()-1
-            BBUtils.deleteFromWebServer(urlVect!.get(wk))
-        next wk
-    endif
+	if urlVect!.size()
+		for wk=0 to urlVect!.size()-1
+			BBUtils.deleteFromWebServer(urlVect!.get(wk))
+		next wk
+	endif
 
 	return
 

@@ -91,7 +91,7 @@ rem --- Select image
     if response$="::CANCEL::" or response$="::BAD::" then
         status=1
 		goto done
-	endif 
+	endif
 
 rem --- Save selected image on server
 	cfs! = BBjAPI().getThinClient().getClientFileSystem()
@@ -111,11 +111,15 @@ rem --- Save selected image on server
     rem --- make the name different in latter case, so if the same doc is saved in Barista and then GDoc, the GDoc remove won't remove the Barista copy
     if scan_docs_to$="BDA" then nameOnServer$="APInv_"+nameOnServer$ 
 
+    
+    rem --- Replace blanks in image file name with underscores
+    nameOnServer!=nameOnServer$
+    nameOnServer$=nameOnServer!.replace(" ","_")
     erase serverPath$+nameOnServer$,err=*next
     rename tempFileLocation$,serverPath$+nameOnServer$
 
 rem --- Preview selected image
-    call "apc_imagepreview.aon", serverPath$+nameOnServer$, retval$
+    call "apc_imagepreview.aon", serverPath$+nameOnServer$, scan_docs_to$, retval$
     if retval$ = "cancel" then 
         document$ = serverPath$+nameOnServer$
     	goto done

@@ -1,0 +1,121 @@
+rem --- BBjHtmlView AP Invoice Image Viewer
+rem --- Program apr_imageviewer.aon
+
+rem --- AddonSoftware Version 22.01 - April 2022
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+    seterr std_error
+    setesc std_error
+
+    use ::BBUtils.bbj::BBUtils
+
+rem --- Get progarm arguments
+    if argc>1
+        for i=1 to argc-1
+            arg$=argv(i)
+            if pos("-f"=arg$)=1 then imageFile$=arg$(3); rem --- Full path to the image file
+            if pos("-i"=arg$)=1 then ap_inv_no$=arg$(3); rem --- Invoice number the image are for
+            if pos("-p"=arg$)=1 then processID$=arg$(3); rem --- Process ID of process that created Global Namespace apcImageViewer_imageCount
+        next i
+    endif
+
+rem --- Get imageCount! TreeMap from Global Namespace, and set count for this image
+    global_ns!=BBjAPI().getGlobalNamespace()
+    imageCount!=global_ns!.getValue("apcImageViewer_imageCount"+processID$)
+    count=imageCount!.lastKey()+1
+    imageCount!.put(count,ap_inv_no$)
+
+rem --- Initializations
+    margin=50
+    xpos=margin*count-25
+    ypos=margin*count-25
+
+rem --- Use BBjHtmlView control for invoice images
+    rem --- Add window for BBjHtmlView control
+    thisGui!=BBjAPI().openSysGui(stbl("+GUI_DEVICE"))
+
+    if BBjAPI().isInMDI() then
+        mdi!=BBjAPI().getMDI()
+        width=mdi!.getClientWidth()-5*margin
+        height=mdi!.getClientHeight()-3*margin
+    else
+        screenSize!=thisGui!.getSystemMetrics().getScreenSize()
+        width=screenSize!.width-100
+        height=screenSize!.height-100
+    endif
+
+    htmlWinContext=thisGui!.getAvailableContext()
+    htmlWin!=thisGui!.addWindow(htmlWinContext,xpos,ypos,width,height,ap_inv_no$,$00080083$)
+    htmlWin!.setCallback(htmlWin!.ON_CLOSE,"win_close")
+    htmlWin!.setCallback(htmlWin!.ON_RESIZE,"win_resize")
+
+    htmlViewCtrlID=htmlWin!.getAvailableControlID()
+    htmlView!=htmlWin!.addHtmlView(htmlViewCtrlID,1,1,htmlWin!.getWidth()-2,htmlWin!.getHeight()-2,"",$0800$)
+
+	rem --- Copy to web server used so file can be viewed if local or connected via Destop App
+	rem --- Skip copy to web server if it's a GDOC (i.e., http://.... or https://....)
+	if pos("http"=imageFile$)<>1
+		sslReq = BBUtils.isWebServerSSLEnabled()
+		imageFile$ = BBUtils.copyFileToWebServer(imageFile$,"appreviewtemp", sslReq)
+	endif
+    htmlView!.setUrl(imageFile$)
+
+    process_events,err=*same
+
+rem --- Done
+    goto std_exit
+
+win_close:
+    htmlWin!.destroy()
+    imageCount!.remove(count)
+    if imageCount!.size()=1 then global_ns!.removeValue("apcImageViewer_imageCount"+processID$,err=*next)
+    goto std_exit
+	
+win_resize:
+	htmlView!.setSize(htmlWin!.getWidth()-2,htmlWin!.getHeight()-2)
+	return
+    
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_exit.src
+
+std_exit: rem --- Standard called program exit (01Mar2006)
+
+    release
+
+rem #endinclude std_exit.src
+
+    end
