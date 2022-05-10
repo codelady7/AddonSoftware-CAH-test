@@ -2621,10 +2621,11 @@ rem ==========================================================================
 	for rowCount = 0 to rowsSelected!.size()-1
 		rem --- get the row data needed
 		curr_row = num(rowsSelected!.getItem(rowCount))
+		ap_type$ = gridInvoices!.getCellText(curr_row,3)
 		vendor_id$ = gridInvoices!.getCellText(curr_row,4)
 		ap_inv_no$ = gridInvoices!.getCellText(curr_row,6)
 
-		call stbl("+DIR_PGM")+"apc_imageviewer.aon", vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+		call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
 		image_count=num(imageCount$)
 
 		callpoint!.setDevObject("imageCount",imageCount!)
@@ -2636,7 +2637,6 @@ rem ==========================================================================
 			next i
 		endif
 	next rowCount
-	endingCount=imageCount!.size()-1
 
 	msg_id$="GENERIC_OK"
 	dim msg_tokens$[1]
