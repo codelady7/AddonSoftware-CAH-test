@@ -17,6 +17,7 @@ rem --- Enable/Disable View Image button
 
 [[APT_INVOICEHDR.AOPT-VIDI]]
 rem --- Display invoice images
+	ap_type$ = callpoint!.getColumnData("APT_INVOICEHDR.AP_TYPE")
 	vendor_id$ = callpoint!.getColumnData("APT_INVOICEHDR.VENDOR_ID")
 	ap_inv_no$ = callpoint!.getColumnData("APT_INVOICEHDR.AP_INV_NO")
 
@@ -26,7 +27,7 @@ rem --- Display invoice images
 		imageCount!.put(0,"")
 	endif
 
-	call stbl("+DIR_PGM")+"apc_imageviewer.aon", vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+	call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
 
 	callpoint!.setDevObject("imageCount",imageCount!)
 

@@ -8,6 +8,7 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
     setesc std_error
 
     use ::BBUtils.bbj::BBUtils
+    use ::bbtranslator.bbj::BBTranslator
 
 rem --- Get progarm arguments
     if argc>1
@@ -16,7 +17,25 @@ rem --- Get progarm arguments
             if pos("-f"=arg$)=1 then imageFile$=arg$(3); rem --- Full path to the image file
             if pos("-i"=arg$)=1 then ap_inv_no$=arg$(3); rem --- Invoice number the image are for
             if pos("-p"=arg$)=1 then processID$=arg$(3); rem --- Process ID of process that created Global Namespace apcImageViewer_imageCount
+            if pos("-r"=arg$)=1 then removeKey$=arg$(3); rem --- The apt_invimage key if removing image is allowed for the invoice
+            if pos("-u"=arg$)=1 then user_id$=arg$(3); rem --- User ID
         next i
+    endif
+
+    if user_id$=""
+        use ::sys/prog/bao_security.bbj::Security
+        user_id$=Security.getURLUser()
+        if cvs(user_id$,2)="" then user_id$="ADMIN"
+    endif
+
+rem --- Make sure needed STBLs are set, and get Translator
+    call stbl("+DIR_SYP")+"bas_process_beg.bbj",user_id$,rd_table_chans$[all]
+
+    rdTransSpaceKey$=stbl("+PROPS_NAME")+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
+    Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
+    if Translate!=null()
+        Translate!=BBTranslator.getInstance(stbl("+PROPS_NAME"),stbl("+USER_LOCALE"),null(),stbl("+PROPS_PATH"))
+        BBjAPI().getGroupNamespace().setValue(rdTransSpaceKey$,Translate!)
     endif
 
 rem --- Get imageCount! TreeMap from Global Namespace, and set count for this image
@@ -26,6 +45,7 @@ rem --- Get imageCount! TreeMap from Global Namespace, and set count for this im
     imageCount!.put(count,ap_inv_no$)
 
 rem --- Initializations
+    removeLable$=Translate!.getTranslation("AON_REMOVE")
     margin=50
     xpos=margin*count-25
     ypos=margin*count-25
@@ -60,6 +80,16 @@ rem --- Use BBjHtmlView control for invoice images
 	endif
     htmlView!.setUrl(imageFile$)
 
+    rem --- "Remove" button
+    if removeKey$<>"" then
+        font! = thisGui!.makeFont("Tahoma", 8, thisGui!.PLAIN)
+        menuBar!=htmlWin!.addMenuBar()
+    
+        remove! = menuBar!.addMenu(-100, removeLable$)
+        remove!.setFont(font!)
+        remove!.setCallback(remove!.ON_MENU_ITEM_SELECT, "remove_image")
+    endif
+
     process_events,err=*same
 
 rem --- Done
@@ -74,6 +104,33 @@ win_close:
 win_resize:
 	htmlView!.setSize(htmlWin!.getWidth()-2,htmlWin!.getHeight()-2)
 	return
+	
+remove_image:
+    msg_id$="AP_REMOVE_IMAGE"
+    dim msg_tokens$[1]
+    msg_tokens$[1]=ap_inv_no$
+    gosub disp_message
+    if msg_opt$="Y" then
+        rem --- Remove image from apt_invimage
+        pgmdir$=stbl("+DIR_PGM",err=*next)
+        files=1,begfile=1,endfile=files
+        dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+        files$[1]="apt_invimage",ids$[1]="APT_INVIMAGE"
+        call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:                                   ids$[all],templates$[all],channels[all],batch,status
+        if status return
+        aptInvImage_dev=channels[1]
+
+        success=0
+        remove(aptInvImage_dev,key=removeKey$,err=*next); success=1
+        close(aptInvImage_dev,err=*next)
+        if success then goto win_close
+    endif
+    return
+
+disp_message: rem --- Display Message Dialog
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+    return
     
 rem #include std_error.src
 

@@ -300,6 +300,7 @@ rem --- Displaye invoice images
 	rowstatus$ = callpoint!.getGridRowNewStatus(curr_row) + callpoint!.getGridRowModifyStatus(curr_row) + callpoint!.getGridRowDeleteStatus(curr_row)
 
 	if pos("Y" = rowstatus$) = 0 then 
+		ap_type$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_TYPE")
 		vendor_id$ = callpoint!.getColumnData("APE_MANCHECKDET.VENDOR_ID")
 		ap_inv_no$ = callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")
 
@@ -309,7 +310,7 @@ rem --- Displaye invoice images
 			imageCount!.put(0,"")
 		endif
 
-		call stbl("+DIR_PGM")+"apc_imageviewer.aon", vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+		call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
 
 		callpoint!.setDevObject("imageCount",imageCount!)
 
@@ -612,7 +613,7 @@ rem --- Remove associated data records
 		read record (apt_invoicehdr_dev, key=apt01_key$, dom=*next) apt01a$
 
 		if pos(apt01_key$ = apt01a$)<>1 then
-			rem --- Open Invoice record NOT found
+			rem --- Historical Invoice record NOT found
 			invimage_dev=fnget_dev("APT_INVIMAGE")
 
 			invimage_trip$ = firm_id$ + vendor_id$ + invoice_no$

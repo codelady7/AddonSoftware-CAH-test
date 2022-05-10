@@ -4,6 +4,7 @@ rem --- Program apc_imageviewer.aon
 rem --- AddonSoftware Version 22.01 - April 2022
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
+rem --- ap_type$       : AP type of vendor the invoice is from (input)
 rem --- vendor_id$     : ID of vendor the invoice is from (input)
 rem --- ap_inv_no$     : Invoice number the images are for (input)
 rem --- table_chans$[] : Barista table channel info, do not modify (input)
@@ -13,7 +14,7 @@ rem --- urls!          : Vector of URLs used for each invoice image file (return
     seterr std_error
     setesc std_error
 
-    enter vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+    enter ap_type$, vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
 
 rem --- Declarations and initializations
     use ::BBUtils.bbj::BBUtils
@@ -29,6 +30,18 @@ rem --- Put imageCount! TreeMap in Global Namespace
     processID$=hta(info(3,0))
     global_ns!=BBjAPI().getGlobalNamespace()
     global_ns!.setValue("apcImageViewer_imageCount"+processID$,imageCount!)
+
+rem --- Is this a historical invoice whose images shouldn't be removed?
+    aptInvoiceHdr_dev=fnget_dev("APT_INVOICEHDR")
+    dim aptInvoiceHdr$:fnget_tpl$("APT_INVOICEHDR")
+    aptInvoiceHdr_key$ = firm_id$ + ap_type$ + vendor_id$ + ap_inv_no$ 
+    readrecord(aptInvoiceHdr_dev, key=aptInvoiceHdr_key$, dom=*next)aptInvoiceHdr$
+    if pos(aptInvoiceHdr_key$ = aptInvoiceHdr$)<>1 then
+        rem --- Historical Invoice record NOT found, so okay to remove images
+        ok2remove=1
+    else
+        ok2remove=0
+    endif
 
 rem --- Get image files for the invoice
     invimage_dev=fnget_dev("APT_INVIMAGE")
@@ -57,7 +70,13 @@ rem --- Get image files for the invoice
         else
 
             rem --- Using MDI or SDI or Google Docs
-            cmd$=$22$+"apr_imageviewer.aon"+$22$+" - -f"+thisFile$+" -i"+ap_inv_no$+" -p"+processID$+" &"
+            if ok2remove then
+                removeKey$=invimage.firm_id$+invimage.vendor_id$+invimage.ap_inv_no$+invimage.sequence_num$
+            else
+                removeKey$=""
+            endif
+            
+            cmd$=$22$+"apr_imageviewer.aon"+$22$+" - -f"+thisFile$+" -i"+ap_inv_no$+" -p"+processID$+" -r"+$22$+removeKey$+$22$+" -u"+stbl("+USER_ID")+" &"
             cmdObj!=BBjAPI().getConfig().getCommandLineObject(cmd$)
             cmdObj!.setChildFrameMode(frameMode!)
             returnCode=BBjAPI().newBBjSession(cmdObj!)
