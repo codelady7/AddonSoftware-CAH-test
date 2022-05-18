@@ -1574,7 +1574,7 @@ std_exit:
             busyImage!=#ExtractorWin!.addImageCtrl(nextCtrlID,xpos,ypos,width,height,System.getProperty("basis.BBjHome")+"/utils/reporting/bbjasper/images/CreatingReport.gif")
             busyImage!.setVisible(1)
 
-            rem --- Extract packager.log in archive file
+            rem --- Extract packager.log from archive file
             jarFile$=#ExtractorArchiveLocationEB!.getText()
             declare TGZFile tgzFile!
             tgzFile!=new TGZFile(jarFile$)
@@ -1583,12 +1583,19 @@ std_exit:
             jarFile$=#ExtractorArchiveLocationEB!.getText()
             jarPos=pos(File.separator+"aoninstall_"=jarFile$,-1)
             jarFileDir$=jarFile$(1,jarPos)
+            logFilesDir$=installationLocation!
             chdir jarFileDir$
-            tgzFile!.extract("packager.log",jarFileDir$)
+
+            rem --- 10429 delete existing packager.log and extractor.log files
+            oldPackagerLog! = new File(logFilesDir$+File.separator+"packager.log")
+            if oldPackagerLog!.exists() then oldPackagerLog!.delete()
+            oldExtractorLog! = new File(logFilesDir$+File.separator+"extractor.log")
+            if oldExtractorLog!.exists() then oldExtractorLog!.delete()
+            tgzFile!.extract("packager.log",logFilesDir$);rem --- 10429 extract the packager.log into installation (base) dir, not the archive dir
             chdir savedDir$
             
             rem --- Process "Canonical Key Path:" lines in packager.log file
-            sourceLog$=jarFileDir$+File.separator+"packager.log"
+            sourceLog$=logFilesDir$+File.separator+"packager.log"
             sourceLog_dev=unt
             open(sourceLog_dev,isz=-1)sourceLog$; rem --- Error if not found, something is wrong.
             while 1
