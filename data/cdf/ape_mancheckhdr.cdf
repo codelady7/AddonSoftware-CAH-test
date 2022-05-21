@@ -863,7 +863,7 @@ filter_defs$[1,2]="LOCK"
 call STBL("+DIR_SYP")+"bax_query.bbj",
 :		gui_dev, 
 :		form!,
-:		"AP_VEND_LK",
+:		"AP_VEND_PAYTO",
 :		"DEFAULT",
 :		table_chans$[all],
 :		sel_key$,

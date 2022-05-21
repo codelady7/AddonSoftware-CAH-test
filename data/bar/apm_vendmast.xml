@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendmast">3BB1D20D5EEBAE71E979758B43E819AD</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendmast">20220308</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendmast">20220308</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendmast">163254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendmast">20220517</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendmast">20220517</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendmast">100526</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendmast"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apm_vendmast">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendmast"></DD_ATTR_DKNM>
@@ -180,6 +180,10 @@
 			<DD_TABLE_ALIAS id="ddm_table_dtld.apm_vendmastapm_emailfax">APM_VENDMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_DTLD id="ddm_table_dtld.apm_vendmastapm_emailfax">APM_EMAILFAX    </DD_ATTR_DTLD>
 		</RECORD>
+		<RECORD id="ddm_table_dtld.apm_vendmastapm_payaddr">
+			<DD_TABLE_ALIAS id="ddm_table_dtld.apm_vendmastapm_payaddr">APM_VENDMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_DTLD id="ddm_table_dtld.apm_vendmastapm_payaddr">APM_PAYADDR     </DD_ATTR_DTLD>
+		</RECORD>
 		<RECORD id="ddm_table_dtld.apm_vendmastapm_vendaddr">
 			<DD_TABLE_ALIAS id="ddm_table_dtld.apm_vendmastapm_vendaddr">APM_VENDMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_DTLD id="ddm_table_dtld.apm_vendmastapm_vendaddr">APM_VENDADDR    </DD_ATTR_DTLD>
@@ -202,6 +206,10 @@
 		<RECORD id="ddm_table_dtlw.apm_vendmastapm_emailfax">
 			<DD_TABLE_ALIAS id="ddm_table_dtlw.apm_vendmastapm_emailfax">APM_VENDMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_DTLW id="ddm_table_dtlw.apm_vendmastapm_emailfax">APM_EMAILFAX    </DD_ATTR_DTLW>
+		</RECORD>
+		<RECORD id="ddm_table_dtlw.apm_vendmastapm_payaddr">
+			<DD_TABLE_ALIAS id="ddm_table_dtlw.apm_vendmastapm_payaddr">APM_VENDMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_DTLW id="ddm_table_dtlw.apm_vendmastapm_payaddr">APM_PAYADDR     </DD_ATTR_DTLW>
 		</RECORD>
 		<RECORD id="ddm_table_dtlw.apm_vendmastapm_vendaddr">
 			<DD_TABLE_ALIAS id="ddm_table_dtlw.apm_vendmastapm_vendaddr">APM_VENDMAST    </DD_TABLE_ALIAS>
