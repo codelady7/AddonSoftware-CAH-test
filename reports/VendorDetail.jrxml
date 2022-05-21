@@ -380,7 +380,8 @@
 				<textFieldExpression><![CDATA[$F{CNTRY_ID}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="50">
+		<band height="60">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<subreport>
 				<reportElement positionType="Float" mode="Transparent" x="0" y="0" width="530" height="10" uuid="15f82787-7948-4110-bb87-2b59f22206e7">
 					<printWhenExpression><![CDATA[new Boolean($P{PICK_CHECK}.equals("Y"))]]></printWhenExpression>
@@ -395,7 +396,9 @@
 				<subreportExpression><![CDATA["VendorDetail_cmts.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="10" width="530" height="10" isRemoveLineWhenBlank="true" uuid="d111ba63-3dbd-48a5-9987-f79c2941a8e3"/>
+				<reportElement positionType="Float" x="0" y="20" width="530" height="10" isRemoveLineWhenBlank="true" uuid="d111ba63-3dbd-48a5-9987-f79c2941a8e3">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<subreportParameter name="FIRM_ID">
 					<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -406,7 +409,9 @@
 				<subreportExpression><![CDATA["VendorDetail_purch.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="20" width="530" height="10" uuid="fd70064f-bd8b-4d3f-a81b-6749733d3f1f"/>
+				<reportElement positionType="Float" x="0" y="30" width="530" height="10" uuid="fd70064f-bd8b-4d3f-a81b-6749733d3f1f">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<subreportParameter name="BARISTA_WD">
 					<subreportParameterExpression><![CDATA[$P{BARISTA_WD}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -426,7 +431,9 @@
 				<subreportExpression><![CDATA["VendorDetail_hist.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="30" width="530" height="10" isRemoveLineWhenBlank="true" uuid="b097c50e-eb64-4302-8b8c-3a561f6d9b4b"/>
+				<reportElement positionType="Float" x="0" y="40" width="530" height="10" isRemoveLineWhenBlank="true" uuid="b097c50e-eb64-4302-8b8c-3a561f6d9b4b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<subreportParameter name="FIRM_ID">
 					<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -437,7 +444,9 @@
 				<subreportExpression><![CDATA["VendorDetail_mast_fax.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="40" width="530" height="10" isRemoveLineWhenBlank="true" uuid="0bd6c78e-18b3-42d1-a0e3-55117f86c2bd"/>
+				<reportElement positionType="Float" x="0" y="50" width="530" height="10" isRemoveLineWhenBlank="true" uuid="0bd6c78e-18b3-42d1-a0e3-55117f86c2bd">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<subreportParameter name="FIRM_ID">
 					<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -446,6 +455,20 @@
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["VendorDetail_replenish.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="10" width="530" height="10" isRemoveLineWhenBlank="true" uuid="bcce42f9-fec4-4b54-a0db-e37a3ee84044">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<subreportParameter name="FIRM_ID">
+					<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="VENDOR_ID">
+					<subreportParameterExpression><![CDATA[$F{VENDOR_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["VendorDetail_payto.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

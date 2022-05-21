@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apm_payaddr"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apm_payaddr">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apm_payaddr">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apm_payaddr">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apm_payaddr">22.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apm_payaddr">8E7328CC4CBB83686A2A514044FAEC7A</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_payaddr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_payaddr">20071019</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_payaddr">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_payaddr">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_payaddr">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_payaddr">20220518</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_payaddr">20220518</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_payaddr">120338</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_payaddr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.apm_payaddr"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.apm_payaddr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_payaddr"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.apm_payaddr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.apm_payaddr">T</DD_ATTR_FTYP>
@@ -36,7 +36,7 @@
 			<DD_ATTR_NOTE id="ddm_tables.apm_payaddr"></DD_ATTR_NOTE>
 			<DD_ATTR_PCAL id="ddm_tables.apm_payaddr"></DD_ATTR_PCAL>
 			<DD_ATTR_PRUN id="ddm_tables.apm_payaddr"></DD_ATTR_PRUN>
-			<DD_ATTR_PTAB id="ddm_tables.apm_payaddr"></DD_ATTR_PTAB>
+			<DD_ATTR_PTAB id="ddm_tables.apm_payaddr">APM_VENDMAST    </DD_ATTR_PTAB>
 			<DD_ATTR_SLEV id="ddm_tables.apm_payaddr"></DD_ATTR_SLEV>
 			<DD_ATTR_WINT id="ddm_tables.apm_payaddr">Vendor Pay-to Address</DD_ATTR_WINT>
 			<SQL_DB_ALIAS id="ddm_tables.apm_payaddr"></SQL_DB_ALIAS>
@@ -49,13 +49,28 @@
 			<DD_ATTR_RSET id="ddm_tables.apm_payaddr"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.apm_payaddr"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.apm_payaddr"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.apm_payaddr"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.apm_payaddr"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.apm_payaddr"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.apm_payaddr"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.apm_payaddr"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.apm_payaddr"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.apm_payaddr"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.apm_payaddr">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.apm_payaddr">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.apm_payaddr">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.apm_payaddr">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.apm_payaddr">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.apm_payaddr">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.apm_payaddr">0</DD_ATTR_PADG>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_cpro">
+		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.apm_payaddrarnf">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apm_payaddrarnf">APM_PAYADDR     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apm_payaddrarnf">ARNF</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.apm_payaddrbend">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apm_payaddrbend">APM_PAYADDR     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apm_payaddrbend">BEND</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.apm_payaddrbsho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apm_payaddrbsho">APM_PAYADDR     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apm_payaddrbsho">BSHO</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -297,7 +312,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_payaddr003">20071019</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_payaddr003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_payaddr003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr003"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_payaddr003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr003"></DD_ATTR_CTLY>
@@ -310,7 +325,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr003"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr003"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr003"></DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr003"></DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr003">1</DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apm_payaddr003"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.apm_payaddr003"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.apm_payaddr003"></DD_ATTR_MAXV>
@@ -463,7 +478,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr006"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr006"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr006"></DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr006"></DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr006">1</DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apm_payaddr006"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.apm_payaddr006"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.apm_payaddr006"></DD_ATTR_MAXV>
@@ -511,7 +526,7 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.apm_payaddr007"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apm_payaddr007"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apm_payaddr007"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr007"></DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr007">State</DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr007"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr007"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr007"></DD_ATTR_MINL>
@@ -554,16 +569,16 @@
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_payaddr008"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr008"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_payaddr008"></DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr008"></DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr008"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr008">+14</DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr008">-1</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.apm_payaddr008"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.apm_payaddr008"></DD_ATTR_CTLH>
 			<DD_ATTR_DFLT id="ddm_table_cols.apm_payaddr008"></DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.apm_payaddr008"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apm_payaddr008"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apm_payaddr008"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr008"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr008"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr008">Zip/Postal</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr008">Zip/Postal</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr008"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr008"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apm_payaddr008"></DD_ATTR_MAXL>
@@ -613,8 +628,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.apm_payaddr009"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apm_payaddr009"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apm_payaddr009"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr009"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr009"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr009">Telephone</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr009">Telephone</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr009"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr009"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apm_payaddr009"></DD_ATTR_MAXL>
@@ -624,14 +639,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_payaddr009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_payaddr009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_payaddr009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_payaddr009">10</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_payaddr009">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_payaddr009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_payaddr009">PHONE_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_payaddr009"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apm_payaddr009"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apm_payaddr009"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apm_payaddr009"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apm_payaddr009">3009</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apm_payaddr009">3010</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apm_payaddr009">ine_phone_no</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apm_payaddr009">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apm_payaddr009"></DD_ATTR_RADG>
@@ -656,15 +671,15 @@
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_payaddr010"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr010"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_payaddr010"></DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr010"></DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr010"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr010">+21</DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr010">-1</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.apm_payaddr010"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.apm_payaddr010"></DD_ATTR_CTLH>
 			<DD_ATTR_DFLT id="ddm_table_cols.apm_payaddr010"></DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.apm_payaddr010"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apm_payaddr010"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apm_payaddr010"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr010"></DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr010">Ext</DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr010"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr010"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr010"></DD_ATTR_MINL>
@@ -675,14 +690,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_payaddr010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_payaddr010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_payaddr010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_payaddr010">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_payaddr010">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_payaddr010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_payaddr010">PHONE_EXTEN</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_payaddr010"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apm_payaddr010"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apm_payaddr010"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apm_payaddr010"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apm_payaddr010">3010</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apm_payaddr010">3011</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apm_payaddr010">ine_phone_exten</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apm_payaddr010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apm_payaddr010"></DD_ATTR_RADG>
@@ -708,15 +723,15 @@
 			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr011"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_payaddr011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr011"></DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr011"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr011">+1</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.apm_payaddr011"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.apm_payaddr011"></DD_ATTR_CTLH>
 			<DD_ATTR_DFLT id="ddm_table_cols.apm_payaddr011"></DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.apm_payaddr011"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apm_payaddr011"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apm_payaddr011"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr011"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr011"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr011">Contact</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr011">Contact</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr011"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr011"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apm_payaddr011"></DD_ATTR_MAXL>
@@ -726,14 +741,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_payaddr011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_payaddr011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_payaddr011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_payaddr011">12</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_payaddr011">10</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_payaddr011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_payaddr011">CONTACT_NAME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_payaddr011"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apm_payaddr011"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apm_payaddr011"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apm_payaddr011"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apm_payaddr011">3011</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.apm_payaddr011">3009</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.apm_payaddr011">ine_contact_name</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apm_payaddr011">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apm_payaddr011"></DD_ATTR_RADG>
@@ -758,7 +773,7 @@
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_payaddr012"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr012"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_payaddr012"></DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr012"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr012">-21</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr012"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.apm_payaddr012"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.apm_payaddr012"></DD_ATTR_CTLH>
@@ -766,8 +781,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.apm_payaddr012"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.apm_payaddr012"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.apm_payaddr012"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr012"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr012"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.apm_payaddr012">Fax Phone</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.apm_payaddr012">Fax Phone</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.apm_payaddr012"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.apm_payaddr012"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.apm_payaddr012"></DD_ATTR_MAXL>
@@ -860,7 +875,7 @@
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_payaddr014"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apm_payaddr014"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_payaddr014">0</DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr014"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_cols.apm_payaddr014">-14</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_payaddr014"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.apm_payaddr014"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.apm_payaddr014"></DD_ATTR_CTLH>
@@ -894,12 +909,25 @@
 			<DD_ATTR_BTNS id="ddm_table_cols.apm_payaddr014">F</DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.apm_payaddrpay_to_namebinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.apm_payaddrpay_to_namebinp">APM_PAYADDR     </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.apm_payaddrpay_to_namebinp">PAY_TO_NAME     </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.apm_payaddrpay_to_namebinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_column_opts">
 		<ID id="ddm_column_opts">DDM_COLUMN_OPTS</ID>
 		<RECORD id="ddm_column_opts.apm_payaddrvendor_idu">
 			<DD_TABLE_ALIAS id="ddm_column_opts.apm_payaddrvendor_idu">APM_PAYADDR     </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.apm_payaddrvendor_idu">VENDOR_ID       </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.apm_payaddrvendor_idu">u</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.apm_payaddraddr_line_2l">
+			<DD_TABLE_ALIAS id="ddm_column_opts.apm_payaddraddr_line_2l">APM_PAYADDR     </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.apm_payaddraddr_line_2l">ADDR_LINE_2     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.apm_payaddraddr_line_2l">L</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.apm_payaddrcode_inactiveo">
 			<DD_TABLE_ALIAS id="ddm_column_opts.apm_payaddrcode_inactiveo">APM_PAYADDR     </DD_TABLE_ALIAS>

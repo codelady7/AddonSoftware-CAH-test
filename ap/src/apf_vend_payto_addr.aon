@@ -1,0 +1,123 @@
+rem --- Vendor Pay-To Address Query filter program
+rem --- Program ID: apf_vend_payto_addr.aon
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- Run by Barista as part of the AP_VEND_PAYTO query.
+rem --- For each row in the result set, this program runs to show apm_vendpayto info when available instead of apm_vendmast info.
+
+    setesc std_error
+    seterr std_error
+
+    enter inq_mode$,rec_tpl$,calc_tpl$,table_chans$[all],status$
+
+rem inq_mode$      - not used until recently - current use not yet documented
+rem rec_tpl$       - Current row database columns
+rem calc_tpl$      - Current row calculated columns
+rem table_chans$[] - Barista opened channels array
+rem status$        - Returned status: "SKIP" = Skip current record
+
+rem --- Initialize data
+    status$=""
+
+rem --- Open tables
+    num_files=1
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="APM_PAYADDR",open_opts$[1]="OTA"
+            
+    gosub open_tables        
+
+	apmPayAddr_dev=num(open_chans$[1])
+	dim apmPayAddr$:open_tpls$[1]
+    
+rem --- Use info from apm_vendpayto when available
+rem wgh ... 9480 ... stopped here
+    readrecord(apmPayAddr_dev,key=rec_tpl.firm_id$+rec_tpl.vendor_id$,dom=*next)apmPayAddr$
+    if apmPayAddr.vendor_id$=rec_tpl.vendor_id$ then
+        rec_tpl.vendor_name$=apmPayAddr.pay_to_name$
+        rec_tpl.contact_name$=apmPayAddr.contact_name$
+        rec_tpl.addr_line_1$=apmPayAddr.addr_line_1$
+        rec_tpl.addr_line_2$=apmPayAddr.addr_line_2$
+        rec_tpl.city$=apmPayAddr.city$
+        rec_tpl.state_code$=apmPayAddr.state_code$
+        rec_tpl.zip_code$=apmPayAddr.zip_code$
+        rec_tpl.phone_no$=apmPayAddr.phone_no$
+        rec_tpl.phone_exten$=apmPayAddr.phone_exten$
+        rec_tpl.fax_no$=apmPayAddr.fax_no$
+    endif
+    
+rem --- Done
+    goto exit_prog
+
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+
+    return
+    
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+
+    return
+
+rem --- Functions
+
+    def fnget_dev(tmp0$)=num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3))
+    def fnget_tpl$(tmp0$)=table_chans$[num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3)),0]
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+    
+exit_prog:rem --- Exit Program
+
+    exit
