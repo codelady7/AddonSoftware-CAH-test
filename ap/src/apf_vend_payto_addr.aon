@@ -30,7 +30,6 @@ rem --- Open tables
 	dim apmPayAddr$:open_tpls$[1]
     
 rem --- Use info from apm_vendpayto when available
-rem wgh ... 9480 ... stopped here
     readrecord(apmPayAddr_dev,key=rec_tpl.firm_id$+rec_tpl.vendor_id$,dom=*next)apmPayAddr$
     if apmPayAddr.vendor_id$=rec_tpl.vendor_id$ then
         rec_tpl.vendor_name$=apmPayAddr.pay_to_name$
