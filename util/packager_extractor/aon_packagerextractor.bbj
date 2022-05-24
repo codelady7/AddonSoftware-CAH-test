@@ -1865,6 +1865,7 @@ std_exit:
                   sourceBaseDir!=cvs(line$(pos(":"=line$)+1),3)
                   sourceBaseDir$=sourceBaseDir!.replace("\","/")
                   sourceBaseDirLen=len(sourceBaseDir$)
+                  canonicalSourceBaseDir$=(new java.io.File(sourceBaseDir$)).getCanonicalPath()
                   break
               case key$="Canonical Key Path:"
                   path$=line$(pos(": "=line$)+2)
@@ -2666,6 +2667,16 @@ std_exit:
                                       syn_value$=synValue!.replace("\","/")
                                   endif
                                   line$=key$+"="+syn_value$
+                              else
+                                  rem --- Warn when STBL directory is under installation base directoy but not in application *.syn file
+                                  path$ = cvs(line$(pos("="=line$)+1),3)
+                                  path!=new java.io.File(path$)
+                                  goodPath=0
+                                  canonicalPath$=path!.getCanonicalPath(err=*next); goodPath=1
+                                  if goodPath and pos(canonicalSourceBaseDir$=canonicalPath$)=1 then
+                                      print(log_dev) "        *** "+Translate!.getTranslation("AON_WARNING","WARNING")+": STBL "+key$(5)+ " set in barista.cfg but not in application *.syn file for path: "+path$
+                                      missingStbl=missingStbl+1
+                                  endif
                               endif
                               break
                           case default
@@ -2894,6 +2905,14 @@ std_exit:
       close(ddmTableTpls_dev,err=*next)
       close(ddmTables_dev,err=*next)
       close(ddmTableCols_dev,err=*next)
+
+      rem --- Warn when STBL directory is under installation base directoy but not in application *.syn file, i.e. missingStbl>0
+      if missingStbl then
+          msg_text$=str(missingStbl)+" STBL(s) in barista.cfg have path(s) under the Installation Base Directory,"+$0A$+
+:             "but are not in application *.syn file."+$0A$+
+:             "See log file for warnings: "+log$
+          rtn_val=msgbox(msg_text$,(0+64+0+0),"AddonSoftware")
+      endif
 
       goto std_exit
 
