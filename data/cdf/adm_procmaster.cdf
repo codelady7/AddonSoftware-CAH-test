@@ -73,10 +73,16 @@ rem --- Batched files for this process must be empty in order to turn on batchin
 if callpoint!.isEditMode() and !callpoint!.getDevObject("warned_cannot_batch") then
 	file_count=callpoint!.getDevObject("file_count")
 	keys_used=callpoint!.getDevObject("keys_used")
-	if file_count>0 and keys_used>0
-		msg_id$="AD_CANNOT_BATCH"
+	if callpoint!.getColumnData("ADM_PROCMASTER.ALLOW_BATCH")="N" then
+		msg_id$="AD_NOT_BATCHED"
 		gosub disp_message
 		callpoint!.setDevObject("warned_cannot_batch",1)
+	else
+		if file_count>0 and keys_used>0
+			msg_id$="AD_CANNOT_BATCH"
+			gosub disp_message
+			callpoint!.setDevObject("warned_cannot_batch",1)
+		endif
 	endif
 endif
 
