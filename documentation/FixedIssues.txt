@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-05-18
+ Report Date:   2022-05-26
  Report Branch: AddonSoftware 22.02
  Last Release:  AddonSoftware 22.01
 =======================================================================================================================================
@@ -30,5 +30,12 @@ Bug 10429 - AD - PackagerExtractor may use wrong package.log file to configure t
 Modified: util/packager_extractor/aon_packagerextractor.bbj
 
 =======================================================================================================================================
-
-
+Revision: ef0b1c4cc193f46422fae64dbb68880ba59783cb
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 5/26/2022 7:24:49 AM
+Message:
+Bug 10436: Corrected use of Inventory account instead of Purchase Price
+Variance account in PO Invoice Register/Update when item cost changed
+for standard costing.
+----
+Modified: po/src/poc_invglpost.aon
