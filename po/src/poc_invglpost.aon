@@ -168,7 +168,7 @@ rem --- Branch based on action code/line code
                     
                     poacct$=arm10d.gl_purc_acct$
                     ivacct$=arm10d.gl_inv_acct$
-                    ppvacct$=arm10d.gl_inv_acct$
+                    ppvacct$=arm10d.gl_ppv_acct$
 
                     if method$<>"S" then 
                         ppvacct$=arm10d.gl_inv_adj$
