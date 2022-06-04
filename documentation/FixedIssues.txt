@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-05-26
+ Report Date:   2022-06-04
  Report Branch: AddonSoftware 22.02
  Last Release:  AddonSoftware 22.01
 =======================================================================================================================================
@@ -39,3 +39,24 @@ Variance account in PO Invoice Register/Update when item cost changed
 for standard costing.
 ----
 Modified: po/src/poc_invglpost.aon
+
+=======================================================================================================================================
+Revision: 4c889052374700c0fb8c855bbf362bb7e83000cf
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 6/4/2022 4:42:04 PM
+Message:
+ER 8279: Replaced "Detail Line No" ListButton in Work Order Entry with
+an Item lookup of the items in the selected Sales Order.
+----
+Modified: data/bar/sfe_woclose.xml
+Modified: data/bar/sfe_womastr.xml
+Modified: data/cdf/sfe_womastr.cdf
+Modified: data/sync/adm_query_cols~[01007514OP].xml
+Modified: data/sync/adm_query~[01007514OP].xml
+Modified: data/sync/ads_messages~[01007514SF].xml
+Added: op/src/opf_orddet_items.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+Modified: reports/SFHardCopy.jasper
+Modified: reports/SFHardCopy.jrxml
+Modified: sprocs/SFHARDCOPY.prc
