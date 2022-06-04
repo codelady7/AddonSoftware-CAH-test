@@ -69,7 +69,7 @@ rem --- masks$ will contain pairs of fields in a single string mask_name^mask|
 rem --- Create a memory record set to hold results.
 rem --- Columns for the record set are defined using a string template
 	      temp$="FIRM_ID:C(2), WO_NO:C(7*), WO_TYPE:C(1*), WO_CATEGORY:C(1*), WO_STATUS:C(1*), CUSTOMER_ID:C(1*), "
-	temp$=temp$+"SLS_ORDER_NO:C(1*), WAREHOUSE_ID:C(1*), ITEM_ID:C(1*), OPENED_DATE:C(1*), LAST_CLOSE:C(1*), "
+	temp$=temp$+"SLS_ORDER_NO:C(1*), SLS_ORDER_ITEM:C(1*), WAREHOUSE_ID:C(1*), ITEM_ID:C(1*), OPENED_DATE:C(1*), LAST_CLOSE:C(1*), "
 	temp$=temp$+"TYPE_DESC:C(1*), PRIORITY:C(1*), UOM:C(1*), YIELD:C(1*), SCH_PROD_QTY:C(1*), PROD_QTY:C(1*), COMPLETED:C(1*), "
 	temp$=temp$+"LAST_ACT_DATE:C(1*), ITEM_DESC_1:C(1*), ITEM_DESC_2:C(1*), IMAGE_PATH:C(1*), DRAWING_NO:C(1*), REV:C(1*), "
 	temp$=temp$+"INCLUDE_LOTSER:C(1*), MAST_CLS_INP_QTY_STR:C(1*), MAST_CLS_INP_DT:C(1*), MAST_CLOSED_COST_STR:C(1*), "
@@ -333,10 +333,17 @@ rem --- Trip Read
 		if cvs(read_tpl.customer_id$,3)<>""
 			dim arm_custmast$:fattr(arm_custmast$)
 			read record (arm_custmast,key=firm_id$+read_tpl.customer_id$,dom=*next) arm_custmast$
-			data!.setFieldValue("CUSTOMER_ID","Customer: "+fnmask$(read_tpl.customer_id$,cust_mask$)+" "+arm_custmast.customer_name$)
+			data!.setFieldValue("CUSTOMER_ID",fnmask$(read_tpl.customer_id$,cust_mask$)+" "+arm_custmast.customer_name$)
 			if num(read_tpl.order_no$)<>0
                 readrecord (opt_invdet,key=firm_id$+opt_invdet.ar_type$+read_tpl.customer_id$+read_tpl.order_no$+opt_invdet.ar_inv_no$+read_tpl.sls_ord_seq_ref$,dom=*next)opt_invdet$
-                data!.setFieldValue("SLS_ORDER_NO","Sales Order: "+read_tpl.order_no$+"-"+opt_invdet.line_no$)
+                data!.setFieldValue("SLS_ORDER_NO",read_tpl.order_no$+" ("+opt_invdet.line_no$+")")
+                if cvs(opt_invdet.item_id$,2)<>"" then
+                    dim soIvmItemMast$:fattr(ivm_itemmast$)
+                    readrecord (ivm_itemmast_dev,key=firm_id$+opt_invdet.item_id$,dom=*next)soIvmItemMast$
+                    data!.setFieldValue("SLS_ORDER_ITEM",cvs(opt_invdet.item_id$,2)+" "+func.displayDesc(soIvmItemMast.item_desc$))
+                else
+                    data!.setFieldValue("SLS_ORDER_ITEM","(Non-Stock) "+opt_invdet.order_memo$)
+                endif
 			endif
 		endif
 		data!.setFieldValue("WAREHOUSE_ID",read_tpl.warehouse_id$)
