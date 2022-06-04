@@ -1,0 +1,168 @@
+rem --- Vendor Pay-To Address Query filter program
+rem --- Program ID: opf_orddet_items.aon
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- Run by Barista as part of the OP_ORDDET_ITEMS query.
+rem --- For each row in the result set, this program runs to show apm_vendpayto info when available instead of apm_vendmast info.
+
+    use ::bbtranslator.bbj::BBTranslator
+
+    setesc std_error
+    seterr std_error
+
+    enter inq_mode$,rec_tpl$,calc_tpl$,table_chans$[all],status$
+
+rem inq_mode$      - not used until recently - current use not yet documented
+rem rec_tpl$       - Current row database columns
+rem calc_tpl$      - Current row calculated columns
+rem table_chans$[] - Barista opened channels array
+rem status$        - Returned status: "SKIP" = Skip current record
+
+rem --- Initialize data
+    status$=""
+
+rem --- Skip if not an open order in Entry status
+    if rec_tpl.ar_inv_no$="" or rec_tpl.trans_status$<>"E" then
+        status$="SKIP"
+        goto exit_prog
+    endif
+
+rem --- Skip order detail lines that are not for non-stock, promotional or standard items
+    if pos(rec_tpl.line_type$="NPS")=0 then
+        status$="SKIP"
+        goto exit_prog
+    endif
+
+rem --- Get BBTranslator from Group Namespace
+    Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
+    if Translate!=null()
+        Translate!=BBTranslator.getInstance(stbl("+PROPS_NAME"),stbl("+USER_LOCALE"),null(),stbl("+PROPS_PATH"))
+        BBjAPI().getGroupNamespace().setValue(rdTransSpaceKey$,Translate!)
+    endif
+
+rem --- Open tables
+    num_files=2
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="SFE_WOMASTR",open_opts$[1]="OTA"
+    open_tables$[2]="OPC_LINECODE",open_opts$[2]="OTA"
+            
+    gosub open_tables        
+
+    sfeWOMastr_dev=num(open_chans$[1])
+    opcLineCode_dev=num(open_chans$[2])
+    dim sfeWOMastr$:open_tpls$[1]
+    dim opcLineCode$:open_tpls$[2]
+
+rem --- Get Work Order Number, Catergory and BOM from Group Namespace
+    wo_no$=BBjAPI().getGroupNamespace().getValue("WO_NO_for_OP_ORDDET_ITEMS")
+    wo_cat$=BBjAPI().getGroupNamespace().getValue("WO_CAT_for_OP_ORDDET_ITEMS")
+    wo_bom$=BBjAPI().getGroupNamespace().getValue("WO_BOM_for_OP_ORDDET_ITEMS")
+
+rem --- Skip existing SO-WO links except to this WO
+    trip_key$=rec_tpl.firm_id$+rec_tpl.customer_id$+rec_tpl.order_no$+rec_tpl.internal_seq_no$
+    read(sfeWOMastr_dev,key=trip_key$,knum="AO_CST_ORD_LINE",dom=*next)
+    while 1
+        sfeWOMastr_key$=key(sfeWOMastr_dev,end=*break)
+        if pos(trip_key$=sfeWOMastr_key$)<>1 then break
+        readrecord(sfeWOMastr_dev)sfeWOMastr$
+        if sfeWOMastr.wo_no$<>wo_no$ then
+            status$="SKIP"
+            goto exit_prog
+        endif
+    wend
+
+rem --- Skip order detail lines that are not consistent with the WO category
+    readrecord(opcLineCode_dev,key=rec_tpl.firm_id$+rec_tpl.line_code$,dom=*next)opcLineCode$
+    if (wo_cat$="I" and pos(opcLineCode.line_type$="SP")=0) or (wo_cat$="N" and pos(opcLineCode.line_type$="N")=0) or wo_cat$="R" then
+        status$="SKIP"
+        goto exit_prog
+    endif
+
+rem --- If the WO Category is Inventoried (I), then the WO BOM and SO Item must be the same.
+    if wo_cat$="I" and rec_tpl.item_id$<>wo_bom$ then
+        status$="SKIP"
+        goto exit_prog
+    endif
+
+rem --- Set Item ID and Description for non-stock items
+    if rec_tpl.line_type$="N" then
+        rec_tpl.item_id$="*** "+Translate!.getTranslation("AON_NON-STOCK")+" ***"
+        rec_tpl.item_desc$=rec_tpl.order_memo$
+    endif
+    
+rem --- Done
+    goto exit_prog
+
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+
+    return
+    
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+
+    return
+
+rem --- Functions
+
+    def fnget_dev(tmp0$)=num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3))
+    def fnget_tpl$(tmp0$)=table_chans$[num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3)),0]
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+    
+exit_prog:rem --- Exit Program
+
+    exit

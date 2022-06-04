@@ -1,3 +1,36 @@
+[[SFE_WOMASTR.ACUS]]
+rem --- Process custom event
+rem This routine is executed when callbacks have been set to run a 'custom event'.
+rem Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind of event it is.
+rem See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ctl_ID=dec(gui_event.ID$)
+
+	notify_base$=notice(gui_dev,gui_event.x%)
+	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
+	notice$=notify_base$
+
+	rem --- The tab control
+	if ctl_ID=num(stbl("+TAB_CTL")) then
+		switch notice.code
+			case 2; rem --- ON_TAB_SELECT
+				rem --- 2nd Tab is for Additional Information
+				tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+				if tabCtrl!.getSelectedIndex() = 1 then
+					rem --- Refresh <<DISPLAY>> fields and static label for non-stock item description
+					gosub refreshDisplayFields
+				else
+					rem --- Hide static label for non-stock item description
+					nonStock_desc!=callpoint!.getDevObject("nonStock_desc")
+					nonStock_desc!.setVisible(0)
+				endif
+			break
+		swend
+	endif
+
 [[SFE_WOMASTR.ADIS]]
 rem --- Set new record flag
 
@@ -227,13 +260,6 @@ rem --- Disable WO Status if Open or Closed
 		callpoint!.setColumnEnabled("SFE_WOMASTR.WO_STATUS",0)
 	endif
 
-rem --- Validate Open Sales Order
-
-	order$=callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")
-	cust$=callpoint!.getColumnData("SFE_WOMASTR.CUSTOMER_ID")
-	dim ope_ordhdr$:fnget_tpl$("OPE_ORDHDR")
-	gosub build_ord_line
-
 rem --- Disable qty/yield if data exists in sfe_womatl (sfe-22)
 
 	if callpoint!.getColumnData("SFE_WOMASTR.WO_STATUS")<>"C" and callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY")="I"
@@ -259,6 +285,9 @@ rem --- set DevObjects
 	callpoint!.setDevObject("wo_est_yield",callpoint!.getColumnData("SFE_WOMASTR.EST_YIELD"))
 	callpoint!.setDevObject("wo_category",callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY"))
 	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("SFE_WOMASTR.LOCK_REF_NUM"))
+
+rem --- Refresh <<DISPLAY>> fields and static label for non-stock item description
+	gosub refreshDisplayFields
 
 [[SFE_WOMASTR.ADTW]]
 rem --- Re-launch sfe_womatl form after a bill is exploded
@@ -299,6 +328,7 @@ rem --- won't work there (too late).
 rem --- Initializations
 
 	use ::ado_func.src::func
+	use ::ado_util.src::util
 	use ::opo_SalesOrderCreateWO.aon::SalesOrderCreateWO
 
 rem --- Set new record flag
@@ -470,6 +500,23 @@ rem --- alter control label and prompt for Bill No vs. Item ID depending on whet
 		lbl_ctl!.setText(Translate!.getTranslation("AON_INVENTORY_ITEM_ID:","Inventory Item ID:",1))
 		callpoint!.setTableColumnAttribute("SFE_WOMASTR.ITEM_ID","PROM",Translate!.getTranslation("AON_ENTER_INVENTORY_ITEM_ID","Enter a valid Inventory Item ID",1))
 	endif
+
+rem --- Add static label for non-stock item description
+	itemId!=callpoint!.getControl("SFE_WOMASTR.ITEM_ID")
+	tempWin!=SysGUI!.getWindow(itemId!.getContextID())
+	itemId_x=itemId!.getX()
+	itemId_y=itemId!.getY()
+	itemId_height=itemId!.getHeight()
+	itemId_width=itemId!.getWidth()
+	label_width=250
+	nxt_ctlID=util.getNextControlID()
+	nonStock_desc!=Form!.addStaticText(nxt_ctlID,itemId_x+itemId_width+40,itemId_y+65,label_width,itemId_height-6,"")
+	nonStock_desc!.setFont(tempWin!.getFont())
+	nonStock_desc!.setBackColor(tempWin!.getBackColor())
+	nonStock_desc!.setForeColor(SysGUI!.makeColor(0,0,96))
+	nonStock_desc!.setText("")
+	nonStock_desc!.setVisible(0)
+	callpoint!.setDevObject("nonStock_desc",nonStock_desc!)
 
 [[SFE_WOMASTR.AOPT-COPY]]
 rem --- Copy from other Work Order
@@ -839,10 +886,10 @@ rem --- enable all enterable fields
 		callpoint!.setColumnEnabled("SFE_WOMASTR.FORECAST",0)
 	endif
 	if callpoint!.getDevObject("op")="Y"
-		callpoint!.setColumnEnabled("SFE_WOMASTR.SLS_ORD_SEQ_REF",1)
+		callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",1)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",1)
 	else
-		callpoint!.setColumnEnabled("SFE_WOMASTR.SLS_ORD_SEQ_REF",0)
+		callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",0)
 	endif
 	callpoint!.setColumnEnabled("SFE_WOMASTR.OPENED_DATE",1)
@@ -852,6 +899,11 @@ rem --- enable all enterable fields
 	callpoint!.setColumnEnabled("SFE_WOMASTR.WAREHOUSE_ID",1)
 	callpoint!.setColumnEnabled("SFE_WOMASTR.WO_TYPE",1)
 	callpoint!.setColumnEnabled("SFE_WOMASTR.WO_STATUS",1)
+
+rem --- Hide static label for non-stock item description
+	nonStock_desc!=callpoint!.getDevObject("nonStock_desc")
+	nonStock_desc!.setText("")
+	nonStock_desc!.setVisible(0)
 
 [[SFE_WOMASTR.ASVA]]
 rem --- Disable Scheduled Quantity and Yield if Inventory Item
@@ -1171,6 +1223,11 @@ rem --- prior to deleting a work order, need to check for open transactions; if 
 	endif
 	
 
+[[SFE_WOMASTR.BSHO]]
+rem --- Set callback for a tab being selected, and save the tab control ID
+	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+	tabCtrl!.setCallback(BBjTabCtrl.ON_TAB_SELECT,"custom_event")
+
 [[SFE_WOMASTR.CUSTOMER_ID.AVAL]]
 rem --- Disable Order info if Customer not entered
 
@@ -1198,12 +1255,13 @@ rem --- Disable Order info if Customer not entered
 
 		if cvs(callpoint!.getUserInput(),3)=""
 			callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",0)
-			callpoint!.setColumnEnabled("SFE_WOMASTR.SLS_ORD_SEQ_REF",0)
+			callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",0)
 			callpoint!.setColumnData("SFE_WOMASTR.ORDER_NO","",1)
 			callpoint!.setColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF","",1)
+			callpoint!.setColumnData("<<DISPLAY>>.LINE_NO","",1)
 		else
 			callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",1)
-			callpoint!.setColumnEnabled("SFE_WOMASTR.SLS_ORD_SEQ_REF",1)
+			callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",1)
 		endif
 
 		if callpoint!.getUserInput()<>customer_id$ then
@@ -1231,6 +1289,114 @@ rem --- Item synonym processing
 	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
 	item$=callpoint!.getUserInput()
 	callpoint!.setColumnData("SFE_WOMASTR.ITEM_ID",item$,1)
+
+[[<<DISPLAY>>.ITEM_ID.AVAL]]
+rem --- Validate manually entered SO Item IDs
+	item_id$=cvs(callpoint!.getUserInput(),2)
+	if item_id$="" then
+		if item_id$<>cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2) then
+			rem --- Warn if changing link info for a linked WO
+			sls_ord_seq_ref$=""
+			gosub checkWOtoSOlink
+			if linkStatus$="OK" then
+				rem --- Refresh static label for non-stock item description
+				nonStock_desc!=callpoint!.getDevObject("nonStock_desc")
+				nonStock_desc!.setText("")
+				callpoint!.setColumnData("<<DISPLAY>>.LINE_NO","",1)
+				callpoint!.setColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF","",1)
+				break
+			else
+				callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID",callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),1)
+				callpoint!.setStatus("ACTIVATE-ABORT")
+				break
+			endif
+		else
+			nonStock_desc!=callpoint!.getDevObject("nonStock_desc")
+			if nonStock_desc!.getText()="" then callpoint!.setColumnData("<<DISPLAY>>.LINE_NO","",1)
+			break
+		endif
+	endif
+	if item_id$=cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2) then break
+
+rem --- Verify there is an existing Sales Order detail line with TRANS_STATUS=E for this SO item.
+	ope11_dev=fnget_dev("OPE_ORDDET")
+	dim ope11a$:fnget_tpl$("OPE_ORDDET")
+	sfe01_dev=fnget_dev("@SFE_WOMASTR")
+	dim sfe01a$:fnget_tpl$("@SFE_WOMASTR")
+	opcLineCode_dev=fnget_dev("OPC_LINECODE")
+	dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
+	wo_no$=callpoint!.getColumnData("SFE_WOMASTR.WO_NO")
+	wo_cat$=callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY")
+	wo_bom$=cvs(callpoint!.getColumnData("SFE_WOMASTR.ITEM_ID"),2)
+	customer_id$=callpoint!.getColumnData("SFE_WOMASTR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")
+	dim foundRecord$:fnget_tpl$("OPE_ORDDET")
+	foundItem=0
+	goodLineNo$=""
+	goodInternalSeqNo$=""
+
+	ope11_trip_key$=firm_id$+ope11a.ar_type$+customer_id$+order_no$
+	read(ope11_dev,key=ope11_trip_key$,dom=*next)
+	while 1
+		ope11_key$=key(ope11_dev,end=*break)
+		if pos(ope11_trip_key$=ope11_key$)<>1 break
+		readrecord(ope11_dev)ope11a$
+		if item_id$<>cvs(ope11a.item_id$,2) or ope11a.trans_status$<>"E" then continue
+
+		rem --- Skip existing SO-WO links except to this WO
+		wrongWOLink=0
+		sfe01_trip_key$=firm_id$+customer_id$+order_no$+ope11a.internal_seq_no$
+		read(sfe01_dev,key=sfe01_trip_key$,knum="AO_CST_ORD_LINE",dom=*next)
+		while 1
+			sfe01_key$=key(sfe01_dev,end=*break)
+			if pos(sfe01_trip_key$=sfe01_key$)<>1 then break
+			readrecord(sfe01_dev)sfe01a$
+			if sfe01a.wo_no$<>wo_no$ then continue
+			wrongWOLink=1
+			break
+		wend
+		if wrongWOLink then continue
+
+		rem --- Skip order detail lines that are not consistent with the WO category
+		readrecord(opcLineCode_dev,key=firm_id$+ope11a.line_code$,dom=*continue)opcLineCode$
+		if wo_cat$="R" then continue
+		if wo_cat$="I" and pos(opcLineCode.line_type$="SP")=0 then continue
+		if wo_cat$="N" and pos(opcLineCode.line_type$="N")=0 then continue
+
+		rem --- If the WO Category is Inventoried (I), then the WO BOM and SO Item must be the same.
+		if wo_cat$="I" and item_id$<>wo_bom$ then continue
+
+		foundItem=foundItem+1
+		goodLineNo$=ope11a.line_no$
+		goodInternalSeqNo$=ope11a.internal_seq_no$
+	wend
+
+	if foundItem=1 then
+		callpoint!.setColumnData("<<DISPLAY>>.LINE_NO",goodLineNo$,1)
+		callpoint!.setColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF",goodInternalSeqNo$,1)
+	else
+		if foundItem=0 then
+			msg_id$="SF_SO_ITEM_MISSING"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=item_id$
+			msg_tokens$[2]=order_no$
+			msg_tokens$[3]=customer_id$
+			gosub disp_message
+			callpoint!.setUserInput(cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2))
+			callpoint!.setColumnData("SFE_WOMASTR.CUSTOMER_ID",customer_id$,1)
+			callpoint!.setStatus("ACTIVATE-ABORT")
+		else
+			msg_id$="SF_SO_ITEM_DUPLICATES"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=item_id$
+			msg_tokens$[2]=order_no$
+			msg_tokens$[3]=customer_id$
+			gosub disp_message
+			callpoint!.setUserInput(cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2))
+			callpoint!.setColumnData("SFE_WOMASTR.CUSTOMER_ID",customer_id$,1)
+			callpoint!.setStatus("ACTIVATE-ABORT")
+		endif
+	endif
 
 [[SFE_WOMASTR.ITEM_ID.AVAL]]
 rem "Inventory Inactive Feature"
@@ -1304,6 +1470,61 @@ rem --- Set default Completion Date
 			callpoint!.setColumnData("SFE_WOMASTR.ESTCMP_DATE",new_date$,1)
 		endif
 	endif
+
+[[<<DISPLAY>>.ITEM_ID.BINQ]]
+rem --- Skip if not in edit mode
+	if !callpoint!.isEditMode() then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Put Work Order Number, Category and BOM in Group Namespace
+	BBjAPI().getGroupNamespace().setValue("WO_NO_for_OP_ORDDET_ITEMS",callpoint!.getColumnData("SFE_WOMASTR.WO_NO"))
+	BBjAPI().getGroupNamespace().setValue("WO_CAT_for_OP_ORDDET_ITEMS",callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY"))
+	BBjAPI().getGroupNamespace().setValue("WO_BOM_for_OP_ORDDET_ITEMS",callpoint!.getColumnData("SFE_WOMASTR.ITEM_ID"))
+
+rem --- Historical Invoice Detail lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_INVDET","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim optInvDet_key$:key_tpl$
+	dim filter_defs$[5,2]
+	filter_defs$[1,0]="OPT_INVDET.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="OPT_INVDET.AR_TYPE"
+	filter_defs$[2,1]="=''"
+	filter_defs$[2,2]="LOCK"
+	filter_defs$[3,0]="OPT_INVDET.CUSTOMER_ID"
+	filter_defs$[3,1]="='"+callpoint!.getColumnData("SFE_WOMASTR.CUSTOMER_ID")+"'"
+	filter_defs$[3,2]="LOCK"
+	filter_defs$[4,0]="OPT_INVDET.ORDER_NO"
+	filter_defs$[4,1]="='"+callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")+"'"
+	filter_defs$[4,2]="LOCK"
+	filter_defs$[5,0]="OPT_INVDET.AR_INV_NO"
+	filter_defs$[5,1]="=''"
+	filter_defs$[5,2]="LOCK"
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"OP_ORDDET_ITEMS","",table_chans$[all],optInvDet_key$,filter_defs$[all]
+
+	rem --- Update sales order sequence reference
+	if cvs(optInvDet_key$,2)<>"" then
+		ope11_dev=fnget_dev("OPE_ORDDET")
+		dim ope11a$:fnget_tpl$("OPE_ORDDET")
+		readrecord(ope11_dev,key=optInvDet_key$(1,len(optInvDet_key$)-1),dom=*next)ope11a$
+
+		rem --- Warn if changing link info for a linked WO
+		sls_ord_seq_ref$=ope11a.internal_seq_no$
+		gosub checkWOtoSOlink
+		if linkStatus$="OK" then
+			callpoint!.setColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF",ope11a.internal_seq_no$,1)
+
+			rem --- Refresh static label for non-stock item description
+			gosub refreshNonStockDescription
+
+			callpoint!.setStatus("MODIFIED")
+		endif
+	endif
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[SFE_WOMASTR.LOCK_REF_NUM.AVAL]]
 rem --- Notify when LOCK_REF_NUM is changed
@@ -1443,8 +1664,6 @@ rem --- Validate Open Sales Order
 
 	endif
 
-	gosub build_ord_line
-
 [[SFE_WOMASTR.SCH_PROD_QTY.AVAL]]
 rem --- Verify minimum quantity > 0
 
@@ -1469,28 +1688,6 @@ rem --- Informational warning for category N WO's - requirements may need to be 
 		if callpoint!.getRecordMode()="C" and callpoint!.getColumnUndoData("SFE_WOMASTR.SCH_PROD_QTY")<>callpoint!.getUserInput()
 			callpoint!.setMessage("SF_ADJ_REQS")
 		endif
-	endif
-
-[[SFE_WOMASTR.SLS_ORD_SEQ_REF.AVAL]]
-	rem --- Warn if changing link info for a linked WO
-	sls_ord_seq_ref$=callpoint!.getColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF")
-	if num(sls_ord_seq_ref$)>0 and callpoint!.getUserInput()<>sls_ord_seq_ref$ then
-		msg_id$="SF_CHANGE_SO_LINK"
-		dim msg_tokens$[2]
-		msg_tokens$[1]=callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")
-		msg_tokens$[2]=callpoint!.getColumnData("SFE_WOMASTR.CUSTOMER_ID")
-		gosub disp_message
-		if msg_opt$<>"Y" then
-			callpoint!.setColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF",sls_ord_seq_ref$,1)
-			callpoint!.setStatus("ACTIVATE-ABORT")
-			break
-		endif
-
-		rem --- Add WO comment with the changed SO link info plus audit info.
-		wo_comment$ =Translate!.getTranslation("AON_SALES_ORDER")+" "+Translate!.getTranslation("AON_DETAIL")+" "
-		wo_comment$ =wo_comment$+Translate!.getTranslation("AON_LINE")+" "+Translate!.getTranslation("AON_LINK_CHANGED_FROM")+" "
-		wo_comment$ =wo_comment$+sls_ord_seq_ref$+" " +Translate!.getTranslation("AON_TO")+" " +callpoint!.getUserInput()
-		gosub add_wo_comment
 	endif
 
 [[SFE_WOMASTR.WAREHOUSE_ID.AVAL]]
@@ -1608,119 +1805,6 @@ rem --- Disable Drawing and Revision Number if Recurring type
 
 [[SFE_WOMASTR.<CUSTOM>]]
 rem =========================================================
-build_ord_line: rem --- Build Sequence list button
-rem 	cust$		input
-rem	order$		input
-rem	validate_ord$	input
-rem =========================================================
-
-	wo_cat$=callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY")
-
-	ope_ordhdr=fnget_dev("OPE_ORDHDR")
-	dim ope_ordhdr$:fnget_tpl$("OPE_ORDHDR")
-	ope11_dev=fnget_dev("OPE_ORDDET")
-	dim ope11a$:fnget_tpl$("OPE_ORDDET")
-	opc_linecode=fnget_dev("OPC_LINECODE")
-	dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
-	ivm01_dev=fnget_dev("IVM_ITEMMAST")
-	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-	sfe01_dev=fnget_dev("@SFE_WOMASTR")
-
-	ops_lines!=SysGUI!.makeVector()
-	ops_items!=SysGUI!.makeVector()
-	ops_list!=SysGUI!.makeVector()
-	ops_lines!.addItem("000000000000")
-	ops_items!.addItem("")
-	ops_list!.addItem("")
-
-	ctlSeqRef!=callpoint!.getControl("SFE_WOMASTR.SLS_ORD_SEQ_REF")
-	ctlSeqRef!.removeAllItems()
-
-	if cvs(order$,3)<>""
-
-		found_ord$="N"
-		read (ope_ordhdr,key=firm_id$+ope_ordhdr.ar_type$+cust$+order$,knum="PRIMARY",dom=*next)
-		while 1
-			ope_ordhdr_key$=key(ope_ordhdr,end=*break)
-			if pos(firm_id$+ope_ordhdr.ar_type$+cust$+order$=ope_ordhdr_key$)<>1 then break
-			readrecord(ope_ordhdr)ope_ordhdr$
-			if pos(ope_ordhdr.trans_status$="ER")=0 then continue
-			found_ord$="Y"
-			break; rem --- new order can have at most just one new invoice, if any
-		wend
-
-		if found_ord$="Y"
-			read(ope11_dev,key=ope_ordhdr_key$,dom=*next)
-			while 1
-				ope11_key$=key(ope11_dev,end=*break)
-				if pos(ope_ordhdr_key$=ope11_key$)<>1 break
-				read record (ope11_dev) ope11a$
-				rem --- Verify there is an existing Sales Order detail line with TRANS_STATUS=E for the new link.
-				if pos(ope11a.trans_status$="ER")=0 then continue
-
-				rem --- Skip existing SO-WO links except to this WO
-				sfe01_key$=""
-				read(sfe01_dev,key=firm_id$+cust$+order$+ope11a.internal_seq_no$,knum="AO_CST_ORD_LINE",dom=*next)
-				sfe01_key$=key(sfe01_dev,end=*next)
-				wo_no$=callpoint!.getColumnData("SFE_WOMASTR.WO_NO")
-				if pos(firm_id$+cust$+order$+ope11a.internal_seq_no$=sfe01_key$)=1 and 
-:					sfe01_key$(len(sfe01_key$)-len(wo_no$)+1)<>wo_no$ then continue
-
-				dim opc_linecode$:fattr(opc_linecode$)
-				read record (opc_linecode,key=firm_id$+ope11a.line_code$,dom=*next)opc_linecode$
-				if wo_cat$="R" continue
-				if wo_cat$="I" and pos(opc_linecode.line_type$="SP")=0 continue
-				if wo_cat$="N" and pos(opc_linecode.line_type$="N")=0 continue
-				if wo_cat$="I"
-					rem --- If the WO Category is Inventoried (I), then verify the WO and SO items are the same.
-					if ope11a.item_id$<>callpoint!.getColumnData("SFE_WOMASTR.ITEM_ID") then continue
-					dim ivm01a$:fattr(ivm01a$)
-					read record (ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
-					ops_lines!.addItem(ope11a.internal_seq_no$)
-					item_list$=item_list$+$ff$+ope11a.item_id$
-					work_var=pos($ff$+ope11a.item_id$=item_list$,1,0)
-					if work_var>1
-						work_var$=cvs(ope11a.item_id$,2)+"("+str(work_var)+")"
-					else
-						work_var$=cvs(ope11a.item_id$,2)
-					endif
-					ops_items!.addItem(work_var$)
-					ops_list!.addItem(work_var$+" - "+ivm01a.item_desc$)
-				endif
-				if wo_cat$="N"
-					ops_lines!.addItem(ope11a.internal_seq_no$)
-					item_list$=item_list$+$ff$+ope11a.order_memo$
-					work_var=pos($ff$+ope11a.order_memo$=item_list$,1,0)
-					if work_var>1
-						work_var$=cvs(ope11a.order_memo$,2)+"("+str(work_var)+")"
-					else
-						work_var$=cvs(ope11a.order_memo$,2)
-					endif
-					ops_items!.addItem(work_var$)
-					ops_list!.addItem(work_var$)
-				endif
-			wend
-		endif
-	endif
-
-	ldat$=""
-	if ops_lines!.size()>0
-		descVect!=BBjAPI().makeVector()
-		codeVect!=BBjAPI().makeVector()
-		for x=0 to ops_lines!.size()-1
-			descVect!.addItem(ops_items!.getItem(x))
-			codeVect!.addItem(ops_lines!.getItem(x))
-		next x
-		ldat$=func.buildListButtonList(descVect!,codeVect!)
-	endif
-
-	ctlSeqRef!.insertItems(0,ops_list!)
-	callpoint!.setTableColumnAttribute("SFE_WOMASTR.SLS_ORD_SEQ_REF","LDAT",ldat$)
-	callpoint!.setStatus("REFRESH")
-
-	return
-
-rem =========================================================
 add_wo_comment: rem --- Add work order comment
 rem 	wo_comment$		input
 rem =========================================================
@@ -1732,6 +1816,78 @@ rem =========================================================
 	soCreateWO!.addWOCmnt(wo_no$,wo_comment$)
 	soCreateWO!.close()
 	soCreateWO!=null()
+
+	return
+
+rem =========================================================
+refreshDisplayFields: rem --- Refresh <<DISPLAY>> fields and static label for non-stock item description
+rem =========================================================
+	nonStock_desc!=callpoint!.getDevObject("nonStock_desc")
+	ope11_dev=fnget_dev("OPE_ORDDET")
+	dim ope11a$:fnget_tpl$("OPE_ORDDET")
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_INVDET","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim optInvDet_key$:key_tpl$
+	optInvDet_key.firm_id$=firm_id$
+	optInvDet_key.ar_type$=""
+	optInvDet_key.customer_id$=callpoint!.getColumnData("SFE_WOMASTR.CUSTOMER_ID")
+	optInvDet_key.order_no$=callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")
+	optInvDet_key.ar_inv_no$=""
+	optInvDet_key.internal_seq_no$=callpoint!.getColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF")
+	readrecord(ope11_dev,key=optInvDet_key$,dom=*next)ope11a$
+
+	rem --- Refresh static label for non-stock item description
+	gosub refreshNonStockDescription
+
+	return
+
+rem =========================================================
+refreshNonStockDescription: rem --- Refresh static label for non-stock item description
+rem 	ope11a$		input
+rem =========================================================
+	opc_linecode=fnget_dev("OPC_LINECODE")
+	dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
+	readrecord(opc_linecode,key=firm_id$+ope11a.line_code$,dom=*next)opc_linecode$
+	nonStock_desc!=callpoint!.getDevObject("nonStock_desc")
+	if opc_linecode.line_type$="N" then
+		rem --- Set and show static label for non-stock item description
+		nonStock_desc!.setText(ope11a.order_memo$)
+		nonStock_desc!.setVisible(1)
+
+		callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID","",1)
+	else
+		rem --- Hide static label for non-stock item description
+		nonStock_desc!.setText("")
+		nonStock_desc!.setVisible(0)
+
+		callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID",ope11a.item_id$,1)
+	endif
+	callpoint!.setColumnData("<<DISPLAY>>.LINE_NO",ope11a.line_no$,1)
+
+	return
+
+rem =========================================================
+checkWOtoSOlink: rem --- Warn if changing link info for a linked WO
+rem 	sls_ord_seq_ref$	input
+rem 	linkStatus$		output
+rem =========================================================
+	linkStatus$="OK"
+	currentSlsOrdSeqRef$=callpoint!.getColumnData("SFE_WOMASTR.SLS_ORD_SEQ_REF")
+	if num(currentSlsOrdSeqRef$)>0 and currentSlsOrdSeqRef$<>sls_ord_seq_ref$ then
+		msg_id$="SF_CHANGE_SO_LINK"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")
+		msg_tokens$[2]=callpoint!.getColumnData("SFE_WOMASTR.CUSTOMER_ID")
+		gosub disp_message
+		if msg_opt$<>"Y" then
+			linkStatus$="BAD"
+		else
+			rem --- Add WO comment with the changed SO link info plus audit info.
+			wo_comment$ =Translate!.getTranslation("AON_SALES_ORDER")+" "+Translate!.getTranslation("AON_DETAIL")+" "
+			wo_comment$ =wo_comment$+Translate!.getTranslation("AON_LINE")+" "+Translate!.getTranslation("AON_LINK_CHANGED_FROM")+" "
+			wo_comment$ =wo_comment$+currentSlsOrdSeqRef$+" " +Translate!.getTranslation("AON_TO")+" " +sls_ord_seq_ref$
+			gosub add_wo_comment
+		endif
+	endif
 
 	return
 

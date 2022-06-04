@@ -54,6 +54,7 @@
 	<field name="WO_STATUS" class="java.lang.String"/>
 	<field name="CUSTOMER_ID" class="java.lang.String"/>
 	<field name="SLS_ORDER_NO" class="java.lang.String"/>
+	<field name="SLS_ORDER_ITEM" class="java.lang.String"/>
 	<field name="WAREHOUSE_ID" class="java.lang.String"/>
 	<field name="ITEM_ID" class="java.lang.String"/>
 	<field name="OPENED_DATE" class="java.lang.String"/>
@@ -314,14 +315,22 @@
 					<textFieldExpression><![CDATA[$F{ITEM_DESC_2}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="379" y="44" width="232" height="11" uuid="80b5a105-bd69-4636-85b8-acb087936780"/>
+					<reportElement x="417" y="33" width="190" height="11" uuid="80b5a105-bd69-4636-85b8-acb087936780">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
 					<textElement>
 						<font fontName="SansSerif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{CUSTOMER_ID}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="372" y="55" width="238" height="11" uuid="da86418b-df2f-4fc3-b747-b44716e38fa7"/>
+					<reportElement x="417" y="44" width="188" height="11" uuid="da86418b-df2f-4fc3-b747-b44716e38fa7">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
 					<textElement>
 						<font fontName="SansSerif"/>
 					</textElement>
@@ -333,6 +342,45 @@
 						<font fontName="SansSerif"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ITEM_DESC_1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="417" y="55" width="201" height="11" uuid="a2988af0-f919-4870-8556-bd189fa4f06f">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="SansSerif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{SLS_ORDER_ITEM}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="375" y="33" width="37" height="11" uuid="3ee0c817-fa24-459e-b1cc-044bcb751fdf">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$F{CUSTOMER_ID}!=""]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$R{AON_CUSTOMER:}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="360" y="44" width="52" height="11" uuid="4af7255e-6ba3-4672-a029-432296862512">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$F{SLS_ORDER_NO}!=""]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$R{AON_SALES_ORDER:}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="375" y="55" width="37" height="11" uuid="891db0fd-70a9-4962-964f-0ba3a2a65aa8">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$F{SLS_ORDER_ITEM}!=""]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$R{AON_SO_ITEM:}]]></textFieldExpression>
 				</textField>
 			</band>
 			<band height="13">
