@@ -26,7 +26,6 @@ rem --- get disc % assoc w/ terms in this rec, and disp distributed bal
 		gosub calc_grid_tots
 		gosub disp_dist_bal
 		user_tpl.inv_in_ape01$="Y"
-		user_tpl.inv_in_apt01$="N"
 		Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
 		
 		vendor_id$ = callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
@@ -139,7 +138,6 @@ look_for_invoice:
 		rem --- not in ape-01, but IS in apt-01
 		rem --- disable dist code, inv date, net amt
 		user_tpl.inv_in_ape01$="N"
-		user_tpl.inv_in_apt01$="Y"
 		
 		callpoint!.setColumnData("APE_INVOICEHDR.FIRM_ID",apt01a.firm_id$)
 		callpoint!.setColumnData("APE_INVOICEHDR.AP_TYPE",apt01a.ap_type$)
@@ -204,7 +202,6 @@ look_for_invoice:
 				callpoint!.setColumnData("APE_INVOICEHDR.ACCTING_DATE",stbl("+SYSTEM_DATE"))
 			callpoint!.setColumnData("APE_INVOICEHDR.HOLD_FLAG","N")
 			user_tpl.inv_in_ape01$="N"
-			user_tpl.inv_in_apt01$="N"
 			callpoint!.setColumnUndoData("APE_INVOICEHDR.AP_INV_NO",
 :				callpoint!.getUserInput())
 			
@@ -375,6 +372,59 @@ rem --- setup utility
 	use ::ado_util.src::util
 	use ::BBUtils.bbj::BBUtils
 
+[[APE_INVOICEHDR.AWRI]]
+rem --- Do previous Payment Authorizations need to be removed?
+	if callpoint!.getDevObject("use_pay_auth") then
+		rem --- Is there a previous Payment Authorization?
+		prevAuth=0
+		aptInvApproval_dev=fnget_dev("APT_INVAPPROVAL")
+		dim aptInvApproval$:fnget_tpl$("APT_INVAPPROVAL")
+		read(aptInvApproval_dev,key=firm_id$+vendor_id$+ap_inv_no$,dom=*next)
+		while 1
+			aptInvApproval_key$=key(aptInvApproval_dev,end=*break)
+			if pos(firm_id$+vendor_id$+ap_inv_no$=aptInvApproval_key$)<>1 then break
+			readrecord(aptInvApproval_dev)aptInvApproval$
+			if aptInvApproval.approval_type$<>"" then
+				prevAuth=1
+				break
+			endif
+		wend
+
+		if prevAuth then
+			rem --- This invoice has been reviewed/approved for payment
+			removePayAuth=0
+			aptInvoiceHdr_dev=fnget_dev("APT_INVOICEHDR")
+			dim aptInvoiceHdr$:fnget_tpl$("APT_INVOICEHDR")
+			ap_type$=callpoint!.getColumnData("APE_INVOICEHDR.AP_TYPE")
+			vendor_id$=callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
+			ap_inv_no$=callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
+			readrecord(aptInvoiceHdr_dev,key=firm_id$+ap_type$+vendor_id$+ap_inv_no$,dom=*endif)aptInvoiceHdr$
+
+			if aptInvoiceHdr.selected_for_pay$="Y" then
+				rem --- This invoice has been selected for payment, but not paid yet
+				if num(callpoint!.getColumnData("APE_INVOICEHDR.NET_INV_AMT"))>aptInvoiceHdr.invoice_bal then removePayAuth=1
+			else
+				if aptInvoiceHdr.invoice_bal=0 then
+					rem --- This invoice has been previously  paid.
+					if num(callpoint!.getColumnData("APE_INVOICEHDR.NET_INV_AMT"))>0 then removePayAuth=1
+				else
+					rem --- This invoice has been reviewed/approved for payment, but has not been selected for payment yet.
+					if num(callpoint!.getColumnData("APE_INVOICEHDR.NET_INV_AMT"))>aptInvoiceHdr.invoice_bal then removePayAuth=1
+				endif
+			endif
+
+			rem --- Remove previous Payment Authorizations
+			if removePayAuth then
+				read(aptInvApproval_dev,key=firm_id$+vendor_id$+ap_inv_no$,dom=*next)
+				while 1
+					aptInvApproval_key$=key(aptInvApproval_dev,end=*break)
+					if pos(firm_id$+vendor_id$+ap_inv_no$=aptInvApproval_key$)<>1 then break
+					remove(aptInvApproval_dev,key=aptInvApproval_key$)
+				wend
+			endif
+		endif
+	endif
+
 [[APE_INVOICEHDR.BDEL]]
 rem --- Delete images for invoice ONLY if it's NOT in apt_invoicehdr (apt-01)
 	apt_invoicehdr_dev = fnget_dev("APT_INVOICEHDR")
@@ -460,7 +510,7 @@ gls_calendar_dev=num(chans$[12])
 dim aps01a$:templates$[6],gls01a$:templates$[7],gls_calendar$:templates$[12]
 user_tpl_str$="glint:c(1),glyr:c(4),glper:c(2),gl_tot_pers:c(2),"
 user_tpl_str$=user_tpl_str$+"amt_msk:c(15),multi_types:c(1),multi_dist:c(1),ret_flag:c(1),units_flag:c(1),"
-user_tpl_str$=user_tpl_str$+"misc_entry:c(1),inv_in_ape01:c(1),inv_in_apt01:c(1),"
+user_tpl_str$=user_tpl_str$+"misc_entry:c(1),inv_in_ape01:c(1),"
 user_tpl_str$=user_tpl_str$+"dflt_dist_cd:c(2),dflt_gl_account:c(10),dflt_ap_type:c(2),dflt_terms_cd:c(2),dflt_pymt_grp:c(2),"
 user_tpl_str$=user_tpl_str$+"disc_pct:c(5),dist_bal_ofst:c(1),inv_amt:c(10),tot_dist:c(10),open_inv_textID:c(5),"
 user_tpl_str$=user_tpl_str$+"dflt_acct_date:c(8)"
@@ -564,6 +614,15 @@ rem --- Get Payment Authorization parameter record
 	readrecord(aps_payauth,key=firm_id$+"AP00",dom=*next)aps_payauth$
 	callpoint!.setDevObject("use_pay_auth",aps_payauth.use_pay_auth)
 	callpoint!.setDevObject("scan_docs_to",aps_payauth.scan_docs_to$)
+
+rem --- Open apt_invapproval as needed
+	if callpoint!.getDevObject("use_pay_auth") then
+		num_files=1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="APT_INVAPPROVAL",open_opts$[1]="OTA"
+
+		gosub open_tables
+	endif
 
 rem --- Disable Load Image and View Images options as needed
 	use_pay_auth=callpoint!.getDevObject("use_pay_auth")
