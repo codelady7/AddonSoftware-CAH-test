@@ -54,7 +54,7 @@ rem --- Disable/enable based on status of closed/open
 		callpoint!.setColumnEnabled("SFE_WOMASTR.EST_YIELD",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.FORECAST",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",0)
-		callpoint!.setColumnEnabled("SFE_WOMASTR.OP_INT_SEQ_NO",0)
+		callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.OPENED_DATE",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.PRIORITY",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.SCH_PROD_QTY",0)
@@ -92,7 +92,7 @@ rem --- Disable/enable based on status of closed/open
 		callpoint!.setColumnEnabled("SFE_WOMASTR.OPENED_DATE",1)
 		if callpoint!.getDevObject("op")="Y"			
 			callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",1)
-			callpoint!.setColumnEnabled("SFE_WOMASTR.OP_INT_SEQ_NO",1)
+			callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",1)
 		endif
 		callpoint!.setColumnEnabled("SFE_WOMASTR.PRIORITY",1)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.SCH_PROD_QTY",1)
@@ -1261,7 +1261,6 @@ rem --- Disable Order info if Customer not entered
 			callpoint!.setColumnData("<<DISPLAY>>.LINE_NO","",1)
 		else
 			callpoint!.setColumnEnabled("SFE_WOMASTR.ORDER_NO",1)
-			callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",1)
 		endif
 
 		if callpoint!.getUserInput()<>customer_id$ then
@@ -1663,6 +1662,8 @@ rem --- Validate Open Sales Order
 		endif
 
 	endif
+
+	callpoint!.setColumnEnabled("<<DISPLAY>>.ITEM_ID",1)
 
 [[SFE_WOMASTR.SCH_PROD_QTY.AVAL]]
 rem --- Verify minimum quantity > 0
