@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2019-11-05T18:29:11 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesByCustType" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="addon" uuid="61581789-5e0c-49c9-8ac5-56746cdac093">
 	<property name="ireport.zoom" value="0.9090909090909091"/>
 	<property name="ireport.x" value="0"/>
@@ -49,9 +48,9 @@
 			<image onErrorType="Blank" hyperlinkType="Reference">
 				<reportElement x="405" y="0" width="147" height="65" uuid="5db37a60-87cc-4571-91f6-d6dbde7bbfe1"/>
 				<imageExpression><![CDATA[$P{LOGO_FILE}]]></imageExpression>
-				<hyperlinkReferenceExpression><![CDATA["http://www.basis.com"]]></hyperlinkReferenceExpression>
+				<hyperlinkReferenceExpression><![CDATA["https://www.basis.cloud"]]></hyperlinkReferenceExpression>
 				<hyperlinkParameter name="command">
-					<hyperlinkParameterExpression><![CDATA["http://www.basis.com"]]></hyperlinkParameterExpression>
+					<hyperlinkParameterExpression><![CDATA["https://www.basis.cloud"]]></hyperlinkParameterExpression>
 				</hyperlinkParameter>
 			</image>
 			<textField>

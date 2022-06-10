@@ -7,4 +7,4 @@ AddonSoftware Co-op Developers can access code changes and bug fixes for the Dev
 
 Information about code changes and bug fixes for RELEASE builds can be found at:
 
-https://bugs.basis.com
+https://bugs.basis.cloud
