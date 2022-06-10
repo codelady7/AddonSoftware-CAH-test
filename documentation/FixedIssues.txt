@@ -9,7 +9,7 @@ BBjBaristaAddonDemos2201_05-10-2022_1845.jar
 
 =======================================================================================================================================
 Revision: 40b9a8a25b8687fd5a54d89d2606e3171645e2a3
-Author: Bill Halsted <bhalsted@basis.com>
+Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 5/18/2022 10:58:34 AM
 Message:
 ER 10242: Set permissions for directories cloned under aon base
@@ -19,7 +19,7 @@ Modified: ad/src/adx_upgradewiz.aon
 
 =======================================================================================================================================
 Revision: f8b91c4565b6f60c624afc95e60874d6340065b2
-Author: Christine <chawkins@basis.com>
+Author: Christine <chawkins@basis.cloud>
 Date: 5/18/2022 12:11:07 PM
 Message:
 Bug 10429 - AD - PackagerExtractor may use wrong package.log file to configure the Extractor
@@ -31,7 +31,7 @@ Modified: util/packager_extractor/aon_packagerextractor.bbj
 
 =======================================================================================================================================
 Revision: ef0b1c4cc193f46422fae64dbb68880ba59783cb
-Author: Bill Halsted <bhalsted@basis.com>
+Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 5/26/2022 7:24:49 AM
 Message:
 Bug 10436: Corrected use of Inventory account instead of Purchase Price
@@ -42,7 +42,7 @@ Modified: po/src/poc_invglpost.aon
 
 =======================================================================================================================================
 Revision: 4c889052374700c0fb8c855bbf362bb7e83000cf
-Author: Bill Halsted <bhalsted@basis.com>
+Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 6/4/2022 4:42:04 PM
 Message:
 ER 8279: Replaced "Detail Line No" ListButton in Work Order Entry with
@@ -63,7 +63,7 @@ Modified: sprocs/SFHARDCOPY.prc
 
 =======================================================================================================================================
 Revision: d4a98081065a5c3769d7c573704a533d88226702
-Author: Bill Halsted <bhalsted@basis.com>
+Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 6/6/2022 4:57:42 PM
 Message:
 Bug 10434: Removed existing Payment Authorizations if the invoice

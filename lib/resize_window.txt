@@ -46,8 +46,4 @@ What if I like my form size bigger than the controls?
 That's okay.  resize_window will never make your form smaller, only bigger, and
 only enough to fit all the controls.
 
-
-Dec-02-2008
-Knute Snortum
-ksnortum@basis.com
 	
