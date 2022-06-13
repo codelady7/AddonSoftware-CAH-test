@@ -14,16 +14,16 @@
 			<DD_SYSTEM_REC id="ddm_tables.arr_cashjournal"></DD_SYSTEM_REC>
 			<RESTRICT_CREATE id="ddm_tables.arr_cashjournal">Y</RESTRICT_CREATE>
 			<RESTRICT_REBUILD id="ddm_tables.arr_cashjournal"></RESTRICT_REBUILD>
-			<RESTRICT_AUTOADD id="ddm_tables.arr_cashjournal"></RESTRICT_AUTOADD>
+			<RESTRICT_AUTOADD id="ddm_tables.arr_cashjournal">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.arr_cashjournal">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.arr_cashjournal">AR </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.arr_cashjournal">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.arr_cashjournal">22.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.arr_cashjournal">4B254AF2F79DF70B92B4D1B3F832A374</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arr_cashjournal"></DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arr_cashjournal">20060418</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arr_cashjournal">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arr_cashjournal">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arr_cashjournal">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arr_cashjournal">20220603</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arr_cashjournal">20220603</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arr_cashjournal">085136</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arr_cashjournal"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arr_cashjournal"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arr_cashjournal"></DD_ATTR_DKNM>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.arr_cashjournal"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.arr_cashjournal"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.arr_cashjournal"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.arr_cashjournal"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.arr_cashjournal"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.arr_cashjournal"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.arr_cashjournal"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.arr_cashjournal"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.arr_cashjournal"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.arr_cashjournal"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.arr_cashjournal">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.arr_cashjournal">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.arr_cashjournal">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.arr_cashjournal">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.arr_cashjournal">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.arr_cashjournal">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.arr_cashjournal">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -94,7 +94,7 @@
 		<RECORD id="ddm_table_tpls.arr_cashjournal">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.arr_cashjournal">ARR_CASHJOURNAL </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.arr_cashjournal"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.arr_cashjournal">firm_id:c(2),report_sequence:c(1),customer_id_01:c(6),customer_id_02:c(6),alt_sequence_01:c(10),alt_sequence_02:c(10),receipt_date_01:c(8),receipt_date_02:c(8),cash_rec_cd:c(3),pick_check:c(1),export_format:c(1)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.arr_cashjournal">firm_id:c(2),report_sequence:c(1),customer_id_01:c(6),customer_id_02:c(6),alt_sequence_01:c(10),alt_sequence_02:c(10),receipt_date_01:c(8),receipt_date_02:c(8),cash_rec_cd:c(3),pick_check:c(1),export_format:c(1),code_inactive:c(1*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -138,7 +138,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal001"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal001">1</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal001"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal001"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal001">FIRM_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal001"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal001"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal001"></DD_ATTR_FTSR>
@@ -189,7 +189,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal002"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal002">2</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal002"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal002"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal002">REPORT_SEQUENCE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal002"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal002"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal002"></DD_ATTR_FTSR>
@@ -240,7 +240,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal003"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal003">3</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal003"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal003"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal003">CUSTOMER_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal003"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal003"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal003"></DD_ATTR_FTSR>
@@ -291,7 +291,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal004"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal004">4</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal004"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal004"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal004">ALT_SEQUENCE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal004"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal004"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal004"></DD_ATTR_FTSR>
@@ -342,7 +342,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal005"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal005">5</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal005"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal005"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal005">RECEIPT_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal005"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal005"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal005"></DD_ATTR_FTSR>
@@ -370,7 +370,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arr_cashjournal006">20060418</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arr_cashjournal006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_CTLY>
@@ -393,7 +393,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal006">6</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal006"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal006">CASH_REC_CD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal006"></DD_ATTR_FTSR>
@@ -444,7 +444,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal007"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal007">7</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal007"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal007"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal007">PICK_CHECK</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal007"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal007"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal007"></DD_ATTR_FTSR>
@@ -495,7 +495,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal008">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal008"></SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal008">EXPORT_FORMAT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_FTSR>
@@ -506,6 +506,65 @@
 			<DD_ATTR_RADG id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arr_cashjournal008">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arr_cashjournal008"></DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.arr_cashjournal009">
+			<DD_TABLE_ALIAS id="ddm_table_cols.arr_cashjournal009">ARR_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.arr_cashjournal009">009</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.arr_cashjournal009">CODE_INACTIVE   </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.arr_cashjournal009">CODE_INACTIVE   </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.arr_cashjournal009">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.arr_cashjournal009">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.arr_cashjournal009">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.arr_cashjournal009">0A</DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.arr_cashjournal009"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.arr_cashjournal009"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.arr_cashjournal009"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.arr_cashjournal009">20220601</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.arr_cashjournal009">20220601</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.arr_cashjournal009">ARR_CASHJOURNAL.CASH_REC_CD</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.arr_cashjournal009">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.arr_cashjournal009">N</DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.arr_cashjournal009">Exclude Inactive CR Codes</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.arr_cashjournal009">Exclude Inactive CR</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.arr_cashjournal009">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.arr_cashjournal009">9</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.arr_cashjournal009">CODE_INACTIVE</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.arr_cashjournal009">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.arr_cashjournal009">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.arr_cashjournal009">3011</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.arr_cashjournal009">cbx_code_inactive</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.arr_cashjournal009">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.arr_cashjournal009">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.arr_cashjournal009"></DD_ATTR_BTNS>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.arr_cashjournalcash_rec_cdaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.arr_cashjournalcash_rec_cdaval">ARR_CASHJOURNAL </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.arr_cashjournalcash_rec_cdaval">CASH_REC_CD     </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.arr_cashjournalcash_rec_cdaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_ldat">
@@ -990,6 +1049,58 @@
 			<DD_ATTR_OEMD id="ddm_elements.generic_chk"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.generic_chk"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.generic_chk"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.code_inactive">
+			<DD_DATA_NAME id="ddm_elements.code_inactive">CODE_INACTIVE   </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.code_inactive">Code Inactive Flag</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.code_inactive">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.code_inactive">1</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.code_inactive"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.code_inactive"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.code_inactive">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.code_inactive">AD </ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.code_inactive">N</LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.code_inactive">2457829</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.code_inactive">20170320</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.code_inactive"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.code_inactive">N</DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.code_inactive">Y;N</DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.code_inactive"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.code_inactive"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.code_inactive">C</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.code_inactive"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.code_inactive"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.code_inactive"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.code_inactive"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.code_inactive"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.code_inactive"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.code_inactive"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.code_inactive"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.code_inactive"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.code_inactive"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.code_inactive">Code Inactive?</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.code_inactive">Code Inactive?</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.code_inactive"></DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.code_inactive"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.code_inactive"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.code_inactive"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.code_inactive"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.code_inactive"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.code_inactive"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.code_inactive"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.code_inactive"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.code_inactive"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.code_inactive">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.code_inactive"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.code_inactive"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.code_inactive"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.code_inactive"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.code_inactive"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.code_inactive">0</DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.code_inactive"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.code_inactive"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.code_inactive"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.code_inactive"></DD_ATTR_CASB>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_element_ldat">
