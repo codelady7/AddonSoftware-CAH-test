@@ -1,11 +1,11 @@
 =======================================================================================================================================
- Report Date:   2022-01-11
- Report Branch: AddonSoftware 21.14
- Last Release:  AddonSoftware 21.13
+ Report Date:   2022-06-13
+ Report Branch: AddonSoftware 21.15
+ Last Release:  AddonSoftware 21.14
 =======================================================================================================================================
 
-21.13 release 12/14/2021
-BBjBaristaAddonDemos2113_12-13-2021_1941.jar
+21.14 release 01/17/2022
+BBjBaristaAddonDemos2114_01-13-2022_1207.jar
 
 =======================================================================================================================================
 Revision: 0403856034bdd951ca1e4367ff8134f98e9f8c09
@@ -103,3 +103,4 @@ NOT to the ivm_lsmaster table.
 ----
 Modified: data/bar/ope_ordlsdet.xml
 Modified: data/cdf/ope_ordlsdet.cdf
+
