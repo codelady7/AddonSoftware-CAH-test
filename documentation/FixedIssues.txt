@@ -86,3 +86,14 @@ Modified: data/bar/arc_cashcode.xml
 Modified: data/bar/arm_custdet.xml
 Modified: data/bar/arm_custmast.xml
 Modified: data/bar/arm_custpmts.xml
+
+=======================================================================================================================================
+Revision: cd19d23814e6301b82c7a03c3a2375c720b52e29
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 6/13/2022 4:18:15 PM
+Message:
+Bug 10442: Corrected warning messages for APS_ACH.FIRM_NAME and
+<<DISPLAY>>.FEDERAL_ID on the APS_PARAMS form.
+----
+Modified: data/bar/aps_params.xml
+Modified: data/cdf/aps_params.cdf
