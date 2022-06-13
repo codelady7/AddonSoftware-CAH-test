@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_vendmast">3BB1D20D5EEBAE71E979758B43E819AD</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_vendmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_vendmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_vendmast">20220517</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendmast">20220517</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendmast">100526</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_vendmast">20220613</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_vendmast">20220613</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_vendmast">092020</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_vendmast"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apm_vendmast">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_vendmast"></DD_ATTR_DKNM>
@@ -1166,7 +1166,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast013">23</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast013">24</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast013">RESERVED_STR</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast013"></DD_ATTR_FONT>
@@ -1574,7 +1574,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast021"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast021"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast021"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast021">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast021">27</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast021"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast021">RESERVED_STR_02</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast021"></DD_ATTR_FONT>
@@ -1829,7 +1829,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast026"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast026"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast026"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast026">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast026">25</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast026"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast026">VEND_INACTIVE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast026"></DD_ATTR_FONT>
@@ -1880,7 +1880,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast027"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast027"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast027">2</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast027">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast027">26</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast027"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast027">PAYMENT_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast027"></DD_ATTR_FONT>
@@ -1931,7 +1931,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast028"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast028"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast028"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast028">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast028">28</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast028"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast028">BANK_NAME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast028"></DD_ATTR_FONT>
@@ -1982,7 +1982,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast029"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast029"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast029"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast029">27</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast029">29</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast029"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast029">ABA_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast029"></DD_ATTR_FONT>
@@ -2033,7 +2033,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast030"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast030"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast030"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast030">28</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast030">30</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast030"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast030">BNK_ACCT_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast030"></DD_ATTR_FONT>
@@ -2084,7 +2084,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast031"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast031"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast031"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast031">29</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast031">31</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast031"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast031">BNK_ACCT_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast031"></DD_ATTR_FONT>
@@ -2135,7 +2135,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apm_vendmast032"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apm_vendmast032"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apm_vendmast032">3</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast032">32</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apm_vendmast032">34</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apm_vendmast032"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apm_vendmast032">MEMO_1024</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apm_vendmast032"></DD_ATTR_FONT>
@@ -2168,7 +2168,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.apm_vendmast001"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.apm_vendmast001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.apm_vendmast001"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.apm_vendmast001">30</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.apm_vendmast001">32</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.apm_vendmast001">3209</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.apm_vendmast001">ine_chkstub_email</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.apm_vendmast001">2</DD_ATTR_CTLC>
@@ -2191,7 +2191,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.apm_vendmast002"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.apm_vendmast002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.apm_vendmast002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.apm_vendmast002">31</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.apm_vendmast002">33</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.apm_vendmast002">3210</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.apm_vendmast002">ine_chkstub_fax</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.apm_vendmast002">2</DD_ATTR_CTLC>
