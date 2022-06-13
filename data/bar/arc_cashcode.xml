@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arc_cashcode">07D8E0B4B1BB07F7231B2AE92F093EB3</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arc_cashcode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arc_cashcode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arc_cashcode">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arc_cashcode">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arc_cashcode">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arc_cashcode">20220613</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arc_cashcode">20220613</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arc_cashcode">092632</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arc_cashcode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arc_cashcode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arc_cashcode">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arc_cashcode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arc_cashcode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arc_cashcode">T</DD_ATTR_FTYP>
@@ -631,7 +631,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arc_cashcode008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arc_cashcode008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arc_cashcode008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arc_cashcode008">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arc_cashcode008">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arc_cashcode008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arc_cashcode008">RESERVED_STR</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arc_cashcode008"></DD_ATTR_FONT>
@@ -661,7 +661,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_cashcode009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_cashcode009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_cashcode009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_cashcode009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_cashcode009">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_cashcode009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_cashcode009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_cashcode009"></DD_ATTR_CTLY>
@@ -712,7 +712,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_cashcode010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_cashcode010">ARC_CASHCODE.DISC_FLAG</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_cashcode010">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_cashcode010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_cashcode010">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_cashcode010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_cashcode010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_cashcode010"></DD_ATTR_CTLY>
