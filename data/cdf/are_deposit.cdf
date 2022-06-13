@@ -185,6 +185,13 @@ rem --- The Cash Receipts Code’s GL Cash Account must be set up in the Bank Acco
 
 	cash_rec_cd$=callpoint!.getUserInput()
 	findrecord(cashcode_dev,key=firm_id$+"C"+cash_rec_cd$,dom=*next)cashcode_tpl$
+
+	if cashcode_tpl.code_inactive$ = "Y"
+		msg_id$="AR_CODE_INACTIVE"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 	findrecord(glm05_dev,key=firm_id$+cashcode_tpl.gl_cash_acct$,dom=*next)glm05a$
 	if cvs(glm05a.gl_account$,2)="" then
 		msg_id$="AR_NOT_BNKREC_CASHCD"

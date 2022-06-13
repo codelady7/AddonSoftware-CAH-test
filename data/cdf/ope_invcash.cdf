@@ -167,10 +167,17 @@ rem --- Validate cash receipt code
 	found = 0
 	find record (fnget_dev(file_name$), key=firm_id$+"C"+code$, dom=*endif) cashcode_rec$; found = 1
 	if found then
+		if cashcode_rec.code_inactive$ = "Y"
+			msg_id$="AR_CODE_INACTIVE"
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
 		if pos(cashcode_rec.trans_type$="$CP")=0 then
 			callpoint!.setStatus("ABORT")
 			break; rem --- exit callpoint
 		endif
+
 		callpoint!.setDevObject("cash_code_type",cashcode_rec.trans_type$)
 
 		rem --- If using Bank Rec, verify the Cash Receipts Code’s GL Cash Account is set up in GLM_BANKMASTER (glm-05)
@@ -185,6 +192,7 @@ rem --- Validate cash receipt code
 				break
 			endif
 		endif
+
 	else
 		callpoint!.setStatus("ABORT")
 		break; rem --- exit callpoint

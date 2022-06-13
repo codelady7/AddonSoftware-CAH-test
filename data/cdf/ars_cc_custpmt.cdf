@@ -44,6 +44,22 @@ rem --- currently the customer cc payment form (are_cc_csthst) only supports one
 			callpoint!.setStatus("ABORT")
 		endif
 
+		cashcode_dev=fnget_dev("ARC_CASHCODE")
+		dim cashcode_tpl$:fnget_tpl$("ARC_CASHCODE")
+
+
+		cash_rec_cd$=callpoint!.getColumnData("ARS_CC_CUSTPMT.CASH_REC_CD")
+		findrecord(cashcode_dev,key=firm_id$+"C"+cash_rec_cd$,dom=*next)cashcode_tpl$
+
+		if cashcode_tpl.code_inactive$ = "Y" 
+			callpoint!.setColumnData("ARS_CC_CUSTPMT.ALLOW_CUST_CC","N",1)
+		
+			msg_id$="AR_CODE_INACTIVE"
+			gosub disp_message
+		
+			break
+		endif
+
 	endif
 
 [[ARS_CC_CUSTPMT.ALLOW_CUST_CC.BINP]]

@@ -749,7 +749,16 @@ callpoint!.setStatus("REFRESH-ABLEMAP-ACTIVATE")
 
 [[ARE_CASHHDR.CASH_REC_CD.AVAL]]
 rem --- Enable/disable controls based on Cash Receipt code
+	arm10_dev=fnget_dev("ARC_CASHCODE")
+	dim arm10c$:fnget_tpl$("ARC_CASHCODE")
 	wk_cash_cd$=callpoint!.getUserInput()
+	read record(arm10_dev,key=firm_id$+"C"+wk_cash_cd$,dom=*next)arm10c$
+	if arm10c.code_inactive$ = "Y"
+		msg_id$="AR_CODE_INACTIVE"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 	gosub get_cash_rec_cd
 	gosub able_controls
 

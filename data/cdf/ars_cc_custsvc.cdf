@@ -115,6 +115,25 @@ rem --- populate list of supported gateways based on the interface type
 	interface_tp$=callpoint!.getUserInput()
 	gosub get_gateways
 
+[[ARS_CC_CUSTSVC.USE_CUSTSVC_CC.AVAL]]
+ if callpoint!.getUserInput()="Y"	
+	cashcode_dev=fnget_dev("ARC_CASHCODE")
+	dim cashcode_tpl$:fnget_tpl$("ARC_CASHCODE")
+
+
+	cash_rec_cd$=callpoint!.getColumnData("ARS_CC_CUSTSVC.CASH_REC_CD")
+	findrecord(cashcode_dev,key=firm_id$+"C"+cash_rec_cd$,dom=*next)cashcode_tpl$
+
+	if cashcode_tpl.code_inactive$ = "Y" 
+		callpoint!.setColumnData("ARS_CC_CUSTSVC.USE_CUSTSVC_CC","N",1)
+		
+		msg_id$="AR_CODE_INACTIVE"
+		gosub disp_message
+		
+		break
+	endif
+endif
+
 [[ARS_CC_CUSTSVC.<CUSTOM>]]
 rem ============================================================
 get_gateways:rem --- load up listbutton with supported gateways for given or selected interface type
@@ -151,4 +170,6 @@ rem ============================================================
 
 #include [+ADDON_LIB]std_functions.aon
 #include [+ADDON_LIB]std_missing_params.aon
+
+
 

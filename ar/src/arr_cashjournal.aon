@@ -86,6 +86,7 @@ rem --- Assign form input values to local variables
             cashcode$=option!.getOptionData("CASH_REC_CD")
             include$=option!.getOptionData("PICK_CHECK")
             export_format$=option!.getOptionData("EXPORT_FORMAT")
+            exclude_inactive_codes$=option!.getOptionData("CODE_INACTIVE")
             rd_alias_id$=option!.getAlias()    
             if export_format$="Y"
                 if len(rd_alias_id$)>15 rd_alias_id$=rd_alias_id$(1,15)
@@ -172,10 +173,12 @@ rem --- Headings
             p=(width-max(len(h7$),len(h8$)))+1
             h9$=Translate!.getTranslation("AON_CASH_RECEIPTS_CODE:")
             if cashcode$="" h9$=h9$+Translate!.getTranslation("AON__ALL") else h9$=h9$+r5$
+            if cashcode$="" and exclude_inactive_codes$="Y" h9$=h9$+" - "+Translate!.getTranslation("AON_INACTIVE_EXCLUDED")else h9$=h9$+r5$
             if cashcode$<>""
                receiptcode$=cashcode$
                gosub receipt_code
                hc$=arm10c.cash_rec_cd$+" "+cvs(arm10c.code_desc$,2)
+               h9$=h9$+" "+hc$
             endif
             headings$[5] = h9$
     
@@ -259,6 +262,14 @@ rem --- Read next Cash Receipt History Header (art-06) record
                 read record (art06_dev) art06a$
                 if enddate$<>"" if art06a.receipt_date$>enddate$ break
                 if cashcode$<>"" if art06a.cash_rec_cd$<>cashcode$ continue
+                
+                
+rem --- Retrieve cash receipts code record using the code from
+rem --- the receipt header to get the GL cash and discount accounts
+                    receiptcode$=art06a.cash_rec_cd$
+                    gosub receipt_code
+                    if inactive_code$ = "Y" and exclude_inactive_codes$ = "Y" then continue
+   
 
 rem --- Change in customer?
  
@@ -357,12 +368,14 @@ rem --- the receipt header to get the GL cash and discount accounts
 
                       receiptcode$=art06a.cash_rec_cd$
                       gosub receipt_code
+                      
 
 rem --- The distribution code from the invoice header or customer
 rem --- detail record is used to retrieve the GL AR account
-
+                    
                       if art16a.ar_inv_no$(1,2)="OA" gosub customer_distribution
 :                                               else gosub invoice_distribution
+                        
 
 rem --- Update the GL summary for this detail record
 
@@ -379,7 +392,8 @@ rem --- Update the GL summary for this detail record
                       amount=-art16a.discount_amt
                       gosub update_gl
 
-rem --- Loop back for next Cash Receipts History Detail record
+              
+                    rem --- Loop back for next Cash Receipts History Detail record
 
                 wend
 
@@ -568,8 +582,11 @@ receipt_code: rem --- Retrieve the Cash Receipts Code record
             arm10c.code_desc$=nf$
             k$=arm10c.firm_id$+arm10c.record_id_c$+arm10c.cash_rec_cd$
             find record (arc_cashcode_dev,key=k$,dom=*next) arm10c$
+                       
+                
             cashaccount$=arm10c.gl_cash_acct$
             discaccount$=arm10c.gl_disc_acct$
+            inactive_code$=arm10c.code_inactive$
             return
 
 invoice_distribution: rem --- Get the Distribution Code based on the invoice
