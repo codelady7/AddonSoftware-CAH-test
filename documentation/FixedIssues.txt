@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-06-06
+ Report Date:   2022-06-13
  Report Branch: AddonSoftware 22.02
  Last Release:  AddonSoftware 22.01
 =======================================================================================================================================
@@ -71,3 +71,18 @@ balance is increased.
 ----
 Modified: data/bar/ape_invoicehdr.xml
 Modified: data/cdf/ape_invoicehdr.cdf
+
+=======================================================================================================================================
+Revision: e9e7d10208da249331d32389d65697ce53446453
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 6/13/2022 9:42:43 AM
+Message:
+Bug 10441: Rebuilt forms to provide unique TIND for all fields.
+
+----
+Modified: data/bar/ape_checks.xml
+Modified: data/bar/apm_vendmast.xml
+Modified: data/bar/arc_cashcode.xml
+Modified: data/bar/arm_custdet.xml
+Modified: data/bar/arm_custmast.xml
+Modified: data/bar/arm_custpmts.xml
