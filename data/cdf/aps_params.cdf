@@ -214,10 +214,10 @@ rem --- Check fields required for ACH Payments
 			required_field$="Total Record Required"
 		endif
 		if cvs(callpoint!.getColumnData("APS_ACH.FIRM_NAME"),2)="" then
-			required_field$="Federal ID"
+			required_field$="Firm Name"
 		endif
 		if cvs(callpoint!.getColumnData("<<DISPLAY>>.FEDERAL_ID"),2)="" then
-			required_field$="Firm Name"
+			required_field$="Federal ID"
 		endif
 		if cvs(callpoint!.getColumnData("APS_ACH.ACH_EXPORT_DIR"),2)="" then
 			required_field$="ACH File Export Directory"
