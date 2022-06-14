@@ -16,6 +16,13 @@ rem --- Create totals
 		cwin!.setVisible(1)
 	endif
 
+rem --- Enable/Disable Summary button
+
+	sic_code$=callpoint!.getColumnData("SAM_CUSTSIC.SIC_CODE")
+	prod_type$=callpoint!.getColumnData("SAM_CUSTSIC.PRODUCT_TYPE")
+	item_no$=callpoint!.getColumnData("SAM_CUSTSIC.ITEM_ID")
+	gosub summ_button
+
 [[SAM_CUSTSIC.AOPT-SUMM]]
 rem --- Calculate and display summary info
 	tcst=0
@@ -404,7 +411,7 @@ rem --- Enable/Disable Summary Button
 summ_button:
 rem ========================================================
 
-	if callpoint!.isEditMode() then callpoint!.setOptionEnabled("SUMM",1)
+	callpoint!.setOptionEnabled("SUMM",1)
 	if cvs(sic_code$,2)=""
 		callpoint!.setOptionEnabled("SUMM",0)
 	else
