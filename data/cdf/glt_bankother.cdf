@@ -98,6 +98,20 @@ rem --- Make Number, Type, Trans Date, Amount, Cash Rec Cd and Code columns sort
 	grid!.setColumnUserSortable(7,1)
 	grid!.setSortByMultipleColumns(1)
 
+[[GLT_BANKOTHER.CASH_REC_CD.AVAL]]
+arm10_dev=fnget_dev("ARC_CASHCODE")
+dim arm10c$:fnget_tpl$("ARC_CASHCODE")
+
+wk_cash_cd$=callpoint!.getUserInput()
+
+read record(arm10_dev,key=firm_id$+"C"+wk_cash_cd$,dom=*next)arm10c$
+if arm10c.code_inactive$ = "Y"
+	msg_id$="AR_CODE_INACTIVE"
+	gosub disp_message
+	callpoint!.setStatus("ABORT")
+	break
+endif
+
 [[GLT_BANKOTHER.TRANS_NO.AVAL]]
 rem --- Has the trans_no changed?
 	trans_no$=callpoint!.getUserInput()
