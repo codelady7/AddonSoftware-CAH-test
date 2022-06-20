@@ -58,7 +58,7 @@ rem --- Assign input values to local variables
 :           callpoint!.getColumnData("GLM_BUDGETMASTER.AMT_OR_UNITS")
     else
         rem --- from Create Budget Revisions menu item
-        budget_revs$=option!.getOptionData("BUDGET_REVS")
+        budget_revs$=option!.getOptionData("BUDGET_CODE")+option!.getOptionData("AMT_OR_UNITS")
     endif
     budget_code$=budget_revs$(1,len(budget_revs$)-1)
     type$=budget_revs$(len(budget_revs$))
