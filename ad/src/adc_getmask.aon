@@ -246,7 +246,7 @@ mask_len:
 
     size=0
     for x=1 to len(mask$)
-        if pos(mask$(x,1)="#0AU")>0 size=size+1
+        if pos(mask$(x,1)="#0AaUZzX")>0 size=size+1
     next x
     return
 
