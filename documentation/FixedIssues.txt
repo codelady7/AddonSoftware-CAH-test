@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-06-20
+ Report Date:   2022-06-29
  Report Branch: AddonSoftware 22.02
  Last Release:  AddonSoftware 22.01
 =======================================================================================================================================
@@ -107,3 +107,14 @@ Bug 10443: Updated adc_getmask.aon to handle all of Barista's standard
 string mask characters.
 ----
 Modified: ad/src/adc_getmask.aon
+
+=======================================================================================================================================
+Revision: abe729d7881da70013683a2dfbf95b80d0d49bb7
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 6/29/2022 5:26:23 PM
+Message:
+Bug 10447: Skip displaying shipment tracking information in the detail
+grid when an Order No. hasn't been entered.
+----
+Modified: data/bar/opm_shiptrack.xml
+Modified: data/cdf/opm_shiptrack.cdf
