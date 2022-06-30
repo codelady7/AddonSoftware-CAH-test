@@ -18,27 +18,29 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 		switch notice.code
 			case 22; rem --- ON_WINDOW_GAINED_FOCUS
 				order_no$=callpoint!.getColumnData("OPM_SHIPTRACK.ORDER_NO")
-				optInvHdr_dev=fnget_dev("@OPT_INVHDR")
-				dim optInvHdr$:fnget_tpl$("@OPT_INVHDR")
-				trip_key$=firm_id$+"  "+order_no$
-				orderFound=0
-				read(optInvHdr_dev,key=trip_key$,knum="AO_ORD_CUST",dom=*next)
-				while 1
-					optInvHdr_key$=key(optInvHdr_dev,end=*break)
-					if pos(trip_key$=optInvHdr_key$)<>1 then break
-					readrecord(optInvHdr_dev)optInvHdr$
-					if optInvHdr.trans_status$<>"E" then continue
-					orderFound=1
-					break
-				wend
+				if cvs(order_no$,2)<>"" then
+					optInvHdr_dev=fnget_dev("@OPT_INVHDR")
+					dim optInvHdr$:fnget_tpl$("@OPT_INVHDR")
+					orderFound=0
+					trip_key$=firm_id$+"  "+order_no$
+					read(optInvHdr_dev,key=trip_key$,knum="AO_ORD_CUST",dom=*next)
+					while 1
+						optInvHdr_key$=key(optInvHdr_dev,end=*break)
+						if pos(trip_key$=optInvHdr_key$)<>1 then break
+						readrecord(optInvHdr_dev)optInvHdr$
+						if optInvHdr.trans_status$<>"E" then continue
+						orderFound=1
+						break
+					wend
 
-				if orderFound then
-					rem --- Refresh the grid as it may get changed in the opt_shiptrack maintenance grid
-					SysGUI!.setRepaintEnabled(0)
-					shipTrack_grid!=callpoint!.getDevObject("shipTrack_grid")
-					shipTrack_grid!.clearMainGrid()
-					gosub getTrackingInfo
-					SysGUI!.setRepaintEnabled(1)
+					if orderFound then
+						rem --- Refresh the grid as it may get changed in the opt_shiptrack maintenance grid
+						SysGUI!.setRepaintEnabled(0)
+						shipTrack_grid!=callpoint!.getDevObject("shipTrack_grid")
+						shipTrack_grid!.clearMainGrid()
+						gosub getTrackingInfo
+						SysGUI!.setRepaintEnabled(1)
+					endif
 				endif
 			break
 		swend
