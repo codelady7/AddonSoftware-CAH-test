@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-06-29
+ Report Date:   2022-07-05
  Report Branch: AddonSoftware 22.02
  Last Release:  AddonSoftware 22.01
 =======================================================================================================================================
@@ -118,3 +118,12 @@ grid when an Order No. hasn't been entered.
 ----
 Modified: data/bar/opm_shiptrack.xml
 Modified: data/cdf/opm_shiptrack.cdf
+
+=======================================================================================================================================
+Revision: 39be7af062b673c343b09e9bc44ee881f52ea79a
+Author: Bill Halsted <bhalsted@basis.com>
+Date: 7/5/2022 9:31:08 AM
+Message:
+Bug 10449: Changed the Min Length of the Warehouse field from 2 to 1.
+----
+Modified: data/bar/ivr_openso.xml
