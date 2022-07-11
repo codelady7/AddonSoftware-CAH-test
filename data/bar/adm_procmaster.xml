@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_procmaster">3049CDE190EDA31F2875AC1BD90D36EC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_procmaster">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_procmaster">20070305</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_procmaster">20220524</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_procmaster">20220524</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_procmaster">182340</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_procmaster">20220711</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_procmaster">20220711</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_procmaster">154856</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_procmaster"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.adm_procmaster">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_procmaster"></DD_ATTR_DKNM>
@@ -226,8 +226,8 @@
 			<DD_SEQUENCE id="ddm_table_cols.adm_procmaster001">001</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.adm_procmaster001">FIRM_ID         </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.adm_procmaster001">FIRM_ID         </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.adm_procmaster001">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.adm_procmaster001">0</DD_COL_OCCURS>
+			<DD_COL_REPEATS id="ddm_table_cols.adm_procmaster001"></DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.adm_procmaster001"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.adm_procmaster001">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.adm_procmaster001"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.adm_procmaster001"></DD_SYSTEM_REC>
@@ -562,8 +562,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.firm_id"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.firm_id">H</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.firm_id"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.firm_id">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.firm_id">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.firm_id"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.firm_id"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.firm_id"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.firm_id"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.firm_id"></DD_ATTR_DKEY>
@@ -770,8 +770,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.batch_entry"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.batch_entry">C</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.batch_entry"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.batch_entry">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.batch_entry">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.batch_entry"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.batch_entry"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.batch_entry"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.batch_entry"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.batch_entry"></DD_ATTR_DKEY>
@@ -808,7 +808,7 @@
 			<DD_DESCRIPTION id="ddm_elements.allow_batch">Allow Batch Entry [Y/N]?      </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.allow_batch">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.allow_batch">1</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.allow_batch"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.allow_batch"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.allow_batch"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.allow_batch">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.allow_batch">AD </ASC_PROD_ID>
@@ -822,8 +822,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.allow_batch"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.allow_batch">C</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.allow_batch"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.allow_batch">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.allow_batch">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.allow_batch"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.allow_batch"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.allow_batch"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.allow_batch"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.allow_batch"></DD_ATTR_DKEY>
