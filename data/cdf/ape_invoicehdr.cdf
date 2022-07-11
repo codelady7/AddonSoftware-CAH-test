@@ -452,7 +452,7 @@ rem --- Delete images for invoice ONLY if it's NOT in apt_invoicehdr (apt-01)
 	read record (apt_invoicehdr_dev, key=apt01_key$, dom=*next) apt01a$
 	if pos(apt01_key$ = apt01a$)<>1 then
 		rem --- Open Invoice record NOT found
-		invimage_dev=fnget_dev("1APT_INVIMAGE")
+		invimage_dev=fnget_dev("APT_INVIMAGE")
 
 		invimage_trip$ = firm_id$ + vendor_id$ + invoice_no$
 		read(invimage_dev,key=invimage_trip$,dom=*next)
