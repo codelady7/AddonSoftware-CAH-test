@@ -84,6 +84,7 @@
 	<field name="UM_SOLD" class="java.lang.String"/>
 	<field name="PICK_FLAG" class="java.lang.String"/>
 	<field name="LINE_TYPE" class="java.lang.String"/>
+	<field name="ITEM_BARCD" class="java.lang.String"/>
 	<variable name="PRICE_BigDec" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[$F{PRICE_RAW} == "" ? 0 : new java.math.BigDecimal($F{PRICE_RAW})]]></variableExpression>
 	</variable>
@@ -157,14 +158,14 @@
 	<group name="Group1">
 		<groupExpression><![CDATA[$P{REPRINT_REVISED}=="" && $F{WO_INFO1}=="" && ($F{ITEM_ID}!="" || $F{ITEM_DESC}!="")]]></groupExpression>
 		<groupHeader>
-			<band height="13" splitType="Prevent">
-				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<band height="37" splitType="Prevent">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<printWhenExpression><![CDATA[$P{REPRINT_REVISED}=="" && $F{WO_INFO1}=="" && ($F{ITEM_ID}!="" || $F{ITEM_DESC}!="")]]></printWhenExpression>
 				<rectangle>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="555" height="13" backcolor="#EBF0FA" uuid="3256f66d-b32f-4074-8b64-1fee056e1b20">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="555" height="37" backcolor="#EBF0FA" uuid="3256f66d-b32f-4074-8b64-1fee056e1b20">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)  && $F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -172,10 +173,10 @@
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="13" uuid="524d5982-0fc3-46b5-ac6d-c1adaad1d595">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="37" uuid="524d5982-0fc3-46b5-ac6d-c1adaad1d595">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -218,12 +219,13 @@
 					<textFieldExpression><![CDATA[$F{SHIP_QTY}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="175" y="0" width="198" height="12" uuid="6126e8a4-eeb4-4fbe-a313-af5045812d43">
+					<reportElement stretchType="RelativeToBandHeight" x="175" y="0" width="198" height="37" uuid="6126e8a4-eeb4-4fbe-a313-af5045812d43">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
-					<textElement verticalAlignment="Middle">
+					<textElement verticalAlignment="Top">
 						<font fontName="DejaVu Serif" size="9"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
@@ -264,19 +266,58 @@
 					<textFieldExpression><![CDATA[$F{PRICE_MASKED}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="45" y="0" width="1" height="13" uuid="f4a8aaf3-28c8-438c-94dc-20e306262c1e">
+					<reportElement stretchType="RelativeToBandHeight" x="45" y="0" width="1" height="37" uuid="f4a8aaf3-28c8-438c-94dc-20e306262c1e">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="90" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="18d9ab65-6c7e-4ef5-96da-cc5ae2ebdf96">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<reportElement stretchType="RelativeToBandHeight" x="90" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="18d9ab65-6c7e-4ef5-96da-cc5ae2ebdf96">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="8e6f1e50-a5d3-493e-9d06-36c3fedc7b86">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="175" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="6b99b610-23c6-4748-97ac-376f01099fbb">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="373" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="baaa1d3b-9fb6-4aba-a6fc-17b132f20039">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="395" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="0cb7687d-b71e-43c2-a428-e95f2a0b9f99">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
@@ -285,43 +326,7 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="8e6f1e50-a5d3-493e-9d06-36c3fedc7b86">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="175" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="6b99b610-23c6-4748-97ac-376f01099fbb">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="373" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="baaa1d3b-9fb6-4aba-a6fc-17b132f20039">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="395" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="0cb7687d-b71e-43c2-a428-e95f2a0b9f99">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="907619e9-59bf-41a5-a650-769ab00aec3d">
+					<reportElement x="457" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="907619e9-59bf-41a5-a650-769ab00aec3d">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<printWhenExpression><![CDATA[$P{PRINT_PRICES}=="Y" && $F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
@@ -330,9 +335,33 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="505" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="cbbaed19-20d1-4a51-aa16-f3619551552f">
+					<reportElement stretchType="RelativeToBandHeight" x="505" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="cbbaed19-20d1-4a51-aa16-f3619551552f">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<componentElement>
+					<reportElement x="375" y="15" width="130" height="20" uuid="fe9b7b56-d573-4e39-baff-7f8be5ebaafa">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$F{ITEM_BARCD}.trim().isEmpty() ? false : true]]></printWhenExpression>
+					</reportElement>
+					<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="none">
+						<jr:codeExpression><![CDATA[$F{ITEM_BARCD}.trim()]]></jr:codeExpression>
+					</jr:Code128>
+				</componentElement>
+				<line>
+					<reportElement x="373" y="13" width="132" height="1" uuid="034ac1f8-e3db-4df5-81b0-bdbf477f76a3">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
@@ -537,20 +566,20 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="395" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="e1cc3865-19d7-4c3f-ab02-e18661fb2789">
+					<reportElement x="395" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="e1cc3865-19d7-4c3f-ab02-e18661fb2789">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="ca696f62-da5e-4f22-b96c-3473ed2f4161">
+					<reportElement x="457" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="ca696f62-da5e-4f22-b96c-3473ed2f4161">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[$P{PRINT_PRICES}=="Y"]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -567,6 +596,29 @@
 						<pen lineColor="#C0C0C0"/>
 					</graphicElement>
 				</line>
+				<line>
+					<reportElement x="373" y="13" width="132" height="1" uuid="58b08d81-92cb-4b50-b1f0-1ff3c42732a7">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<componentElement>
+					<reportElement x="375" y="15" width="130" height="20" uuid="edddc722-12fa-48e2-bb70-25674b17d021">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$F{ITEM_BARCD}.trim().isEmpty() ? false : true]]></printWhenExpression>
+					</reportElement>
+					<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="none">
+						<jr:codeExpression><![CDATA[$F{ITEM_BARCD}.trim()]]></jr:codeExpression>
+					</jr:Code128>
+				</componentElement>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -578,14 +630,14 @@
 	<group name="Group3">
 		<groupExpression><![CDATA[$P{REPRINT_REVISED}!="" && $F{WO_INFO1}=="" && ($F{ITEM_ID}!="" || $F{ITEM_DESC}!="")]]></groupExpression>
 		<groupHeader>
-			<band height="13">
+			<band height="37">
 				<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				<printWhenExpression><![CDATA[$P{REPRINT_REVISED}!="" && $F{WO_INFO1}=="" && ($F{ITEM_ID}!="" || $F{ITEM_DESC}!="")]]></printWhenExpression>
 				<rectangle>
-					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="555" height="13" backcolor="#EBF0FA" uuid="c2f620bd-6f9c-43e5-8028-28d47bac224b">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="555" height="37" backcolor="#EBF0FA" uuid="c2f620bd-6f9c-43e5-8028-28d47bac224b">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)  && $F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -593,10 +645,10 @@
 					</graphicElement>
 				</rectangle>
 				<rectangle>
-					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="13" uuid="341f7182-1696-4c4a-8b64-0404220b9be2">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="37" uuid="341f7182-1696-4c4a-8b64-0404220b9be2">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -651,12 +703,13 @@
 					<textFieldExpression><![CDATA[$F{SHIP_QTY}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement style="Style1" x="175" y="0" width="198" height="12" uuid="dc10fadf-d6da-4d70-ad4c-6795347edad7">
+					<reportElement style="Style1" stretchType="RelativeToBandHeight" x="175" y="0" width="198" height="37" uuid="dc10fadf-d6da-4d70-ad4c-6795347edad7">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Left" verticalAlignment="Top">
 						<font fontName="DejaVu Serif" size="9"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
@@ -697,30 +750,69 @@
 					<textFieldExpression><![CDATA[$F{PRICE_MASKED}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="20" y="0" width="1" height="13" uuid="2f77204f-0c12-4688-a429-13d6aea0193a">
+					<reportElement stretchType="RelativeToBandHeight" x="20" y="0" width="1" height="36" uuid="2f77204f-0c12-4688-a429-13d6aea0193a">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="45" y="0" width="1" height="13" uuid="77c8f5b9-a54c-4b75-b936-f5ed1eb8d663">
+					<reportElement stretchType="RelativeToBandHeight" x="45" y="0" width="1" height="36" uuid="77c8f5b9-a54c-4b75-b936-f5ed1eb8d663">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="90" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="7bf9b3d3-9084-4932-a1d5-8abb11ae19f0">
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<reportElement stretchType="RelativeToBandHeight" x="90" y="0" width="1" height="36" isPrintWhenDetailOverflows="true" uuid="7bf9b3d3-9084-4932-a1d5-8abb11ae19f0">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="1" height="36" isPrintWhenDetailOverflows="true" uuid="02bd1492-7c55-4e53-88aa-190cef706cd0">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="175" y="0" width="1" height="36" isPrintWhenDetailOverflows="true" uuid="eb516ba1-2433-48e5-b948-7441b240b696">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="373" y="0" width="1" height="36" isPrintWhenDetailOverflows="true" uuid="fe9de730-5c2e-475b-995b-42cb3114cdf1">
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="395" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="2b4c4a9d-152a-4537-a5dd-f1706142b40e">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
@@ -729,43 +821,7 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="135" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="02bd1492-7c55-4e53-88aa-190cef706cd0">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="175" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="eb516ba1-2433-48e5-b948-7441b240b696">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="373" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="fe9de730-5c2e-475b-995b-42cb3114cdf1">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="395" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="2b4c4a9d-152a-4537-a5dd-f1706142b40e">
-						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
-					</reportElement>
-					<graphicElement>
-						<pen lineColor="#C0C0C0"/>
-					</graphicElement>
-				</line>
-				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="2a4dcee8-9e4c-46b4-8255-7be9ae3cbbe7">
+					<reportElement x="457" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="2a4dcee8-9e4c-46b4-8255-7be9ae3cbbe7">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<printWhenExpression><![CDATA[$P{PRINT_PRICES}=="Y" && $F{WO_INFO1}==""]]></printWhenExpression>
 					</reportElement>
@@ -774,9 +830,33 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="505" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="ecdc61e5-72c6-4a78-915d-333fdb27f7fe">
+					<reportElement stretchType="RelativeToBandHeight" x="505" y="0" width="1" height="36" isPrintWhenDetailOverflows="true" uuid="ecdc61e5-72c6-4a78-915d-333fdb27f7fe">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[$F{WO_INFO1}==""]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<componentElement>
+					<reportElement x="375" y="15" width="130" height="20" uuid="f5a25040-3de9-452f-b9a0-7750966a6345">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$F{ITEM_BARCD}.trim().isEmpty() ? false : true]]></printWhenExpression>
+					</reportElement>
+					<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="none">
+						<jr:codeExpression><![CDATA[$F{ITEM_BARCD}.trim()]]></jr:codeExpression>
+					</jr:Code128>
+				</componentElement>
+				<line>
+					<reportElement x="373" y="13" width="132" height="1" uuid="cd5edd6c-de95-4e14-823b-1f03872d341b">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
@@ -1004,20 +1084,20 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="395" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="7b944f5d-a7e7-4277-93d4-a23f9d1923ab">
+					<reportElement x="395" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="7b944f5d-a7e7-4277-93d4-a23f9d1923ab">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="1" height="37" isPrintWhenDetailOverflows="true" uuid="c061b836-449b-4d06-ac0b-c282ddfdc1be">
+					<reportElement x="457" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="c061b836-449b-4d06-ac0b-c282ddfdc1be">
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<printWhenExpression><![CDATA[$P{PRINT_PRICES}=="Y"]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -1029,6 +1109,29 @@
 						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</line>
+				<componentElement>
+					<reportElement x="375" y="15" width="130" height="20" uuid="b1645a83-a100-4f2e-9c7d-685ddb35b979">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$F{ITEM_BARCD}.trim().isEmpty() ? false : true]]></printWhenExpression>
+					</reportElement>
+					<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="none">
+						<jr:codeExpression><![CDATA[$F{ITEM_BARCD}.trim()]]></jr:codeExpression>
+					</jr:Code128>
+				</componentElement>
+				<line>
+					<reportElement x="373" y="13" width="132" height="1" uuid="7f005900-1547-4261-9c01-ce9987e2ff37">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					</reportElement>
 					<graphicElement>
 						<pen lineColor="#C0C0C0"/>

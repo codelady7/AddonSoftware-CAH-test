@@ -149,11 +149,11 @@ rem --- Initialize Data
 	stdMsg_len = 40
 	rem dim stdMessage$(max_stdMsg_lines * stdMsg_len)
 	
-	max_billAddr_lines = 7
+	max_billAddr_lines = 6
 	bill_addrLine_len = 30
 	dim b$(max_billAddr_lines * bill_addrLine_len)
 	
-	max_custAddr_lines = 7
+	max_custAddr_lines = 6
 	cust_addrLine_len = 30	
 	dim c$(max_custAddr_lines * bill_custLine_len)
 	
@@ -221,9 +221,6 @@ rem --- Heading (bill-to address)
         read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"B", dom=*next) ope31!
         b$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
         b$ = pad(arm01!.getFieldAsString("CUSTOMER_NAME"), bill_addrLine_len) + b$
-        if cvs(b$((max_billAddr_lines-1)*bill_addrLine_len),2)="" then
-                b$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + b$
-        endif
         found = 1
     endif
 
@@ -311,7 +308,6 @@ rem --- Format addresses to be bottom justified
     data!.setFieldValue("BILL_ADDR_LINE4", b$((bill_addrLine_len*3)+1,bill_addrLine_len))
     data!.setFieldValue("BILL_ADDR_LINE5", b$((bill_addrLine_len*4)+1,bill_addrLine_len))
     data!.setFieldValue("BILL_ADDR_LINE6", b$((bill_addrLine_len*5)+1,bill_addrLine_len))
-    data!.setFieldValue("BILL_ADDR_LINE7", b$((bill_addrLine_len*6)+1,bill_addrLine_len))
 
     data!.setFieldValue("SHIP_ADDR_LINE1", c$((cust_addrLine_len*0)+1,cust_addrLine_len))
     data!.setFieldValue("SHIP_ADDR_LINE2", c$((cust_addrLine_len*1)+1,cust_addrLine_len))
@@ -319,7 +315,6 @@ rem --- Format addresses to be bottom justified
     data!.setFieldValue("SHIP_ADDR_LINE4", c$((cust_addrLine_len*3)+1,cust_addrLine_len))
     data!.setFieldValue("SHIP_ADDR_LINE5", c$((cust_addrLine_len*4)+1,cust_addrLine_len))
     data!.setFieldValue("SHIP_ADDR_LINE6", c$((cust_addrLine_len*5)+1,cust_addrLine_len))
-    data!.setFieldValue("SHIP_ADDR_LINE7", c$((cust_addrLine_len*6)+1,cust_addrLine_len))
 
     data!.setFieldValue("SALESREP_CODE", slspsn_code$)
     data!.setFieldValue("SALESREP_DESC", slspsn_desc$)
@@ -347,8 +342,8 @@ rem Tell the stored procedure to return the result set.
 
 format_address: rem --- Reformat address to bottom justify
 
-	dim tmp_address$(7*line_len)
-	y=6*line_len+1
+	dim tmp_address$(6*line_len)
+	y=5*line_len+1
 	for x=y to 1 step -line_len
 		if cvs(address$(x,line_len),2)<>""
 			tmp_address$(y,line_len)=address$(x,line_len)
