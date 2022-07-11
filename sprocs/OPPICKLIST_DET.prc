@@ -29,6 +29,7 @@ rem --- Get 'IN' SPROC parameters
 	customer_id$ =   sp!.getParameter("CUSTOMER_ID")
 	order_no$ =      sp!.getParameter("ORDER_NO")
     ar_inv_no$ =     sp!.getParameter("AR_INV_NO")
+    barcode$ =       sp!.getParameter("BARCODE")
 	qty_mask$ =      sp!.getParameter("QTY_MASK")
 	price_mask$ =    sp!.getParameter("PRICE_MASK")
     ivIMask$ =       sp!.getParameter("ITEM_MASK")
@@ -44,7 +45,7 @@ rem --- Get 'IN' SPROC parameters
 rem --- create the in memory recordset for return
 	dataTemplate$ = ""
 	dataTemplate$ = dataTemplate$ + "order_qty_raw:c(1*),order_qty_masked:c(1*), ship_qty:c(1*), bo_qty:c(1*), "
-	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), whse:c(2*), "
+	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), item_barCd:c(1*), whse:c(2*), "
 	dataTemplate$ = dataTemplate$ + "price_raw:c(1*), price_masked:c(1*), "
 	dataTemplate$ = dataTemplate$ + "location:c(1*), internal_seq_no:c(1*), um_sold:c(6*), "
 	dataTemplate$ = dataTemplate$ + "item_is_ls:c(1), linetype_allows_ls:c(1), carton:c(1*), "
@@ -127,6 +128,7 @@ rem --- Main
             bo_qty$ =             ""
 			item_id$ =            ""
 			item_desc$ =          ""
+			item_barCd$ =         ""
 			whse$ =               ""
 			price_raw$ =          ""
 			price_masked$ =       ""
@@ -181,6 +183,9 @@ rem --- Main
                 find record (ivm01_dev, key=firm_id$+ope11a.item_id$, dom=*next) ivm01a$
                 item_description$ = func.displayDesc(ivm01a.item_desc$)
 				if pos(pick_or_quote$="S") then item_is_ls$ = ivm01a.lotser_item$
+				if barcode$="BAR" then item_barCd$=ivm01a.bar_code$
+                if barcode$="UPC" then item_barCd$=ivm01a.upc_code$
+				
                 find record (ivm02_dev,key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next) ivm02a$
 			endif
 
@@ -302,6 +307,7 @@ line_detail: rem --- Item Detail
     			data!.setFieldValue("BO_QTY", bo_qty$)
     			data!.setFieldValue("ITEM_ID", item_id$)
     			data!.setFieldValue("ITEM_DESC", item_desc$)
+                data!.setFieldValue("ITEM_BARCD", item_barCd$)
     			data!.setFieldValue("WHSE", whse$)
                 data!.setFieldValue("LOCATION",location$)
     			data!.setFieldValue("PRICE_RAW", price_raw$)
@@ -362,6 +368,7 @@ rem --- return a final row that's empty except for the whse_message$, which will
     data!.setFieldValue("BO_QTY", "")
     data!.setFieldValue("ITEM_ID", "")
     data!.setFieldValue("ITEM_DESC", "")
+    data!.setFieldValue("ITEM_BARCD", "")
     data!.setFieldValue("WHSE", whse$)
     data!.setFieldValue("LOCATION","")
     data!.setFieldValue("PRICE_RAW", "")

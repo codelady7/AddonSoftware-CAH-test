@@ -148,7 +148,7 @@ rem --- Set Report Name & Subreport directory
     open (temp)reportDir$
     reportDir$ = fid(temp)(9)+"/"
     close (temp)
-    reportBaseName$ = "OPPickListHdr"
+    reportBaseName$ = "OPPickListHdr"; rem --- When printing barcodes, gets reset to OPPickListHdr_BarCd in Initialize Data section
     filename$ = reportDir$ + reportBaseName$ + ".jasper"
     masterBaseName$ = "OPPickListMaster"
     master_filename$ = reportDir$ + masterBaseName$+".jasper"
@@ -240,7 +240,9 @@ rem --- Initialize Data
 
     more=1
     precision num(params_rec.precision$)
-	
+
+    barCode$=cvs(stbl("+ORDER_PICK_LIST_BARCODES",err=*next),2)
+
     call pgmdir$+"adc_getmask.aon","","AR","I","",cust_mask$,0,cust_size
     call pgmdir$+"adc_getmask.aon","","AR","A","",amt_mask$,0,amt_mask_size
     call pgmdir$+"adc_getmask.aon","","AR","U","",qty_mask$,0,qty_mask
@@ -520,6 +522,7 @@ rem --- Misc setup and qualification
         params!.put("SELECTED_WHSE",whse$)
         params!.put("MULT_WH",mult_wh$)
         params!.put("WO_INFO_LABELS",woInfo_1abels$)
+        params!.put("BARCODE",barCode$)
 		
 		params!.put("AR_ADDRESS1",comp$((comp_addrLine_len*0)+1,comp_addrLine_len))
 		params!.put("AR_ADDRESS2",comp$((comp_addrLine_len*1)+1,comp_addrLine_len))
