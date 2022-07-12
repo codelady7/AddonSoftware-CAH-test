@@ -37,3 +37,16 @@ Bug 10455: Added Beginning Balance to the Inventory Transaction History
 Listing.
 ----
 Modified: iv/src/ivr_transhist.aon
+
+=======================================================================================================================================
+Revision: 40394ace16b625b037e823c444424b77b7c733cc
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/11/2022 6:52:20 PM
+Message:
+Bug 10456: DIM'd curr_itemmast to record template and read file to get
+missing data.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
