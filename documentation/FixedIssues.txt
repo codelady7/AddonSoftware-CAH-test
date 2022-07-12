@@ -8,3 +8,12 @@
 BBjBaristaAddonDemos2202_07-06-2022_1802.jar
 
 =======================================================================================================================================
+Revision: 82e12b46d41ab7f7c6fb5b46f1da622156c61582
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/11/2022 3:31:30 PM
+Message:
+Bug 10450: Corrected wrong file name used to get the channel the
+APT_INVIMAGE file is opened on.
+----
+Modified: data/bar/ape_invoicehdr.xml
+Modified: data/cdf/ape_invoicehdr.cdf
