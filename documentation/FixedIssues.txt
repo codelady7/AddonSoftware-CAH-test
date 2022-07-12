@@ -27,3 +27,13 @@ Bug 10451: Corrected DOM for firm_id$ trip read on batched files.
 ----
 Modified: data/bar/adm_procmaster.xml
 Modified: data/cdf/adm_procmaster.cdf
+
+=======================================================================================================================================
+Revision: d0d1bc202829d56440fbddf253a302642bb25ac8
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/11/2022 5:44:23 PM
+Message:
+Bug 10455: Added Beginning Balance to the Inventory Transaction History
+Listing.
+----
+Modified: iv/src/ivr_transhist.aon
