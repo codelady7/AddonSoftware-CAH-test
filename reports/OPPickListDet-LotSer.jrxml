@@ -84,8 +84,10 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="107" y="0" width="50" height="12" uuid="93e4ac29-c830-4019-a5ba-138de504d439">
+				<reportElement x="55" y="0" width="102" height="12" uuid="93e4ac29-c830-4019-a5ba-138de504d439">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="DejaVu Serif" size="8"/>
@@ -93,8 +95,9 @@
 				<textFieldExpression><![CDATA[$P{ITEM_ID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="73" y="1" width="33" height="12" uuid="76e859c8-7546-4d29-93d1-2440564dc685">
+				<reportElement x="21" y="1" width="33" height="12" uuid="76e859c8-7546-4d29-93d1-2440564dc685">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="7" isBold="true"/>
