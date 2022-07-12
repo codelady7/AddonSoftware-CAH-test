@@ -332,7 +332,11 @@ rem --- Print subheading?
             OutVect!.addItem(subhead1$)
             xwk=fnblank(2)
             OutVect!.addItem(subhead2$)
-            xwk=fnblank(4)
+            OutVect!.addItem("")
+            OutVect!.addItem(Translate!.getTranslation("AON_BEGINNING_BALANCE")+":")
+            OutVect!.addItem("")
+            OutVect!.addItem(str(begin_bal))
+
             subhead1$="",subhead2$=""
         endif
 
@@ -519,6 +523,7 @@ get_beg_bal: rem --- Determine starting beginning balance
         read record (ivt04_dev2,key=firm_id$+read_tpl.warehouse_id$+read_tpl.item_id$+read_tpl.trans_date$+read_tpl.iv_hist_seq$)ivt04b$
         balance=ivt04b.trans_qty
     endif
+    begin_bal=balance
 
     while found=1
         dim ivt04b$:fattr(ivt04b$)
@@ -526,6 +531,7 @@ get_beg_bal: rem --- Determine starting beginning balance
         if ivt04b.firm_id$+ivt04b.warehouse_id$+ivt04b.item_id$<>firm_id$+whse$+item$ break
         if ivt04b.trans_date$>=beg_date$ break
         let balance=balance+ivt04b.trans_qty
+        if ivt04b.trans_date$<beg_date$ then begin_bal=balance
     wend
     
     return
