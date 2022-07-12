@@ -917,6 +917,11 @@ rem --- and that's when this code should be hit.
 			items$[1] = curr_whse$
 			items$[2] = curr_item$
 			refs[0]   = curr_qty
+
+			ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+			dim curr_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+			read record (ivm_itemmast_dev, key=firm_id$+curr_item$, dom=awri_update_hdr) curr_itemmast$
+
 			if action$="CO" or curr_itemmast.lotser_item$<>"Y" or curr_itemmast.inventoried$<>"Y" then
 				call user_tpl.pgmdir$+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 				if status then goto awri_update_hdr
