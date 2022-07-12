@@ -17,3 +17,13 @@ APT_INVIMAGE file is opened on.
 ----
 Modified: data/bar/ape_invoicehdr.xml
 Modified: data/cdf/ape_invoicehdr.cdf
+
+=======================================================================================================================================
+Revision: 8b890dfdb4250556dda56e316c7892b2c5a90262
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/11/2022 3:52:41 PM
+Message:
+Bug 10451: Corrected DOM for firm_id$ trip read on batched files.
+----
+Modified: data/bar/adm_procmaster.xml
+Modified: data/cdf/adm_procmaster.cdf
