@@ -36,6 +36,7 @@ rem --- get SPROC parameters
     key_num$=sp!.getParameter("KEY_NUM")
     iv_precision=num(sp!.getParameter("IV_PRECISION"))
     iv_lotser$=sp!.getParameter("IV_LOTSER")
+    comments$=sp!.getParameter("COMMENTS")
     info31$=sp!.getParameter("INFO_31")
     barista_wd$=sp!.getParameter("BARISTA_WD")
 
@@ -48,7 +49,7 @@ rem --- but makes it easy to set a grouping/report break in the Jasper report it
 
     dataTemplate$ = ""
     dataTemplate$ = dataTemplate$ + "wo_type:C(1*),wo_cat_cd:C(1*),wo_category:C(1*),op_step:C(1*),bill_no:C(1*),wo_desc1:C(1*),wo_desc2:C(1*),"
-    dataTemplate$ = dataTemplate$ + "open_date:C(1*),start_date:C(1*),completion_date:C(1*),"
+    dataTemplate$ = dataTemplate$ + "open_date:C(1*),start_date:C(1*),completion_date:C(1*),comments:C(1*),"
     dataTemplate$ = dataTemplate$ + "drawing_no:C(1*),rev_no:C(1*),customer:C(1*),order:C(1*),warehouse:C(1*),prod_qty:C(1*),"
     dataTemplate$ = dataTemplate$ + "wh_loc:C(1*),req_qty:C(1*),item_no:C(1*),item_desc:C(1*),lotser_prompt:C(1*),lotser_prompt2:C(1*), "
     dataTemplate$ = dataTemplate$ + "qty_OH:C(1*),qty_CO:C(1*),qty_AV:C(1*),qty_OO:C(1*)"
@@ -185,6 +186,7 @@ rem --- Other header fields
     drawing_no$=sfe_womastr.drawing_no$
     rev_no$=sfe_womastr.drawing_rev$
     prod_qty$=str(sfe_womastr.sch_prod_qty-sfe_womastr.qty_cls_todt:qty_mask$)
+    comments$=cvs(sfe_womastr.memo_1024$,3)
 
 rem --- Get Header level comments, i.e. memo lines entered before the first sfe_womatl detail line for an item
 
@@ -296,6 +298,7 @@ add_to_recordset: rem --- add header, detail and/or comment info to recordset
     data!.setFieldValue("order",order$)
     data!.setFieldValue("warehouse",whse_short$)
     data!.setFieldValue("prod_qty",prod_qty$)
+    data!.setFieldValue("comments",comments$)
     
     data!.setFieldValue("wh_loc",wh_loc$)
     data!.setFieldValue("req_qty",req_qty$)
