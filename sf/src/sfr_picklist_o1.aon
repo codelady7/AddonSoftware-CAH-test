@@ -77,6 +77,7 @@ rem --- Init Data
 rem --- Assign form input values to local variables
 
     sort_seq$=option!.getOptionData("REPORT_SEQ")
+    comments$=option!.getOptionData("INCLUDE_COMMENT")
     alias$=option!.getAlias()
     
 	if sort_seq$="L"
@@ -178,6 +179,7 @@ rem --- Main Read
         params!.put("IV_LOTSER",ivs01a.lotser_flag$)
         params!.put("BANDED_ROWS","Y")
         params!.put("INFO_31",hta(info(3,1)))
+        params!.put("COMMENTS",comments$)
 
     rem --- invoke jasper
 

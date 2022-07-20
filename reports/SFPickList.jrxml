@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2018-09-17T16:27:44 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SFPickList" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="564" leftMargin="28" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="addon" uuid="ea22a6d6-67f2-4294-82f2-d5ea1455f2e0">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
@@ -28,8 +27,9 @@
 	<parameter name="BANDED_ROWS" class="java.lang.String"/>
 	<parameter name="INFO_31" class="java.lang.String"/>
 	<parameter name="ITEM_MASK" class="java.lang.String"/>
+	<parameter name="COMMENTS" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL SFPICKLIST($P{FIRM_ID}, $P{WO_LOCATION}, $P{WO_NO}, $P{CUST_MASK}, $P{QTY_MASK}, $P{BOM_INTERFACE}, $P{KEY_NUM}, $P{IV_PRECISION}, $P{IV_LOTSER}, $P{INFO_31}, $P{CUST_MASK}, $P{BARISTA_WD})]]>
+		<![CDATA[CALL SFPICKLIST($P{FIRM_ID}, $P{WO_LOCATION}, $P{WO_NO}, $P{CUST_MASK}, $P{QTY_MASK}, $P{BOM_INTERFACE}, $P{KEY_NUM}, $P{IV_PRECISION}, $P{IV_LOTSER}, $P{COMMENTS}, $P{INFO_31}, $P{CUST_MASK}, $P{BARISTA_WD})]]>
 	</queryString>
 	<field name="WO_TYPE" class="java.lang.String"/>
 	<field name="WO_CAT_CD" class="java.lang.String"/>
@@ -57,6 +57,57 @@
 	<field name="QTY_CO" class="java.lang.String"/>
 	<field name="QTY_AV" class="java.lang.String"/>
 	<field name="QTY_OO" class="java.lang.String"/>
+	<field name="COMMENTS" class="java.lang.String"/>
+	<group name="CommentsGroup">
+		<groupHeader>
+			<band height="20">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1 && $P{COMMENTS}.matches("Y") && !$F{COMMENTS}.isEmpty()]]></printWhenExpression>
+				<rectangle radius="4">
+					<reportElement stretchType="ElementGroupHeight" mode="Opaque" x="5" y="2" width="545" height="17" backcolor="#EBF0FA" uuid="287b8996-83c4-4361-8711-349306de6024">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1 && $P{COMMENTS}.matches("Y") && !$F{COMMENTS}.isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineColor="#C0C0C0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="7" y="3" width="75" height="15" uuid="3278ed55-4575-4f1a-945a-77ec6a0549dc">
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1 && $P{COMMENTS}.matches("Y") && !$F{COMMENTS}.isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{AON_WO}+" "+$R{AON_COMMENTS}+":"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement stretchType="ElementGroupHeight" x="85" y="3" width="450" height="15" uuid="7012d6c2-a768-48af-9f13-93b3134b72a5">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1 && $P{COMMENTS}.matches("Y") && !$F{COMMENTS}.isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<group name="OP_STEP" isStartNewPage="true" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{OP_STEP}]]></groupExpression>
 		<groupHeader>
@@ -203,12 +254,12 @@
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle radius="2">
-				<reportElement x="0" y="0" width="555" height="200" backcolor="#FAFAFA" uuid="94245235-2cd9-4a4e-a004-a0d67a4d3824">
+				<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="555" height="200" backcolor="#FAFAFA" uuid="94245235-2cd9-4a4e-a004-a0d67a4d3824">
 					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</rectangle>
 			<staticText>
@@ -904,7 +955,7 @@
 					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[str($F{LOTSER_PROMPT2})]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
+				<textField textAdjust="StretchHeight">
 					<reportElement x="153" y="15" width="300" height="15" uuid="e5cd9de0-bfdb-4d87-a799-30658b462379">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
