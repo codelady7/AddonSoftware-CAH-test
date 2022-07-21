@@ -1623,7 +1623,8 @@ std_exit:
             close(sourceLog_dev,err=*next)
             
             rem --- Set Barista directory
-            #ExtractorBaristaLocationEB!.setText(installationLocation!+sourceBarDir$(len(sourceBaseDir$)+2))
+            tmpLoc!=installationLocation!+sourceBarDir$(len(sourceBaseDir$)+2)
+            #ExtractorBaristaLocationEB!.setText(tmpLoc!.replaceAll("[/\\]","\"+File.separator))
 
             rem -- validate barista directory 
             baristaLocation!=#ExtractorBaristaLocationEB!.getText()
@@ -2605,7 +2606,7 @@ std_exit:
                               endif
 
                               rem Keep only relative paths and paths beginning with BBJ_HOME
-                              addToken=(token!="PREFIX") OR (token!.startsWith(bbjHome$)) OR (!(new java.io.File(token!).isAbsolute()) AND !token!.startsWith("/"))
+                              addToken=(token!="PREFIX") OR (token!.startsWith(bbjHome$)) OR (!(token!.substring(1).startsWith(":")) AND !token!.startsWith("/"))
                               if addToken then
                                   if (token!.contains(" ")) then
                                       token!=$22$+token!+$22$
