@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-07-12
+ Report Date:   2022-07-20
  Report Branch: AddonSoftware 22.03
  Last Release:  AddonSoftware 22.02
 =======================================================================================================================================
@@ -50,3 +50,16 @@ Modified: data/bar/ope_invdet.xml
 Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_invdet.cdf
 Modified: data/cdf/ope_orddet.cdf
+
+=======================================================================================================================================
+Revision: 5864fa108b207f9ffb1fe5f7cdb34552e5ebd832
+Author: Christine <chawkins@basis.com>
+Date: 7/20/2022 5:38:35 PM
+Message:
+Bug 10462 - AD - Packager/Extractor can run into path name issues when changing OS
+ - corrected as suggested in bug report
+
+(cherry picked from commit 7cf8862c38060621acd73267c2ceb2b6aebd95cb)
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
