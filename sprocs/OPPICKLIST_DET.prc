@@ -67,6 +67,8 @@ rem --- Initializations
         woInfo_1abels$=woInfo_1abels$(xpos+1)
         xpos=pos(";"=woInfo_1abels$)
     wend
+    
+    if selected_whse$="" then detailLineTree!=new java.util.TreeMap()
 	
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
@@ -326,6 +328,10 @@ line_detail: rem --- Item Detail
                 data!.setFieldValue("LINE_TYPE", opm02a.line_type$)
     
     			rs!.insert(data!)
+                if selected_whse$="" then
+                    sortKey$=ope11a.warehouse_id$+ope11a.line_no$+str(line)
+                    detailLineTree!.put(sortKey$,data!)
+                endif
 			next line		
 
         rem --- End of detail lines
@@ -361,6 +367,18 @@ rem --- Determine the warehouse message to send back to header report
     endif
 
 rem --- return a final row that's empty except for the whse_message$, which will get passed back to the main report
+
+    if selected_whse$="" then
+        rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
+        detailLineIter!=detailLineTree!.keySet().iterator()
+        while detailLineIter!.hasNext()
+            data! = rs!.getEmptyRecordData()
+            thisLine$=detailLineIter!.next()
+            data!=cast(BBjRecordData,detailLineTree!.get(thisLine$))
+    
+            rs!.insert(data!)    
+        wend
+    endif
 
     data! = rs!.getEmptyRecordData()
     data!.setFieldValue("ORDER_QTY_MASKED", "")
@@ -421,7 +439,7 @@ alpha_mask:
 sproc_error:rem --- SPROC error trap/handler
     rd_err_text$="", err_num=err
     if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
-    x$=stbl("+THROWN_ERR","TRUE")   
+    x$=stbl("+THROWN_ERR","TRUE")
     throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
     
 std_exit:
