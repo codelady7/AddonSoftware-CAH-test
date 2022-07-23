@@ -68,7 +68,7 @@ rem --- Initializations
         xpos=pos(";"=woInfo_1abels$)
     wend
     
-    if selected_whse$="" then detailLineTree!=new java.util.TreeMap()
+    if mult_wh$="Y" and selected_whse$="" then detailLineTree!=new java.util.TreeMap()
 	
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
@@ -328,7 +328,7 @@ line_detail: rem --- Item Detail
                 data!.setFieldValue("LINE_TYPE", opm02a.line_type$)
     
     			rs!.insert(data!)
-                if selected_whse$="" then
+                if mult_wh$="Y" and selected_whse$="" then
                     sortKey$=ope11a.warehouse_id$+ope11a.line_no$+str(line)
                     detailLineTree!.put(sortKey$,data!)
                 endif
@@ -368,7 +368,7 @@ rem --- Determine the warehouse message to send back to header report
 
 rem --- return a final row that's empty except for the whse_message$, which will get passed back to the main report
 
-    if selected_whse$="" then
+    if mult_wh$="Y" and selected_whse$="" then
         rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
         detailLineIter!=detailLineTree!.keySet().iterator()
         while detailLineIter!.hasNext()
