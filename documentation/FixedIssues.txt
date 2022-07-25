@@ -63,3 +63,12 @@ Bug 10462 - AD - Packager/Extractor can run into path name issues when changing 
 ----
 Modified: util/packager_extractor/aon_packagerextractor.bbj
 
+=======================================================================================================================================
+Revision: 7157b0fb59cdb3f3d7e1d1428486238cb41fd314
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/25/2022 10:17:30 AM
+Message:
+Bug 8251: Corrected typo preventing previous fix.
+----
+Modified: data/bar/poe_recdet.xml
+Modified: data/cdf/poe_recdet.cdf
