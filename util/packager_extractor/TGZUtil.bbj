@@ -68,6 +68,7 @@ class public TGZFile
     
     REM Error reporting variables 
     field protected BBjVector m_failedToExtract!
+    field protected BBjVector m_badFileName!
     
     method private TGZFile() 
     methodend 
@@ -267,7 +268,7 @@ class public TGZFile
             if (entry!=null()) then break
             
             REM quick check to make sure file will fall under destination
-            entryPath!=new File(entry!.getName()).toPath()
+            entryPath!=new File(entry!.getName()).toPath(err=handle_copy_error)
             diskPath!=destinationPath!.resolve(entryPath!)
             if (!diskPath!.normalize().startsWith(destinationPath!)) then 
                 throw "Path in archive will copy outside of destination directory. Stopping.",17
@@ -303,6 +304,15 @@ class public TGZFile
                 #m_failedToExtract!=BBjAPI().makeVector()
             endif
             #m_failedToExtract!.add(diskPath!) 
+            goto next_extraction
+       endif
+
+       rem --- log files that can't be handled due to invalid char(s) in name (eg. '<' or '>' in admin data xml file name)
+       if (err=252 and errorMessage!.contains("InvalidPathException")) then 
+            if (#m_badFileName!=null()) then 
+                #m_badFileName!=BBjAPI().makeVector()
+            endif
+            #m_badFileName!.add(entry!.getName()) 
             goto next_extraction
        endif 
        
@@ -394,6 +404,10 @@ class public TGZFile
     
     method public BBjVector getFailedToExtract()
         methodret #m_failedToExtract!
+    methodend
+
+    method public BBjVector getBadFileName()
+        methodret #m_badFileName!
     methodend 
     
 classend 

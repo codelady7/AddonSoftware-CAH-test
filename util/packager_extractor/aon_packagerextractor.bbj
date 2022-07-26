@@ -1774,6 +1774,16 @@ std_exit:
               print (log_dev) "Did not overwrite: ",failedToExtractI!.next()
           wend
       endif
+
+      REM log any files we did not extract due to invalid characters in file name. 
+      badFileName!=tgzFile!.getBadFileName()
+      if (badFileName!<>null()) then
+          print (log_dev)  "Could not extract due to invalid chars in file name:"
+          badFileNameI!=badFileName!.iterator()
+          while (badFileNameI!.hasNext())
+              print (log_dev) "Could not extract: ",badFileNameI!.next()
+          wend
+      endif
       chdir savedDir$
 
       rem --- Remove busy/working image from progress meter
