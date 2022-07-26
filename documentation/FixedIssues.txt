@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-07-20
+ Report Date:   2022-07-25
  Report Branch: AddonSoftware 22.03
  Last Release:  AddonSoftware 22.02
 =======================================================================================================================================
@@ -72,3 +72,30 @@ Bug 8251: Corrected typo preventing previous fix.
 ----
 Modified: data/bar/poe_recdet.xml
 Modified: data/cdf/poe_recdet.cdf
+
+=======================================================================================================================================
+Revision: 1a743b057e34f960541c67649b02cb9ea45d7a55
+Author: Christine <chawkins@basis.com>
+Date: 7/25/2022 5:44:34 PM
+Message:
+Bug 10463 - AD - Packager/Extractor can encounter invalid characters in file names
+ - added error handling/logging for files w/ invalid filename characters.
+
+(cherry picked from commit 4a199561abc6c1b6c0570ec18593c1a78e7cdfb2)
+----
+Modified: util/packager_extractor/TGZUtil.bbj
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+=======================================================================================================================================
+Revision: 8d1a064c14a7410cef8488e9f381e48d1bc8f4a0
+Author: Christine <chawkins@basis.com>
+Date: 7/25/2022 5:51:21 PM
+Message:
+Bug 10464 - AD - Upgrade Wizard runs into err 252 when reporting files containing conflicts
+ - corrected as suggested in bug report
+
+(cherry picked from commit 2a9fccf1d7187fa72bc4f779341b280abfaa2333)
+----
+Modified: ad/src/adx_upgradewiz.aon
+
+
