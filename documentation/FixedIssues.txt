@@ -98,4 +98,15 @@ Bug 10464 - AD - Upgrade Wizard runs into err 252 when reporting files containin
 ----
 Modified: ad/src/adx_upgradewiz.aon
 
+=======================================================================================================================================
+Revision: 522d2a6535287dfb0b7121655010a7490ca89986
+Author: Christine <chawkins@basis.com>
+Date: 7/25/2022 6:23:04 PM
+Message:
+Bug 10465 - AD - Packager/Extractor can't find TGZUtil.bbj
+ - corrected as suggested in bug report.
+
+(cherry picked from commit 0f296623d0cbafb7fcd795e0814e78779164a42a)
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
 
