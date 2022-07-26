@@ -23,7 +23,7 @@ use java.util.Vector
 
 use ::ado_util.src::util
 use ::bbtranslator.bbj::BBTranslator
-use ::jar/TGZUtil.bbj::TGZFile
+use ::TGZUtil.bbj::TGZFile
 
 declare PackagerExtractor eventHandler!
 eventHandler!=new PackagerExtractor()
