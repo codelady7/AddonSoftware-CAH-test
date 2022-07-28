@@ -181,6 +181,33 @@ call stbl("+DIR_SYP")+"bam_run_prog.bbj",
 :                       "",
 :                       dflt_data$[all]
 
+[[APM_VENDMAST.AOPT-PHST]]
+rem --- Show payments for this vendor
+	vendor_id$=callpoint!.getColumnData("APM_VENDMAST.VENDOR_ID")
+
+	selected_key$ = ""
+	dim filter_defs$[1,2]
+	filter_defs$[0,0]="APT_VENDPAYMENTS.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+	filter_defs$[1,0]="APT_VENDPAYMENTS.VENDOR_ID"
+	filter_defs$[1,1]="='"+vendor_id$+"'"
+	filter_defs$[1,2]="LOCK"
+
+	dim search_defs$[3]
+
+	call stbl("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev,
+:		Form!,
+:		"AP_VENDPAYMENTS",
+:		"",
+:		table_chans$[all],
+:		selected_key$,
+:		filter_defs$[all],
+:		search_defs$[all],
+:		"",
+:		""
+
 [[APM_VENDMAST.AOPT-RCTL]]
 rem --- Launch Report Control Recipients form for this vendor
 	user_id$=stbl("+USER_ID")

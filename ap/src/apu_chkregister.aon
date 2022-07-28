@@ -41,7 +41,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=17,begfile=1,endfile=files
+    files=19,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS"
     files$[3]="gls_calendar",ids$[3]="GLS_CALENDAR"
@@ -54,10 +54,12 @@ rem --- Open/Lock files
     files$[12]="apt-11",ids$[12]="APT_INVOICEDET"
     files$[13]="apw-01",ids$[13]="APW_CHECKINVOICE"
     files$[14]="apw_chkjasperprn",ids$[14]="APW_CHKJASPERPRN"
-    files$[15]="glm-01",ids$[15]="GLM_ACCT"
-    files$[16]="glt-04",ids$[16]="GLE_DAILYDETAIL"
-    files$[17]="glt-05",ids$[17]="GLT_BANKCHECKS"
-    call pgmdir$+"adc_fileopen.aon",action,begfile,14,files$[all],options$[all],
+    files$[15]="apt_vendpayments",ids$[15]="APT_VENDPAYMENTS"
+    files$[16]="adc_bankacctcode",ids$[16]="ADC_BANKACCTCODE"
+    files$[17]="glm-01",ids$[17]="GLM_ACCT"
+    files$[18]="glt-04",ids$[18]="GLE_DAILYDETAIL"
+    files$[19]="glt-05",ids$[19]="GLT_BANKCHECKS"
+    call pgmdir$+"adc_fileopen.aon",action,begfile,16,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
     ads01_dev=channels[1]
@@ -71,6 +73,8 @@ rem --- Open/Lock files
     apt11_dev=channels[12]
     apw01_dev=channels[13]
     apwChkJasperPrn_dev=channels[14]
+    aptVendPayments_dev=channels[15]
+    adcBankAcctCode_dev=channels[16]
 
 rem --- Dimension string templates
 
@@ -78,7 +82,7 @@ rem --- Dimension string templates
     dim apm01a$:templates$[5],apm02a$:templates$[6]
     dim apm10b$:templates$[8],apt01a$:templates$[9],apt02a$:templates$[10]
     dim apt05a$:templates$[11],apt11a$:templates$[12],apw01a$:templates$[13]
-    dim apwChkJasperPrn$:templates$[14]
+    dim apwChkJasperPrn$:templates$[14],aptVendPayments$:templates$[15],adcBankAcctCode$:templates$[16]
 
 rem --- Retrieve parameter records
 
@@ -122,16 +126,16 @@ rem --- Initializations
 rem --- Additional File Opens
 
     if gl$<>"Y" goto confirm_update
-    call pgmdir$+"adc_fileopen.aon",action,15,16,files$[all],options$[all],
+    call pgmdir$+"adc_fileopen.aon",action,17,18,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
-    glm01_dev=channels[15];dim glm01a$:templates$[15]
-    glt04_dev=channels[16];dim glt04a$:templates$[16]
+    glm01_dev=channels[17];dim glm01a$:templates$[17]
+    glt04_dev=channels[18];dim glt04a$:templates$[18]
     if br$<>"Y" goto confirm_update
-    call pgmdir$+"adc_fileopen.aon",action,17,17,files$[all],options$[all],
+    call pgmdir$+"adc_fileopen.aon",action,19,19,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
-    glt05_dev=channels[17];dim glt05a$:templates$[17]
+    glt05_dev=channels[19];dim glt05a$:templates$[19]
 
 confirm_update: rem --- Run Update?
 
@@ -262,6 +266,7 @@ open_checks: rem --- Open Checks
         apt05a.discount_amt=ape04a.discount_amt
         apt05a.retention=ape04a.retention
         write record (apt05_dev,dom=remove_open_invoice) apt05a$
+        gosub updateAptVendPayments
         if br$="Y" if gl$="Y" gosub update_bank_rec
         goto remove_open_invoice
 
@@ -285,6 +290,7 @@ void_check: rem --- Void Check
         apt05a.check_date$=apw01a.check_date$
         apt05a.trans_type$="V"
         write record (apt05_dev,dom=remove_check) apt05a$
+        gosub updateAptVendPayments
         if br$="Y" x9$=x9$+apt05a.check_no$
 
 remove_check: rem --- Remove Check
@@ -307,6 +313,31 @@ done: rem --- All done
     endif
     call pgmdir$+"adc_batchdelete.aon",err=*next,status
     goto std_exit
+
+updateAptVendPayments: rem --- Update APT_VENDPAYMENTS with new data from APT_CHECKHISTORY
+    foundRec=0      
+    aptVendPayments_key$=apt05a.firm_id$+apt05a.vendor_id$+apt05a.check_no$+apt05a.bnk_acct_cd$
+    readrecord(aptVendPayments_dev,key=aptVendPayments_key$,dom=*next)aptVendPayments$; foundRec=1
+    if !foundRec then
+        redim aptVendPayments$
+        aptVendPayments.firm_id$=apt05a.firm_id$
+        aptVendPayments.vendor_id$=apt05a.vendor_id$
+        aptVendPayments.check_no$=apt05a.check_no$
+        aptVendPayments.bnk_acct_cd$=apt05a.bnk_acct_cd$
+        aptVendPayments.check_date$=apt05a.check_date$
+        aptVendPayments.trans_type$=apt05a.trans_type$
+        aptVendPayments.payment_amt=apt05a.invoice_amt - apt05a.discount_amt - apt05a.retention
+
+        redim adcBankAcctCode$
+        readrecord(adcBankAcctCode_dev,key=apt05a.firm_id$+apt05a.bnk_acct_cd$,dom=*next)adcBankAcctCode$
+        aptVendPayments.acct_desc$=adcBankAcctCode.acct_desc$
+    else
+        aptVendPayments.payment_amt=aptVendPayments.payment_amt + apt05a.invoice_amt - apt05a.discount_amt - apt05a.retention
+    endif
+
+    writerecord(aptVendPayments_dev)aptVendPayments$
+
+    return
 
 build_NACHA_file: rem --- Build NACHA text file for financial institution to process ACH payments for all ACH non-negotiable checks
 
