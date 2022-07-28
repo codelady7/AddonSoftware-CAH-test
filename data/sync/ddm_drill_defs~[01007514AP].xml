@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<barista_record_table>DDM_DRILL_DEFS</barista_record_table>
+<barista_admin_records>
+	<barista_record>
+		<DRILL_DEF_ID>AP_PAIDINVOICES </DRILL_DEF_ID>
+		<DESCRIPTION>Paid Invoice History</DESCRIPTION>
+		<DD_ATTR_DTAB>APT_CHECKHISTORY</DD_ATTR_DTAB>
+		<DD_ATTR_DKNM>AO_BNKACCT_CHECK</DD_ATTR_DKNM>
+		<DD_ATTR_DKEY>[FIRM_ID]+[BNK_ACCT_CD]+[CHECK_NO]</DD_ATTR_DKEY>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<DD_ATTR_IDEF>AP_PAIDINVOICES </DD_ATTR_IDEF>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+</barista_admin_records>
