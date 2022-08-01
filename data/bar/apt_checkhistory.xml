@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apt_checkhistory">01A1F00CEDA3DEE1C7C78AA7B93F4482</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apt_checkhistory">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_checkhistory">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apt_checkhistory">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_checkhistory">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_checkhistory">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apt_checkhistory">20220801</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_checkhistory">20220801</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_checkhistory">165556</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_checkhistory"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_checkhistory"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_checkhistory"></DD_ATTR_DKNM>
@@ -377,7 +377,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory001">FIRM_ID         </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory001">FIRM_ID         </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory001">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory001">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory001"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory001">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory001"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory001"></DD_SYSTEM_REC>
@@ -428,7 +428,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory002">AP_TYPE         </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory002">AP_TYPE         </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory002">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory002">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory002"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory002">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory002"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory002"></DD_SYSTEM_REC>
@@ -478,8 +478,8 @@
 			<DD_SEQUENCE id="ddm_table_cols.apt_checkhistory003">003</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory003">BNK_ACCT_CD     </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory003">BNK_ACCT_CD     </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory003">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory003">0</DD_COL_OCCURS>
+			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory003"></DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory003"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory003">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory003"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory003"></DD_SYSTEM_REC>
@@ -530,7 +530,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory004">CHECK_NO        </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory004">CHECK_NO        </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory004">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory004">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory004"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory004">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory004"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory004"></DD_SYSTEM_REC>
@@ -580,8 +580,8 @@
 			<DD_SEQUENCE id="ddm_table_cols.apt_checkhistory005">005</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory005">VENDOR_ID       </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory005">VENDOR_ID       </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory005">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory005">0</DD_COL_OCCURS>
+			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory005"></DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory005"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory005">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory005"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory005"></DD_SYSTEM_REC>
@@ -632,7 +632,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory006">AP_INV_NO       </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory006">AP_INV_NO       </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory006">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory006">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory006"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory006">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory006"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory006"></DD_SYSTEM_REC>
@@ -682,8 +682,8 @@
 			<DD_SEQUENCE id="ddm_table_cols.apt_checkhistory007">007</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory007">TRANS_TYPE      </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory007">TRANS_TYPE      </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory007">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory007">0</DD_COL_OCCURS>
+			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory007"></DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory007"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory007">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory007"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory007"></DD_SYSTEM_REC>
@@ -734,7 +734,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory008">AP_DIST_CODE    </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory008">AP_DIST_CODE    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory008">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory008">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory008"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory008">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory008"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory008"></DD_SYSTEM_REC>
@@ -785,7 +785,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory009">CHECK_DATE      </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory009">CHECK_DATE      </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory009">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory009">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory009"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory009">Y</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory009">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory009"></DD_SYSTEM_REC>
@@ -835,8 +835,8 @@
 			<DD_SEQUENCE id="ddm_table_cols.apt_checkhistory010">010</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory010">VENDOR_NAME     </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory010">VENDOR_NAME     </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory010">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory010">0</DD_COL_OCCURS>
+			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory010"></DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory010"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory010">Y</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory010">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory010"></DD_SYSTEM_REC>
@@ -887,7 +887,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory011">INVOICE_AMT     </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory011">INVOICE_AMT     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory011">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory011">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory011"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory011">Y</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory011">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory011"></DD_SYSTEM_REC>
@@ -938,7 +938,7 @@
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory012">DISCOUNT_AMT    </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory012">DISCOUNT_AMT    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory012">1</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory012">0</DD_COL_OCCURS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory012"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory012">Y</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory012">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory012"></DD_SYSTEM_REC>
@@ -988,8 +988,8 @@
 			<DD_SEQUENCE id="ddm_table_cols.apt_checkhistory013">013</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.apt_checkhistory013">RETENTION       </DD_DATA_NAME>
 			<DD_DVAR_NAME id="ddm_table_cols.apt_checkhistory013">RETENTION       </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory013">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory013">0</DD_COL_OCCURS>
+			<DD_COL_REPEATS id="ddm_table_cols.apt_checkhistory013"></DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.apt_checkhistory013"></DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.apt_checkhistory013">Y</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.apt_checkhistory013">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_checkhistory013"></DD_SYSTEM_REC>
@@ -1174,7 +1174,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ap_type">AP Type</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ap_type">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ap_type">2</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ap_type"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ap_type"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ap_type"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ap_type">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ap_type">AP </ASC_PROD_ID>
@@ -1188,8 +1188,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ap_type"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ap_type">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ap_type">CODE_DESC       </DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ap_type">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ap_type">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ap_type"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ap_type"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ap_type"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ap_type"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ap_type">[+FIRM_ID]+"A"+@</DD_ATTR_DKEY>
@@ -1292,8 +1292,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.check_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.check_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.check_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.check_no">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.check_no">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.check_no"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.check_no"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.check_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.check_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.check_no"></DD_ATTR_DKEY>
@@ -1344,8 +1344,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.vendor_id"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.vendor_id">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.vendor_id">VENDOR_NAME</DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.vendor_id">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.vendor_id">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.vendor_id"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.vendor_id"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.vendor_id"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.vendor_id"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.vendor_id">[+FIRM_ID]+@</DD_ATTR_DKEY>
@@ -1382,7 +1382,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ap_inv_no">AP Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ap_inv_no">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ap_inv_no">10</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ap_inv_no"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ap_inv_no"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ap_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ap_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ap_inv_no">AD </ASC_PROD_ID>
@@ -1396,8 +1396,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ap_inv_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ap_inv_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ap_inv_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ap_inv_no">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ap_inv_no">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ap_inv_no"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ap_inv_no"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ap_inv_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ap_inv_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ap_inv_no"></DD_ATTR_DKEY>
@@ -1448,8 +1448,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.trans_type"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.trans_type">L</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.trans_type"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.trans_type">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.trans_type">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.trans_type"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.trans_type"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.trans_type"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.trans_type"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.trans_type"></DD_ATTR_DKEY>
@@ -1486,7 +1486,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ap_dist_code">Distribution Code</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ap_dist_code">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ap_dist_code">2</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ap_dist_code"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ap_dist_code"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ap_dist_code">N</DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ap_dist_code">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ap_dist_code">AP </ASC_PROD_ID>
@@ -1500,8 +1500,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ap_dist_code"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ap_dist_code">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ap_dist_code">CODE_DESC       </DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ap_dist_code">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ap_dist_code">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ap_dist_code"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ap_dist_code"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ap_dist_code"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ap_dist_code"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ap_dist_code">[+FIRM_ID]+"B"+@ </DD_ATTR_DKEY>
@@ -1538,7 +1538,7 @@
 			<DD_DESCRIPTION id="ddm_elements.check_date">Check Date                    </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.check_date">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.check_date">8</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.check_date"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.check_date"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.check_date"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.check_date">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.check_date">AD </ASC_PROD_ID>
@@ -1552,8 +1552,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.check_date"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.check_date">D</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.check_date"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.check_date">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.check_date">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.check_date"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.check_date"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.check_date"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.check_date"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.check_date"></DD_ATTR_DKEY>
@@ -1590,7 +1590,7 @@
 			<DD_DESCRIPTION id="ddm_elements.vendor_name">Vendor Name                   </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.vendor_name">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.vendor_name">30</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.vendor_name"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.vendor_name"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.vendor_name"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.vendor_name">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.vendor_name">AP </ASC_PROD_ID>
@@ -1604,8 +1604,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.vendor_name"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.vendor_name">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.vendor_name"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.vendor_name">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.vendor_name">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.vendor_name"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.vendor_name"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.vendor_name"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.vendor_name"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.vendor_name"></DD_ATTR_DKEY>
@@ -1760,8 +1760,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.retention"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.retention">N</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.retention"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.retention">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.retention">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.retention"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.retention"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.retention"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.retention"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.retention"></DD_ATTR_DKEY>
