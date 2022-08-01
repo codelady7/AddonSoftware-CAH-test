@@ -1417,7 +1417,7 @@ new_vendor: rem --- New Vendor
         if start_block
             find record (apm08_dev,key=firm_id$+vendor_id$,dom=*endif) apm08a$
             address$(1) = apm08a.addr_line_1$+apm08a.addr_line_2$+apm08a.city$+apm08a.state_code$+apm08a.zip_code$
-            vend_name$  = apm08a.vendor_name$
+            vend_name$  = apm08a.pay_to_name$
         endif
     endif
     
