@@ -133,8 +133,8 @@ rem --- Process SQL results
 
 			if start_block
 				find record (apm08_dev,key=firm_id$+vendor_id$,dom=*endif) apm08a$
-				address$= apm08a.addr_line_1$+apm08a.addr_line2$+apm08a.city$+apm08a.state_code$+apm08a.zip_code$+apm08a.cntry_id$
-				vend_name$=  apm08a.vendor_name$
+				address$= apm08a.addr_line_1$+apm08a.addr_line_2$+apm08a.city$+apm08a.state_code$+apm08a.zip_code$+apm08a.cntry_id$
+				vend_name$= apm08a.pay_to_name$
 			endif
 			
 			call pgmdir$+"adc_address.aon",address$,30,3,9,35

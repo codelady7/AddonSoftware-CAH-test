@@ -67,8 +67,8 @@ rem --- Format Vendor Address
     if start_block
         find record (apmPayAddr_dev,key=firm_id$+vendor_id$,dom=*endif) apmPayAddr$
         address$=""
-        address$= apmPayAddr.addr_line_1$+apmPayAddr.addr_line2$+apmPayAddr.city$+apmPayAddr.state_code$+apmPayAddr.zip_code$+apmPayAddr.cntry_id$
-        vend_name$=  apmPayAddr.vendor_name$
+        address$= apmPayAddr.addr_line_1$+apmPayAddr.addr_line_2$+apmPayAddr.city$+apmPayAddr.state_code$+apmPayAddr.zip_code$+apmPayAddr.cntry_id$
+        vend_name$= apmPayAddr.pay_to_name$
     endif
     
     call pgmdir$+"adc_address.aon",address$,30,3,9,30
