@@ -39,7 +39,6 @@ rem --- Retrieve sysinfo data
     sysinfo$=stbl("+SYSINFO",err=*next)
     milestone=50
     milestone=num(stbl("+MILESTONE",err=*next),err=*next)
-    firm_id$=sysinfo.firm_id$
 
 rem --- Open/Lock files
 
@@ -133,9 +132,11 @@ rem --- Increment progress meter
 
 rem --- Build new APT_VENDPAYMENTS from APT_CHECKHISTORY
 
-    read(aptCheckHistory_dev,key=firm_id$,dom=*next)
+    read(aptCheckHistory_dev,key=theFirm$,dom=*next)
     while 1
         readrecord(aptCheckHistory_dev,end=*break)aptCheckHistory$
+        if cvs(theFirm$,2)<>"" and theFirm$<>aptCheckHistory.firm_id$ then break
+        if aptCheckHistory.trans_type$="V" then continue; rem --- Skip Voids
     
         foundRec=0      
         aptVendPayments_key$=aptCheckHistory.firm_id$+aptCheckHistory.vendor_id$+aptCheckHistory.check_no$+aptCheckHistory.bnk_acct_cd$
