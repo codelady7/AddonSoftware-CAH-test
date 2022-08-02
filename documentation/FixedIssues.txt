@@ -123,3 +123,12 @@ Modified: ap/src/apr_apchecks.aon
 Modified: sprocs/APACH_PAYMENT_HDR.prc
 Modified: sprocs/APCHECKS_MAIN.prc
 
+=======================================================================================================================================
+Revision: 4eaa76d9772a134af0103a18f40f939fad17d573
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 8/1/2022 4:59:32 PM
+Message:
+Bug 10472: Corrected description for A in some trans_type ListButtons.
+----
+Modified: data/bar/apt_checkhistory.xml
+Modified: data/bar/apt_vendpayments.xml
