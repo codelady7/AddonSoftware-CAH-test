@@ -290,7 +290,6 @@ void_check: rem --- Void Check
         apt05a.check_date$=apw01a.check_date$
         apt05a.trans_type$="V"
         write record (apt05_dev,dom=remove_check) apt05a$
-        gosub updateAptVendPayments
         if br$="Y" x9$=x9$+apt05a.check_no$
 
 remove_check: rem --- Remove Check
