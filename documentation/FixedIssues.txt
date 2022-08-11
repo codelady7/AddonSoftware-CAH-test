@@ -1,134 +1,27 @@
 =======================================================================================================================================
- Report Date:   2022-08-01
- Report Branch: AddonSoftware 22.03
- Last Release:  AddonSoftware 22.02
+ Report Date:   2022-08-11
+ Report Branch: AddonSoftware 22.04
+ Last Release:  AddonSoftware 22.03
 =======================================================================================================================================
 
-22.02 release 07/11/2022
-BBjBaristaAddonDemos2202_07-06-2022_1802.jar
+22.03 release 08/08/2022
+BBjBaristaAddonDemos2203_08-04-2022_1457.jar
 
 =======================================================================================================================================
-Revision: 82e12b46d41ab7f7c6fb5b46f1da622156c61582
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/11/2022 3:31:30 PM
-Message:
-Bug 10450: Corrected wrong file name used to get the channel the
-APT_INVIMAGE file is opened on.
-----
-Modified: data/bar/ape_invoicehdr.xml
-Modified: data/cdf/ape_invoicehdr.cdf
-
-=======================================================================================================================================
-Revision: 8b890dfdb4250556dda56e316c7892b2c5a90262
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/11/2022 3:52:41 PM
-Message:
-Bug 10451: Corrected DOM for firm_id$ trip read on batched files.
-----
-Modified: data/bar/adm_procmaster.xml
-Modified: data/cdf/adm_procmaster.cdf
-
-=======================================================================================================================================
-Revision: d0d1bc202829d56440fbddf253a302642bb25ac8
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/11/2022 5:44:23 PM
-Message:
-Bug 10455: Added Beginning Balance to the Inventory Transaction History
-Listing.
-----
-Modified: iv/src/ivr_transhist.aon
-
-=======================================================================================================================================
-Revision: 40394ace16b625b037e823c444424b77b7c733cc
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/11/2022 6:52:20 PM
-Message:
-Bug 10456: DIM'd curr_itemmast to record template and read file to get
-missing data.
-----
-Modified: data/bar/ope_invdet.xml
-Modified: data/bar/ope_orddet.xml
-Modified: data/cdf/ope_invdet.cdf
-Modified: data/cdf/ope_orddet.cdf
-
-=======================================================================================================================================
-Revision: 5864fa108b207f9ffb1fe5f7cdb34552e5ebd832
+Revision: f3840f9ed375b2bb6f2c124730f72b5fc4c0da99
 Author: Christine <chawkins@basis.com>
-Date: 7/20/2022 5:38:35 PM
+Date: 8/11/2022 10:53:39 AM
 Message:
-Bug 10462 - AD - Packager/Extractor can run into path name issues when changing OS
- - corrected as suggested in bug report
+Bug 10479 - AR - Convert Authorize.net and PalPal servlets to use BBxServlet
+ - swapped BBjspWebRequest > BBxServletRequest, etc.
+Bug 9936 - AD - The adc_webcontext program should be able to (re)start the context
+ - added restart() method for jetty server
 
-(cherry picked from commit 7cf8862c38060621acd73267c2ceb2b6aebd95cb)
+(cherry picked from commit 49e26cc54f1f89d89e2fe5bfeff60e118d2c4197)
 ----
-Modified: util/packager_extractor/aon_packagerextractor.bbj
-
-=======================================================================================================================================
-Revision: 7157b0fb59cdb3f3d7e1d1428486238cb41fd314
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/25/2022 10:17:30 AM
-Message:
-Bug 8251: Corrected typo preventing previous fix.
-----
-Modified: data/bar/poe_recdet.xml
-Modified: data/cdf/poe_recdet.cdf
-
-=======================================================================================================================================
-Revision: 1a743b057e34f960541c67649b02cb9ea45d7a55
-Author: Christine <chawkins@basis.com>
-Date: 7/25/2022 5:44:34 PM
-Message:
-Bug 10463 - AD - Packager/Extractor can encounter invalid characters in file names
- - added error handling/logging for files w/ invalid filename characters.
-
-(cherry picked from commit 4a199561abc6c1b6c0570ec18593c1a78e7cdfb2)
-----
-Modified: util/packager_extractor/TGZUtil.bbj
-Modified: util/packager_extractor/aon_packagerextractor.bbj
-
-=======================================================================================================================================
-Revision: 8d1a064c14a7410cef8488e9f381e48d1bc8f4a0
-Author: Christine <chawkins@basis.com>
-Date: 7/25/2022 5:51:21 PM
-Message:
-Bug 10464 - AD - Upgrade Wizard runs into err 252 when reporting files containing conflicts
- - corrected as suggested in bug report
-
-(cherry picked from commit 2a9fccf1d7187fa72bc4f779341b280abfaa2333)
-----
-Modified: ad/src/adx_upgradewiz.aon
-
-=======================================================================================================================================
-Revision: 522d2a6535287dfb0b7121655010a7490ca89986
-Author: Christine <chawkins@basis.com>
-Date: 7/25/2022 6:23:04 PM
-Message:
-Bug 10465 - AD - Packager/Extractor can't find TGZUtil.bbj
- - corrected as suggested in bug report.
-
-(cherry picked from commit 0f296623d0cbafb7fcd795e0814e78779164a42a)
-----
-Modified: util/packager_extractor/aon_packagerextractor.bbj
-
-=======================================================================================================================================
-Revision: ba1200595b75f44e36f95dd57a7bfaec038ac037
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 8/1/2022 4:20:50 PM
-Message:
-Bug 10471: Corrected type where apm08a.addr_line2$ should be
-apm08a.addr_line_2$; and apm08a.vend_name$ should be
-apm08a.pay_to_name$.
-----
-Modified: ap/src/apr_apchecks.aon
-Modified: sprocs/APACH_PAYMENT_HDR.prc
-Modified: sprocs/APCHECKS_MAIN.prc
-
-=======================================================================================================================================
-Revision: 4eaa76d9772a134af0103a18f40f939fad17d573
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 8/1/2022 4:59:32 PM
-Message:
-Bug 10472: Corrected description for A in some trans_type ListButtons.
-----
-Modified: data/bar/apt_checkhistory.xml
-Modified: data/bar/apt_vendpayments.xml
+Modified: ad/src/adc_webcontext.aon
+Modified: web/AuthorizeConfirmation.aon
+Modified: web/AuthorizeWebhook.aon
+Modified: web/PayPalError.aon
+Modified: web/PayPalSilentPost.aon
+Modified: web/PayPalSilentPostFailure.aon
