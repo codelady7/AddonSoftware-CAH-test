@@ -22,14 +22,13 @@ CLASS PUBLIC AuthorizeWebhook
 	use ::ado_util.src::util	
 	use ::aro_CCUtil.aon::CCUtil
 
-    field private BBjspWebRequest request!
-    field private BBjspWebResponse response!
-    field private BBjspWebSession session!
-    field private BBjspSessionData data!
+    field private BBxServletRequest request!
+    field private BBxServletResponse response!
+    field private BBxWebSession session!
 
     field private CCUtil ccUtil!=null()
   
-    method public void service(BBjspServletContext context!)
+    method public void service(BBxServletContext context!)
 	       
         #request! = context!.getRequest()
         #response! = context!.getResponse()

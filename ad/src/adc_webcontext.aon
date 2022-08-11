@@ -76,7 +76,7 @@ rem --- Add Session Cookie
     contextConfig!.setSessionCookieHttpOnly(1)
     contextConfig!.setSessionCookieSecure(1)
 
-rem --- Add BBJSP Servlets
+rem --- Add BBx Servlets
     servlets!=BBjAPI().makeVector()
     servlets!.addItem("AuthorizeWebhook")
     servlets!.addItem("AuthorizeConfirmation")
@@ -87,8 +87,8 @@ rem --- Add BBJSP Servlets
     for i=0 to servlets!.size()-1
         servletName$=servlets!.getItem(i)
         filePath$=(new File(aonLoc$+"/web/"+servletName$+".aon")).getAbsolutePath()
-        contextConfig!.addBBjspServlet(servletName$, "/"+servletName$, BBjapi().getFileSystem().resolvePath(filePath$))
-        servletContext!=contextConfig!.getBBjspServlet("/"+servletName$)
+        contextConfig!.addBBxServlet(servletName$, "/"+servletName$, BBjapi().getFileSystem().resolvePath(filePath$))
+        servletContext!=contextConfig!.getBBxServlet("/"+servletName$)
         servletContext!.setConfig(barDir$+stbl("+FILE_CFG"))
         servletContext!.setClassPath(sscpName$)
         servletContext!.setWorkingDir(barDir$)
@@ -96,15 +96,8 @@ rem --- Add BBJSP Servlets
 	
 rem --- Save, then start the context
     serverConfig!.saveConfig()
-	
-rem --- have tried jettyServer!.restart(), which hung, jettyServer!.stop()/start() doesn't hang, but doesn't work (err 503's)
-rem	jettyServer!.stop()
-rem	jettyServer!.start()
+	jettyServer! = BBjAPI().getAdmin(theAdmin!.getUser(), theAdmin!.getPassword()).getJettyServer().getContext(cvs(dbName$,11)).restart()
 
-rem --- have tried to get the context after having stopped/removed/created/saved it, then just start the context. Also gives err 503's
-rem	thisContext! = jettyServer!.getContext(cvs(dbName$,11))
-rem thisContext!.start()
-    
 done: rem --- All done
     
     goto std_exit

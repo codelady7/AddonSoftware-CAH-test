@@ -1,9 +1,9 @@
 CLASS PUBLIC AuthorizeConfirmation
 
-    field private BBjspWebRequest request!
-    field private BBjspWebResponse response!
+    field private BBxServletRequest request!
+    field private BBxServletResponse response!
   
-    method public void service(BBjspServletContext context!)
+    method public void service(BBxServletContext context!)
 	       
         #request! = context!.getRequest()
         #response! = context!.getResponse()
