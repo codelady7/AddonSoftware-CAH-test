@@ -1,9 +1,9 @@
 CLASS PUBLIC PayPalError
 
-    field private BBjspWebRequest request!
-    field private BBjspWebResponse response!
+    field private BBxServletRequest request!
+    field private BBxServletResponse response!
   
-    method public void service(BBjspServletContext context!) 
+    method public void service(BBxServletContext context!) 
 	
 		rem --- parse response text
 		rem --- wkx0$=response, wkx1$=key to look for, wkx2$=delim used to separate key/value pairs
