@@ -51,12 +51,26 @@ rem wgh ... 10304 ... stopped here
 	endif
 
 [[OPT_FILLMNTDET.AREC]]
+rem --- Initialize RTP trans_status and created fields
+	rem --- TRANS_STATUS set to "E" via form Preset Value
+	callpoint!.setColumnData("OPT_FILLMNTDET.CREATED_USER",sysinfo.user_id$)
+	callpoint!.setColumnData("OPT_FILLMNTDET.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
+	callpoint!.setColumnData("OPT_FILLMNTDET.CREATED_TIME",date(0:"%Hz%mz"))
+
 rem --- Buttons start disabled
 	callpoint!.setOptionEnabled("LENT",0)
 
 [[OPT_FILLMNTDET.BDGX]]
 rem --- Disable detail-only buttons
 	callpoint!.setOptionEnabled("LENT",0)
+
+[[OPT_FILLMNTDET.BWRI]]
+rem --- Initialize RTP modified fields for modified existing records
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
+		callpoint!.setColumnData("OPT_FILLMNTDET.MOD_USER", sysinfo.user_id$)
+		callpoint!.setColumnData("OPT_FILLMNTDET.MOD_DATE", date(0:"%Yd%Mz%Dz"))
+		callpoint!.setColumnData("OPT_FILLMNTDET.MOD_TIME", date(0:"%Hz%mz"))
+	endif
 
 [[OPT_FILLMNTDET.QTY_PICKED.AVAL]]
 rem --- Warn when quantity picked is NOT equal to the ship quantity

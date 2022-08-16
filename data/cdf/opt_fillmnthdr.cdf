@@ -1,3 +1,17 @@
+[[OPT_FILLMNTHDR.ADIS]]
+rem --- Capture starting record data so can tell later if anything changed
+	callpoint!.setDevObject("initial_rec_data$",rec_data$)
+
+[[OPT_FILLMNTHDR.AREC]]
+rem --- Initialize RTP trans_status and created fields
+	rem --- TRANS_STATUS set to "E" via form Preset Value
+	callpoint!.setColumnData("OPT_FILLMNTHDR.CREATED_USER",sysinfo.user_id$)
+	callpoint!.setColumnData("OPT_FILLMNTHDR.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
+	callpoint!.setColumnData("OPT_FILLMNTHDR.CREATED_TIME",date(0:"%Hz%mz"))
+
+rem --- Capture starting record data so can tell later if anything changed
+	callpoint!.setDevObject("initial_rec_data$",rec_data$)
+
 [[OPT_FILLMNTHDR.ARNF]]
 rem --- Confirm the Order is ready to be filled.
 	msg_id$="OP_ORD_READY_TO_FILL"
@@ -68,6 +82,9 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		optFillmntDet.order_memo$=opeOrdDet.order_memo$
 		optFillmntDet.memo_1024$=opeOrdDet.memo_1024$
 		optFillmntDet.um_sold$=opeOrdDet.um_sold$
+		optFillmntDet.created_user$=sysinfo.user_id$
+		optFillmntDet.created_date$=date(0:"%Yd%Mz%Dz")
+		optFillmntDet.created_time$=date(0:"%Hz%mz")
 		optFillmntDet.trans_status$="E"
 		optFillmntDet.qty_shipped=opeOrdDet.qty_shipped
 		optFillmntDet.qty_picked=0
@@ -96,6 +113,9 @@ rem --- Initialize OPT_FILLMNTLSDET with corresponding OPE_ORDLSDET data
 		optFillmntLsDet.orddet_seq_ref$=opeOrdLsDet.orddet_seq_ref$
 		optFillmntLsDet.sequence_no$=opeOrdLsDet.sequence_no$
 		optFillmntLsDet.lotser_no$=opeOrdLsDet.lotser_no$
+		optFillmntLsDet.created_user$=sysinfo.user_id$
+		optFillmntLsDet.created_date$=date(0:"%Yd%Mz%Dz")
+		optFillmntLsDet.created_time$=date(0:"%Hz%mz")
 		optFillmntLsDet.trans_status$="E"
 		optFillmntLsDet.qty_shipped=opeOrdLsDet.qty_shipped
 		optFillmntLsDet.qty_picked=0
@@ -129,6 +149,24 @@ rem --- Set up Lot/Serial button
 	swend
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
+
+[[OPT_FILLMNTHDR.BWRI]]
+rem --- Initialize RTP modified fields for modified existing records
+	if callpoint!.getRecordMode()="C" then
+		rem --- For immediate write forms must compare initial record to current record to see if modified.
+		dim initial_rec_data$:fattr(rec_data$)
+		initial_rec_data$=callpoint!.getDevObject("initial_rec_data$")
+		if callpoint!.getColumnData("OPT_FILLMNTHDR.PRINT_STATUS")="Y" then
+			callpoint!.setColumnData("OPT_FILLMNTHDR.REPRINT_FLAG","Y",1)
+			rec_data.reprint_flag$="Y"
+		endif
+		if rec_data$<>initial_rec_data$ then
+			rec_data.mod_user$=sysinfo.user_id$
+			rec_data.mod_date$=date(0:"%Yd%Mz%Dz")
+			rec_data.mod_time$=date(0:"%Hz%mz")
+			callpoint!.setDevObject("initial_rec_data$",rec_data$)
+		endif
+	endif
 
 [[OPT_FILLMNTHDR.ORDER_NO.AVAL]]
 rem --- Validate this is an existing open Order (not Quote) with a printed Picking List
