@@ -1,10 +1,50 @@
+[[OPT_FILLMNTDET.AGCL]]
+rem --- Set up a color to be used when qty picked <> ship qty
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	plainFont!=pickGrid!.getRowFont(0)
+	boldFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),3);rem bold italic
+	callpoint!.setDevObject("boldFont",boldFont!)
+	callpoint!.setDevObject("plainFont",plainFont!)
+
+rem --- Get and hold on to columns for qty_picked_dsp and qty_shipped_dsp
+	picked_hdr$=callpoint!.getTableColumnAttribute("<<DISPLAY>>.QTY_PICKED_DSP","LABS")
+	picked_col=util.getGridColumnNumber(pickGrid!,picked_hdr$)
+	callpoint!.setDevObject("picked_col",picked_col)
+	shipped_hdr$=callpoint!.getTableColumnAttribute("<<DISPLAY>>.QTY_SHIPPED_DSP","LABS")
+	shipped_col=util.getGridColumnNumber(pickGrid!,shipped_hdr$)
+	callpoint!.setDevObject("shipped_col",shipped_col)
+
+[[OPT_FILLMNTDET.AGDS]]
+rem --- Provide visual warning when quantity picked is NOT equal to the ship quantity
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	picked_col=callpoint!.getDevObject("picked_col")
+	shipped_col=callpoint!.getDevObject("shipped_col")
+
+	rows=pickGrid!.getNumRows()
+	if rows=0 then break
+	for i=0 to rows-1
+		qty_picked=num(pickGrid!.getCellText(i,picked_col))
+		ship_qty=num(pickGrid!.getCellText(i,shipped_col))
+		if qty_picked<>ship_qty then
+			pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("boldFont"))
+			pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("redColor"))
+		else
+			pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("plainFont"))
+			pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("blackColor"))
+		endif
+	next i
+
+[[OPT_FILLMNTDET.AGRE]]
+rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
+	gosub update_record_fields
+
 [[OPT_FILLMNTDET.AGRN]]
 rem --- Force focus on the row's qty_picked cell
-	callpoint!.setFocus(num(callpoint!.getValidationRow()),"OPT_FILLMNTDET.QTY_PICKED",1)
+	callpoint!.setFocus(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_PICKED_DSP",1)
 
  rem --- Enable/disable lotted/serialized button
 	item_id$ = callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
-	ship_qty  = num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_SHIPPED"))
+	ship_qty  = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 	gosub lot_ser_check
 
 	if lotser_item$="Y" and ship_qty<>0 and callpoint!.isEditMode() then
@@ -24,20 +64,25 @@ rem --- Is this item lot/serial?
 		invoice$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
 		int_seq$=callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO")
 
-		dim dflt_data$[6,1]
-		dflt_data$[1,0]="AR_TYPE"
-		dflt_data$[1,1]=ar_type$
-		dflt_data$[2,0]="TRANS_STATUS"
-		dflt_data$[2,1]="E"
-		dflt_data$[3,0]="CUSTOMER_ID"
-		dflt_data$[3,1]=cust$
-		dflt_data$[4,0]="ORDER_NO"
-		dflt_data$[4,1]=order$
-		dflt_data$[5,0]="AR_INV_NO"
-		dflt_data$[5,1]=invoice$
-		dflt_data$[6,0]="ORDDET_SEQ_REF"
-		dflt_data$[6,1]=int_seq$
-		key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice$+int_seq$
+		dim dflt_data$[7,1]
+		dflt_data$[1,0]="FIRM_ID"
+		dflt_data$[1,1]=firm_id$
+		dflt_data$[2,0]="AR_TYPE"
+		dflt_data$[2,1]=ar_type$
+		dflt_data$[3,0]="TRANS_STATUS"
+		dflt_data$[3,1]="E"
+		dflt_data$[4,0]="CUSTOMER_ID"
+		dflt_data$[4,1]=cust$
+		dflt_data$[5,0]="ORDER_NO"
+		dflt_data$[5,1]=order$
+		dflt_data$[6,0]="AR_INV_NO"
+		dflt_data$[6,1]=invoice$
+		dflt_data$[7,0]="ORDDET_SEQ_REF"
+		dflt_data$[7,1]=int_seq$
+		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+int_seq$
+
+		rem --- Pass additional info needed in OPT_FILLMNTLSDET
+		callpoint!.setDevObject("item_ship_qty", callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 
 rem wgh ... 10304 ... stopped here
 		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
@@ -48,6 +93,14 @@ rem wgh ... 10304 ... stopped here
 :			table_chans$[all], 
 :			dflt_data$[all]
 
+	endif
+
+rem --- Has the total quantity picked changed?
+	start_qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))
+	total_picked=callpoint!.getDevObject("total_picked")
+	if total_picked<>start_qty_picked then
+		callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(callpoint!.getDevObject("total_picked")),1)
+		callpoint!.setStatus("MODIFIED")
 	endif
 
 [[OPT_FILLMNTDET.AREC]]
@@ -64,6 +117,15 @@ rem --- Buttons start disabled
 rem --- Disable detail-only buttons
 	callpoint!.setOptionEnabled("LENT",0)
 
+[[OPT_FILLMNTDET.BGDR]]
+rem --- Initialize UM_SOLD related <DISPLAY> fields
+	conv_factor=num(callpoint!.getColumnData("OPT_FILLMNTDET.CONV_FACTOR"))
+	if conv_factor=0 then conv_factor=1
+	qty_shipped=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_SHIPPED"))/conv_factor
+	callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP",str(qty_shipped))
+	qty_picked=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))/conv_factor
+	callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(qty_picked))
+
 [[OPT_FILLMNTDET.BWRI]]
 rem --- Initialize RTP modified fields for modified existing records
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
@@ -72,18 +134,25 @@ rem --- Initialize RTP modified fields for modified existing records
 		callpoint!.setColumnData("OPT_FILLMNTDET.MOD_TIME", date(0:"%Hz%mz"))
 	endif
 
-[[OPT_FILLMNTDET.QTY_PICKED.AVAL]]
-rem --- Warn when quantity picked is NOT equal to the ship quantity
+[[<<DISPLAY>>.QTY_PICKED_DSP.AVAL]]
+rem --- Provide visual warning when quantity picked is NOT equal to the ship quantity
 	qty_picked=num(callpoint!.getUserInput())
-	ship_qty=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_SHIPPED"))
+	ship_qty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	curr_row=num(callpoint!.getValidationRow())
+	picked_col=callpoint!.getDevObject("picked_col")
+
 	if qty_picked<>ship_qty then
-		msg_id$="OP_PICK_QTY_BAD"
-		gosub disp_message
-		if msg_opt$="N"
-			callpoint!.setStatus("ABORT")
-			break
-		endif
+		pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("boldFont"))
+		pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("redColor"))
+	else
+		pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("plainFont"))
+		pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("blackColor"))
 	endif
+
+rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
+	callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(qty_picked))
+	gosub update_record_fields
 
 [[OPT_FILLMNTDET.<CUSTOM>]]
 rem ==========================================================================
@@ -101,6 +170,23 @@ rem ==========================================================================
 	endif
 
 	return
+
+rem ==========================================================================
+update_record_fields: rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
+rem ==========================================================================
+	conv_factor=num(callpoint!.getColumnData("OPT_FILLMNTDET.CONV_FACTOR"))
+	if conv_factor=0 then conv_factor=1
+	qty_shipped=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))*conv_factor
+	callpoint!.setColumnData("OPT_FILLMNTDET.QTY_SHIPPED",str(qty_shipped))
+	qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))*conv_factor
+	callpoint!.setColumnData("OPT_FILLMNTDET.QTY_PICKED",str(qty_picked))
+
+	return
+
+rem ==========================================================================
+rem 	Use util object
+rem ==========================================================================
+	use ::ado_util.src::util
 
 
 
