@@ -19,6 +19,8 @@ rem --- Confirm the Order is ready to be filled.
 	if msg_opt$="N"
 		callpoint!.setStatus("ABORT")
 		break
+	else
+		callpoint!.setStatus("ACTIVATE")
 	endif
 
 rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR data
@@ -36,10 +38,22 @@ rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR dat
 	opeOrdHdr_key.ar_inv_no$=""
 
 	readrecord(opeOrdHdr_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)opeOrdHdr$
-	callpoint!.setColumnData("OPT_FILLMNTHDR.SHIPMNT_DATE",opeOrdHdr.shipmnt_date$,1)
-	callpoint!.setColumnData("OPT_FILLMNTHDR.AR_SHIP_VIA",opeOrdHdr.ar_ship_via$,1)
-	callpoint!.setColumnData("OPT_FILLMNTHDR.SHIPPING_ID",opeOrdHdr.shipping_id$,1)
-	callpoint!.setColumnData("OPT_FILLMNTHDR.TRANS_STATUS","E",1)
+
+	optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+	dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+	optFillmntHdr.firm_id$=firm_id$
+	optFillmntHdr.ar_type$=opeOrdHdr.ar_type$
+	optFillmntHdr.customer_id$=opeOrdHdr.customer_id$
+	optFillmntHdr.order_no$=opeOrdHdr.order_no$
+	optFillmntHdr.ar_inv_no$=opeOrdHdr.ar_inv_no$
+	optFillmntHdr.shipmnt_date$=opeOrdHdr.shipmnt_date$
+	optFillmntHdr.ar_ship_via$=opeOrdHdr.ar_ship_via$
+	optFillmntHdr.shipping_id$=opeOrdHdr.shipping_id$
+	optFillmntHdr.created_user$=sysinfo.user_id$
+	optFillmntHdr.created_date$=date(0:"%Yd%Mz%Dz")
+	optFillmntHdr.created_time$=date(0:"%Hz%mz")
+	optFillmntHdr.trans_status$="E"
+	writerecord(optFillmntHdr_dev)optFillmntHdr$
 
 rem --- Show total weight and total freight amount
 	weight=0
@@ -88,10 +102,9 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		optFillmntDet.trans_status$="E"
 		optFillmntDet.qty_shipped=opeOrdDet.qty_shipped
 		optFillmntDet.qty_picked=0
+		optFillmntDet.conv_factor=opeOrdDet.conv_factor
 		writerecord(optFillmntDet_dev)optFillmntDet$
 	wend
-
-	callpoint!.setStatus("REFGRID")
 
 rem --- Initialize OPT_FILLMNTLSDET with corresponding OPE_ORDLSDET data
 	optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
@@ -123,6 +136,58 @@ rem --- Initialize OPT_FILLMNTLSDET with corresponding OPE_ORDLSDET data
 		writerecord(optFillmntLsDet_dev)optFillmntLsDet$
 	wend
 
+rem --- Relaunch form with all the initialized data
+	rec_key$=optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$+optFillmntHdr.customer_id$+optFillmntHdr.order_no$+optFillmntHdr.ar_inv_no$
+	callpoint!.setStatus("RECORD:["+rec_key$+"]")
+
+[[OPT_FILLMNTHDR.ASHO]]
+rem --- Get grid control on each tab
+	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+	numTabs=tabCtrl!.getNumTabs()
+	for i=0 to numTabs-1
+		if tabCtrl!.getTitleAt(i)="Picking" then
+			pickTab!=tabCtrl!.getControlAt(i)
+			callpoint!.setDevObject("pickGrid",pickTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1)))
+		endif
+		if tabCtrl!.getTitleAt(i)="Packing and Shipping" then
+			packShipTab!=tabCtrl!.getControlAt(i)
+			callpoint!.setDevObject("packShipGrid",packShipTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1)))
+		endif
+	next i
+
+[[OPT_FILLMNTHDR.BDEL]]
+rem wgh ... 10304 ... don't do BREX warnings when record is deleted
+
+rem wgh ... 10304 ... cascade delete to opt_fillmntlsdet like ope_ordhdr.cdf does via remove_lot_ser_det routine
+
+[[OPT_FILLMNTHDR.BREX]]
+rem --- Are there any items that weren't picked completely
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	picked_col=callpoint!.getDevObject("picked_col")
+	shipped_col=callpoint!.getDevObject("shipped_col")
+
+	rows=pickGrid!.getNumRows()
+	if rows=0 then break
+	pickedOK=1
+	for i=0 to rows-1
+		qty_picked=num(pickGrid!.getCellText(i,picked_col))
+		ship_qty=num(pickGrid!.getCellText(i,shipped_col))
+		if qty_picked<>ship_qty then
+			pickedOK=0
+			break
+		endif
+	next i
+
+	if !pickedOK then
+		msg_id$ = "OP_PICK_QTY_BAD"
+		gosub disp_message
+		if msg_opt$="N"
+			callpoint!.setStatus("ABORT-ACTIVATE")
+			pickGrid!.focus()
+			break
+		endif
+	endif
+
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
 	num_files=8
@@ -149,6 +214,15 @@ rem --- Set up Lot/Serial button
 	swend
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
+
+rem --- Make colors
+	RGB$="255,0,0"
+	gosub get_RGB
+	callpoint!.setDevObject("redColor",BBjAPI().getSysGui().makeColor(R,G,B))
+
+	RGB$="0,0,0"
+	gosub get_RGB
+	callpoint!.setDevObject("blackColor",BBjAPI().getSysGui().makeColor(R,G,B))
 
 [[OPT_FILLMNTHDR.BWRI]]
 rem --- Initialize RTP modified fields for modified existing records
@@ -202,6 +276,22 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+[[OPT_FILLMNTHDR.<CUSTOM>]]
+rem ==========================================================================
+get_RGB: rem --- Parse Red, Green and Blue segments from RGB$ string
+	rem --- input: RGB$
+	rem --- output: R
+	rem --- output: G
+	rem --- output: B
+rem ==========================================================================
+	comma1=pos(","=RGB$,1,1)
+	comma2=pos(","=RGB$,1,2)
+	R=num(RGB$(1,comma1-1))
+	G=num(RGB$(comma1+1,comma2-comma1-1))
+	B=num(RGB$(comma2+1))
+
+	return
 
 
 
