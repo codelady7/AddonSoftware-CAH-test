@@ -18,15 +18,12 @@ rem --- status       : Status/0=No error (returned)
     enter theFirm$,rdForm!,status
 
 rem --- Initializations
-
     status=0
 
 rem --- Get program path
-
     pgmdir$=stbl("+DIR_PGM",err=*next)
     
 rem --- Retrieve sysinfo data
-
     rem --- If BUI, initialize Barista processes
     if info(3,6)="5" then
         use ::ado_util.src::util
@@ -41,13 +38,16 @@ rem --- Retrieve sysinfo data
     milestone=num(stbl("+MILESTONE",err=*next),err=*next)
 
 rem --- Open/Lock files
-
-    num_files=4
+    num_files=8
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
     open_tables$[1]="DDM_SYSTEMS",      open_opts$[1]="OTA"
     open_tables$[2]="APT_CHECKHISTORY", open_opts$[2]="OTA"
     open_tables$[3]="APT_VENDPAYMENTS", open_opts$[3]="OTA"
     open_tables$[4]="ADC_BANKACCTCODE", open_opts$[4]="OTA"
+    open_tables$[5]="APM_VENDMAST",   open_opts$[5]="OTA"
+    open_tables$[6]="APT_INVOICEHDR",   open_opts$[6]="OTA"
+    open_tables$[7]="APT_INVOICEDET",   open_opts$[7]="OTA"
+    open_tables$[8]="APT_CHECKHISTORY",   open_opts$[8]="OTAN"
 
     gosub open_tables
 
@@ -55,9 +55,12 @@ rem --- Open/Lock files
     aptCheckHistory_dev=num(open_chans$[2]); dim aptCheckHistory$:open_tpls$[2]
     aptVendPayments_dev=num(open_chans$[3]); dim aptVendPayments$:open_tpls$[3]
     adcBankAcctCode_dev=num(open_chans$[4]); dim adcBankAcctCode$:open_tpls$[4]
+    apmVendMast_dev=num(open_chans$[5]); dim apmVendMast$:open_tpls$[5]
+    aptInvoiceHdr_dev=num(open_chans$[6]); dim aptInvoiceHdr$:open_tpls$[6]
+    aptInvoiceDet_dev=num(open_chans$[7]); dim aptInvoiceDet$:open_tpls$[7]
+    aptCheckHistory_dev2=num(open_chans$[8]); dim aptCheckHistory2$:open_tpls$[8]
     
 rem --- Open log file in aon/logs directory
-    
     aonDir$=""
     readrecord(ddm_systems,key=pad("ADDON",16," "),knum="SYSTEM_ID",err=*next)ddm_systems$
     if cvs(ddm_systems.mount_dir$,2)<>"" then
@@ -68,7 +71,6 @@ rem --- Open log file in aon/logs directory
     gosub open_log
 
 rem --- Verify have BBTranslator object Translate!
-
     if Translate!=null() then 
         gosub get_translate_object
         if status then
@@ -98,7 +100,6 @@ rem --- Verify have BBTranslator object Translate!
     endif
 
 rem --- As necessary, creating a small invisible window to hold progress meter
-
     if rdForm!=null() then
         sysGUI!=BBjAPI().getSysGui()
         if BBjAPI().isInMDI() then
@@ -115,12 +116,116 @@ rem --- As necessary, creating a small invisible window to hold progress meter
     endif
     
 rem --- Start progress meter
-
     meter_title$="apc_v22initMinorRev.aon"
     meter_proc_recs=0
     meter_text$=""
     meter_action$="WIN-LST"
     gosub disp_meter
+
+rem --- Increment progress meter
+    meter_text$=Translate!.getTranslation("AON_UPDATE","Update")+" "+"APT_CHECKHISTORY"
+    meter_proc_recs=meter_proc_recs+1
+    meter_action$="MTR-LST"
+    gosub disp_meter
+    print(log_dev)
+    print(log_dev)meter_text$
+
+rem --- Copy apt-05 to a backup rather than rename because we want to keep current records
+    BLOCKSIZE=2^20
+    sourceFile$=stbl("+APDATA")+"apt-05"
+    targetFile$=sourceFile$+".bak"
+    erase targetFile$, err=*next
+
+    sourceChan=unt
+    open(sourceChan,isz=-1)sourceFile$
+    targetChan=unt
+    open(targetChan,isz=-1,mode="O_CREATE,O_TRUNC")targetFile$
+    while 1
+        read(sourceChan,siz=BLOCKSIZE,end=*break)record$
+        write(targetChan)record$
+    wend
+    close(sourceChan)
+    close(targetChan)
+
+rem --- Rebuild APT_CHECKHISTORY from APT_INVOICEDET
+    currentFirm$=""
+    currentVendor$=""
+    vendorNotFound$=Translate!.getTranslation("AON_VENDOR")+" "+Translate!.getTranslation("AON_NOT_FOUND")
+    read(aptInvoiceHdr_dev,key=theFirm$,dom=*next)
+    while 1
+        readrecord(aptInvoiceHdr_dev,end=*break)aptInvoiceHdr$
+        if cvs(theFirm$,2)<>"" and theFirm$<>aptInvoiceHdr.firm_id$ then break
+        discCode$=aptInvoiceHdr.ap_dist_code$
+        if currentFirm$<>aptInvoiceHdr.firm_id$ then
+            rem --- Log next firm processed
+            print(log_dev)"    APT_INVOICEHDR.FIRM_ID = "+aptInvoiceHdr.firm_id$
+            currentFirm$=aptInvoiceHdr.firm_id$
+        endif
+
+        rem --- Get current vendor's name.
+        if currentVendor$<>aptInvoiceHdr.vendor_id$ then
+            currentVendor$=aptInvoiceHdr.vendor_id$
+            redim apmVendMast$
+            apmVendMast.vendor_name$=vendorNotFound$
+            readrecord(apmVendMast_dev,key=currentFirm$+currentVendor$,dom=*next)apmVendMast$
+            vendorName$=apmVendMast.vendor_name$
+        endif
+
+        rem --- Get Invoice History Detail to build Check History
+        aptInvoiceDet_trip$=aptInvoiceHdr.firm_id$+aptInvoiceHdr.ap_type$+aptInvoiceHdr.vendor_id$+aptInvoiceHdr.ap_inv_no$
+        read(aptInvoiceDet_dev,key=aptInvoiceDet_trip$,dom=*next)
+        while 1
+            aptInvoiceDet_key$=key(aptInvoiceDet_dev,end=*break)
+            if pos(aptInvoiceDet_trip$=aptInvoiceDet_key$)<>1 then break
+            readrecord(aptInvoiceDet_dev)aptInvoiceDet$
+            if pos(aptInvoiceDet.trans_type$="ACMRV")=0 then continue
+
+            redim aptCheckHistory$
+            aptCheckHistory.firm_id$=aptInvoiceDet.firm_id$
+            aptCheckHistory.ap_type$=aptInvoiceDet.ap_type$
+            aptCheckHistory.bnk_acct_cd$=""; rem --- Added for v22
+            aptCheckHistory.check_no$=aptInvoiceDet.trans_ref$
+            aptCheckHistory.vendor_id$=aptInvoiceDet.vendor_id$
+            aptCheckHistory.ap_inv_no$=aptInvoiceDet.ap_inv_no$
+            aptCheckHistory.trans_type$=aptInvoiceDet.trans_type$
+            aptCheckHistory.ap_dist_code$=discCode$
+            aptCheckHistory.check_date$=aptInvoiceDet.trans_date$
+            aptCheckHistory.vendor_name$=vendorName$
+            aptCheckHistory.invoice_amt=(-aptInvoiceDet.trans_amt)+aptInvoiceDet.trans_disc+aptInvoiceDet.trans_disc
+            aptCheckHistory.discount_amt=-aptInvoiceDet.trans_disc
+            aptCheckHistory.retention=-aptInvoiceDet.trans_disc
+
+            if aptCheckHistory.trans_type$="C" then
+                x=-1
+                x=num(aptCheckHistory.check_no$,err=*next)
+                if x=-1 then aptCheckHistory.trans_type$="A"
+            endif
+            if aptCheckHistory.trans_type$="R" then aptCheckHistory.ap_dist_code$=""
+            if aptCheckHistory.trans_type$="V" then
+                aptCheckHistory.ap_dist_code$=""
+                aptCheckHistory.vendor_id$=""
+            endif
+
+            rem --- Do NOT overwrite existing apt_checkhistory (apt-05) records
+            aptCheckHistory$=field(aptCheckHistory$)
+            writerecord(aptCheckHistory_dev,dom=*next)aptCheckHistory$
+        wend
+    wend
+
+    rem --- Remove apt_checkhistory (apt-05) records that are duplicates except bnk_acct_cd is blank
+    call stbl("+DIR_SYP")+"bac_key_template.bbj","APT_CHECKHISTORY","PRIMARY",key_tpl$,table_chans$[all],status$
+    dim aptCheckHistory_key$:key_tpl$
+    read(aptCheckHistory_dev,key=theFirm$,dom=*next)
+    while 1
+        aptCheckHistory_key$=key(aptCheckHistory_dev,end=*break)
+        read(aptCheckHistory_dev)
+        if cvs(theFirm$,2)<>"" and theFirm$<>aptCheckHistory_key$.firm_id$ then break
+        if cvs(aptCheckHistory_key$.bnk_acct_cd$,2)="" then continue
+
+        rem --- Remove record with same key except bnk_acct_cd is blank
+        aptCheckHistory_key.bnk_acct_cd$=""
+        remove(aptCheckHistory_dev2,key=aptCheckHistory_key$,dom=*next)
+    wend
 
 rem --- Increment progress meter
     meter_text$=Translate!.getTranslation("AON_INITIALIZING","Initializing")+" "+"APT_VENDPAYMENTS"
@@ -131,12 +236,17 @@ rem --- Increment progress meter
     print(log_dev)meter_text$
 
 rem --- Build new APT_VENDPAYMENTS from APT_CHECKHISTORY
-
+    currentFirm$=""
     read(aptCheckHistory_dev,key=theFirm$,dom=*next)
     while 1
         readrecord(aptCheckHistory_dev,end=*break)aptCheckHistory$
         if cvs(theFirm$,2)<>"" and theFirm$<>aptCheckHistory.firm_id$ then break
         if aptCheckHistory.trans_type$="V" then continue; rem --- Skip Voids
+        if currentFirm$<>aptCheckHistory.firm_id$ then
+            rem --- Log next firm processed
+            print(log_dev)"    APT_CHECKHISTORY.FIRM_ID = "+aptCheckHistory.firm_id$
+            currentFirm$=aptCheckHistory.firm_id$
+        endif
     
         foundRec=0      
         aptVendPayments_key$=aptCheckHistory.firm_id$+aptCheckHistory.vendor_id$+aptCheckHistory.check_no$+aptCheckHistory.bnk_acct_cd$
