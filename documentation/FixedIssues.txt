@@ -25,3 +25,14 @@ Modified: web/AuthorizeWebhook.aon
 Modified: web/PayPalError.aon
 Modified: web/PayPalSilentPost.aon
 Modified: web/PayPalSilentPostFailure.aon
+
+=======================================================================================================================================
+Revision: 92d891ca6dc893e11f99171ef2d6564de1293e59
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 8/22/2022 5:47:00 PM
+Message:
+Bug 9783: DataPort should NOT modify the "modules=" line in the
+adx_conversionCtrl file. It should leave that line as-is.
+----
+Modified: config/adx_conversionCtrl.ini
+Modified: util/dataport/DataPort_main.bbj
