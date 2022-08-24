@@ -46,3 +46,13 @@ Bug 10485: Removed bad table reference in the AP_VENDPAYMENTS Query
 Definition.
 ----
 Modified: data/sync/adm_query_cols~[01007514AP].xml
+
+=======================================================================================================================================
+Revision: 8964c82557d3ea9923459b1d4fad44cc0814c829
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 8/24/2022 3:51:40 PM
+Message:
+Bug 10487: Added missing Drilldown Definition for AP_HISTINV that is
+used for the "Invoice No." link on the Paid Invoice History query.
+----
+Modified: data/sync/ddm_drill_defs~[01007514AP].xml
