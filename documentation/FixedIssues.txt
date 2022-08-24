@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-08-11
+ Report Date:   2022-08-24
  Report Branch: AddonSoftware 22.04
  Last Release:  AddonSoftware 22.03
 =======================================================================================================================================
@@ -36,3 +36,13 @@ adx_conversionCtrl file. It should leave that line as-is.
 ----
 Modified: config/adx_conversionCtrl.ini
 Modified: util/dataport/DataPort_main.bbj
+
+=======================================================================================================================================
+Revision: 478ef93373ab323225e2c19430198be81014ce12
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 8/24/2022 1:00:26 PM
+Message:
+Bug 10485: Removed bad table reference in the AP_VENDPAYMENTS Query
+Definition.
+----
+Modified: data/sync/adm_query_cols~[01007514AP].xml
