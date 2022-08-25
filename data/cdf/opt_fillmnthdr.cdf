@@ -1,6 +1,13 @@
+[[OPT_FILLMNTHDR.ADEL]]
+rem --- Set record deleted flag
+	callpoint!.setDevObject("recordDeleted",1)
+
 [[OPT_FILLMNTHDR.ADIS]]
 rem --- Capture starting record data so can tell later if anything changed
 	callpoint!.setDevObject("initial_rec_data$",rec_data$)
+
+rem --- Initializations
+	callpoint!.setDevObject("recordDeleted",0)
 
 [[OPT_FILLMNTHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -11,6 +18,9 @@ rem --- Initialize RTP trans_status and created fields
 
 rem --- Capture starting record data so can tell later if anything changed
 	callpoint!.setDevObject("initial_rec_data$",rec_data$)
+
+rem --- Initializations
+	callpoint!.setDevObject("recordDeleted",0)
 
 [[OPT_FILLMNTHDR.ARNF]]
 rem --- Confirm the Order is ready to be filled.
@@ -142,55 +152,66 @@ rem --- Relaunch form with all the initialized data
 
 [[OPT_FILLMNTHDR.ASHO]]
 rem --- Get grid control on each tab
+	Picking$=Translate!.getTranslation("DDM_TABLE_TABG-OPT_FILLMNTHDR-01-DD_ATTR_TABG")
+	Packing_and_Shipping$=Translate!.getTranslation("DDM_TABLE_TABG-OPT_FILLMNTHDR-02-DD_ATTR_TABG")
 	tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
 	numTabs=tabCtrl!.getNumTabs()
 	for i=0 to numTabs-1
-		if tabCtrl!.getTitleAt(i)="Picking" then
+		if pos(tabCtrl!.getTitleAt(i)=Picking$)=1 then
 			pickTab!=tabCtrl!.getControlAt(i)
+			callpoint!.setDevObject("pickTabIndex",i)
 			callpoint!.setDevObject("pickGrid",pickTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1)))
 		endif
-		if tabCtrl!.getTitleAt(i)="Packing and Shipping" then
+		if pos(tabCtrl!.getTitleAt(i)=Packing_and_Shipping$)=1 then
 			packShipTab!=tabCtrl!.getControlAt(i)
+			callpoint!.setDevObject("packShipTabIndex",i)
 			callpoint!.setDevObject("packShipGrid",packShipTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1)))
 		endif
 	next i
 
 [[OPT_FILLMNTHDR.BDEL]]
-rem wgh ... 10304 ... don't do BREX warnings when record is deleted
-
 rem wgh ... 10304 ... cascade delete to opt_fillmntlsdet like ope_ordhdr.cdf does via remove_lot_ser_det routine
+rem wgh ... 10304 ... needs to update qty_commit for delete lot/serial numbers
 
 [[OPT_FILLMNTHDR.BREX]]
+rem --- Skip warnings if record was deleted
+	if callpoint!.getDevObject("recordDeleted") then break
+
 rem --- Are there any items that weren't picked completely
 	pickGrid!=callpoint!.getDevObject("pickGrid")
 	picked_col=callpoint!.getDevObject("picked_col")
 	shipped_col=callpoint!.getDevObject("shipped_col")
 
-	rows=pickGrid!.getNumRows()
-	if rows=0 then break
+	gridRows=pickGrid!.getNumRows()
+	if gridRows<2 then break
 	pickedOK=1
-	for i=0 to rows-1
-		qty_picked=num(pickGrid!.getCellText(i,picked_col))
-		ship_qty=num(pickGrid!.getCellText(i,shipped_col))
-		if qty_picked<>ship_qty then
+	dropshipMap!=callpoint!.getDevObject("dropshipMap")
+	linetypeMap!=callpoint!.getDevObject("linetypeMap")
+	for row=0 to gridRows-2
+		qty_picked=num(pickGrid!.getCellText(row,picked_col))
+		ship_qty=num(pickGrid!.getCellText(row,shipped_col))
+		if qty_picked<>ship_qty and dropshipMap!.get(i)<>"Y" and pos(linetypeMap!.get(i)="MO")=0 then
 			pickedOK=0
 			break
 		endif
-	next i
+	next row
 
 	if !pickedOK then
+		tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+		tabCtrl!.setSelectedIndex(callpoint!.getDevObject("pickTabIndex"))
+
 		msg_id$ = "OP_PICK_QTY_BAD"
 		gosub disp_message
 		if msg_opt$="N"
+			pickGrid!.setSelectedCell(row,picked_col)
 			callpoint!.setStatus("ABORT-ACTIVATE")
-			pickGrid!.focus()
 			break
 		endif
 	endif
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
-	num_files=8
+	num_files=10
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="OPE_ORDHDR",  open_opts$[1]="OTA"
@@ -201,6 +222,8 @@ rem --- Open needed files
 	open_tables$[6]="OPT_CARTHDR",  open_opts$[6]="OTA"
 	open_tables$[7]="IVS_PARAMS",   open_opts$[7]="OTA"
 	open_tables$[8]="IVM_ITEMMAST",   open_opts$[8]="OTA"
+	open_tables$[9]="IVM_LSMASTER",   open_opts$[9]="OTA"
+	open_tables$[10]="OPC_LINECODE",   open_opts$[10]="OTA"
 
 	gosub open_tables
 
@@ -215,14 +238,8 @@ rem --- Set up Lot/Serial button
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
 
-rem --- Make colors
-	RGB$="255,0,0"
-	gosub get_RGB
-	callpoint!.setDevObject("redColor",BBjAPI().getSysGui().makeColor(R,G,B))
-
-	RGB$="0,0,0"
-	gosub get_RGB
-	callpoint!.setDevObject("blackColor",BBjAPI().getSysGui().makeColor(R,G,B))
+rem --- Initializations
+	callpoint!.setDevObject("recordDeleted",0)
 
 [[OPT_FILLMNTHDR.BWRI]]
 rem --- Initialize RTP modified fields for modified existing records
@@ -278,20 +295,6 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 	endif
 
 [[OPT_FILLMNTHDR.<CUSTOM>]]
-rem ==========================================================================
-get_RGB: rem --- Parse Red, Green and Blue segments from RGB$ string
-	rem --- input: RGB$
-	rem --- output: R
-	rem --- output: G
-	rem --- output: B
-rem ==========================================================================
-	comma1=pos(","=RGB$,1,1)
-	comma2=pos(","=RGB$,1,2)
-	R=num(RGB$(1,comma1-1))
-	G=num(RGB$(comma1+1,comma2-comma1-1))
-	B=num(RGB$(comma2+1))
-
-	return
 
 
 
