@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_fillmntlsdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_fillmntlsdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_fillmntlsdet">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_fillmntlsdet">20220818</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmntlsdet">20220818</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmntlsdet">141754</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_fillmntlsdet">20220824</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmntlsdet">20220824</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmntlsdet">191500</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_fillmntlsdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_fillmntlsdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_fillmntlsdet">AO_STATUS</DD_ATTR_DKNM>
@@ -68,9 +68,21 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetagre">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetagre">AGRE</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmntlsdetagrn">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetagrn">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetagrn">AGRN</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_fillmntlsdetarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetarec">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetarec">AREC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmntlsdetaude">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetaude">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetaude">AUDE</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmntlsdetbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetbdel">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetbdel">BDEL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_fillmntlsdetbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetbend">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
@@ -98,6 +110,10 @@
 		<RECORD id="ddm_table_opts.opt_fillmntlsdetp">
 			<DD_TABLE_ALIAS id="ddm_table_opts.opt_fillmntlsdetp">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.opt_fillmntlsdetp">P</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.opt_fillmntlsdets">
+			<DD_TABLE_ALIAS id="ddm_table_opts.opt_fillmntlsdets">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.opt_fillmntlsdets">S</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.opt_fillmntlsdetu">
 			<DD_TABLE_ALIAS id="ddm_table_opts.opt_fillmntlsdetu">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
@@ -1516,7 +1532,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_fillmntlsdet008">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_fillmntlsdet008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_fillmntlsdet008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmntlsdet008"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmntlsdet008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_fillmntlsdet008">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_fillmntlsdet008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_fillmntlsdet008"></DD_ATTR_CTLY>
@@ -2128,7 +2144,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_fillmntlsdet020">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_fillmntlsdet020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_fillmntlsdet020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmntlsdet020"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmntlsdet020">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_fillmntlsdet020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_fillmntlsdet020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_fillmntlsdet020"></DD_ATTR_CTLY>
@@ -2179,7 +2195,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_fillmntlsdet021">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_fillmntlsdet021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_fillmntlsdet021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmntlsdet021"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmntlsdet021">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_fillmntlsdet021">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_fillmntlsdet021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_fillmntlsdet021"></DD_ATTR_CTLY>
@@ -2264,6 +2280,24 @@
 			<DD_ATTR_RADG id="ddm_table_cols.opt_fillmntlsdet022"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_fillmntlsdet022"></DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opt_fillmntlsdet022"></DD_ATTR_BTNS>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.opt_fillmntlsdetlotser_noaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_fillmntlsdetlotser_noaval">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_fillmntlsdetlotser_noaval">LOTSER_NO       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_fillmntlsdetlotser_noaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_fillmntlsdetqty_shippedaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_fillmntlsdetqty_shippedaval">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_fillmntlsdetqty_shippedaval">QTY_SHIPPED     </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_fillmntlsdetqty_shippedaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_fillmntlsdetqty_pickedaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_fillmntlsdetqty_pickedaval">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_fillmntlsdetqty_pickedaval">QTY_PICKED      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_fillmntlsdetqty_pickedaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
