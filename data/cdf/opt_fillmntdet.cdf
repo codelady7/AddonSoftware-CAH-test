@@ -58,22 +58,34 @@ rem --- Get corresponding order detail line.
 	unitcostMap!=callpoint!.getDevObject("unitcostMap")
 	unitcostMap!.put(callpoint!.getValidationRow(),opeOrdDet.unit_cost)
 
-rem --- Is this a dropship detail line?
-	dropshipMap!=callpoint!.getDevObject("dropshipMap")
+	rem --- Do NOT allow returns!
+	qty_picked=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))
+	ship_qty=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_SHIPPED"))
+
+rem --- What is this line type? Is this a dropship detail line?
+	curr_row=callpoint!.getValidationRow()
+	pickGrid!=callpoint!.getDevObject("pickGrid")
 	linetypeMap!=callpoint!.getDevObject("linetypeMap")
+	dropshipMap!=callpoint!.getDevObject("dropshipMap")
 	opcLineCode_dev=fnget_dev("OPC_LINECODE")
 	dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
 	findrecord (opcLineCode_dev, key=firm_id$+opeOrdDet.line_code$, dom=*next)opcLineCode$
-	linetypeMap!.put(callpoint!.getValidationRow(),opcLineCode.line_type$)
-	if pos(opcLineCode.line_type$="MO") or opcLineCode.dropship$="Y" then
-		if opcLineCode.dropship$="Y" then dropshipMap!.put(callpoint!.getValidationRow(),"Y")
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"<<DISPLAY>>.QTY_PICKED_DSP",0)
-		pickGrid!=callpoint!.getDevObject("pickGrid")
-		pickGrid!.setRowFont(callpoint!.getValidationRow(),callpoint!.getDevObject("italicFont"))
-		pickGrid!.setRowForeColor(callpoint!.getValidationRow(),callpoint!.getDevObject("disabledColor"))
+	linetypeMap!.put(curr_row,opcLineCode.line_type$)
+	dropshipMap!.put(curr_row,opcLineCode.dropship$)
+	if pos(opcLineCode.line_type$="MO") or opcLineCode.dropship$="Y" or qty_picked<0 or ship_qty<0 then
+		pickGrid!.setRowFont(curr_row,callpoint!.getDevObject("italicFont"))
+		pickGrid!.setRowForeColor(curr_row,callpoint!.getDevObject("disabledColor"))
+		pickGrid!.setCellEditable(curr_row,picked_col,0)
 	else
-		dropshipMap!.put(callpoint!.getValidationRow(),"N")
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"<<DISPLAY>>.QTY_PICKED_DSP",1)
+		picked_col=callpoint!.getDevObject("picked_col")
+		if qty_picked<>ship_qty then
+			pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("boldFont"))
+			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("redColor"))
+		else
+			pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("plainFont"))
+			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("blackColor"))
+		endif
+		pickGrid!.setCellEditable(curr_row,picked_col,1)
 	endif
 
 [[OPT_FILLMNTDET.AGDS]]
@@ -89,16 +101,20 @@ rem --- Provide visual warning when quantity picked is NOT equal to the ship qua
 	for i=0 to rows-2
 		qty_picked=num(pickGrid!.getCellText(i,picked_col))
 		ship_qty=num(pickGrid!.getCellText(i,shipped_col))
-		if qty_picked<>ship_qty and dropshipMap!.get(i)<>"Y" and pos(linetypeMap!.get(i)="MO")=0 then
+		if qty_picked<>ship_qty and dropshipMap!.get(i)<>"Y" and pos(linetypeMap!.get(i)="MO")=0 and
+:		qty_picked>=0 and ship_qty>=0 then
 			pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("boldFont"))
 			pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("redColor"))
+			pickGrid!.setCellEditable(i,picked_col,1)
 		else
-			if dropshipMap!.get(i)="Y" or pos(linetypeMap!.get(i)="MO") then
+			if dropshipMap!.get(i)="Y" or pos(linetypeMap!.get(i)="MO") or qty_picked<0 or ship_qty<0 then
 				pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("italicFont"))
 				pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("disabledColor"))
+				pickGrid!.setCellEditable(i,picked_col,0)
 			else
 				pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("plainFont"))
 				pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("blackColor"))
+				pickGrid!.setCellEditable(i,picked_col,0)
 			endif
 		endif
 	next i
@@ -205,9 +221,9 @@ rem --- Initialize UM_SOLD related <DISPLAY> fields
 	conv_factor=num(callpoint!.getColumnData("OPT_FILLMNTDET.CONV_FACTOR"))
 	if conv_factor=0 then conv_factor=1
 	qty_shipped=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_SHIPPED"))/conv_factor
-	callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP",str(qty_shipped))
+	callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP",str(qty_shipped),1)
 	qty_picked=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))/conv_factor
-	callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(qty_picked))
+	callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(qty_picked),1)
 
 [[OPT_FILLMNTDET.BWRI]]
 rem --- Initialize RTP modified fields for modified existing records
@@ -218,8 +234,19 @@ rem --- Initialize RTP modified fields for modified existing records
 	endif
 
 [[<<DISPLAY>>.QTY_PICKED_DSP.AVAL]]
-rem --- Provide visual warning when quantity picked is NOT equal to the ship quantity
+rem --- Do not allow returns
 	qty_picked=num(callpoint!.getUserInput())
+	if qty_picked<0 then
+		msg_id$ = "OP_INV_FOR_RETURNS"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem wgh ... 10304 ... For inventoried lot/serial items, item qty_picked cannot be less than lot/serial number qty_picked
+rem wgh ... 10304 ... see BEND in opt_fillmntlsdet
+
+rem --- Provide visual warning when quantity picked is NOT equal to the ship quantity
 	ship_qty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 	pickGrid!=callpoint!.getDevObject("pickGrid")
 	curr_row=num(callpoint!.getValidationRow())
