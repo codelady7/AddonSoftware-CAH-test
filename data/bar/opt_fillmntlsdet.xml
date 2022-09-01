@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_fillmntlsdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_fillmntlsdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_fillmntlsdet">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_fillmntlsdet">20220824</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmntlsdet">20220824</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmntlsdet">191500</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_fillmntlsdet">20220831</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmntlsdet">20220831</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmntlsdet">175308</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_fillmntlsdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_fillmntlsdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_fillmntlsdet">AO_STATUS</DD_ATTR_DKNM>
@@ -58,6 +58,16 @@
 			<DD_ATTR_PADG id="ddm_tables.opt_fillmntlsdet">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.opt_fillmntlsdet01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.opt_fillmntlsdet01">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.opt_fillmntlsdet01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.opt_fillmntlsdet01">Serial Lookup</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_fillmntlsdet01">LLOK</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_fillmntlsdet01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.opt_fillmntlsdetagds">
@@ -71,6 +81,10 @@
 		<RECORD id="ddm_table_cpro.opt_fillmntlsdetagrn">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetagrn">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetagrn">AGRN</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmntlsdetaopt-llok">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetaopt-llok">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntlsdetaopt-llok">AOPT-LLOK</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_fillmntlsdetarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntlsdetarec">OPT_FILLMNTLSDET</DD_TABLE_ALIAS>

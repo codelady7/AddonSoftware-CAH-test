@@ -33,6 +33,11 @@ rem --- Confirm the Order is ready to be filled.
 		callpoint!.setStatus("ACTIVATE")
 	endif
 
+rem --- Initialize inventory item update
+	status=999
+	call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+	if status then exitto std_exit
+
 rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR data
 	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
 	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
@@ -94,6 +99,53 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		if pos(opeOrdHdr_key$=opeOrdDet_key$)<>1 then break
 		readrecord(opeOrdDet_dev)opeOrdDet$
 
+		rem --- Initialize OPT_FILLMNTLSDET with corresponding OPE_ORDLSDET data
+		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+		opeOrdLsDet_dev=fnget_dev("OPE_ORDLSDET")
+		dim opeOrdLsDet$:fnget_tpl$("OPE_ORDLSDET")
+		read(opeOrdLsDet_dev,key=opeOrdDet_key$,knum="PRIMARY",dom=*next)
+		while 1
+			opeOrdLsDet_key$=key(opeOrdLsDet_dev,end=*break)
+			if pos(opeOrdDet_key$=opeOrdLsDet_key$)<>1 then break
+			readrecord(opeOrdLsDet_dev)opeOrdLsDet$
+
+			rem --- Need to uncommit inventoried lot/serial numbers since the pick quantity was zeroed, 
+			rem --- but leave the item committed.
+			items$[1]=opeOrdDet.warehouse_id$
+			items$[2]=opeOrdDet.item_id$
+			items$[3]=opeOrdLsDet.lotser_no$
+			refs[0]=opeOrdLsDet.qty_shipped
+			action$="UC"
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			items$[3]=""
+			action$="CO"
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+			redim optFillmntLsDet$
+			optFillmntLsDet.firm_id$=firm_id$
+			optFillmntLsDet.ar_type$=opeOrdLsDet.ar_type$
+			optFillmntLsDet.customer_id$=opeOrdLsDet.customer_id$
+			optFillmntLsDet.order_no$=opeOrdLsDet.order_no$
+			optFillmntLsDet.ar_inv_no$=opeOrdLsDet.ar_inv_no$
+			optFillmntLsDet.orddet_seq_ref$=opeOrdLsDet.orddet_seq_ref$
+			optFillmntLsDet.sequence_no$=opeOrdLsDet.sequence_no$
+			optFillmntLsDet.lotser_no$=opeOrdLsDet.lotser_no$
+			optFillmntLsDet.created_user$=sysinfo.user_id$
+			optFillmntLsDet.created_date$=date(0:"%Yd%Mz%Dz")
+			optFillmntLsDet.created_time$=date(0:"%Hz%mz")
+			optFillmntLsDet.trans_status$="E"
+			optFillmntLsDet.qty_shipped=opeOrdLsDet.qty_shipped
+			if status then
+				rem --- Wasn't able to uncommit the lot/serial number
+				optFillmntLsDet.qty_picked=opeOrdLsDet.qty_shipped
+			else
+				optFillmntLsDet.qty_picked=0
+			endif
+			optFillmntLsDet.unit_cost=opeOrdLsDet.unit_cost
+			writerecord(optFillmntLsDet_dev)optFillmntLsDet$
+		wend
+
 		redim optFillmntDet$
 		optFillmntDet.firm_id$=firm_id$
 		optFillmntDet.ar_type$=opeOrdDet.ar_type$
@@ -114,36 +166,6 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		optFillmntDet.qty_picked=0
 		optFillmntDet.conv_factor=opeOrdDet.conv_factor
 		writerecord(optFillmntDet_dev)optFillmntDet$
-	wend
-
-rem --- Initialize OPT_FILLMNTLSDET with corresponding OPE_ORDLSDET data
-	optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
-	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
-	opeOrdLsDet_dev=fnget_dev("OPE_ORDLSDET")
-	dim opeOrdLsDet$:fnget_tpl$("OPE_ORDLSDET")
-	read(opeOrdLsDet_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)
-	while 1
-		opeOrdLsDet_key$=key(opeOrdLsDet_dev,end=*break)
-		if pos(opeOrdHdr_key$=opeOrdLsDet_key$)<>1 then break
-		readrecord(opeOrdLsDet_dev)opeOrdLsDet$
-
-		redim optFillmntLsDet$
-		optFillmntLsDet.firm_id$=firm_id$
-		optFillmntLsDet.ar_type$=opeOrdLsDet.ar_type$
-		optFillmntLsDet.customer_id$=opeOrdLsDet.customer_id$
-		optFillmntLsDet.order_no$=opeOrdLsDet.order_no$
-		optFillmntLsDet.ar_inv_no$=opeOrdLsDet.ar_inv_no$
-		optFillmntLsDet.orddet_seq_ref$=opeOrdLsDet.orddet_seq_ref$
-		optFillmntLsDet.sequence_no$=opeOrdLsDet.sequence_no$
-		optFillmntLsDet.lotser_no$=opeOrdLsDet.lotser_no$
-		optFillmntLsDet.created_user$=sysinfo.user_id$
-		optFillmntLsDet.created_date$=date(0:"%Yd%Mz%Dz")
-		optFillmntLsDet.created_time$=date(0:"%Hz%mz")
-		optFillmntLsDet.trans_status$="E"
-		optFillmntLsDet.qty_shipped=opeOrdLsDet.qty_shipped
-		optFillmntLsDet.qty_picked=0
-		optFillmntLsDet.unit_cost=opeOrdLsDet.unit_cost
-		writerecord(optFillmntLsDet_dev)optFillmntLsDet$
 	wend
 
 rem --- Relaunch form with all the initialized data
@@ -171,7 +193,7 @@ rem --- Get grid control on each tab
 
 [[OPT_FILLMNTHDR.BDEL]]
 rem wgh ... 10304 ... cascade delete to opt_fillmntlsdet like ope_ordhdr.cdf does via remove_lot_ser_det routine
-rem wgh ... 10304 ... needs to update qty_commit for delete lot/serial numbers
+rem wgh ... 10304 ... needs to update qty_commit for delete lot/serial numbers/items
 
 [[OPT_FILLMNTHDR.BREX]]
 rem --- Skip warnings if record was deleted
@@ -293,8 +315,6 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 		callpoint!.setStatus("ABORT")
 		break
 	endif
-
-[[OPT_FILLMNTHDR.<CUSTOM>]]
 
 
 
