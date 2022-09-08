@@ -123,8 +123,7 @@
 		<br />
 		<div class="indent1">
 			<br />
-			Version 22.10 takes advantage of the technological advancements provided by Barista&reg; and BBj&reg; to deliver an innovative software package known for its structural quality. Together with Barista, AddonSoftware offers a leap forward in the efficiency of software customization and the creation of vertical applications. AddonSoftware
-continues its history of constant improvement - additional features, increased functionality, and updated technology - in this release.
+			Version 22.10 takes advantage of the technological advancements provided by Barista&reg; and BBj&reg; to deliver an innovative software package known for its structural quality. Together with Barista, AddonSoftware offers a leap forward in the efficiency of software customization and the creation of vertical applications. AddonSoftware continues its history of constant improvement - additional features, increased functionality, and updated technology - in this release.
 			<ul>
                 <li>Preview for version 23.00</li>
                 <ul>
@@ -133,6 +132,8 @@ continues its history of constant improvement - additional features, increased f
                         <li>New "Print Check" button in Manual Check Entry allows printing manual checks on-demand.</li>
                         <li>Scanned AP Invoice images can now be attached to any invoice, regardless of whether or not Payment Authorization is used, and new parameters can be set to warn on registers and/or disallow updates if an image has not been linked to an invoice.</li>
                         <li>Loading/viewing scanned AP Invoice images now display inside a BBjHtmlView control rather than an external browser.</li>
+                        <li>Added a Vendor Pay-To Address additional option to the Vendor master form for when checks to the vendor are sent to an address different than the vendor's main address.</li>
+                        <li>The Vendor Master has a new Payment History Inquiry option for viewing all checks and related invoices for the vendor.</li>
                     </ul>
                     <li>Distribution</li>
                     <ul>
@@ -140,6 +141,12 @@ continues its history of constant improvement - additional features, increased f
                         <li>Order Entry can be filtered to present only Quotes, or only Orders, or both.</li>
                         <li>A new lookup in Order and Invoice Entry shows historical manual ship-to addresses, and a new option allows creating a Customer ship-to address from the manual ship-to address.</li>
                         <li>The Customer Ship-To Addresses form has a new "Use Manual Ship-To" option that lets the user create a new ship-to address from a manual ship-to address previously used for the customer.</li>
+                       <li>Barcodes for the customer, order, and detail line items can now be included on the Sales Order Picking List.</li>
+                        <li>When printing for all warehouses, Picking List items are sorted by warehouse.</li>
+                    </ul>
+                    <li>Manufacturing</li>
+                    <ul>
+                        <li>Work Order comments can now be included on the Shop Floor Picking List.</li>
                     </ul>
                 </ul>
                 <li>New for version 22.00</li>
@@ -158,7 +165,7 @@ continues its history of constant improvement - additional features, increased f
                         <li>Added Audit Control Number drilldown to the "Detail" view query on the GL Account Summary Activity form.</li>
                         <li>Enhanced the AP Export 1099 To Text form so user can specify both a server and client-side save directory.</li>
                         <li>Different checking accounts can use the same check numbers.</li> 
-                        <li>Columns in the Bank Reconciliation Check Detail and Deposit/Other Transactions grids can now be sorted for faster processing</li> 
+                        <li>Columns in the Bank Reconciliation Check Detail and Deposit/Other Transactions grids can now be sorted for faster processing.</li> 
                         <li>Manual Check Entry now permits users to select multiple invoices for payment from the Open Invoice lookup grid.</li> 
                         <li>Accounts Payable has been enhanced so that checks for selected vendors can be limited to paying a single invoice.</li>
                         <li>The General Ledger Daily Detail Update can now post to the suspense account if applicable. GL reports and month/year-end close processes show if suspense account balance is not zero, and year-end close is prohibited.</li>
@@ -188,10 +195,10 @@ continues its history of constant improvement - additional features, increased f
                         <li>When releasing a Work Order, automatically select all checkboxes (Release Work Order, Print Traveler, Print Pick List).</li>
                         <li>The Shop Floor Calendar uses the new BBjCalendarWidget and has added functionality so user can display hours for more than one operations code at a time, add/edit hours for a range of days, and control the display color for each operation.</li>
                     </ul>
-                </ul>
-                <li>Testing</li>
-                <ul>
-                    <li>This version passes all QF-Test suites.</li>
+                    <li>Testing</li>
+                    <ul>
+                        <li>This version passes all QF-Test suites.</li>
+                    </ul>
                 </ul>
             </ul>
             <br />

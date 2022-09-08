@@ -1,10 +1,20 @@
 =======================================================================================================================================
-Report Branch: AddonSoftware Development Build
+ Report Date:   2022-09-07
+ Report Branch: AddonSoftware 22.10
+ Last Release:  AddonSoftware 22.04
 =======================================================================================================================================
-Development builds are generated daily.
 
-AddonSoftware Co-op Developers can access code changes and bug fixes for the Development Builds via Git.
+22.04 released 09/07/2022
+BBjBaristaAddonDemos2204_09-01-2022_1123.jar
 
-Information about code changes and bug fixes for RELEASE builds can be found at:
+=======================================================================================================================================
+Revision: 088916a1f5f9b440c41284ef057463a7eca1d439
+Author: Christine <chawkins@basis.com>
+Date: 9/2/2022 3:34:56 PM
+Message:
+Bug 10492 - AP - Invalid column and err 252 selecting bank account in AP Checks form
+ - corrected as suggested
+----
+Modified: data/bar/apr_checks.xml
+Modified: data/cdf/apr_checks.cdf
 
-https://bugs.basis.cloud
