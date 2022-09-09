@@ -188,15 +188,9 @@ rem --- Re-commit lot/serial if undeleting an existing (not new) row
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 		if status then exitto std_exit
 
-		commit_lot$ = callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.LOTSER_NO")
-		commit_qty  = num(callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.QTY_PICKED"))
-		increasing  = 1
-		gosub commit_lots
-
-		rem --- The Item was committed along with the lot/serial number, so must un-commit just the item.
-		commit_lot$=""
-		commit_qty=prior_qty
-		increasing=0
+		commit_lot$=callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.LOTSER_NO")
+		commit_qty=num(callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.QTY_PICKED"))
+		increasing=1
 		gosub commit_lots
 	endif
 
@@ -207,15 +201,9 @@ rem --- If not a new row, uncommit the lot/serial
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 		if status then exitto std_exit
 
-		commit_lot$ = callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.LOTSER_NO")
-		commit_qty  = num(callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.QTY_PICKED"))
-		increasing  = 0
-		gosub commit_lots
-
-		rem --- The Item was uncommitted along with the lot/serial number, so must re-commit just the item.
-		commit_lot$=""
-		commit_qty=prior_qty
-		increasing=1
+		commit_lot$=callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.LOTSER_NO")
+		commit_qty=num(callpoint!.getColumnUndoData("OPT_FILLMNTLSDET.QTY_PICKED"))
+		increasing=0
 		gosub commit_lots
 	endif
 
@@ -522,11 +510,11 @@ rem ==========================================================================
 	items$[2]=callpoint!.getDevObject("item")
 	items$[3]=commit_lot$
 	refs[0]=commit_qty
-	if increasing then action$="CO" else action$="UC"
+	if increasing then action$="OE" else action$="UC"
 	call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 	if status then exitto std_exit
 	items$[3]=""
-	if increasing then action$="UC" else action$="CO"
+	if increasing then action$="UC" else action$="OE"
 	call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 	if status then exitto std_exit
 

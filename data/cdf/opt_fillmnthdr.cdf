@@ -1,3 +1,37 @@
+[[OPT_FILLMNTHDR.ACUS]]
+rem --- Process custom event
+rem This routine is executed when callbacks have been set to run a 'custom event'.
+rem Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind of event it is.
+rem See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ctl_ID=dec(gui_event.ID$)
+
+	notify_base$=notice(gui_dev,gui_event.x%)
+	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
+	notice$=notify_base$
+
+	rem --- The tab control
+	if ctl_ID=num(stbl("+TAB_CTL")) then
+		switch notice.code
+			case 2; rem --- ON_TAB_SELECT
+				tabCtrl!=Form!.getControl(ctl_ID)
+				tabIndex=tabCtrl!.getSelectedIndex()
+				Packing_and_Shipping$=Translate!.getTranslation("DDM_TABLE_TABG-OPT_FILLMNTHDR-02-DD_ATTR_TABG")
+				if pos(tabCtrl!.getTitleAt(tabIndex)=Packing_and_Shipping$)=1 then
+					rem --- Need to refresh display if a new OPT_CARTHDR record was added via Pick Item button (also see AWRI)
+					if callpoint!.getDevObject("refreshRecord") then
+						optFillmntHdr_key$=callpoint!.getRecordKey()
+						callpoint!.setStatus("RECORD:["+optFillmntHdr_key$+"]")
+						callpoint!.setDevObject("refreshRecord",0)
+					endif
+				endif
+			break
+		swend
+	endif
+
 [[OPT_FILLMNTHDR.ADEL]]
 rem --- Set record deleted flag
 	callpoint!.setDevObject("recordDeleted",1)
@@ -6,8 +40,12 @@ rem --- Set record deleted flag
 rem --- Capture starting record data so can tell later if anything changed
 	callpoint!.setDevObject("initial_rec_data$",rec_data$)
 
+rem --- Hold onto ar_ship_via for use in opt_carthdr
+	callpoint!.setDevObject("ar_ship_via",callpoint!.getColumnData("OPT_FILLMNTHDR.AR_SHIP_VIA"))
+
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
+	callpoint!.setDevObject("refreshRecord",0)
 
 [[OPT_FILLMNTHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -21,6 +59,7 @@ rem --- Capture starting record data so can tell later if anything changed
 
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
+	callpoint!.setDevObject("refreshRecord",0)
 
 [[OPT_FILLMNTHDR.ARNF]]
 rem --- Confirm the Order is ready to be filled.
@@ -69,6 +108,9 @@ rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR dat
 	optFillmntHdr.created_time$=date(0:"%Hz%mz")
 	optFillmntHdr.trans_status$="E"
 	writerecord(optFillmntHdr_dev)optFillmntHdr$
+
+rem --- Hold onto ar_ship_via for use in opt_carthdr
+	callpoint!.setDevObject("ar_ship_via",optFillmntHdr.ar_ship_via$)
 
 rem --- Show total weight and total freight amount
 	weight=0
@@ -119,7 +161,7 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 			action$="UC"
 			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 			items$[3]=""
-			action$="CO"
+			action$="OE"
 			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
 			redim optFillmntLsDet$
@@ -172,6 +214,10 @@ rem --- Relaunch form with all the initialized data
 	rec_key$=optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$+optFillmntHdr.customer_id$+optFillmntHdr.order_no$+optFillmntHdr.ar_inv_no$
 	callpoint!.setStatus("RECORD:["+rec_key$+"]")
 
+[[OPT_FILLMNTHDR.AR_SHIP_VIA.AVAL]]
+rem --- Hold onto ar_ship_via for use in opt_carthdr
+	callpoint!.setDevObject("ar_ship_via",callpoint!.getUserInput())
+
 [[OPT_FILLMNTHDR.ASHO]]
 rem --- Get grid control on each tab
 	Picking$=Translate!.getTranslation("DDM_TABLE_TABG-OPT_FILLMNTHDR-01-DD_ATTR_TABG")
@@ -191,9 +237,64 @@ rem --- Get grid control on each tab
 		endif
 	next i
 
+rem --- Set callback for a tab being selected so can refresh display if a new OPT_CARTHDR record was added via Pick Item button
+	tabCtrl!.setCallback(BBjTabCtrl.ON_TAB_SELECT,"custom_event")
+
+[[OPT_FILLMNTHDR.AWRI]]
+rem --- Need to refresh display if a new OPT_CARTHDR record was added via Pick Item button (also see ACUS)
+	if callpoint!.getDevObject("refreshRecord") then
+		optFillmntHdr_key$=callpoint!.getRecordKey()
+		callpoint!.setStatus("RECORD:["+optFillmntHdr_key$+"]")
+		callpoint!.setDevObject("refreshRecord",0)
+	endif
+
 [[OPT_FILLMNTHDR.BDEL]]
-rem wgh ... 10304 ... cascade delete to opt_fillmntlsdet like ope_ordhdr.cdf does via remove_lot_ser_det routine
-rem wgh ... 10304 ... needs to update qty_commit for delete lot/serial numbers/items
+rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not for the item itself.
+	optFillmntDet_dev=fnget_dev("OPT_FILLMNTDET")
+	dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+	optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
+	optFillmntHdr_key$=callpoint!.getRecordKey()
+	read (optFillmntDet_dev,key=optFillmntHdr_key$,knum="AO_STATUS",dom=*next)
+	while 1
+		optFillMntDet_key$=key(optFillmntDet_dev,end=*break)
+		if pos(optFillmntHdr_key$=optFillMntDet_key$)<>1 then break
+		readrecord(optFillmntDet_dev)optFillmntDet$
+
+		read(optFillmntLsDet_dev,key=optFillMntDet_key$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillMntLsDet_key$=key(optFillmntLsDet_dev,knum="AO_STATUS",end=*break)
+			if pos(optFillmntDet_key$=optFillMntLsDet_key$)<>1 then break
+			remove_key$=key(optFillmntLsDet_dev,knum="PRIMARY")
+			readrecord(optFillmntLsDet_dev,knum="AO_STATUS")optFillmntLsDet$
+
+			rem --- Is this an inventoried lot/serial item?
+			item$=optFillmntDet.item_id$
+			findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
+			if ivmItemMast$.inventoried$="Y" then
+				status=999
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				if status then exitto std_exit
+
+				rem --- Need to uncommit deleted inventoried lot/serial numbers, but leave the item committed.
+				items$[1]=optFillmntDet.warehouse_id$
+				items$[2]=optFillmntDet.item_id$
+				items$[3]=optFillmntLsDet.lotser_no$
+				refs[0]=optFillmntLsDet.qty_shipped
+				action$="UC"
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				items$[3]=""
+				action$="OE"
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			endif
+
+			remove(optFillmntLsDet_dev,key=remove_key$)
+		wend
+	wend
+
+rem wgh ... 10304 ... All carton records need to be deleted when the Order Fulfillment record is deleted
 
 [[OPT_FILLMNTHDR.BREX]]
 rem --- Skip warnings if record was deleted
@@ -233,7 +334,7 @@ rem --- Are there any items that weren't picked completely
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
-	num_files=10
+	num_files=11
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="OPE_ORDHDR",  open_opts$[1]="OTA"
@@ -246,6 +347,7 @@ rem --- Open needed files
 	open_tables$[8]="IVM_ITEMMAST",   open_opts$[8]="OTA"
 	open_tables$[9]="IVM_LSMASTER",   open_opts$[9]="OTA"
 	open_tables$[10]="OPC_LINECODE",   open_opts$[10]="OTA"
+	open_tables$[11]="ARC_SHIPVIACODE",   open_opts$[11]="OTA"
 
 	gosub open_tables
 
@@ -259,6 +361,9 @@ rem --- Set up Lot/Serial button
 	swend
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
+
+rem --- Pack Carton button starts disabled
+	callpoint!.setOptionEnabled("PACK",0)
 
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
@@ -315,6 +420,51 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+[[OPT_FILLMNTHDR.<CUSTOM>]]
+rem ==========================================================================
+commit_lots: rem --- Commit lot/serial number only, not the item
+             rem      IN: commit_lot$
+             rem           commit_qty
+             rem           increasing - 0/1 to back out old/commit new
+             rem     OUT: committedNow!
+rem ==========================================================================
+	items$[1]=callpoint!.getDevObject("wh")
+	items$[2]=callpoint!.getDevObject("item")
+	items$[3]=commit_lot$
+	refs[0]=commit_qty
+	if increasing then action$="OE" else action$="UC"
+	call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+	if status then exitto std_exit
+	items$[3]=""
+	if increasing then action$="OE" else action$="CO"
+	call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+	if status then exitto std_exit
+
+	rem --- Keep track of what's been committed this session
+	committedNow! = cast(java.util.HashMap, callpoint!.getDevObject("committed_now"))
+
+	containsKey=committedNow!.containsKey(commit_lot$)
+	if containsKey then	
+		commtd_now = num(committedNow!.get(commit_lot$))
+	else
+		commtd_now = 0
+	endif
+
+	if increasing then
+		commtd_now = commtd_now + commit_qty
+	else
+		commtd_now = commtd_now - commit_qty
+	endif
+
+	if containsKey then
+		committedNow!.replace(commit_lot$, commtd_now)
+	else
+		committedNow!.put(commit_lot$, commtd_now)
+	endif
+	callpoint!.setDevObject("committed_now", CommittedNow!)
+
+	return
 
 
 

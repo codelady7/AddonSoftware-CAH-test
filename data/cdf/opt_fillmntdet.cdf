@@ -125,15 +125,16 @@ rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
 
 [[OPT_FILLMNTDET.AGRN]]
 rem --- Force focus on the row's qty_picked cell
-	callpoint!.setFocus(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_PICKED_DSP",1)
+	row=callpoint!.getValidationRow()
+	callpoint!.setFocus(row,"<<DISPLAY>>.QTY_PICKED_DSP",1)
 
 rem --- Get order detail line unit_cost
 	unitcostMap!=callpoint!.getDevObject("unitcostMap")
-	callpoint!.setDevObject("unit_cost",unitcostMap!.get(callpoint!.getValidationRow()))
+	callpoint!.setDevObject("unit_cost",unitcostMap!.get(row))
 
 rem --- Is this a dropship detail line?
 	dropshipMap!=callpoint!.getDevObject("dropshipMap")
-	if dropshipMap!.get(callpoint!.getValidationRow())="Y" then
+	if dropshipMap!.get(row)="Y" then
 		callpoint!.setDevObject("dropship_line","Y")
 	else
 		callpoint!.setDevObject("dropship_line","N")
@@ -144,10 +145,19 @@ rem --- Is this a dropship detail line?
 	ship_qty  = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 	gosub lot_ser_check
 
-	if callpoint!.isEditMode() and lotser_item$="Y" and ship_qty<>0 and dropshipMap!.get(callpoint!.getValidationRow())<>"Y"  then
+	if callpoint!.isEditMode() and lotser_item$="Y" and ship_qty>0 and dropshipMap!.get(row)<>"Y"  then
 		callpoint!.setOptionEnabled("LENT",1)
 	else
 		callpoint!.setOptionEnabled("LENT",0)
+	endif
+
+rem --- Enable Pack Carton button if, and only if, the QTY_PICKED_DSP is enabled
+	linetypeMap!=callpoint!.getDevObject("linetypeMap")
+	qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))
+	if !callpoint!.isEditMode() or ship_qty<=0 or qty_picked<0 or dropshipMap!.get(row)="Y" or  pos(linetypeMap!.get(row)="MO") then
+		callpoint!.setOptionEnabled("PACK",0)
+	else
+		callpoint!.setOptionEnabled("PACK",1)
 	endif
 
 [[OPT_FILLMNTDET.AOPT-LENT]]
@@ -202,6 +212,44 @@ rem --- Has the total quantity picked changed?
 		callpoint!.setStatus("MODIFIED")
 	endif
 
+[[OPT_FILLMNTDET.AOPT-PACK]]
+rem --- Launch Pack Carton grid
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
+		cust$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
+		order$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
+		invoice$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
+
+		dim dflt_data$[7,1]
+		dflt_data$[1,0]="FIRM_ID"
+		dflt_data$[1,1]=firm_id$
+		dflt_data$[2,0]="AR_TYPE"
+		dflt_data$[2,1]=ar_type$
+		dflt_data$[3,0]="TRANS_STATUS"
+		dflt_data$[3,1]="E"
+		dflt_data$[4,0]="CUSTOMER_ID"
+		dflt_data$[4,1]=cust$
+		dflt_data$[5,0]="ORDER_NO"
+		dflt_data$[5,1]=order$
+		dflt_data$[6,0]="AR_INV_NO"
+		dflt_data$[6,1]=invoice$
+		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$
+
+		rem --- Pass additional info needed in OPT_CARTDET
+		callpoint!.setDevObject("ar_type",ar_type$)
+		callpoint!.setDevObject("warehouse_id",callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID"))
+		callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
+		callpoint!.setDevObject("order_memo",callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_MEMO"))
+		callpoint!.setDevObject("um_sold", callpoint!.getColumnData("OPT_FILLMNTDET.UM_SOLD"))
+		callpoint!.setDevObject("qty_picked", callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))
+
+		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:			"OPT_CARTDET", 
+:			stbl("+USER_ID"), 
+:			"MNT" ,
+:			key_pfx$, 
+:			table_chans$[all], 
+:			dflt_data$[all]
+
 [[OPT_FILLMNTDET.AREC]]
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
@@ -243,8 +291,40 @@ rem --- Do not allow returns
 		break
 	endif
 
-rem wgh ... 10304 ... For inventoried lot/serial items, item qty_picked cannot be less than lot/serial number qty_picked
-rem wgh ... 10304 ... see BEND in opt_fillmntlsdet
+rem --- For inventoried lot/serial items, item qty_picked must equal sum of lot/serial number qty_picked
+	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
+	item$=callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
+	findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
+	if ivmItemMast$.inventoried$="Y" then
+		lotser_picked=0
+		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+		trans_status$=callpoint!.getColumnData("OPT_FILLMNTDET.TRANS_STATUS")
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
+		customer_id$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
+		ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
+		internal_seq_no$=callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO")
+		optFillmntDet_key$=firm_id$+trans_status$+ar_type$+customer_id$+order_no$+ar_inv_no$+internal_seq_no$
+		read(optFillmntLsDet_dev,key=optFillmntDet_key$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+			if pos(optFillmntDet_key$=optFillmntLsDet_key$)<>1 then break
+			readrecord(optFillmntLsDet_dev)optFillmntLsDet$
+			lotser_picked=lotser_picked+optFillmntLsDet.qty_picked
+		wend
+
+		if qty_picked<>lotser_picked then
+			msg_id$ = "OP_SUM_LOTSER_PICKED"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=str(lotser_picked)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(lotser_picked),1)
+			break
+		endif
+	endif
 
 rem --- Provide visual warning when quantity picked is NOT equal to the ship quantity
 	ship_qty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
