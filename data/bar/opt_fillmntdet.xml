@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_fillmntdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_fillmntdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_fillmntdet">20220808</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_fillmntdet">20220831</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmntdet">20220831</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmntdet">170342</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_fillmntdet">20220907</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmntdet">20220907</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmntdet">173610</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_fillmntdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_fillmntdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_fillmntdet">AO_STATUS</DD_ATTR_DKNM>
@@ -67,6 +67,13 @@
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_fillmntdet01">LENT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_fillmntdet01">B</DD_ATTR_AOPT_FM>
 		</RECORD>
+		<RECORD id="ddm_table_aopt.opt_fillmntdet02">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.opt_fillmntdet02">OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.opt_fillmntdet02">02</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.opt_fillmntdet02">Pack Item</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_fillmntdet02">PACK</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_fillmntdet02">B</DD_ATTR_AOPT_FM>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
@@ -93,6 +100,10 @@
 		<RECORD id="ddm_table_cpro.opt_fillmntdetaopt-lent">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntdetaopt-lent">OPT_FILLMNTDET  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntdetaopt-lent">AOPT-LENT</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmntdetaopt-pack">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntdetaopt-pack">OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmntdetaopt-pack">AOPT-PACK</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_fillmntdetarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmntdetarec">OPT_FILLMNTDET  </DD_TABLE_ALIAS>
@@ -2770,8 +2781,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.firm_id"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.firm_id">H</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.firm_id"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.firm_id"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.firm_id"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.firm_id">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.firm_id">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.firm_id"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.firm_id"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.firm_id"></DD_ATTR_DKEY>
