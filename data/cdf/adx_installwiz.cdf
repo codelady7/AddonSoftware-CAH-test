@@ -244,6 +244,10 @@ validate_new_db_name: rem --- Validate new database name
 	rem --- Barista uses all upper case db names
 	db_name$=cvs(db_name$,4)
 
+	rem --- Also replace any spaces with underscores (ER 10496)
+	db_name!=db_name$
+	db_name$=db_name!.replace(" ","_")
+
 	rem --- Don't allow database if it's already in Enterprise Manager
 	call stbl("+DIR_SYP")+"bac_em_login.bbj",SysGUI!,Form!,rdAdmin!,rd_status$
 	if rd_status$="ADMIN" then
