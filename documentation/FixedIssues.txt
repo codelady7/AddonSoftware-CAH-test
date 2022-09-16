@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-09-07
+ Report Date:   2022-09-16
  Report Branch: AddonSoftware 22.10
  Last Release:  AddonSoftware 22.04
 =======================================================================================================================================
@@ -17,4 +17,33 @@ Bug 10492 - AP - Invalid column and err 252 selecting bank account in AP Checks 
 ----
 Modified: data/bar/apr_checks.xml
 Modified: data/cdf/apr_checks.cdf
+
+=======================================================================================================================================
+Revision: 4475e60c1d540cb1c3b5bd48e716e6a601475077
+Author: Christine <chawkins@basis.com>
+Date: 9/16/2022 1:27:36 PM
+Message:
+Bug 10496 - AD - Disallow spaces in install/upgrade wizard Install ID
+ - altered to replace spaces with underscores
+
+(cherry picked from commit cc5ea54eaacfcc5ac235dedfbd9e06640857073b)
+----
+Modified: data/bar/adx_installwiz.xml
+Modified: data/bar/adx_upgradewiz.xml
+Modified: data/cdf/adx_installwiz.cdf
+Modified: data/cdf/adx_upgradewiz.cdf
+
+=======================================================================================================================================
+Revision: 7c902ac63d741cc1058f483ddcee469010183f03
+Author: Christine <chawkins@basis.com>
+Date: 9/16/2022 1:57:19 PM
+Message:
+Bug 10495 - AP - Check printing updates next check number inconsistently between regular vs manual checks
+ - changed so both types of checks update next chk# using right just/zero fill.
+
+(cherry picked from commit 0e6ff13352b73660b55978196e55a694d504bab8)
+----
+Modified: ap/src/apr_apchecks.aon
+
+
 
