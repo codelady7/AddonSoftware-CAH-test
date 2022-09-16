@@ -692,7 +692,7 @@ rem --- Update next check number for this Bank Account, i.e. Checking Account
 rem --- Next check number already updated for on-demand print checks
     if cvs(bnkAcctCd$,2)<>"" and printMode$<>"OnDemand" then
         extractrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$; rem Advisory Locking
-        adcBnkAcct.nxt_check_no$=str(num(printed_check_no$)+1)
+        adcBnkAcct.nxt_check_no$=pad(str(num(printed_check_no$)+1),len(adcBnkAcct.nxt_check_no$),"R","0")
         writerecord(adcBnkAcct_dev)adcBnkAcct$
     endif
 
