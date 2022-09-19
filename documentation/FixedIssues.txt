@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-09-16
+ Report Date:   2022-09-19
  Report Branch: AddonSoftware 22.10
  Last Release:  AddonSoftware 22.04
 =======================================================================================================================================
@@ -45,5 +45,12 @@ Bug 10495 - AP - Check printing updates next check number inconsistently between
 ----
 Modified: ap/src/apr_apchecks.aon
 
-
-
+=======================================================================================================================================
+Revision: b4c748b41ae172462209a3dcb257d3095f4e7c61
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 9/19/2022 9:46:00 AM
+Message:
+Bug 10497: Don't attempt voiding uncommitted orphaned sales tax service
+transactions when NOT using a sales tax service.
+----
+Modified: op/src/opu_updateinventory.aon
