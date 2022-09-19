@@ -1021,7 +1021,7 @@ rem --- Set LOCK_STATUS and TRANS_STATUS for update completed, and remove comple
                     endif
                 endif
             else
-                salesTax!=new AvaTaxInterface(firm_id$)
+                if cvs(ars01a.sls_tax_intrface$,2)<>"" then
                     rem --- Void possible uncommitted transaction that have been orphaned
                     rem --- Order/Invoice Tax Code changed to one NOT using AvaTax after first using AvaTax
                     if cvs(ope01a.credit_invoice$,2)="" then
