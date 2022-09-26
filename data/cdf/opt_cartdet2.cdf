@@ -1,4 +1,11 @@
-[[OPT_CARTDET.AGDR]]
+[[OPT_CARTDET2.AGDR]]
+rem --- Initialize <<DISPLAY>> fields
+	warehouse_id$=callpoint!.getColumnData("OPT_CARTDET2.WAREHOUSE_ID")
+	callpoint!.setColumnData("<<DISPLAY>>.WHSE_ID_DSP",warehouse_id$,1)
+	item_id$=callpoint!.getColumnData("OPT_CARTDET2.ITEM_ID")
+	callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID_DSP",item_id$,1)
+	order_memo$=callpoint!.getDevObject("order_memo")
+
 rem --- Enable Pack Lot/Serial button for lot/serial items
 	if callpoint!.getDevObject("lotser_item")="Y" then
 		callpoint!.setOptionEnabled("PKLS",1)
@@ -6,12 +13,7 @@ rem --- Enable Pack Lot/Serial button for lot/serial items
 		callpoint!.setOptionEnabled("PKLS",0)
 	endif
 
-rem wgh ... 10304 ... Provide visual warning when lot/serial numbers not packed
-
-[[OPT_CARTDET.AGDS]]
-rem wgh ... 10304 ... Provide visual warning when lot/serial numbers not packed
-
-[[OPT_CARTDET.AGRN]]
+[[OPT_CARTDET2.AGRN]]
 rem --- Disable Pack Lot/Serial button for new lines
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 		callpoint!.setOptionEnabled("PKLS",0)
@@ -24,25 +26,22 @@ rem --- Disable Pack Lot/Serial button for new lines
 		endif
 	endif
 
-[[OPT_CARTDET.AOPT-PKLS]]
+[[OPT_CARTDET2.AOPT-PKLS]]
 rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
-	ar_type$=callpoint!.getColumnData("OPT_CARTDET.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_CARTDET.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_CARTDET.ORDER_NO")
-	ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET.AR_INV_NO")
-	carton_no$=callpoint!.getColumnData("OPT_CARTDET.CARTON_NO")
-	warehouse_id$=callpoint!.getColumnData("OPT_CARTDET.WAREHOUSE_ID")
-	item_id$=callpoint!.getColumnData("OPT_CARTDET.ITEM_ID")
-	seqRef$=callpoint!.getColumnData("OPT_CARTDET.INTERNAL_SEQ_NO")
+	ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+	carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
+	warehouse_id$=callpoint!.getColumnData("OPT_CARTDET2.WAREHOUSE_ID")
+	item_id$=callpoint!.getColumnData("OPT_CARTDET2.ITEM_ID")
+	seqRef$=callpoint!.getColumnData("OPT_CARTDET2.INTERNAL_SEQ_NO")
 	optCartDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+warehouse_id$+item_id$+seqRef$
 
 	optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
 	dim optCartLsDet$:fnget_tpl$("OPT_CARTLSDET")
 	read(optCartLsDet_dev,key=optCartDet_key$,dom=*next)
 	optCartLsDet_key$=key(optCartLsDet_dev,end=*next)
-print"optCartDet_key$=",optCartDet_key$
-print"optCartLsDet_key$=",optCartLsDet_key$
-escape;rem wgh ... 10304 ... testing
 	if pos(optCartDet_key$=optCartLsDet_key$)=1 then
 		rem --- Grid already initialized
 	else
@@ -131,32 +130,17 @@ rem --- Launch Packing Carton Lot/Serial Detail grid
 :			table_chans$[all], 
 :			dflt_data$[all]
 
-[[OPT_CARTDET.AREC]]
-rem --- Initialize new record
-rem wgh ... 10304 ... is this still necessary after changing keys
-rem ...	warehouse_id$=callpoint!.getDevObject("warehouse_id")
-rem ...	callpoint!.setColumnData("OPT_CARTDET.WAREHOUSE_ID",warehouse_id$,1)
-rem wgh ... 10304 ... is this still necessary after changing keys
-rem ...	item_id$=callpoint!.getDevObject("item_id")
-rem ...	callpoint!.setColumnData("OPT_CARTDET.ITEM_ID",item_id$,1)
-rem wgh ... 10304 ... is this still necessary after changing keys
-rem ...	call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",newInternalSeqNo$,table_chans$[all]
-rem ...	callpoint!.setColumnData("OPT_CARTDET.INTERNAL_SEQ_NO",newInternalSeqNo$)
-	order_memo$=callpoint!.getDevObject("order_memo")
-	callpoint!.setColumnData("OPT_CARTDET.ORDER_MEMO",order_memo$,1)
-	um_sold$=callpoint!.getDevObject("um_sold")
-	callpoint!.setColumnData("OPT_CARTDET.UM_SOLD",um_sold$,1)
-
+[[OPT_CARTDET2.AREC]]
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
-	callpoint!.setColumnData("OPT_CARTDET.CREATED_USER",sysinfo.user_id$)
-	callpoint!.setColumnData("OPT_CARTDET.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
-	callpoint!.setColumnData("OPT_CARTDET.CREATED_TIME",date(0:"%Hz%mz"))
+	callpoint!.setColumnData("OPT_CARTDET2.CREATED_USER",sysinfo.user_id$)
+	callpoint!.setColumnData("OPT_CARTDET2.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
+	callpoint!.setColumnData("OPT_CARTDET2.CREATED_TIME",date(0:"%Hz%mz"))
 
 rem --- Buttons start disabled
 	callpoint!.setOptionEnabled("PKLS",0)
 
-[[OPT_CARTDET.ASHO]]
+[[OPT_CARTDET2.ASHO]]
 rem --- Set Lot/Serial button up properly
 	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
 		case 1; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_LOT")); break
@@ -164,16 +148,46 @@ rem --- Set Lot/Serial button up properly
 		case default; callpoint!.setOptionEnabled("PKLS",0); break
 	swend
 
-[[OPT_CARTDET.AWRI]]
+[[OPT_CARTDET2.AWRI]]
 rem --- Enable Pack Lot/Serial button for lot/serial items
 	if callpoint!.getDevObject("lotser_item")="Y" then callpoint!.setOptionEnabled("PKLS",1)
 
-[[OPT_CARTDET.BEND]]
-rem wgh ... 10304 ... Warn when lot/serial numbers haven't been packed
+[[OPT_CARTDET2.BEND]]
+rem --- Get the total quantity packed
+	qtyPacked=0
+	dim gridrec$:fattr(rec_data$)
+	numrecs=GridVect!.size()
+	if numrecs>0 then 
+		for reccnt=0 to numrecs-1
+			gridrec$=GridVect!.getItem(reccnt)
+			qtyPacked=qtyPacked+gridrec.qty_packed
+		next reccnt
+	endif
 
-[[OPT_CARTDET.CARTON_NO.AVAL]]
+rem --- Warn if quantity packed is less than the quantity picked.
+	qty_picked=num(callpoint!.getDevObject("qty_picked"))
+	if qtyPacked<qty_picked
+		msg_id$ = "OP_BAD_PACK_QTY"
+		dim msg_tokens$[2]
+		msg_tokens$[1] = str(qtyPacked)
+		msg_tokens$[2] = str(qty_picked)
+		gosub disp_message
+		if msg_opt$="N"
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+[[OPT_CARTDET2.BWRI]]
+rem --- Make sure INTERNAL_SEQ_NO gets initialized
+	if cvs(callpoint!.getColumnData("OPT_CARTDET2.INTERNAL_SEQ_NO"),2)="" then
+		call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",newInternalSeqNo$,table_chans$[all]
+		callpoint!.setColumnData("OPT_CARTDET2.INTERNAL_SEQ_NO",newInternalSeqNo$)
+	endif
+
+[[OPT_CARTDET2.CARTON_NO.AVAL]]
 rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CARTON_NO 
-	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTDET","AO_STATUS",key_tpl$,table_chans$[all],status$
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTDET2","AO_STATUS",key_tpl$,table_chans$[all],status$
 	dim optCartDet_keyPrefix$:key_tpl$
 	optCartDet_keyPrefix$=callpoint!.getKeyPrefix()
 
@@ -211,12 +225,36 @@ rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CART
 
 		writerecord(optCartHdr_dev)optCartHdr$
 		callpoint!.setDevObject("refreshRecord",1)
+	else
+		rem --- Allow the same carton number only once in the grid
+		dim gridrec$:fattr(rec_data$)
+		for i=0 to GridVect!.size()-1
+			gridrec$=GridVect!.getItem(i)
+			if gridrec.carton_no$=carton_no$
+				msg_id$ = "OP_CARTON_IN_GRID"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=cvs(carton_no$,2)
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+				break
+			endif
+		next i
 	endif
 
-[[OPT_CARTDET.QTY_PACKED.AVAL]]
+rem --- Initialize new row
+	warehouse_id$=callpoint!.getDevObject("warehouse_id")
+	callpoint!.setColumnData("<<DISPLAY>>.WHSE_ID_DSP",warehouse_id$,1)
+	item_id$=callpoint!.getDevObject("item_id")
+	callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID_DSP",item_id$,1)
+	order_memo$=callpoint!.getDevObject("order_memo")
+	callpoint!.setColumnData("OPT_CARTDET2.ORDER_MEMO",order_memo$,1)
+	um_sold$=callpoint!.getDevObject("um_sold")
+	callpoint!.setColumnData("OPT_CARTDET2.UM_SOLD",um_sold$,1)
+
+[[OPT_CARTDET2.QTY_PACKED.AVAL]]
 rem --- QTY_PACKED cannot be negative
 	qty_packed=num(callpoint!.getUserInput())
-	previous_qtyPacked=num(callpoint!.getColumnData("OPT_CARTDET.QTY_PACKED"))
+	previous_qtyPacked=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
 	if qty_packed=previous_qtyPacked then break
 	if qty_packed<0 then
 		msg_id$ = "OP_PACKED_NEGATIVE"
@@ -239,12 +277,10 @@ rem --- QTY_PACKED cannot be greater than the remaining number that still need t
 		break
 	endif
 
-rem wgh ... 10304 ... Provide visual warning when lot/serial numbers not packed
-
-[[OPT_CARTDET.QTY_PACKED.BINP]]
+[[OPT_CARTDET2.QTY_PACKED.BINP]]
 rem --- Default QTY_PACKED to the remaining number that still need to be packed.
-	alreadyPacked=-num(callpoint!.getColumnData("OPT_CARTDET.QTY_PACKED"))
-	dim optCartDet$:fnget_tpl$("OPT_CARTDET")
+	alreadyPacked=-num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
+	dim optCartDet$:fnget_tpl$("OPT_CARTDET2")
 	for i=0 to GridVect!.size()-1
 		optCartDet$=GridVect!.getItem(i)
 		alreadyPacked=alreadyPacked+optCartDet.qty_packed
@@ -253,7 +289,7 @@ rem --- Default QTY_PACKED to the remaining number that still need to be packed.
 	qty_picked=num(callpoint!.getDevObject("qty_picked"))
 	unpackedQty=qty_picked-alreadyPacked
 	callpoint!.setDevObject("unpackedQty",unpackedQty)
-	callpoint!.setColumnData("OPT_CARTDET.QTY_PACKED",str(unpackedQty),1)
+	callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(unpackedQty),1)
 
 
 

@@ -38,8 +38,8 @@ rem --- Create linetypeMap, dropshipMap and unitcostMap HashMaps
 
 rem --- Set Lot/Serial button up properly
 	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
+		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_PICK")+" "+Translate!.getTranslation("AON_LOT")); break
+		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_PICK")+" "+Translate!.getTranslation("AON_SERIAL")); break
 		case default; callpoint!.setOptionEnabled("LENT",0); break
 	swend
 
@@ -174,10 +174,10 @@ rem --- Is this item lot/serial?
 		dim dflt_data$[7,1]
 		dflt_data$[1,0]="FIRM_ID"
 		dflt_data$[1,1]=firm_id$
-		dflt_data$[2,0]="AR_TYPE"
-		dflt_data$[2,1]=ar_type$
-		dflt_data$[3,0]="TRANS_STATUS"
-		dflt_data$[3,1]="E"
+		dflt_data$[2,0]="TRANS_STATUS"
+		dflt_data$[2,1]="E"
+		dflt_data$[3,0]="AR_TYPE"
+		dflt_data$[3,1]=ar_type$
 		dflt_data$[4,0]="CUSTOMER_ID"
 		dflt_data$[4,1]=cust$
 		dflt_data$[5,0]="ORDER_NO"
@@ -191,7 +191,7 @@ rem --- Is this item lot/serial?
 		rem --- Pass additional info needed in OPT_FILLMNTLSDET
 		callpoint!.setDevObject("item_ship_qty", callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 		callpoint!.setDevObject("wh",callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID"))
-		callpoint!.setDevObject("item",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
+		callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
 		callpoint!.setDevObject("ship_qty",callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 
 		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
@@ -213,29 +213,35 @@ rem --- Has the total quantity picked changed?
 	endif
 
 [[OPT_FILLMNTDET.AOPT-PACK]]
-rem --- Launch Pack Carton grid
+rem --- Launch Packing Carton Detail grid
 		ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
 		cust$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
 		order$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
 		invoice$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
+		warehouse_id$=callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID")
+		item_id$=callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
 
-		dim dflt_data$[7,1]
+		dim dflt_data$[8,1]
 		dflt_data$[1,0]="FIRM_ID"
 		dflt_data$[1,1]=firm_id$
-		dflt_data$[2,0]="AR_TYPE"
-		dflt_data$[2,1]=ar_type$
-		dflt_data$[3,0]="TRANS_STATUS"
-		dflt_data$[3,1]="E"
+		dflt_data$[2,0]="TRANS_STATUS"
+		dflt_data$[2,1]="E"
+		dflt_data$[3,0]="AR_TYPE"
+		dflt_data$[3,1]=ar_type$
 		dflt_data$[4,0]="CUSTOMER_ID"
 		dflt_data$[4,1]=cust$
 		dflt_data$[5,0]="ORDER_NO"
 		dflt_data$[5,1]=order$
 		dflt_data$[6,0]="AR_INV_NO"
 		dflt_data$[6,1]=invoice$
-		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$
+		dflt_data$[7,0]="WAREHOUSE_ID"
+		dflt_data$[7,1]=warehouse_id$
+		dflt_data$[8,0]="ITEM_ID"
+		dflt_data$[8,1]=item_id$
+		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+warehouse_id$+item_id$
 
 		rem --- Pass additional info needed in OPT_CARTDET
-		callpoint!.setDevObject("ar_type",ar_type$)
+		callpoint!.setDevObject("orddet_seq_ref",callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO"))
 		callpoint!.setDevObject("warehouse_id",callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID"))
 		callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
 		callpoint!.setDevObject("order_memo",callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_MEMO"))
@@ -243,7 +249,7 @@ rem --- Launch Pack Carton grid
 		callpoint!.setDevObject("qty_picked", callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))
 
 		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
-:			"OPT_CARTDET", 
+:			"OPT_CARTDET2", 
 :			stbl("+USER_ID"), 
 :			"MNT" ,
 :			key_pfx$, 
@@ -358,6 +364,7 @@ rem ==========================================================================
 		read record (ivm01_dev, key=firm_id$+item_id$, dom=*endif) ivm01a$
 		if ivm01a.lotser_item$="Y" then lotser_item$="Y"
 	endif
+	callpoint!.setDevObject("lotser_item",lotser_item$)
 
 	return
 

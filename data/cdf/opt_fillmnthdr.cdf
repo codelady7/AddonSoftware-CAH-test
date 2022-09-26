@@ -135,6 +135,8 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 	dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
 	opeOrdDet_dev=fnget_dev("OPE_ORDDET")
 	dim opeOrdDet$:fnget_tpl$("OPE_ORDDET")
+	ivmItemWhse_dev=fnget_dev("IVM_ITEMWHSE")
+	dim ivmItemWhse$:fnget_tpl$("IVM_ITEMWHSE")
 	read(opeOrdDet_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)
 	while 1
 		opeOrdDet_key$=key(opeOrdDet_dev,end=*break)
@@ -152,18 +154,6 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 			if pos(opeOrdDet_key$=opeOrdLsDet_key$)<>1 then break
 			readrecord(opeOrdLsDet_dev)opeOrdLsDet$
 
-			rem --- Need to uncommit inventoried lot/serial numbers since the pick quantity was zeroed, 
-			rem --- but leave the item committed.
-			items$[1]=opeOrdDet.warehouse_id$
-			items$[2]=opeOrdDet.item_id$
-			items$[3]=opeOrdLsDet.lotser_no$
-			refs[0]=opeOrdLsDet.qty_shipped
-			action$="UC"
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-			items$[3]=""
-			action$="OE"
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
 			redim optFillmntLsDet$
 			optFillmntLsDet.firm_id$=firm_id$
 			optFillmntLsDet.ar_type$=opeOrdLsDet.ar_type$
@@ -173,6 +163,12 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 			optFillmntLsDet.orddet_seq_ref$=opeOrdLsDet.orddet_seq_ref$
 			optFillmntLsDet.sequence_no$=opeOrdLsDet.sequence_no$
 			optFillmntLsDet.lotser_no$=opeOrdLsDet.lotser_no$
+			if opeOrdLsDet.qty_ordered>0 then
+				rem --- Cannot have an order qty greater than zero unless the lot/serial number was committed in Order Entry 
+				optFillmntLsDet.oe_committed$="Y"
+			else
+				optFillmntLsDet.oe_committed$="N"
+			endif
 			optFillmntLsDet.created_user$=sysinfo.user_id$
 			optFillmntLsDet.created_date$=date(0:"%Yd%Mz%Dz")
 			optFillmntLsDet.created_time$=date(0:"%Hz%mz")
@@ -188,6 +184,10 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 			writerecord(optFillmntLsDet_dev)optFillmntLsDet$
 		wend
 
+		rem --- Get warehouse location for this item
+		redim ivmItemWhse$
+		readrecord(ivmItemWhse_dev,key=firm_id$+opeOrdDet.warehouse_id$+opeOrdDet.item_id$,dom=*next)ivmItemWhse$
+
 		redim optFillmntDet$
 		optFillmntDet.firm_id$=firm_id$
 		optFillmntDet.ar_type$=opeOrdDet.ar_type$
@@ -200,6 +200,7 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		optFillmntDet.order_memo$=opeOrdDet.order_memo$
 		optFillmntDet.memo_1024$=opeOrdDet.memo_1024$
 		optFillmntDet.um_sold$=opeOrdDet.um_sold$
+		optFillmntDet.location$=ivmItemWhse.location$
 		optFillmntDet.created_user$=sysinfo.user_id$
 		optFillmntDet.created_date$=date(0:"%Yd%Mz%Dz")
 		optFillmntDet.created_time$=date(0:"%Hz%mz")
@@ -256,6 +257,7 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
 	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
+	opeOrdLsDet_dev=fnget_dev("OPE_ORDLSDET")
 	optFillmntHdr_key$=callpoint!.getRecordKey()
 	read (optFillmntDet_dev,key=optFillmntHdr_key$,knum="AO_STATUS",dom=*next)
 	while 1
@@ -270,24 +272,27 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 			remove_key$=key(optFillmntLsDet_dev,knum="PRIMARY")
 			readrecord(optFillmntLsDet_dev,knum="AO_STATUS")optFillmntLsDet$
 
-			rem --- Is this an inventoried lot/serial item?
-			item$=optFillmntDet.item_id$
-			findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
-			if ivmItemMast$.inventoried$="Y" then
-				status=999
-				call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-				if status then exitto std_exit
+			rem --- Do Not uncommit if lot/serial number was committed in Order Entry
+			if optFillmntLsDet.oe_committed$<>"Y" then
+				rem --- Is this an inventoried lot/serial item?
+				item$=optFillmntDet.item_id$
+				findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
+				if ivmItemMast$.inventoried$="Y" then
+					status=999
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					if status then exitto std_exit
 
-				rem --- Need to uncommit deleted inventoried lot/serial numbers, but leave the item committed.
-				items$[1]=optFillmntDet.warehouse_id$
-				items$[2]=optFillmntDet.item_id$
-				items$[3]=optFillmntLsDet.lotser_no$
-				refs[0]=optFillmntLsDet.qty_shipped
-				action$="UC"
-				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-				items$[3]=""
-				action$="OE"
-				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					rem --- Need to uncommit deleted inventoried lot/serial numbers, but leave the item committed.
+					items$[1]=optFillmntDet.warehouse_id$
+					items$[2]=optFillmntDet.item_id$
+					items$[3]=optFillmntLsDet.lotser_no$
+					refs[0]=optFillmntLsDet.qty_shipped
+					action$="UC"
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					items$[3]=""
+					action$="OE"
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				endif
 			endif
 
 			remove(optFillmntLsDet_dev,key=remove_key$)
@@ -334,7 +339,7 @@ rem --- Are there any items that weren't picked completely
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
-	num_files=11
+	num_files=12
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="OPE_ORDHDR",  open_opts$[1]="OTA"
@@ -345,9 +350,10 @@ rem --- Open needed files
 	open_tables$[6]="OPT_CARTHDR",  open_opts$[6]="OTA"
 	open_tables$[7]="IVS_PARAMS",   open_opts$[7]="OTA"
 	open_tables$[8]="IVM_ITEMMAST",   open_opts$[8]="OTA"
-	open_tables$[9]="IVM_LSMASTER",   open_opts$[9]="OTA"
-	open_tables$[10]="OPC_LINECODE",   open_opts$[10]="OTA"
-	open_tables$[11]="ARC_SHIPVIACODE",   open_opts$[11]="OTA"
+	open_tables$[9]="IVM_ITEMWHSE",   open_opts$[9]="OTA"
+	open_tables$[10]="IVM_LSMASTER",   open_opts$[10]="OTA"
+	open_tables$[11]="OPC_LINECODE",   open_opts$[11]="OTA"
+	open_tables$[12]="ARC_SHIPVIACODE",   open_opts$[12]="OTA"
 
 	gosub open_tables
 
@@ -420,51 +426,6 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 		callpoint!.setStatus("ABORT")
 		break
 	endif
-
-[[OPT_FILLMNTHDR.<CUSTOM>]]
-rem ==========================================================================
-commit_lots: rem --- Commit lot/serial number only, not the item
-             rem      IN: commit_lot$
-             rem           commit_qty
-             rem           increasing - 0/1 to back out old/commit new
-             rem     OUT: committedNow!
-rem ==========================================================================
-	items$[1]=callpoint!.getDevObject("wh")
-	items$[2]=callpoint!.getDevObject("item")
-	items$[3]=commit_lot$
-	refs[0]=commit_qty
-	if increasing then action$="OE" else action$="UC"
-	call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-	if status then exitto std_exit
-	items$[3]=""
-	if increasing then action$="OE" else action$="CO"
-	call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-	if status then exitto std_exit
-
-	rem --- Keep track of what's been committed this session
-	committedNow! = cast(java.util.HashMap, callpoint!.getDevObject("committed_now"))
-
-	containsKey=committedNow!.containsKey(commit_lot$)
-	if containsKey then	
-		commtd_now = num(committedNow!.get(commit_lot$))
-	else
-		commtd_now = 0
-	endif
-
-	if increasing then
-		commtd_now = commtd_now + commit_qty
-	else
-		commtd_now = commtd_now - commit_qty
-	endif
-
-	if containsKey then
-		committedNow!.replace(commit_lot$, commtd_now)
-	else
-		committedNow!.put(commit_lot$, commtd_now)
-	endif
-	callpoint!.setDevObject("committed_now", CommittedNow!)
-
-	return
 
 
 
