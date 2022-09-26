@@ -513,4 +513,52 @@
 		<MSG_TEXT>Already packed %1 of the %2 picked. Only %3 remain to pack.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </MSG_TEXT>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_CANNOT_DEL_LS    </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>64</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>Cannot delete lot/serial numbers that were committed (shipped) in Order Entry.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_PACK_UNPACKED    </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>4</MSG_TYPE>
+		<MSG_ICON>32</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>Y;N</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>Pack all remaining unpacked lot/serial numbers picked for this item?[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_CARTON_IN_GRID   </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>Carton %1 is already in this item's packing grid.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_BAD_PACK_QTY     </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>4</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>256</MSG_DEFAULT_BUT>
+		<MSG_CODES>Y;N</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>The total quantity packed %1 is NOT equal to the quantity picked %2. Continue?[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
 </barista_admin_records>

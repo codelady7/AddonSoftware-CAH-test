@@ -13,5 +13,11 @@ rem --- Initialize RTP trans_status and created fields
 	callpoint!.setColumnData("OPT_CARTHDR.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
 	callpoint!.setColumnData("OPT_CARTHDR.CREATED_TIME",date(0:"%Hz%mz"))
 
+[[OPT_CARTHDR.AUDE]]
+rem wgh ... 10304 ... Need to restore corresponding OPT_CARTLSDET records
+
+[[OPT_CARTHDR.BDEL]]
+rem wgh ... 10304 ... Need to delete corresponding OPT_CARTLSDET records
+
 
 

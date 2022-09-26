@@ -20,7 +20,12 @@ rem --- Can't use qty_shipped and qty_picked from opt_fillmntdet. Must total the
 			already_picked=num(grid!.getCellText(row,qtyPicked_column))
 			qty_picked=qty_picked+already_picked
 			lotser_no$=pad(grid!.getCellText(row,lotserNo_column),lotserNo_size)
-			committedNow!.put(lotser_no$, already_picked)
+			if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" then
+				rem --- CommittedNow needs to be qty_shipped if lot/serial number was committed in Order Entry
+				committedNow!.put(lotser_no$, num(grid!.getCellText(row,qtyShipped_column)))
+			else
+				committedNow!.put(lotser_no$, already_picked)
+			endif
 		next row
 	endif
 
@@ -32,21 +37,27 @@ rem --- Can't use qty_shipped and qty_picked from opt_fillmntdet. Must total the
 
 [[OPT_FILLMNTLSDET.AGRE]]
 rem --- Skip if qty_picked not changed
-		qty_picked=num(callpoint!.getColumnData("OPT_FILLMNTLSDET.QTY_PICKED"))
-		prev_qtyPicked=callpoint!.getDevObject("prev_qtyPicked")
-		if qty_picked=prev_qtyPicked then break
+	qty_picked=num(callpoint!.getColumnData("OPT_FILLMNTLSDET.QTY_PICKED"))
+	prev_qtyPicked=callpoint!.getDevObject("prev_qtyPicked")
+	if qty_picked=prev_qtyPicked then break
+
+rem --- Skip if lot/serial number was committed in Order Entry
+	if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" then break
 
 rem --- Check quantities, do commits if this row isn't deleted
 	curr_lot$ = callpoint!.getColumnData("OPT_FILLMNTLSDET.LOTSER_NO")
-	if callpoint!.getGridRowDeleteStatus( callpoint!.getValidationRow() )<>"Y" and cvs(curr_lot$,2)<>""  then
+	if callpoint!.getGridRowDeleteStatus(callpoint!.getValidationRow() )<>"Y" and cvs(curr_lot$,2)<>""  then
 
-		if callpoint!.getGridRowNewStatus( callpoint!.getValidationRow() )    = "Y" or
-:		   callpoint!.getGridRowModifyStatus( callpoint!.getValidationRow() ) = "Y" 
+		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" or
+:		   callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow())="Y" 
 :		then
 			lot_qty = qty_picked
 			ls_no$=curr_lot$
 			gosub check_avail
-			if aborted then break
+			if aborted then
+				callpoint!.setFocus(callpoint!.getValidationRow(),"OPT_FILLMNTLSDET.QTY_PICKED",1)
+				break
+			endif
 		endif
 
 		rem --- Commit lots if inventoried and not a dropship. (Quotes are already filtered out of Order Fulfillment.)
@@ -79,29 +90,32 @@ rem --- Check quantities, do commits if this row isn't deleted
 			endif
 		endif
 	endif
- 
 
 [[OPT_FILLMNTLSDET.AGRN]]
+rem --- Disable lotser_no and qty_shipped fields if lot/serial number was committed in Order Entry
+	if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" then
+		row=callpoint!.getValidationRow()
+		callpoint!.setColumnEnabled(row,"OPT_FILLMNTLSDET.LOTSER_NO",0)
+		callpoint!.setColumnEnabled(row,"OPT_FILLMNTLSDET.QTY_SHIPPED",0)
+	endif
+
 rem --- Keep track of starting qty picked for this line, so we can accurately check avail qty minus what's already been committed
 	callpoint!.setDevObject("prev_qtyPicked",num(callpoint!.getColumnData("OPT_FILLMNTLSDET.QTY_PICKED")))
 	callpoint!.setDevObject("prior_lot",callpoint!.getColumnData("OPT_FILLMNTLSDET.LOTSER_NO"))
 
 [[OPT_FILLMNTLSDET.AOPT-LLOK]]
-rem --- Non-inventoried items do not have to exist
-	if callpoint!.getDevObject("non_inventory") then break
-
 rem --- See if there are any lots/serials for this item
 	wh$=callpoint!.getDevObject("wh")
-	item$=callpoint!.getDevObject("item")
+	item_id$=callpoint!.getDevObject("item_id")
 	item_ship_qty=num( callpoint!.getDevObject("item_ship_qty") )
 	ivmLsMaster_dev= fnget_dev("IVM_LSMASTER")
-	read (ivmLsMaster_dev, key=firm_id$+wh$+item$, knum="AO_WH_ITM_FLAG", dom=*next)
+	read (ivmLsMaster_dev, key=firm_id$+wh$+item_id$, knum="AO_WH_ITM_FLAG", dom=*next)
 	ivmLsMaster_key$=key(ivmLsMaster_dev, end=*next)
 
-	if pos(firm_id$+wh$+item$=ivmLsMaster_key$)=1 then
+	if pos(firm_id$+wh$+item_id$=ivmLsMaster_key$)=1 then
 		dim dflt_data$[3,1]
 		dflt_data$[1,0] = "ITEM_ID"
-		dflt_data$[1,1] = item$
+		dflt_data$[1,1] = item_id$
 		dflt_data$[2,0] = "WAREHOUSE_ID"
 		dflt_data$[2,1] = wh$
 		dflt_data$[3,0] = "LOTS_TO_DISP"
@@ -182,7 +196,10 @@ rem --- Initialize RTP trans_status and created fields
 	callpoint!.setColumnData("OPT_FILLMNTLSDET.CREATED_TIME",date(0:"%Hz%mz"))
 
 [[OPT_FILLMNTLSDET.AUDE]]
-rem --- Re-commit lot/serial if undeleting an existing (not new) row
+rem --- Skip if lot/serial number was committed in Order Entry
+	if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" then break
+
+rem --- Re-commit lot/serial number if undeleting an existing (not new) row
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
 		status=999
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
@@ -195,7 +212,15 @@ rem --- Re-commit lot/serial if undeleting an existing (not new) row
 	endif
 
 [[OPT_FILLMNTLSDET.BDEL]]
-rem --- If not a new row, uncommit the lot/serial
+rem --- Cannot delete if lot/serial number was committed in Order Entry
+	if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" then 
+		msg_id$ = "OP_CANNOT_DEL_LS"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- If not a new row, uncommit the lot/serial number
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
 		status=999
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
@@ -225,7 +250,10 @@ rem --- Get the total quantity picked
 				ls_no$=gridrec.lotser_no$
 				if cvs(ls_no$,2)<>"" then
 					gosub check_avail
-					if aborted then break
+					if aborted then
+						callpoint!.setFocus(reccnt,"OPT_FILLMNTLSDET.QTY_PICKED",1)
+						break
+					endif
 				endif
 
 				rem --- Total lines
@@ -259,8 +287,8 @@ rem --- Use util object
 rem --- Set a flag for non-inventoried items
 	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
-	item$=callpoint!.getDevObject("item")
-	findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
+	item_id$=callpoint!.getDevObject("item_id")
+	findrecord (ivmItemMast_dev,key=firm_id$+item_id$,dom=*next)ivmItemMast$
 	if ivmItemMast$.inventoried$<>"Y" or callpoint!.getDevObject("dropship_line")="Y" then
 		callpoint!.setDevObject("non_inventory",1)
 	else
@@ -278,7 +306,7 @@ rem --- Set Lot/Serial button up properly
 		case default; callpoint!.setOptionEnabled("LLOK",0); break
 	swend
 
-	rem --- No Serial/lot lookup for non-inventory items
+rem --- No Serial/lot lookup for non-inventory items
 	if callpoint!.getDevObject("non_inventory") then callpoint!.setOptionEnabled("LLOK", 0)
 
 [[OPT_FILLMNTLSDET.BWRI]]
@@ -296,7 +324,7 @@ rem --- Skip if lotser_no not changed
 
 rem --- Get lot/serial record fields
 	wh$=callpoint!.getDevObject("wh")
-	item$=callpoint!.getDevObject("item")
+	item_id$=callpoint!.getDevObject("item_id")
 	item_ship_qty=num( callpoint!.getDevObject("item_ship_qty") )
 
 rem --- Non-inventoried items do not have to exist (but can't be blank)
@@ -315,7 +343,7 @@ rem --- Validate open lot number
 	ivmLsMaster_dev = fnget_dev("IVM_LSMASTER")
 	dim ivmLsMaster$:fnget_tpl$("IVM_LSMASTER")
 	if !callpoint!.getDevObject("non_inventory") then
-		read record (ivmLsMaster_dev, key=firm_id$+wh$+item$+ls_no$, dom=*next) ivmLsMaster$
+		read record (ivmLsMaster_dev, key=firm_id$+wh$+item_id$+ls_no$, dom=*next) ivmLsMaster$
 		if cvs(ivmLsMaster.lotser_no$,2)="" then
 			msg_id$ = "IV_LOT_MUST_EXIST"
 			gosub disp_message
@@ -439,10 +467,10 @@ rem --- Check ship quantity against what's available on the Lot
 	ivmLsMaster_dev = fnget_dev("IVM_LSMASTER")
 	dim ivmLsMaster$:fnget_tpl$("IVM_LSMASTER")
 	wh$=callpoint!.getDevObject("wh")
-	item$=callpoint!.getDevObject("item")
+	item_id$=callpoint!.getDevObject("item_id")
  	ls_no$=callpoint!.getColumnData("OPT_FILLMNTLSDET.LOTSER_NO")
 
-	read record (ivmLsMaster_dev, key=firm_id$+wh$+item$+ls_no$, dom=*next)ivmLsMaster$
+	read record (ivmLsMaster_dev, key=firm_id$+wh$+item_id$+ls_no$, dom=*next)ivmLsMaster$
 	if cvs(ivmLsMaster.lotser_no$,2)<>"" then
 		if ivmLsMaster.qty_on_hand - ivmLsMaster.qty_commit - ship_qty < 0
 			dim msg_tokens$[1]
@@ -459,7 +487,7 @@ rem --- Update qty left to ship
 	left_to_ship = left_to_ship + callpoint!.getDevObject("prev_qtyPicked") - ship_qty 
 	callpoint!.setDevObject("left_to_ship",left_to_ship)
 
-rem --- Set picked default for new line
+rem --- Set default picked qty for new line
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 		callpoint!.setColumnData("OPT_FILLMNTLSDET.QTY_PICKED", str(ship_qty),1)
 	endif
@@ -470,15 +498,14 @@ check_avail: rem --- Check for available quantity
 		rem      IN: lot_qty
 		rem		 ls_no$
 		rem   OUT: aborted - true/false
-		rem           committedNow!
 rem ==========================================================================
 	aborted = 0
 	wh$=callpoint!.getDevObject("wh")
-	item$=callpoint!.getDevObject("item")
+	item_id$=callpoint!.getDevObject("item_id")
 
 	ivmLsMaster_dev = fnget_dev("IVM_LSMASTER")
 	dim ivmLsMaster$:fnget_tpl$("IVM_LSMASTER")
-	read record (ivmLsMaster_dev, key=firm_id$+wh$+item$+ls_no$, dom=*next) ivmLsMaster$
+	read record (ivmLsMaster_dev, key=firm_id$+wh$+item_id$+ls_no$, dom=*next) ivmLsMaster$
 	if cvs(ivmLsMaster.lotser_no$,2)<>"" then
 		committedNow! = cast(java.util.HashMap, callpoint!.getDevObject("committed_now"))
 		if committedNow!.containsKey(ls_no$) then
@@ -501,13 +528,15 @@ rem ==========================================================================
 
 rem ==========================================================================
 commit_lots: rem --- Commit lot/serial number only, not the item
+		     rem --- NOTE: *** Do Not commit/uncommit if lot/serial number was committed in Order Entry ***
              rem      IN: commit_lot$
              rem           commit_qty
              rem           increasing - 0/1 to back out old/commit new
              rem     OUT: committedNow!
 rem ==========================================================================
+
 	items$[1]=callpoint!.getDevObject("wh")
-	items$[2]=callpoint!.getDevObject("item")
+	items$[2]=callpoint!.getDevObject("item_id")
 	items$[3]=commit_lot$
 	refs[0]=commit_qty
 	if increasing then action$="OE" else action$="UC"
