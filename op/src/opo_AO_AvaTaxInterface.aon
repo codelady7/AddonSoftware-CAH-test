@@ -1465,25 +1465,28 @@ stringJSON_error:rem --- Method error trap/handler (11Oct2017)
                 endif
                 customerNotFound=0
                 exemptStatusModel!=#avaTaxClient!.listValidCertificatesForCustomer(companyId!,customerCode$,country$,region$,err=*next)
-                if exemptStatusModel!=null() then
+                if exemptStatusModel! = null() then
                     err_num=err
                     if err_num=252 then
                         E!=BBjAPI().getLastBBjException()
                         rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
                         if E!.getMessage()<>null() and pos("EntityNotFoundError"=E!.getMessage()) then customerNotFound=1
                     endif
-                    if !customerNotFound then 
-                        customerNotFound=0
-                        exemptStatusModel!=#avaTaxClient!.listValidCertificatesForCustomer(companyId!,customerCode$,country$,region$,err=*endif)
-                        customerNotFound=1
-                    endif
                 endif
                 if #logClient then
                     endTime!=new Date()
                     response_time=(endTime!.getTime()-startTime!.getTime())/1000
                     print(#devClientLog) "<<< RESPONSE "+logSource$+" (seconds: "+str(response_time)+") >>>"
-                    if customerNotFound then
-                        print(#devClientLog) "    status: Customer Not Found"
+                    if exemptStatusModel! = null() then
+                        if customerNotFound then
+                            print(#devClientLog) "    status: Customer Not Found"
+                        else
+                            if E!.getMessage()<>null() then
+                                print(#devClientLog) "    status: "+E!.getMessage()
+                            else
+                                print(#devClientLog) "    status: Error "+str(err_num)
+                            endif
+                        endif
                     else
                         print(#devClientLog) "    status: "+ exemptStatusModel!.getStatus()
                     endif
