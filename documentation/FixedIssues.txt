@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-09-19
+ Report Date:   2022-09-27
  Report Branch: AddonSoftware 22.10
  Last Release:  AddonSoftware 22.04
 =======================================================================================================================================
@@ -54,3 +54,13 @@ Bug 10497: Don't attempt voiding uncommitted orphaned sales tax service
 transactions when NOT using a sales tax service.
 ----
 Modified: op/src/opu_updateinventory.aon
+
+=======================================================================================================================================
+Revision: 6b1a60f63a6ca13c859e38e202e65e87e0d67db9
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 9/27/2022 4:51:23 PM
+Message:
+Bug 10501: Eliminated possible use of exemptStatusModel!.getStatus()
+when exemptStatusModel! is null().
+----
+Modified: op/src/opo_AO_AvaTaxInterface.aon
