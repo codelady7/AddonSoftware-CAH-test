@@ -339,7 +339,7 @@ rem --- Are there any items that weren't picked completely
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
-	num_files=12
+	num_files=15
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="OPE_ORDHDR",  open_opts$[1]="OTA"
@@ -348,18 +348,21 @@ rem --- Open needed files
 	open_tables$[4]="OPT_FILLMNTDET",  open_opts$[4]="OTA"
 	open_tables$[5]="OPT_FILLMNTLSDET",  open_opts$[5]="OTA"
 	open_tables$[6]="OPT_CARTHDR",  open_opts$[6]="OTA"
-	open_tables$[7]="IVS_PARAMS",   open_opts$[7]="OTA"
-	open_tables$[8]="IVM_ITEMMAST",   open_opts$[8]="OTA"
-	open_tables$[9]="IVM_ITEMWHSE",   open_opts$[9]="OTA"
-	open_tables$[10]="IVM_LSMASTER",   open_opts$[10]="OTA"
-	open_tables$[11]="OPC_LINECODE",   open_opts$[11]="OTA"
-	open_tables$[12]="ARC_SHIPVIACODE",   open_opts$[12]="OTA"
+	open_tables$[7]="OPT_CARTDET",  open_opts$[7]="OTA"
+	open_tables$[8]="OPT_CARTLSDET",  open_opts$[8]="OTA"
+	open_tables$[9]="OPT_CARTLSDET", open_opts$[9]="OTA[2_]"
+	open_tables$[10]="IVS_PARAMS",   open_opts$[10]="OTA"
+	open_tables$[11]="IVM_ITEMMAST",   open_opts$[11]="OTA"
+	open_tables$[12]="IVM_ITEMWHSE",   open_opts$[12]="OTA"
+	open_tables$[13]="IVM_LSMASTER",   open_opts$[13]="OTA"
+	open_tables$[14]="OPC_LINECODE",   open_opts$[14]="OTA"
+	open_tables$[15]="ARC_SHIPVIACODE",   open_opts$[15]="OTA"
 
 	gosub open_tables
 
 rem --- Set up Lot/Serial button
-	dim ivs01a$:open_tpls$[7]
-	read record (num(open_chans$[7]), key=firm_id$+"IV00") ivs01a$
+	dim ivs01a$:open_tpls$[10]
+	read record (num(open_chans$[10]), key=firm_id$+"IV00") ivs01a$
 	switch pos(ivs01a.lotser_flag$="LS")
 		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
 		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break

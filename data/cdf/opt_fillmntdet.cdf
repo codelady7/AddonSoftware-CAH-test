@@ -208,7 +208,7 @@ rem --- Has the total quantity picked changed?
 	start_qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))
 	total_picked=callpoint!.getDevObject("total_picked")
 	if total_picked<>start_qty_picked then
-		callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(callpoint!.getDevObject("total_picked")),1)
+		callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(total_picked),1)
 		callpoint!.setStatus("MODIFIED")
 	endif
 
