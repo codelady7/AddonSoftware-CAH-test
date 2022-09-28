@@ -561,4 +561,40 @@
 		<MSG_TEXT>The total quantity packed %1 is NOT equal to the quantity picked %2. Continue?[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </MSG_TEXT>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_LS_NOT_PICKED    </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>Lot/serial number %1 was not picked.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_LOTSER_IN_GRID   </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>Lot/serial number %1 is already in this carton's lot/serial packing grid.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_PACK_EXCEEDS_PICK</MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>Quantity packed %1 exceeds unpacked quantity picked %2.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
 </barista_admin_records>

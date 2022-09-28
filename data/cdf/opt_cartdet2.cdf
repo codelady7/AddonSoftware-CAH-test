@@ -36,13 +36,13 @@ rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
 	warehouse_id$=callpoint!.getColumnData("OPT_CARTDET2.WAREHOUSE_ID")
 	item_id$=callpoint!.getColumnData("OPT_CARTDET2.ITEM_ID")
 	seqRef$=callpoint!.getColumnData("OPT_CARTDET2.INTERNAL_SEQ_NO")
-	optCartDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+warehouse_id$+item_id$+seqRef$
+	optCartLsDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+warehouse_id$+item_id$+seqRef$
 
 	optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
 	dim optCartLsDet$:fnget_tpl$("OPT_CARTLSDET")
-	read(optCartLsDet_dev,key=optCartDet_key$,dom=*next)
+	read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="AO_STATUS",dom=*next)
 	optCartLsDet_key$=key(optCartLsDet_dev,end=*next)
-	if pos(optCartDet_key$=optCartLsDet_key$)=1 then
+	if pos(optCartLsDet_trip$=optCartLsDet_key$)=1 then
 		rem --- Grid already initialized
 	else
 		rem --- Ask if they want to pack all remaining unpacked lot/serial numbers picked for this item
@@ -62,15 +62,16 @@ rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
 				if pos(optFillmntDet_key$=optFillmntLsDet_key$)<>1 then break
 				readrecord(optFillmntLsDet_dev)optFillmntLsDet$
 
-				rem --- Skip if already full packed in other cartoons
+				rem --- Skip if already fully packed in other cartoons
 				alreadyPacked=0
-				optCartLsDet_trip$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$
-				read(optCartLsDet_dev,key=optCartLsDet_trip$,dom=*next)
+				optCartLsDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+				read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="AO_STATUS",dom=*next)
 				while 1
 					optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
 					if pos(optCartLsDet_trip$=optCartLsDet_key$)<>1 then break
 					readrecord(optCartLsDet_dev)optCartLsDet$
-					if optCartLsDet.warehouse_id$+optCartLsDet.item_id$<>whse$+item$ then continue
+					if optCartLsDet.warehouse_id$+optCartLsDet.item_id$<>warehouse_id$+item_id$ then continue
+					if optCartLsDet.lotser_no$<>optFillmntLsDet.lotser_no$ then continue
 					alreadyPacked=alreadyPacked+optCartLsDet.qty_packed
 				wend
 				if alreadyPacked>=optFillmntLsDet.qty_picked then continue
@@ -121,6 +122,16 @@ rem --- Launch Packing Carton Lot/Serial Detail grid
 		dflt_data$[9,1]=item_id$
 		dflt_data$[10,0]="CARTDET_SEQ_REF"
 		dflt_data$[10,1]=seqRef$
+		optCartDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+warehouse_id$+item_id$+seqRef$
+
+		rem --- Pass additional info needed in OPT_CARTLSDET
+		callpoint!.setDevObject("ar_type",ar_type$)
+		callpoint!.setDevObject("customer_id",customer_id$)
+		callpoint!.setDevObject("order_no",order_no$)
+		callpoint!.setDevObject("ar_inv_no",ar_inv_no$)
+		callpoint!.setDevObject("carton_no",carton_no$)
+		callpoint!.setDevObject("warehouse_id",warehouse_id$)
+		callpoint!.setDevObject("item_id",item_id$)
 
 		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
 :			"OPT_CARTLSDET", 
@@ -129,6 +140,14 @@ rem --- Launch Packing Carton Lot/Serial Detail grid
 :			optCartDet_key$, 
 :			table_chans$[all], 
 :			dflt_data$[all]
+
+rem --- Has the total quantity packed changed?
+	start_qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
+	total_packed=callpoint!.getDevObject("total_packed")
+	if total_packed<>start_qty_packed then
+		callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(total_packed),1)
+		callpoint!.setStatus("MODIFIED")
+	endif
 
 [[OPT_CARTDET2.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -242,14 +261,29 @@ rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CART
 	endif
 
 rem --- Initialize new row
-	warehouse_id$=callpoint!.getDevObject("warehouse_id")
-	callpoint!.setColumnData("<<DISPLAY>>.WHSE_ID_DSP",warehouse_id$,1)
-	item_id$=callpoint!.getDevObject("item_id")
-	callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID_DSP",item_id$,1)
-	order_memo$=callpoint!.getDevObject("order_memo")
-	callpoint!.setColumnData("OPT_CARTDET2.ORDER_MEMO",order_memo$,1)
-	um_sold$=callpoint!.getDevObject("um_sold")
-	callpoint!.setColumnData("OPT_CARTDET2.UM_SOLD",um_sold$,1)
+	row=callpoint!.getValidationRow()
+	if callpoint!.getGridRowNewStatus(row)="Y" then
+		warehouse_id$=callpoint!.getDevObject("warehouse_id")
+		callpoint!.setColumnData("<<DISPLAY>>.WHSE_ID_DSP",warehouse_id$,1)
+		item_id$=callpoint!.getDevObject("item_id")
+		callpoint!.setColumnData("<<DISPLAY>>.ITEM_ID_DSP",item_id$,1)
+		order_memo$=callpoint!.getDevObject("order_memo")
+		callpoint!.setColumnData("OPT_CARTDET2.ORDER_MEMO",order_memo$,1)
+		um_sold$=callpoint!.getDevObject("um_sold")
+		callpoint!.setColumnData("OPT_CARTDET2.UM_SOLD",um_sold$,1)
+
+		rem --- For a new row, default QTY_PACKED to the remaining number that still need to be packed.
+		alreadyPacked=-num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
+		dim optCartDet$:fnget_tpl$("OPT_CARTDET2")
+		for i=0 to GridVect!.size()-1
+			optCartDet$=GridVect!.getItem(i)
+			alreadyPacked=alreadyPacked+optCartDet.qty_packed
+		next i
+		qty_picked=num(callpoint!.getDevObject("qty_picked"))
+		unpackedQty=qty_picked-alreadyPacked
+		callpoint!.setDevObject("unpackedQty",unpackedQty)
+		callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(unpackedQty),1)
+	endif
 
 [[OPT_CARTDET2.QTY_PACKED.AVAL]]
 rem --- QTY_PACKED cannot be negative
@@ -276,20 +310,6 @@ rem --- QTY_PACKED cannot be greater than the remaining number that still need t
 		callpoint!.setStatus("ABORT")
 		break
 	endif
-
-[[OPT_CARTDET2.QTY_PACKED.BINP]]
-rem --- Default QTY_PACKED to the remaining number that still need to be packed.
-	alreadyPacked=-num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
-	dim optCartDet$:fnget_tpl$("OPT_CARTDET2")
-	for i=0 to GridVect!.size()-1
-		optCartDet$=GridVect!.getItem(i)
-		alreadyPacked=alreadyPacked+optCartDet.qty_packed
-	next i
-
-	qty_picked=num(callpoint!.getDevObject("qty_picked"))
-	unpackedQty=qty_picked-alreadyPacked
-	callpoint!.setDevObject("unpackedQty",unpackedQty)
-	callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(unpackedQty),1)
 
 
 

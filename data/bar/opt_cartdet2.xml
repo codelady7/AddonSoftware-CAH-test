@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_cartdet2"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_cartdet2">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_cartdet2">20220921</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_cartdet2">20220926</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartdet2">20220926</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartdet2">084126</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_cartdet2">20220928</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartdet2">20220928</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartdet2">100138</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_cartdet2">OPT_CARTDET     </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_cartdet2">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_cartdet2">AO_WH_ITEM_CART</DD_ATTR_DKNM>
@@ -2960,11 +2960,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdet2qty_packedaval">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdet2qty_packedaval">QTY_PACKED      </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdet2qty_packedaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.opt_cartdet2qty_packedbinp">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdet2qty_packedbinp">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdet2qty_packedbinp">QTY_PACKED      </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdet2qty_packedbinp">BINP</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
