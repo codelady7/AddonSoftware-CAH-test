@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-09-27
+ Report Date:   2022-10-04
  Report Branch: AddonSoftware 22.10
  Last Release:  AddonSoftware 22.04
 =======================================================================================================================================
@@ -64,3 +64,18 @@ Bug 10501: Eliminated possible use of exemptStatusModel!.getStatus()
 when exemptStatusModel! is null().
 ----
 Modified: op/src/opo_AO_AvaTaxInterface.aon
+
+=======================================================================================================================================
+Revision: e447a25d9f5967d09b5350428690fb61f5e2de9a
+Author: Christine <chawkins@basis.com>
+Date: 10/4/2022 3:38:56 PM
+Message:
+Bug 10499 - AD - Install Wizard needs to recursively set permissions to 777 after cloning Addon repo
+ - Cleaned up/corrected existing code in the upgrade wizard
+ - Copied the existing (cleaned up) code from upgrade to install wizard
+
+(cherry picked from commit d63f4412245c010bc8630f3c55c5a43e5114173d)
+----
+Modified: ad/src/adx_installwiz.aon
+Modified: ad/src/adx_upgradewiz.aon
+
