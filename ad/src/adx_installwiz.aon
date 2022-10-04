@@ -12,6 +12,7 @@ rem ==========================================================================
     use java.nio.file.Paths
     use java.nio.file.FileSystems
     use java.nio.file.attribute.PosixFilePermissions 
+    use java.util.stream.Collectors
     use java.util.Arrays
     use java.util.HashSet
     use java.util.Vector
@@ -131,25 +132,25 @@ rem --- Clone and pull branch(s) from Git repository to newAonLoc
         print(log_dev)"    For "+mountedSys!.getItem(syscnt)   
            
         rem --- Clone and pull branch from Git repository
-	branchName$="BBJ"+minor_ver$(2)+"GA"
+	    branchName$="BBJ"+minor_ver$(2)+"GA"
         cloneDir$=mountedSys!.getItem(syscnt)
 
         rem --- Clone Git repository and get a JGit interface to it
-	base_dir!=Paths.get(base_dir$)
-	addon_dir!=Paths.get(cloneDir$)
-	if (addon_dir!.startsWith(base_dir!)) then 
-		Files.createDirectories(addon_dir!)
-		if (! osIsWindows!) then  
-			current_dir!=addon_dir!
-			permissions!=PosixFilePermissions.fromString("rwxrwxrwx")
-			while (current_dir!<>base_dir!.getParent()) 
-				Files.setPosixFilePermissions(current_dir!,permissions!)
+    	base_dir!=Paths.get(base_dir$)
+	    addon_dir!=Paths.get(cloneDir$)
+	    if (addon_dir!.startsWith(base_dir!)) then 
+		    Files.createDirectories(addon_dir!)
+		    if (! osIsWindows!) then  
+			    current_dir!=addon_dir!
+			    permissions!=PosixFilePermissions.fromString("rwxrwxrwx")
 				userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(java.lang.System.getProperty("user.name"))
-				Files.setOwner(current_dir!,userPrincipal!)
-				current_dir!=current_dir!.getParent()
-			wend
-		endif
-	endif 
+			    while (current_dir!<>base_dir!.getParent()) 
+				    Files.setPosixFilePermissions(current_dir!,permissions!)
+				    Files.setOwner(current_dir!,userPrincipal!)
+				    current_dir!=current_dir!.getParent()
+			    wend
+		    endif
+	    endif 
         repoInterface!=new GitRepoInterface(git_auth_id$,cloneDir$)
         print(log_dev) "    Git Repo URL="+repoInterface!.getRepoURL()
 		if (repoInterface!=null()) then 
@@ -159,8 +160,28 @@ rem --- Clone and pull branch(s) from Git repository to newAonLoc
             gosub disp_message
             print(log_dev)"    ***** "+branchName$+" CLONE FAILED *****"   
             goto done
-		endif 
-	
+		endif
+
+        rem --- Set permissions on all directories under cloneDir! for non-Windows OS
+        if (! osIsWindows!) then
+	        permissions!=PosixFilePermissions.fromString("rwxrwxrwx") 
+            userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(java.lang.System.getProperty("user.name"))
+            path! = Paths.get(cloneDir$)
+            stream! = Files.walk(path!)
+            pathList! = stream!.collect(Collectors.toList())
+            
+            dirVector! = new Vector(pathList!)
+            dirIter! = dirVector!.iterator()
+            while dirIter!.hasNext()
+                path! = dirIter!.next()
+                file! = path!.toFile()
+                if(file!.isDirectory()) then
+                    Files.setPosixFilePermissions(path!,permissions!)
+                    Files.setOwner(path!,userPrincipal!)
+                endif
+            wend
+        endif 
+
 		rem --- Check out the current branch
 		print (log_dev) "    Checkout "+branchName$
         checkoutStatus$=repoInterface!.checkoutBranch(branchName$)
