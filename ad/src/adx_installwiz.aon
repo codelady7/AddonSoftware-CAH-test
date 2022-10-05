@@ -198,15 +198,20 @@ rem --- Clone and pull branch(s) from Git repository to newAonLoc
     next syscnt
 
     rem --- Build addonprop.jar and put it in the aon/prop directory
-    print (log_dev) "    Build addonprop.jar"
-    x=scall("jar cf "+newAonLoc$+"/aon/addonprop.jar -C "+newAonLoc$+"/aon/prop .",err=*next)
+    cmd$=java.lang.System.getProperty("java.home")+"/bin/jar cf "+newAonLoc$+"/aon/addonprop.jar -C "+newAonLoc$+"/aon/prop ."
+    x=scall(cmd$,err=*next)
+    if x
+        print (log_dev) "***** WARNING: Unable to build addonprop.jar. Return code was "+str(x)+". *****"
+    else
+        print (log_dev) "Created addonprop.jar from addon*.properties files."
+    endif
     aonJar!=new File(newAonLoc$+"/aon/addonprop.jar")
     propJar!=new File(newAonLoc$+"/aon/prop/addonprop.jar")
     aonJar!.renameTo(propJar!)
 
     rem --- Remove busy/working image from progress meter
     busyImage!.destroy(err=*next)
-    
+
 rem --- Update new addon.syn file
 
     rem --- Increment progress meter
