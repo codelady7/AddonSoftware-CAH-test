@@ -92,4 +92,18 @@ Bug 10500 - AD - Install Wizard may fail to create addonprop.jar
 ----
 Modified: ad/src/adx_installwiz.aon
 
+=======================================================================================================================================
+Revision: 23f5f15f7beac3c2e8cb3d65474d4bbe35222d3c
+Author: Christine <chawkins@basis.com>
+Date: 10/5/2022 2:20:59 PM
+Message:
+Bug 10500 - AD - Install Wizard may fail to create addonprop.jar
+ - issue also exists in Upgrade Wiz, so propagating there
+
+(cherry picked from commit 5b940fc81c268575cf2a3431ef4df0b45cfcdfdf)
+----
+Modified: ad/src/adx_upgradewiz.aon
+
+
+
 
