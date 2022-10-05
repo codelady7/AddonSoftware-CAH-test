@@ -1485,8 +1485,14 @@ buildAddonJar: rem --- Build addonprop.jar and put it in the aon/prop directory
     rem --- Show busy/working image while cloning and pulling from repository
     nxt_ctlID=util.getNextControlID()
     busyImage!=meterWin!.addImageCtrl(nxt_ctlID,150,75,33,33,System.getProperty("basis.BBjHome")+"/utils/reporting/bbjasper/images/CreatingReport.gif")
-
-    x=scall("jar cf "+newAonDir$+"/addonprop.jar -C "+newAonDir$+"/prop .",err=*next)
+    
+    cmd$=java.lang.System.getProperty("java.home")+"/bin/jar cf "+newAonDir$+"/addonprop.jar -C "+newAonDir$+"/prop ."
+    x=scall(cmd$,err=*next)
+    if x
+        print (log_dev) "***** WARNING: Unable to build addonprop.jar. Return code was "+str(x)+". *****"
+    else
+        print (log_dev) "Created addonprop.jar from addon*.properties files."
+    endif
     aonJar!=new File(newAonDir$+"/addonprop.jar")
     propJar!=new File(newAonDir$+"/prop/addonprop.jar")
     aonJar!.renameTo(propJar!)
