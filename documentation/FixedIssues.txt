@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-10-04
+ Report Date:   2022-10-05
  Report Branch: AddonSoftware 22.10
  Last Release:  AddonSoftware 22.04
 =======================================================================================================================================
@@ -78,4 +78,18 @@ Bug 10499 - AD - Install Wizard needs to recursively set permissions to 777 afte
 ----
 Modified: ad/src/adx_installwiz.aon
 Modified: ad/src/adx_upgradewiz.aon
+
+=======================================================================================================================================
+Revision: fc17b33dd07a130ce51dd1a40da3dd7a582a7f1f
+Author: Christine <chawkins@basis.com>
+Date: 10/5/2022 2:08:59 PM
+Message:
+Bug 10500 - AD - Install Wizard may fail to create addonprop.jar
+ - changed scall command to use java.System.getProperty("java.home")+"/bin/jar cf..." instead of just "jar cf..."
+ - if scall return <> 0, log failure to create it
+
+(cherry picked from commit 94232130b8a875f5d563e1c0798fa4ac4a14d03c)
+----
+Modified: ad/src/adx_installwiz.aon
+
 
