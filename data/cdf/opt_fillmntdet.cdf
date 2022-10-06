@@ -1,26 +1,6 @@
 [[OPT_FILLMNTDET.AGCL]]
-rem --- Set up a color to be used when qty picked <> ship qty
-	pickGrid!=callpoint!.getDevObject("pickGrid")
-	plainFont!=pickGrid!.getRowFont(0)
-	boldFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),3);rem bold italic
-	italicFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),2);rem italic
-	callpoint!.setDevObject("plainFont",plainFont!)
-	callpoint!.setDevObject("boldFont",boldFont!)
-	callpoint!.setDevObject("italicFont",italicFont!)
-
-	RGB$="255,0,0"
-	gosub get_RGB
-	callpoint!.setDevObject("redColor",BBjAPI().getSysGui().makeColor(R,G,B))
-
-	RGB$="0,0,0"
-	gosub get_RGB
-	callpoint!.setDevObject("blackColor",BBjAPI().getSysGui().makeColor(R,G,B))
-
-	RGB$="115,147,179"
-	gosub get_RGB
-	callpoint!.setDevObject("disabledColor",BBjAPI().getSysGui().makeColor(R,G,B))
-
 rem --- Get and hold on to columns for qty_picked_dsp and qty_shipped_dsp
+	pickGrid!=callpoint!.getDevObject("pickGrid")
 	picked_hdr$=callpoint!.getTableColumnAttribute("<<DISPLAY>>.QTY_PICKED_DSP","LABS")
 	picked_col=util.getGridColumnNumber(pickGrid!,picked_hdr$)
 	callpoint!.setDevObject("picked_col",picked_col)
@@ -51,8 +31,8 @@ rem --- Get corresponding order detail line.
 	customer_id$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
 	order_no$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
 	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
-	internal_seq_no$=callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO")
-	opeOrdDet_key$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$+internal_seq_no$
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDDET_SEQ_REF")
+	opeOrdDet_key$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
 	findrecord(opeOrdDet_dev,key=opeOrdDet_key$,dom=*next)opeOrdDet$
 
 	unitcostMap!=callpoint!.getDevObject("unitcostMap")
@@ -169,24 +149,9 @@ rem --- Is this item lot/serial?
 		cust$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
 		order$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
 		invoice$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
-		int_seq$=callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO")
+		seq_ref$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDDET_SEQ_REF")
 
-		dim dflt_data$[7,1]
-		dflt_data$[1,0]="FIRM_ID"
-		dflt_data$[1,1]=firm_id$
-		dflt_data$[2,0]="TRANS_STATUS"
-		dflt_data$[2,1]="E"
-		dflt_data$[3,0]="AR_TYPE"
-		dflt_data$[3,1]=ar_type$
-		dflt_data$[4,0]="CUSTOMER_ID"
-		dflt_data$[4,1]=cust$
-		dflt_data$[5,0]="ORDER_NO"
-		dflt_data$[5,1]=order$
-		dflt_data$[6,0]="AR_INV_NO"
-		dflt_data$[6,1]=invoice$
-		dflt_data$[7,0]="ORDDET_SEQ_REF"
-		dflt_data$[7,1]=int_seq$
-		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+int_seq$
+		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+seq_ref$
 
 		rem --- Pass additional info needed in OPT_FILLMNTLSDET
 		callpoint!.setDevObject("item_ship_qty", callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
@@ -213,48 +178,29 @@ rem --- Has the total quantity picked changed?
 	endif
 
 [[OPT_FILLMNTDET.AOPT-PACK]]
-rem --- Launch Packing Carton Detail grid
-		ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
-		cust$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
-		order$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
-		invoice$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
-		warehouse_id$=callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID")
-		item_id$=callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
+rem --- Launch Item Packing grid
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDDET_SEQ_REF")
 
-		dim dflt_data$[8,1]
-		dflt_data$[1,0]="FIRM_ID"
-		dflt_data$[1,1]=firm_id$
-		dflt_data$[2,0]="TRANS_STATUS"
-		dflt_data$[2,1]="E"
-		dflt_data$[3,0]="AR_TYPE"
-		dflt_data$[3,1]=ar_type$
-		dflt_data$[4,0]="CUSTOMER_ID"
-		dflt_data$[4,1]=cust$
-		dflt_data$[5,0]="ORDER_NO"
-		dflt_data$[5,1]=order$
-		dflt_data$[6,0]="AR_INV_NO"
-		dflt_data$[6,1]=invoice$
-		dflt_data$[7,0]="WAREHOUSE_ID"
-		dflt_data$[7,1]=warehouse_id$
-		dflt_data$[8,0]="ITEM_ID"
-		dflt_data$[8,1]=item_id$
-		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+warehouse_id$+item_id$
+	key_pfx$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
 
-		rem --- Pass additional info needed in OPT_CARTDET
-		callpoint!.setDevObject("orddet_seq_ref",callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO"))
-		callpoint!.setDevObject("warehouse_id",callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID"))
-		callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
-		callpoint!.setDevObject("order_memo",callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_MEMO"))
-		callpoint!.setDevObject("um_sold", callpoint!.getColumnData("OPT_FILLMNTDET.UM_SOLD"))
-		callpoint!.setDevObject("qty_picked", callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))
+	rem --- Pass additional info needed in OPT_CARTDET2
+	callpoint!.setDevObject("warehouse_id",callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID"))
+	callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
+	callpoint!.setDevObject("order_memo",callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_MEMO"))
+	callpoint!.setDevObject("um_sold", callpoint!.getColumnData("OPT_FILLMNTDET.UM_SOLD"))
+	callpoint!.setDevObject("qty_picked", callpoint!.getColumnData("OPT_FILLMNTDET.QTY_PICKED"))
 
-		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
-:			"OPT_CARTDET2", 
-:			stbl("+USER_ID"), 
-:			"MNT" ,
-:			key_pfx$, 
-:			table_chans$[all], 
-:			dflt_data$[all]
+	call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:		"OPT_CARTDET2", 
+:		stbl("+USER_ID"), 
+:		"MNT" ,
+:		key_pfx$, 
+:		table_chans$[all], 
+:		dflt_data$[all]
 
 [[OPT_FILLMNTDET.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -269,6 +215,7 @@ rem --- Buttons start disabled
 [[OPT_FILLMNTDET.BDGX]]
 rem --- Disable detail-only buttons
 	callpoint!.setOptionEnabled("LENT",0)
+	callpoint!.setOptionEnabled("PACK",0)
 
 [[OPT_FILLMNTDET.BGDR]]
 rem --- Initialize UM_SOLD related <DISPLAY> fields
@@ -311,8 +258,8 @@ rem --- For inventoried lot/serial items, item qty_picked must equal sum of lot/
 		customer_id$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
 		order_no$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
 		ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
-		internal_seq_no$=callpoint!.getColumnData("OPT_FILLMNTDET.INTERNAL_SEQ_NO")
-		optFillmntDet_key$=firm_id$+trans_status$+ar_type$+customer_id$+order_no$+ar_inv_no$+internal_seq_no$
+		orddet_seq_ref$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDDET_SEQ_REF")
+		optFillmntDet_key$=firm_id$+trans_status$+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
 		read(optFillmntLsDet_dev,key=optFillmntDet_key$,knum="AO_STATUS",dom=*next)
 		while 1
 			optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
@@ -377,21 +324,6 @@ rem ==========================================================================
 	callpoint!.setColumnData("OPT_FILLMNTDET.QTY_SHIPPED",str(qty_shipped))
 	qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))*conv_factor
 	callpoint!.setColumnData("OPT_FILLMNTDET.QTY_PICKED",str(qty_picked))
-
-	return
-
-rem ==========================================================================
-get_RGB: rem --- Parse Red, Green and Blue segments from RGB$ string
-	rem --- input: RGB$
-	rem --- output: R
-	rem --- output: G
-	rem --- output: B
-rem ==========================================================================
-	comma1=pos(","=RGB$,1,1)
-	comma2=pos(","=RGB$,1,2)
-	R=num(RGB$(1,comma1-1))
-	G=num(RGB$(comma1+1,comma2-comma1-1))
-	B=num(RGB$(comma2+1))
 
 	return
 

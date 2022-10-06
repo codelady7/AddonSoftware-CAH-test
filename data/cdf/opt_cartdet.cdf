@@ -1,28 +1,34 @@
 [[OPT_CARTDET.AGDR]]
-rem --- Enable Pack Lot/Serial button for lot/serial items
-	if callpoint!.getDevObject("lotser_item")="Y" then
-		callpoint!.setOptionEnabled("PKLS",1)
-	else
-		callpoint!.setOptionEnabled("PKLS",0)
-	endif
+rem --- Initialize <<DISPLAY>> fields
+	carton_no$=callpoint!.getDevObject("carton_no")
+	callpoint!.setColumnData("<<DISPLAY>>.CARTON_DSP",carton_no$,1)
 
-rem wgh ... 10304 ... Provide visual warning when lot/serial numbers not packed
+rem --- Initialize last warehouse entered
+	warehouse_id$=callpoint!.getColumnData("OPT_CARTDET.WAREHOUSE_ID")
+	if cvs(warehouse_id$,2)<>"" then callpoint!.setDevObject("lastWhse",warehouse_id$)
+
+
+rem --- Enable Pack Lot/Serial button for lot/serial items
+	callpoint!.setOptionEnabled("PKLS",1)
+
+rem wgh ... 10304 ... Provide visual warning when quantity of lot/serial number packed is less than the quantity packed for the item
 
 [[OPT_CARTDET.AGDS]]
-rem wgh ... 10304 ... Provide visual warning when lot/serial numbers not packed
+rem wgh ... 10304 ... Provide visual warning when quantity of lot/serial number packed is less than the quantity packed for the item
+
+[[OPT_CARTDET.AGRE]]
+rem wgh ... 10304 ... Warning when quantity of lot/serial number packed is less than the quantity packed for the item
 
 [[OPT_CARTDET.AGRN]]
 rem --- Disable Pack Lot/Serial button for new lines
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 		callpoint!.setOptionEnabled("PKLS",0)
 	else
-		rem --- Enable Pack Lot/Serial button for lot/serial items
-		if callpoint!.getDevObject("lotser_item")="Y" then
-			callpoint!.setOptionEnabled("PKLS",1)
-		else
-			callpoint!.setOptionEnabled("PKLS",0)
-		endif
+		callpoint!.setOptionEnabled("PKLS",1)
 	endif
+
+rem --- Allow skipping warehouse entry once
+	callpoint!.setDevObject("skipWHCode","Y")
 
 [[OPT_CARTDET.AOPT-PKLS]]
 rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
@@ -33,7 +39,7 @@ rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
 	carton_no$=callpoint!.getColumnData("OPT_CARTDET.CARTON_NO")
 	warehouse_id$=callpoint!.getColumnData("OPT_CARTDET.WAREHOUSE_ID")
 	item_id$=callpoint!.getColumnData("OPT_CARTDET.ITEM_ID")
-	seqRef$=callpoint!.getColumnData("OPT_CARTDET.INTERNAL_SEQ_NO")
+	seqRef$=callpoint!.getColumnData("OPT_CARTDET.ORDDET_SEQ_REF")
 	optCartDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+warehouse_id$+item_id$+seqRef$
 
 	optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
@@ -42,7 +48,7 @@ rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
 	optCartLsDet_key$=key(optCartLsDet_dev,end=*next)
 print"optCartDet_key$=",optCartDet_key$
 print"optCartLsDet_key$=",optCartLsDet_key$
-escape;rem wgh ... 10304 ... testing
+rem wgh ... 10304 ... testing
 	if pos(optCartDet_key$=optCartLsDet_key$)=1 then
 		rem --- Grid already initialized
 	else
@@ -101,28 +107,6 @@ escape;rem wgh ... 10304 ... testing
 
 rem --- Launch Packing Carton Lot/Serial Detail grid
 
-		dim dflt_data$[10,1]
-		dflt_data$[1,0]="FIRM_ID"
-		dflt_data$[1,1]=firm_id$
-		dflt_data$[2,0]="TRANS_STATUS"
-		dflt_data$[2,1]="E"
-		dflt_data$[3,0]="AR_TYPE"
-		dflt_data$[3,1]=ar_type$
-		dflt_data$[4,0]="CUSTOMER_ID"
-		dflt_data$[4,1]=customer_id$
-		dflt_data$[5,0]="ORDER_NO"
-		dflt_data$[5,1]=order_no$
-		dflt_data$[6,0]="AR_INV_NO"
-		dflt_data$[6,1]=ar_inv_no$
-		dflt_data$[7,0]="CARTON_NO"
-		dflt_data$[7,1]=carton_no$
-		dflt_data$[8,0]="WAREHOUSE_ID"
-		dflt_data$[8,1]=warehouse_id$
-		dflt_data$[9,0]="ITEM_ID"
-		dflt_data$[9,1]=item_id$
-		dflt_data$[10,0]="CARTDET_SEQ_REF"
-		dflt_data$[10,1]=seqRef$
-
 		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
 :			"OPT_CARTLSDET", 
 :			stbl("+USER_ID"), 
@@ -132,20 +116,9 @@ rem --- Launch Packing Carton Lot/Serial Detail grid
 :			dflt_data$[all]
 
 [[OPT_CARTDET.AREC]]
-rem --- Initialize new record
-rem wgh ... 10304 ... is this still necessary after changing keys
-rem ...	warehouse_id$=callpoint!.getDevObject("warehouse_id")
-rem ...	callpoint!.setColumnData("OPT_CARTDET.WAREHOUSE_ID",warehouse_id$,1)
-rem wgh ... 10304 ... is this still necessary after changing keys
-rem ...	item_id$=callpoint!.getDevObject("item_id")
-rem ...	callpoint!.setColumnData("OPT_CARTDET.ITEM_ID",item_id$,1)
-rem wgh ... 10304 ... is this still necessary after changing keys
-rem ...	call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",newInternalSeqNo$,table_chans$[all]
-rem ...	callpoint!.setColumnData("OPT_CARTDET.INTERNAL_SEQ_NO",newInternalSeqNo$)
-	order_memo$=callpoint!.getDevObject("order_memo")
-	callpoint!.setColumnData("OPT_CARTDET.ORDER_MEMO",order_memo$,1)
-	um_sold$=callpoint!.getDevObject("um_sold")
-	callpoint!.setColumnData("OPT_CARTDET.UM_SOLD",um_sold$,1)
+rem --- Initialize <<DISPLAY>> fields
+	carton_no$=callpoint!.getDevObject("carton_no")
+	callpoint!.setColumnData("<<DISPLAY>>.CARTON_DSP",carton_no$,1)
 
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
@@ -156,13 +129,8 @@ rem --- Initialize RTP trans_status and created fields
 rem --- Buttons start disabled
 	callpoint!.setOptionEnabled("PKLS",0)
 
-[[OPT_CARTDET.ASHO]]
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_LOT")); break
-		case 2; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_SERIAL")); break
-		case default; callpoint!.setOptionEnabled("PKLS",0); break
-	swend
+rem --- Allow skipping warehouse entry once
+	callpoint!.setDevObject("skipWHCode","Y")
 
 [[OPT_CARTDET.AWRI]]
 rem --- Enable Pack Lot/Serial button for lot/serial items
@@ -171,47 +139,26 @@ rem --- Enable Pack Lot/Serial button for lot/serial items
 [[OPT_CARTDET.BEND]]
 rem wgh ... 10304 ... Warn when lot/serial numbers haven't been packed
 
-[[OPT_CARTDET.CARTON_NO.AVAL]]
-rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CARTON_NO 
-	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTDET","AO_STATUS",key_tpl$,table_chans$[all],status$
-	dim optCartDet_keyPrefix$:key_tpl$
-	optCartDet_keyPrefix$=callpoint!.getKeyPrefix()
+[[OPT_CARTDET.BSHO]]
+rem --- Initialize last warehouse entered
+	callpoint!.setDevObject("lastWhse","")
 
-	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
-	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-	ar_type$=optCartDet_keyPrefix.ar_type$
-	customer_id$=optCartDet_keyPrefix.customer_id$
-	order_no$=optCartDet_keyPrefix.order_no$
-	ar_inv_no$=optCartDet_keyPrefix.ar_inv_no$
-	carton_no$=pad(callpoint!.getUserInput(),len(optCartHdr.carton_no$))
-	optCartHdr_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$
-	readrecord(optCartHdr_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*next)optCartHdr$
-	if cvs(optCartHdr.customer_id$,2)="" then
-		rem --- Create new OPT_CARTHDR record for this CARTON_NO
-		optCartHdr.firm_id$=firm_id$
-		optCartHdr.ar_type$=ar_type$
-		optCartHdr.customer_id$=customer_id$
-		optCartHdr.order_no$=order_no$
-		optCartHdr.ar_inv_no$=ar_inv_no$
-		optCartHdr.carton_no$=callpoint!.getUserInput()
-		optCartHdr.trans_status$="E"
-		optCartHdr.created_user$=sysinfo.user_id$
-		optCartHdr.created_date$=date(0:"%Yd%Mz%Dz")
-		optCartHdr.created_time$=date(0:"%Hz%mz")
-		optCartHdr.weight=0
-		optCartHdr.freight_amt=0
-
-		rem --- Initialize new OPT_CARTHDR record with the ARC_SHIPVIACODE record for the OPT_FILLMNTHDR.AR_SHIP_VIA.
-		arcShipViaCode_dev=fnget_dev("ARC_SHIPVIACODE")
-		dim arcShipViaCode$:fnget_tpl$("ARC_SHIPVIACODE")
-		ar_ship_via$=callpoint!.getDevObject("ar_ship_via")
-		readrecord(arcShipViaCode_dev,key=firm_id$+ar_ship_via$,dom=*next)arcShipViaCode$
-		optCartHdr.carrier_code$=arcShipViaCode.carrier_code$
-		optCartHdr.scac_code$=arcShipViaCode.scac_code$
-
-		writerecord(optCartHdr_dev)optCartHdr$
-		callpoint!.setDevObject("refreshRecord",1)
+[[OPT_CARTDET.BWRI]]
+rem --- Initialize RTP modified fields for modified existing records
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
+		callpoint!.setColumnData("OPT_CARTDET.MOD_USER", sysinfo.user_id$)
+		callpoint!.setColumnData("OPT_CARTDET.MOD_DATE", date(0:"%Yd%Mz%Dz"))
+		callpoint!.setColumnData("OPT_CARTDET.MOD_TIME", date(0:"%Hz%mz"))
 	endif
+
+[[<<DISPLAY>>.CARTON_DSP.AVAL]]
+rem --- Need to use <<DISPLAY>> field for CARTON_NO because it is part of the key to the primary table OPT_CARTHDR.
+
+[[OPT_CARTDET.ITEM_ID.AVAL]]
+rem wgh ... 10304 ... handle item_id the same as in Order Entry
+
+[[OPT_CARTDET.ITEM_ID.BINP]]
+rem wgh ... 10304 ... handle item_id the same as in Order Entry
 
 [[OPT_CARTDET.QTY_PACKED.AVAL]]
 rem --- QTY_PACKED cannot be negative
@@ -226,6 +173,7 @@ rem --- QTY_PACKED cannot be negative
 	endif
 
 rem --- QTY_PACKED cannot be greater than the remaining number that still need to be packed.
+break; rem wgh ... 10304 ... stopped here
 	qty_picked=num(callpoint!.getDevObject("qty_picked"))
 	unpackedQty=callpoint!.getDevObject("unpackedQty")
 	if qty_packed>unpackedQty then
@@ -239,7 +187,7 @@ rem --- QTY_PACKED cannot be greater than the remaining number that still need t
 		break
 	endif
 
-rem wgh ... 10304 ... Provide visual warning when lot/serial numbers not packed
+rem wgh ... 10304 ... Provide visual warning when quantity of lot/serial number packed is less than the quantity packed for the item
 
 [[OPT_CARTDET.QTY_PACKED.BINP]]
 rem --- Default QTY_PACKED to the remaining number that still need to be packed.
@@ -250,10 +198,30 @@ rem --- Default QTY_PACKED to the remaining number that still need to be packed.
 		alreadyPacked=alreadyPacked+optCartDet.qty_packed
 	next i
 
+break; rem wgh ... 10304 ... testing
 	qty_picked=num(callpoint!.getDevObject("qty_picked"))
 	unpackedQty=qty_picked-alreadyPacked
 	callpoint!.setDevObject("unpackedQty",unpackedQty)
 	callpoint!.setColumnData("OPT_CARTDET.QTY_PACKED",str(unpackedQty),1)
+
+[[OPT_CARTDET.WAREHOUSE_ID.AVAL]]
+rem --- Hold on to the last warehouse entered
+	warehouse_id$=callpoint!.getUserInput()
+	callpoint!.setDevObject("lastWhse",warehouse_id$)
+
+[[OPT_CARTDET.WAREHOUSE_ID.BINP]]
+rem --- If a warehouse was previously entered for this carton, use it and skip warehouse entry once.
+	lastWhse$=callpoint!.getDevObject("lastWhse")
+	if cvs(lastWhse$,2)<>"" then
+		callpoint!.setColumnData("OPT_CARTDET.WAREHOUSE_ID",lastWhse$,1)
+
+rem wgh ... 10304 ... testing
+		rem --- Force focus on item when warehouse hasn't been skipped yet
+		if callpoint!.getDevObject("skipWHCode") = "Y" then
+			callpoint!.setDevObject("skipWHCode","N"); rem --- skip warehouse code entry only once
+			callpoint!.setFocus(num(callpoint!.getValidationRow()),"OPT_CARTDET.ITEM_ID",1)
+		endif
+	endif
 
 
 

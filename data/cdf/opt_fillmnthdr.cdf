@@ -19,8 +19,13 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 			case 2; rem --- ON_TAB_SELECT
 				tabCtrl!=Form!.getControl(ctl_ID)
 				tabIndex=tabCtrl!.getSelectedIndex()
+				Picking_Tab$=Translate!.getTranslation("DDM_TABLE_TABG-OPT_FILLMNTHDR-01-DD_ATTR_TABG")
 				Packing_and_Shipping$=Translate!.getTranslation("DDM_TABLE_TABG-OPT_FILLMNTHDR-02-DD_ATTR_TABG")
+				if pos(tabCtrl!.getTitleAt(tabIndex)=Picking_Tab$)=1 then
+					rem --- Picking Tab has focus
+				endif
 				if pos(tabCtrl!.getTitleAt(tabIndex)=Packing_and_Shipping$)=1 then
+					rem --- Packing & Shipping Tab has focus
 					rem --- Need to refresh display if a new OPT_CARTHDR record was added via Pick Item button (also see AWRI)
 					if callpoint!.getDevObject("refreshRecord") then
 						optFillmntHdr_key$=callpoint!.getRecordKey()
@@ -194,7 +199,8 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		optFillmntDet.customer_id$=opeOrdDet.customer_id$
 		optFillmntDet.order_no$=opeOrdDet.order_no$
 		optFillmntDet.ar_inv_no$=opeOrdDet.ar_inv_no$
-		optFillmntDet.internal_seq_no$=opeOrdDet.internal_seq_no$
+		optFillmntDet.line_no$=opeOrdDet.line_no$
+		optFillmntDet.orddet_seq_ref$=opeOrdDet.internal_seq_no$
 		optFillmntDet.warehouse_id$=opeOrdDet.warehouse_id$
 		optFillmntDet.item_id$=opeOrdDet.item_id$
 		optFillmntDet.order_memo$=opeOrdDet.order_memo$
@@ -240,6 +246,27 @@ rem --- Get grid control on each tab
 
 rem --- Set callback for a tab being selected so can refresh display if a new OPT_CARTHDR record was added via Pick Item button
 	tabCtrl!.setCallback(BBjTabCtrl.ON_TAB_SELECT,"custom_event")
+
+rem --- Set up a color to be used when qty picked <> ship qty
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	plainFont!=pickGrid!.getRowFont(0)
+	boldFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),3);rem bold italic
+	italicFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),2);rem italic
+	callpoint!.setDevObject("plainFont",plainFont!)
+	callpoint!.setDevObject("boldFont",boldFont!)
+	callpoint!.setDevObject("italicFont",italicFont!)
+
+	RGB$="255,0,0"
+	gosub get_RGB
+	callpoint!.setDevObject("redColor",BBjAPI().getSysGui().makeColor(R,G,B))
+
+	RGB$="0,0,0"
+	gosub get_RGB
+	callpoint!.setDevObject("blackColor",BBjAPI().getSysGui().makeColor(R,G,B))
+
+	RGB$="115,147,179"
+	gosub get_RGB
+	callpoint!.setDevObject("disabledColor",BBjAPI().getSysGui().makeColor(R,G,B))
 
 [[OPT_FILLMNTHDR.AWRI]]
 rem --- Need to refresh display if a new OPT_CARTHDR record was added via Pick Item button (also see ACUS)
@@ -318,7 +345,7 @@ rem --- Are there any items that weren't picked completely
 	for row=0 to gridRows-2
 		qty_picked=num(pickGrid!.getCellText(row,picked_col))
 		ship_qty=num(pickGrid!.getCellText(row,shipped_col))
-		if qty_picked<>ship_qty and dropshipMap!.get(i)<>"Y" and pos(linetypeMap!.get(i)="MO")=0 then
+		if ship_qty>0 and qty_picked<>ship_qty and dropshipMap!.get(row)<>"Y" and pos(linetypeMap!.get(row)="MO")=0 then
 			pickedOK=0
 			break
 		endif
@@ -350,7 +377,7 @@ rem --- Open needed files
 	open_tables$[6]="OPT_CARTHDR",  open_opts$[6]="OTA"
 	open_tables$[7]="OPT_CARTDET",  open_opts$[7]="OTA"
 	open_tables$[8]="OPT_CARTLSDET",  open_opts$[8]="OTA"
-	open_tables$[9]="OPT_CARTLSDET", open_opts$[9]="OTA[2_]"
+	open_tables$[9]="OPT_CARTLSDET2", open_opts$[9]="OTA"
 	open_tables$[10]="IVS_PARAMS",   open_opts$[10]="OTA"
 	open_tables$[11]="IVM_ITEMMAST",   open_opts$[11]="OTA"
 	open_tables$[12]="IVM_ITEMWHSE",   open_opts$[12]="OTA"
@@ -361,18 +388,20 @@ rem --- Open needed files
 	gosub open_tables
 
 rem --- Set up Lot/Serial button
-	dim ivs01a$:open_tpls$[10]
-	read record (num(open_chans$[10]), key=firm_id$+"IV00") ivs01a$
-	switch pos(ivs01a.lotser_flag$="LS")
+	ivsParams_dev=fnget_dev("IVS_PARAMS")
+	dim ivsParams$:fnget_tpl$("IVS_PARAMS")
+	findrecord(ivsParams_dev, key=firm_id$+"IV00")ivsParams$
+	switch pos(ivsParams.lotser_flag$="LS")
 		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
 		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
 		case default; break
 	swend
-	callpoint!.setOptionEnabled("LENT",0)
-	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
+	callpoint!.setDevObject("lotser_flag",ivsParams.lotser_flag$)
 
-rem --- Pack Carton button starts disabled
+rem --- Disable all detail grid butons
+	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setOptionEnabled("PACK",0)
+	callpoint!.setOptionEnabled("CART",0)
 
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
@@ -429,6 +458,22 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+[[OPT_FILLMNTHDR.<CUSTOM>]]
+rem ==========================================================================
+get_RGB: rem --- Parse Red, Green and Blue segments from RGB$ string
+	rem --- input: RGB$
+	rem --- output: R
+	rem --- output: G
+	rem --- output: B
+rem ==========================================================================
+	comma1=pos(","=RGB$,1,1)
+	comma2=pos(","=RGB$,1,2)
+	R=num(RGB$(1,comma1-1))
+	G=num(RGB$(comma1+1,comma2-comma1-1))
+	B=num(RGB$(comma2+1))
+
+	return
 
 
 
