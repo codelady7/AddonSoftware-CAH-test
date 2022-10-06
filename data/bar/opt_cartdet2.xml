@@ -21,12 +21,12 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_cartdet2"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_cartdet2">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_cartdet2">20220921</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_cartdet2">20220928</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartdet2">20220928</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartdet2">100138</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_cartdet2">20221006</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartdet2">20221006</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartdet2">102058</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_cartdet2">OPT_CARTDET     </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_cartdet2">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
-			<DD_ATTR_DKNM id="ddm_tables.opt_cartdet2">AO_WH_ITEM_CART</DD_ATTR_DKNM>
+			<DD_ATTR_DKNM id="ddm_tables.opt_cartdet2">AO_ORDDET_CART</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opt_cartdet2"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opt_cartdet2">G</DD_ATTR_FTYP>
 			<DD_ATTR_HELP id="ddm_tables.opt_cartdet2"></DD_ATTR_HELP>
@@ -74,6 +74,10 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdet2agdr">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdet2agdr">AGDR</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_cartdet2agds">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdet2agds">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdet2agds">AGDS</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartdet2agrn">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdet2agrn">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdet2agrn">AGRN</DD_ATTR_CPRO>
@@ -101,6 +105,13 @@
 		<RECORD id="ddm_table_cpro.opt_cartdet2bwri">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdet2bwri">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdet2bwri">BWRI</DD_ATTR_CPRO>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_dtld">
+		<ID id="ddm_table_dtld">DDM_TABLE_DTLD</ID>
+		<RECORD id="ddm_table_dtld.opt_cartdet2opt_cartlsdet2">
+			<DD_TABLE_ALIAS id="ddm_table_dtld.opt_cartdet2opt_cartlsdet2">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_ATTR_DTLD id="ddm_table_dtld.opt_cartdet2opt_cartlsdet2">OPT_CARTLSDET2  </DD_ATTR_DTLD>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -139,7 +150,7 @@
 		<RECORD id="ddm_table_tpls.opt_cartdet2">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opt_cartdet2">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opt_cartdet2"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.opt_cartdet2">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),carton_no:c(8),warehouse_id:c(2),item_id:c(20),internal_seq_no:c(12),sequence_no:c(3),order_memo:c(40),um_sold:c(6),batch_no:c(7),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),qty_packed:n(7*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.opt_cartdet2">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),carton_no:c(8),orddet_seq_ref:c(12),sequence_no:c(3),warehouse_id:c(2),item_id:c(20),order_memo:c(40),um_sold:c(6),batch_no:c(7),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),trans_status:c(1),arc_user:c(16),arc_date:c(8),arc_time:c(4),qty_packed:n(7*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -326,8 +337,8 @@
 		<RECORD id="ddm_keys.opt_cartdet208">
 			<DD_TABLE_ALIAS id="ddm_keys.opt_cartdet208">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_keys.opt_cartdet208">08</DD_KEY_NUMBER>
-			<DD_KEY_DESC id="ddm_keys.opt_cartdet208">Status + Whse + Item + Carton</DD_KEY_DESC>
-			<DD_KEY_ID id="ddm_keys.opt_cartdet208">AO_WH_ITEM_CART </DD_KEY_ID>
+			<DD_KEY_DESC id="ddm_keys.opt_cartdet208">Stat + Orddet_Seq_Ref + Carton</DD_KEY_DESC>
+			<DD_KEY_ID id="ddm_keys.opt_cartdet208">AO_ORDDET_CART  </DD_KEY_ID>
 			<DD_KEY_AUTO_GEN id="ddm_keys.opt_cartdet208"></DD_KEY_AUTO_GEN>
 		</RECORD>
 	</ALIAS>
@@ -415,7 +426,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20007">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20007">00</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20007">07</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20007">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20007">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20007"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20007"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20007"></DD_SEGMENT_LEN>
@@ -428,7 +439,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20008">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20008">00</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20008">08</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20008">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20008">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20008"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20008"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20008"></DD_SEGMENT_LEN>
@@ -436,32 +447,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20008">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20008">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20008">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20009">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20009">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20009">00</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20009">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20009">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20009"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20009"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20009"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20009">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20009">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20009">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20009">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20010">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20010">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20010">00</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20010">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20010">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20010"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20010"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20010"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20010">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20010">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20010">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20010">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20101">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20101">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -558,7 +543,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20108">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20108">01</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20108">08</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20108">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20108">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20108"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20108"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20108"></DD_SEGMENT_LEN>
@@ -571,7 +556,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20109">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20109">01</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20109">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20109">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20109">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20109"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20109"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20109"></DD_SEGMENT_LEN>
@@ -579,32 +564,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20109">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20109">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20109">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20110">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20110">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20110">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20110">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20110">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20110"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20110"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20110"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20110">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20110">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20110">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20110">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20111">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20111">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20111">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20111">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20111">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20111"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20111"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20111"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20111">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20111">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20111">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20111">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20201">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20201">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -701,7 +660,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20208">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20208">02</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20208">08</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20208">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20208">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20208"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20208"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20208"></DD_SEGMENT_LEN>
@@ -714,7 +673,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20209">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20209">02</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20209">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20209">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20209">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20209"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20209"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20209"></DD_SEGMENT_LEN>
@@ -722,32 +681,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20209">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20209">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20209">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20210">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20210">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20210">02</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20210">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20210">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20210"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20210"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20210"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20210">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20210">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20210">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20210">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20211">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20211">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20211">02</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20211">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20211">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20211"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20211"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20211"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20211">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20211">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20211">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20211">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20301">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20301">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -857,7 +790,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20309">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20309">03</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20309">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20309">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20309">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20309"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20309"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20309"></DD_SEGMENT_LEN>
@@ -870,7 +803,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20310">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20310">03</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20310">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20310">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20310">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20310"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20310"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20310"></DD_SEGMENT_LEN>
@@ -878,32 +811,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20310">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20310">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20310">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20311">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20311">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20311">03</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20311">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20311">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20311"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20311"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20311"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20311">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20311">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20311">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20311">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20312">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20312">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20312">03</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20312">12</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20312">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20312"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20312"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20312"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20312">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20312">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20312">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20312">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20401">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20401">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -1013,7 +920,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20409">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20409">04</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20409">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20409">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20409">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20409"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20409"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20409"></DD_SEGMENT_LEN>
@@ -1026,7 +933,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20410">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20410">04</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20410">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20410">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20410">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20410"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20410"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20410"></DD_SEGMENT_LEN>
@@ -1034,32 +941,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20410">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20410">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20410">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20411">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20411">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20411">04</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20411">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20411">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20411"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20411"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20411"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20411">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20411">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20411">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20411">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20412">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20412">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20412">04</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20412">12</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20412">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20412"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20412"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20412"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20412">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20412">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20412">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20412">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20501">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20501">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -1169,7 +1050,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20509">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20509">05</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20509">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20509">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20509">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20509"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20509"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20509"></DD_SEGMENT_LEN>
@@ -1182,7 +1063,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20510">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20510">05</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20510">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20510">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20510">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20510"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20510"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20510"></DD_SEGMENT_LEN>
@@ -1190,32 +1071,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20510">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20510">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20510">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20511">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20511">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20511">05</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20511">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20511">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20511"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20511"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20511"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20511">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20511">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20511">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20511">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20512">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20512">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20512">05</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20512">12</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20512">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20512"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20512"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20512"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20512">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20512">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20512">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20512">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20601">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20601">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -1325,7 +1180,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20609">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20609">06</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20609">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20609">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20609">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20609"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20609"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20609"></DD_SEGMENT_LEN>
@@ -1338,7 +1193,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20610">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20610">06</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20610">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20610">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20610">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20610"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20610"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20610"></DD_SEGMENT_LEN>
@@ -1346,32 +1201,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20610">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20610">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20610">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20611">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20611">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20611">06</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20611">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20611">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20611"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20611"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20611"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20611">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20611">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20611">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20611">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20612">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20612">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20612">06</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20612">12</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20612">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20612"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20612"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20612"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20612">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20612">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20612">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20612">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20701">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20701">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -1481,7 +1310,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20709">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20709">07</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20709">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20709">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20709">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20709"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20709"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20709"></DD_SEGMENT_LEN>
@@ -1494,7 +1323,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20710">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20710">07</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20710">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20710">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20710">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20710"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20710"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20710"></DD_SEGMENT_LEN>
@@ -1502,32 +1331,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20710">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20710">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20710">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20711">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20711">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20711">07</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20711">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20711">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20711"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20711"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20711"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20711">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20711">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20711">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20711">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20712">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20712">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20712">07</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20712">12</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20712">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20712"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20712"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20712"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20712">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20712">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20712">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20712">N</DD_SEGMENT_NUM>
 		</RECORD>
 		<RECORD id="ddm_key_segs.opt_cartdet20801">
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20801">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -1611,7 +1414,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20807">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20807">08</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20807">07</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20807">WAREHOUSE_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20807">ORDDET_SEQ_REF</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20807"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20807"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20807"></DD_SEGMENT_LEN>
@@ -1624,7 +1427,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20808">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20808">08</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20808">08</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20808">ITEM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20808">CARTON_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20808"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20808"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20808"></DD_SEGMENT_LEN>
@@ -1637,7 +1440,7 @@
 			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20809">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20809">08</DD_KEY_NUMBER>
 			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20809">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20809">CARTON_NO</DD_SEGMENT_COL>
+			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20809">SEQUENCE_NO</DD_SEGMENT_COL>
 			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20809"></DD_SEGMENT_POS>
 			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20809"></DD_SEGMENT_OFF>
 			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20809"></DD_SEGMENT_LEN>
@@ -1645,32 +1448,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20809">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20809">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20809">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20810">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20810">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20810">08</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20810">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20810">INTERNAL_SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20810"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20810"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20810"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20810">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20810">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20810">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20810">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.opt_cartdet20811">
-			<DD_TABLE_ALIAS id="ddm_key_segs.opt_cartdet20811">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.opt_cartdet20811">08</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.opt_cartdet20811">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.opt_cartdet20811">SEQUENCE_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.opt_cartdet20811"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.opt_cartdet20811"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.opt_cartdet20811"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.opt_cartdet20811">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.opt_cartdet20811">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.opt_cartdet20811">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.opt_cartdet20811">N</DD_SEGMENT_NUM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -1946,7 +1723,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2006">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet2006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_cartdet2006">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_CTLY>
@@ -1974,18 +1751,18 @@
 			<DD_ATTR_STYL id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_cartdet2006">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opt_cartdet2006">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opt_cartdet2006">3001</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.opt_cartdet2006">ine_carton_no</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2006">0</DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2006">Y</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2006"></DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2006">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.opt_cartdet2007">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_cartdet2007">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_cartdet2007">007</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2007">WAREHOUSE_ID    </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2007">WAREHOUSE_ID    </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2007">SEQ_REF         </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2007">ORDDET_SEQ_REF  </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_cartdet2007">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_cartdet2007">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_cartdet2007">N</DD_FIELD_DELIM>
@@ -1993,8 +1770,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.opt_cartdet2007"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.opt_cartdet2007"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.opt_cartdet2007"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2007">20220808</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2007">20220808</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2007">20221003</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2007">20221003</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_CPGM>
@@ -2007,8 +1784,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2007">Whse</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2007">Whse</DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.opt_cartdet2007">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_MAXL>
@@ -2020,7 +1797,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2007">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2007">WAREHOUSE_ID</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2007">ORDDET_SEQ_REF</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_cartdet2007">N</DD_ATTR_FTSR>
@@ -2030,13 +1807,13 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2007">Y</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2007">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2007"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.opt_cartdet2008">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_cartdet2008">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_cartdet2008">008</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2008">ITEM_ID         </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2008">ITEM_ID         </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2008">SEQUENCE_NO     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2008">SEQUENCE_NO     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_cartdet2008">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_cartdet2008">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_cartdet2008">N</DD_FIELD_DELIM>
@@ -2044,8 +1821,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.opt_cartdet2008"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.opt_cartdet2008"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.opt_cartdet2008"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2008">20220808</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2008">20220808</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2008">20220921</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2008">20220921</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_CPGM>
@@ -2058,8 +1835,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2008">Item Number</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2008">Item Number</DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.opt_cartdet2008">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_MAXL>
@@ -2071,7 +1848,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2008">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2008">ITEM_ID</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2008">SEQUENCE_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_cartdet2008">N</DD_ATTR_FTSR>
@@ -2081,13 +1858,13 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2008">Y</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2008">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2008"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.opt_cartdet2009">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_cartdet2009">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_cartdet2009">009</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2009">INTERNAL_SEQ_NO </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2009">INTERNAL_SEQ_NO </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2009">WAREHOUSE_ID    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2009">WAREHOUSE_ID    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_cartdet2009">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_cartdet2009">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_cartdet2009">N</DD_FIELD_DELIM>
@@ -2095,8 +1872,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.opt_cartdet2009"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.opt_cartdet2009"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.opt_cartdet2009"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2009">20220906</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2009">20220906</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2009">20221003</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2009">20221003</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CPGM>
@@ -2105,12 +1882,12 @@
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.opt_cartdet2009">[SEQ:INTERNAL_SEQ_NO]</DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2009">Whse</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2009">Whse</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.opt_cartdet2009">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_MAXL>
@@ -2120,25 +1897,25 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2009">10</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2009">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2009">INTERNAL_SEQ_NO</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2009">WAREHOUSE_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_cartdet2009">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opt_cartdet2009">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.opt_cartdet2009">3002</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opt_cartdet2009">dis_warehouse_id</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2009">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2009">Y</DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2009"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.opt_cartdet2010">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_cartdet2010">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_cartdet2010">010</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2010">SEQUENCE_NO     </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2010">SEQUENCE_NO     </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_cartdet2010">ITEM_ID         </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_cartdet2010">ITEM_ID         </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_cartdet2010">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_cartdet2010">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_cartdet2010">N</DD_FIELD_DELIM>
@@ -2146,8 +1923,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.opt_cartdet2010"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.opt_cartdet2010"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.opt_cartdet2010"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2010">20220921</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2010">20220921</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.opt_cartdet2010">20221003</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet2010">20221003</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_CPGM>
@@ -2160,8 +1937,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.opt_cartdet2010">Item Number</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opt_cartdet2010">Item Number</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.opt_cartdet2010">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_MAXL>
@@ -2171,18 +1948,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2010">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2010">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2010">SEQUENCE_NO</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2010">ITEM_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_cartdet2010">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opt_cartdet2010">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.opt_cartdet2010">3003</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opt_cartdet2010">dis_item_id</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opt_cartdet2010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2010">Y</DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opt_cartdet2010"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.opt_cartdet2011">
@@ -2222,7 +1999,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2011">14</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2011">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2011">ORDER_MEMO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2011"></DD_ATTR_FONT>
@@ -2273,7 +2050,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2012">15</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2012">14</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2012">UM_SOLD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2012"></DD_ATTR_FONT>
@@ -2324,7 +2101,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2013">16</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2013">15</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2013">BATCH_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2013"></DD_ATTR_FONT>
@@ -2375,7 +2152,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2014">17</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2014">16</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2014">CREATED_USER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2014"></DD_ATTR_FONT>
@@ -2426,7 +2203,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2015"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2015"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2015"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2015">18</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2015">17</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2015"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2015">CREATED_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2015"></DD_ATTR_FONT>
@@ -2477,7 +2254,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2016"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2016">19</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2016">18</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2016"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2016">CREATED_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2016"></DD_ATTR_FONT>
@@ -2528,7 +2305,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2017"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2017"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2017"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2017">20</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2017">19</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2017"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2017">MOD_USER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2017"></DD_ATTR_FONT>
@@ -2579,7 +2356,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2018"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2018"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2018"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2018">21</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2018">20</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2018"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2018">MOD_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2018"></DD_ATTR_FONT>
@@ -2630,7 +2407,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2019"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2019"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2019"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2019">22</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2019">21</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2019"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2019">MOD_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2019"></DD_ATTR_FONT>
@@ -2732,7 +2509,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2021"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2021"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2021"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2021">23</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2021">22</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2021"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2021">ARC_USER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2021"></DD_ATTR_FONT>
@@ -2783,7 +2560,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2022"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2022"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2022"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2022">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2022">23</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2022"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2022">ARC_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2022"></DD_ATTR_FONT>
@@ -2834,7 +2611,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2023"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2023"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2023"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2023">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2023">24</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2023"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2023">ARC_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2023"></DD_ATTR_FONT>
@@ -2885,7 +2662,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_cartdet2024"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_cartdet2024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_cartdet2024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2024">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_cartdet2024">25</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_cartdet2024"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opt_cartdet2024">QTY_PACKED</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_cartdet2024"></DD_ATTR_FONT>
@@ -2905,10 +2682,10 @@
 		<RECORD id="ddm_table_disp.opt_cartdet2001">
 			<DD_TABLE_ALIAS id="ddm_table_disp.opt_cartdet2001">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_disp.opt_cartdet2001">001</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_disp.opt_cartdet2001">WAREHOUSE_ID    </DD_DATA_NAME>
-			<DD_CTRL_NAME id="ddm_table_disp.opt_cartdet2001">WHSE_ID_DSP     </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_disp.opt_cartdet2001">Whse</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_disp.opt_cartdet2001">Whse</DD_ATTR_LABS>
+			<DD_DATA_NAME id="ddm_table_disp.opt_cartdet2001">CARTON_NO       </DD_DATA_NAME>
+			<DD_CTRL_NAME id="ddm_table_disp.opt_cartdet2001">CARTON_DSP      </DD_CTRL_NAME>
+			<DD_ATTR_LABL id="ddm_table_disp.opt_cartdet2001">Carton Number</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_disp.opt_cartdet2001">Carton Number</DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_CALC>
 			<DD_ATTR_CTLX id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_CTLY>
@@ -2918,48 +2695,30 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_cartdet2001">12</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.opt_cartdet2001">3002</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_disp.opt_cartdet2001">dis_whse_id_dsp</DD_ATTR_CTLN>
+			<DD_ATTR_TIND id="ddm_table_disp.opt_cartdet2001">10</DD_ATTR_TIND>
+			<DD_ATTR_CTLI id="ddm_table_disp.opt_cartdet2001">3001</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_disp.opt_cartdet2001">dis_carton_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_cartdet2001">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_cartdet2001"></DD_ATTR_CPGM>
-		</RECORD>
-		<RECORD id="ddm_table_disp.opt_cartdet2002">
-			<DD_TABLE_ALIAS id="ddm_table_disp.opt_cartdet2002">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_SEQUENCE id="ddm_table_disp.opt_cartdet2002">002</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_disp.opt_cartdet2002">ITEM_ID         </DD_DATA_NAME>
-			<DD_CTRL_NAME id="ddm_table_disp.opt_cartdet2002">ITEM_ID_DSP     </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_disp.opt_cartdet2002">Item Number</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_disp.opt_cartdet2002">Item Number</DD_ATTR_LABS>
-			<DD_ATTR_CALC id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_CALC>
-			<DD_ATTR_CTLX id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_CTLY>
-			<DD_ATTR_CTLW id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_CTLW>
-			<DD_ATTR_CTLH id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_CTLH>
-			<DD_ATTR_DRLE id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_DRLE>
-			<DD_ATTR_GHDR id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_GHDR>
-			<DD_ATTR_SLEV id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_SLEV>
-			<DD_ATTR_TABG id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_cartdet2002">13</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.opt_cartdet2002">3003</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_disp.opt_cartdet2002">dis_item_id_dsp</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_disp.opt_cartdet2002">0</DD_ATTR_CTLC>
-			<DD_ATTR_RADG id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_cartdet2002"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.opt_cartdet2001">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
 		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
-		<RECORD id="ddm_column_cpro.opt_cartdet2carton_noaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdet2carton_noaval">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdet2carton_noaval">CARTON_NO       </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdet2carton_noaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
 		<RECORD id="ddm_column_cpro.opt_cartdet2qty_packedaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdet2qty_packedaval">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdet2qty_packedaval">QTY_PACKED      </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdet2qty_packedaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_cartdet2qty_packedbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdet2qty_packedbinp">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdet2qty_packedbinp">QTY_PACKED      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdet2qty_packedbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_cartdet2carton_dspaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdet2carton_dspaval">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdet2carton_dspaval">CARTON_DSP      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdet2carton_dspaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
@@ -2994,35 +2753,25 @@
 			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2ar_inv_now">AR_INV_NO       </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2ar_inv_now">W</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2warehouse_idg">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2warehouse_idg">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2warehouse_idg">WAREHOUSE_ID    </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2warehouse_idg">G</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.opt_cartdet2carton_nog">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2carton_nog">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2carton_nog">CARTON_NO       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2carton_nog">G</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2warehouse_idw">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2warehouse_idw">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2warehouse_idw">WAREHOUSE_ID    </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2warehouse_idw">W</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.opt_cartdet2carton_now">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2carton_now">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2carton_now">CARTON_NO       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2carton_now">W</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2item_idg">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2item_idg">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2item_idg">ITEM_ID         </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2item_idg">G</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.opt_cartdet2orddet_seq_refg">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2orddet_seq_refg">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2orddet_seq_refg">ORDDET_SEQ_REF  </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2orddet_seq_refg">G</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2item_idw">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2item_idw">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2item_idw">ITEM_ID         </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2item_idw">W</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2internal_seq_nog">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2internal_seq_nog">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2internal_seq_nog">INTERNAL_SEQ_NO </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2internal_seq_nog">G</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2internal_seq_now">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2internal_seq_now">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2internal_seq_now">INTERNAL_SEQ_NO </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2internal_seq_now">W</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.opt_cartdet2orddet_seq_refw">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2orddet_seq_refw">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2orddet_seq_refw">ORDDET_SEQ_REF  </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2orddet_seq_refw">W</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.opt_cartdet2sequence_nog">
 			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2sequence_nog">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -3033,6 +2782,16 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2sequence_now">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2sequence_now">SEQUENCE_NO     </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2sequence_now">W</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.opt_cartdet2warehouse_idc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2warehouse_idc">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2warehouse_idc">WAREHOUSE_ID    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2warehouse_idc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.opt_cartdet2item_idc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2item_idc">OPT_CARTDET2    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2item_idc">ITEM_ID         </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2item_idc">C</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.opt_cartdet2order_memoc">
 			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2order_memoc">OPT_CARTDET2    </DD_TABLE_ALIAS>
@@ -3153,16 +2912,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2arc_timew">OPT_CARTDET2    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2arc_timew">ARC_TIME        </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2arc_timew">W</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2whse_id_dspc">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2whse_id_dspc">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2whse_id_dspc">WHSE_ID_DSP     </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2whse_id_dspc">C</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.opt_cartdet2item_id_dspc">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_cartdet2item_id_dspc">OPT_CARTDET2    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_cartdet2item_id_dspc">ITEM_ID_DSP     </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_cartdet2item_id_dspc">C</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
@@ -3438,20 +3187,20 @@
 			<ASC_PROD_ID id="ddm_elements.carton_no">OP </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.carton_no">N</LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.carton_no">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.carton_no">20220808</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.carton_no">20221005</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.carton_no"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.carton_no">N</DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.carton_no"></DD_ATTR_CDAT>
 			<DD_ATTR_CTLW id="ddm_elements.carton_no"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_elements.carton_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.carton_no">E</DD_ATTR_CTYP>
-			<DD_ATTR_DCOL id="ddm_elements.carton_no"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOL id="ddm_elements.carton_no">CARTON_NO</DD_ATTR_DCOL>
 			<DD_ATTR_DCOM id="ddm_elements.carton_no"></DD_ATTR_DCOM>
 			<DD_ATTR_DEXP id="ddm_elements.carton_no"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.carton_no"></DD_ATTR_DFLT>
-			<DD_ATTR_DKNM id="ddm_elements.carton_no"></DD_ATTR_DKNM>
-			<DD_ATTR_DKEY id="ddm_elements.carton_no"></DD_ATTR_DKEY>
-			<DD_ATTR_DTAB id="ddm_elements.carton_no"></DD_ATTR_DTAB>
+			<DD_ATTR_DKNM id="ddm_elements.carton_no">AO_STATUS       </DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.carton_no">[+FIRM_ID]+"E"+[AR_TYPE]+[CUSTOMER_ID]+[ORDER_NO]+[AR_INV_NO]+@</DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.carton_no">OPT_CARTHDR     </DD_ATTR_DTAB>
 			<DD_ATTR_DINQ id="ddm_elements.carton_no"></DD_ATTR_DINQ>
 			<DD_ATTR_ENCR id="ddm_elements.carton_no"></DD_ATTR_ENCR>
 			<DD_ATTR_IDEF id="ddm_elements.carton_no"></DD_ATTR_IDEF>
@@ -3465,8 +3214,8 @@
 			<DD_ATTR_MINV id="ddm_elements.carton_no"></DD_ATTR_MINV>
 			<DD_ATTR_MSKI id="ddm_elements.carton_no"></DD_ATTR_MSKI>
 			<DD_ATTR_MSKO id="ddm_elements.carton_no"></DD_ATTR_MSKO>
-			<DD_ATTR_PADC id="ddm_elements.carton_no"></DD_ATTR_PADC>
-			<DD_ATTR_PADJ id="ddm_elements.carton_no"></DD_ATTR_PADJ>
+			<DD_ATTR_PADC id="ddm_elements.carton_no">20</DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.carton_no">L</DD_ATTR_PADJ>
 			<DD_ATTR_PREC id="ddm_elements.carton_no">0</DD_ATTR_PREC>
 			<DD_ATTR_PROM id="ddm_elements.carton_no"></DD_ATTR_PROM>
 			<DD_ATTR_PVAL id="ddm_elements.carton_no"></DD_ATTR_PVAL>
@@ -3478,6 +3227,110 @@
 			<DD_ATTR_OEMD id="ddm_elements.carton_no"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.carton_no"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.carton_no"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.seq_ref">
+			<DD_DATA_NAME id="ddm_elements.seq_ref">SEQ_REF         </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.seq_ref">Sequence Reference Number</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.seq_ref">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.seq_ref">12</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.seq_ref"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.seq_ref"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.seq_ref">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.seq_ref">AD </ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.seq_ref">N</LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.seq_ref">20081124</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.seq_ref">20081124</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.seq_ref"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.seq_ref">N</DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.seq_ref"></DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.seq_ref"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.seq_ref"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.seq_ref">E</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.seq_ref"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.seq_ref"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.seq_ref"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.seq_ref"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.seq_ref"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.seq_ref"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.seq_ref"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.seq_ref"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.seq_ref"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.seq_ref"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.seq_ref">Sequence Ref Number</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.seq_ref">Sequence Ref Number</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.seq_ref"></DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.seq_ref"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.seq_ref"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.seq_ref"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.seq_ref"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.seq_ref"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.seq_ref"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.seq_ref"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.seq_ref">30</DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.seq_ref">R</DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.seq_ref">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.seq_ref"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.seq_ref"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.seq_ref"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.seq_ref"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.seq_ref"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.seq_ref"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.seq_ref"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.seq_ref"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.seq_ref"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.seq_ref"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.sequence_no">
+			<DD_DATA_NAME id="ddm_elements.sequence_no">SEQUENCE_NO     </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.sequence_no">Sequence Number</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.sequence_no">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.sequence_no">3</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.sequence_no"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.sequence_no">Y</DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.sequence_no">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.sequence_no">ADB</ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.sequence_no"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.sequence_no">20060119</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.sequence_no">20120326</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.sequence_no"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.sequence_no"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.sequence_no"></DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.sequence_no"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.sequence_no"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.sequence_no">E</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.sequence_no"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.sequence_no">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.sequence_no">            </DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.sequence_no"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.sequence_no"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.sequence_no"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.sequence_no"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.sequence_no"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.sequence_no"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.sequence_no"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.sequence_no">Sequence Number</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.sequence_no">Seq No</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.sequence_no"></DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.sequence_no"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.sequence_no"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.sequence_no"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.sequence_no"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.sequence_no"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.sequence_no">000</DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.sequence_no">000</DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.sequence_no">30</DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.sequence_no">R</DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.sequence_no">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.sequence_no"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.sequence_no"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.sequence_no"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.sequence_no"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.sequence_no">S</DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.sequence_no"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.sequence_no"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.sequence_no"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.sequence_no"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.sequence_no"></DD_ATTR_CASB>
 		</RECORD>
 		<RECORD id="ddm_elements.warehouse_id">
 			<DD_DATA_NAME id="ddm_elements.warehouse_id">WAREHOUSE_ID    </DD_DATA_NAME>
@@ -3582,110 +3435,6 @@
 			<DD_ATTR_OEMD id="ddm_elements.item_id"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.item_id">0</DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.item_id"></DD_ATTR_CASB>
-		</RECORD>
-		<RECORD id="ddm_elements.internal_seq_no">
-			<DD_DATA_NAME id="ddm_elements.internal_seq_no">INTERNAL_SEQ_NO </DD_DATA_NAME>
-			<DD_DESCRIPTION id="ddm_elements.internal_seq_no">Internal Sequence Number</DD_DESCRIPTION>
-			<DD_DATA_TYPE id="ddm_elements.internal_seq_no">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.internal_seq_no">12</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.internal_seq_no"></DD_MASK_TYPE>
-			<DD_SYSTEM_REC id="ddm_elements.internal_seq_no"></DD_SYSTEM_REC>
-			<ASC_COMP_ID id="ddm_elements.internal_seq_no">01007514</ASC_COMP_ID>
-			<ASC_PROD_ID id="ddm_elements.internal_seq_no">AD </ASC_PROD_ID>
-			<LOCALIZATION_EX id="ddm_elements.internal_seq_no">N</LOCALIZATION_EX>
-			<DD_CREATE_DATE id="ddm_elements.internal_seq_no">20081120</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.internal_seq_no">20090330</DD_LSTREV_DATE>
-			<DD_AUTO_COMP id="ddm_elements.internal_seq_no"></DD_AUTO_COMP>
-			<DD_ATTR_BLNK id="ddm_elements.internal_seq_no">N</DD_ATTR_BLNK>
-			<DD_ATTR_CDAT id="ddm_elements.internal_seq_no"></DD_ATTR_CDAT>
-			<DD_ATTR_CTLW id="ddm_elements.internal_seq_no"></DD_ATTR_CTLW>
-			<DD_ATTR_CTLH id="ddm_elements.internal_seq_no"></DD_ATTR_CTLH>
-			<DD_ATTR_CTYP id="ddm_elements.internal_seq_no">E</DD_ATTR_CTYP>
-			<DD_ATTR_DCOL id="ddm_elements.internal_seq_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.internal_seq_no"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.internal_seq_no"></DD_ATTR_DEXP>
-			<DD_ATTR_DFLT id="ddm_elements.internal_seq_no">[SEQ:INTERNAL_SEQ_NO]</DD_ATTR_DFLT>
-			<DD_ATTR_DKNM id="ddm_elements.internal_seq_no"></DD_ATTR_DKNM>
-			<DD_ATTR_DKEY id="ddm_elements.internal_seq_no"></DD_ATTR_DKEY>
-			<DD_ATTR_DTAB id="ddm_elements.internal_seq_no"></DD_ATTR_DTAB>
-			<DD_ATTR_DINQ id="ddm_elements.internal_seq_no"></DD_ATTR_DINQ>
-			<DD_ATTR_ENCR id="ddm_elements.internal_seq_no"></DD_ATTR_ENCR>
-			<DD_ATTR_IDEF id="ddm_elements.internal_seq_no"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_elements.internal_seq_no">Internal Sequence Number</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_elements.internal_seq_no">Internal Seq No</DD_ATTR_LABS>
-			<DD_ATTR_LDIS id="ddm_elements.internal_seq_no"></DD_ATTR_LDIS>
-			<DD_ATTR_MAXL id="ddm_elements.internal_seq_no"></DD_ATTR_MAXL>
-			<DD_ATTR_MAXR id="ddm_elements.internal_seq_no"></DD_ATTR_MAXR>
-			<DD_ATTR_MAXV id="ddm_elements.internal_seq_no"></DD_ATTR_MAXV>
-			<DD_ATTR_MINL id="ddm_elements.internal_seq_no"></DD_ATTR_MINL>
-			<DD_ATTR_MINV id="ddm_elements.internal_seq_no"></DD_ATTR_MINV>
-			<DD_ATTR_MSKI id="ddm_elements.internal_seq_no"></DD_ATTR_MSKI>
-			<DD_ATTR_MSKO id="ddm_elements.internal_seq_no"></DD_ATTR_MSKO>
-			<DD_ATTR_PADC id="ddm_elements.internal_seq_no">30</DD_ATTR_PADC>
-			<DD_ATTR_PADJ id="ddm_elements.internal_seq_no">R</DD_ATTR_PADJ>
-			<DD_ATTR_PREC id="ddm_elements.internal_seq_no">0</DD_ATTR_PREC>
-			<DD_ATTR_PROM id="ddm_elements.internal_seq_no"></DD_ATTR_PROM>
-			<DD_ATTR_PVAL id="ddm_elements.internal_seq_no"></DD_ATTR_PVAL>
-			<DD_ATTR_SDLG id="ddm_elements.internal_seq_no"></DD_ATTR_SDLG>
-			<DD_ATTR_SLEV id="ddm_elements.internal_seq_no"></DD_ATTR_SLEV>
-			<DD_ATTR_STYP id="ddm_elements.internal_seq_no"></DD_ATTR_STYP>
-			<DD_ATTR_STEP id="ddm_elements.internal_seq_no"></DD_ATTR_STEP>
-			<DD_ATTR_FLPT id="ddm_elements.internal_seq_no"></DD_ATTR_FLPT>
-			<DD_ATTR_OEMD id="ddm_elements.internal_seq_no"></DD_ATTR_OEMD>
-			<DD_ATTR_Y2KW id="ddm_elements.internal_seq_no"></DD_ATTR_Y2KW>
-			<DD_ATTR_CASB id="ddm_elements.internal_seq_no"></DD_ATTR_CASB>
-		</RECORD>
-		<RECORD id="ddm_elements.sequence_no">
-			<DD_DATA_NAME id="ddm_elements.sequence_no">SEQUENCE_NO     </DD_DATA_NAME>
-			<DD_DESCRIPTION id="ddm_elements.sequence_no">Sequence Number</DD_DESCRIPTION>
-			<DD_DATA_TYPE id="ddm_elements.sequence_no">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.sequence_no">3</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.sequence_no"></DD_MASK_TYPE>
-			<DD_SYSTEM_REC id="ddm_elements.sequence_no">Y</DD_SYSTEM_REC>
-			<ASC_COMP_ID id="ddm_elements.sequence_no">01007514</ASC_COMP_ID>
-			<ASC_PROD_ID id="ddm_elements.sequence_no">ADB</ASC_PROD_ID>
-			<LOCALIZATION_EX id="ddm_elements.sequence_no"></LOCALIZATION_EX>
-			<DD_CREATE_DATE id="ddm_elements.sequence_no">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.sequence_no">20120326</DD_LSTREV_DATE>
-			<DD_AUTO_COMP id="ddm_elements.sequence_no"></DD_AUTO_COMP>
-			<DD_ATTR_BLNK id="ddm_elements.sequence_no"></DD_ATTR_BLNK>
-			<DD_ATTR_CDAT id="ddm_elements.sequence_no"></DD_ATTR_CDAT>
-			<DD_ATTR_CTLW id="ddm_elements.sequence_no"></DD_ATTR_CTLW>
-			<DD_ATTR_CTLH id="ddm_elements.sequence_no"></DD_ATTR_CTLH>
-			<DD_ATTR_CTYP id="ddm_elements.sequence_no">E</DD_ATTR_CTYP>
-			<DD_ATTR_DCOL id="ddm_elements.sequence_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.sequence_no">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.sequence_no">            </DD_ATTR_DEXP>
-			<DD_ATTR_DFLT id="ddm_elements.sequence_no"></DD_ATTR_DFLT>
-			<DD_ATTR_DKNM id="ddm_elements.sequence_no"></DD_ATTR_DKNM>
-			<DD_ATTR_DKEY id="ddm_elements.sequence_no"></DD_ATTR_DKEY>
-			<DD_ATTR_DTAB id="ddm_elements.sequence_no"></DD_ATTR_DTAB>
-			<DD_ATTR_DINQ id="ddm_elements.sequence_no"></DD_ATTR_DINQ>
-			<DD_ATTR_ENCR id="ddm_elements.sequence_no"></DD_ATTR_ENCR>
-			<DD_ATTR_IDEF id="ddm_elements.sequence_no"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_elements.sequence_no">Sequence Number</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_elements.sequence_no">Seq No</DD_ATTR_LABS>
-			<DD_ATTR_LDIS id="ddm_elements.sequence_no"></DD_ATTR_LDIS>
-			<DD_ATTR_MAXL id="ddm_elements.sequence_no"></DD_ATTR_MAXL>
-			<DD_ATTR_MAXR id="ddm_elements.sequence_no"></DD_ATTR_MAXR>
-			<DD_ATTR_MAXV id="ddm_elements.sequence_no"></DD_ATTR_MAXV>
-			<DD_ATTR_MINL id="ddm_elements.sequence_no"></DD_ATTR_MINL>
-			<DD_ATTR_MINV id="ddm_elements.sequence_no"></DD_ATTR_MINV>
-			<DD_ATTR_MSKI id="ddm_elements.sequence_no">000</DD_ATTR_MSKI>
-			<DD_ATTR_MSKO id="ddm_elements.sequence_no">000</DD_ATTR_MSKO>
-			<DD_ATTR_PADC id="ddm_elements.sequence_no">30</DD_ATTR_PADC>
-			<DD_ATTR_PADJ id="ddm_elements.sequence_no">R</DD_ATTR_PADJ>
-			<DD_ATTR_PREC id="ddm_elements.sequence_no">0</DD_ATTR_PREC>
-			<DD_ATTR_PROM id="ddm_elements.sequence_no"></DD_ATTR_PROM>
-			<DD_ATTR_PVAL id="ddm_elements.sequence_no"></DD_ATTR_PVAL>
-			<DD_ATTR_SDLG id="ddm_elements.sequence_no"></DD_ATTR_SDLG>
-			<DD_ATTR_SLEV id="ddm_elements.sequence_no"></DD_ATTR_SLEV>
-			<DD_ATTR_STYP id="ddm_elements.sequence_no">S</DD_ATTR_STYP>
-			<DD_ATTR_STEP id="ddm_elements.sequence_no"></DD_ATTR_STEP>
-			<DD_ATTR_FLPT id="ddm_elements.sequence_no"></DD_ATTR_FLPT>
-			<DD_ATTR_OEMD id="ddm_elements.sequence_no"></DD_ATTR_OEMD>
-			<DD_ATTR_Y2KW id="ddm_elements.sequence_no"></DD_ATTR_Y2KW>
-			<DD_ATTR_CASB id="ddm_elements.sequence_no"></DD_ATTR_CASB>
 		</RECORD>
 		<RECORD id="ddm_elements.order_memo">
 			<DD_DATA_NAME id="ddm_elements.order_memo">ORDER_MEMO      </DD_DATA_NAME>
