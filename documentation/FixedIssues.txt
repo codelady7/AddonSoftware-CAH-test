@@ -1,108 +1,15 @@
 =======================================================================================================================================
- Report Date:   2022-10-05
- Report Branch: AddonSoftware 22.10
- Last Release:  AddonSoftware 22.04
+ Report Date:   2022-10-11
+ Report Branch: AddonSoftware 22.11
+ Last Release:  AddonSoftware 22.10
 =======================================================================================================================================
 
-22.04 released 09/07/2022
-BBjBaristaAddonDemos2204_09-01-2022_1123.jar
+22.10 released 10/10/2022
+BBjBaristaAddonDemos2210_10-05-2022_1914.jar
 
 =======================================================================================================================================
-Revision: 088916a1f5f9b440c41284ef057463a7eca1d439
-Author: Christine <chawkins@basis.com>
-Date: 9/2/2022 3:34:56 PM
-Message:
-Bug 10492 - AP - Invalid column and err 252 selecting bank account in AP Checks form
- - corrected as suggested
-----
-Modified: data/bar/apr_checks.xml
-Modified: data/cdf/apr_checks.cdf
 
-=======================================================================================================================================
-Revision: 4475e60c1d540cb1c3b5bd48e716e6a601475077
-Author: Christine <chawkins@basis.com>
-Date: 9/16/2022 1:27:36 PM
-Message:
-Bug 10496 - AD - Disallow spaces in install/upgrade wizard Install ID
- - altered to replace spaces with underscores
 
-(cherry picked from commit cc5ea54eaacfcc5ac235dedfbd9e06640857073b)
-----
-Modified: data/bar/adx_installwiz.xml
-Modified: data/bar/adx_upgradewiz.xml
-Modified: data/cdf/adx_installwiz.cdf
-Modified: data/cdf/adx_upgradewiz.cdf
-
-=======================================================================================================================================
-Revision: 7c902ac63d741cc1058f483ddcee469010183f03
-Author: Christine <chawkins@basis.com>
-Date: 9/16/2022 1:57:19 PM
-Message:
-Bug 10495 - AP - Check printing updates next check number inconsistently between regular vs manual checks
- - changed so both types of checks update next chk# using right just/zero fill.
-
-(cherry picked from commit 0e6ff13352b73660b55978196e55a694d504bab8)
-----
-Modified: ap/src/apr_apchecks.aon
-
-=======================================================================================================================================
-Revision: b4c748b41ae172462209a3dcb257d3095f4e7c61
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 9/19/2022 9:46:00 AM
-Message:
-Bug 10497: Don't attempt voiding uncommitted orphaned sales tax service
-transactions when NOT using a sales tax service.
-----
-Modified: op/src/opu_updateinventory.aon
-
-=======================================================================================================================================
-Revision: 6b1a60f63a6ca13c859e38e202e65e87e0d67db9
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 9/27/2022 4:51:23 PM
-Message:
-Bug 10501: Eliminated possible use of exemptStatusModel!.getStatus()
-when exemptStatusModel! is null().
-----
-Modified: op/src/opo_AO_AvaTaxInterface.aon
-
-=======================================================================================================================================
-Revision: e447a25d9f5967d09b5350428690fb61f5e2de9a
-Author: Christine <chawkins@basis.com>
-Date: 10/4/2022 3:38:56 PM
-Message:
-Bug 10499 - AD - Install Wizard needs to recursively set permissions to 777 after cloning Addon repo
- - Cleaned up/corrected existing code in the upgrade wizard
- - Copied the existing (cleaned up) code from upgrade to install wizard
-
-(cherry picked from commit d63f4412245c010bc8630f3c55c5a43e5114173d)
-----
-Modified: ad/src/adx_installwiz.aon
-Modified: ad/src/adx_upgradewiz.aon
-
-=======================================================================================================================================
-Revision: fc17b33dd07a130ce51dd1a40da3dd7a582a7f1f
-Author: Christine <chawkins@basis.com>
-Date: 10/5/2022 2:08:59 PM
-Message:
-Bug 10500 - AD - Install Wizard may fail to create addonprop.jar
- - changed scall command to use java.System.getProperty("java.home")+"/bin/jar cf..." instead of just "jar cf..."
- - if scall return <> 0, log failure to create it
-
-(cherry picked from commit 94232130b8a875f5d563e1c0798fa4ac4a14d03c)
-----
-Modified: ad/src/adx_installwiz.aon
-
-=======================================================================================================================================
-Revision: 23f5f15f7beac3c2e8cb3d65474d4bbe35222d3c
-Author: Christine <chawkins@basis.com>
-Date: 10/5/2022 2:20:59 PM
-Message:
-Bug 10500 - AD - Install Wizard may fail to create addonprop.jar
- - issue also exists in Upgrade Wiz, so propagating there
-
-(cherry picked from commit 5b940fc81c268575cf2a3431ef4df0b45cfcdfdf)
-----
-Modified: ad/src/adx_upgradewiz.aon
 
 
 
