@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_cartdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_cartdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_cartdet">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_cartdet">20221005</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartdet">20221005</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartdet">124626</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_cartdet">20221012</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartdet">20221012</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartdet">102010</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_cartdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_cartdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_cartdet">AO_STATUS</DD_ATTR_DKNM>
@@ -63,9 +63,16 @@
 		<RECORD id="ddm_table_aopt.opt_cartdet01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.opt_cartdet01">OPT_CARTDET     </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.opt_cartdet01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.opt_cartdet01">Pack Lot/Serial</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_cartdet01">PKLS</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.opt_cartdet01">Item Lookup</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_cartdet01">ITEM</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_cartdet01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+		<RECORD id="ddm_table_aopt.opt_cartdet02">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.opt_cartdet02">OPT_CARTDET     </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.opt_cartdet02">02</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.opt_cartdet02">Pack Lot/Serial</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_cartdet02">PKLS</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_cartdet02">F</DD_ATTR_AOPT_FM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -78,13 +85,13 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetagds">OPT_CARTDET     </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetagds">AGDS</DD_ATTR_CPRO>
 		</RECORD>
-		<RECORD id="ddm_table_cpro.opt_cartdetagre">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetagre">OPT_CARTDET     </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetagre">AGRE</DD_ATTR_CPRO>
-		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartdetagrn">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetagrn">OPT_CARTDET     </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetagrn">AGRN</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_cartdetaopt-item">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetaopt-item">OPT_CARTDET     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetaopt-item">AOPT-ITEM</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartdetaopt-pkls">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetaopt-pkls">OPT_CARTDET     </DD_TABLE_ALIAS>
@@ -94,9 +101,9 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetarec">OPT_CARTDET     </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetarec">AREC</DD_ATTR_CPRO>
 		</RECORD>
-		<RECORD id="ddm_table_cpro.opt_cartdetawri">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetawri">OPT_CARTDET     </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetawri">AWRI</DD_ATTR_CPRO>
+		<RECORD id="ddm_table_cpro.opt_cartdetasho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetasho">OPT_CARTDET     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartdetasho">ASHO</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartdetbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartdetbend">OPT_CARTDET     </DD_TABLE_ALIAS>
@@ -1982,7 +1989,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartdet011">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartdet011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartdet011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet011"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartdet011">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_cartdet011">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_cartdet011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_cartdet011"></DD_ATTR_CTLY>
@@ -2724,10 +2731,15 @@
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdetitem_idaval">ITEM_ID         </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdetitem_idaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
-		<RECORD id="ddm_column_cpro.opt_cartdetitem_idbinp">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdetitem_idbinp">OPT_CARTDET     </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdetitem_idbinp">ITEM_ID         </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdetitem_idbinp">BINP</DD_ATTR_CPRO>
+		<RECORD id="ddm_column_cpro.opt_cartdetitem_idbinq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdetitem_idbinq">OPT_CARTDET     </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdetitem_idbinq">ITEM_ID         </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdetitem_idbinq">BINQ</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_cartdetorder_memoaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdetorder_memoaval">OPT_CARTDET     </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_cartdetorder_memoaval">ORDER_MEMO      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_cartdetorder_memoaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.opt_cartdetqty_packedaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_cartdetqty_packedaval">OPT_CARTDET     </DD_TABLE_ALIAS>

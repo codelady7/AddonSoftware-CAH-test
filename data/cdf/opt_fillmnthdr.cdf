@@ -366,7 +366,7 @@ rem --- Are there any items that weren't picked completely
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
-	num_files=15
+	num_files=16
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="OPE_ORDHDR",  open_opts$[1]="OTA"
@@ -376,14 +376,15 @@ rem --- Open needed files
 	open_tables$[5]="OPT_FILLMNTLSDET",  open_opts$[5]="OTA"
 	open_tables$[6]="OPT_CARTHDR",  open_opts$[6]="OTA"
 	open_tables$[7]="OPT_CARTDET",  open_opts$[7]="OTA"
-	open_tables$[8]="OPT_CARTLSDET",  open_opts$[8]="OTA"
-	open_tables$[9]="OPT_CARTLSDET2", open_opts$[9]="OTA"
-	open_tables$[10]="IVS_PARAMS",   open_opts$[10]="OTA"
-	open_tables$[11]="IVM_ITEMMAST",   open_opts$[11]="OTA"
-	open_tables$[12]="IVM_ITEMWHSE",   open_opts$[12]="OTA"
-	open_tables$[13]="IVM_LSMASTER",   open_opts$[13]="OTA"
-	open_tables$[14]="OPC_LINECODE",   open_opts$[14]="OTA"
-	open_tables$[15]="ARC_SHIPVIACODE",   open_opts$[15]="OTA"
+	open_tables$[8]="OPT_CARTDET2",  open_opts$[8]="OTA"
+	open_tables$[9]="OPT_CARTLSDET",  open_opts$[9]="OTA"
+	open_tables$[10]="OPT_CARTLSDET2", open_opts$[10]="OTA"
+	open_tables$[11]="IVS_PARAMS",   open_opts$[11]="OTA"
+	open_tables$[12]="IVM_ITEMMAST",   open_opts$[12]="OTA"
+	open_tables$[13]="IVM_ITEMWHSE",   open_opts$[13]="OTA"
+	open_tables$[14]="IVM_LSMASTER",   open_opts$[14]="OTA"
+	open_tables$[15]="OPC_LINECODE",   open_opts$[15]="OTA"
+	open_tables$[16]="ARC_SHIPVIACODE",   open_opts$[16]="OTA"
 
 	gosub open_tables
 
