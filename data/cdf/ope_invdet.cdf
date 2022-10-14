@@ -105,7 +105,7 @@ rem --- Initialize UM_SOLD ListButton except when line type is non-stock
 			else
 				dtlGrid!.setCellListSelection(row,col_ref,1,1)
 			endif
-			callpoint!.setColumnEnabled(row,"OPE_INVDET.UM_SOLD",callpoint!.getValidationRow())
+			callpoint!.setColumnEnabled(row,"OPE_INVDET.UM_SOLD",1)
 		else
 			callpoint!.setColumnData("OPE_INVDET.UM_SOLD",umList!.getItemAt(0),1)
 			callpoint!.setColumnEnabled(row,"OPE_INVDET.UM_SOLD",0)
