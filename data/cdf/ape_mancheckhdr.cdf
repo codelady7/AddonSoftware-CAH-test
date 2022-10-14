@@ -623,7 +623,7 @@ endif
 
 [[<<DISPLAY>>.CHECK_ACCTS.AVAL]]
 rem --- Initialize CHECK_NO for the selected checking account if it has changed
-	bnk_acct_cd$=callpoint!.getUserInput()
+	bnk_acct_cd$=pad(callpoint!.getUserInput(),len(rec_data.bnk_acct_cd$))
 	if callpoint!.getColumnData("<<DISPLAY>>.CHECK_ACCTS")=bnk_acct_cd$ then break
 
 	chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
