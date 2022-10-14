@@ -279,23 +279,26 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 endif
 
 [[APE_MANCHECKHDR.ASVA]]
-rem --- Update next check number
-	adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
-	dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
+rem --- Update next check number (if not a reversal or void per bug 10509)
 
-	bnkAcctCd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
-	extractrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$; rem Advisory Locking
-	if cvs(adcBnkAcct.bnk_acct_cd$,2)<>"" then
-		check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
-		nextCheck$=cvs(str(num(check_no$)+1),3)
-		adcBnkAcct.nxt_check_no$=pad(nextCheck$,len(check_no$),"R","0")
-		writerecord(adcBnkAcct_dev)adcBnkAcct$
+	if pos(callpoint!.getColumnData("APE_MANCHECKHDR.TRANS_TYPE")="RV")=0
+		adcBnkAcct_dev=fnget_dev("ADC_BANKACCTCODE")
+		dim adcBnkAcct$:fnget_tpl$("ADC_BANKACCTCODE")
 
-		rem --- Update list of next check numbers for the current checking account
-		chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
-		index=chkAcctCtl!.getSelectedIndex()
-		nextChkList!=callpoint!.getDevObject("nextCheckList")
-		nextChkList!.setItem(index,adcBnkAcct.nxt_check_no$)
+		bnkAcctCd$=callpoint!.getColumnData("APE_MANCHECKHDR.BNK_ACCT_CD")
+		extractrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$; rem Advisory Locking
+		if cvs(adcBnkAcct.bnk_acct_cd$,2)<>"" then
+			check_no$=callpoint!.getColumnData("APE_MANCHECKHDR.CHECK_NO")
+			nextCheck$=cvs(str(num(check_no$)+1),3)
+			adcBnkAcct.nxt_check_no$=pad(nextCheck$,len(check_no$),"R","0")
+			writerecord(adcBnkAcct_dev)adcBnkAcct$
+
+			rem --- Update list of next check numbers for the current checking account
+			chkAcctCtl!=callpoint!.getControl("<<DISPLAY>>.CHECK_ACCTS")
+			index=chkAcctCtl!.getSelectedIndex()
+			nextChkList!=callpoint!.getDevObject("nextCheckList")
+			nextChkList!.setItem(index,adcBnkAcct.nxt_check_no$)
+		endif
 	endif
 
 [[APE_MANCHECKHDR.AWIN]]
