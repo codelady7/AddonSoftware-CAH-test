@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glt_bankother">ACBEB6A2DF5A6E9CF528BFE42EE65A9B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glt_bankother">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glt_bankother">20060609</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glt_bankother">20220615</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankother">20220615</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankother">134900</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glt_bankother">20221014</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankother">20221014</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankother">151644</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glt_bankother"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glt_bankother">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glt_bankother"></DD_ATTR_DKNM>
@@ -58,11 +58,25 @@
 			<DD_ATTR_PADG id="ddm_tables.glt_bankother"></DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.glt_bankother01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.glt_bankother01">GLT_BANKOTHER   </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.glt_bankother01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.glt_bankother01">Undo Sort</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.glt_bankother01">UNDO</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.glt_bankother01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.glt_bankotheracus">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankotheracus">GLT_BANKOTHER   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankotheracus">ACUS</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.glt_bankotheraopt-undo">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankotheraopt-undo">GLT_BANKOTHER   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankotheraopt-undo">AOPT-UNDO</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.glt_bankotherarea">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankotherarea">GLT_BANKOTHER   </DD_TABLE_ALIAS>
@@ -94,6 +108,10 @@
 		<RECORD id="ddm_table_opts.glt_bankotherv">
 			<DD_TABLE_ALIAS id="ddm_table_opts.glt_bankotherv">GLT_BANKOTHER   </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.glt_bankotherv">V</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glt_bankotherw">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glt_bankotherw">GLT_BANKOTHER   </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glt_bankotherw">W</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.glt_bankotherr">
 			<DD_TABLE_ALIAS id="ddm_table_opts.glt_bankotherr">GLT_BANKOTHER   </DD_TABLE_ALIAS>
