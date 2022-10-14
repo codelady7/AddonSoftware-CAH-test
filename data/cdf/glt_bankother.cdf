@@ -48,6 +48,12 @@ rem --- Update posted_code for selected grid rows
 		next i
 	endif
 
+[[GLT_BANKOTHER.AOPT-UNDO]]
+rem --- remove column sorting
+
+	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	grid!.unsort()
+
 [[GLT_BANKOTHER.AREA]]
 rem --- Skip transactions after current statement date
 	stmtdate$=callpoint!.getDevObject("stmtdate")

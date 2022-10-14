@@ -48,6 +48,12 @@ rem --- Update paid_code for selected grid rows
 		next i
 	endif
 
+[[GLT_BANKCHECKS.AOPT-UNDO]]
+rem --- remove column sorting
+
+	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	grid!.unsort()
+
 [[GLT_BANKCHECKS.AREA]]
 rem --- Skip checks after current statement date
 	stmtdate$=callpoint!.getDevObject("stmtdate")

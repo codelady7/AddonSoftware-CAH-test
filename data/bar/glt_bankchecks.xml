@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glt_bankchecks">020F20F8607CE84F8EA73BA5148B9299</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glt_bankchecks">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glt_bankchecks">20060609</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glt_bankchecks">20220322</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankchecks">20220322</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankchecks">125828</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glt_bankchecks">20221014</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankchecks">20221014</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankchecks">152148</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glt_bankchecks"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glt_bankchecks">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glt_bankchecks">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glt_bankchecks"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glt_bankchecks"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glt_bankchecks">G</DD_ATTR_FTYP>
@@ -58,11 +58,25 @@
 			<DD_ATTR_PADG id="ddm_tables.glt_bankchecks">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.glt_bankchecks01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.glt_bankchecks01">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.glt_bankchecks01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.glt_bankchecks01">Undo Sort</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.glt_bankchecks01">UNDO</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.glt_bankchecks01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.glt_bankchecksacus">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankchecksacus">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankchecksacus">ACUS</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.glt_bankchecksaopt-undo">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankchecksaopt-undo">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankchecksaopt-undo">AOPT-UNDO</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.glt_bankchecksarea">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankchecksarea">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
@@ -94,6 +108,10 @@
 		<RECORD id="ddm_table_opts.glt_bankchecksv">
 			<DD_TABLE_ALIAS id="ddm_table_opts.glt_bankchecksv">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.glt_bankchecksv">V</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glt_bankchecksw">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glt_bankchecksw">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glt_bankchecksw">W</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.glt_bankchecksr">
 			<DD_TABLE_ALIAS id="ddm_table_opts.glt_bankchecksr">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
@@ -398,7 +416,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glt_bankchecks004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glt_bankchecks004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glt_bankchecks004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glt_bankchecks004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glt_bankchecks004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glt_bankchecks004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glt_bankchecks004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glt_bankchecks004"></DD_ATTR_CTLY>
