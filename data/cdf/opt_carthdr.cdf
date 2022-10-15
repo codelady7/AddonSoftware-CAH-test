@@ -31,7 +31,6 @@ rem --- Initialize grid with unpacked picked items in OPT_FILLMNTDET
 		gosub disp_message
 		if msg_opt$="Y" then
 			rem --- Initialize grid
-			detSeqNo=0
 			lsSeqNo=0
 			optCartDet2_dev=fnget_dev("OPT_CARTDET2")
 			dim optCartDet2$:fnget_tpl$("OPT_CARTDET2")
@@ -62,7 +61,6 @@ rem --- Initialize grid with unpacked picked items in OPT_FILLMNTDET
 				wend
 				if alreadyPacked>=optFillmntDet.qty_picked then continue
 
-				detSeqNo=detSeqNo+1
 				redim optCartDet2$
 				optCartDet2.firm_id$=firm_id$
 				optCartDet2.ar_type$=ar_type$
@@ -71,7 +69,6 @@ rem --- Initialize grid with unpacked picked items in OPT_FILLMNTDET
 				optCartDet2.ar_inv_no$=ar_inv_no$
 				optCartDet2.carton_no$=carton_no$
 				optCartDet2.orddet_seq_ref$=orddet_seq_ref$
-				optCartDet2.sequence_no$=str(detSeqNo,"000")
 				optCartDet2.warehouse_id$=optFillmntDet.warehouse_id$
 				optCartDet2.item_id$=optFillmntDet.item_id$
 				optCartDet2.order_memo$=optFillmntDet.order_memo$
@@ -104,7 +101,7 @@ rem --- Initialize grid with unpacked picked items in OPT_FILLMNTDET
 					wend
 					if alreadyPacked>=optFillmntLsDet.qty_picked then continue
 
-					lsSeqNo=slSeqNo+1
+					lsSeqNo=lsSeqNo+1
 					redim optCartLsDet2$
 					optCartLsDet2.firm_id$=firm_id$
 					optCartLsDet2.ar_type$=ar_type$
