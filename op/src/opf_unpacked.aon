@@ -1,0 +1,70 @@
+rem --- OP Unpacked Item and Lot/Serial Number lookups filter program
+rem --- Program ID: opf_unpacked.aon
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- Run by Barista as part of the OP_UNPACKED_ITEM and OP_UNPACKED_LS queries.
+rem --- For each row in the result set, this program runs to SKIP rows where the packed quantity equals the picked quantity.
+
+    use ::bbtranslator.bbj::BBTranslator
+
+    setesc std_error
+    seterr std_error
+
+    enter inq_mode$,rec_tpl$,calc_tpl$,table_chans$[all],status$
+
+rem inq_mode$      - not used until recently - current use not yet documented
+rem rec_tpl$       - Current row database columns
+rem calc_tpl$      - Current row calculated columns
+rem table_chans$[] - Barista opened channels array
+rem status$        - Returned status: "SKIP" = Skip current record
+
+rem --- Initialize data
+    status$=""
+
+rem --- Skip if the packed quantity equals the picked quantity
+    if rec_tpl.qty_packed=rec_tpl.qty_picked then
+        status$="SKIP"
+        goto exit_prog
+    endif
+    
+rem --- Done
+    goto exit_prog
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+    
+exit_prog:rem --- Exit Program
+
+    exit

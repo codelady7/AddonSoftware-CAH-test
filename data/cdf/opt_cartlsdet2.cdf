@@ -43,7 +43,6 @@ rem --- Luanch lookup for unpacked picked inventoried lot/serial numbers
 			else
 				callpoint!.setColumnData("OPT_CARTLSDET2.QTY_PACKED",str(unpacked),1)
 			endif
-			callpoint!.setColumnData("OPT_CARTLSDET2.QTY_PACKED",str(optFillmntLsDet.qty_picked-already_packed),1)
 
 			callpoint!.setStatus("MODIFIED")
 		endif

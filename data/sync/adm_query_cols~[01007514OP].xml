@@ -1436,6 +1436,228 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>001</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>FIRM_ID         </DD_TABLE_COL>
+		<COLUMN_HDR>Firm ID</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>002</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_STATUS    </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Status</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>='E'[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>003</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>AR_TYPE         </DD_TABLE_COL>
+		<COLUMN_HDR>AR Type</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>004</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>CUSTOMER_ID     </DD_TABLE_COL>
+		<COLUMN_HDR>Customer ID</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>005</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ORDER_NO        </DD_TABLE_COL>
+		<COLUMN_HDR>Order No</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>006</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>AR_INV_NO       </DD_TABLE_COL>
+		<COLUMN_HDR>Invoice No</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>007</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>LINE_NO         </DD_TABLE_COL>
+		<COLUMN_HDR>Line No</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>008</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ORDDET_SEQ_REF  </DD_TABLE_COL>
+		<COLUMN_HDR>Orddet Seq Ref</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>009</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>WAREHOUSE_ID    </DD_TABLE_COL>
+		<COLUMN_HDR>Whse</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>010</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ITEM_ID         </DD_TABLE_COL>
+		<COLUMN_HDR>Item Number</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>011</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ORDER_MEMO      </DD_TABLE_COL>
+		<COLUMN_HDR>Memo/Non-Stock Desc</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>012</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>UM_SOLD         </DD_TABLE_COL>
+		<COLUMN_HDR>UM Sold</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>013</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_FILLMNTDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>QTY_PICKED      </DD_TABLE_COL>
+		<COLUMN_HDR>Qty Picked</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_PROG>[+DIR_PGM]opf_unpacked.aon</COLUMN_PROG>
+		<COLUMN_FILTER><![CDATA[3E305B243061245D20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020]]></COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>OP_UNPACKED_ITEM</QUERY_ID>
+		<SEQUENCE_NO>014</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>OPT_CARTDET     </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>QTY_PACKED      </DD_TABLE_COL>
+		<COLUMN_HDR>Qty Packed</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER><![CDATA[3C5B5154595F5049434B45445D5B243061245D2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020]]></COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
 		<QUERY_ID>OP_UNPACKED_LS  </QUERY_ID>
 		<SEQUENCE_NO>001</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
@@ -1460,11 +1682,10 @@
 		<DD_TABLE_COL>TRANS_STATUS    </DD_TABLE_COL>
 		<COLUMN_HDR>Trans Status</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
-		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_FILTER>='E'[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
-		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
@@ -1604,6 +1825,7 @@
 		<DD_TABLE_COL>QTY_PICKED      </DD_TABLE_COL>
 		<COLUMN_HDR>Picked Qty</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_PROG>[+DIR_PGM]opf_unpacked.aon</COLUMN_PROG>
 		<COLUMN_FILTER><![CDATA[3E305B243061245D20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020]]></COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>

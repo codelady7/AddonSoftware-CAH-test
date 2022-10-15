@@ -41,6 +41,8 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 	customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
 	order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
 	ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+	packCartonGrid!=callpoint!.getDevObject("packCartonGrid")
+	packed_col=callpoint!.getDevObject("packed_col")
 	for row=0 to GridVect!.size()-1
 		qty_picked=0
 		redim optCartDet$
@@ -67,8 +69,6 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 		wend
 		unpackedQty=qty_picked-alreadyPacked
 
-		packCartonGrid!=callpoint!.getDevObject("packCartonGrid")
-		packed_col=callpoint!.getDevObject("packed_col")
 		if unpackedQty>0 then
 			packCartonGrid!.setCellFont(row,packed_col,callpoint!.getDevObject("boldFont"))
 			packCartonGrid!.setCellForeColor(row,packed_col,callpoint!.getDevObject("redColor"))
@@ -223,6 +223,22 @@ rem --- Get and hold on to column for qty_packed
 [[OPT_CARTDET2.AWRI]]
 rem --- Enable Pack Lot/Serial button for lot/serial items
 	if callpoint!.getDevObject("lotser_item")="Y" then callpoint!.setOptionEnabled("PKLS",1)
+
+rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
+	qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
+	gosub getPickedQty
+	gosub getUnpackedQty
+	packCartonGrid!=callpoint!.getDevObject("packCartonGrid")
+	packed_col=callpoint!.getDevObject("packed_col")
+	for row=0 to GridVect!.size()-1
+		if qty_packed<unpackedQty then
+			packCartonGrid!.setCellFont(row,packed_col,callpoint!.getDevObject("boldFont"))
+			packCartonGrid!.setCellForeColor(row,packed_col,callpoint!.getDevObject("redColor"))
+		else
+			packCartonGrid!.setCellFont(row,packed_col,callpoint!.getDevObject("plainFont"))
+			packCartonGrid!.setCellForeColor(row,packed_col,callpoint!.getDevObject("blackColor"))
+		endif
+	next row
 
 [[OPT_CARTDET2.BEND]]
 rem --- Get the total quantity packed
