@@ -140,6 +140,8 @@ rem --- Launch Carton Packing grid
 :		table_chans$[all], 
 :		dflt_data$[all]
 
+	callpoint!.setStatus("ACTIVATE")
+
 [[OPT_CARTHDR.AREC]]
 rem --- Initialize records with the ARC_SHIPVIACODE record for the OPT_FILLMNTHDR.AR_SHIP_VIA.
 	arcShipViaCode_dev=fnget_dev("ARC_SHIPVIACODE")

@@ -2,13 +2,6 @@
 rem --- Initialize CARTON_DSP with CARTON_NO
 	callpoint!.setColumnData("<<DISPLAY>>.CARTON_DSP",callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO"),1)
 
-rem --- Enable Pack Lot/Serial button for lot/serial items
-	if callpoint!.getDevObject("lotser_item")="Y" then
-		callpoint!.setOptionEnabled("PKLS",1)
-	else
-		callpoint!.setOptionEnabled("PKLS",0)
-	endif
-
 rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
 	qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
 	gosub getPickedQty
@@ -24,8 +17,6 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 		packCartonGrid!.setCellFont(curr_row,packed_col,callpoint!.getDevObject("plainFont"))
 		packCartonGrid!.setCellForeColor(curr_row,packed_col,callpoint!.getDevObject("blackColor"))
 	endif
-
-rem wgh ... 10304 ... Provide visual warning when quantity of lot/serial number packed is less than the quantity packed for the item
 
 [[OPT_CARTDET2.AGDS]]
 rem --- Skip if the grid is empty
@@ -76,24 +67,8 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 			packCartonGrid!.setCellFont(row,packed_col,callpoint!.getDevObject("plainFont"))
 			packCartonGrid!.setCellForeColor(row,packed_col,callpoint!.getDevObject("blackColor"))
 		endif
-
-rem wgh ... 10304 ... Provide visual warning when quantity of lot/serial number packed is less than the quantity packed for the item
-
 	next row
 	read(optFillmntDet_dev,key="",knum="AO_STATUS",dom=*next)
-
-[[OPT_CARTDET2.AGRN]]
-rem --- Disable Pack Lot/Serial button for new lines
-	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
-		callpoint!.setOptionEnabled("PKLS",0)
-	else
-		rem --- Enable Pack Lot/Serial button for lot/serial items
-		if callpoint!.getDevObject("lotser_item")="Y" then
-			callpoint!.setOptionEnabled("PKLS",1)
-		else
-			callpoint!.setOptionEnabled("PKLS",0)
-		endif
-	endif
 
 [[OPT_CARTDET2.AOPT-PKLS]]
 rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
@@ -177,12 +152,15 @@ rem --- Launch Packing Carton Lot/Serial Detail grid
 :			table_chans$[all], 
 :			dflt_data$[all]
 
+		callpoint!.setStatus("ACTIVATE")
+
 rem --- Has the total quantity packed changed?
 	start_qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
 	total_packed=callpoint!.getDevObject("total_packed")
 	if total_packed<>start_qty_packed then
 		callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(total_packed),1)
 		callpoint!.setStatus("MODIFIED")
+		callpoint!.setFocus(callpoint!.getValidationRow(),"OPT_CARTDET2.QTY_PACKED",1)
 	endif
 
 [[OPT_CARTDET2.AREC]]
@@ -221,9 +199,6 @@ rem --- Get and hold on to column for qty_packed
 	callpoint!.setDevObject("packed_col",packed_col)
 
 [[OPT_CARTDET2.AWRI]]
-rem --- Enable Pack Lot/Serial button for lot/serial items
-	if callpoint!.getDevObject("lotser_item")="Y" then callpoint!.setOptionEnabled("PKLS",1)
-
 rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
 	qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
 	gosub getPickedQty
@@ -265,8 +240,6 @@ rem --- Warn if quantity packed is less than the quantity picked.
 			break
 		endif
 	endif
-
-rem wgh ... 10304 ... Warning when quantity of lot/serial number packed is less than the quantity packed for the item
 
 [[OPT_CARTDET2.BWRI]]
 rem --- Make sure CARTON_NO is set to CARTON_DSP
@@ -322,6 +295,9 @@ rem --- Initialize new row
 	endif
 
 [[OPT_CARTDET2.QTY_PACKED.AVAL]]
+rem --- Disable Pack Lot/Serial button except in qty_packed field
+	callpoint!.setOptionEnabled("PKLS",0)
+
 rem --- Skip validation if QTY_PACKED wasn't change
 	qty_packed=num(callpoint!.getUserInput())
 	previous_qty=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
@@ -351,6 +327,42 @@ rem --- QTY_PACKED cannot be greater than the remaining number that still need t
 		break
 	endif
 
+rem --- For lot/serial items, item qty_packed must equal sum of lot/serial number qty_packed for the carton
+	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
+	item$=callpoint!.getColumnData("OPT_CARTDET2.ITEM_ID")
+	findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
+	if ivmItemMast.lotser_item$="Y" then
+		lotser_packed=0
+		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
+		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
+		trans_status$=callpoint!.getColumnData("OPT_CARTDET2.TRANS_STATUS")
+		ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+		customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+		ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+		orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTDET2.ORDDET_SEQ_REF")
+		carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
+		optCartDet2_key$=firm_id$+trans_status$+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$+carton_no$
+		read(optCartLsDet2_dev,key=optCartDet2_key$,knum="AO_ORDDET_CART",dom=*next)
+		while 1
+			optCartLsDet2_key$=key(optCartLsDet2_dev,end=*break)
+			if pos(optCartDet2_key$=optCartLsDet2_key$)<>1 then break
+			readrecord(optCartLsDet2_dev)optCartLsDet2$
+			lotser_packed=lotser_packed+optCartLsDet2.qty_packed
+		wend
+
+		if qty_packed<>lotser_packed then
+			msg_id$ = "OP_SUM_LOTSER_PACKED"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=str(lotser_packed)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(lotser_packed),1)
+			break
+		endif
+	endif
+
 rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
 	packCartonGrid!=callpoint!.getDevObject("packCartonGrid")
 	curr_row=num(callpoint!.getValidationRow())
@@ -364,13 +376,22 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 		packCartonGrid!.setCellForeColor(curr_row,packed_col,callpoint!.getDevObject("blackColor"))
 	endif
 
-rem wgh ... 10304 ... Provide visual warning when quantity of lot/serial number packed is less than the quantity packed for the item
-
 [[OPT_CARTDET2.QTY_PACKED.BINP]]
 rem --- For new line, default QTY_PACKED to the remaining number that still need to be packed.
 	gosub getUnpackedQty
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
-		callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(unpackedQty),1)
+		if callpoint!.getDevObject("lotser_item")="Y" then
+			callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(0),1)
+		else
+			callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(unpackedQty),1)
+		endif
+	endif
+
+rem --- Enable Pack Lot/Serial button for lot/serial items
+	if callpoint!.getDevObject("lotser_item")="Y" then
+		callpoint!.setOptionEnabled("PKLS",1)
+	else
+		callpoint!.setOptionEnabled("PKLS",0)
 	endif
 
 [[OPT_CARTDET2.<CUSTOM>]]

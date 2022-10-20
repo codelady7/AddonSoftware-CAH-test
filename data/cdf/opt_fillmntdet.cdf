@@ -94,7 +94,7 @@ rem --- Provide visual warning when quantity picked is NOT equal to the ship qua
 			else
 				pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("plainFont"))
 				pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("blackColor"))
-				pickGrid!.setCellEditable(i,picked_col,0)
+				pickGrid!.setCellEditable(i,picked_col,1)
 			endif
 		endif
 	next i
@@ -167,6 +167,7 @@ rem --- Is this item lot/serial?
 :			table_chans$[all], 
 :			dflt_data$[all]
 
+		callpoint!.setStatus("ACTIVATE")
 	endif
 
 rem --- Has the total quantity picked changed?
@@ -201,6 +202,8 @@ rem --- Launch Item Packing grid
 :		key_pfx$, 
 :		table_chans$[all], 
 :		dflt_data$[all]
+
+	callpoint!.setStatus("ACTIVATE")
 
 [[OPT_FILLMNTDET.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -244,12 +247,9 @@ rem --- Do not allow returns
 		break
 	endif
 
-rem --- For inventoried lot/serial items, item qty_picked must equal sum of lot/serial number qty_picked
-	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
-	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
-	item$=callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
-	findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
-	if ivmItemMast$.inventoried$="Y" then
+rem --- For lot/serial items, item qty_picked must equal sum of lot/serial number qty_picked
+	callpoint!.setDevObject("lotser_item",lotser_item$)
+	if callpoint!.getDevObject("lotser_item")="Y" then
 		lotser_picked=0
 		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
 		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")

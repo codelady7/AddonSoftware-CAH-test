@@ -1,67 +1,83 @@
 [[OPT_CARTLSDET.AOPT-LLOK]]
-rem --- Luanch lookup for unpacked picked inventoried lot/serial numbers
-	if !callpoint!.getDevObject("non_inventory") then 
-		call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_FILLMNTLSDET","PRIMARY",key_tpl$,rd_table_chans$[all],status$
-		dim optFillmntLsDet_key$:key_tpl$
-		keyLength=len(optFillmntLsDet_key$)
-		dim filter_defs$[7,2]
-		filter_defs$[1,0]="OPT_FILLMNTLSDET.FIRM_ID"
-		filter_defs$[1,1]="='"+firm_id$ +"'"
-		filter_defs$[1,2]="LOCK"
-		filter_defs$[2,0]="OPT_FILLMNTLSDET.TRANS_STATUS"
-		filter_defs$[2,1]="='E'"
-		filter_defs$[2,2]="LOCK"
-		filter_defs$[3,0]="OPT_FILLMNTLSDET.AR_TYPE"
-		filter_defs$[3,1]="='"+callpoint!.getDevObject("ar_type")+"'"
-		filter_defs$[3,2]="LOCK"
-		filter_defs$[4,0]="OPT_FILLMNTLSDET.CUSTOMER_ID"
-		filter_defs$[4,1]="='"+callpoint!.getDevObject("customer_id")+"'"
-		filter_defs$[4,2]="LOCK"
-		filter_defs$[5,0]="OPT_FILLMNTLSDET.ORDER_NO"
-		filter_defs$[5,1]="='"+callpoint!.getDevObject("order_no")+"'"
-		filter_defs$[5,2]="LOCK"
-		filter_defs$[6,0]="OPT_FILLMNTLSDET.AR_INV_NO"
-		filter_defs$[6,1]="='"+callpoint!.getDevObject("ar_inv_no")+"'"
-		filter_defs$[6,2]="LOCK"
-		filter_defs$[7,0]="OPT_FILLMNTLSDET.ORDDET_SEQ_REF"
-		filter_defs$[7,1]="='"+callpoint!.getDevObject("orddet_seq_ref")+"'"
-		filter_defs$[7,2]="LOCK"
+rem --- Launch lookup for unpacked picked lot/serial numbers
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_FILLMNTLSDET","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim optFillmntLsDet_key$:key_tpl$
+	keyLength=len(optFillmntLsDet_key$)
+	dim filter_defs$[7,2]
+	filter_defs$[1,0]="OPT_FILLMNTLSDET.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="OPT_FILLMNTLSDET.TRANS_STATUS"
+	filter_defs$[2,1]="='E'"
+	filter_defs$[2,2]="LOCK"
+	filter_defs$[3,0]="OPT_FILLMNTLSDET.AR_TYPE"
+	filter_defs$[3,1]="='"+callpoint!.getColumnData("OPT_CARTLSDET.AR_TYPE")+"'"
+	filter_defs$[3,2]="LOCK"
+	filter_defs$[4,0]="OPT_FILLMNTLSDET.CUSTOMER_ID"
+	filter_defs$[4,1]="='"+callpoint!.getColumnData("OPT_CARTLSDET.CUSTOMER_ID")+"'"
+	filter_defs$[4,2]="LOCK"
+	filter_defs$[5,0]="OPT_FILLMNTLSDET.ORDER_NO"
+	filter_defs$[5,1]="='"+callpoint!.getColumnData("OPT_CARTLSDET.ORDER_NO")+"'"
+	filter_defs$[5,2]="LOCK"
+	filter_defs$[6,0]="OPT_FILLMNTLSDET.AR_INV_NO"
+	filter_defs$[6,1]="='"+callpoint!.getColumnData("OPT_CARTLSDET.AR_INV_NO")+"'"
+	filter_defs$[6,2]="LOCK"
+	filter_defs$[7,0]="OPT_FILLMNTLSDET.ORDDET_SEQ_REF"
+	filter_defs$[7,1]="='"+callpoint!.getColumnData("OPT_CARTLSDET.ORDDET_SEQ_REF")+"'"
+	filter_defs$[7,2]="LOCK"
 	
-		call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"OP_UNPACKED_LS","",table_chans$[all],optFillmntLsDet_key$,filter_defs$[all]
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"OP_UNPACKED_LS","",table_chans$[all],optFillmntLsDet_key$,filter_defs$[all]
 
-		rem --- Update lotser_no with selected lot/serial number
-		if cvs(optFillmntLsDet_key$,2)<>"" then
-			optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
-			dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
-			readrecord(optFillmntLsDet_dev,key=optFillmntLsDet_key$(1,keyLength),knum="PRIMARY")optFillmntLsDet$
-			lotser_no$=optFillmntLsDet.lotser_no$
-			callpoint!.setColumnData( "OPT_CARTLSDET.LOTSER_NO",lotser_no$,1)
-			qty_picked=num(callpoint!.getDevObject("qty_picked"))
-			gosub getUnpacked
-			if unpacked>qty_picked then
-				callpoint!.setColumnData("OPT_CARTLSDET.QTY_PACKED",str(qty_picked),1)
-			else
-				callpoint!.setColumnData("OPT_CARTLSDET.QTY_PACKED",str(unpacked),1)
-			endif
-			callpoint!.setColumnData("OPT_CARTLSDET.QTY_PACKED",str(optFillmntLsDet.qty_picked-already_packed),1)
-
-			callpoint!.setStatus("MODIFIED")
+	rem --- Update lotser_no with selected lot/serial number
+	if cvs(optFillmntLsDet_key$,2)<>"" then
+		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+		readrecord(optFillmntLsDet_dev,key=optFillmntLsDet_key$(1,keyLength),knum="PRIMARY")optFillmntLsDet$
+		lotser_no$=optFillmntLsDet.lotser_no$
+		callpoint!.setColumnData( "OPT_CARTLSDET.LOTSER_NO",lotser_no$,1)
+		qty_picked=num(callpoint!.getDevObject("qty_picked"))
+		gosub getUnpacked
+		if unpacked>qty_picked then
+			callpoint!.setColumnData("OPT_CARTLSDET.QTY_PACKED",str(qty_picked),1)
+		else
+			callpoint!.setColumnData("OPT_CARTLSDET.QTY_PACKED",str(unpacked),1)
 		endif
+		callpoint!.setColumnData("OPT_CARTLSDET.QTY_PACKED",str(optFillmntLsDet.qty_picked-already_packed),1)
+
+		callpoint!.setStatus("MODIFIED")
 	endif
+
+[[OPT_CARTLSDET.AREC]]
+rem ---Initialize fields needed for CARTON_NO Lot/Serial lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTLSDET","AO_STATUS",key_tpl$,table_chans$[all],status$
+	dim optCartLsDet_keyPrefix$:key_tpl$
+	optCartLsDet_keyPrefix$=callpoint!.getKeyPrefix()
+	callpoint!.setColumnData("OPT_CARTLSDET.AR_TYPE",optCartLsDet_keyPrefix.ar_type$)
+	callpoint!.setColumnData("OPT_CARTLSDET.CUSTOMER_ID",optCartLsDet_keyPrefix.customer_id$)
+	callpoint!.setColumnData("OPT_CARTLSDET.ORDER_NO",optCartLsDet_keyPrefix.order_no$)
+	callpoint!.setColumnData("OPT_CARTLSDET.AR_INV_NO",optCartLsDet_keyPrefix.ar_inv_no$)
+	callpoint!.setColumnData("OPT_CARTLSDET.ORDDET_SEQ_REF",optCartLsDet_keyPrefix.orddet_seq_ref$)
+	callpoint!.setColumnData("OPT_CARTLSDET.CARTON_NO",optCartLsDet_keyPrefix.carton_no$)
+
+rem --- Initialize RTP trans_status and created fields
+	rem --- TRANS_STATUS set to "E" via form Preset Value
+	callpoint!.setColumnData("OPT_CARTLSDET.CREATED_USER",sysinfo.user_id$)
+	callpoint!.setColumnData("OPT_CARTLSDET.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
+	callpoint!.setColumnData("OPT_CARTLSDET.CREATED_TIME",date(0:"%Hz%mz"))
 
 [[OPT_CARTLSDET.BEND]]
 rem --- Update total qty_packed in the Packing Carton detail grid with the total qty_packed here
 	totalPacked=0
 	optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
 	dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
-	ar_type$=callpoint!.getDevObject("ar_type")
-	customer_id$=callpoint!.getDevObject("customer_id")
-	order_no$=callpoint!.getDevObject("order_no")
-	ar_inv_no$=callpoint!.getDevObject("ar_inv_no")
-	carton_no$=callpoint!.getDevObject("carton_no")
-	orddet_seq_ref$=callpoint!.getDevObject("orddet_seq_ref")
-	optCartLsDet2_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$
-	read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_STATUS",dom=*next)
+	ar_type$=callpoint!.getColumnData("OPT_CARTLSDET.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTLSDET.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTLSDET.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTLSDET.AR_INV_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTLSDET.ORDDET_SEQ_REF")
+	carton_no$=callpoint!.getColumnData("OPT_CARTLSDET.CARTON_NO")
+	optCartLsDet2_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$+carton_no$
+	read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
 	while 1
 		thisKey$=key(optCartLsDet2_dev,end=*break)
 		if pos(optCartLsDet2_trip$=thisKey$)<>1 then break
@@ -71,29 +87,14 @@ rem --- Update total qty_packed in the Packing Carton detail grid with the total
 	callpoint!.setDevObject("total_packed",totalPacked)
 
 [[OPT_CARTLSDET.BSHO]]
-rem --- Set a flag for non-inventoried items
-	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
-	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
-	item_id$=callpoint!.getDevObject("item_id")
-	findrecord (ivmItemMast_dev,key=firm_id$+item_id$,dom=*next)ivmItemMast$
-	if ivmItemMast$.inventoried$<>"Y" or callpoint!.getDevObject("dropship_line")="Y" then
-		callpoint!.setDevObject("non_inventory",1)
-	else
-		callpoint!.setDevObject("non_inventory",0)
-	endif
-
 rem --- Set Lot/Serial button up properly
 	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
 		case 1; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_LOT_LOOKUP")); break
 		case 2; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
 	swend
 
-rem --- No serial/lot lookup for non-inventory items
-	if callpoint!.getDevObject("non_inventory") then
-		callpoint!.setOptionEnabled("LLOK", 0)
-	else
-		callpoint!.setOptionEnabled("LLOK", 1)
-	endif
+rem --- Enable serial/lot lookup
+	callpoint!.setOptionEnabled("LLOK", 1)
 
 [[OPT_CARTLSDET.BWRI]]
 rem --- Initialize RTP modified fields for modified existing records
@@ -106,7 +107,7 @@ rem --- Initialize RTP modified fields for modified existing records
 [[OPT_CARTLSDET.LOTSER_NO.AVAL]]
 rem --- Skip if lotser_no not changed
 	lotser_no$=callpoint!.getUserInput()
-	if lotser_no$=callpoint!.getColumnData("OPT_CARTLSDET.LOTSER_NO") then break
+	if cvs(lotser_no$,2)<>"" and cvs(lotser_no$,2)=cvs(callpoint!.getColumnData("OPT_CARTLSDET.LOTSER_NO"),2) then break
 
 rem --- Allow the same lot/serial number only once in the grid
 	dim gridrec$:fattr(rec_data$)
@@ -127,11 +128,11 @@ rem --- Validate entered lot/serial number was picked
 	optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
 	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
 	lotser_no$=pad(lotser_no$,len(optFillmntLsDet.lotser_no$))
-	ar_type$=callpoint!.getDevObject("ar_type")
-	customer_id$=callpoint!.getDevObject("customer_id")
-	order_no$=callpoint!.getDevObject("order_no")
-	ar_inv_no$=callpoint!.getDevObject("ar_inv_no")
-	orddet_seq_ref$=callpoint!.getDevObject("orddet_seq_ref")
+	ar_type$=callpoint!.getColumnData("OPT_CARTLSDET.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTLSDET.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTLSDET.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTLSDET.AR_INV_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTLSDET.ORDDET_SEQ_REF")
 	optFillmntLsDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
 	read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
 	while 1
@@ -164,6 +165,15 @@ rem --- Default lot/serial number qty_packed to remaining unpacked picked quanti
 	endif
 
 [[OPT_CARTLSDET.QTY_PACKED.AVAL]]
+rem --- QTY_PACKED cannot be negative
+	qty_packed=num(callpoint!.getUserInput())
+	if qty_packed<0 then
+		msg_id$ = "OP_PACKED_NEGATIVE"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Entered qty_packed cannot be greater than unpacked quantity picked
 	qty_packed=num(callpoint!.getUserInput())
 	prev_qty_packed=num(callpoint!.getColumnData("OPT_CARTLSDET.QTY_PACKED"))
@@ -196,11 +206,11 @@ rem ==========================================================================
 	already_packed=0
 	optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
 	dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
-	ar_type$=callpoint!.getDevObject("ar_type")
-	customer_id$=callpoint!.getDevObject("customer_id")
-	order_no$=callpoint!.getDevObject("order_no")
-	ar_inv_no$=callpoint!.getDevObject("ar_inv_no")
-	orddet_seq_ref$=callpoint!.getDevObject("orddet_seq_ref")
+	ar_type$=callpoint!.getColumnData("OPT_CARTLSDET.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTLSDET.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTLSDET.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTLSDET.AR_INV_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTLSDET.ORDDET_SEQ_REF")
 	optCartLsDet2_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
 	read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
 	while 1
@@ -213,7 +223,7 @@ rem ==========================================================================
 
 	optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
 	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
-	orddet_seq_ref$=callpoint!.getDevObject("orddet_seq_ref")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTLSDET.ORDDET_SEQ_REF")
 	optFillmntLsDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
 	read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
 	while 1
