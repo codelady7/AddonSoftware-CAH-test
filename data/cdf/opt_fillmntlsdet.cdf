@@ -134,6 +134,8 @@ rem --- See if there are any lots/serials for this item
 :			"",
 :			dflt_data$[all]
 
+		callpoint!.setStatus("ACTIVATE")
+
 		rem --- Test lot and available qty
 		if callpoint!.getDevObject("selected_lot") <> null() then 
 			if callpoint!.getDevObject("lotser_flag") = "S" then

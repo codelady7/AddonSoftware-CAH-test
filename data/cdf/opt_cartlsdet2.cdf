@@ -1,6 +1,6 @@
 [[OPT_CARTLSDET2.AOPT-LLOK]]
-rem --- Luanch lookup for unpacked picked inventoried lot/serial numbers
-	if !callpoint!.getDevObject("non_inventory") then 
+rem --- Launch lookup for unpacked picked lot/serial numbers
+	if callpoint!.getDevObject("lotser_item")="Y" then 
 		call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_FILLMNTLSDET","PRIMARY",key_tpl$,rd_table_chans$[all],status$
 		dim optFillmntLsDet_key$:key_tpl$
 		keyLength=len(optFillmntLsDet_key$)
@@ -87,25 +87,14 @@ rem --- Update total qty_packed in the Packing Carton detail grid with the total
 	callpoint!.setDevObject("total_packed",totalPacked)
 
 [[OPT_CARTLSDET2.BSHO]]
-rem --- Set a flag for non-inventoried items
-	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
-	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
-	item_id$=callpoint!.getDevObject("item_id")
-	findrecord (ivmItemMast_dev,key=firm_id$+item_id$,dom=*next)ivmItemMast$
-	if ivmItemMast$.inventoried$<>"Y" or callpoint!.getDevObject("dropship_line")="Y" then
-		callpoint!.setDevObject("non_inventory",1)
-	else
-		callpoint!.setDevObject("non_inventory",0)
-	endif
-
 rem --- Set Lot/Serial button up properly
 	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
 		case 1; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_LOT_LOOKUP")); break
 		case 2; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
 	swend
 
-rem --- No serial/lot lookup for non-inventory items
-	if callpoint!.getDevObject("non_inventory") then
+rem --- No serial/lot lookup except for lot/serial items
+	if callpoint!.getDevObject("lotser_item")="N" then
 		callpoint!.setOptionEnabled("LLOK", 0)
 	else
 		callpoint!.setOptionEnabled("LLOK", 1)
@@ -180,8 +169,16 @@ rem --- Default lot/serial number qty_packed to remaining unpacked picked quanti
 	endif
 
 [[OPT_CARTLSDET2.QTY_PACKED.AVAL]]
-rem --- Entered qty_packed cannot be greater than unpacked quantity picked
+rem --- QTY_PACKED cannot be negative
 	qty_packed=num(callpoint!.getUserInput())
+	if qty_packed<0 then
+		msg_id$ = "OP_PACKED_NEGATIVE"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Entered qty_packed cannot be greater than unpacked quantity picked
 	prev_qty_packed=num(callpoint!.getColumnData("OPT_CARTLSDET2.QTY_PACKED"))
 	qty_picked=num(callpoint!.getDevObject("qty_picked"))
 	lotser_no$=callpoint!.getColumnData("OPT_CARTLSDET2.LOTSER_NO")

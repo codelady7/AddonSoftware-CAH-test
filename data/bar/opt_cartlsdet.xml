@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_cartlsdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_cartlsdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_cartlsdet">2459801</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_cartlsdet">20221004</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartlsdet">20221004</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartlsdet">191138</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_cartlsdet">20221019</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartlsdet">20221019</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartlsdet">164452</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_cartlsdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_cartlsdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_cartlsdet">AO_STATUS</DD_ATTR_DKNM>
@@ -73,6 +73,10 @@
 		<RECORD id="ddm_table_cpro.opt_cartlsdetaopt-llok">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdetaopt-llok">OPT_CARTLSDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartlsdetaopt-llok">AOPT-LLOK</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_cartlsdetarec">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdetarec">OPT_CARTLSDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartlsdetarec">AREC</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartlsdetbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdetbend">OPT_CARTLSDET   </DD_TABLE_ALIAS>
@@ -146,12 +150,6 @@
 			<REF_TABLE_ALIAS id="ddm_table_ref.opt_cartlsdetcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
 			<TABLE_REF_NAME id="ddm_table_ref.opt_cartlsdetcustomer_idarm_custmast">FK_OPT_CARTLSDET_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                      </TABLE_REF_NAME>
 		</RECORD>
-		<RECORD id="ddm_table_ref.opt_cartlsdetitem_idivm_itemmast">
-			<DD_TABLE_ALIAS id="ddm_table_ref.opt_cartlsdetitem_idivm_itemmast">OPT_CARTLSDET   </DD_TABLE_ALIAS>
-			<DD_TABLE_COL id="ddm_table_ref.opt_cartlsdetitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
-			<REF_TABLE_ALIAS id="ddm_table_ref.opt_cartlsdetitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.opt_cartlsdetitem_idivm_itemmast">FK_OPT_CARTLSDET_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
-		</RECORD>
 		<RECORD id="ddm_table_ref.opt_cartlsdetmod_useradm_user">
 			<DD_TABLE_ALIAS id="ddm_table_ref.opt_cartlsdetmod_useradm_user">OPT_CARTLSDET   </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.opt_cartlsdetmod_useradm_user">MOD_USER        </DD_TABLE_COL>
@@ -196,24 +194,6 @@
 			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_cartlsdetcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
 			<REF_KEY_COLUMN id="ddm_table_refcol.opt_cartlsdetcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
 			<FK_TABLE_COL id="ddm_table_refcol.opt_cartlsdetcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
-		</RECORD>
-		<RECORD id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">
-			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">OPT_CARTLSDET   </DD_TABLE_ALIAS>
-			<DD_TABLE_COL id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
-			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
-			<REF_KEY_NUMBER id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
-			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
-			<REF_KEY_COLUMN id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
-			<FK_TABLE_COL id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
-		</RECORD>
-		<RECORD id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">
-			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">OPT_CARTLSDET   </DD_TABLE_ALIAS>
-			<DD_TABLE_COL id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
-			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
-			<REF_KEY_NUMBER id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
-			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
-			<REF_KEY_COLUMN id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
-			<FK_TABLE_COL id="ddm_table_refcol.opt_cartlsdetitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
 		</RECORD>
 		<RECORD id="ddm_table_refcol.opt_cartlsdetmod_useradm_user0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_cartlsdetmod_useradm_user0001">OPT_CARTLSDET   </DD_TABLE_ALIAS>
@@ -1838,7 +1818,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.opt_cartlsdet009">N</DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.opt_cartlsdet009">1</DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_MAXV>
