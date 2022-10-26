@@ -185,19 +185,19 @@ rem --- See if there are any lots/serials this item
 			qty_ord  = min(lot_avail, user_tpl.left_to_ord) 
 			if ord_qty<0 and callpoint!.getDevObject("lotser_flag") = "S"  then qty_ord=-1;rem --- can only return -1 at a time when serialized
 
-			callpoint!.setColumnData( "OPE_ORDLSDET.LOTSER_NO", ls_no$ )
-			callpoint!.setColumnData( "OPE_ORDLSDET.QTY_ORDERED", str(qty_ord) )
+			callpoint!.setColumnData( "OPE_ORDLSDET.LOTSER_NO", ls_no$,1 )
+			callpoint!.setColumnData( "OPE_ORDLSDET.QTY_ORDERED", str(qty_ord),1)
 			rem callpoint!.setTableColumnAttribute("OPE_ORDLSDET.QTY_SHIPPED","DFLT", str(qty_ord))
 			print "---Set qty ord:", qty_ord; rem debug
 
 			user_tpl.left_to_ord = ( abs(user_tpl.left_to_ord) - abs(qty_ord) ) * sgn(ord_qty)
 			print "---Left to Ord:", user_tpl.left_to_ord; rem debug
 
-			callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED", str(qty_ord))
+			callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED", str(qty_ord),1)
 			print "---Set shipped:", qty_ord; rem debug
 
-			callpoint!.setColumnData("OPE_ORDLSDET.UNIT_COST", str(lot_cost))
-			callpoint!.setStatus("MODIFIED;REFRESH")
+			callpoint!.setColumnData("OPE_ORDLSDET.UNIT_COST", str(lot_cost),1)
+			callpoint!.setStatus("MODIFIED")
 		endif
 
 	else
@@ -466,9 +466,9 @@ set_qty_defaults: rem --- Set defaults
 	if num(callpoint!.getColumnData("OPE_ORDLSDET.QTY_SHIPPED")) = 0 then
 		if callpoint!.getDevObject("lotser_flag")="S" then
 			if ord_qty>0
-				callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED","1")
+				callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED","1",1)
 			else
-				callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED","-1")
+				callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED","-1",1)
 			endif
 		else
 			callpoint!.setColumnData("OPE_ORDLSDET.QTY_SHIPPED",callpoint!.getColumnData("OPE_ORDLSDET.QTY_ORDERED"),1)
@@ -480,11 +480,11 @@ set_qty_defaults: rem --- Set defaults
 	endif
 
 	if num(callpoint!.getColumnData("OPE_ORDLSDET.UNIT_COST")) = 0 then
-		callpoint!.setColumnData("OPE_ORDLSDET.UNIT_COST", lsmast_tpl.unit_cost$)
+		callpoint!.setColumnData("OPE_ORDLSDET.UNIT_COST", lsmast_tpl.unit_cost$,1)
 	endif
 	
 refresh_screen:
-	callpoint!.setStatus("MODIFIED;REFRESH")
+	callpoint!.setStatus("MODIFIED")
 
 [[OPE_ORDLSDET.QTY_ORDERED.AVAL]]
 rem --- Skip if qty_ordered not changed
