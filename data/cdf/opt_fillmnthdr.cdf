@@ -12,7 +12,6 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 	notify_base$=notice(gui_dev,gui_event.x%)
 	dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
 	notice$=notify_base$
-
 	rem --- The tab control
 	if ctl_ID=num(stbl("+TAB_CTL")) then
 		switch notice.code
@@ -51,6 +50,27 @@ rem --- Hold onto ar_ship_via for use in opt_carthdr
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
 	callpoint!.setDevObject("refreshRecord",0)
+
+rem --- Show total weight and total freight amount
+	weight=0
+	freight_amt=0
+	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+	optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+	while 1
+		optCartHdr_key$=key(optCartHdr_dev,end=*break)
+		if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+		readrecord(optCartHdr_dev)optCartHdr$
+		weight=weight+optCartHdr.weight
+		freight_amt=freight_amt+optCartHdr.freight_amt
+	wend
+	callpoint!.setColumnData("<<DISPLAY>>.WEIGHT",str(weight),1)
+	callpoint!.setColumnData("<<DISPLAY>>.FREIGHT_AMT",str(freight_amt),1)
 
 [[OPT_FILLMNTHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -116,24 +136,6 @@ rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR dat
 
 rem --- Hold onto ar_ship_via for use in opt_carthdr
 	callpoint!.setDevObject("ar_ship_via",optFillmntHdr.ar_ship_via$)
-
-rem --- Show total weight and total freight amount
-	weight=0
-	freight_amt=0
-	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
-	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-	read(optCartHdr_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)
-	while 1
-		optCartHdr_key$=key(optCartHdr_dev,end=*break)
-		if pos(opeOrdHdr_key$=optCartHdr_key$)<>1 then break
-		readrecord(optCartHdr_dev)optCartHdr$
-		weight=weight+optCartHdr.weight
-		freight_amt=freight_amt+optCartHdr.freight_amt
-	wend
-	callpoint!.setColumnData("<<DISPLAY>>.WEIGHT",str(weight),1)
-	callpoint!.setColumnData("<<DISPLAY>>.FREIGHT_AMT",str(freight_amt),1)
-
-	callpoint!.setStatus("MODIFIED")
 
 rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 	optFillmntDet_dev=fnget_dev("OPT_FILLMNTDET")
@@ -235,12 +237,14 @@ rem --- Get grid control on each tab
 		if pos(tabCtrl!.getTitleAt(i)=Picking$)=1 then
 			pickTab!=tabCtrl!.getControlAt(i)
 			callpoint!.setDevObject("pickTabIndex",i)
-			callpoint!.setDevObject("pickGrid",pickTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1)))
+			pickGrid!=pickTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1))
+			callpoint!.setDevObject("pickGrid",pickGrid!)
 		endif
 		if pos(tabCtrl!.getTitleAt(i)=Packing_and_Shipping$)=1 then
 			packShipTab!=tabCtrl!.getControlAt(i)
 			callpoint!.setDevObject("packShipTabIndex",i)
-			callpoint!.setDevObject("packShipGrid",packShipTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1)))
+			packShipGrid!=packShipTab!.getControl(num(stbl("+GRID_CTL"))+100*(i+1))
+			callpoint!.setDevObject("packShipGrid",packShipGrid!)
 		endif
 	next i
 
@@ -267,6 +271,13 @@ rem --- Set up a color to be used when qty picked <> ship qty
 	RGB$="115,147,179"
 	gosub get_RGB
 	callpoint!.setDevObject("disabledColor",BBjAPI().getSysGui().makeColor(R,G,B))
+
+rem --- Get and hold on to controls for the <<DISPLAY>> field controls
+	totalFreightAmtCtrl!=callpoint!.getControl("<<DISPLAY>>.FREIGHT_AMT")
+	callpoint!.setDevObject("totalFreightAmtCtrl",totalFreightAmtCtrl!)
+
+	totalWeightCtrl!=callpoint!.getControl("<<DISPLAY>>.WEIGHT")
+	callpoint!.setDevObject("totalWeightCtrl",totalWeightCtrl!)
 
 [[OPT_FILLMNTHDR.AWRI]]
 rem --- Need to refresh display if a new OPT_CARTHDR record was added via Pick Item button (also see ACUS)
@@ -423,6 +434,47 @@ rem --- Initialize RTP modified fields for modified existing records
 			rec_data.mod_time$=date(0:"%Hz%mz")
 			callpoint!.setDevObject("initial_rec_data$",rec_data$)
 		endif
+	endif
+
+[[OPT_FILLMNTHDR.COMPLETE_FLG.AVAL]]
+rem --- Skip if complete_flg hasn't changed
+	complete_flg$=callpoint!.getUserInput()
+	if cvs(complete_flg$,2)=cvs(callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG"),2) then break
+
+rem --- Do NOT allow changes to a carton's contents when the order's fulfillment is completed
+	numRows=0
+	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+	optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+	while 1
+		optCartHdr_key$=key(optCartHdr_dev,end=*break)
+		if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+		readrecord(optCartHdr_dev)optCartHdr$
+		if complete_flg$="Y" then
+			optCartHdr.shipped_flag$="Y"
+		else
+			optCartHdr.shipped_flag$="N"
+		endif
+		writerecord(optCartHdr_dev)optCartHdr$
+		numRows=numRows+1
+	wend
+
+rem --- Need to refresh display of Shipped cells in detail grid on Packing & Shipping Tab
+	if numRows>0 then
+		packShipGrid!=callpoint!.getDevObject("packShipGrid")
+		shippedFlag_col=callpoint!.getDevObject("shippedFlag_col")
+		for row=0 to numRows-1
+			if optCartHdr.shipped_flag$="Y" then
+				packShipGrid!.setCellStyle(row,shippedFlag_col,SysGUI!.GRID_STYLE_CHECKED)
+			else
+				packShipGrid!.setCellStyle(row,shippedFlag_col,SysGUI!.GRID_STYLE_UNCHECKED)
+			endif
+		next row
 	endif
 
 [[OPT_FILLMNTHDR.ORDER_NO.AVAL]]

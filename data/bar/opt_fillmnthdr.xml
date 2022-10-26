@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_fillmnthdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_fillmnthdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_fillmnthdr">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_fillmnthdr">20221008</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmnthdr">20221008</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmnthdr">142814</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_fillmnthdr">20221025</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmnthdr">20221025</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmnthdr">181122</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_fillmnthdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_fillmnthdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_fillmnthdr">AO_STATUS</DD_ATTR_DKNM>
@@ -1607,7 +1607,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_fillmnthdr011">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_fillmnthdr011"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_fillmnthdr011"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmnthdr011"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_fillmnthdr011">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_fillmnthdr011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_fillmnthdr011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_fillmnthdr011"></DD_ATTR_CTLY>
@@ -2264,6 +2264,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_fillmnthdrar_ship_viaaval">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_fillmnthdrar_ship_viaaval">AR_SHIP_VIA     </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.opt_fillmnthdrar_ship_viaaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_fillmnthdrcomplete_flgaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_fillmnthdrcomplete_flgaval">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_fillmnthdrcomplete_flgaval">COMPLETE_FLG    </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_fillmnthdrcomplete_flgaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">

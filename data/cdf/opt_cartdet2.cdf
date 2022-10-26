@@ -70,6 +70,21 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 	next row
 	read(optFillmntDet_dev,key="",knum="AO_STATUS",dom=*next)
 
+[[OPT_CARTDET2.AGRN]]
+rem --- Disable carton_no and qty_picked when the carton has shipped so they cannot be changed
+	carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
+	if cvs(carton_no$,2)<>"" then
+		gosub checkCartonShipped
+		if shipped_flag$="Y" then
+			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"OPT_CARTDET2.CARTON_NO",0)
+			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"OPT_CARTDET2.QTY_PACKED",0)
+
+			rem --- Cannot change contents of cartons that are shipped
+			msg_id$ = "OP_CARTON_SHIPPED"
+			gosub disp_message
+		endif
+	endif
+
 [[OPT_CARTDET2.AOPT-PKLS]]
 rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
 	ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
@@ -215,6 +230,15 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 		endif
 	next row
 
+[[OPT_CARTDET2.BDEL]]
+rem --- Cannot delete cartons that are shipped
+	if callpoint!.getDevObject("shipped_flag")="Y" then
+		msg_id$ = "OP_CARTON_SHIPPED"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[OPT_CARTDET2.BEND]]
 rem --- Get the total quantity packed
 	qtyPacked=0
@@ -256,6 +280,41 @@ rem --- Initialize RTP modified fields for modified existing records
 rem --- Need to use <<DISPLAY>> field for CARTON_NO because it is part of the key to the primary table OPT_CARTHDR.
 rem --- OPT_CARTDET2 doesn't need to have a primary table because OPT_CARTHDR deletes cascade to OPT_CARTDET.
 rem --- However, for maintainability, CARTON_DSP is being used in both OPT_CARTDET and OPT_CARTDET2.
+
+rem --- Cannot change contents of cartons that are shipped
+	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))="Y" then
+		carton_no$=callpoint!.getUserInput()
+		gosub checkCartonShipped
+		if shipped_flag$="Y" then
+			msg_id$ = "OP_CARTON_SHIPPED"
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	else
+		previousCartonNo$=callpoint!.getColumnData("<<DISPLAY>>.CARTON_DSP")
+		carton_no$=callpoint!.getUserInput()
+		if cvs(carton_no$,2)<>cvs(previousCartonNo$,2) then
+			gosub checkCartonShipped
+			if shipped_flag$="Y" then
+				msg_id$ = "OP_CARTON_SHIPPED"
+				gosub disp_message
+				callpoint!.setColumnData("<<DISPLAY>>.CARTON_DSP",previousCartonNo$,1)
+				callpoint!.setStatus("ABORT")
+				break
+			else
+				carton_no$=previousCartonNo$
+				gosub checkCartonShipped
+				if shipped_flag$="Y" then
+					msg_id$ = "OP_CARTON_SHIPPED"
+					gosub disp_message
+					callpoint!.setColumnData("<<DISPLAY>>.CARTON_DSP",previousCartonNo$,1)
+					callpoint!.setStatus("ABORT")
+					break
+				endif
+			endif
+		endif
+	endif
 
 rem --- Initialize new row
 	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))="Y" then
@@ -451,6 +510,28 @@ rem ==========================================================================
 	qty_picked=num(callpoint!.getDevObject("qty_picked"))
 	unpackedQty=qty_picked-alreadyPacked
 	callpoint!.setDevObject("unpackedQty",unpackedQty)
+
+	return
+
+rem ==========================================================================
+checkCartonShipped: rem --- Has this carton been shipped?
+               rem      IN: carton_no$
+               rem   OUT: shipped_flag$
+rem ==========================================================================
+	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTHDR","AO_STATUS",key_tpl$,table_chans$[all],status$
+	dim optCartHdr_key$:key_tpl$
+	optCartHdr_key.firm_id$=firm_id$
+	optCartHdr_key.trans_status$="E"
+	optCartHdr_key.ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+	optCartHdr_key.customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+	optCartHdr_key.order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+	optCartHdr_key.ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+	optCartHdr_key.carton_no$=carton_no$
+	readrecord(optCartHdr_dev,key=optCartHdr_key$,dom=*next)optCartHdr$
+	shipped_flag$=optCartHdr.shipped_flag$
+	callpoint!.setDevObject("shipped_flag",shipped_flag$)
 
 	return
 

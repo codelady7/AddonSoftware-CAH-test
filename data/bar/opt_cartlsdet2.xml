@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_cartlsdet2"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_cartlsdet2">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_cartlsdet2">20221004</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_cartlsdet2">20221019</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartlsdet2">20221019</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartlsdet2">155452</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_cartlsdet2">20221025</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartlsdet2">20221025</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartlsdet2">150138</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_cartlsdet2">OPT_CARTLSDET   </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_cartlsdet2">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_cartlsdet2">AO_ORDDET_CART</DD_ATTR_DKNM>
@@ -70,6 +70,10 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.opt_cartlsdet2agrn">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdet2agrn">OPT_CARTLSDET2  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartlsdet2agrn">AGRN</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartlsdet2aopt-llok">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdet2aopt-llok">OPT_CARTLSDET2  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartlsdet2aopt-llok">AOPT-LLOK</DD_ATTR_CPRO>
@@ -77,6 +81,10 @@
 		<RECORD id="ddm_table_cpro.opt_cartlsdet2arec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdet2arec">OPT_CARTLSDET2  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartlsdet2arec">AREC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_cartlsdet2bdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdet2bdel">OPT_CARTLSDET2  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_cartlsdet2bdel">BDEL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_cartlsdet2bend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_cartlsdet2bend">OPT_CARTLSDET2  </DD_TABLE_ALIAS>

@@ -1,3 +1,10 @@
+[[OPT_CARTLSDET2.AGRN]]
+rem --- Disable lotser_no and qty_picked when the carton has shipped so they cannot be changed
+	if callpoint!.getDevObject("shipped_flag")="Y" then
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"OPT_CARTLSDET2.LOTSER_NO",0)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"OPT_CARTLSDET2.QTY_PACKED",0)
+	endif
+
 [[OPT_CARTLSDET2.AOPT-LLOK]]
 rem --- Launch lookup for unpacked picked lot/serial numbers
 	if callpoint!.getDevObject("lotser_item")="Y" then 
@@ -29,6 +36,14 @@ rem --- Launch lookup for unpacked picked lot/serial numbers
 
 		call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"OP_UNPACKED_LS","",table_chans$[all],optFillmntLsDet_key$,filter_defs$[all]
 
+		rem --- Cannot change cartons that are shipped
+		if callpoint!.getDevObject("shipped_flag")="Y" then
+			msg_id$ = "OP_CARTON_SHIPPED"
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
 		rem --- Update lotser_no with selected lot/serial number
 		if cvs(optFillmntLsDet_key$,2)<>"" then
 			optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
@@ -49,6 +64,25 @@ rem --- Launch lookup for unpacked picked lot/serial numbers
 	endif
 
 [[OPT_CARTLSDET2.AREC]]
+rem --- Can't add new record when carton is shipped
+	if callpoint!.getDevObject("shipped_flag")="Y" then
+		msg_id$ = "OP_CARTON_SHIPPED"
+		gosub disp_message
+		if GridVect!.size()=1 then
+			rem --- Grid is empty
+			callpoint!.setStatus("EXIT")
+			break
+		else
+			for row=0 to GridVect!.size()-1
+				callpoint!.setColumnEnabled(row,"OPT_CARTLSDET2.LOTSER_NO",0)
+				callpoint!.setColumnEnabled(row,"OPT_CARTLSDET2.QTY_PACKED",0)
+			next row
+			callpoint!.setFocus(0,"OPT_CARTLSDET.LOTSER_NO",0)
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
 rem ---Initialize fields needed for CARTON_NO Lot/Serial lookup
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTLSDET2","AO_ORDDET_CART",key_tpl$,table_chans$[all],status$
 	dim optCartLsDet2_keyPrefix$:key_tpl$
@@ -64,6 +98,15 @@ rem --- Initialize RTP trans_status and created fields
 	callpoint!.setColumnData("OPT_CARTLSDET2.CREATED_USER",sysinfo.user_id$)
 	callpoint!.setColumnData("OPT_CARTLSDET2.CREATED_DATE",date(0:"%Yd%Mz%Dz"))
 	callpoint!.setColumnData("OPT_CARTLSDET2.CREATED_TIME",date(0:"%Hz%mz"))
+
+[[OPT_CARTLSDET2.BDEL]]
+rem --- Cannot delete cartons that are shipped
+	if callpoint!.getDevObject("shipped_flag")="Y" then
+		msg_id$ = "OP_CARTON_SHIPPED"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[OPT_CARTLSDET2.BEND]]
 rem --- Update total qty_packed in the Packing Carton detail grid with the total qty_packed here
