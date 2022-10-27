@@ -60,3 +60,14 @@ Barista bug.
 ----
 Modified: data/bar/ope_ordlsdet.xml
 Modified: data/cdf/ope_ordlsdet.cdf
+
+=======================================================================================================================================
+Revision: 750244ac96fcd3219814543ceb6c25c4801b0b3f
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 10/26/2022 5:56:29 PM
+Message:
+Bug 10517: Enabled Lot/Serial Lookup for both lotted and serialized
+inventoried items.
+----
+Modified: data/bar/ive_transfer.xml
+Modified: data/cdf/ive_transfer.cdf
