@@ -1,25 +1,63 @@
-[[IVE_TRANSFER.ARNF]]
-if num(stbl("+BATCH_NO"),err=*next)<>0
-	rem --- Check if this record exists in a different batch
-	tableAlias$=callpoint!.getAlias()
-	primaryKey$=callpoint!.getColumnData("IVE_TRANSFER.FIRM_ID")+
-:		callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")+
-:		callpoint!.getColumnData("IVE_TRANSFER.TRANS_DATE")+
-:		callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID_TO")+
-:		callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")+
-:		callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
-	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
-	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
-endif
-[[IVE_TRANSFER.BREC]]
-rem --- Disable Lot Lookup button
-	callpoint!.setOptionEnabled("LOTS",0)
-[[IVE_TRANSFER.ARAR]]
-	callpoint!.setDevObject("qty_ok","")
-[[IVE_TRANSFER.ITEM_ID.AINV]]
-rem --- Item synonym processing
+[[IVE_TRANSFER.ADEL]]
+print "debug - in ADEL (After Delete)"; rem debug
 
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+rem --- Uncommit inventory
+
+	qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
+
+	if qty then 
+
+		print "debug - need to uncommit qty..."; rem debug
+	
+		rem --- Initialize
+		status = 999
+		call user_tpl.pgmdir$ + "ivc_itemupdt.aon::init",
+:			err=*next,
+:			chan[all],
+:			ivs01a$,
+:			items$[all],
+:			refs$[all],
+:			refs[all],
+:			table_chans$[all],
+:			status
+		if status then goto std_exit
+
+		rem --- Uncommit qty
+		action$ = "UC"
+		if qty then gosub item_update
+
+	endif
+
+[[IVE_TRANSFER.ADIS]]
+print "debug - in ADIS (After Record Display)"; rem debug
+
+rem --- Get 'previous' qty
+
+	user_tpl.prev_qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
+
+rem --- Set/display item data (avail comes from item if no lot/serial)
+
+	item$ = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")
+	print "debug - Item: ", item$; rem debug
+	gosub get_item
+
+rem --- Get from-whse data, calculate available
+
+	whse$ = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")
+	gosub check_item_whse
+	user_tpl.avail = ivm02a.qty_on_hand - ivm02a.qty_commit + user_tpl.prev_qty
+
+rem --- Get lot/serial# if necessary (avail comes from lots if present)
+
+	gosub set_ls_flags
+
+	if user_tpl.this_item_is_lot_ser% then
+		
+		ls_no$ = callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
+		gosub valid_ls
+
+	endif
+
 [[IVE_TRANSFER.AOPT-LOTS]]
 rem --- Call the lot lookup window and set default lot
 
@@ -57,23 +95,45 @@ else
 	callpoint!.setMessage("IV_NO_ITEM_WHSE")
 	callpoint!.setStatus("ABORT")
 endif
-[[IVE_TRANSFER.BEND]]
-rem --- remove software lock on batch, if batching
 
-	batch$=stbl("+BATCH_NO",err=*next)
-	if num(batch$)<>0
-		lock_table$="ADM_PROCBATCHES"
-		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
-		lock_type$="X"
-		lock_status$=""
-		lock_disp$=""
-		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-	endif
-[[IVE_TRANSFER.BTBL]]
-rem --- Get Batch information
+[[IVE_TRANSFER.ARAR]]
+	callpoint!.setDevObject("qty_ok","")
 
-call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
-callpoint!.setTableColumnAttribute("IVE_TRANSFER.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+[[IVE_TRANSFER.AREC]]
+print "debug - in AREC (After New Record)"; rem debug
+
+rem --- Do record inits here
+
+rem	util.disableField(callpoint!, "IVE_TRANSFER.LOTSER_NO")
+	callpoint!.setColumnEnabled("IVE_TRANSFER.LOTSER_NO",0)
+	user_tpl.avail = 0
+	user_tpl.prev_qty = 0
+	user_tpl.this_item_is_lot_ser% = 0
+	user_tpl.item_is_serial% = 0
+
+	callpoint!.setDevObject("qty_ok","")
+
+rem --- Initialize Lot/Serial Lookup button
+	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
+		case 1; callpoint!.setOptionText("LOTS",Translate!.getTranslation("AON_LOT_LOOKUP")); break
+		case 2; callpoint!.setOptionText("LOTS",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
+	swend
+	callpoint!.setOptionEnabled("LLOK", 0)
+
+[[IVE_TRANSFER.ARNF]]
+if num(stbl("+BATCH_NO"),err=*next)<>0
+	rem --- Check if this record exists in a different batch
+	tableAlias$=callpoint!.getAlias()
+	primaryKey$=callpoint!.getColumnData("IVE_TRANSFER.FIRM_ID")+
+:		callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")+
+:		callpoint!.getColumnData("IVE_TRANSFER.TRANS_DATE")+
+:		callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID_TO")+
+:		callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")+
+:		callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
+	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
+	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
+endif
+
 [[IVE_TRANSFER.AWRI]]
 print "debug - in AWRI (After Record Write)"; rem debug
 
@@ -117,107 +177,188 @@ rem --- Commit inventory
 		gosub item_update
 
 	endif
-[[IVE_TRANSFER.ADIS]]
-print "debug - in ADIS (After Record Display)"; rem debug
 
-rem --- Get 'previous' qty
+[[IVE_TRANSFER.BEND]]
+rem --- remove software lock on batch, if batching
 
-	user_tpl.prev_qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
+	batch$=stbl("+BATCH_NO",err=*next)
+	if num(batch$)<>0
+		lock_table$="ADM_PROCBATCHES"
+		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
+		lock_type$="X"
+		lock_status$=""
+		lock_disp$=""
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
 
-rem --- Set/display item data (avail comes from item if no lot/serial)
+[[IVE_TRANSFER.BREC]]
+rem --- Disable Lot Lookup button
+	callpoint!.setOptionEnabled("LOTS",0)
 
-	item$ = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")
-	print "debug - Item: ", item$; rem debug
-	gosub get_item
+[[IVE_TRANSFER.BSHO]]
+rem print 'show',"debug - in BSHO"; rem debug
 
-rem --- Get from-whse data, calculate available
+rem --- Inits
 
-	whse$ = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")
+	use ::ado_util.src::util
+
+rem --- Open files
+
+	num_files=4
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="IVS_PARAMS",   open_opts$[1]="OTA"
+	open_tables$[2]="IVM_ITEMMAST", open_opts$[2]="OTA"
+	open_tables$[3]="IVM_ITEMWHSE", open_opts$[3]="OTA"
+	open_tables$[4]="IVM_LSMASTER", open_opts$[4]="OTA"	
+
+	gosub open_tables
+
+	ivs01_dev=num(open_chans$[1])
+	dim ivs01a$:open_tpls$[1]
+
+rem --- Get parameter records
+
+	find record(ivs01_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs01a$
+	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
+
+rem --- Exit if not multi-warehouse
+
+	if ivs01a.multi_whse$ <> "Y" then
+		callpoint!.setMessage("IV_NOT_MULTI_WHSE")
+		callpoint!.setStatus("EXIT")
+		goto bsho_exit
+	endif
+
+rem --- Setup user template 
+
+	user_tpl_str$ = ""
+	user_tpl_str$ = user_tpl_str$ + "ls:c(1),"
+	user_tpl_str$ = user_tpl_str$ + "lf:c(1),"
+	user_tpl_str$ = user_tpl_str$ + "gl:c(1),"
+	user_tpl_str$ = user_tpl_str$ + "pgmdir:c(1*),"
+	user_tpl_str$ = user_tpl_str$ + "cost_mask:c(1*),"
+	user_tpl_str$ = user_tpl_str$ + "amount_mask:c(1*),"
+	user_tpl_str$ = user_tpl_str$ + "avail:n(1*),"
+	user_tpl_str$ = user_tpl_str$ + "this_item_is_lot_ser:u(1),"
+	user_tpl_str$ = user_tpl_str$ + "serialized:u(1),"
+	user_tpl_str$ = user_tpl_str$ + "item_is_serial:u(1),"
+	user_tpl_str$ = user_tpl_str$ + "prev_qty:n(1*),"
+	user_tpl_str$ = user_tpl_str$ + "disk_qty:n(1*)"
+	dim user_tpl$:user_tpl_str$
+
+	user_tpl.pgmdir$      = stbl("+DIR_PGM",err=*next)
+	call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","C","",cst_mask$,0,0
+	user_tpl.cost_mask$   = cst_mask$
+	call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","A","",amt_mask$,0,0
+	user_tpl.amount_mask$ = amt_mask$
+
+rem --- Set IV flags
+
+	user_tpl.ls$ = iff( pos(ivs01a.lotser_flag$ = "LS"), "Y", "N" )
+	user_tpl.lf$ = iff( pos(ivs01a.lifofifo$    = "LF"), "Y", "N" )
+
+	if ivs01a.lotser_flag$ = "S" then user_tpl.serialized% = 1
+
+rem --- Is the GL module installed?
+
+	user_tpl.gl$="N"
+	call user_tpl.pgmdir$+"adc_application.aon","GL",info$[all]
+	
+	if info$[20]="Y" then 
+		call user_tpl.pgmdir$+"adc_application.aon","IV",info$[all]
+		
+		rem --- Does IV post to GL?
+		user_tpl.gl$=info$[9]
+	endif
+
+rem --- Final inits
+
+	precision num(ivs01a.precision$)
+
+bsho_exit:
+
+[[IVE_TRANSFER.BTBL]]
+rem --- Get Batch information
+
+call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
+callpoint!.setTableColumnAttribute("IVE_TRANSFER.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
+[[IVE_TRANSFER.BWRI]]
+print "debug - in BWRI (Before Write)"; rem debug
+
+rem --- Do all data validation here
+
+rem --- Warehouses can't match
+
+	from_whse$ = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")
+	to_whse$   = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID_TO")
+
+	if from_whse$ = to_whse$ then
+		callpoint!.setMessage("IV_FROM_TO_WHSE_MTCH")
+		callpoint!.setStatus("ABORT")
+		goto bwri_end
+	endif
+
+rem --- Check item against both warehouses
+
+	item$ = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID") 
+	whse$ = from_whse$
 	gosub check_item_whse
+
+	rem --- Available is based on the from whse
 	user_tpl.avail = ivm02a.qty_on_hand - ivm02a.qty_commit + user_tpl.prev_qty
 
-rem --- Get lot/serial# if necessary (avail comes from lots if present)
-
-	gosub set_ls_flags
-
-	if user_tpl.this_item_is_lot_ser% then
-		
-		ls_no$ = callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
-		gosub valid_ls
-
-	endif
-[[IVE_TRANSFER.ADEL]]
-print "debug - in ADEL (After Delete)"; rem debug
-
-rem --- Uncommit inventory
-
-	qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
-
-	if qty then 
-
-		print "debug - need to uncommit qty..."; rem debug
-	
-		rem --- Initialize
-		status = 999
-		call user_tpl.pgmdir$ + "ivc_itemupdt.aon::init",
-:			err=*next,
-:			chan[all],
-:			ivs01a$,
-:			items$[all],
-:			refs$[all],
-:			refs[all],
-:			table_chans$[all],
-:			status
-		if status then goto std_exit
-
-		rem --- Uncommit qty
-		action$ = "UC"
-		if qty then gosub item_update
-
-	endif
-[[IVE_TRANSFER.AREC]]
-print "debug - in AREC (After New Record)"; rem debug
-
-rem --- Do record inits here
-
-rem	util.disableField(callpoint!, "IVE_TRANSFER.LOTSER_NO")
-	callpoint!.setColumnEnabled("IVE_TRANSFER.LOTSER_NO",0)
-	user_tpl.avail = 0
-	user_tpl.prev_qty = 0
-	user_tpl.this_item_is_lot_ser% = 0
-	user_tpl.item_is_serial% = 0
-
-	callpoint!.setDevObject("qty_ok","")
-[[IVE_TRANSFER.TRANS_QTY.BINP]]
-print "debug - in TRANS_QTY.BINP"; rem debug
-[[IVE_TRANSFER.INV_XFER_NO.BINP]]
-print "debug - in INV_XREF_NO.BINP"; rem debug
-[[IVE_TRANSFER.TRANS_QTY.AVAL]]
-print "debug - in TRANS_QTY.AVAL"; rem debug
-
-rem --- Is qty valid?
-
-	qty = num( callpoint!.getUserInput() )
-	gosub check_qty
-	if !(failed)
-		gosub display_ext
-	else
+	if failed then 
 		callpoint!.setStatus("ABORT")
+		goto bwri_end
+	else
+		whse$ = to_whse$
+		gosub check_item_whse
+		if failed then 
+			callpoint!.setStatus("ABORT")
+			goto bwri_end
+		endif
 	endif
-[[IVE_TRANSFER.LOTSER_NO.AVAL]]
+
 rem --- Validate entered lot/serial#
 
-	whse$  = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")
-	item$  = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")
-	ls_no$ = callpoint!.getUserInput()
+	if user_tpl.this_item_is_lot_ser% then
 
-	gosub valid_ls
+		whse$  = from_whse$
+		ls_no$ = callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
 
-	if !(failed) then 
-		callpoint!.setColumnData("IVE_TRANSFER.UNIT_COST", str(ls_rec.unit_cost))
-		qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
-		gosub display_ext
+		gosub valid_ls
+		if failed then
+			callpoint!.setStatus("ABORT")
+			goto bwri_end
+		endif
+
 	endif
+
+rem --- Check trans qty against available
+
+	qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
+	gosub check_qty
+	if failed then 
+		callpoint!.setStatus("ABORT")
+		goto bwri_end
+	endif
+
+rem --- Get 'previous' or disk qty to test against
+
+	rem getColumnDiskData() does not seem to work yet
+	disk_qty = num( callpoint!.getColumnDiskData("IVE_TRANSFER.TRANS_QTY") )
+
+bwri_end:
+
+[[IVE_TRANSFER.INV_XFER_NO.BINP]]
+print "debug - in INV_XREF_NO.BINP"; rem debug
+
+[[IVE_TRANSFER.ITEM_ID.AINV]]
+rem --- Item synonym processing
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
 [[IVE_TRANSFER.ITEM_ID.AVAL]]
 print "debug - in ITEM_ID.AVAL"; rem debug
 
@@ -296,13 +437,50 @@ rem		util.enableField(callpoint!, "IVE_TRANSFER.LOTSER_NO")
 
 	endif
 
-	rem --- Enable Lot Lookup for inventoried lotted items
-	if user_tpl.this_item_is_lot_ser% and !user_tpl.serialized% then
-		rem --- Is item lotted and inventoried?
-		callpoint!.setOptionEnabled("LOTS",1)
-	endif
+rem --- Enable Lot/Serial Lookup for inventoried lotted/serialized items
+	if user_tpl.this_item_is_lot_ser% then  callpoint!.setOptionEnabled("LOTS",1)
 
 item_id_aval_end:
+
+[[IVE_TRANSFER.LOTSER_NO.AVAL]]
+rem --- Validate entered lot/serial#
+
+	whse$  = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")
+	item$  = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")
+	ls_no$ = callpoint!.getUserInput()
+
+	gosub valid_ls
+
+	if !(failed) then 
+		callpoint!.setColumnData("IVE_TRANSFER.UNIT_COST", str(ls_rec.unit_cost))
+		qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
+		gosub display_ext
+	endif
+
+[[IVE_TRANSFER.TRANS_DATE.AVAL]]
+rem --- Is date within range of GL period?
+
+	if user_tpl.gl$="Y" then 
+		call user_tpl.pgmdir$+"glc_datecheck.aon",callpoint!.getUserInput(),"Y",period$,year$,status
+		if status>99 then callpoint!.setStatus("ABORT")
+	endif
+
+[[IVE_TRANSFER.TRANS_QTY.AVAL]]
+print "debug - in TRANS_QTY.AVAL"; rem debug
+
+rem --- Is qty valid?
+
+	qty = num( callpoint!.getUserInput() )
+	gosub check_qty
+	if !(failed)
+		gosub display_ext
+	else
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[IVE_TRANSFER.TRANS_QTY.BINP]]
+print "debug - in TRANS_QTY.BINP"; rem debug
+
 [[IVE_TRANSFER.WAREHOUSE_ID.AVAL]]
 rem --- If both warehouses are entered, they can't match
 
@@ -313,73 +491,7 @@ rem --- If both warehouses are entered, they can't match
 		msg_id$ = "IV_FROM_TO_WHSE_MTCH"
 		gosub disp_message
 	endif
-[[IVE_TRANSFER.BWRI]]
-print "debug - in BWRI (Before Write)"; rem debug
 
-rem --- Do all data validation here
-
-rem --- Warehouses can't match
-
-	from_whse$ = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID")
-	to_whse$   = callpoint!.getColumnData("IVE_TRANSFER.WAREHOUSE_ID_TO")
-
-	if from_whse$ = to_whse$ then
-		callpoint!.setMessage("IV_FROM_TO_WHSE_MTCH")
-		callpoint!.setStatus("ABORT")
-		goto bwri_end
-	endif
-
-rem --- Check item against both warehouses
-
-	item$ = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID") 
-	whse$ = from_whse$
-	gosub check_item_whse
-
-	rem --- Available is based on the from whse
-	user_tpl.avail = ivm02a.qty_on_hand - ivm02a.qty_commit + user_tpl.prev_qty
-
-	if failed then 
-		callpoint!.setStatus("ABORT")
-		goto bwri_end
-	else
-		whse$ = to_whse$
-		gosub check_item_whse
-		if failed then 
-			callpoint!.setStatus("ABORT")
-			goto bwri_end
-		endif
-	endif
-
-rem --- Validate entered lot/serial#
-
-	if user_tpl.this_item_is_lot_ser% then
-
-		whse$  = from_whse$
-		ls_no$ = callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
-
-		gosub valid_ls
-		if failed then
-			callpoint!.setStatus("ABORT")
-			goto bwri_end
-		endif
-
-	endif
-
-rem --- Check trans qty against available
-
-	qty = num( callpoint!.getColumnData("IVE_TRANSFER.TRANS_QTY") )
-	gosub check_qty
-	if failed then 
-		callpoint!.setStatus("ABORT")
-		goto bwri_end
-	endif
-
-rem --- Get 'previous' or disk qty to test against
-
-	rem getColumnDiskData() does not seem to work yet
-	disk_qty = num( callpoint!.getColumnDiskData("IVE_TRANSFER.TRANS_QTY") )
-
-bwri_end:
 [[IVE_TRANSFER.WAREHOUSE_ID_TO.AVAL]]
 rem --- If both warehouses are entered, they can't match
 
@@ -390,86 +502,7 @@ rem --- If both warehouses are entered, they can't match
 		msg_id$ = "IV_FROM_TO_WHSE_MTCH"
 		gosub disp_message
 	endif
-[[IVE_TRANSFER.BSHO]]
-rem print 'show',"debug - in BSHO"; rem debug
 
-rem --- Inits
-
-	use ::ado_util.src::util
-
-rem --- Open files
-
-	num_files=4
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="IVS_PARAMS",   open_opts$[1]="OTA"
-	open_tables$[2]="IVM_ITEMMAST", open_opts$[2]="OTA"
-	open_tables$[3]="IVM_ITEMWHSE", open_opts$[3]="OTA"
-	open_tables$[4]="IVM_LSMASTER", open_opts$[4]="OTA"	
-
-	gosub open_tables
-
-	ivs01_dev=num(open_chans$[1])
-	dim ivs01a$:open_tpls$[1]
-
-rem --- Get parameter records
-
-	find record(ivs01_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs01a$
-
-rem --- Exit if not multi-warehouse
-
-	if ivs01a.multi_whse$ <> "Y" then
-		callpoint!.setMessage("IV_NOT_MULTI_WHSE")
-		callpoint!.setStatus("EXIT")
-		goto bsho_exit
-	endif
-
-rem --- Setup user template 
-
-	user_tpl_str$ = ""
-	user_tpl_str$ = user_tpl_str$ + "ls:c(1),"
-	user_tpl_str$ = user_tpl_str$ + "lf:c(1),"
-	user_tpl_str$ = user_tpl_str$ + "gl:c(1),"
-	user_tpl_str$ = user_tpl_str$ + "pgmdir:c(1*),"
-	user_tpl_str$ = user_tpl_str$ + "cost_mask:c(1*),"
-	user_tpl_str$ = user_tpl_str$ + "amount_mask:c(1*),"
-	user_tpl_str$ = user_tpl_str$ + "avail:n(1*),"
-	user_tpl_str$ = user_tpl_str$ + "this_item_is_lot_ser:u(1),"
-	user_tpl_str$ = user_tpl_str$ + "serialized:u(1),"
-	user_tpl_str$ = user_tpl_str$ + "item_is_serial:u(1),"
-	user_tpl_str$ = user_tpl_str$ + "prev_qty:n(1*),"
-	user_tpl_str$ = user_tpl_str$ + "disk_qty:n(1*)"
-	dim user_tpl$:user_tpl_str$
-
-	user_tpl.pgmdir$      = stbl("+DIR_PGM",err=*next)
-	call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","C","",cst_mask$,0,0
-	user_tpl.cost_mask$   = cst_mask$
-	call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","A","",amt_mask$,0,0
-	user_tpl.amount_mask$ = amt_mask$
-
-rem --- Set IV flags
-
-	user_tpl.ls$ = iff( pos(ivs01a.lotser_flag$ = "LS"), "Y", "N" )
-	user_tpl.lf$ = iff( pos(ivs01a.lifofifo$    = "LF"), "Y", "N" )
-
-	if ivs01a.lotser_flag$ = "S" then user_tpl.serialized% = 1
-
-rem --- Is the GL module installed?
-
-	user_tpl.gl$="N"
-	call user_tpl.pgmdir$+"adc_application.aon","GL",info$[all]
-	
-	if info$[20]="Y" then 
-		call user_tpl.pgmdir$+"adc_application.aon","IV",info$[all]
-		
-		rem --- Does IV post to GL?
-		user_tpl.gl$=info$[9]
-	endif
-
-rem --- Final inits
-
-	precision num(ivs01a.precision$)
-
-bsho_exit:
 [[IVE_TRANSFER.<CUSTOM>]]
 rem ===========================================================================
 check_item_whse: rem --- Check that a warehouse record exists for this item
@@ -655,10 +688,6 @@ return
 rem ===========================================================================
 #include [+ADDON_LIB]std_missing_params.aon
 rem ===========================================================================
-[[IVE_TRANSFER.TRANS_DATE.AVAL]]
-rem --- Is date within range of GL period?
 
-	if user_tpl.gl$="Y" then 
-		call user_tpl.pgmdir$+"glc_datecheck.aon",callpoint!.getUserInput(),"Y",period$,year$,status
-		if status>99 then callpoint!.setStatus("ABORT")
-	endif
+
+
