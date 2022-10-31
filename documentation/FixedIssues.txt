@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-10-26
+ Report Date:   2022-10-31
  Report Branch: AddonSoftware 22.11
  Last Release:  AddonSoftware 22.10
 =======================================================================================================================================
@@ -71,3 +71,13 @@ inventoried items.
 ----
 Modified: data/bar/ive_transfer.xml
 Modified: data/cdf/ive_transfer.cdf
+
+=======================================================================================================================================
+Revision: 4e607971a4eb2549601d910c6f925079b80ac33c
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 10/31/2022 9:36:38 AM
+Message:
+Bug 10518: In the Sales Register Update, skipped doing AvaTax sales tax
+for voided invoices.
+----
+Modified: op/src/opu_updateinventory.aon
