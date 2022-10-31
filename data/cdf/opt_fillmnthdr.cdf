@@ -441,6 +441,238 @@ rem --- Skip if complete_flg hasn't changed
 	complete_flg$=callpoint!.getUserInput()
 	if cvs(complete_flg$,2)=cvs(callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG"),2) then break
 
+rem --- Validate fulfillment if marked complete
+	if complete_flg$="Y" then
+		rem --- Warn if OPT_FILLMNTDET.QTY_PICKED<>OPT_FILLMNTDET.QTY_SHIPPED for an ITEM_ID
+		validationFailed=0
+		opcLineCode_dev=fnget_dev("OPC_LINECODE")
+		dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
+		optFillmntDet_dev=fnget_dev("OPT_FILLMNTDET")
+		dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+		customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+		ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			if optFillmntdet.qty_shipped=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_NOT_COMPLETE_PICK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
+			break
+		endif
+
+rem --- Warn if the sum of OPT_FILLMNTLSDET.QTY_PICKED for an ITEM_ID is not equal to OPT_FILLMNTDET.QTY_PICKED
+		validationFailed=0
+		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			rem --- Is this a lot/serial item?
+			lotser_item$="N"
+			lotser_flag$=callpoint!.getDevObject("lotser_flag")
+			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+				ivm01_dev=fnget_dev("IVM_ITEMMAST")
+				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
+				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+			endif
+			if lotser_item$<>"Y" then continue
+
+			totalLsPicked=0
+			optFillmntLsDet_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
+			read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
+			while 1
+				optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+				if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
+				readrecord(optFillmntLsDet_dev)optFillmntLsDet$
+				totalLsPicked=totalLsPicked+optFillmntLsDet.qty_picked
+			wend
+			if totalLsPicked=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_INCOMPLETE_LSPICK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
+			break
+		endif
+
+rem --- Warn if the sum of the OPT_CARTDET.QTY_PACKED for all the packed cartons is not equal to OPT_FILLMNTDET.QTY_PICKED for an ITEM_ID
+		validationFailed=0
+		optCartDet2_dev=fnget_dev("OPT_CARTDET2")
+		dim optCartDet2$:fnget_tpl$("OPT_CARTDET2")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			totalPacked=0
+			optCartDet2_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
+			read(optCartDet2_dev,key=optCartDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
+			while 1
+				optCartDet2_key$=key(optCartDet2_dev,end=*break)
+				if pos(optCartDet2_trip$=optCartDet2_key$)<>1 then break
+				readrecord(optCartDet2_dev)optCartDet2$
+				totalPacked=totalPacked+optCartDet2.qty_packed
+			wend
+			if totalPacked=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_NOT_COMPLETE_PACK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
+			break
+		endif
+
+
+rem --- Warn if the sum of the OPT_CARTLSDET.QTY_PACKED for an ITEM_ID and LOTSER_NO in a packed carton is not equal to the the OPT_CARTDET.QTY_PACKED for the ITEM_ID in the packed carton
+		validationFailed=0
+		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
+		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			rem --- Is this a lot/serial item?
+			lotser_item$="N"
+			lotser_flag$=callpoint!.getDevObject("lotser_flag")
+			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+				ivm01_dev=fnget_dev("IVM_ITEMMAST")
+				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
+				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+			endif
+			if lotser_item$<>"Y" then continue
+
+			totalLsPacked=0
+			optCartLsDet2_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
+			read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
+			while 1
+				optCartLsDet2_key$=key(optCartLsDet2_dev,end=*break)
+				if pos(optCartLsDet2_trip$=optCartLsDet2_key$)<>1 then break
+				readrecord(optCartLsDet2_dev)optCartLsDet2$
+				totalLsPacked=totalLsPacked+optCartLsDet2.qty_packed
+			wend
+			if totalLsPacked=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_INCOMPLETE_LSPACK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
+			break
+		endif
+
+
+rem --- Warn if a carton's weight isn't more than zero
+		validationFailed=0
+		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+		optCartHdr_trip$=optFillmntDet_trip$
+		read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optCartHdr_key$=key(optCartHdr_dev,end=*break)
+			if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+			readrecord(optCartHdr_dev)optCartHdr$
+			if optCartHdr.weight>0 then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_ZERO_WEIGHT"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=cvs(optCartHdr.carton_no$,2)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
+			break
+		endif
+	endif
+
 rem --- Do NOT allow changes to a carton's contents when the order's fulfillment is completed
 	numRows=0
 	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
@@ -464,7 +696,7 @@ rem --- Do NOT allow changes to a carton's contents when the order's fulfillment
 		numRows=numRows+1
 	wend
 
-rem --- Need to refresh display of Shipped cells in detail grid on Packing & Shipping Tab
+	rem --- Need to refresh display of Shipped cells in detail grid on Packing & Shipping Tab
 	if numRows>0 then
 		packShipGrid!=callpoint!.getDevObject("packShipGrid")
 		shippedFlag_col=callpoint!.getDevObject("shippedFlag_col")
@@ -494,7 +726,9 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 	opeOrdHdr_key.ar_inv_no$=""
 
 	rem --- Use of ORDER_NO_LK Element Type guarantees this is an existing open Order or Quote
-	readrecord(opeOrdHdr_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)opeOrdHdr$
+rem wgh ... 10304 ... stopped here
+rem --- Extract the ope_ordhdr record to make sure it's not currently in use.
+readrecord(opeOrdHdr_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)opeOrdHdr$
 
 	rem --- Must be an Order, not a Quote
 	if opeOrdHdr.invoice_type$<>"S" then
