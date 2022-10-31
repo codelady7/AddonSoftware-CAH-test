@@ -987,6 +987,7 @@ rem --- Set LOCK_STATUS and TRANS_STATUS for update completed, and remove comple
             extract record (ope01_dev) ope01a$; rem Advisory Locking
             if ope01a.lock_status$<>"2" or ope01a.trans_status$<>"R" then read(ope01_dev); continue
 
+            if ope01a.invoice_type$<>"V" then
             rem --- Was sales tax service used to calculate the tax amount?
             redim opm06a$
             find record (opm06_dev,key=firm_id$+ope01a.tax_code$,dom=*next) opm06a$
@@ -1031,12 +1032,13 @@ rem --- Set LOCK_STATUS and TRANS_STATUS for update completed, and remove comple
                     endif
                     success=0
                     salesTax!.voidTransaction(customer_id$, order_no$, ar_inv_no$, transType$, err=*next); success=1
-
+        
                     if !success then
                         read(ope01_dev); rem --- release extract
                         break
                     endif
                 endif
+            endif
             endif
 
             ope01a.lock_status$="3"
