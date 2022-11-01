@@ -144,6 +144,21 @@ rem --- Check locked status
 		break; rem --- exit callpoint
 	endif
 
+rem --- Prevent changes to an Order when it's currently in Fulfillment
+	inFulfillment=0
+	optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+	ar_type$  = callpoint!.getColumnData("OPE_ORDHDR.AR_TYPE")
+	customer_id$  = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
+	order_no$ = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPE_ORDHDR.AR_INV_NO")
+	find(optFillmntHdr_dev,key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$,knum="AO_STATUS",dom=*next); inFulfillment=1
+	if inFulfillment then
+		msg_id$ = "OP_IN_FILLMNTHDR"
+		gosub disp_message
+		callpoint!.setStatus("NEWREC")
+		break
+	endif
+
 rem --- Reprint order?
 
 	if callpoint!.getColumnData("OPE_ORDHDR.REPRINT_FLAG") <> "Y" then
@@ -2139,7 +2154,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=47
+	num_files=48
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -2186,6 +2201,7 @@ rem --- Open needed files
 	open_tables$[45]="OPT_INVDET",open_opts$[45]="OTAN[2_]"
 	open_tables$[46]="OPE_ORDLSDET", open_opts$[46]="OTA[2_]"
 	open_tables$[47]="ADM_RPTCTL_RCP",open_opts$[47]="OTA"
+	open_tables$[48]="OPT_FILLMNTHDR",open_opts$[48]="OTA"
 
 	gosub open_tables
 

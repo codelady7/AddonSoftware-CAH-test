@@ -40,7 +40,35 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 rem --- Set record deleted flag
 	callpoint!.setDevObject("recordDeleted",1)
 
+rem --- Remove Barista soft lock for the Order.
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+	lock_table$="OPT_INVHDR"
+	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	lock_type$="U"
+	lock_status$=""
+	lock_disp$="M"
+	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+
 [[OPT_FILLMNTHDR.ADIS]]
+rem --- Add Barista soft lock for the Order to make sure it cannot be edited.
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+	lock_table$="OPT_INVHDR"
+	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	lock_type$="L"
+	lock_status$=""
+	lock_disp$="M"
+	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	if lock_status$<>""
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Capture starting record data so can tell later if anything changed
 	callpoint!.setDevObject("initial_rec_data$",rec_data$)
 
@@ -56,10 +84,6 @@ rem --- Show total weight and total freight amount
 	freight_amt=0
 	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
 	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
-	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
 	optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
 	read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
 	while 1
@@ -97,15 +121,42 @@ rem --- Confirm the Order is ready to be filled.
 		callpoint!.setStatus("ACTIVATE")
 	endif
 
+rem --- Check Barista soft lock for the Order to make sure it isn't currently being edited.
+rem --- Add Barista soft lock for the Order to make sure it cannot be edited.
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+	lock_table$="OPT_INVHDR"
+	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	lock_type$="C"
+	lock_status$=""
+	lock_disp$=""
+	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	if lock_status$="" then
+		rem --- Add temporary soft lock
+		lock_type$="L"
+		lock_status$=""
+		lock_disp$="M"
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+		if lock_status$<>""
+			callpoint!.setStatus("NEWREC")
+			break
+		endif
+	else
+		rem --- Record locked by someone else
+		msg_id$="ENTRY_REC_LOCKED"
+		gosub disp_message
+		callpoint!.setStatus("NEWREC")
+		break
+	endif
+
 rem --- Initialize inventory item update
 	status=999
 	call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 	if status then exitto std_exit
 
 rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR data
-	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
 	opeOrdHdr_dev=fnget_dev("OPE_ORDHDR")
 	dim opeOrdHdr$:fnget_tpl$("OPE_ORDHDR")
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_INVHDR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
@@ -374,6 +425,18 @@ rem --- Are there any items that weren't picked completely
 			break
 		endif
 	endif
+
+rem --- Remove Barista soft lock for the Order.
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+	lock_table$="OPT_INVHDR"
+	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	lock_type$="U"
+	lock_status$=""
+	lock_disp$="M"
+	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Open needed files
@@ -726,9 +789,7 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 	opeOrdHdr_key.ar_inv_no$=""
 
 	rem --- Use of ORDER_NO_LK Element Type guarantees this is an existing open Order or Quote
-rem wgh ... 10304 ... stopped here
-rem --- Extract the ope_ordhdr record to make sure it's not currently in use.
-readrecord(opeOrdHdr_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)opeOrdHdr$
+	readrecord(opeOrdHdr_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)opeOrdHdr$
 
 	rem --- Must be an Order, not a Quote
 	if opeOrdHdr.invoice_type$<>"S" then
