@@ -52,7 +52,7 @@ rem --- What is this line type? Is this a dropship detail line?
 	findrecord (opcLineCode_dev, key=firm_id$+opeOrdDet.line_code$, dom=*next)opcLineCode$
 	linetypeMap!.put(curr_row,opcLineCode.line_type$)
 	dropshipMap!.put(curr_row,opcLineCode.dropship$)
-	if pos(opcLineCode.line_type$="MO") or opcLineCode.dropship$="Y" or qty_picked<0 or ship_qty<0 then
+	if pos(opcLineCode.line_type$="MO") or opcLineCode.dropship$="Y" or ship_qty<=0 then
 		pickGrid!.setRowFont(curr_row,callpoint!.getDevObject("italicFont"))
 		pickGrid!.setRowForeColor(curr_row,callpoint!.getDevObject("disabledColor"))
 		pickGrid!.setCellEditable(curr_row,picked_col,0)

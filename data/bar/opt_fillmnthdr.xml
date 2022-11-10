@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_fillmnthdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_fillmnthdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_fillmnthdr">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_fillmnthdr">20221101</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmnthdr">20221101</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmnthdr">120510</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_fillmnthdr">20221109</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmnthdr">20221109</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmnthdr">161812</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_fillmnthdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_fillmnthdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_fillmnthdr">AO_STATUS</DD_ATTR_DKNM>
@@ -58,6 +58,16 @@
 			<DD_ATTR_PADG id="ddm_tables.opt_fillmnthdr">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.opt_fillmnthdr01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.opt_fillmnthdr01">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.opt_fillmnthdr01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.opt_fillmnthdr01">Print Packing</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_fillmnthdr01">PRNT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_fillmnthdr01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.opt_fillmnthdracus">
@@ -71,6 +81,14 @@
 		<RECORD id="ddm_table_cpro.opt_fillmnthdradis">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdradis">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmnthdradis">ADIS</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmnthdraopt-prnt">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdraopt-prnt">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmnthdraopt-prnt">AOPT-PRNT</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmnthdrapfe">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdrapfe">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmnthdrapfe">APFE</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_fillmnthdrarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdrarec">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
@@ -91,6 +109,10 @@
 		<RECORD id="ddm_table_cpro.opt_fillmnthdrbdel">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdrbdel">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmnthdrbdel">BDEL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_fillmnthdrbpfx">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdrbpfx">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_fillmnthdrbpfx">BPFX</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_fillmnthdrbrex">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_fillmnthdrbrex">OPT_FILLMNTHDR  </DD_TABLE_ALIAS>

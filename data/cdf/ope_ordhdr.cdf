@@ -155,6 +155,7 @@ rem --- Prevent changes to an Order when it's currently in Fulfillment
 	if inFulfillment then
 		msg_id$ = "OP_IN_FILLMNTHDR"
 		gosub disp_message
+		user_tpl.do_end_of_form = 0
 		callpoint!.setStatus("NEWREC")
 		break
 	endif

@@ -96,6 +96,112 @@ rem --- Show total weight and total freight amount
 	callpoint!.setColumnData("<<DISPLAY>>.WEIGHT",str(weight),1)
 	callpoint!.setColumnData("<<DISPLAY>>.FREIGHT_AMT",str(freight_amt),1)
 
+rem --- Disable/enable fields if Complete, or not.
+	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y" then
+		rem --- Enable Print List button only if in Edit mode
+		if callpoint!.isEditMode() then
+			callpoint!.setOptionEnabled("PRNT",1)
+		else
+			callpoint!.setOptionEnabled("PRNT",0)
+		endif
+
+		rem --- Disable fields
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",0)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",0)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",0)
+	else
+		rem --- Disable Print List button
+		callpoint!.setOptionEnabled("PRNT",0)
+
+		rem --- Enable fields
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",1)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",1)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",1)
+	endif
+
+[[OPT_FILLMNTHDR.AOPT-PRNT]]
+rem --- Make sure modified records are saved before printing Packing List
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+
+	if pos("M"=callpoint!.getRecordStatus())
+		rem --- Add Barista soft lock for this record if not already in edit mode
+		if !callpoint!.isEditMode() then
+			rem --- Is there an existing soft lock?
+			lock_table$="OPT_FILLMNTHDR"
+			lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+			lock_type$="C"
+			lock_status$=""
+			lock_disp$=""
+			call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+			if lock_status$="" then
+				rem --- Add temporary soft lock used just for this print task
+				lock_type$="L"
+				call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+			else
+				rem --- Record locked by someone else
+				msg_id$="ENTRY_REC_LOCKED"
+				gosub disp_message
+				break
+			endif
+		endif
+
+		rem --- Get current form data and write it to disk
+		optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+		optFillmntHdr_tpl$=fnget_tpl$("OPT_FILLMNTHDR")
+		dim optFillmntHdr$:optFillmntHdr_tpl$
+		optFillmntHdr$=util.copyFields(optFillmntHdr_tpl$, callpoint!)
+		optFillmntHdr$=field(optFillmntHdr$)
+		writerecord(optFillmntHdr_dev)optFillmntHdr$
+		extractrecord(optFillmntHdr_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$, dom=*next)optFillmntHdr$; rem Advisory Locking
+		callpoint!.setStatus("SETORIG")
+	endif
+
+rem --- Print Packing List for this Order
+	user_id$=stbl("+USER_ID")
+ 
+	dim dflt_data$[4,1]
+	dflt_data$[1,0]="CUSTOMER_ID"
+	dflt_data$[1,1]=customer_id$
+	dflt_data$[2,0]="ORDER_NO"
+	dflt_data$[2,1]=order_no$
+
+	rem --- Pass additional info needed in OPR_PACKLIST
+	callpoint!.setDevObject("ar_type",ar_type$)
+	callpoint!.setDevObject("ar_inv_no",ar_inv_no$)
+	callpoint!.setDevObject("reprint_flag",callpoint!.getColumnData("OPT_FILLMNTHDR.REPRINT_FLAG"))
+
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:	                       "OPR_PACKLIST",
+:	                       user_id$,
+:	                       "",
+:	                       "",
+:	                       table_chans$[all],
+:	                       "",
+:	                       dflt_data$[all]	
+
+rem --- Update print_status flag
+	if callpoint!.getColumnData("OPT_FILLMNTHDR.PRINT_STATUS")<>"Y" then
+		msg_id$="OP_PACK_LST_PRINTED"
+		gosub disp_message
+		if msg_opt$="Y" then
+			callpoint!.setColumnData("OPT_FILLMNTHDR.PRINT_STATUS","Y")
+			callpoint!.setStatus("MODIFIED")
+		endif
+	endif
+
+rem --- Remove temporary soft lock used just for this task 
+	if !callpoint!.isEditMode() and lock_type$="L" then
+		lock_type$="U"
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
+[[OPT_FILLMNTHDR.APFE]]
+rem --- Enable Print List button if Complete and in Edit mode
+	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y" and callpoint!.isEditMode() then callpoint!.setOptionEnabled("PRNT",1)
+
 [[OPT_FILLMNTHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
@@ -109,6 +215,9 @@ rem --- Capture starting record data so can tell later if anything changed
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
 	callpoint!.setDevObject("refreshRecord",0)
+
+rem --- Disable Print List button
+	callpoint!.setOptionEnabled("PRNT",0)
 
 [[OPT_FILLMNTHDR.ARNF]]
 rem --- Confirm the Order is ready to be filled.
@@ -390,6 +499,10 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 
 rem wgh ... 10304 ... All carton records need to be deleted when the Order Fulfillment record is deleted
 
+[[OPT_FILLMNTHDR.BPFX]]
+rem --- Disable Print List button
+	callpoint!.setOptionEnabled("PRNT",0)
+
 [[OPT_FILLMNTHDR.BREX]]
 rem --- Skip warnings if record was deleted
 	if callpoint!.getDevObject("recordDeleted") then break
@@ -439,6 +552,9 @@ rem --- Remove Barista soft lock for the Order.
 	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 
 [[OPT_FILLMNTHDR.BSHO]]
+rem --- Init Java classes
+	use ::ado_util.src::util
+
 rem --- Open needed files
 	num_files=16
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -473,7 +589,8 @@ rem --- Set up Lot/Serial button
 	swend
 	callpoint!.setDevObject("lotser_flag",ivsParams.lotser_flag$)
 
-rem --- Disable all detail grid butons
+rem --- Disable all detail grid buttons
+	callpoint!.setOptionEnabled("PRNT",0)
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setOptionEnabled("PACK",0)
 	callpoint!.setOptionEnabled("CART",0)
@@ -487,10 +604,6 @@ rem --- Initialize RTP modified fields for modified existing records
 		rem --- For immediate write forms must compare initial record to current record to see if modified.
 		dim initial_rec_data$:fattr(rec_data$)
 		initial_rec_data$=callpoint!.getDevObject("initial_rec_data$")
-		if callpoint!.getColumnData("OPT_FILLMNTHDR.PRINT_STATUS")="Y" then
-			callpoint!.setColumnData("OPT_FILLMNTHDR.REPRINT_FLAG","Y",1)
-			rec_data.reprint_flag$="Y"
-		endif
 		if rec_data$<>initial_rec_data$ then
 			rec_data.mod_user$=sysinfo.user_id$
 			rec_data.mod_date$=date(0:"%Yd%Mz%Dz")
@@ -503,6 +616,21 @@ rem --- Initialize RTP modified fields for modified existing records
 rem --- Skip if complete_flg hasn't changed
 	complete_flg$=callpoint!.getUserInput()
 	if cvs(complete_flg$,2)=cvs(callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG"),2) then break
+
+rem --- Warn if reprint is required
+	if complete_flg$="N" and callpoint!.getColumnData("OPT_FILLMNTHDR.PRINT_STATUS")="Y" then
+		msg_id$="OP_REPRINT_FILLMNT"
+		gosub disp_message
+		if msg_opt$="N"
+			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","Y",1)
+			callpoint!.setStatus("ABORT")
+			break
+		else
+			rem --- When Packing List is printed again, it will be a reprint.
+			callpoint!.setColumnData("OPT_FILLMNTHDR.PRINT_STATUS","N")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.REPRINT_FLAG","Y")
+		endif
+	endif
 
 rem --- Validate fulfillment if marked complete
 	if complete_flg$="Y" then
@@ -549,7 +677,7 @@ rem --- Validate fulfillment if marked complete
 			break
 		endif
 
-rem --- Warn if the sum of OPT_FILLMNTLSDET.QTY_PICKED for an ITEM_ID is not equal to OPT_FILLMNTDET.QTY_PICKED
+		rem --- Warn if the sum of OPT_FILLMNTLSDET.QTY_PICKED for an ITEM_ID is not equal to OPT_FILLMNTDET.QTY_PICKED
 		validationFailed=0
 		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
 		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
@@ -606,7 +734,7 @@ rem --- Warn if the sum of OPT_FILLMNTLSDET.QTY_PICKED for an ITEM_ID is not equ
 			break
 		endif
 
-rem --- Warn if the sum of the OPT_CARTDET.QTY_PACKED for all the packed cartons is not equal to OPT_FILLMNTDET.QTY_PICKED for an ITEM_ID
+		rem --- Warn if the sum of the OPT_CARTDET.QTY_PACKED for all the packed cartons is not equal to OPT_FILLMNTDET.QTY_PICKED for an ITEM_ID
 		validationFailed=0
 		optCartDet2_dev=fnget_dev("OPT_CARTDET2")
 		dim optCartDet2$:fnget_tpl$("OPT_CARTDET2")
@@ -653,7 +781,7 @@ rem --- Warn if the sum of the OPT_CARTDET.QTY_PACKED for all the packed cartons
 		endif
 
 
-rem --- Warn if the sum of the OPT_CARTLSDET.QTY_PACKED for an ITEM_ID and LOTSER_NO in a packed carton is not equal to the the OPT_CARTDET.QTY_PACKED for the ITEM_ID in the packed carton
+		rem --- Warn if the sum of the OPT_CARTLSDET.QTY_PACKED for an ITEM_ID and LOTSER_NO in a packed carton is not equal to the the OPT_CARTDET.QTY_PACKED for the ITEM_ID in the packed carton
 		validationFailed=0
 		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
 		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
@@ -711,7 +839,7 @@ rem --- Warn if the sum of the OPT_CARTLSDET.QTY_PACKED for an ITEM_ID and LOTSE
 		endif
 
 
-rem --- Warn if a carton's weight isn't more than zero
+		rem --- Warn if a carton's weight isn't more than zero
 		validationFailed=0
 		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
 		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
@@ -734,6 +862,25 @@ rem --- Warn if a carton's weight isn't more than zero
 			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
 			break
 		endif
+	endif
+
+rem --- Disable/enable fields and Print List button if Complete or not.
+	if complete_flg$="Y" then
+		rem --- Enable Print List button
+		callpoint!.setOptionEnabled("PRNT",1)
+
+		rem --- Disable fields
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",0)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",0)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",0)
+	else
+		rem --- Disable Print List button
+		callpoint!.setOptionEnabled("PRNT",0)
+
+		rem --- Enable fields
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",1)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",1)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",1)
 	endif
 
 rem --- Do NOT allow changes to a carton's contents when the order's fulfillment is completed
@@ -759,7 +906,7 @@ rem --- Do NOT allow changes to a carton's contents when the order's fulfillment
 		numRows=numRows+1
 	wend
 
-	rem --- Need to refresh display of Shipped cells in detail grid on Packing & Shipping Tab
+rem --- Need to refresh display of Shipped cells in detail grid on Packing & Shipping Tab
 	if numRows>0 then
 		packShipGrid!=callpoint!.getDevObject("packShipGrid")
 		shippedFlag_col=callpoint!.getDevObject("shippedFlag_col")
