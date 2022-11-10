@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OPPackListDet" language="groovy" pageWidth="554" pageHeight="320" columnWidth="554" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" resourceBundle="addon" uuid="a46c6452-81bd-4023-bafb-8f0488b8a578">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="184"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="805"/>
+	<style name="Style1" hTextAlign="Center" vTextAlign="Middle" fontName="DejaVu Sans" fontSize="9">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($F{PICK_FLAG}=="N" || $F{PICK_FLAG}=="") && $P{REPRINT_REVISED}!=""]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="DejaVu Sans" fontSize="9"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PICK_FLAG}=="M" && $P{REPRINT_REVISED}!="" && ($F{LINE_TYPE}=="M" || $F{LINE_TYPE}=="O" || $F{ORDER_QTY_RAW}!="0")]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="DejaVu Sans" fontSize="9" isItalic="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PICK_FLAG}=="M" && $P{REPRINT_REVISED}!="" && $F{LINE_TYPE}!="M" && $F{LINE_TYPE}!="O" && $F{ORDER_QTY_RAW}=="0"]]></conditionExpression>
+			<style hTextAlign="Center" vTextAlign="Middle" fontName="DejaVu Sans" fontSize="9" isItalic="true" isStrikeThrough="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PICK_FLAG}=="Y" && $P{REPRINT_REVISED}!="" && ($F{LINE_TYPE}=="M" || $F{LINE_TYPE}=="O" || $F{ORDER_QTY_RAW}!="0")]]></conditionExpression>
+			<style forecolor="#9C9A9A" hTextAlign="Center" vTextAlign="Middle" fontName="DejaVu Sans" fontSize="9"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{PICK_FLAG}=="Y" && $P{REPRINT_REVISED}!="" && $F{LINE_TYPE}!="M" && $F{LINE_TYPE}!="O" && $F{ORDER_QTY_RAW}=="0"]]></conditionExpression>
+			<style forecolor="#827F7F" hTextAlign="Center" vTextAlign="Middle" fontName="DejaVu Sans" fontSize="9" isStrikeThrough="true"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="FIRM_ID" class="java.lang.String"/>
+	<parameter name="AR_TYPE" class="java.lang.String"/>
+	<parameter name="CUSTOMER_ID" class="java.lang.String"/>
+	<parameter name="ORDER_NO" class="java.lang.String"/>
+	<parameter name="AR_INV_NO" class="java.lang.String"/>
+	<parameter name="QTY_MASK" class="java.lang.String"/>
+	<parameter name="ITEM_MASK" class="java.lang.String"/>
+	<parameter name="BARISTA_WD" class="java.lang.String"/>
+	<parameter name="IVS_LOTSER_FLAG" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[call OPPACKLIST_DET($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{QTY_MASK},$P{ITEM_MASK},$P{BARISTA_WD})]]>
+	</queryString>
+	<field name="ITEM_ID" class="java.lang.String"/>
+	<field name="ITEM_DESC" class="java.lang.String"/>
+	<field name="UM_SOLD" class="java.lang.String"/>
+	<field name="SHIP_QTY" class="java.lang.String"/>
+	<field name="PACK_QTY" class="java.lang.String"/>
+	<field name="CARTON_NO" class="java.lang.String"/>
+	<field name="ORDDET_SEQ_REF" class="java.lang.String"/>
+	<field name="ITEM_IS_LS" class="java.lang.String">
+		<fieldDescription><![CDATA[Item is flagged as Lotted/Serialized]]></fieldDescription>
+	</field>
+	<group name="LINE_ITEM">
+		<groupExpression><![CDATA[$F{ORDDET_SEQ_REF}]]></groupExpression>
+		<groupFooter>
+			<band height="13" splitType="Stretch">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<printWhenExpression><![CDATA[($P{IVS_LOTSER_FLAG}=="L" || $P{IVS_LOTSER_FLAG}=="S") && $F{ITEM_IS_LS}=="Y"]]></printWhenExpression>
+				<subreport>
+					<reportElement x="0" y="0" width="555" height="13" uuid="866ad7f7-fb41-4ab0-bdf7-e7993f6e243e">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<subreportParameter name="FIRM_ID">
+						<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="AR_TYPE">
+						<subreportParameterExpression><![CDATA[$P{AR_TYPE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CUSTOMER_ID">
+						<subreportParameterExpression><![CDATA[$P{CUSTOMER_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ORDER_NO">
+						<subreportParameterExpression><![CDATA[$P{ORDER_NO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="AR_INV_NO">
+						<subreportParameterExpression><![CDATA[$P{AR_INV_NO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="CARTON_NO">
+						<subreportParameterExpression><![CDATA[$F{CARTON_NO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ORDDET_SEQ_REF">
+						<subreportParameterExpression><![CDATA[$F{ORDDET_SEQ_REF}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="QTY_MASK">
+						<subreportParameterExpression><![CDATA[$P{QTY_MASK}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="BARISTA_WD">
+						<subreportParameterExpression><![CDATA[$P{BARISTA_WD}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="ITEM_ID">
+						<subreportParameterExpression><![CDATA[$F{ITEM_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="IVS_LOTSER_FLAG">
+						<subreportParameterExpression><![CDATA[$P{IVS_LOTSER_FLAG}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["OPPackListDet-LotSer.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="555" height="13" backcolor="#EBF0FA" uuid="3f264fe3-cc1f-48c0-a168-0ab3fbae1d9d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#C0C0C0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="13" uuid="8549be8a-2b8f-4c73-bf04-f6fff33a8d71">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#C0C0C0"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="285" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="f5149900-b554-4a31-960f-46345c02e878">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#C0C0C0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="315" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="57d59586-6912-4ee2-b2cf-fdc1ac8da493">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#C0C0C0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="375" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="a50cfcd2-d76f-414c-b3f6-b8e480a2e924">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#C0C0C0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="435" y="0" width="1" height="13" isPrintWhenDetailOverflows="true" uuid="51096b63-05c6-4c26-9585-86e0fd118e2e">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineColor="#C0C0C0"/>
+				</graphicElement>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="5" y="1" width="280" height="12" uuid="85ce119a-16d0-4574-aded-1fd513a3711e">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="1" width="30" height="12" uuid="9cb822fd-1878-4341-a6fc-f01d7ad40c36">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UM_SOLD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="1" width="60" height="12" uuid="ca841baa-402a-4b6a-936f-34cb02df73fe">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIP_QTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="1" width="60" height="12" uuid="456823f5-29c9-4f37-be55-88b1285bb83b">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9" isBold="true"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PACK_QTY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="1" width="120" height="12" uuid="3adc18be-9bc3-4552-8e08-e17ac325118a">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARTON_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
