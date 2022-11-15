@@ -149,6 +149,9 @@
 					<subreportParameter name="QTY_MASK_PATTERN">
 						<subreportParameterExpression><![CDATA[$P{QTY_MASK_PATTERN}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="SHADE_BACKCOLOR">
+						<subreportParameterExpression><![CDATA[new Boolean( $V{PAGE_COUNT}.intValue()  % 2 == 0)]]></subreportParameterExpression>
+					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["OPPickListDet-LotSer.jasper"]]></subreportExpression>
 				</subreport>
