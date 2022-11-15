@@ -1,83 +1,11 @@
 =======================================================================================================================================
- Report Date:   2022-10-31
- Report Branch: AddonSoftware 22.11
- Last Release:  AddonSoftware 22.10
+ Report Date:   2022-11-15
+ Report Branch: AddonSoftware 22.12
+ Last Release:  AddonSoftware 22.11
 =======================================================================================================================================
 
-22.10 released 10/10/2022
-BBjBaristaAddonDemos2210_10-05-2022_1914.jar
+22.11 released 11/14/2022
+BBjBaristaAddonDemos2211_11-10-2022_1626.jar
 
 =======================================================================================================================================
-Revision: 90d72f7566b4ce45282a9182ef6d797f62941319
-Author: Christine <chawkins@basis.com>
-Date: 10/13/2022 5:06:54 PM
-Message:
-Bug 10488 - OP - typo in setColumnEnabled() method in the ope_orddet AGDR callpoint
- - corrected to use 1 instead of getValidationRow() in the setColumnEnabled() method
 
-(cherry picked from commit 80aaf949db37ff53499e72e79752303bdc4bdeab)
-----
-Modified: data/bar/ope_invdet.xml
-Modified: data/bar/ope_orddet.xml
-Modified: data/cdf/ope_invdet.cdf
-Modified: data/cdf/ope_orddet.cdf
-
-=======================================================================================================================================
-Revision: 389942030738946c4e188635682035fcd6833ad4
-Author: Christine <chawkins@basis.com>
-Date: 10/13/2022 5:17:02 PM
-Message:
-Bug 10509 - AP - Reversing an ACH check in Manual Check entry throws error trying to increment check number
- - Corrected as suggested
- - Also noticed binoc query was showing 'generic checkbox' corresponding to the retain_approvals field, so marked as hide in all forms
-
-(cherry picked from commit f01d69103d3ab665680a22a6d74d946df8f8b697)
-----
-Modified: data/bar/ape_mancheckhdr.xml
-Modified: data/cdf/ape_mancheckhdr.cdf
-
-=======================================================================================================================================
-Revision: 62a39ed1e5e3c6211ed0002ef5adf6799fdf6553
-Author: Christine <chawkins@basis.com>
-Date: 10/13/2022 5:33:57 PM
-Message:
-Bug 10510 - AP - Manual Check entry not finding an existing computer check to create reversal
- - corrected as suggested (padding bnk_acct_cd$ to defined length)
-
-(cherry picked from commit 32f966855da41a28c2d4508375f3e8437fc457d6)
-----
-Modified: data/bar/ape_mancheckhdr.xml
-Modified: data/cdf/ape_mancheckhdr.cdf
-
-=======================================================================================================================================
-Revision: b060e993fda9a5d34fe9a27c402ec8f19c116041
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 10/26/2022 2:59:32 PM
-Message:
-Bug 10516: Modified AOPT-LLOK and LOTSER_NO-AVAL code to eliminate the
-need for callpoint!.setStatus("REFRESH") that triggered the underlying
-Barista bug.
-----
-Modified: data/bar/ope_ordlsdet.xml
-Modified: data/cdf/ope_ordlsdet.cdf
-
-=======================================================================================================================================
-Revision: 750244ac96fcd3219814543ceb6c25c4801b0b3f
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 10/26/2022 5:56:29 PM
-Message:
-Bug 10517: Enabled Lot/Serial Lookup for both lotted and serialized
-inventoried items.
-----
-Modified: data/bar/ive_transfer.xml
-Modified: data/cdf/ive_transfer.cdf
-
-=======================================================================================================================================
-Revision: 4e607971a4eb2549601d910c6f925079b80ac33c
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 10/31/2022 9:36:38 AM
-Message:
-Bug 10518: In the Sales Register Update, skipped doing AvaTax sales tax
-for voided invoices.
-----
-Modified: op/src/opu_updateinventory.aon
