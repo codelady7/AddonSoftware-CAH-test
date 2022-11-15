@@ -85,9 +85,11 @@ rem --- Open files
 
     arsReport_dev=num(open_chans$[5])
     ivParams_dev=num(open_chans$[7])
+    optCartHdr_dev=num(open_chans$[11])
 
     dim arsReport$:open_tpls$[5]
     dim ivParams$:open_tpls$[7]
+    dim optCartHdr$:open_tpls$[11]
 
 rem --- Get Parameters
     findrecord(ivParams_dev,key=firm_id$+"IV00",dom=std_missing_params)ivParams$
@@ -185,9 +187,33 @@ rem --- Check for user authentication
     locale$ = stbl("+USER_LOCALE",err=*next)
     report!.setLocale(locale$)
 
+    rem --- Create one individual Packing List (not the full report)
+    declare BBJasperReport packingList!
+    packingList! = BarUtils.getBBJasperReport(filename$)
+    packingList!.putParams(params!)
+    packingList!.setLocale(locale$)
+
 rem --- Fill Report and Show
     rc=report!.fill(1)
     if rc<>BBJasperReport.getSUCCESS() then goto close_win
+    rc=packingList!.fill(1)
+    if rc<>BBJasperReport.getSUCCESS() then goto close_win
+
+    rem --- The full report includes a separate copy of the Packing List for each carton
+    cartons=0
+    optCartHdr_trip$=firm_id$+"E"+callpoint!.getDevObject("ar_type")+customer_id$+order_no$+callpoint!.getDevObject("ar_inv_no")
+    read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+    while 1
+        optCartHdr_key$=key(optCartHdr_dev,end=*break)
+        if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+        read(optCartHdr_dev)
+        cartons=cartons+1
+    wend
+    if cartons>1 then
+        for i=2 to cartons
+            report!.appendReport(packingList!)
+        next i
+    endif
     
     rem --- get a pdf path from +DOC_DIR_PDF
     rem --- this will eventually be replaced with code to get output formats/types based on doc group and/or print settings

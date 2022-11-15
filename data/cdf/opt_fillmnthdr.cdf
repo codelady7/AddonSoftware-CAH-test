@@ -98,12 +98,8 @@ rem --- Show total weight and total freight amount
 
 rem --- Disable/enable fields if Complete, or not.
 	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y" then
-		rem --- Enable Print List button only if in Edit mode
-		if callpoint!.isEditMode() then
-			callpoint!.setOptionEnabled("PRNT",1)
-		else
-			callpoint!.setOptionEnabled("PRNT",0)
-		endif
+		rem --- Enable Print List button if Complete
+		callpoint!.setOptionEnabled("PRNT",1)
 
 		rem --- Disable fields
 		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",0)
@@ -188,6 +184,16 @@ rem --- Update print_status flag
 		gosub disp_message
 		if msg_opt$="Y" then
 			callpoint!.setColumnData("OPT_FILLMNTHDR.PRINT_STATUS","Y")
+
+			rem --- Get current form data and write it to disk
+			optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+			optFillmntHdr_tpl$=fnget_tpl$("OPT_FILLMNTHDR")
+			dim optFillmntHdr$:optFillmntHdr_tpl$
+			optFillmntHdr$=util.copyFields(optFillmntHdr_tpl$, callpoint!)
+			optFillmntHdr$=field(optFillmntHdr$)
+			writerecord(optFillmntHdr_dev)optFillmntHdr$
+			extractrecord(optFillmntHdr_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$, dom=*next)optFillmntHdr$; rem Advisory Locking
+			callpoint!.setStatus("SETORIG")
 			callpoint!.setStatus("MODIFIED")
 		endif
 	endif
@@ -199,8 +205,8 @@ rem --- Remove temporary soft lock used just for this task
 	endif
 
 [[OPT_FILLMNTHDR.APFE]]
-rem --- Enable Print List button if Complete and in Edit mode
-	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y" and callpoint!.isEditMode() then callpoint!.setOptionEnabled("PRNT",1)
+rem --- Enable Print List button if Complete
+	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y"  then callpoint!.setOptionEnabled("PRNT",1)
 
 [[OPT_FILLMNTHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields

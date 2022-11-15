@@ -20,6 +20,7 @@
 		<parameterDescription><![CDATA[Item:]]></parameterDescription>
 	</parameter>
 	<parameter name="IVS_LOTSER_FLAG" class="java.lang.String"/>
+	<parameter name="SHADE_BACKCOLOR" class="java.lang.Boolean"/>
 	<queryString language="SQL">
 		<![CDATA[call OPPACKLIST_DET_LOTSER($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{CARTON_NO},$P{ORDDET_SEQ_REF},$P{QTY_MASK},$P{BARISTA_WD})]]>
 	</queryString>
@@ -34,7 +35,18 @@
 		<band height="13">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="13" backcolor="#FFFFFF" uuid="d5d33e2e-afce-4ed6-9f72-2388712bfb81">
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="13" backcolor="#EBF0FA" uuid="101dee2f-6dd9-40d6-81a0-13a78a5b912b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$P{SHADE_BACKCOLOR}]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#C0C0C0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="13" backcolor="#FFFFFF" uuid="d5d33e2e-afce-4ed6-9f72-2388712bfb81">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<graphicElement>
