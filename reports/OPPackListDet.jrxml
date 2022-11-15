@@ -96,6 +96,9 @@
 					<subreportParameter name="IVS_LOTSER_FLAG">
 						<subreportParameterExpression><![CDATA[$P{IVS_LOTSER_FLAG}]]></subreportParameterExpression>
 					</subreportParameter>
+					<subreportParameter name="SHADE_BACKCOLOR">
+						<subreportParameterExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)]]></subreportParameterExpression>
+					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["OPPackListDet-LotSer.jasper"]]></subreportExpression>
 				</subreport>
