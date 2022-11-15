@@ -8,4 +8,14 @@
 BBjBaristaAddonDemos2211_11-10-2022_1626.jar
 
 =======================================================================================================================================
+Revision: aaaf9e97922d6e0d5c6f49eafa5bc21aba7521b8
+Author: Christine <chawkins@basis.com>
+Date: 11/15/2022 6:28:03 PM
+Message:
+Bug 10524 - OP - Error 26 in Sales Tax Transaction History form on non-numeric Customer ID
+ - corrected sequence number issue by changing from a sequence counter sub-type to a regular sequence reference field
+
+(cherry picked from commit 05eeb2bc986b9df40c32fb48d67ff0146f6a76f2)
+----
+Modified: data/bar/opt_slstaxtrans.xml
 
