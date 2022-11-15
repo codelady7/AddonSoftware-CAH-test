@@ -19,6 +19,7 @@
 	<parameter name="ITEM_ID" class="java.lang.String">
 		<parameterDescription><![CDATA[Item:]]></parameterDescription>
 	</parameter>
+	<parameter name="SHADE_BACKCOLOR" class="java.lang.Boolean"/>
 	<queryString language="SQL">
 		<![CDATA[call OPPICKLIST_DET_LOTSER($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{INTERNAL_SEQ_NO},$P{OPE11_QTY_SHIPPED},$P{QTY_MASK},$P{IVS_LOTSER_FLAG},$P{BARISTA_WD})]]>
 	</queryString>
@@ -36,16 +37,22 @@
 	</background>
 	<detail>
 		<band height="14">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#FFFFFF" uuid="d5d33e2e-afce-4ed6-9f72-2388712bfb81"/>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="14" backcolor="#EBF0FA" uuid="d5d33e2e-afce-4ed6-9f72-2388712bfb81">
+					<printWhenExpression><![CDATA[$P{SHADE_BACKCOLOR}]]></printWhenExpression>
+				</reportElement>
 				<graphicElement>
 					<pen lineWidth="1.0" lineColor="#C0C0C0"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Opaque" x="157" y="1" width="213" height="12" backcolor="#FAFAFA" uuid="69876ad0-c7ca-49a5-8f2c-110c7ce65daf"/>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="14" backcolor="#FFFFFF" uuid="130debd8-026a-4f91-b3c4-76a1ac98f8e2">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<graphicElement>
-					<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<pen lineWidth="1.0" lineColor="#C0C0C0"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
