@@ -83,6 +83,26 @@ rem --- Check Print flag
 		break; rem --- exit callpoint
 	endif
 
+rem --- Check Fulfillment
+	optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+	dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+	ar_type$=callpoint!.getColumnData("OPE_INVHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPE_INVHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPE_INVHDR.ORDER_NO")
+	ar_inv_no$=optFillmntHdr.ar_inv_no$
+	inFulfillmnt=0
+	extractrecord(optFillmntHdr_dev,key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$,knum="AO_STATUS",dom=*next)optFillmntHdr$; inFulfillmnt=1
+	if inFulfillmnt and (optFillmntHdr.complete_flg$<>"Y" or optFillmntHdr$.print_status$<>"Y") then
+		rem --- Order not completed in Fulfillment, so skip it and start a new one
+		msg_id$="OP_ORD_IN_FILLMNT"
+		gosub disp_message
+
+		user_tpl.do_end_of_form = 0
+		callpoint!.clearStatus()
+		callpoint!.setStatus("NEWREC")
+		break; rem --- exit callpoint
+	endif
+
 rem --- Check for order, force to an Invoice
 
 	if callpoint!.getColumnData("OPE_INVHDR.ORDINV_FLAG") <> "I" then
@@ -754,7 +774,6 @@ rem --- Reset the print file
 	rem --- Replace ope_ordship ope-31 records
 	ope31_dev=fnget_dev("OPE_ORDSHIP")
 	dim ope31a$:fnget_tpl$("OPE_ORDSHIP")
-	old_inv_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
 	ordship_found=0
 	for i=1 to 2
 		if i=1 then
@@ -775,12 +794,24 @@ rem --- Reset the print file
 		endif
 	next i
 
+rem --- Restore fulfillment records if using fulfillment
+	optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+	didFulfillment=0
+	extractrecord(optFillmntHdr_dev,key=firm_id$+"U"+ar_type$+cust_id$+order_no$+old_inv_no$,knum="AO_STATUS",dom=*next); didFulfillment=1
+	if didFulfillment then
+		rem --- Update TRANS_STATUS and AR_INV_NO in all 6 fulfillment tables
+		optFillmntHdr_Primary_key$=firm_id$+ar_type$+cust_id$+order_no$+old_inv_no$
+		trans_status$="E"
+		ar_inv_no$=""
+		gosub updateFulfillment
+	endif
+
 rem --- All Done
 
 	user_tpl.do_end_of_form = 0
 	callpoint!.setStatus("NEWREC")
 
-rem --- Remove temporary soft lock used just for this print task 
+rem --- Remove temporary soft lock used just for this task 
 	if !callpoint!.isEditMode() and lock_type$="L" then
 		lock_type$="U"
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
@@ -1302,6 +1333,74 @@ rem --- Void AvaTax transaction if using a sales tax service
 		endif
 	endif
 
+rem --- Remove fulfillment records if using fulfillment
+	optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+	ar_inv_no$=callpoint!.getColumnData("OPE_INVHDR.AR_INV_NO")
+	didFulfillment=0
+	extractrecord(optFillmntHdr_dev,key=firm_id$+"U"+ar_type$+customer_id$+order_no$+ar_inv_no$,knum="AO_STATUS",dom=*next); didFulfillment=1
+	if didFulfillment then
+		rem --- Remove records from all 6 fulfillment tables
+		optFillmntHdr_Primary_key$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$
+
+		rem --- OPT_CARTLSDET
+		optCartLsDet_dev = fnget_dev("OPT_CARTLSDET")
+		dim optCartLsDet$:fnget_tpl$("OPT_CARTLSDET")
+		optCartLsDet_trip$=optFillmntHdr_Primary_key$
+		read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="PRIMARY",dom=*next)
+		while 1
+			optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
+			if pos(optCartLsDet_trip$=optCartLsDet_key$)=0 then break
+			remove(optCartLsDet_dev,key=optCartLsDet_key$)
+		wend
+
+		rem --- OPT_FILLMNTLSDET
+		optFillmntLsDet_dev = fnget_dev("OPT_FILLMNTLSDET")
+		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+		optFillmntLsDet_trip$=optFillmntHdr_Primary_key$
+		read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="PRIMARY",dom=*next)
+		while 1
+			optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+			if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)=0 then break
+			remove(optFillmntLsDet_dev,key=optFillmntLsDet_key$)
+		wend
+
+		rem --- OPT_CARTDET
+		optCartDet_dev = fnget_dev("OPT_CARTDET")
+		dim optCartDet$:fnget_tpl$("OPT_CARTDET")
+		optCartDet_trip$=optFillmntHdr_Primary_key$
+		read(optCartDet_dev,key=optCartDet_trip$,knum="PRIMARY",dom=*next)
+		while 1
+			optCartDet_key$=key(optCartDet_dev,end=*break)
+			if pos(optCartDet_trip$=optCartDet_key$)=0 then break
+			remove(optCartDet_dev,key=optCartDet_key$)
+		wend
+
+		rem --- OPT_FILLMNTDET
+		optFillmntDet_dev = fnget_dev("OPT_FILLMNTDET")
+		dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+		optFillmntDet_trip$=optFillmntHdr_Primary_key$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="PRIMARY",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)=0 then break
+			remove(optFillmntDet_dev,key=optFillmntDet_key$)
+		wend
+
+		rem --- OPT_CARTHDR
+		optCartHdr_dev = fnget_dev("OPT_CARTHDR")
+		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+		optCartHdr_trip$=optFillmntHdr_Primary_key$
+		read(optCartHdr_dev,key=optCartHdr_trip$,knum="PRIMARY",dom=*next)
+		while 1
+			optCartHdr_key$=key(optCartHdr_dev,end=*break)
+			if pos(optCartHdr_trip$=optCartHdr_key$)=0 then break
+			remove(optCartHdr_dev,key=optCartHdr_key$)
+		wend
+
+		rem --- OPT_FILLMNTHDR
+		remove(optFillmntHdr_dev,key=optFillmntHdr_Primary_key$)
+	endif
+
 rem --- Set table variables
 	file_name$ = "OPE_PRNTLIST"
 	prntlist_dev = fnget_dev(file_name$)
@@ -1759,7 +1858,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=44
+	num_files=49
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -1791,7 +1890,7 @@ rem --- Open needed files
 	open_tables$[30]="OPE_ORDLSDET", open_opts$[30]="OTA"
 	open_tables$[31]="IVM_ITEMPRIC", open_opts$[31]="OTA"
 	open_tables$[32]="IVC_PRICCODE", open_opts$[32]="OTA"
-	rem open_tables$[33]="", open_opts$[33]=""
+	open_tables$[33]="OPT_FILLMNTHDR", open_opts$[33]="OTA"
 	open_tables$[34]="OPE_PRNTLIST", open_opts$[34]="OTA"
 	open_tables$[35]="OPM_POINTOFSALE", open_opts$[35]="OTA"
 	open_tables$[36]="ARC_SALECODE", open_opts$[36]="OTA"
@@ -1803,6 +1902,11 @@ rem --- Open needed files
 	open_tables$[42]="OPT_SHIPTRACK",open_opts$[42]="OTA"
 	open_tables$[43]="ARM_CUSTPMTS",   open_opts$[43]="OTA"
 	open_tables$[44]="ADM_RPTCTL_RCP",open_opts$[44]="OTA"
+	open_tables$[45]="OPT_FILLMNTDET", open_opts$[45]="OTA"
+	open_tables$[46]="OPT_FILLMNTLSDET", open_opts$[46]="OTA"
+	open_tables$[47]="OPT_CARTHDR", open_opts$[47]="OTA"
+	open_tables$[48]="OPT_CARTDET", open_opts$[48]="OTA"
+	open_tables$[49]="OPT_CARTLSDET", open_opts$[49]="OTA"
 
 	gosub open_tables
 
@@ -4027,6 +4131,12 @@ rem ==========================================================================
 			callpoint!.setStatus("NEWREC")
 			locked = 1
 		else
+			rem --- Was Fulfillment used for this order?
+			optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+			dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+			didFulfillment=0
+			extractrecord(optFillmntHdr_dev,key=firm_id$+"E"+ar_type$+customer_id$+order_no$+old_inv_no$,knum="AO_STATUS",dom=*next)optFillmntHdr$; didFulfillment=1
+
 			rem --- Replace ope_ordship ope-31 records
 			ope31_dev=fnget_dev("OPE_ORDSHIP")
 			dim ope31a$:fnget_tpl$("OPE_ORDSHIP")
@@ -4061,7 +4171,7 @@ rem ==========================================================================
 				ope11_key$=key(ope11_dev,end=*break)
 				if pos(ope11_trip$=ope11_key$)<>1 then break
 				extractrecord(ope11_dev)ope11a$; rem Advisory locking
-				rem --- Skip new ope_invdet ope-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, except for "M" and "O" line types.
+				rem --- Skip new ope_invdet ope-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if for "M" and "O" line types.
 				skipNewOpe11Record=0
 				if ope11a.qty_ordered=0 and ope11a.qty_shipped=0 and ope11a.qty_backord=0 then
 					opc_linecode_dev = fnget_dev("OPC_LINECODE")
@@ -4073,6 +4183,30 @@ rem ==========================================================================
 					endif
 				endif
 				if !skipNewOpe11Record then
+					if didFulfillment then
+						rem --- Use Fulfillment item picking info
+						optFillmntDet_dev = fnget_dev("OPT_FILLMNTDET")
+						dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+						optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+old_inv_no$+ope11a.internal_seq_no$
+						read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS_ORDDET",dom=*next)
+						while 1
+							optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+							if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+							readrecord(optFillmntDet_dev)optFillmntDet$
+							break
+						wend
+						rem --- Make sure this detail line is pickable
+						if optFillmntDet.qty_shipped>0 then
+							opc_linecode_dev = fnget_dev("OPC_LINECODE")
+							dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
+							read record (opc_linecode_dev, key=firm_id$+ope11a.line_code$, dom=*next) opc_linecode$
+							if pos(opc_linecode.line_type$="MO")=0 and opc_linecode.dropship$<>"Y" then 
+								ope11a.qty_shipped=optFillmntDet.qty_picked
+								if ope11a.qty_shipped<=ope11a.qty_ordered then ope11a.qty_backord=ope11a.qty_ordered-ope11a.qty_shipped
+							endif
+						endif
+					endif
+
 					ope11a.ar_inv_no$=inv_no$
 					ope11a.mod_user$=sysinfo.user_id$
 					ope11a.mod_date$=date(0:"%Yd%Mz%Dz")
@@ -4086,29 +4220,77 @@ rem ==========================================================================
 			wend
 
 			rem --- Replace ope_ordlsdet ope-21 records
-			ope21_dev = fnget_dev("OPE_ORDLSDET")
-			dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
-			status$=callpoint!.getColumnData("OPE_INVHDR.TRANS_STATUS")
-			ar_type$=callpoint!.getColumnData("OPE_INVHDR.AR_TYPE")
-			ope21_trip$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
-			read (ope21_dev, key=ope21_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
-			while 1
-				ope21_key$=key(ope21_dev,end=*break)
-				if pos(ope21_trip$=ope21_key$)<>1 then break
-				extractrecord(ope21_dev)ope21a$; rem Advisory locking
-				rem --- Remove ope_ordlsdet ope-21 records that don't have matching ope_invdet ope-11 records.
-				if pos(ope21a.orddet_seq_ref$+";"=skipNewOpe21Records$)=0 then
+			if didFulfillment then
+				rem --- Remove any item lot/serial picking info from Order Entry
+				ope21_dev = fnget_dev("OPE_ORDLSDET")
+				dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
+				status$=callpoint!.getColumnData("OPE_INVHDR.TRANS_STATUS")
+				ar_type$=callpoint!.getColumnData("OPE_INVHDR.AR_TYPE")
+				ope21_trip$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
+				read (ope21_dev, key=ope21_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+				while 1
+					ope21_key$=key(ope21_dev,end=*break)
+					if pos(ope21_trip$=ope21_key$)<>1 then break
+					extractrecord(ope21_dev)ope21a$; rem Advisory locking
+					ope21_primary$=ope21a.firm_id$+ope21a.ar_type$+ope21a.customer_id$+ope21a.order_no$+old_inv_no$+ope21a.orddet_seq_ref$+ope21a.sequence_no$
+					remove(ope21_dev,key=ope21_primary$)
+					read(ope21_dev,key=ope21_key$,dom=*next)
+				wend
+
+				rem --- Use Fulfillment item lot/serial picking info
+				optFillmntLsDet_dev = fnget_dev("OPT_FILLMNTLSDET")
+				dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+				optFillmntLsDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+old_inv_no$
+				read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
+				while 1
+					optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+					if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
+					readrecord(optFillmntLsDet_dev)optFillmntLsDet$
+
+					redim ope21a$
+					ope21a.firm_id$=optFillmntLsDet.firm_id$
+					ope21a.ar_type$=optFillmntLsDet.ar_type$
+					ope21a.customer_id$=optFillmntLsDet.customer_id$
+					ope21a.order_no$=optFillmntLsDet.order_no$
 					ope21a.ar_inv_no$=inv_no$
-					ope21a.mod_user$=sysinfo.user_id$
-					ope21a.mod_date$=date(0:"%Yd%Mz%Dz")
-					ope21a.mod_time$=date(0:"%Hz%mz")
+					ope21a.orddet_seq_ref$=optFillmntLsDet.orddet_seq_ref$
+					ope21a.sequence_no$=optFillmntLsDet.sequence_no$
+					ope21a.lotser_no$=optFillmntLsDet.lotser_no$
+					ope21a.created_user$=sysinfo.user_id$
+					ope21a.created_date$=date(0:"%Yd%Mz%Dz")
+					ope21a.created_time$=date(0:"%Hz%mz")
+					ope21a.trans_status$="E"
+					ope21a.qty_ordered=optFillmntLsDet.qty_shipped
+					ope21a.qty_shipped=optFillmntLsDet.qty_picked
+					ope21a.unit_cost=optFillmntLsDet.unit_cost
 					ope21a$=field(ope21a$)
 					writerecord(ope21_dev)ope21a$
-				endif
-				ope21_primary$=ope21a.firm_id$+ope21a.ar_type$+ope21a.customer_id$+ope21a.order_no$+old_inv_no$+ope21a.orddet_seq_ref$+ope21a.sequence_no$
-				remove(ope21_dev,key=ope21_primary$)
-				read(ope21_dev,key=ope21_key$,dom=*next)
-			wend
+				wend
+			else
+				ope21_dev = fnget_dev("OPE_ORDLSDET")
+				dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
+				status$=callpoint!.getColumnData("OPE_INVHDR.TRANS_STATUS")
+				ar_type$=callpoint!.getColumnData("OPE_INVHDR.AR_TYPE")
+				ope21_trip$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
+				read (ope21_dev, key=ope21_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+				while 1
+					ope21_key$=key(ope21_dev,end=*break)
+					if pos(ope21_trip$=ope21_key$)<>1 then break
+					extractrecord(ope21_dev)ope21a$; rem Advisory locking
+					rem --- Remove ope_ordlsdet ope-21 records that don't have matching ope_invdet ope-11 records.
+					if pos(ope21a.orddet_seq_ref$+";"=skipNewOpe21Records$)=0 then
+						ope21a.ar_inv_no$=inv_no$
+						ope21a.mod_user$=sysinfo.user_id$
+						ope21a.mod_date$=date(0:"%Yd%Mz%Dz")
+						ope21a.mod_time$=date(0:"%Hz%mz")
+						ope21a$=field(ope21a$)
+						writerecord(ope21_dev)ope21a$
+					endif
+					ope21_primary$=ope21a.firm_id$+ope21a.ar_type$+ope21a.customer_id$+ope21a.order_no$+old_inv_no$+ope21a.orddet_seq_ref$+ope21a.sequence_no$
+					remove(ope21_dev,key=ope21_primary$)
+					read(ope21_dev,key=ope21_key$,dom=*next)
+				wend
+			endif
 
 			rem --- Replace ope_invhdr ope-01 record
 			ope01_dev = fnget_dev("OPE_INVHDR")
@@ -4117,6 +4299,30 @@ rem ==========================================================================
 			ope01_key$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
 			extractrecord(ope01_dev,key=ope01_key$,knum="AO_STATUS",dom=*next)ope01a$; ordhdr_found=1; rem Advisory locking
 			if ordhdr_found then
+				if didFulfillment then
+					rem --- Use Fulfillment and Carton header info
+					freight_amt=0
+					optCartHdr_dev = fnget_dev("OPT_CARTHDR")
+					dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+					optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+old_inv_no$
+					read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+					while 1
+						optCartHdr_key$=key(optCartHdr_dev,end=*break)
+						if pos(optCartHdr_trip$=optCartHdr_key$)=0 then break
+						readrecord(optCartHdr_dev)optCartHdr$
+						freight_amt=freight_amt+optCartHdr.freight_amt
+					wend
+
+					ope01a.shipmnt_date$=optFillmntHdr.shipmnt_date$
+					ope01a.ar_ship_via$=optFillmntHdr.ar_ship_via$
+					ope01a.shipping_id$=optFillmntHdr.shipping_id$
+					ope01a.freight_amt=freight_amt
+					rem --- Also setColumnData since cannot use get_disk_rec with sales tax service
+					callpoint!.setColumnData("OPE_INVHDR.SHIPMNT_DATE",ope01a.shipmnt_date$,1)
+					callpoint!.setColumnData("OPE_INVHDR.AR_SHIP_VIA",ope01a.ar_ship_via$,1)
+					callpoint!.setColumnData("OPE_INVHDR.SHIPPING_ID",ope01a.shipping_id$,1)
+					callpoint!.setColumnData("OPE_INVHDR.FREIGHT_AMT",str(ope01a.freight_amt),1)
+				endif
 				ope01a.ar_inv_no$=inv_no$
 				ope01a.ordinv_flag$="I"
 				ope01a.invoice_date$=sysinfo.system_date$
@@ -4136,7 +4342,7 @@ rem ==========================================================================
 				callpoint!.setColumnData("OPE_INVHDR.MOD_TIME",ope01a.mod_time$,1)
 
 				rem --- Do NOT overwrite existing FREIGH_AMT previously entered in Order Entry.
-				if ope01a.freight_amt=0 then
+				if !didFulfillment and ope01a.freight_amt=0 then
 					rem --- Initialize FREIGHT_AMT when freight charges are available in OPT_SHIPTRACK
 					trackingNos!=new java.util.HashMap()
 					ar_type$=ope01a.ar_type$
@@ -4171,6 +4377,14 @@ rem ==========================================================================
 				writerecord(ope01_dev)ope01a$
 				ope01_primary$=ope01a.firm_id$+ope01a.ar_type$+ope01a.customer_id$+ope01a.order_no$+old_inv_no$
 				remove(ope01_dev,key=ope01_primary$)
+
+				if didFulfillment then
+					rem --- Update TRANS_STATUS and AR_INV_NO in all 6 fulfillment tables
+					optFillmntHdr_Primary_key$=firm_id$+ar_type$+customer_id$+order_no$+old_inv_no$
+					trans_status$="U"
+					ar_inv_no$=inv_no$
+					gosub updateFulfillment
+				endif
 
 				callpoint!.setColumnData("OPE_INVHDR.NO_SLS_TAX_CALC","1",1)
 				disc_amt=num(callpoint!.getColumnData("OPE_INVHDR.DISCOUNT_AMT"))
@@ -4812,6 +5026,123 @@ rem ==========================================================================
 		ordship_tpl$ = field(ordship_tpl$)
 		write record (ordship_dev) ordship_tpl$
 	endif
+
+	return
+
+rem ==========================================================================
+updateFulfillment: rem ---  Update TRANS_STATUS and AR_INV_NO in all 6 fulfillment tables
+rem IN: optFillmntHdr_Primary_key$
+rem IN: trans_status$
+rem IN: ar_inv_no$
+rem OUT: - none -
+rem ==========================================================================
+	rem --- OPT_CARTLSDET
+	optCartLsDet_dev = fnget_dev("OPT_CARTLSDET")
+	dim optCartLsDet$:fnget_tpl$("OPT_CARTLSDET")
+	optCartLsDet_trip$=optFillmntHdr_Primary_key$
+	read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="PRIMARY",dom=*next)
+	while 1
+		optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
+		if pos(optCartLsDet_trip$=optCartLsDet_key$)=0 then break
+		readrecord(optCartLsDet_dev)optCartLsDet$
+		optCartLsDet.ar_inv_no$=ar_inv_no$
+		optCartLsDet.trans_status$=trans_status$
+		optCartLsDet.mod_user$=sysinfo.user_id$
+		optCartLsDet.mod_date$=date(0:"%Yd%Mz%Dz")
+		optCartLsDet.mod_time$=date(0:"%Hz%mz")
+		optCartLsDet$=field(optCartLsDet$)
+		writerecord(optCartLsDet_dev)optCartLsDet$
+		remove(optCartLsDet_dev,key=optCartLsDet_key$)
+	wend
+
+	rem --- OPT_FILLMNTLSDET
+	optFillmntLsDet_dev = fnget_dev("OPT_FILLMNTLSDET")
+	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+	optFillmntLsDet_trip$=optFillmntHdr_Primary_key$
+	read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="PRIMARY",dom=*next)
+	while 1
+		optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+		if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)=0 then break
+		readrecord(optFillmntLsDet_dev)optFillmntLsDet$
+		optFillmntLsDet.ar_inv_no$=ar_inv_no$
+		optFillmntLsDet.trans_status$=trans_status$
+		optFillmntLsDet.mod_user$=sysinfo.user_id$
+		optFillmntLsDet.mod_date$=date(0:"%Yd%Mz%Dz")
+		optFillmntLsDet.mod_time$=date(0:"%Hz%mz")
+		optFillmntLsDet$=field(optFillmntLsDet$)
+		writerecord(optFillmntLsDet_dev)optFillmntLsDet$
+		remove(optFillmntLsDet_dev,key=optFillmntLsDet_key$)
+	wend
+
+	rem --- OPT_CARTDET
+	optCartDet_dev = fnget_dev("OPT_CARTDET")
+	dim optCartDet$:fnget_tpl$("OPT_CARTDET")
+	optCartDet_trip$=optFillmntHdr_Primary_key$
+	read(optCartDet_dev,key=optCartDet_trip$,knum="PRIMARY",dom=*next)
+	while 1
+		optCartDet_key$=key(optCartDet_dev,end=*break)
+		if pos(optCartDet_trip$=optCartDet_key$)=0 then break
+		readrecord(optCartDet_dev)optCartDet$
+		optCartDet.ar_inv_no$=ar_inv_no$
+		optCartDet.trans_status$=trans_status$
+		optCartDet.mod_user$=sysinfo.user_id$
+		optCartDet.mod_date$=date(0:"%Yd%Mz%Dz")
+		optCartDet.mod_time$=date(0:"%Hz%mz")
+		optCartDet$=field(optCartDet$)
+		writerecord(optCartDet_dev)optCartDet$
+		remove(optCartDet_dev,key=optCartDet_key$)
+	wend
+
+	rem --- OPT_FILLMNTDET
+	optFillmntDet_dev = fnget_dev("OPT_FILLMNTDET")
+	dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+	optFillmntDet_trip$=optFillmntHdr_Primary_key$
+	read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="PRIMARY",dom=*next)
+	while 1
+		optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+		if pos(optFillmntDet_trip$=optFillmntDet_key$)=0 then break
+		readrecord(optFillmntDet_dev)optFillmntDet$
+		optFillmntDet.ar_inv_no$=ar_inv_no$
+		optFillmntDet.trans_status$=trans_status$
+		optFillmntDet.mod_user$=sysinfo.user_id$
+		optFillmntDet.mod_date$=date(0:"%Yd%Mz%Dz")
+		optFillmntDet.mod_time$=date(0:"%Hz%mz")
+		optFillmntDet$=field(optFillmntDet$)
+		writerecord(optFillmntDet_dev)optFillmntDet$
+		remove(optFillmntDet_dev,key=optFillmntDet_key$)
+	wend
+
+	rem --- OPT_CARTHDR
+	optCartHdr_dev = fnget_dev("OPT_CARTHDR")
+	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+	optCartHdr_trip$=optFillmntHdr_Primary_key$
+	read(optCartHdr_dev,key=optCartHdr_trip$,knum="PRIMARY",dom=*next)
+	while 1
+		optCartHdr_key$=key(optCartHdr_dev,end=*break)
+		if pos(optCartHdr_trip$=optCartHdr_key$)=0 then break
+		readrecord(optCartHdr_dev)optCartHdr$
+		optCartHdr.ar_inv_no$=ar_inv_no$
+		optCartHdr.trans_status$=trans_status$
+		optCartHdr.mod_user$=sysinfo.user_id$
+		optCartHdr.mod_date$=date(0:"%Yd%Mz%Dz")
+		optCartHdr.mod_time$=date(0:"%Hz%mz")
+		optCartHdr$=field(optCartHdr$)
+		writerecord(optCartHdr_dev)optCartHdr$
+		remove(optCartHdr_dev,key=optCartHdr_key$)
+	wend
+
+	rem --- OPT_FILLMNTHDR
+	optFillmntHdr_dev = fnget_dev("OPT_FILLMNTHDR")
+	dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+	readrecord(optFillmntHdr_dev,key=optFillmntHdr_Primary_key$,knum="PRIMARY")optFillmntHdr$
+	optFillmntHdr.ar_inv_no$=ar_inv_no$
+	optFillmntHdr.trans_status$=trans_status$
+	optFillmntHdr.mod_user$=sysinfo.user_id$
+	optFillmntHdr.mod_date$=date(0:"%Yd%Mz%Dz")
+	optFillmntHdr.mod_time$=date(0:"%Hz%mz")
+	optFillmntHdr$=field(optFillmntHdr$)
+	writerecord(optFillmntHdr_dev)optFillmntHdr$
+	remove(optFillmntHdr_dev,key=optFillmntHdr_Primary_key$)
 
 	return
 
