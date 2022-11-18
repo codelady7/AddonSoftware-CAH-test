@@ -1349,7 +1349,7 @@ rem --- Remove fulfillment records if using fulfillment
 		read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="PRIMARY",dom=*next)
 		while 1
 			optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
-			if pos(optCartLsDet_trip$=optCartLsDet_key$)=0 then break
+			if pos(optCartLsDet_trip$=optCartLsDet_key$)<>1 then break
 			remove(optCartLsDet_dev,key=optCartLsDet_key$)
 		wend
 
@@ -1360,7 +1360,7 @@ rem --- Remove fulfillment records if using fulfillment
 		read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="PRIMARY",dom=*next)
 		while 1
 			optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
-			if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)=0 then break
+			if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
 			remove(optFillmntLsDet_dev,key=optFillmntLsDet_key$)
 		wend
 
@@ -1371,7 +1371,7 @@ rem --- Remove fulfillment records if using fulfillment
 		read(optCartDet_dev,key=optCartDet_trip$,knum="PRIMARY",dom=*next)
 		while 1
 			optCartDet_key$=key(optCartDet_dev,end=*break)
-			if pos(optCartDet_trip$=optCartDet_key$)=0 then break
+			if pos(optCartDet_trip$=optCartDet_key$)<>1 then break
 			remove(optCartDet_dev,key=optCartDet_key$)
 		wend
 
@@ -1382,7 +1382,7 @@ rem --- Remove fulfillment records if using fulfillment
 		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="PRIMARY",dom=*next)
 		while 1
 			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
-			if pos(optFillmntDet_trip$=optFillmntDet_key$)=0 then break
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
 			remove(optFillmntDet_dev,key=optFillmntDet_key$)
 		wend
 
@@ -1393,7 +1393,7 @@ rem --- Remove fulfillment records if using fulfillment
 		read(optCartHdr_dev,key=optCartHdr_trip$,knum="PRIMARY",dom=*next)
 		while 1
 			optCartHdr_key$=key(optCartHdr_dev,end=*break)
-			if pos(optCartHdr_trip$=optCartHdr_key$)=0 then break
+			if pos(optCartHdr_trip$=optCartHdr_key$)<>1then break
 			remove(optCartHdr_dev,key=optCartHdr_key$)
 		wend
 
@@ -4308,7 +4308,7 @@ rem ==========================================================================
 					read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
 					while 1
 						optCartHdr_key$=key(optCartHdr_dev,end=*break)
-						if pos(optCartHdr_trip$=optCartHdr_key$)=0 then break
+						if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
 						readrecord(optCartHdr_dev)optCartHdr$
 						freight_amt=freight_amt+optCartHdr.freight_amt
 					wend
@@ -4384,6 +4384,57 @@ rem ==========================================================================
 					trans_status$="U"
 					ar_inv_no$=inv_no$
 					gosub updateFulfillment
+
+					rem --- Add to Shipment Tracking if not already there
+					optShipTrack_dev = fnget_dev("OPT_SHIPTRACK")
+					dim optShipTrack$:fnget_tpl$("OPT_SHIPTRACK")
+					optCartHdr_dev = fnget_dev("OPT_CARTHDR")
+					dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+					optCartHdr_trip$=firm_id$+"U"+ar_type$+customer_id$+order_no$+inv_no$
+					read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+					while 1
+						optCartHdr_key$=key(optCartHdr_dev,end=*break)
+						if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+						readrecord(optCartHdr_dev)optCartHdr$
+						if cvs(optCartHdr.tracking_no$,2)="" then continue
+
+						rem --- Is this carton already being tracked?
+						alreadyTracked=0
+						optShipTrack_trip$=firm_id$+ar_type$+customer_id$+order_no$
+						read(optShipTrack_dev,key=optShipTrack_trip$,dom=*next)
+						while 1
+							optShipTrack_key$=key(optShipTrack_dev,end=*break)
+							if pos(optShipTrack_trip$=optShipTrack_key$)<>1 then break
+							readrecord(optShipTrack_dev)optShipTrack$
+							if optShipTrack.tracking_no$<>optCartHdr.tracking_no$ then continue
+							alreadyTracked=1
+							break
+						wend
+
+						rem --- Enter Shipment Tracking info for cartons NOT already bein tracked
+						if !alreadyTracked then
+							ship_seq_no$=callpoint!.getColumnData("OPE_INVHDR.SHIP_SEQ_NO")
+							if cvs(ship_seq_no$,2)="" then ship_seq_no$='001'
+
+							redim optShipTrack$
+							optShipTrack.firm_id$=firm_id$
+							optShipTrack.ar_type$=ar_type$
+							optShipTrack.customer_id$=customer_id$
+							optShipTrack.order_no$=order_no$
+							optShipTrack.ship_seq_no$=ship_seq_no$
+							optShipTrack.tracking_no$=optCartHdr.tracking_no$
+							optShipTrack.void_flag$="N"
+							optShipTrack.scac_code$=optCartHdr.scac_code$
+							optShipTrack.carrier_code$=optCartHdr.carrier_code$
+							optShipTrack.create_date$=date(0:"%Yd%Mz%Dz")
+							optShipTrack.weight=optCartHdr.weight
+							optShipTrack.cust_freight_amt=optCartHdr.freight_amt
+							optShipTrack.act_freight_amt=optCartHdr.freight_amt
+							optShipTrack$=field(optShipTrack$)
+							writerecord(optShipTrack_dev)optShipTrack$
+						endif
+					wend
+
 				endif
 
 				callpoint!.setColumnData("OPE_INVHDR.NO_SLS_TAX_CALC","1",1)
@@ -5043,7 +5094,7 @@ rem ==========================================================================
 	read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="PRIMARY",dom=*next)
 	while 1
 		optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
-		if pos(optCartLsDet_trip$=optCartLsDet_key$)=0 then break
+		if pos(optCartLsDet_trip$=optCartLsDet_key$)<>1 then break
 		readrecord(optCartLsDet_dev)optCartLsDet$
 		optCartLsDet.ar_inv_no$=ar_inv_no$
 		optCartLsDet.trans_status$=trans_status$
@@ -5062,7 +5113,7 @@ rem ==========================================================================
 	read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="PRIMARY",dom=*next)
 	while 1
 		optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
-		if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)=0 then break
+		if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
 		readrecord(optFillmntLsDet_dev)optFillmntLsDet$
 		optFillmntLsDet.ar_inv_no$=ar_inv_no$
 		optFillmntLsDet.trans_status$=trans_status$
@@ -5081,7 +5132,7 @@ rem ==========================================================================
 	read(optCartDet_dev,key=optCartDet_trip$,knum="PRIMARY",dom=*next)
 	while 1
 		optCartDet_key$=key(optCartDet_dev,end=*break)
-		if pos(optCartDet_trip$=optCartDet_key$)=0 then break
+		if pos(optCartDet_trip$=optCartDet_key$)<>1 then break
 		readrecord(optCartDet_dev)optCartDet$
 		optCartDet.ar_inv_no$=ar_inv_no$
 		optCartDet.trans_status$=trans_status$
@@ -5100,7 +5151,7 @@ rem ==========================================================================
 	read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="PRIMARY",dom=*next)
 	while 1
 		optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
-		if pos(optFillmntDet_trip$=optFillmntDet_key$)=0 then break
+		if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
 		readrecord(optFillmntDet_dev)optFillmntDet$
 		optFillmntDet.ar_inv_no$=ar_inv_no$
 		optFillmntDet.trans_status$=trans_status$
@@ -5119,7 +5170,7 @@ rem ==========================================================================
 	read(optCartHdr_dev,key=optCartHdr_trip$,knum="PRIMARY",dom=*next)
 	while 1
 		optCartHdr_key$=key(optCartHdr_dev,end=*break)
-		if pos(optCartHdr_trip$=optCartHdr_key$)=0 then break
+		if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
 		readrecord(optCartHdr_dev)optCartHdr$
 		optCartHdr.ar_inv_no$=ar_inv_no$
 		optCartHdr.trans_status$=trans_status$
