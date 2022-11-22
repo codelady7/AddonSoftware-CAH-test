@@ -96,9 +96,10 @@ rem --- Show total weight and total freight amount
 	callpoint!.setColumnData("<<DISPLAY>>.WEIGHT",str(weight),1)
 	callpoint!.setColumnData("<<DISPLAY>>.FREIGHT_AMT",str(freight_amt),1)
 
-rem --- Disable/enable fields if Complete, or not.
-	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y" then
-		rem --- Enable Print List button if Complete
+rem --- Disable/enable fields if all_packed, or not.
+	all_packed$=callpoint!.getColumnData("OPT_FILLMNTHDR.ALL_PACKED")
+	if all_packed$="Y" then
+		rem --- Enable Print List button if all_packed
 		callpoint!.setOptionEnabled("PRNT",1)
 
 		rem --- Disable fields
@@ -113,6 +114,297 @@ rem --- Disable/enable fields if Complete, or not.
 		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",1)
 		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",1)
 		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",1)
+	endif
+	callpoint!.setDevObject("all_packed",all_packed$)
+
+[[OPT_FILLMNTHDR.ALL_PACKED.AVAL]]
+rem --- Skip if all_packed hasn't changed
+	all_packed$=callpoint!.getUserInput()
+	if cvs(all_packed$,2)=cvs(callpoint!.getColumnData("OPT_FILLMNTHDR.ALL_PACKED"),2) then break
+
+rem --- Warn if reprint is required
+	if all_packed$="N" and callpoint!.getColumnData("OPT_FILLMNTHDR.PRINT_STATUS")="Y" then
+		msg_id$="OP_REPRINT_FILLMNT"
+		gosub disp_message
+		if msg_opt$="N"
+			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","Y",1)
+			callpoint!.setStatus("ABORT")
+			break
+		else
+			rem --- When Packing List is printed again, it will be a reprint.
+			callpoint!.setColumnData("OPT_FILLMNTHDR.PRINT_STATUS","N")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.REPRINT_FLAG","Y")
+		endif
+	endif
+
+rem --- Validate fulfillment if marked all_packed
+	if all_packed$="Y" then
+		rem --- Warn if OPT_FILLMNTDET.QTY_PICKED<>OPT_FILLMNTDET.QTY_SHIPPED for an ITEM_ID
+		validationFailed=0
+		opcLineCode_dev=fnget_dev("OPC_LINECODE")
+		dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
+		optFillmntDet_dev=fnget_dev("OPT_FILLMNTDET")
+		dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+		customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+		ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			if optFillmntdet.qty_shipped=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_NOT_COMPLETE_PICK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
+			break
+		endif
+
+		rem --- Warn if the sum of OPT_FILLMNTLSDET.QTY_PICKED for an ITEM_ID is not equal to OPT_FILLMNTDET.QTY_PICKED
+		validationFailed=0
+		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			rem --- Is this a lot/serial item?
+			lotser_item$="N"
+			lotser_flag$=callpoint!.getDevObject("lotser_flag")
+			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+				ivm01_dev=fnget_dev("IVM_ITEMMAST")
+				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
+				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+			endif
+			if lotser_item$<>"Y" then continue
+
+			totalLsPicked=0
+			optFillmntLsDet_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
+			read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
+			while 1
+				optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+				if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
+				readrecord(optFillmntLsDet_dev)optFillmntLsDet$
+				totalLsPicked=totalLsPicked+optFillmntLsDet.qty_picked
+			wend
+			if totalLsPicked=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_INCOMPLETE_LSPICK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
+			break
+		endif
+
+		rem --- Warn if the sum of the OPT_CARTDET.QTY_PACKED for all the packed cartons is not equal to OPT_FILLMNTDET.QTY_PICKED for an ITEM_ID
+		validationFailed=0
+		optCartDet2_dev=fnget_dev("OPT_CARTDET2")
+		dim optCartDet2$:fnget_tpl$("OPT_CARTDET2")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			totalPacked=0
+			optCartDet2_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
+			read(optCartDet2_dev,key=optCartDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
+			while 1
+				optCartDet2_key$=key(optCartDet2_dev,end=*break)
+				if pos(optCartDet2_trip$=optCartDet2_key$)<>1 then break
+				readrecord(optCartDet2_dev)optCartDet2$
+				totalPacked=totalPacked+optCartDet2.qty_packed
+			wend
+			if totalPacked=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_NOT_COMPLETE_PACK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
+			break
+		endif
+
+
+		rem --- Warn if the sum of the OPT_CARTLSDET.QTY_PACKED for an ITEM_ID and LOTSER_NO in a packed carton is not equal to the the OPT_CARTDET.QTY_PACKED for the ITEM_ID in the packed carton
+		validationFailed=0
+		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
+		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
+		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+			readrecord(optFillmntDet_dev)optFillmntDet$
+
+			rem --- Is this item pickable?
+			if optFillmntdet.qty_shipped<0 then continue
+			row=num(optFillmntdet.line_no$)-1
+			dropshipMap!=callpoint!.getDevObject("dropshipMap")
+			linetypeMap!=callpoint!.getDevObject("linetypeMap")
+			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
+
+			rem --- Is this a lot/serial item?
+			lotser_item$="N"
+			lotser_flag$=callpoint!.getDevObject("lotser_flag")
+			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+				ivm01_dev=fnget_dev("IVM_ITEMMAST")
+				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
+				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+			endif
+			if lotser_item$<>"Y" then continue
+
+			totalLsPacked=0
+			optCartLsDet2_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
+			read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
+			while 1
+				optCartLsDet2_key$=key(optCartLsDet2_dev,end=*break)
+				if pos(optCartLsDet2_trip$=optCartLsDet2_key$)<>1 then break
+				readrecord(optCartLsDet2_dev)optCartLsDet2$
+				totalLsPacked=totalLsPacked+optCartLsDet2.qty_packed
+			wend
+			if totalLsPacked=optFillmntdet.qty_picked then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_INCOMPLETE_LSPACK"
+			dim msg_tokens$[1]
+			if cvs(optFillmntdet.item_id$,2)<>"" then
+				item$=optFillmntdet.item_id$
+			else
+				item$=optFillmntdet.order_memo$
+			endif
+			msg_tokens$[1]=item$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
+			break
+		endif
+
+
+		rem --- Warn if a carton's weight isn't more than zero
+		validationFailed=0
+		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+		optCartHdr_trip$=optFillmntDet_trip$
+		read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optCartHdr_key$=key(optCartHdr_dev,end=*break)
+			if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+			readrecord(optCartHdr_dev)optCartHdr$
+			if optCartHdr.weight>0 then continue
+			validationFailed=1
+			break
+		wend
+		if validationFailed then
+			msg_id$ = "OP_ZERO_WEIGHT"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=cvs(optCartHdr.carton_no$,2)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
+			break
+		endif
+	endif
+
+rem --- Disable/enable fields and Print List button if all_packed or not.
+	if all_packed$="Y" then
+		rem --- Enable Print List button
+		callpoint!.setOptionEnabled("PRNT",1)
+
+		rem --- Disable fields
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",0)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",0)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",0)
+	else
+		rem --- Disable Print List button
+		callpoint!.setOptionEnabled("PRNT",0)
+
+		rem --- Enable fields
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",1)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",1)
+		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",1)
+	endif
+	callpoint!.setDevObject("all_packed",all_packed$)
+
+rem --- Disable qty_picked on picking tab
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	rows=pickGrid!.getNumRows()
+	if rows>1 then
+		disabledColor!=callpoint!.getDevObject("disabledColor")
+		all_packed$=callpoint!.getColumnData("OPT_FILLMNTHDR.ALL_PACKED")
+		picked_col=callpoint!.getDevObject("picked_col")
+		for i=0 to rows-2
+			if pickGrid!.getCellForeColor(i,picked_col)<>disabledColor! then
+				if all_packed$<>"Y" then
+					pickGrid!.setCellEditable(i,picked_col,0)
+				else
+					pickGrid!.setCellEditable(i,picked_col,1)
+				endif
+			endif
+		next i
 	endif
 
 [[OPT_FILLMNTHDR.AOPT-PRNT]]
@@ -205,8 +497,55 @@ rem --- Remove temporary soft lock used just for this task
 	endif
 
 [[OPT_FILLMNTHDR.APFE]]
-rem --- Enable Print List button if Complete
-	if callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG")="Y"  then callpoint!.setOptionEnabled("PRNT",1)
+rem --- Enable Print List button if all_packed
+	if callpoint!.getColumnData("OPT_FILLMNTHDR.ALL_PACKED")="Y"  then callpoint!.setOptionEnabled("PRNT",1)
+
+[[OPT_FILLMNTHDR.ARAR]]
+rem --- If First/Last Record was used, did it return an Order?
+	if callpoint!.getDevObject("FirstLastRecord")<>null() and callpoint!.getDevObject("FirstLastRecord")<>"" then
+		whichRecord$=callpoint!.getDevObject("FirstLastRecord")
+		callpoint!.setDevObject("FirstLastRecord","")
+
+		optFillmntHdr_dev = fnget_dev("OPT_FILLMNTHDR")
+		dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+		status$=callpoint!.getColumnData("OPT_FILLMNTHDR.TRANS_STATUS")
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+		next_key$=""
+
+		if whichRecord$="FIRST" then
+			rem --- Locate FIRST valid OPT_FILLMNTHDR record to display
+			read record (optFillmntHdr_dev, dir=0, end=*next) optFillmntHdr$
+			if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$=firm_id$+status$+ar_type$ then
+				next_key$=key(ope01_dev)
+			endif
+		endif
+
+		if whichRecord$="LAST" then
+			rem --- Locate LAST valid OPT_FILLMNTHDR record to display
+			p_key$=""
+			p_key$ = keyp(optFillmntHdr_dev, end=*next)
+			if p_key$<>"" then
+				read record (optFillmntHdr_dev, key=p_key$) optFillmntHdr$
+				if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$<>firm_id$+status$+ar_type$
+					next_key$=p_key$
+				endif
+			endif
+		endif
+
+		rem --- Display next OPT_FILLMNTHDR record
+		if next_key$<>"" then
+			callpoint!.setStatus("RECORD:["+next_key$+"]")
+			break
+		else
+			msg_id$ = "OP_NO_FULFILLMENT"
+			gosub disp_message
+			callpoint!.setStatus("ABORT-NEWREC")
+			break
+		endif
+	endif
+
+rem --- Initializations
+	callpoint!.setDevObject("new_rec","N")
 
 [[OPT_FILLMNTHDR.AREC]]
 rem --- Initialize RTP trans_status and created fields
@@ -221,6 +560,8 @@ rem --- Capture starting record data so can tell later if anything changed
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
 	callpoint!.setDevObject("refreshRecord",0)
+	callpoint!.setDevObject("all_packed","N")
+	callpoint!.setDevObject("new_rec","Y")
 
 rem --- Disable Print List button
 	callpoint!.setOptionEnabled("PRNT",0)
@@ -505,9 +846,94 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 
 rem wgh ... 10304 ... All carton records need to be deleted when the Order Fulfillment record is deleted
 
+[[OPT_FILLMNTHDR.BFST]]
+rem --- Set flag that First Record has been selected
+	callpoint!.setDevObject("FirstLastRecord","FIRST")
+
+[[OPT_FILLMNTHDR.BLST]]
+rem --- Set flag that Last Record has been selected
+	callpoint!.setDevObject("FirstLastRecord","LAST")
+
+[[OPT_FILLMNTHDR.BNEK]]
+rem --- Position the file at the correct record
+	optFillmntHdr_dev = fnget_dev("OPT_FILLMNTHDR")
+	dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+	status$=callpoint!.getColumnData("OPT_FILLMNTHDR.TRANS_STATUS")
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	if callpoint!.getDevObject("new_rec")="Y"
+		start_key$=firm_id$+status$+ar_type$
+		cust_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+		if cvs(cust_id$,2)<>""
+			start_key$=start_key$+cust_id$
+			order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+			if cvs(order_no$,2)<>""
+				start_key$=start_key$+order_no$
+			endif
+		endif
+		read (optFillmntHdr_dev,key=start_key$,dom=*next)
+	else
+		current_key$=callpoint!.getRecordKey()
+		read(optFillmntHdr_dev,key=current_key$,dom=*next)
+	endif
+
+	hit_eof=0
+	while 1
+		read record (optFillmntHdr_dev, dir=0, end=eof)optFillmntHdr$
+		if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$ = firm_id$+status$+ar_type$ then break
+
+eof: rem --- If end-of-file or end-of-firm, rewind to first record of the firm
+		read (optFillmntHdr_dev, key=firm_id$+status$+ar_type$, dom=*next)
+		hit_eof=hit_eof+1
+		if hit_eof>1 then
+			msg_id$ = "OP_NO_FULFILLMENT"
+			gosub disp_message
+			callpoint!.setStatus("ABORT-NEWREC")
+			break
+		endif
+	wend
+
 [[OPT_FILLMNTHDR.BPFX]]
 rem --- Disable Print List button
 	callpoint!.setOptionEnabled("PRNT",0)
+
+[[OPT_FILLMNTHDR.BPRK]]
+rem --- Position the file at the correct record
+	optFillmntHdr_dev = fnget_dev("OPT_FILLMNTHDR")
+	dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+	status$=callpoint!.getColumnData("OPT_FILLMNTHDR.TRANS_STATUS")
+	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+	if callpoint!.getDevObject("new_rec")="Y"
+		start_key$=firm_id$+status$+ar_type$
+		cust_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+		if cvs(cust_id$,2)<>""
+			start_key$=start_key$+cust_id$
+			order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+			if cvs(order_no$,2)<>""
+				start_key$=start_key$+order_no$
+			endif
+		endif
+		read (optFillmntHdr_dev,key=start_key$,dom=*next)
+	else
+		current_key$=callpoint!.getRecordKey()
+		read(optFillmntHdr_dev,key=current_key$,dom=*next)
+	endif
+
+	hit_eof=0
+	while 1
+		p_key$ = keyp(optFillmntHdr_dev, end=eof_pkey)
+		read record (optFillmntHdr_dev, key=p_key$)optFillmntHdr$
+		if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$ = firm_id$+status$+ar_type$ then break
+
+eof_pkey: rem --- If end-of-file or end-of-firm, rewind to first record of the firm
+		read (optFillmntHdr_dev, key=firm_id$+status$+ar_type$, dom=*next)
+		hit_eof=hit_eof+1
+		if hit_eof>1 then
+			msg_id$ = "OP_NO_FULFILLMENT"
+			gosub disp_message
+			callpoint!.setStatus("ABORT-NEWREC")
+			break
+		endif
+	wend
 
 [[OPT_FILLMNTHDR.BREX]]
 rem --- Skip warnings if record was deleted
@@ -616,313 +1042,6 @@ rem --- Initialize RTP modified fields for modified existing records
 			rec_data.mod_time$=date(0:"%Hz%mz")
 			callpoint!.setDevObject("initial_rec_data$",rec_data$)
 		endif
-	endif
-
-[[OPT_FILLMNTHDR.COMPLETE_FLG.AVAL]]
-rem --- Skip if complete_flg hasn't changed
-	complete_flg$=callpoint!.getUserInput()
-	if cvs(complete_flg$,2)=cvs(callpoint!.getColumnData("OPT_FILLMNTHDR.COMPLETE_FLG"),2) then break
-
-rem --- Warn if reprint is required
-	if complete_flg$="N" and callpoint!.getColumnData("OPT_FILLMNTHDR.PRINT_STATUS")="Y" then
-		msg_id$="OP_REPRINT_FILLMNT"
-		gosub disp_message
-		if msg_opt$="N"
-			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","Y",1)
-			callpoint!.setStatus("ABORT")
-			break
-		else
-			rem --- When Packing List is printed again, it will be a reprint.
-			callpoint!.setColumnData("OPT_FILLMNTHDR.PRINT_STATUS","N")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.REPRINT_FLAG","Y")
-		endif
-	endif
-
-rem --- Validate fulfillment if marked complete
-	if complete_flg$="Y" then
-		rem --- Warn if OPT_FILLMNTDET.QTY_PICKED<>OPT_FILLMNTDET.QTY_SHIPPED for an ITEM_ID
-		validationFailed=0
-		opcLineCode_dev=fnget_dev("OPC_LINECODE")
-		dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
-		optFillmntDet_dev=fnget_dev("OPT_FILLMNTDET")
-		dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
-		ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-		customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-		order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
-		ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
-		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
-		while 1
-			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
-			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
-			readrecord(optFillmntDet_dev)optFillmntDet$
-
-			rem --- Is this item pickable?
-			if optFillmntdet.qty_shipped<0 then continue
-			row=num(optFillmntdet.line_no$)-1
-			dropshipMap!=callpoint!.getDevObject("dropshipMap")
-			linetypeMap!=callpoint!.getDevObject("linetypeMap")
-			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
-
-			if optFillmntdet.qty_shipped=optFillmntdet.qty_picked then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_NOT_COMPLETE_PICK"
-			dim msg_tokens$[1]
-			if cvs(optFillmntdet.item_id$,2)<>"" then
-				item$=optFillmntdet.item_id$
-			else
-				item$=optFillmntdet.order_memo$
-			endif
-			msg_tokens$[1]=item$
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
-			break
-		endif
-
-		rem --- Warn if the sum of OPT_FILLMNTLSDET.QTY_PICKED for an ITEM_ID is not equal to OPT_FILLMNTDET.QTY_PICKED
-		validationFailed=0
-		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
-		dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
-		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
-		while 1
-			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
-			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
-			readrecord(optFillmntDet_dev)optFillmntDet$
-
-			rem --- Is this item pickable?
-			if optFillmntdet.qty_shipped<0 then continue
-			row=num(optFillmntdet.line_no$)-1
-			dropshipMap!=callpoint!.getDevObject("dropshipMap")
-			linetypeMap!=callpoint!.getDevObject("linetypeMap")
-			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
-
-			rem --- Is this a lot/serial item?
-			lotser_item$="N"
-			lotser_flag$=callpoint!.getDevObject("lotser_flag")
-			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
-				ivm01_dev=fnget_dev("IVM_ITEMMAST")
-				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
-				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
-			endif
-			if lotser_item$<>"Y" then continue
-
-			totalLsPicked=0
-			optFillmntLsDet_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
-			read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
-			while 1
-				optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
-				if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
-				readrecord(optFillmntLsDet_dev)optFillmntLsDet$
-				totalLsPicked=totalLsPicked+optFillmntLsDet.qty_picked
-			wend
-			if totalLsPicked=optFillmntdet.qty_picked then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_INCOMPLETE_LSPICK"
-			dim msg_tokens$[1]
-			if cvs(optFillmntdet.item_id$,2)<>"" then
-				item$=optFillmntdet.item_id$
-			else
-				item$=optFillmntdet.order_memo$
-			endif
-			msg_tokens$[1]=item$
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
-			break
-		endif
-
-		rem --- Warn if the sum of the OPT_CARTDET.QTY_PACKED for all the packed cartons is not equal to OPT_FILLMNTDET.QTY_PICKED for an ITEM_ID
-		validationFailed=0
-		optCartDet2_dev=fnget_dev("OPT_CARTDET2")
-		dim optCartDet2$:fnget_tpl$("OPT_CARTDET2")
-		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
-		while 1
-			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
-			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
-			readrecord(optFillmntDet_dev)optFillmntDet$
-
-			rem --- Is this item pickable?
-			if optFillmntdet.qty_shipped<0 then continue
-			row=num(optFillmntdet.line_no$)-1
-			dropshipMap!=callpoint!.getDevObject("dropshipMap")
-			linetypeMap!=callpoint!.getDevObject("linetypeMap")
-			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
-
-			totalPacked=0
-			optCartDet2_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
-			read(optCartDet2_dev,key=optCartDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
-			while 1
-				optCartDet2_key$=key(optCartDet2_dev,end=*break)
-				if pos(optCartDet2_trip$=optCartDet2_key$)<>1 then break
-				readrecord(optCartDet2_dev)optCartDet2$
-				totalPacked=totalPacked+optCartDet2.qty_packed
-			wend
-			if totalPacked=optFillmntdet.qty_picked then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_NOT_COMPLETE_PACK"
-			dim msg_tokens$[1]
-			if cvs(optFillmntdet.item_id$,2)<>"" then
-				item$=optFillmntdet.item_id$
-			else
-				item$=optFillmntdet.order_memo$
-			endif
-			msg_tokens$[1]=item$
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
-			break
-		endif
-
-
-		rem --- Warn if the sum of the OPT_CARTLSDET.QTY_PACKED for an ITEM_ID and LOTSER_NO in a packed carton is not equal to the the OPT_CARTDET.QTY_PACKED for the ITEM_ID in the packed carton
-		validationFailed=0
-		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
-		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
-		optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-		read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS",dom=*next)
-		while 1
-			optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
-			if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
-			readrecord(optFillmntDet_dev)optFillmntDet$
-
-			rem --- Is this item pickable?
-			if optFillmntdet.qty_shipped<0 then continue
-			row=num(optFillmntdet.line_no$)-1
-			dropshipMap!=callpoint!.getDevObject("dropshipMap")
-			linetypeMap!=callpoint!.getDevObject("linetypeMap")
-			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
-
-			rem --- Is this a lot/serial item?
-			lotser_item$="N"
-			lotser_flag$=callpoint!.getDevObject("lotser_flag")
-			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
-				ivm01_dev=fnget_dev("IVM_ITEMMAST")
-				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
-				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
-			endif
-			if lotser_item$<>"Y" then continue
-
-			totalLsPacked=0
-			optCartLsDet2_trip$=optFillmntDet_trip$+optFillmntDet.orddet_seq_ref$
-			read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
-			while 1
-				optCartLsDet2_key$=key(optCartLsDet2_dev,end=*break)
-				if pos(optCartLsDet2_trip$=optCartLsDet2_key$)<>1 then break
-				readrecord(optCartLsDet2_dev)optCartLsDet2$
-				totalLsPacked=totalLsPacked+optCartLsDet2.qty_packed
-			wend
-			if totalLsPacked=optFillmntdet.qty_picked then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_INCOMPLETE_LSPACK"
-			dim msg_tokens$[1]
-			if cvs(optFillmntdet.item_id$,2)<>"" then
-				item$=optFillmntdet.item_id$
-			else
-				item$=optFillmntdet.order_memo$
-			endif
-			msg_tokens$[1]=item$
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
-			break
-		endif
-
-
-		rem --- Warn if a carton's weight isn't more than zero
-		validationFailed=0
-		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
-		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-		optCartHdr_trip$=optFillmntDet_trip$
-		read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
-		while 1
-			optCartHdr_key$=key(optCartHdr_dev,end=*break)
-			if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
-			readrecord(optCartHdr_dev)optCartHdr$
-			if optCartHdr.weight>0 then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_ZERO_WEIGHT"
-			dim msg_tokens$[1]
-			msg_tokens$[1]=cvs(optCartHdr.carton_no$,2)
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.COMPLETE_FLG","N",1)
-			break
-		endif
-	endif
-
-rem --- Disable/enable fields and Print List button if Complete or not.
-	if complete_flg$="Y" then
-		rem --- Enable Print List button
-		callpoint!.setOptionEnabled("PRNT",1)
-
-		rem --- Disable fields
-		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",0)
-		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",0)
-		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",0)
-	else
-		rem --- Disable Print List button
-		callpoint!.setOptionEnabled("PRNT",0)
-
-		rem --- Enable fields
-		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPMNT_DATE",1)
-		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.AR_SHIP_VIA",1)
-		callpoint!.setColumnEnabled("OPT_FILLMNTHDR.SHIPPING_ID",1)
-	endif
-
-rem --- Do NOT allow changes to a carton's contents when the order's fulfillment is completed
-	numRows=0
-	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
-	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
-	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
-	optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-	read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
-	while 1
-		optCartHdr_key$=key(optCartHdr_dev,end=*break)
-		if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
-		readrecord(optCartHdr_dev)optCartHdr$
-		if complete_flg$="Y" then
-			optCartHdr.shipped_flag$="Y"
-		else
-			optCartHdr.shipped_flag$="N"
-		endif
-		writerecord(optCartHdr_dev)optCartHdr$
-		numRows=numRows+1
-	wend
-
-rem --- Need to refresh display of Shipped cells in detail grid on Packing & Shipping Tab
-	if numRows>0 then
-		packShipGrid!=callpoint!.getDevObject("packShipGrid")
-		shippedFlag_col=callpoint!.getDevObject("shippedFlag_col")
-		for row=0 to numRows-1
-			if optCartHdr.shipped_flag$="Y" then
-				packShipGrid!.setCellStyle(row,shippedFlag_col,SysGUI!.GRID_STYLE_CHECKED)
-			else
-				packShipGrid!.setCellStyle(row,shippedFlag_col,SysGUI!.GRID_STYLE_UNCHECKED)
-			endif
-		next row
 	endif
 
 [[OPT_FILLMNTHDR.ORDER_NO.AVAL]]
