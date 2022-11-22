@@ -342,31 +342,6 @@ rem --- Validate fulfillment if marked all_packed
 			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
 			break
 		endif
-
-
-		rem --- Warn if a carton's weight isn't more than zero
-		validationFailed=0
-		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
-		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-		optCartHdr_trip$=optFillmntDet_trip$
-		read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
-		while 1
-			optCartHdr_key$=key(optCartHdr_dev,end=*break)
-			if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
-			readrecord(optCartHdr_dev)optCartHdr$
-			if optCartHdr.weight>0 then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_ZERO_WEIGHT"
-			dim msg_tokens$[1]
-			msg_tokens$[1]=cvs(optCartHdr.carton_no$,2)
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
-			break
-		endif
 	endif
 
 rem --- Disable/enable fields and Print List button if all_packed or not.
