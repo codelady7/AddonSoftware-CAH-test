@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_fillmnthdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_fillmnthdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_fillmnthdr">2459800</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_fillmnthdr">20221121</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmnthdr">20221121</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmnthdr">180200</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_fillmnthdr">20221122</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_fillmnthdr">20221122</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_fillmnthdr">125524</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_fillmnthdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_fillmnthdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_fillmnthdr">AO_STATUS</DD_ATTR_DKNM>
@@ -2063,7 +2063,7 @@
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_fillmnthdr019"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.opt_fillmnthdr019"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.opt_fillmnthdr019"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.opt_fillmnthdr019">"E"</DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.opt_fillmnthdr019">E</DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_fillmnthdr019"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_fillmnthdr019"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_fillmnthdr019"></DD_ATTR_IDEF>
