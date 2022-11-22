@@ -514,24 +514,28 @@ rem ==========================================================================
 	return
 
 rem ==========================================================================
-checkCartonShipped: rem --- Has this carton been shipped?
+checkCartonShipped: rem --- Has this carton been shipped, or is it "All Packed"?
                rem      IN: carton_no$
                rem   OUT: shipped_flag$
 rem ==========================================================================
-	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
-	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
-	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTHDR","AO_STATUS",key_tpl$,table_chans$[all],status$
-	dim optCartHdr_key$:key_tpl$
-	optCartHdr_key.firm_id$=firm_id$
-	optCartHdr_key.trans_status$="E"
-	optCartHdr_key.ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
-	optCartHdr_key.customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
-	optCartHdr_key.order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
-	optCartHdr_key.ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
-	optCartHdr_key.carton_no$=carton_no$
-	readrecord(optCartHdr_dev,key=optCartHdr_key$,dom=*next)optCartHdr$
-	shipped_flag$=optCartHdr.shipped_flag$
-	callpoint!.setDevObject("shipped_flag",shipped_flag$)
+	if callpoint!.getDevObject("all_packed")="Y" then
+		callpoint!.setDevObject("shipped_flag","Y")
+	else
+		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+		call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTHDR","AO_STATUS",key_tpl$,table_chans$[all],status$
+		dim optCartHdr_key$:key_tpl$
+		optCartHdr_key.firm_id$=firm_id$
+		optCartHdr_key.trans_status$="E"
+		optCartHdr_key.ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+		optCartHdr_key.customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+		optCartHdr_key.order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+		optCartHdr_key.ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+		optCartHdr_key.carton_no$=carton_no$
+		readrecord(optCartHdr_dev,key=optCartHdr_key$,dom=*next)optCartHdr$
+		shipped_flag$=optCartHdr.shipped_flag$
+		callpoint!.setDevObject("shipped_flag",shipped_flag$)
+	endif
 
 	return
 

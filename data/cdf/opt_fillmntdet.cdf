@@ -65,7 +65,12 @@ rem --- What is this line type? Is this a dropship detail line?
 			pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("plainFont"))
 			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("blackColor"))
 		endif
-		pickGrid!.setCellEditable(curr_row,picked_col,1)
+		if callpoint!.getDevObject("all_packed")<>"Y" and callpoint!.isEditMode() then
+			pickGrid!.setCellEditable(curr_row,picked_col,1)
+		else
+			rem --- Cannot change qty_picked when "All Packed"
+			pickGrid!.setCellEditable(curr_row,picked_col,0)
+		endif
 	endif
 
 [[OPT_FILLMNTDET.AGDS]]
@@ -85,7 +90,12 @@ rem --- Provide visual warning when quantity picked is NOT equal to the ship qua
 :		qty_picked>=0 and ship_qty>=0 then
 			pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("boldFont"))
 			pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("redColor"))
-			pickGrid!.setCellEditable(i,picked_col,1)
+			if callpoint!.getDevObject("all_packed")<>"Y" then
+				pickGrid!.setCellEditable(i,picked_col,1)
+			else
+				rem --- Cannot change qty_picked when "All Packed"
+				pickGrid!.setCellEditable(i,picked_col,0)
+			endif
 		else
 			if dropshipMap!.get(i)="Y" or pos(linetypeMap!.get(i)="MO") or qty_picked<0 or ship_qty<0 then
 				pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("italicFont"))
@@ -94,7 +104,12 @@ rem --- Provide visual warning when quantity picked is NOT equal to the ship qua
 			else
 				pickGrid!.setCellFont(i,picked_col,callpoint!.getDevObject("plainFont"))
 				pickGrid!.setCellForeColor(i,picked_col,callpoint!.getDevObject("blackColor"))
-				pickGrid!.setCellEditable(i,picked_col,1)
+				if callpoint!.getDevObject("all_packed")<>"Y"and callpoint!.isEditMode() then
+					pickGrid!.setCellEditable(i,picked_col,1)
+				else
+					rem --- Cannot change qty_picked when "All Packed"
+					pickGrid!.setCellEditable(i,picked_col,0)
+				endif
 			endif
 		endif
 	next i

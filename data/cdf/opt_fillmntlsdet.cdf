@@ -92,11 +92,17 @@ rem --- Check quantities, do commits if this row isn't deleted
 	endif
 
 [[OPT_FILLMNTLSDET.AGRN]]
-rem --- Disable lotser_no and qty_shipped fields if lot/serial number was committed in Order Entry
-	if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" then
+rem --- Disable lotser_no and qty_shipped fields if lot/serial number was committed in Order Entry, or is "All Packed"
+	if callpoint!.getColumnData("OPT_FILLMNTLSDET.OE_COMMITTED")="Y" or callpoint!.getDevObject("all_packed")="Y" then
 		row=callpoint!.getValidationRow()
 		callpoint!.setColumnEnabled(row,"OPT_FILLMNTLSDET.LOTSER_NO",0)
 		callpoint!.setColumnEnabled(row,"OPT_FILLMNTLSDET.QTY_SHIPPED",0)
+	endif
+
+rem --- Disable qty_picked when "All Packed"
+	if callpoint!.getDevObject("all_packed")="Y" then
+		row=callpoint!.getValidationRow()
+		callpoint!.setColumnEnabled(row,"OPT_FILLMNTLSDET.QTY_PICKED",0)
 	endif
 
 rem --- Keep track of starting qty picked for this line, so we can accurately check avail qty minus what's already been committed

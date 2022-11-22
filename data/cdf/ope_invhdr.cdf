@@ -92,15 +92,35 @@ rem --- Check Fulfillment
 	ar_inv_no$=optFillmntHdr.ar_inv_no$
 	inFulfillmnt=0
 	extractrecord(optFillmntHdr_dev,key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$,knum="AO_STATUS",dom=*next)optFillmntHdr$; inFulfillmnt=1
-	if inFulfillmnt and (optFillmntHdr.complete_flg$<>"Y" or optFillmntHdr$.print_status$<>"Y") then
-		rem --- Order not completed in Fulfillment, so skip it and start a new one
-		msg_id$="OP_ORD_IN_FILLMNT"
-		gosub disp_message
+	if inFulfillmnt then
+		packingDone=0
+		if optFillmntHdr.all_packed$="Y" and optFillmntHdr$.print_status$="Y" then packingDone=1
 
-		user_tpl.do_end_of_form = 0
-		callpoint!.clearStatus()
-		callpoint!.setStatus("NEWREC")
-		break; rem --- exit callpoint
+		rem --- All cartons shipped?
+		shippingDone=1
+		optCartHdr_dev = fnget_dev("OPT_CARTHDR")
+		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+		optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optCartHdr_key$=key(optCartHdr_dev,end=*break)
+			if pos(optCartHdr_trip$=optCartHdr_key$)<>1then break
+			readrecord(optCartHdr_dev)optCartHdr$
+			if optCartHdr.shipped_flag$="Y" then continue
+			shippingDone=0
+			break
+		wend
+
+		if !packingDone or !shippingDone then
+			rem --- Order not completed in Fulfillment, so skip it and start a new one
+			msg_id$="OP_ORD_IN_FILLMNT"
+			gosub disp_message
+
+			user_tpl.do_end_of_form = 0
+			callpoint!.clearStatus()
+			callpoint!.setStatus("NEWREC")
+			break; rem --- exit callpoint
+		endif
 	endif
 
 rem --- Check for order, force to an Invoice

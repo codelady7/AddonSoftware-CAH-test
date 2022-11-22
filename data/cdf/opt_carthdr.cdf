@@ -9,6 +9,26 @@ rem --- Get and hold on to column for shipped_flag
 rem --- Enable Pack Carton button for existing rows
 	callpoint!.setOptionEnabled("CART",1)
 
+rem --- Disable/enable fields depending on shipped_flag
+	row=callpoint!.getValidationRow()
+	if callpoint!.getColumnData("OPT_CARTHDR.SHIPPED_FLAG")="Y" then
+		rem --- Disable fields if carton has been shipped
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARTON_NO",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.TRACKING_NO",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARRIER_CODE",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.SCAC_CODE",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.WEIGHT",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",0)
+	else
+		rem --- Enable fields if carton has not been shipped
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARTON_NO",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.TRACKING_NO",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARRIER_CODE",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.SCAC_CODE",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.WEIGHT",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",1)
+	endif
+
 [[OPT_CARTHDR.AGRN]]
 rem --- Disable Pack Carton button for new rows
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
@@ -23,7 +43,7 @@ rem --- Capture starting freight_amt and weight
 
 [[OPT_CARTHDR.AOPT-CART]]
 rem --- Initialize grid with unpacked picked items in OPT_FILLMNTDET
-	if callpoint!.getColumnData("OPT_CARTHDR.SHIPPED_FLAG")<>"Y" then
+	if callpoint!.getDevObject("all_packed")<>"Y" and callpoint!.getColumnData("OPT_CARTHDR.SHIPPED_FLAG")<>"Y" then
 		ar_type$=callpoint!.getColumnData("OPT_CARTHDR.AR_TYPE")
 		customer_id$=callpoint!.getColumnData("OPT_CARTHDR.CUSTOMER_ID")
 		order_no$=callpoint!.getColumnData("OPT_CARTHDR.ORDER_NO")
@@ -224,6 +244,27 @@ rem --- Initialize RTP modified fields for modified existing records
 		callpoint!.setColumnData("OPT_CARTHDR.MOD_USER", sysinfo.user_id$)
 		callpoint!.setColumnData("OPT_CARTHDR.MOD_DATE", date(0:"%Yd%Mz%Dz"))
 		callpoint!.setColumnData("OPT_CARTHDR.MOD_TIME", date(0:"%Hz%mz"))
+	endif
+
+[[OPT_CARTHDR.SHIPPED_FLAG.AVAL]]
+rem --- Disable/enable fields depending on shipped_flag
+	row=callpoint!.getValidationRow()
+	if callpoint!.getColumnData("OPT_CARTHDR.SHIPPED_FLAG")="Y" then
+		rem --- Disable fields if carton has been shipped
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARTON_NO",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.TRACKING_NO",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARRIER_CODE",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.SCAC_CODE",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.WEIGHT",0)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",0)
+	else
+		rem --- Enable fields if carton has not been shipped
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARTON_NO",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.TRACKING_NO",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARRIER_CODE",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.SCAC_CODE",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.WEIGHT",1)
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",1)
 	endif
 
 [[OPT_CARTHDR.<CUSTOM>]]
