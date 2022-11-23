@@ -489,9 +489,10 @@ rem --- If First/Last Record was used, did it return an Order?
 
 		if whichRecord$="FIRST" then
 			rem --- Locate FIRST valid OPT_FILLMNTHDR record to display
+			read(optFillmntHdr_dev,key=firm_id$+status$+ar_type$,dom=*next)
 			read record (optFillmntHdr_dev, dir=0, end=*next) optFillmntHdr$
 			if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$=firm_id$+status$+ar_type$ then
-				next_key$=key(ope01_dev)
+				next_key$=key(optFillmntHdr_dev)
 			endif
 		endif
 
@@ -501,7 +502,7 @@ rem --- If First/Last Record was used, did it return an Order?
 			p_key$ = keyp(optFillmntHdr_dev, end=*next)
 			if p_key$<>"" then
 				read record (optFillmntHdr_dev, key=p_key$) optFillmntHdr$
-				if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$<>firm_id$+status$+ar_type$
+				if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$=firm_id$+status$+ar_type$
 					next_key$=p_key$
 				endif
 			endif
