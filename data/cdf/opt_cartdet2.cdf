@@ -281,6 +281,76 @@ rem --- Need to use <<DISPLAY>> field for CARTON_NO because it is part of the ke
 rem --- OPT_CARTDET2 doesn't need to have a primary table because OPT_CARTHDR deletes cascade to OPT_CARTDET.
 rem --- However, for maintainability, CARTON_DSP is being used in both OPT_CARTDET and OPT_CARTDET2.
 
+rem --- A non-blank carton number is required
+	carton_no$=callpoint!.getUserInput()
+	if cvs(carton_no$,2)="" then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CARTON_NO 
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTDET2","AO_STATUS",key_tpl$,table_chans$[all],status$
+	dim optCartDet_keyPrefix$:key_tpl$
+	optCartDet_keyPrefix$=callpoint!.getKeyPrefix()
+
+	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+	dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+	ar_type$=optCartDet_keyPrefix.ar_type$
+	customer_id$=optCartDet_keyPrefix.customer_id$
+	order_no$=optCartDet_keyPrefix.order_no$
+	ar_inv_no$=optCartDet_keyPrefix.ar_inv_no$
+	carton_no$=pad(callpoint!.getUserInput(),len(optCartHdr.carton_no$))
+	optCartHdr_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$
+	readrecord(optCartHdr_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*next)optCartHdr$
+	if cvs(optCartHdr.customer_id$,2)="" then
+		rem --- Confirm this is a new carton
+		msg_id$ = "OP_CARTON_NOT_FND"
+		gosub disp_message
+		if msg_opt$="N" then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Create new OPT_CARTHDR record for this CARTON_NO
+		optCartHdr.firm_id$=firm_id$
+		optCartHdr.ar_type$=ar_type$
+		optCartHdr.customer_id$=customer_id$
+		optCartHdr.order_no$=order_no$
+		optCartHdr.ar_inv_no$=ar_inv_no$
+		optCartHdr.carton_no$=callpoint!.getUserInput()
+		optCartHdr.trans_status$="E"
+		optCartHdr.created_user$=sysinfo.user_id$
+		optCartHdr.created_date$=date(0:"%Yd%Mz%Dz")
+		optCartHdr.created_time$=date(0:"%Hz%mz")
+		optCartHdr.weight=0
+		optCartHdr.freight_amt=0
+
+		rem --- Initialize new OPT_CARTHDR record with the ARC_SHIPVIACODE record for the OPT_FILLMNTHDR.AR_SHIP_VIA.
+		arcShipViaCode_dev=fnget_dev("ARC_SHIPVIACODE")
+		dim arcShipViaCode$:fnget_tpl$("ARC_SHIPVIACODE")
+		ar_ship_via$=callpoint!.getDevObject("ar_ship_via")
+		readrecord(arcShipViaCode_dev,key=firm_id$+ar_ship_via$,dom=*next)arcShipViaCode$
+		optCartHdr.carrier_code$=arcShipViaCode.carrier_code$
+		optCartHdr.scac_code$=arcShipViaCode.scac_code$
+
+		writerecord(optCartHdr_dev)optCartHdr$
+		callpoint!.setDevObject("refreshRecord",1)
+	else
+		rem --- Allow the same carton number only once in the grid
+		dim gridrec$:fattr(rec_data$)
+		for i=0 to GridVect!.size()-1
+			gridrec$=GridVect!.getItem(i)
+			if gridrec.carton_no$=carton_no$
+				msg_id$ = "OP_CARTON_IN_GRID"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=cvs(carton_no$,2)
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+				break
+			endif
+		next i
+	endif
+
 rem --- Cannot change contents of cartons that are shipped
 	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))="Y" then
 		carton_no$=callpoint!.getUserInput()
@@ -532,7 +602,7 @@ rem ==========================================================================
 		optCartHdr_key.order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
 		optCartHdr_key.ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
 		optCartHdr_key.carton_no$=carton_no$
-		readrecord(optCartHdr_dev,key=optCartHdr_key$,dom=*next)optCartHdr$
+		readrecord(optCartHdr_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*next)optCartHdr$
 		shipped_flag$=optCartHdr.shipped_flag$
 		callpoint!.setDevObject("shipped_flag",shipped_flag$)
 	endif
