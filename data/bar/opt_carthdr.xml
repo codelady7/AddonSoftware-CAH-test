@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_carthdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_carthdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_carthdr">20220808</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_carthdr">20221121</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_carthdr">20221121</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_carthdr">112012</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_carthdr">20221123</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_carthdr">20221123</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_carthdr">090240</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_carthdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_carthdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_carthdr">AO_STATUS</DD_ATTR_DKNM>
@@ -2013,7 +2013,7 @@
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_carthdr018"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.opt_carthdr018"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.opt_carthdr018"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.opt_carthdr018">E</DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.opt_carthdr018"></DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_carthdr018"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_carthdr018"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_carthdr018"></DD_ATTR_IDEF>
@@ -2025,7 +2025,7 @@
 			<DD_ATTR_MINV id="ddm_table_cols.opt_carthdr018"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.opt_carthdr018"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.opt_carthdr018"></DD_ATTR_PROM>
-			<DD_ATTR_PVAL id="ddm_table_cols.opt_carthdr018"></DD_ATTR_PVAL>
+			<DD_ATTR_PVAL id="ddm_table_cols.opt_carthdr018">"E"</DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_carthdr018"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_carthdr018"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_carthdr018">2</DD_ATTR_TIND>
