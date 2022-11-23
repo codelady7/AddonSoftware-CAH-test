@@ -20,6 +20,7 @@ rem --- Use statements and Declares
     use ::sys/prog/bao_utilities.bbj::BarUtils
     use ::bbtranslator.bbj::BBTranslator
     use ::ado_func.src::func
+    use ::ado_rptControl.src::ReportControl
     use ::ado_util.src::util
 
     declare BBTranslator Translate!
@@ -175,8 +176,31 @@ rem --- Set Report Name & Subreport directory
     close (temp)
     reportBaseName$ = "OPPackListHdr"
     filename$ = reportDir$ + reportBaseName$ + ".jasper"
-  
 
+rem --- See if this document is set up in Addon Report Control
+    rptctl_alias$ = "PACKING_LIST"
+    reportControl!=new ReportControl()
+    reportControl!.setDocExtension("pdf")
+    rpt_ctl$=reportControl!.getReportControl(rptctl_alias$)
+    rpt_ctl$=iff(rpt_ctl$="","NO","YES")
+    rpt_id$=iff(rpt_ctl$="YES",reportControl!.getReportID(),"")
+    rpt_logo_file$=iff(rpt_ctl$="YES",reportControl!.getLogoFile(),"")
+    logo_filename$=iff(rpt_logo_file$="",logo_filename$,rpt_logo_file$);rem doc-specific logo supersedes default or company logo
+
+    rem --- Use ReportControl object to see if customer wants print, email, or fax
+    do_emailFax=0
+    emailFax! = BBjAPI().makeVector()
+    if rpt_ctl$="YES"
+        found=reportControl!.getRecipientInfo(rpt_id$,customer_id$,"")
+        if found         
+            if reportControl!.getEmailYN()="Y" or reportControl!.getFaxYN()="Y"
+                emailFax!.add(rpt_id$)
+                emailFax!.add(customer_id$)
+                emailFax!.add(rd_doc_id$)
+                do_emailFax=1
+            endif
+        endif
+    endif
     
 rem --- Check for user authentication
     declare BBJasperReport report!
@@ -302,6 +326,15 @@ rem --- exportToPDF and record in doc warehouse
         rd_doc_ext$="PDF"
         report!.exportToPDF(BBjAPI().FALSE, rd_doc_path$+rd_doc_name$)
         gosub document_whse
+
+        rem --- Use PACKING_LIST for Report Control's Report Alias
+        reportTitle$=Translate!.getTranslation("AON_PACKING_LIST","Packing List")+"_"+rd_doc_id$
+        repTitle!=reportTitle$
+        repTitle$=repTitle!.replace(" ","_")
+        rd_doc_name$=repTitle$+".pdf"
+        rd_doc_ext$="PDF"
+        packingList!.exportToPDF(BBjAPI().FALSE, rd_doc_path$+rd_doc_name$)
+        gosub document_whse
     endif
 
     if show_save_dlg$="YES"
@@ -324,6 +357,15 @@ rem --- force exportToPDF first, in case it hasn't already been saved
     return
 
 close_win:rem --- Viewer Window Closed
+    if emailFax!.size() then
+        msg_id$ = "CONF_RPTCTL"
+        gosub disp_message
+        if msg_opt$="Y"
+            for email_fax=0 to emailFax!.size()-1 step 3
+                reportControl!.addToDocQueue(emailFax!.get(email_fax),emailFax!.get(email_fax+1),"",emailFax!.get(email_fax+2))    
+            next email_fax
+    endif
+
     viewerWindow!.destroy(err=*next)
     rdForm!.destroy(err=*next)
     if tcb(13) then exit
