@@ -29,7 +29,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=15,begfile=1,endfile=files
+    files=16,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="arm-01",ids$[1]="ARM_CUSTMAST"
     files$[2]="arm-02",ids$[2]="ARM_CUSTDET"
@@ -46,6 +46,7 @@ rem --- Open/Lock files
     files$[13]="opm-02",ids$[13]="OPC_LINECODE"
     files$[14]="poe-08",ids$[14]="POE_LINKED"
     files$[15]="poe-02",ids$[15]="POE_POHDR"
+    files$[16]="opt_carthdr",ids$[16]="OPT_CARTHDR"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status then goto std_exit
@@ -64,6 +65,7 @@ rem --- Open/Lock files
     opm02_dev=channels[13]
     poe08_dev=channels[14]
     poe02_dev=channels[15]
+    optCartHdr_dev=channels[16]
 
 rem --- Dimension string templates
 
@@ -71,7 +73,8 @@ rem --- Dimension string templates
 :       ars01a$:templates$[4],ivm01a$:templates$[5],ivm02a$:templates$[6],
 :       ivm10a$:templates$[7],ivs01a$:templates$[8],ope01a$:templates$[9],
 :       ope04a$:templates$[10],ope11a$:templates$[11],ope21a$:templates$[12],
-:       opm02a$:templates$[13],poe08a$:templates$[14],poe02a$:templates$[15]
+:       opm02a$:templates$[13],poe08a$:templates$[14],poe02a$:templates$[15],
+:       optCartHdr$:templates$[16]
 
 rem --- Assign form input values to local variables
 
@@ -88,6 +91,7 @@ rem --- Assign form input values to local variables
     open_new$=Option!.getOptionData("OPEN_NEW")
     open_back$=Option!.getOptionData("OPEN_BACK")
     open_hold$=Option!.getOptionData("OPEN_HOLD")
+    open_shipped$=Option!.getOptionData("OPEN_SHIPPED")
     quoted$=Option!.getOptionData("QUOTED")
     quote_new$=Option!.getOptionData("QUOTE_NEW")
     quote_hold$=Option!.getOptionData("QUOTE_HOLD")

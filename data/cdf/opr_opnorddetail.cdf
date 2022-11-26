@@ -13,20 +13,24 @@ if open$="Y" then
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_BACK",1)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_HOLD",1)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_NEW",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",1)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_BACK","Y",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_HOLD","Y",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_NEW","Y",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_SHIPPED","Y",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","A",1)
 else
 	rem --- Disable and uncheck sub-options
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_BACK",0)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_HOLD",0)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_NEW",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",0)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",0)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_BACK","N",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_HOLD","N",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_NEW","N",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_SHIPPED","N",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.NON_STOCK_OPTION","X",1)
 endif
 

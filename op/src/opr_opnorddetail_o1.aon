@@ -73,43 +73,46 @@ rem --- Initializations
     if ivs01a.lotser_flag$="S" then  x2$="Ser#"
     if ivs01a.lotser_flag$="L" then  x2$="Lot#"
 
+    yes$=Translate!.getTranslation("AON_YES","Yes")
+
 rem --- column heading
 
     if col_format$="Y" then
-        columns = 27
+        columns = 28
     else
-        columns = 12
+        columns = 13
     endif
     dim columns$[columns,10]
-    columns$[0,0]="Customer^Number",columns$[0,1]="C",columns$[0,2]="7"
-    columns$[1,0]="Customer Name",  columns$[1,1]="C",columns$[1,2]="15"
-    columns$[2,0]="Order^Number",   columns$[2,1]="C",columns$[2,2]="17",  columns$[2,10]="T"
-    columns$[3,0]="Order Date",      columns$[3,1]="C",columns$[3,2]="10", columns$[3,10]="T"
-    columns$[4,0]="Ship Date",       columns$[4,1]="C",columns$[4,2]="12", columns$[4,10]="T"
-    columns$[5,0]="By",              columns$[5,1]="C",columns$[5,2]="10", columns$[5,10]="T"
-    columns$[6,0]="Sls",             columns$[6,1]="C",columns$[6,2]="10",  columns$[6,10]="T"
-    columns$[7,0]="P.O  Number",     columns$[7,1]="C",columns$[7,2]="10"
-    columns$[8,0]="Ship Via",        columns$[8,1]="C",columns$[8,2]="10", columns$[8,10]="T"
-    columns$[10,0]="Terms",          columns$[10,1]="C",columns$[10,2]="14",columns$[10,10]="T"
-    columns$[11,0]="Tax Code",       columns$[11,1]="C",columns$[11,2]="8", columns$[11,10]="T"
-    columns$[12,0]="Prntd",          columns$[12,1]="C",columns$[12,2]="7", columns$[12,10]="T"
+    columns$[0,0]="Customer^Number",columns$[0,1]="C", columns$[0,2]="7"
+    columns$[1,0]="Customer Name",  columns$[1,1]="C", columns$[1,2]="15"
+    columns$[2,0]="Order^Number",   columns$[2,1]="C", columns$[2,2]="17", columns$[2,10]="T"
+    columns$[3,0]="Order Date",     columns$[3,1]="C", columns$[3,2]="10", columns$[3,10]="T"
+    columns$[4,0]="Ship Date",      columns$[4,1]="C", columns$[4,2]="12", columns$[4,10]="T"
+    columns$[5,0]="By",             columns$[5,1]="C", columns$[5,2]="10", columns$[5,10]="T"
+    columns$[6,0]="Sls",            columns$[6,1]="C", columns$[6,2]="10", columns$[6,10]="T"
+    columns$[7,0]="P.O  Number",    columns$[7,1]="C", columns$[7,2]="10"
+    columns$[8,0]="Ship Via",       columns$[8,1]="C", columns$[8,2]="10", columns$[8,10]="T"
+    columns$[10,0]="Terms",         columns$[10,1]="C",columns$[10,2]="14",columns$[10,10]="T"
+    columns$[11,0]="Tax Code",      columns$[11,1]="C",columns$[11,2]="8", columns$[11,5]="C", columns$[11,10]="T"
+    columns$[12,0]="Prntd",         columns$[12,1]="C",columns$[12,2]="7", columns$[12,5]="C", columns$[12,10]="T"
+    columns$[13,0]="Shipped",        columns$[13,1]="C",columns$[13,2]="6", columns$[13,5]="C"
 
     if col_format$="Y" then
-        columns$[13,0]="Cd",columns$[13,1]="C",columns$[13,2]="4"
-        columns$[14,0]="Whs",columns$[14,1]="C",columns$[14,2]="4"
-        columns$[15,0]="Prd",columns$[15,1]="C",columns$[15,2]="4"
-        columns$[16,0]="Item",columns$[16,1]="C",columns$[16,2]="15"
-        columns$[17,0]="Item Desc",columns$[17,1]="C",columns$[17,2]="30"
-        columns$[18,0]="Order",columns$[18,1]="N",columns$[18,2]="10"
-        columns$[19,0]="Back Order",columns$[19,1]="N",columns$[19,2]="10"
-        columns$[20,0]="Ship",columns$[20,1]="N",columns$[20,2]="10"
-        columns$[21,0]="Disc pct",columns$[21,1]="N",columns$[21,2]="10"
-        columns$[22,0]="Price",columns$[22,1]="N",columns$[22,2]="10"
-        columns$[23,0]="Ext. Price",columns$[23,1]="N",columns$[23,2]="10"
-        columns$[24,0]="Cost",columns$[24,1]="N",columns$[24,2]="10"
-        columns$[25,0]="Extended Cost",columns$[25,1]="N",columns$[25,2]="10"
-        columns$[26,0]="Profit",columns$[26,1]="N",columns$[26,2]="10"
-        columns$[27,0]="GP%",columns$[27,1]="N",columns$[27,2]="10"
+        columns$[14,0]="Cd",columns$[14,1]="C",columns$[14,2]="4"
+        columns$[15,0]="Whs",columns$[15,1]="C",columns$[15,2]="4"
+        columns$[16,0]="Prd",columns$[16,1]="C",columns$[16,2]="4"
+        columns$[17,0]="Item",columns$[17,1]="C",columns$[17,2]="15"
+        columns$[18,0]="Item Desc",columns$[18,1]="C",columns$[18,2]="30"
+        columns$[19,0]="Order",columns$[19,1]="N",columns$[19,2]="10"
+        columns$[20,0]="Back Order",columns$[20,1]="N",columns$[20,2]="10"
+        columns$[21,0]="Ship",columns$[21,1]="N",columns$[21,2]="10"
+        columns$[22,0]="Disc pct",columns$[22,1]="N",columns$[22,2]="10"
+        columns$[23,0]="Price",columns$[23,1]="N",columns$[23,2]="10"
+        columns$[24,0]="Ext. Price",columns$[24,1]="N",columns$[24,2]="10"
+        columns$[25,0]="Cost",columns$[25,1]="N",columns$[25,2]="10"
+        columns$[26,0]="Extended Cost",columns$[26,1]="N",columns$[26,2]="10"
+        columns$[27,0]="Profit",columns$[27,1]="N",columns$[27,2]="10"
+        columns$[28,0]="GP%",columns$[28,1]="N",columns$[28,2]="10"
     endif
 
     call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
@@ -153,8 +156,12 @@ rem    if end_ship_date$="" then headings$[5]=headings$[5]+" -- Ending Ship Date
             if open_new$="Y" or open_back$="Y" then h8$=h8$+" + "
             h8$=h8$+"Held"
         endif
-        if pos(non_stock_option$="APN") then
+        if open_hold$="Y" then
             if open_new$="Y" or open_back$="Y" or open_hold$="Y" then h8$=h8$+" + "
+            h8$=h8$+"Shipped"
+        endif
+        if pos(non_stock_option$="APN") then
+            if open_new$="Y" or open_back$="Y" or open_hold$="Y" or open_shipped$="Y" then h8$=h8$+" + "
             if non_stock_option$="A" then h8$=h8$+"All Non-Stocks"
             if non_stock_option$="P" then h8$=h8$+"Non-Stocks With PO's"
             if non_stock_option$="N" then  h8$=h8$+"Non-Stocks Without PO's"
@@ -215,10 +222,31 @@ rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then co
             if quote_hold$="Y" and ope01a.credit_flag$="C" then skipRecord=0
         endif
         if ope01a.invoice_type$="S" and open$="Y" then
-            if open_new$="Y" and ope01a.backord_flag$<>"B" and ope01a.credit_flag$<>"C" then skipRecord=0
-            if open_back$="Y" and ope01a.backord_flag$="B" then skipRecord=0
-            if open_hold$="Y" and ope01a.credit_flag$="C" then skipRecord=0
-        Endif
+            rem --- Check Fulfillment to see if this Order has been shipped
+            shipped$="N"
+            optCartHdr_trip$=ope01a.firm_id$+"E"+ope01a.ar_type$+ope01a.customer_id$+ope01a.order_no$
+            read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+            while 1
+                optCartHdr_key$=key(optCartHdr_dev,end=*break)
+                if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+                readrecord(optCartHdr_dev)optCartHdr$
+                if optCartHdr.shipped_flag$="Y" then
+                    shipped$="Yes"
+                else
+                    shipped$="N"
+                    break
+                endif
+            wend
+            if open_shipped$="Y" and shipped$="Yes" then
+                rem --- Print this Order
+                skipRecord=0
+            else
+                rem --- Has this Order been selected?
+                if open_new$="Y" and ope01a.backord_flag$<>"B" and ope01a.credit_flag$<>"C" then skipRecord=0
+                if open_back$="Y" and ope01a.backord_flag$="B" then skipRecord=0
+                if open_hold$="Y" and ope01a.credit_flag$="C" then skipRecord=0
+            endif
+        endif
         if skipRecord then continue
 
         if ope01a.invoice_type$="P" then
@@ -267,7 +295,7 @@ rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then co
                 OutVect!.addItem(ope01a.ord_taken_by$)
                 OutVect!.addItem(ope01a.slspsn_code$)
                 OutVect!.addItem(" *** VOID ***")
-                xwk = fnblank(5) 
+                xwk = fnblank(6) 
                 l=l+2
                 recs=recs+1
             endif
@@ -390,6 +418,7 @@ rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then co
             OutVect!.addItem(str(s[1]:m1$)+$00$+"R")
             OutVect!.addItem(str(s[0]-s[1]:m1$)+$00$+"R")
             OutVect!.addItem(str(fnd(s[0]-s[1],s[0]):m9$)+$00$+"R")
+            xwk = fnblank(1)
 
         endif
 
@@ -411,7 +440,7 @@ end_of_report: rem --- Order Totals
         goto std_exit
     endif
 
-    xwk = fnblank(13)
+    xwk = fnblank(14)
     TotVect!.addItem(str(OutVect!.size()/(columns+1))) 
     OutVect!.addItem(str(u2)+" "+" Orders Listed")
     xwk = fnblank(6)
@@ -421,6 +450,7 @@ end_of_report: rem --- Order Totals
     OutVect!.addItem(str(u[1]:m1$)+$00$+"R")
     OutVect!.addItem(str(u[0]-u[1]:m1$)+$00$+"R")
     OutVect!.addItem(str(fnd(u[0]-u[1],u[0]):m9$)+$00$+"R")
+    xwk = fnblank(1)
 
 rem --- Product Totals
 
@@ -451,7 +481,7 @@ rem --- Product Totals
             OutVect!.addItem(str(cost:m1$)+$00$+"R")
             OutVect!.addItem(str(price-cost:m1$)+$00$+"R")
             OutVect!.addItem(str(fnd(price-cost,price):m9$)+$00$+"R")
-            xwk = fnblank(6)
+            xwk = fnblank(7)
 
             t[0]=t[0]+price
             t[1]=t[1]+cost
@@ -462,7 +492,7 @@ rem --- Product Totals
 
     rem --- Report Totals
 
-        xwk = fnblank(13)
+        xwk = fnblank(14)
         TotVect!.addItem(str(OutVect!.size()/(columns+1))) 
         OutVect!.addItem("Totals For Report")
         xwk = fnblank(1)
@@ -471,17 +501,17 @@ rem --- Product Totals
         OutVect!.addItem(str(t[1]:m1$)+$00$+"R")
         OutVect!.addItem(str(t[0]-t[1]:m1$)+$00$+"R")
         OutVect!.addItem(str(fnd(t[0]-t[1],t[0]):m9$)+$00$+"R")
-        xwk = fnblank(6)
+        xwk = fnblank(7)
     endif
 
 label_six: 
 
 	dim t[3]
-    xwk = fnblank(13)
-    xwk = fnblank(13)
+    xwk = fnblank(14)
+    xwk = fnblank(14)
     OutVect!.addItem("Line Type Totals")
-    xwk = fnblank(12)
     xwk = fnblank(13)
+    xwk = fnblank(14)
     OutVect!.addItem("Line Type")
     xwk = fnblank(1)
     OutVect!.addItem("Order "+$00$+"R")
@@ -489,8 +519,8 @@ label_six:
     OutVect!.addItem("Ship "+$00$+"R")
     OutVect!.addItem("Sales "+$00$+"R")
     OutVect!.addItem("Cost "+$00$+"R")
-    xwk = fnblank(6)
-    xwk = fnblank(13)
+    xwk = fnblank(7)
+    xwk = fnblank(14)
 
     for i=0 to 2
         if r[i,0]=0 and r[i,1]=0 and r[i,2]=0 and r[i,3]=0 and r[i,4]=0 then continue
@@ -501,7 +531,7 @@ label_six:
         OutVect!.addItem(str(r[i,4]:m2$)+$00$+"R")
         OutVect!.addItem(str(r[i,0]:m1$)+$00$+"R")
         OutVect!.addItem(str(r[i,1]:m1$)+$00$+"R")
-        xwk = fnblank(6)
+        xwk = fnblank(7)
         t[0]=t[0]+r[i,0]
         t[1]=t[1]+r[i,1]
     next i
@@ -510,17 +540,17 @@ label_six:
         OutVect!.addItem("Other Charges")
         xwk = fnblank(4)
         OutVect!.addItem(str(r[3,0]:m1$)+$00$+"R")
-        xwk = fnblank(7)
+        xwk = fnblank(8)
         t[0]=t[0]+r[3,0]
     endif
 
-    xwk = fnblank(13)
+    xwk = fnblank(14)
     TotVect!.addItem(str(OutVect!.size()/(columns+1))) 
     OutVect!.addItem("Totals For Report")
     xwk = fnblank(4)
     OutVect!.addItem(str(t[0]:m1$)+$00$+"R")
     OutVect!.addItem(str(t[1]:m1$)+$00$+"R")
-    xwk = fnblank(6)
+    xwk = fnblank(7)
     
     out_action$="FORMAT"
     goto std_exit
@@ -534,7 +564,7 @@ ord_header: rem --- Print Order Header
 
     if col_format$="Y" then return
 
-    xwk = fnblank(13)
+    xwk = fnblank(14)
     OutVect!.addItem(fnmask$(ope01a.customer_id$(1,m0),m0$))
     OutVect!.addItem(arm01a.customer_name$)
     OutVect!.addItem(stat$+" "+ope01a.order_no$)
@@ -548,16 +578,17 @@ ord_header: rem --- Print Order Header
     OutVect!.addItem(w$)
     OutVect!.addItem(ope01a.tax_code$)
     OutVect!.addItem(ope01a.print_status$)
+    OutVect!.addItem(shipped$)
     recs=recs+1
     u2=u2+1
 
     if ope01a.lock_status$<>"N" then 
         xwk = fnblank(2)
         OutVect!.addItem("**Locked Flag="+ope01a.lock_status$+"**")
-        xwk = fnblank(10)
+        xwk = fnblank(11)
     endif
 
-    xwk = fnblank(13)
+    xwk = fnblank(14)
     OutVect!.addItem("Cd   Whs"+$00$+"B")
     OutVect!.addItem("Prd"+$00$+"B")
     OutVect!.addItem("Item"+$00$+"B")
@@ -571,6 +602,7 @@ ord_header: rem --- Print Order Header
     OutVect!.addItem("Extended Cost "+$00$+"RB")
     OutVect!.addItem("Profit "+$00$+"RB")
     OutVect!.addItem("GP%"+$00$+"RB")
+    xwk = fnblank(1)
 
     return
 
@@ -580,10 +612,10 @@ prod_subtotals: rem --- Product subtotals heading
 
     BrkVect!.addItem(str(OutVect!.size()/(columns+1)))
 
-    xwk = fnblank(13)
+    xwk = fnblank(14)
     OutVect!.addItem("Product Totals")
-    xwk = fnblank(12)
     xwk = fnblank(13)
+    xwk = fnblank(14)
     OutVect!.addItem("Product")
     xwk = fnblank(1)
     OutVect!.addItem("Units "+$00$+"R")
@@ -591,8 +623,8 @@ prod_subtotals: rem --- Product subtotals heading
     OutVect!.addItem("Cost "+$00$+"R")
     OutVect!.addItem("Profit "+$00$+"R")
     OutVect!.addItem("GP%"+$00$+"R")
-    xwk = fnblank(6)
-    xwk = fnblank(13)
+    xwk = fnblank(7)
+    xwk = fnblank(14)
 
     return
 
@@ -614,7 +646,7 @@ serial_lotted: rem --- Serialized/Lotted Inventory
         OutVect!.addItem(str(ope21a.qty_shipped:m2$)+$00$+"R")
         xwk = fnblank(4)
         OutVect!.addItem(str(ope21a.unit_cost:m3$)+$00$+"R")
-        xwk = fnblank(3)
+        xwk = fnblank(4)
         l=l+1
     wend    
 
@@ -636,6 +668,7 @@ print_detail: rem --- Print Detail
         OutVect!.addItem(w$)
         OutVect!.addItem(ope01a.tax_code$)
         OutVect!.addItem(ope01a.print_status$)
+        OutVect!.addItem(shipped$)
         OutVect!.addItem(ope11a.line_code$)
         OutVect!.addItem(ope11a.warehouse_id$)
         OutVect!.addItem(ope11a.product_type$)
@@ -667,7 +700,7 @@ print_detail: rem --- Print Detail
         if opm02a.line_type$="M" then
             xwk = fnblank(1)
             OutVect!.addItem(desc$) 
-            xwk = fnblank(10)
+            xwk = fnblank(14)
             goto print_detail_end
     	endif
     	
@@ -676,7 +709,7 @@ print_detail: rem --- Print Detail
             OutVect!.addItem(desc$) 
             xwk = fnblank(5)
             OutVect!.addItem(str(price:m1$)+$00$+"R")
-            xwk = fnblank(4)
+            xwk = fnblank(5)
             goto print_detail_end
     	endif
     	
@@ -699,6 +732,7 @@ print_detail: rem --- Print Detail
                 OutVect!.addItem(str(cost:m4$)+$00$+"R")
                 OutVect!.addItem(str(price-cost:m4$)+$00$+"R")
                 OutVect!.addItem(str(fnd(price-cost,price):m9$)+$00$+"R")
+                xwk = fnblank(1)
             endif        
         endif
     
@@ -716,9 +750,9 @@ print_detail: rem --- Print Detail
     
         if opm02a.line_type$="N" then 
             OutVect!.addItem(pol$)
-            xwk = fnblank(7)
-        else
             xwk = fnblank(8)
+        else
+            xwk = fnblank(9)
         endif
     
         if pos(opm02a.line_type$="SP") and pos(ivs01a.lotser_flag$="SL") and ivm01a.lotser_item$="Y" then 
