@@ -1048,6 +1048,7 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 	endif
 
 	rem --- Picking List must have been printed with no pending reprints
+	rem --- NOTE: Picking List cannot be printed when the customer is on Credit Hold.
 	if opeOrdHdr.print_status$<>"Y" or opeOrdHdr.reprint_flag$="Y" then
 		msg_id$ = "OP_PICK_LST_REQUIRED"
 		gosub disp_message
