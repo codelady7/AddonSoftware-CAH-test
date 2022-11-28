@@ -778,7 +778,6 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 	dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
 	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
-	opeOrdLsDet_dev=fnget_dev("OPE_ORDLSDET")
 	optFillmntHdr_key$=callpoint!.getRecordKey()
 	read (optFillmntDet_dev,key=optFillmntHdr_key$,knum="AO_STATUS",dom=*next)
 	while 1
@@ -786,10 +785,11 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 		if pos(optFillmntHdr_key$=optFillMntDet_key$)<>1 then break
 		readrecord(optFillmntDet_dev)optFillmntDet$
 
-		read(optFillmntLsDet_dev,key=optFillMntDet_key$,knum="AO_STATUS",dom=*next)
+		optFillmntLsDet_trip$=firm_id$+"E"+optFillmntDet.ar_type$+optFillmntDet.customer_id$+optFillmntDet.order_no$+optFillmntDet.ar_inv_no$+optFillmntDet.orddet_seq_ref$
+		read(optFillmntLsDet_dev,key=optFillmntLsDet_trip$,knum="AO_STATUS",dom=*next)
 		while 1
-			optFillMntLsDet_key$=key(optFillmntLsDet_dev,knum="AO_STATUS",end=*break)
-			if pos(optFillmntDet_key$=optFillMntLsDet_key$)<>1 then break
+			optFillmntLsDet_key$=key(optFillmntLsDet_dev,knum="AO_STATUS",end=*break)
+			if pos(optFillmntLsDet_trip$=optFillmntLsDet_key$)<>1 then break
 			remove_key$=key(optFillmntLsDet_dev,knum="PRIMARY")
 			readrecord(optFillmntLsDet_dev,knum="AO_STATUS")optFillmntLsDet$
 
@@ -820,7 +820,37 @@ rem --- Update qty_commit for deleted inventoried lot/serial numbers, but not fo
 		wend
 	wend
 
-rem wgh ... 10304 ... All carton records need to be deleted when the Order Fulfillment record is deleted
+rem --- All carton (OPT_CARTHDR, OPT_CARTDET and OPT_CARTLSDET) records need to be deleted when the Order Fulfillment record is deleted
+	optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+	optCartDet_dev=fnget_dev("OPT_CARTDET")
+	optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
+	optFillmntHdr_key$=callpoint!.getRecordKey()
+	read (optCartHdr_dev,key=optFillmntHdr_key$,knum="AO_STATUS",dom=*next)
+	while 1
+		optCartHdr_key$=key(optCartHdr_dev,end=*break)
+		if pos(optFillmntHdr_key$=optCartHdr_key$)<>1 then break
+		remove_optCartHdr$=key(optCartHdr_dev,knum="PRIMARY")
+
+		read(optCartDet_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*next)
+		while 1
+			optCartDet_key$=key(optCartDet_dev,end=*break)
+			if pos(optCartHdr_key$=optCartDet_key$)<>1 then break
+			remove_optCartDet$=key(optCartDet_dev,knum="PRIMARY")
+
+			read(optCartLsDet_dev,key=optCartDet_key$,knum="AO_STATUS",dom=*next)
+			while 1
+				optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
+				if pos(optCartDet_key$=optCartLsDet_key$)<>1 then break
+				remove_optCartLsDet$=key(optCartLsDet_dev,knum="PRIMARY")
+
+				remove(optCartLsDet_dev,key=remove_optCartLsDet$)
+			wend			
+
+			remove(optCartDet_dev,key=remove_optCartDet$)
+		wend
+
+		remove(optCartHdr_dev,key=remove_optCartHdr$)
+	wend
 
 [[OPT_FILLMNTHDR.BFST]]
 rem --- Set flag that First Record has been selected
