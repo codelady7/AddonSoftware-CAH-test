@@ -213,6 +213,9 @@ rem --- Get and hold on to column for qty_packed
 	packed_col=util.getGridColumnNumber(packCartonGrid!,packed_hdr$)
 	callpoint!.setDevObject("packed_col",packed_col)
 
+[[OPT_CARTDET2.AUDE]]
+rem wgh ... 10304 ... rem --- Restore associated OPT_CARTLSDET2 records
+
 [[OPT_CARTDET2.AWRI]]
 rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
 	qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
@@ -238,6 +241,8 @@ rem --- Cannot delete cartons that are shipped
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+rem wgh ... 10304 ... rem --- Delete associated OPT_CARTLSDET2 records, but save a copy for possible undelete of this record.
 
 [[OPT_CARTDET2.BEND]]
 rem --- Get the total quantity packed

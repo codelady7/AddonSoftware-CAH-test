@@ -86,6 +86,15 @@ rem --- Enable Item Lookup button for new lines
 		callpoint!.setOptionEnabled("ITEM",0)
 	endif
 
+rem --- Enable Pack Lot/Serial button for lot/serial items
+	item_id$=callpoint!.getColumnData("OPT_CARTDET.ITEM_ID")
+	gosub lot_ser_check
+	if lotser_item$="Y" then
+		callpoint!.setOptionEnabled("PKLS",1)
+	else
+		callpoint!.setOptionEnabled("PKLS",0)
+	endif
+
 rem --- Disable warehouse_id, item_id, and order_memo for existing lines so they can't be changed since there is not seqence_no.
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"OPT_CARTDET.WAREHOUSE_ID",0)
@@ -129,13 +138,13 @@ rem --- Luanch lookup for unpacked picked items
 
 [[OPT_CARTDET.AOPT-PKLS]]
 rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
+	ar_type$=callpoint!.getColumnData("OPT_CARTDET.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTDET.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTDET.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET.AR_INV_NO")
+	carton_no$=callpoint!.getColumnData("OPT_CARTDET.CARTON_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTDET.ORDDET_SEQ_REF")
 	if callpoint!.getDevObject("shipped_flag")<>"Y" then
-		ar_type$=callpoint!.getColumnData("OPT_CARTDET.AR_TYPE")
-		customer_id$=callpoint!.getColumnData("OPT_CARTDET.CUSTOMER_ID")
-		order_no$=callpoint!.getColumnData("OPT_CARTDET.ORDER_NO")
-		ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET.AR_INV_NO")
-		carton_no$=callpoint!.getColumnData("OPT_CARTDET.CARTON_NO")
-		orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTDET.ORDDET_SEQ_REF")
 		optCartDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$
 
 		optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
@@ -216,8 +225,17 @@ rem --- Has the total quantity packed changed?
 	total_packed=callpoint!.getDevObject("total_packed")
 	if total_packed<>start_qty_packed then
 		callpoint!.setColumnData("OPT_CARTDET.QTY_PACKED",str(total_packed),1)
-		callpoint!.setStatus("MODIFIED")
 		callpoint!.setFocus(callpoint!.getValidationRow(),"OPT_CARTDET.QTY_PACKED",1)
+
+		rem --- Get current form data and write it to disk
+		optCartDet_dev=fnget_dev("OPT_CARTDET")
+		optCartDet_tpl$=fnget_tpl$("OPT_CARTDET")
+		dim optCartDet$:optCartDet_tpl$
+		optCartDet$=util.copyFields(optCartDet_tpl$, callpoint!)
+		optCartDet$=field(optCartDet$)
+		writerecord(optCartDet_dev)optCartDet$
+		extractrecord(optCartDet_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$, dom=*next)optCartDet$; rem Advisory Locking
+		callpoint!.setStatus("REFRESH;SETORIG")
 
 		rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
 		gosub getUnpackedQty
@@ -298,6 +316,9 @@ rem --- Get and hold on to column for qty_packed
 	packed_col=util.getGridColumnNumber(packCartonGrid!,packed_hdr$)
 	callpoint!.setDevObject("packed_col",packed_col)
 
+[[OPT_CARTDET.AUDE]]
+rem wgh ... 10304 ... rem --- Restore associated OPT_CARTLSDET records
+
 [[OPT_CARTDET.BDEL]]
 rem --- Cannot delete cartons that are shipped
 	if callpoint!.getDevObject("shipped_flag")="Y" then
@@ -306,6 +327,8 @@ rem --- Cannot delete cartons that are shipped
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+rem wgh ... 10304 ... rem --- Delete associated OPT_CARTLSDET records, but save a copy for possible undelete of this record.
 
 [[OPT_CARTDET.BEND]]
 rem --- Skip if carton shipped or the grid is empty

@@ -199,7 +199,54 @@ rem --- Initialize RTP trans_status and created fields
 	callpoint!.setColumnData("OPT_CARTHDR.CREATED_TIME",date(0:"%Hz%mz"))
 
 [[OPT_CARTHDR.AUDE]]
-rem wgh ... 10304 ... Need to restore corresponding OPT_CARTLSDET records
+rem --- Restore associated OPT_CARTDET/OPT_CARTDET2 and OPT_CARTLSDET/OPT_CARTLSDET2 records, 
+	removedOptCartDet! = callpoint!.getDevObject("removedOptCartDet")
+	removedOptCartLsDet! = callpoint!.getDevObject("removedOptCartLsDet")
+	optCartDet_dev=fnget_dev("OPT_CARTDET")
+	optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
+	ar_type$=callpoint!.getColumnData("OPT_CARTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTHDR.AR_INV_NO")
+	carton_no$=callpoint!.getColumnData("OPT_CARTHDR.CARTON_NO")
+
+	if removedOptCartDet!.size()>0 then
+		optCartHdr_key$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$
+		removedOptCartDet_keys! = removedOptCartDet!.keySet()
+		removedOptCartDet_iter! = removedOptCartDet_keys!.iterator()
+		while removedOptCartDet_iter!.hasNext()
+			thisOptCartDet_key$=removedOptCartDet_iter!.next()
+			if pos(optCartHdr_key$=thisOptCartDet_key$)<>1 then continue
+
+			if removedOptCartLsDet!.size()>0 then
+				removedOptCartLsDet_keys! = removedOptCartLsDet!.keySet()
+				removedOptCartLsDet_iter! = removedOptCartLsDet_keys!.iterator()
+				while removedOptCartLsDet_iter!.hasNext()
+					thisOptCartLsDet_key$=removedOptCartLsDet_iter!.next()
+					if pos(thisOptCartDet_key$=thisOptCartLsDet_key$)<>1 then continue
+
+					optCartLsDet_vect! = removedOptCartLsDet!.get(thisOptCartLsDet_key$)
+					if optCartLsDet_vect!.size()=0 then continue
+					for i=optCartLsDet_vect!.size()-1 to 0 step -1
+						optCartLsDet_record$=optCartLsDet_vect!.removeItem(i)
+						writerecord(optCartLsDet_dev)optCartLsDet_record$
+					next i
+					removedOptCartLsDet!.put(thisOptCartLsDet_key$,optCartLsDet_vect!)
+				wend
+			endif
+
+			optCartDet_vect! = removedOptCartDet!.get(thisOptCartDet_key$)
+			if optCartDet_vect!.size()=0 then continue
+			for i=optCartDet_vect!.size()-1 to 0 step -1
+				optCartDet_record$=optCartDet_vect!.removeItem(i)
+				writerecord(optCartDet_dev)optCartDet_record$
+			next i
+			removedOptCartDet!.put(thisOptCartDet_key$,optCartDet_vect!)
+		wend
+	endif
+
+	callpoint!.setDevObject("removedOptCartDet",removedOptCartDet!)
+	callpoint!.setDevObject("removedOptCartLsDet",removedOptCartLsDet!)
 
 [[OPT_CARTHDR.AWRI]]
 rem --- Update the <<DISPLAY>>.FREIGHT_AMT and <<DISPALY>>.WEIGHT on OPT_FILLMNTHDR form
@@ -232,7 +279,48 @@ rem --- Cannot delete cartons that are shipped
 		break
 	endif
 
-rem wgh ... 10304 ... Need to delete corresponding OPT_CARTLSDET records
+rem --- Delete associated OPT_CARTDET/OPT_CARTDET2 and OPT_CARTLSDET/OPT_CARTLSDET2 records, 
+rem --- but save a copy for possible undelete of this record.
+	removedOptCartDet! = callpoint!.getDevObject("removedOptCartDet")
+	removedOptCartLsDet! = callpoint!.getDevObject("removedOptCartLsDet")
+	optCartDet_dev=fnget_dev("OPT_CARTDET")
+	dim optCartDet$:fnget_tpl$("OPT_CARTDET")
+	optCartLsDet_dev=fnget_dev("OPT_CARTLSDET")
+	dim optCartLsDet$:fnget_tpl$("OPT_CARTLSDET")
+	ar_type$=callpoint!.getColumnData("OPT_CARTHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTHDR.AR_INV_NO")
+	carton_no$=callpoint!.getColumnData("OPT_CARTHDR.CARTON_NO")
+
+	optCartDet_vect! = BBjAPI().makeVector()
+	optCartDet_trip$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$
+	read(optCartDet_dev,key=optCartDet_trip$,knum="PRIMARY",dom=*next)
+	while 1
+		optCartDet_key$=key(optCartDet_dev,end=*break)
+		if pos(optCartDet_trip$=optCartDet_key$)<>1 then break
+		readrecord(optCartDet_dev)optCartDet$
+
+		optCartLsDet_vect! = BBjAPI().makeVector()
+		optCartLsDet_trip$=optCartDet_trip$+optCartDet.orddet_seq_ref$
+		read(optCartLsDet_dev,key=optCartLsDet_trip$,knum="PRIMARY",dom=*next)
+		while 1
+			optCartLsDet_key$=key(optCartLsDet_dev,end=*break)
+			if pos(optCartLsDet_trip$=optCartLsDet_key$)<>1 then break
+			readrecord(optCartLsDet_dev)optCartLsDet$
+
+			optCartLsDet_vect!.addItem(optCartLsDet$)
+			remove(optCartLsDet_dev,key=optCartLsDet_key$)
+		wend
+		removedOptCartLsDet!.put(optCartDet_trip$,optCartLsDet_vect!)
+
+		optCartDet_vect!.addItem(optCartDet$)
+		remove(optCartDet_dev,key=optCartDet_key$)
+	wend
+	removedOptCartDet!.put(optCartDet_trip$,optCartDet_vect!)
+
+	callpoint!.setDevObject("removedOptCartDet",removedOptCartDet!)
+	callpoint!.setDevObject("removedOptCartLsDet",removedOptCartLsDet!)
 
 [[OPT_CARTHDR.BDGX]]
 rem --- Disable detail-only buttons
@@ -245,6 +333,10 @@ rem --- Initialize RTP modified fields for modified existing records
 		callpoint!.setColumnData("OPT_CARTHDR.MOD_DATE", date(0:"%Yd%Mz%Dz"))
 		callpoint!.setColumnData("OPT_CARTHDR.MOD_TIME", date(0:"%Hz%mz"))
 	endif
+
+[[OPT_CARTHDR.CARTON_NO.AVAL]]
+rem --- Enable Pack Carton button for new carton
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then callpoint!.setOptionEnabled("CART",1)
 
 [[OPT_CARTHDR.SHIPPED_FLAG.AVAL]]
 rem --- Disable/enable fields depending on shipped_flag
