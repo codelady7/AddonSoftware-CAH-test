@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_carthdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_carthdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_carthdr">20220808</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_carthdr">20221123</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_carthdr">20221123</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_carthdr">090240</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_carthdr">20221129</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_carthdr">20221129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_carthdr">103136</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_carthdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_carthdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_carthdr">AO_STATUS</DD_ATTR_DKNM>
@@ -109,13 +109,6 @@
 		<RECORD id="ddm_table_cpro.opt_carthdrbwri">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_carthdrbwri">OPT_CARTHDR     </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_carthdrbwri">BWRI</DD_ATTR_CPRO>
-		</RECORD>
-	</ALIAS>
-	<ALIAS id="ddm_table_dtld">
-		<ID id="ddm_table_dtld">DDM_TABLE_DTLD</ID>
-		<RECORD id="ddm_table_dtld.opt_carthdropt_cartdet">
-			<DD_TABLE_ALIAS id="ddm_table_dtld.opt_carthdropt_cartdet">OPT_CARTHDR     </DD_TABLE_ALIAS>
-			<DD_ATTR_DTLD id="ddm_table_dtld.opt_carthdropt_cartdet">OPT_CARTDET     </DD_ATTR_DTLD>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -1395,7 +1388,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_carthdr006">20220808</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_carthdr006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_carthdr006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_carthdr006"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_carthdr006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_carthdr006">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_carthdr006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_carthdr006"></DD_ATTR_CTLY>
@@ -2300,6 +2293,11 @@
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
 		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.opt_carthdrcarton_noaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_carthdrcarton_noaval">OPT_CARTHDR     </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_carthdrcarton_noaval">CARTON_NO       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_carthdrcarton_noaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_column_cpro.opt_carthdrshipped_flagaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_carthdrshipped_flagaval">OPT_CARTHDR     </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_carthdrshipped_flagaval">SHIPPED_FLAG    </DD_DVAR_NAME>

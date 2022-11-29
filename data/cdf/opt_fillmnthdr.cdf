@@ -78,6 +78,8 @@ rem --- Hold onto ar_ship_via for use in opt_carthdr
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
 	callpoint!.setDevObject("refreshRecord",0)
+	callpoint!.setDevObject("removedOptCartDet",new java.util.HashMap())
+	callpoint!.setDevObject("removedOptCartLsDet",new java.util.HashMap())
 
 rem --- Show total weight and total freight amount
 	weight=0
@@ -538,6 +540,8 @@ rem --- Initializations
 	callpoint!.setDevObject("refreshRecord",0)
 	callpoint!.setDevObject("all_packed","N")
 	callpoint!.setDevObject("new_rec","Y")
+	callpoint!.setDevObject("removedOptCartDet",new java.util.HashMap())
+	callpoint!.setDevObject("removedOptCartLsDet",new java.util.HashMap())
 
 rem --- Disable Print List button
 	callpoint!.setOptionEnabled("PRNT",0)
