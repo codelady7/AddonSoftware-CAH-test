@@ -214,7 +214,35 @@ rem --- Get and hold on to column for qty_packed
 	callpoint!.setDevObject("packed_col",packed_col)
 
 [[OPT_CARTDET2.AUDE]]
-rem wgh ... 10304 ... rem --- Restore associated OPT_CARTLSDET2 records
+rem --- Restore associated OPT_CARTLSDET2 records
+	removedOptCartLsDet! = callpoint!.getDevObject("removedOptCartLsDet")
+	optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
+	ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+	carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTDET2.ORDDET_SEQ_REF")
+
+	if removedOptCartLsDet!.size()>0 then
+		optCartDet2_key$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$
+		removedOptCartLsDet_keys! = removedOptCartLsDet!.keySet()
+		removedOptCartLsDet_iter! = removedOptCartLsDet_keys!.iterator()
+		while removedOptCartLsDet_iter!.hasNext()
+			thisOptCartLsDet2_key$=removedOptCartLsDet_iter!.next()
+			if pos(optCartDet2_key$=thisOptCartLsDet2_key$)<>1 then continue
+
+			optCartLsDet2_vect! = removedOptCartLsDet!.get(thisOptCartLsDet2_key$)
+			if optCartLsDet2_vect!.size()=0 then continue
+			for i=optCartLsDet2_vect!.size()-1 to 0 step -1
+				optCartLsDet2_record$=optCartLsDet2_vect!.removeItem(i)
+				writerecord(optCartLsDet2_dev)optCartLsDet2_record$
+			next i
+			removedOptCartLsDet!.put(thisOptCartLsDet2_key$,optCartLsDet2_vect!)
+		wend
+	endif
+
+	callpoint!.setDevObject("removedOptCartLsDet",removedOptCartLsDet!)
 
 [[OPT_CARTDET2.AWRI]]
 rem --- Provide visual warning when quantity packed is less than the remaining number that still need to be packed
@@ -242,7 +270,31 @@ rem --- Cannot delete cartons that are shipped
 		break
 	endif
 
-rem wgh ... 10304 ... rem --- Delete associated OPT_CARTLSDET2 records, but save a copy for possible undelete of this record.
+rem --- Delete associated OPT_CARTLSDET2 records, but save a copy for possible undelete of this record.
+	removedOptCartLsDet! = callpoint!.getDevObject("removedOptCartLsDet")
+	optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
+	dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
+	ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+	carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
+	orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTDET2.ORDDET_SEQ_REF")
+
+	optCartLsDet2_vect! = BBjAPI().makeVector()
+	optCartDet2_key$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$
+	read(optCartLsDet2_dev,key=optCartDet2_key$,knum="PRIMARY",dom=*next)
+	while 1
+		optCartLsDet2_key$=key(optCartLsDet2_dev,end=*break)
+		if pos(optCartDet2_key$=optCartLsDet2_key$)<>1 then break
+		readrecord(optCartLsDet2_dev)optCartLsDet2$
+
+		optCartLsDet2_vect!.addItem(optCartLsDet2$)
+		remove(optCartLsDet2_dev,key=optCartLsDet2_key$)
+	wend
+	removedOptCartLsDet!.put(optCartDet2_key$,optCartLsDet2_vect!)
+
+	callpoint!.setDevObject("removedOptCartLsDet",removedOptCartLsDet!)
 
 [[OPT_CARTDET2.BEND]]
 rem --- Get the total quantity packed
@@ -292,6 +344,9 @@ rem --- A non-blank carton number is required
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+rem --- Skip if existing carton number wasn't changed
+	if cvs(carton_no$,2)=cvs(callpoint!.getColumnData("<<DISPLAY>>.CARTON_DSP"),2) then break
 
 rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CARTON_NO 
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTDET2","AO_STATUS",key_tpl$,table_chans$[all],status$
