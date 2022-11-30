@@ -123,6 +123,23 @@ rem --- Inits
 	use ::ado_order.src::OrderHelper
 	use ::adc_array.aon::ArrayObject
 
+[[OPT_INVHDR.AOPT-CART]]
+rem --- Launch Order Fulfillment's Historical Carton Packing grid
+	ar_type$=callpoint!.getColumnData("OPT_INVHDR.AR_TYPE")
+	customer_id$=callpoint!.getColumnData("OPT_INVHDR.CUSTOMER_ID")
+	order_no$=callpoint!.getColumnData("OPT_INVHDR.ORDER_NO")
+	ar_inv_no$=callpoint!.getColumnData("OPT_INVHDR.AR_INV_NO")
+	key_pfx$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$
+
+	callpoint!.setDevObject("lotser_flag",user_tpl.lotser_flag$)
+
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:	"OPT_CARTDETHIST",
+:       stbl("+USER_ID"),
+:       "QRY",
+:       key_pfx$,
+:       table_chans$[all]
+
 [[OPT_INVHDR.AOPT-PRNT]]
 rem --- historical invoice
  
