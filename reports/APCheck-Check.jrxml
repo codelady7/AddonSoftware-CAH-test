@@ -27,6 +27,7 @@
 	<parameter name="CHECK_AMT_MASK" class="java.lang.String"/>
 	<parameter name="ACH_PAYMENT" class="java.lang.String"/>
 	<parameter name="BNK_ACCT_CD" class="java.lang.String"/>
+	<parameter name="AP_MICR" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[call APCHECKS_CHECK($P{FIRM_ID},$P{BARISTA_WD},$P{BNK_ACCT_CD},$P{CHECK_NUM},$P{CURR_PAGE},$P{AP_TYPE},$P{VENDOR_ID},$P{AP_ADDRESS1_NAME},$P{AP_ADDRESS2},$P{AP_ADDRESS3},$P{AP_ADDRESS4},$P{LOGO_FILE},$P{VEND_NAME},$P{VEND_ADDR1},$P{VEND_ADDR2},$P{VEND_ADDR3},$P{VEND_ADDR4},$P{VEND_MASK},$P{GL_ACCT_MASK},$P{CHECK_AMT_MASK})]]>
 	</queryString>
@@ -51,7 +52,7 @@
 	<detail>
 		<band height="258" splitType="Stretch">
 			<textField>
-				<reportElement x="28" y="171" width="36" height="13" uuid="b27d47c2-5c94-4dd7-8e5a-ec0ee57755e9">
+				<reportElement x="31" y="147" width="36" height="13" uuid="b27d47c2-5c94-4dd7-8e5a-ec0ee57755e9">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="none">
@@ -60,7 +61,7 @@
 				<textFieldExpression><![CDATA[$R{AON_PAY}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="29" y="188" width="33" height="13" uuid="805fbf9d-a4a0-4910-b4ed-f262cac0efbe">
+				<reportElement x="32" y="164" width="33" height="13" uuid="805fbf9d-a4a0-4910-b4ed-f262cac0efbe">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="none">
@@ -69,7 +70,7 @@
 				<textFieldExpression><![CDATA[$R{AON_TO_THE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="29" y="204" width="41" height="13" uuid="4e9117d6-8424-4d45-b0c0-6c786cfd48be">
+				<reportElement x="32" y="180" width="41" height="13" uuid="4e9117d6-8424-4d45-b0c0-6c786cfd48be">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="none">
@@ -78,7 +79,7 @@
 				<textFieldExpression><![CDATA[$R{AON_ORDER_OF}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="168" width="216" height="16" uuid="bf40f852-6bc7-47d8-9b52-c6e087ebe414">
+				<reportElement x="90" y="144" width="216" height="16" uuid="bf40f852-6bc7-47d8-9b52-c6e087ebe414">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -87,7 +88,7 @@
 				<textFieldExpression><![CDATA[$P{VEND_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="181" width="216" height="16" uuid="e349179b-bba4-4810-a58b-dfe8483c5984">
+				<reportElement x="90" y="157" width="216" height="16" uuid="e349179b-bba4-4810-a58b-dfe8483c5984">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -96,7 +97,7 @@
 				<textFieldExpression><![CDATA[$P{VEND_ADDR1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="87" y="194" width="216" height="16" uuid="41f6376f-e0e9-42ba-9178-566f6024dcbf">
+				<reportElement stretchType="RelativeToBandHeight" x="90" y="170" width="216" height="16" uuid="41f6376f-e0e9-42ba-9178-566f6024dcbf">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -223,20 +224,20 @@
 				<textFieldExpression><![CDATA[$F{EXACTLY_AMT}.trim()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="354" y="227" width="225" height="1" uuid="9b5c0375-c846-45aa-b614-0686884e38cc"/>
+				<reportElement x="350" y="191" width="225" height="1" uuid="9b5c0375-c846-45aa-b614-0686884e38cc"/>
 				<graphicElement>
 					<pen lineWidth="1.5"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="354" y="229" width="225" height="16" uuid="2d7f176f-dc82-40ea-8972-3ed6dfd85cbe"/>
+				<reportElement x="350" y="193" width="225" height="16" uuid="2d7f176f-dc82-40ea-8972-3ed6dfd85cbe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AON_AUTHORIZED_SIGNATURE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="207" width="216" height="16" uuid="48f439e4-e4af-432d-ac6d-feb1e067fd1e">
+				<reportElement x="90" y="183" width="216" height="16" uuid="48f439e4-e4af-432d-ac6d-feb1e067fd1e">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -245,25 +246,25 @@
 				<textFieldExpression><![CDATA[$P{VEND_ADDR3}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="400" y="204" width="140" height="44" uuid="e351b15d-f3eb-483b-9de7-53e5ed4cd706">
+				<reportElement x="396" y="168" width="140" height="44" uuid="e351b15d-f3eb-483b-9de7-53e5ed4cd706">
 					<printWhenExpression><![CDATA[$F{ONE_SIGNATURE}!=""]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$F{ONE_SIGNATURE}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="322" y="204" width="140" height="44" uuid="30d67ae3-e48b-4ae2-b974-f3757e8bd709">
+				<reportElement x="318" y="168" width="140" height="44" uuid="30d67ae3-e48b-4ae2-b974-f3757e8bd709">
 					<printWhenExpression><![CDATA[$F{TWO_SIGNATURE_1}!=""]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$F{TWO_SIGNATURE_1}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="464" y="204" width="140" height="44" uuid="e41dfdd9-4dd1-4460-bc38-41b9cfeea375">
+				<reportElement x="460" y="168" width="140" height="44" uuid="e41dfdd9-4dd1-4460-bc38-41b9cfeea375">
 					<printWhenExpression><![CDATA[$F{TWO_SIGNATURE_2}!=""]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$F{TWO_SIGNATURE_2}]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="true">
-				<reportElement x="87" y="220" width="216" height="16" uuid="0ef53de4-6cd8-48ac-867a-f27f62b0c6cf">
+				<reportElement x="90" y="196" width="216" height="16" uuid="0ef53de4-6cd8-48ac-867a-f27f62b0c6cf">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -275,7 +276,7 @@
 				<textFieldExpression><![CDATA[$P{VEND_ADDR4}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="355" y="210" width="112" height="20" uuid="2acee78d-2991-45c5-9092-b9c0e7796e59">
+				<reportElement x="351" y="174" width="112" height="20" uuid="2acee78d-2991-45c5-9092-b9c0e7796e59">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -288,7 +289,7 @@
 				<textFieldExpression><![CDATA[$R{AON_NON-NEGOTIABLE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="470" y="210" width="112" height="20" uuid="f38bf4ee-0747-448b-8bdf-4dfd4d6da499">
+				<reportElement x="466" y="174" width="112" height="20" uuid="f38bf4ee-0747-448b-8bdf-4dfd4d6da499">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
@@ -299,6 +300,16 @@
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AON_NON-NEGOTIABLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="225" width="450" height="26" uuid="bb0ef2e6-38b0-4636-84d3-94863b3591b9">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[!$P{AP_MICR}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="MICR Encoding" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C"+$P{CHECK_NUM}+"C  "+$P{AP_MICR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

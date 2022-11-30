@@ -106,6 +106,7 @@ rem --- Use statements and Declares
     use ::ado_rptControl.src::ReportControl
 
     use ::sys/prog/bao_utilities.bbj::BarUtils
+	use ::sys/prog/bao_encryptor.bbj::Encryptor
     
     params! = Option!.getOptionMap()
 		
@@ -274,6 +275,46 @@ rem --- Retrieve parameter records
 	call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",vend_mask$,0,vendor_length
     call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",gl_acct_mask$,0,gl_acct_length
 
+    rem --- get settings for printing MICR (or not) and the MICR format for the bank account number
+    rem --- prior to v23, use STBLs; in v23+ will store settings in adc_bankacctcode
+ 
+    micr_routing_acct$=""
+    encryptor! = new Encryptor()    
+    config_id$ = "BANK_ACCT_AUTH"
+    encryptor!.setConfiguration(config_id$)
+    readrecord(adcBnkAcct_dev,key=firm_id$+bnkAcctCd$,dom=*next)adcBnkAcct$
+    bank_acct$=encryptor!.decryptData(cvs(adcBnkAcct.bnk_acct_no$,3))
+
+    rem --- use field function here for pre-v23 to avoid template error
+    field_found=0
+    micr_print$=cvs(field(adcBnkAcct$,"MICR_PRINT",err=*next),3);field_found=1
+    micr_acct$=cvs(field(adcBnkAcct$,"MICR_ACCT",err=*next),3)
+    if !field_found
+        micr_print$=stbl("+MICR_PRINT"+firm_id$+cvs(bnkAcctCd$,2),err=*next);rem --- use globals pre-v23
+        micr_acct$=stbl("+MICR_ACCT"+firm_id$+cvs(bnkAcctCd$,2),err=*next)
+        micr_len=pos("#"=micr_acct$,1,0);rem number of # char should = number of char in bank account no
+        mask = mask("","^[A-D#\ ]+$")
+        if len(bank_acct$)<>micr_len or !mask(micr_acct$) then micr_acct$=fill(len(bank_acct$),"#")
+    endif
+    
+    if micr_print$="Y"
+        if pos("#"<>micr_acct$)=0
+            micr_routing_acct$=bank_acct$+"C";rem all #, so just set to account number + On-Us (C) at the end
+        else
+            cntr=1
+            p=1
+            micr_routing_acct$=bank_acct$
+            while p
+                p=pos("#"<>micr_acct$,1,cntr)
+                if p<>0
+                    micr_routing_acct$=micr_routing_acct$(1,p-1)+micr_acct$(p,1)+micr_routing_acct$(p)
+                    cntr=cntr+1
+                endif
+            wend    
+        endif
+        if micr_routing_acct$<>"" then micr_routing_acct$="A"+cvs(adcBnkAcct.aba_no$,3)+"A  "+micr_routing_acct$;rem A is MICR Transit symbol
+    endif
+
 rem --- Clear any existing (stale) recs for this firm from the jasper print file
 
     if restart$="Y" and ach_allowed then
@@ -407,9 +448,9 @@ rem --- Assign needed jasper params
 	params!.put("AP_ADDRESS4",ap_address$(71))
 	params!.put("AP_ADDR3_STUB",stub_address$)
 
-	params!.put("LOGO_FILE",logo_filename$)
-	
+	params!.put("LOGO_FILE",logo_filename$)	
 	params!.put("MAX_STUB_ROWS",str(max_stub_rows))
+    params!.put("AP_MICR",micr_routing_acct$)
 
 rem --- Initialize the print work file fields
 
@@ -617,6 +658,7 @@ rem --- Fill jasper reports
         report! = BarUtils.getBBJasperReport(filename$)
         params!.remove("ACH_PAYMENT")
         params!.put("ACH_PAYMENT","Y")
+        params!.remove("AP_MICR")
         report!.putParams(params!)
         report!.setLocale(locale$)
         report!.fill(1)

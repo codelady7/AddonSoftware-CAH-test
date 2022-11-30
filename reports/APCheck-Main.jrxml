@@ -23,6 +23,7 @@
 	<parameter name="LOGO_FILE" class="java.lang.String"/>
 	<parameter name="MAX_STUB_ROWS" class="java.lang.String"/>
 	<parameter name="ACH_PAYMENT" class="java.lang.String"/>
+	<parameter name="AP_MICR" class="java.lang.String" isForPrompting="false"/>
 	<queryString language="SQL">
 		<![CDATA[call APCHECKS_MAIN($P{FIRM_ID},$P{BARISTA_WD},$P{AP_TYPE},$P{ACH_PAYMENT})]]>
 	</queryString>
@@ -67,12 +68,6 @@
 	</columnHeader>
 	<detail>
 		<band height="263" splitType="Immediate">
-			<rectangle>
-				<reportElement mode="Transparent" x="5" y="4" width="601" height="256" backcolor="#FFFFFF" uuid="998b01ca-472c-423d-a621-9e6841e50549"/>
-				<graphicElement>
-					<pen lineWidth="0.75"/>
-				</graphicElement>
-			</rectangle>
 			<subreport runToBottom="false">
 				<reportElement positionType="Float" x="3" y="3" width="608" height="260" uuid="4e85b204-79bd-4dc6-b0d9-3e85a6816328">
 					<printWhenExpression><![CDATA[$P{TOP_PART}=="V" || $P{TOP_PART}=="A"]]></printWhenExpression>
@@ -216,17 +211,14 @@
 				<subreportParameter name="BNK_ACCT_CD">
 					<subreportParameterExpression><![CDATA[$F{BNK_ACCT_CD}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="AP_MICR">
+					<subreportParameterExpression><![CDATA[$P{AP_MICR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["APCheck-Check.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="263" splitType="Immediate">
-			<rectangle>
-				<reportElement mode="Transparent" x="5" y="4" width="601" height="256" backcolor="#FFFFFF" uuid="9462362a-86bc-4386-9965-07385f9ab9c1"/>
-				<graphicElement>
-					<pen lineWidth="0.75"/>
-				</graphicElement>
-			</rectangle>
 			<subreport runToBottom="false">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="3" width="608" height="260" uuid="d664a9a5-1d90-4676-bfa5-93da20532150">
 					<printWhenExpression><![CDATA[$P{MIDDLE_PART}=="V" || $P{MIDDLE_PART}=="A"]]></printWhenExpression>
@@ -370,17 +362,14 @@
 				<subreportParameter name="BNK_ACCT_CD">
 					<subreportParameterExpression><![CDATA[$F{BNK_ACCT_CD}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="AP_MICR">
+					<subreportParameterExpression><![CDATA[$P{AP_MICR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["APCheck-Check.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="263" splitType="Immediate">
-			<rectangle>
-				<reportElement mode="Transparent" x="5" y="4" width="601" height="256" backcolor="#FFFFFF" uuid="bebc6db8-3a20-416f-98a4-1ecd7f277221"/>
-				<graphicElement>
-					<pen lineWidth="0.75"/>
-				</graphicElement>
-			</rectangle>
 			<subreport runToBottom="false">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="3" width="608" height="260" uuid="1b639cd5-ac93-43fd-8dcf-b3587769d185">
 					<printWhenExpression><![CDATA[$P{BOTTOM_PART}=="V" || $P{BOTTOM_PART}=="A"]]></printWhenExpression>
@@ -523,6 +512,9 @@
 				</subreportParameter>
 				<subreportParameter name="BNK_ACCT_CD">
 					<subreportParameterExpression><![CDATA[$F{BNK_ACCT_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="AP_MICR">
+					<subreportParameterExpression><![CDATA[$P{AP_MICR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["APCheck-Check.jasper"]]></subreportExpression>
