@@ -155,14 +155,13 @@ rem --- Top Of Loop
         if h3$<>"" 
             xwk=fnblank(4)
             OutVect!.addItem(h3$)    
-            xwk=fnblank(3)
             h3$=""
         else
             OutVect!.addItem("")
-            OutVect!.addItem(fnmask$(glm01a.gl_account$,m0$))
-            OutVect!.addItem(glm01a.gl_acct_desc$)
-            OutVect!.addItem(alice$(pos(glm01a.gl_acct_type$=alice$,9),9))
         endif
+        OutVect!.addItem(fnmask$(glm01a.gl_account$,m0$))
+        OutVect!.addItem(glm01a.gl_acct_desc$)
+        OutVect!.addItem(alice$(pos(glm01a.gl_acct_type$=alice$,9),9))
 
 rem --- Loop back for next record
 
