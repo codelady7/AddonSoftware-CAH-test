@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<barista_record_table>ADS_FILTERS</barista_record_table>
+<barista_admin_records>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
+		<FILTER_ID>PAID                          </FILTER_ID>
+		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
+		<FILTER_ID>PAID                          </FILTER_ID>
+		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
+		<FILTER_ID>UNPAID                        </FILTER_ID>
+		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
+		<FILTER_ID>UNPAID                        </FILTER_ID>
+		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+</barista_admin_records>
