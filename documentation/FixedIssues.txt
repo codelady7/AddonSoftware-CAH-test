@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-11-17
+ Report Date:   2022-11-29
  Report Branch: AddonSoftware 22.12
  Last Release:  AddonSoftware 22.11
 =======================================================================================================================================
@@ -34,4 +34,12 @@ Modified: data/bar/sfm_cal_maint.xml
 Modified: data/cdf/pom_cal_maint.cdf
 Modified: data/cdf/sfm_cal_maint.cdf
 
-
+=======================================================================================================================================
+Revision: c6b73e4fdeb4377ecab4505568d8df4fea19d29c
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 11/29/2022 4:50:41 PM
+Message:
+Bug 10531: Restored the GL account that appears on the same line as the
+account break.
+----
+Modified: gl/src/glr_acctlist.aon
