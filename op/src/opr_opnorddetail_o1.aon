@@ -696,11 +696,11 @@ print_detail: rem --- Print Detail
     else
         ctrl=0
         OutVect!.addItem(ope11a.line_code$+"     "+ ope11a.warehouse_id$)
-    
+
         if opm02a.line_type$="M" then
             xwk = fnblank(1)
             OutVect!.addItem(desc$) 
-            xwk = fnblank(14)
+            xwk = fnblank(11)
             goto print_detail_end
     	endif
     	
