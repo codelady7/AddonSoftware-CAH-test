@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-11-29
+ Report Date:   2022-12-06
  Report Branch: AddonSoftware 22.12
  Last Release:  AddonSoftware 22.11
 =======================================================================================================================================
@@ -43,3 +43,43 @@ Bug 10531: Restored the GL account that appears on the same line as the
 account break.
 ----
 Modified: gl/src/glr_acctlist.aon
+
+=======================================================================================================================================
+Revision: c4a094f6763dcf10fc0115ac3ce0f99d7c18fa5a
+Author: BASIS GitHub Account <github@basis.cloud>
+Date: 12/5/2022 12:39:09 PM
+Message:
+Delete j2pay-2.7.7.jar
+
+j2pay-2.7.7.jar was replace by j2pay-2.9.11.jar several years ago.
+
+Removed jar from archive so it will no longer be included in the install.
+
+All jars found in the lib/jars directory are included in the packaging.
+----
+Deleted: lib/jars/j2pay-2.7.7.jar
+
+=======================================================================================================================================
+Revision: 5eb6b53bc82d770af3fe7253829a7306bebb7f3d
+Author: Christine <chawkins@basis.com>
+Date: 12/5/2022 12:48:02 PM
+Message:
+Committing new version of AvaTax jar, removing the older one.
+
+(cherry picked from commit bb9e1c25441f6a91196a42cc8a5afd0d0c704e90)
+----
+Deleted: lib/jars/avatax-rest-v2-api-java_2.11-21.3.1.jar
+Added: lib/jars/avatax-rest-v2-api-java_2.11-22.11.0.jar
+
+=======================================================================================================================================
+Revision: 4556cc5aa9066b9c8c298709ca294ff64005da72
+Author: Christine <chawkins@basis.com>
+Date: 12/6/2022 3:47:33 PM
+Message:
+Bug 10535 - AD - New jars for AvaTax and Authorize.net available
+
+(cherry picked from commit d5f0994f00270cb36f97d2ce14f5c190fe23862b)
+----
+Deleted: lib/jars/anet-java-sdk-1.9.8-SNAPSHOT.jar
+Added: lib/jars/anet-java-sdk-2.0.6.jar
+
