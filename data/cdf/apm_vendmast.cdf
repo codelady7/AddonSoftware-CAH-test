@@ -577,12 +577,16 @@ rem --- Enable Payment Information fields when paying via ACH
 			callpoint!.setColumnEnabled("APM_VENDMAST.BNK_ACCT_NO",0)
 			callpoint!.setColumnEnabled("APM_VENDMAST.BNK_ACCT_TYPE",0)
 
-			callpoint!.setColumnData("APM_VENDMAST.BANK_NAME","",1)
-			callpoint!.setColumnData("APM_VENDMAST.ABA_NO","",1)
-			callpoint!.setColumnData("APM_VENDMAST.BNK_ACCT_NO","",1)
-			callpoint!.setColumnData("APM_VENDMAST.BNK_ACCT_TYPE","",1)
-			callpoint!.setColumnData("<<DISPLAY>>.CHKSTUB_EMAIL","",1)
-			callpoint!.setColumnData("<<DISPLAY>>.CHKSTUB_FAX","",1)
+			msg_id$="AP_DISCARD_ACH"
+			gosub disp_message
+			if msg_opt$="Y"
+				callpoint!.setColumnData("APM_VENDMAST.BANK_NAME","",1)
+				callpoint!.setColumnData("APM_VENDMAST.ABA_NO","",1)
+				callpoint!.setColumnData("APM_VENDMAST.BNK_ACCT_NO","",1)
+				callpoint!.setColumnData("APM_VENDMAST.BNK_ACCT_TYPE","",1)
+				callpoint!.setColumnData("<<DISPLAY>>.CHKSTUB_EMAIL","",1)
+				callpoint!.setColumnData("<<DISPLAY>>.CHKSTUB_FAX","",1)
+			endif
 		endif
 	endif
 
