@@ -94,7 +94,7 @@ rem --- Check Fulfillment
 	extractrecord(optFillmntHdr_dev,key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$,knum="AO_STATUS",dom=*next)optFillmntHdr$; inFulfillmnt=1
 	if inFulfillmnt then
 		packingDone=0
-		if optFillmntHdr.all_packed$="Y" and optFillmntHdr$.print_status$="Y" then packingDone=1
+		if optFillmntHdr.all_packed$="Y" then packingDone=1
 
 		rem --- All cartons shipped?
 		shippingDone=1

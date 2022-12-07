@@ -481,6 +481,9 @@ rem --- Initialize new row
 			callpoint!.setStatus("ABORT")
 			break
 		endif
+
+		rem --- Force focus on qty_packed in edit mode
+		callpoint!.setFocus(callpoint!.getValidationRow(),"OPT_CARTDET2.QTY_PACKED",1)
 	endif
 
 [[OPT_CARTDET2.QTY_PACKED.AVAL]]
