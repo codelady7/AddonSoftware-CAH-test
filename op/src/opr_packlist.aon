@@ -220,7 +220,7 @@ rem --- Check for user authentication
 rem --- Fill Report and Show
     rc=report!.fill(1)
     if rc<>BBJasperReport.getSUCCESS() then goto close_win
-    rc=packingList!.fill(1)
+    packingList!.fill(1)
     if rc<>BBJasperReport.getSUCCESS() then goto close_win
 
     rem --- The full report includes a separate copy of the Packing List for each carton
@@ -264,20 +264,18 @@ rem --- Fill Report and Show
 
     emailToolButton! = viewerControl!.getControl(BBJasperViewerControl.getEMAIL_TOOL_BUTTON_NAME())
     emailToolButton!.setCallback(BBjMenuButton.ON_TOOL_BUTTON_PUSH ,"OnEmailToolButton")
-    
+
     viewerWindow!.setReleaseOnClose(0)
     viewerWindow!.show(0)
         
     declare BBjTopLevelWindow bbjWindow!
     bbjWindow!= viewerWindow!.getViewerWindow()
-    cancelled=1
-    bbjWindow!.setCallback(bbjWindow!.ON_CLOSE,"close_win",err=*next); cancelled=0
-    if cancelled then goto close_win
+    bbjWindow!.setCallback(bbjWindow!.ON_CLOSE,"close_win")
 
 rem --- Event Control
     process_events,err=*same
 
-    release
+    goto std_exit
 
 document_whse:rem --- Write record to Barista document warehouse (ads_documents)
 
@@ -364,12 +362,12 @@ close_win:rem --- Viewer Window Closed
             for email_fax=0 to emailFax!.size()-1 step 3
                 reportControl!.addToDocQueue(emailFax!.get(email_fax),emailFax!.get(email_fax+1),"",emailFax!.get(email_fax+2))    
             next email_fax
+        endif
     endif
 
     viewerWindow!.destroy(err=*next)
-    rdForm!.destroy(err=*next)
     if tcb(13) then exit
-    release
+    goto std_exit
     
 open_tables:rem --- Open Tables
 
@@ -390,7 +388,7 @@ open_tables:rem --- Open Tables
         msg_tokens$[1]=open_status$
         gosub disp_message
         rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
-        release
+        goto std_exit
     endif
 
     return
@@ -486,7 +484,6 @@ rem #include std_end.src
 
 std_exit: rem --- Standard program end (01Mar2006)
 
-	rd_called$="YES"
     run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
     release
     
