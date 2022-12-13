@@ -220,7 +220,7 @@ rem --- Check for user authentication
 rem --- Fill Report and Show
     rc=report!.fill(1)
     if rc<>BBJasperReport.getSUCCESS() then goto close_win
-    packingList!.fill(1)
+    rc=packingList!.fill(1)
     if rc<>BBJasperReport.getSUCCESS() then goto close_win
 
     rem --- The full report includes a separate copy of the Packing List for each carton

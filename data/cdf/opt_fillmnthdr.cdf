@@ -40,35 +40,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 rem --- Set record deleted flag
 	callpoint!.setDevObject("recordDeleted",1)
 
-rem --- Remove Barista soft lock for the Order.
-	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
-	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
-	lock_table$="OPT_INVHDR"
-	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-	lock_type$="U"
-	lock_status$=""
-	lock_disp$="M"
-	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-
 [[OPT_FILLMNTHDR.ADIS]]
-rem --- Add Barista soft lock for the Order to make sure it cannot be edited.
-	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
-	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
-	lock_table$="OPT_INVHDR"
-	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-	lock_type$="L"
-	lock_status$=""
-	lock_disp$="M"
-	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-	if lock_status$<>""
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
 rem --- Capture starting record data so can tell later if anything changed
 	callpoint!.setDevObject("initial_rec_data$",rec_data$)
 
@@ -706,6 +678,14 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		writerecord(optFillmntDet_dev)optFillmntDet$
 	wend
 
+rem --- Remove Barista soft lock for the Order.
+	lock_table$="OPT_INVHDR"
+	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+	lock_type$="U"
+	lock_status$=""
+	lock_disp$="M"
+	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+
 rem --- Relaunch form with all the initialized data
 	rec_key$=optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$+optFillmntHdr.customer_id$+optFillmntHdr.order_no$+optFillmntHdr.ar_inv_no$
 	callpoint!.setStatus("RECORD:["+rec_key$+"]")
@@ -980,18 +960,6 @@ rem --- Are there any items that weren't picked completely
 			break
 		endif
 	endif
-
-rem --- Remove Barista soft lock for the Order.
-	ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
-	customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
-	order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
-	ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
-	lock_table$="OPT_INVHDR"
-	lock_record$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
-	lock_type$="U"
-	lock_status$=""
-	lock_disp$="M"
-	call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 
 [[OPT_FILLMNTHDR.BSHO]]
 rem --- Init Java classes
