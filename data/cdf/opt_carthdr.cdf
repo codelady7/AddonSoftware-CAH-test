@@ -166,7 +166,11 @@ rem --- Launch Carton Packing grid
 	key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+carton$
 
 	rem --- Pass additional info needed in OPT_CARTDET
-	callpoint!.setDevObject("shipped_flag", callpoint!.getColumnData("OPT_CARTHDR.SHIPPED_FLAG"))
+	if callpoint!.getDevObject("all_packed")="Y" then
+		callpoint!.setDevObject("shipped_flag", "Y")
+	else
+		callpoint!.setDevObject("shipped_flag", callpoint!.getColumnData("OPT_CARTHDR.SHIPPED_FLAG"))
+	endif
 
 	call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
 :		"OPT_CARTDET", 

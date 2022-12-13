@@ -119,6 +119,9 @@ rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
 	gosub update_record_fields
 
 [[OPT_FILLMNTDET.AGRN]]
+rem --- Auto launch lot/serial grid once
+	callpoint!.setDevObject("autoLaunchGrid",1)
+
 rem --- Force focus on the row's qty_picked cell
 	row=callpoint!.getValidationRow()
 	callpoint!.setFocus(row,"<<DISPLAY>>.QTY_PICKED_DSP",1)
@@ -148,6 +151,7 @@ rem --- Is this a dropship detail line?
 
 rem --- Enable Pack Carton button if, and only if, the QTY_PICKED_DSP is enabled
 	linetypeMap!=callpoint!.getDevObject("linetypeMap")
+	ship_qty=num(callpoint!.getColumnData("OPT_FILLMNTDET.QTY_SHIPPED"))
 	qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))
 	if !callpoint!.isEditMode() or ship_qty<=0 or qty_picked<0 or dropshipMap!.get(row)="Y" or  pos(linetypeMap!.get(row)="MO") then
 		callpoint!.setOptionEnabled("PACK",0)
@@ -253,6 +257,9 @@ rem --- Initialize RTP modified fields for modified existing records
 	endif
 
 [[<<DISPLAY>>.QTY_PICKED_DSP.AVAL]]
+rem --- Auto launch lot/serial grid once
+	callpoint!.setDevObject("autoLaunchGrid",1)
+
 rem --- Do not allow returns
 	qty_picked=num(callpoint!.getUserInput())
 	if qty_picked<0 then
@@ -311,6 +318,45 @@ rem --- Provide visual warning when quantity picked is NOT equal to the ship qua
 rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
 	callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(qty_picked))
 	gosub update_record_fields
+
+[[<<DISPLAY>>.QTY_PICKED_DSP.BINP]]
+rem --- Automatically launch OPT_FILLMNTLSDET grid for lot/serial items
+	item_id$=callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
+	gosub lot_ser_check
+	if lotser_item$="Y" and 	callpoint!.getDevObject("autoLaunchGrid") then
+		callpoint!.setDevObject("autoLaunchGrid",0)
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
+		cust$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
+		order$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDER_NO")
+		invoice$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_INV_NO")
+		seq_ref$=callpoint!.getColumnData("OPT_FILLMNTDET.ORDDET_SEQ_REF")
+
+		key_pfx$=firm_id$+"E"+ar_type$+cust$+order$+invoice$+seq_ref$
+
+		rem --- Pass additional info needed in OPT_FILLMNTLSDET
+		callpoint!.setDevObject("item_ship_qty", callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+		callpoint!.setDevObject("wh",callpoint!.getColumnData("OPT_FILLMNTDET.WAREHOUSE_ID"))
+		callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID"))
+		callpoint!.setDevObject("ship_qty",callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+
+		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:			"OPT_FILLMNTLSDET", 
+:			stbl("+USER_ID"), 
+:			"MNT" ,
+:			key_pfx$, 
+:			table_chans$[all], 
+:			dflt_data$[all]
+
+		callpoint!.setStatus("ACTIVATE")
+
+		rem --- Has the total quantity picked changed?
+		start_qty_picked=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_PICKED_DSP"))
+		total_picked=callpoint!.getDevObject("total_picked")
+		if total_picked<>start_qty_picked then
+			callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(total_picked),1)
+			callpoint!.setStatus("MODIFIED")
+		endif
+	endif
 
 [[OPT_FILLMNTDET.<CUSTOM>]]
 rem ==========================================================================

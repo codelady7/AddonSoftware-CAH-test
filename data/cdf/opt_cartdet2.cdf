@@ -71,6 +71,9 @@ rem --- Provide visual warning when quantity packed is less than the remaining n
 	read(optFillmntDet_dev,key="",knum="AO_STATUS",dom=*next)
 
 [[OPT_CARTDET2.AGRN]]
+rem --- Auto launch lot/serial grid once
+	callpoint!.setDevObject("autoLaunchGrid",1)
+
 rem --- Disable carton_no and qty_picked when the carton has shipped so they cannot be changed
 	carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
 	if cvs(carton_no$,2)<>"" then
@@ -346,7 +349,7 @@ rem --- A non-blank carton number is required
 	endif
 
 rem --- Skip if existing carton number wasn't changed
-	if cvs(carton_no$,2)=cvs(callpoint!.getColumnData("<<DISPLAY>>.CARTON_DSP"),2) then break
+	if cvs(carton_no$,2)=cvs(callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO"),2) then break
 
 rem --- Create new OPT_CARTHDR record if one doesn't already exist for this CARTON_NO 
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_CARTDET2","AO_STATUS",key_tpl$,table_chans$[all],status$
@@ -487,6 +490,9 @@ rem --- Initialize new row
 	endif
 
 [[OPT_CARTDET2.QTY_PACKED.AVAL]]
+rem --- Auto launch lot/serial grid once
+	callpoint!.setDevObject("autoLaunchGrid",1)
+
 rem --- Disable Pack Lot/Serial button except in qty_packed field
 	callpoint!.setOptionEnabled("PKLS",0)
 
@@ -573,7 +579,7 @@ rem --- For new line, default QTY_PACKED to the remaining number that still need
 	gosub getUnpackedQty
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 		if callpoint!.getDevObject("lotser_item")="Y" then
-			callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(0),1)
+			if callpoint!.getDevObject("autoLaunchGrid") then callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(0),1)
 		else
 			callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(unpackedQty),1)
 		endif
@@ -584,6 +590,101 @@ rem --- Enable Pack Lot/Serial button for lot/serial items
 		callpoint!.setOptionEnabled("PKLS",1)
 	else
 		callpoint!.setOptionEnabled("PKLS",0)
+	endif
+
+rem --- Automatically launch OPT_CARTLSDET2 grid for lot/serial items
+	if callpoint!.getDevObject("lotser_item")="Y" and callpoint!.getDevObject("autoLaunchGrid") then
+		callpoint!.setDevObject("autoLaunchGrid",0)
+
+		rem --- Initialize grid with unpacked picked lots/serials in OPT_FILLMNTLSDET
+		ar_type$=callpoint!.getColumnData("OPT_CARTDET2.AR_TYPE")
+		customer_id$=callpoint!.getColumnData("OPT_CARTDET2.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("OPT_CARTDET2.ORDER_NO")
+		ar_inv_no$=callpoint!.getColumnData("OPT_CARTDET2.AR_INV_NO")
+		carton_no$=callpoint!.getColumnData("OPT_CARTDET2.CARTON_NO")
+		orddet_seq_ref$=callpoint!.getColumnData("OPT_CARTDET2.ORDDET_SEQ_REF")
+		optCartLsDet2_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$+carton_no$
+
+		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
+		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")
+		read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
+		optCartLsDet2_key$=key(optCartLsDet2_dev,end=*next)
+		if pos(optCartLsDet2_trip$=optCartLsDet2_key$)=1 then
+			rem --- Grid already initialized
+		else
+			rem --- Ask if they want to pack all remaining unpacked lot/serial numbers picked for this item
+			msg_id$ = "OP_PACK_UNPACKED"
+			gosub disp_message
+			if msg_opt$="Y" then
+				rem --- Initialize grid
+				seqNo=0
+				optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
+				dim optFillmntLsDet$:fnget_tpl$("OPT_FILLMNTLSDET")
+				optFillmntDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
+
+				read(optFillmntLsDet_dev,key=optFillmntDet_key$,knum="AO_STATUS",dom=*next)
+				while 1
+					optFillmntLsDet_key$=key(optFillmntLsDet_dev,end=*break)
+					if pos(optFillmntDet_key$=optFillmntLsDet_key$)<>1 then break
+					readrecord(optFillmntLsDet_dev)optFillmntLsDet$
+
+					rem --- Skip if already fully packed in other cartoons
+					alreadyPacked=0
+					optCartLsDet2_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$
+					read(optCartLsDet2_dev,key=optCartLsDet2_trip$,knum="AO_ORDDET_CART",dom=*next)
+					while 1
+						optCartLsDet2_key$=key(optCartLsDet2_dev,end=*break)
+						if pos(optCartLsDet2_trip$=optCartLsDet2_key$)<>1 then break
+						readrecord(optCartLsDet2_dev)optCartLsDet2$
+						if optCartLsDet2.lotser_no$<>optFillmntLsDet.lotser_no$ then continue
+						alreadyPacked=alreadyPacked+optCartLsDet2.qty_packed
+					wend
+					if alreadyPacked>=optFillmntLsDet.qty_picked then continue
+
+					seqNo=seqNo+1
+					redim optCartLsDet2$
+					optCartLsDet2.firm_id$=firm_id$
+					optCartLsDet2.ar_type$=ar_type$
+					optCartLsDet2.customer_id$=customer_id$
+					optCartLsDet2.order_no$=order_no$
+					optCartLsDet2.ar_inv_no$=ar_inv_no$
+					optCartLsDet2.carton_no$=carton_no$
+					optCartLsDet2.orddet_seq_ref$=orddet_seq_ref$
+					optCartLsDet2.sequence_no$=str(seqNo,"000")
+					optCartLsDet2.lotser_no$=optFillmntLsDet.lotser_no$
+					optCartLsDet2.created_user$=sysinfo.user_id$
+					optCartLsDet2.created_date$=date(0:"%Yd%Mz%Dz")
+					optCartLsDet2.created_time$=date(0:"%Hz%mz")
+					optCartLsDet2.trans_status$="E"
+					optCartLsDet2.qty_packed=optFillmntLsDet.qty_picked-alreadyPacked
+					writerecord(optCartLsDet2_dev)optCartLsDet2$
+				wend
+			endif
+		endif
+
+		rem --- Launch Packing Carton Lot/Serial Detail grid
+		optCartLsDet2_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+orddet_seq_ref$+carton_no$
+
+		callpoint!.setDevObject("item_id",callpoint!.getColumnData("OPT_CARTDET2.ITEM_ID"))
+
+		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:			"OPT_CARTLSDET2", 
+:			stbl("+USER_ID"), 
+:			"MNT" ,
+:			optCartLsDet2_key$, 
+:			table_chans$[all], 
+:			dflt_data$[all]
+
+		callpoint!.setStatus("ACTIVATE")
+
+		rem --- Has the total quantity packed changed?
+		start_qty_packed=num(callpoint!.getColumnData("OPT_CARTDET2.QTY_PACKED"))
+		total_packed=callpoint!.getDevObject("total_packed")
+		if total_packed<>start_qty_packed then
+			callpoint!.setColumnData("OPT_CARTDET2.QTY_PACKED",str(total_packed),1)
+			callpoint!.setStatus("MODIFIED")
+			callpoint!.setFocus(callpoint!.getValidationRow(),"OPT_CARTDET2.QTY_PACKED",1)
+		endif
 	endif
 
 [[OPT_CARTDET2.<CUSTOM>]]
