@@ -1,85 +1,18 @@
 =======================================================================================================================================
- Report Date:   2022-12-06
- Report Branch: AddonSoftware 22.12
- Last Release:  AddonSoftware 22.11
+ Report Date:   2022-12-14
+ Report Branch: AddonSoftware 22.13
+ Last Release:  AddonSoftware 22.12
 =======================================================================================================================================
 
-22.11 released 11/14/2022
-BBjBaristaAddonDemos2211_11-10-2022_1626.jar
+22.12 released 12/12/2022
+BBjBaristaAddonDemos2212_12-09-2022_1301.jar
 
 =======================================================================================================================================
-Revision: aaaf9e97922d6e0d5c6f49eafa5bc21aba7521b8
-Author: Christine <chawkins@basis.com>
-Date: 11/15/2022 6:28:03 PM
-Message:
-Bug 10524 - OP - Error 26 in Sales Tax Transaction History form on non-numeric Customer ID
- - corrected sequence number issue by changing from a sequence counter sub-type to a regular sequence reference field
-
-(cherry picked from commit 05eeb2bc986b9df40c32fb48d67ff0146f6a76f2)
-----
-Modified: data/bar/opt_slstaxtrans.xml
-
-=======================================================================================================================================
-Revision: 0ffa8ad09da002acd26759868659f58d81dffbbb
-Author: Christine <chawkins@basis.com>
-Date: 11/17/2022 9:43:11 AM
-Message:
-Bug 10528 - AD - Forms built using BBjCalendarWidget need to turn off debug flag
- - altered createBBjCalendarWidget() constructor to not use debugging
-
-(cherry picked from commit d560b1db7e79a8d18af89096d2df0632cbc2efd1)
-----
-Modified: data/bar/pom_cal_maint.xml
-Modified: data/bar/sfm_cal_maint.xml
-Modified: data/cdf/pom_cal_maint.cdf
-Modified: data/cdf/sfm_cal_maint.cdf
-
-=======================================================================================================================================
-Revision: c6b73e4fdeb4377ecab4505568d8df4fea19d29c
+Revision: 62db762eb3f05ff9de779e6f8c48cf28f63a6ad6
 Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 11/29/2022 4:50:41 PM
+Date: 12/14/2022 10:54:35 AM
 Message:
-Bug 10531: Restored the GL account that appears on the same line as the
-account break.
+Bug 10540: Eliminated adding extra padding to ACH files when the line
+count is already divisible by 10.
 ----
-Modified: gl/src/glr_acctlist.aon
-
-=======================================================================================================================================
-Revision: c4a094f6763dcf10fc0115ac3ce0f99d7c18fa5a
-Author: BASIS GitHub Account <github@basis.cloud>
-Date: 12/5/2022 12:39:09 PM
-Message:
-Delete j2pay-2.7.7.jar
-
-j2pay-2.7.7.jar was replace by j2pay-2.9.11.jar several years ago.
-
-Removed jar from archive so it will no longer be included in the install.
-
-All jars found in the lib/jars directory are included in the packaging.
-----
-Deleted: lib/jars/j2pay-2.7.7.jar
-
-=======================================================================================================================================
-Revision: 5eb6b53bc82d770af3fe7253829a7306bebb7f3d
-Author: Christine <chawkins@basis.com>
-Date: 12/5/2022 12:48:02 PM
-Message:
-Committing new version of AvaTax jar, removing the older one.
-
-(cherry picked from commit bb9e1c25441f6a91196a42cc8a5afd0d0c704e90)
-----
-Deleted: lib/jars/avatax-rest-v2-api-java_2.11-21.3.1.jar
-Added: lib/jars/avatax-rest-v2-api-java_2.11-22.11.0.jar
-
-=======================================================================================================================================
-Revision: 4556cc5aa9066b9c8c298709ca294ff64005da72
-Author: Christine <chawkins@basis.com>
-Date: 12/6/2022 3:47:33 PM
-Message:
-Bug 10535 - AD - New jars for AvaTax and Authorize.net available
-
-(cherry picked from commit d5f0994f00270cb36f97d2ce14f5c190fe23862b)
-----
-Deleted: lib/jars/anet-java-sdk-1.9.8-SNAPSHOT.jar
-Added: lib/jars/anet-java-sdk-2.0.6.jar
-
+Modified: ap/src/apu_chkregister.aon
