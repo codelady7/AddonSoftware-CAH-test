@@ -533,6 +533,7 @@ finish_NACHA_file: rem --- Finish building complete NACHA text file for ACH paym
     rem --- NACHA File Control Record (Record Type Code 9)
     entry_count=(nacha_recs+2+2)
     pad_count=10-mod(entry_count,10)
+    if pad_count=10 then pad_count=0; rem --- If the line count is already divisible by 10, no extra padding is needed.
     block_count=(entry_count+pad_count)/10
     nachaFileControl$=""
     nachaFileControl$=nachaFileControl$+"9";                                    rem --- Record Type Code
