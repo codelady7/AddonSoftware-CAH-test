@@ -531,6 +531,26 @@
 	</barista_record>
 	<barista_record>
 		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>24315358-9d23-464b-833d-1faca04a7b00</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Pick Lot/Serial</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>27684745-b9ae-41ea-b4a5-95ffc73a1b43</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Pack Item Lot/Serial</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
 		<MENUITEM_ID>27c66580-d182-4111-9ede-b4b809b7b820</MENUITEM_ID>
 		<LANG_ID>DEU</LANG_ID>
 		<NO_SHOW>Y</NO_SHOW>
@@ -703,6 +723,16 @@
 		<LANG_ID>ENU</LANG_ID>
 		<NO_SHOW>Y</NO_SHOW>
 		<MENU_DESC>On-demand Order Acknowledgement</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>2fdd6b5d-bced-47fb-aef9-0d308863e648</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Report</MENU_DESC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
@@ -1125,6 +1155,16 @@
 	</barista_record>
 	<barista_record>
 		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>3a2198e4-6c10-413b-a437-67555733c4c4</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Pack Carton</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
 		<MENUITEM_ID>3b6bb631-4e54-4ca4-936c-7c8e440850ba</MENUITEM_ID>
 		<LANG_ID>DEU</LANG_ID>
 		<NO_SHOW>Y</NO_SHOW>
@@ -1367,6 +1407,16 @@
 		<LANG_ID>ITA</LANG_ID>
 		<NO_SHOW>Y</NO_SHOW>
 		<MENU_DESC>Terms Code Entry</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>468bd712-ba50-4af6-9e1c-e58f0ff38b13</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Order Fulfillment</MENU_DESC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
@@ -2833,6 +2883,16 @@
 	</barista_record>
 	<barista_record>
 		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>7f478e9d-fc48-4c49-92a2-3b8234cdfdd4</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Historical Carton Lot/Serial Packing</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
 		<MENUITEM_ID>7f623cd5-f195-467b-aecd-ec4988f5f785</MENUITEM_ID>
 		<LANG_ID>DEU</LANG_ID>
 		<NO_SHOW> </NO_SHOW>
@@ -3005,6 +3065,26 @@
 		<LANG_ID>ITA</LANG_ID>
 		<NO_SHOW>Y</NO_SHOW>
 		<MENU_DESC>Credit Action</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>899ead9a-2726-497f-8a8f-c2b58c472879</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Historical Carton Packing</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>8ae4477b-5f27-47f8-bc2d-b02fb476b166</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Pick Item</MENU_DESC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
@@ -3701,6 +3781,16 @@
 		<NO_SHOW> </NO_SHOW>
 		<MENU_DESC>Rimouvere linee di dettaglio scollegate</MENU_DESC>
 		<HELP_TAG>Remove_Unlinked_Detail_Lines3</HELP_TAG>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>a4d5a8d8-14d6-4bc7-b015-64cc574c2e38</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Pack Carton Lot/Serial</MENU_DESC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
@@ -4459,6 +4549,16 @@
 		<NO_SHOW> </NO_SHOW>
 		<MENU_DESC>Rapporto stato dell'ordine per cliente</MENU_DESC>
 		<HELP_TAG>Order_Status_Report_By_Customer</HELP_TAG>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>d2ffd38b-5148-4cf7-8994-544a8bb0d2e4</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Fulfillment Pack Item</MENU_DESC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
