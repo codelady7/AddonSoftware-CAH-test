@@ -312,7 +312,7 @@
 		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
 		<MENUITEM_ID>2fdd6b5d-bced-47fb-aef9-0d308863e648</MENUITEM_ID>
 		<MENU_DESC>Fulfillment Report</MENU_DESC>
-		<IMAGE>im_menui_table.png</IMAGE>
+		<IMAGE>im_menui_report.png</IMAGE>
 		<NO_SHOW> </NO_SHOW>
 		<EXPAND> </EXPAND>
 		<NO_ACTION> </NO_ACTION>
