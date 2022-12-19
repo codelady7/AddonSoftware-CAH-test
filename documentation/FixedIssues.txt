@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-12-14
+ Report Date:   2022-12-19
  Report Branch: AddonSoftware 22.13
  Last Release:  AddonSoftware 22.12
 =======================================================================================================================================
@@ -16,3 +16,16 @@ Bug 10540: Eliminated adding extra padding to ACH files when the line
 count is already divisible by 10.
 ----
 Modified: ap/src/apu_chkregister.aon
+
+=======================================================================================================================================
+Revision: ccae2bc3f5eebfca60f684c565bc6bb397a707b9
+Author: Christine <chawkins@basis.com>
+Date: 12/19/2022 4:56:28 PM
+Message:
+Bug 10537 - AP - Export to 1099 throws err 252, and can put out incorrect entries and entries for zero amount
+ - corrected as suggested
+
+(cherry picked from commit 772b36562ec29ff6dd6024de902a0c4b1257d04d)
+----
+Modified: ap/src/apx_export_1099.aon
+
