@@ -279,40 +279,40 @@ rem --- Accumulate payments
                     curr_calendar_paymts=curr_calendar_paymts+apm02a.cur_cal_pmts
                 wend    
 
-                if curr_calendar_paymts<minimum continue
+                if curr_calendar_paymts=0 or curr_calendar_paymts<minimum continue
                 boxAmts!.put(cvs(type_box$,2),curr_calendar_paymts)
             wend
     
 rem --- Assign export variables
-
+            if boxAmts!.size()=0 then continue;rem nothing for any of the box types on this form
             iter!=boxAmts!.keySet().iterator()
             while iter!.hasNext()
                 type_box$=iter!.next()
 
-                if type_box$="DIV1" then ordinary_dividends=boxAmts!.getProperty(type_box$)
-                if type_box$="DIV2" then qualified_dividends=boxAmts!.getProperty(type_box$)
-                if type_box$="DIV3" then cap_gain_distributions=boxAmts!.getProperty(type_box$)
-                if type_box$="DIV4" then unrecaptured_1250_gain=boxAmts!.getProperty(type_box$)
-                if type_box$="DIV5" then nondividend_distribution=boxAmts!.getProperty(type_box$)
+                if type_box$="DIV1" then ordinary_dividends=boxAmts!.get(type_box$)
+                if type_box$="DIV2" then qualified_dividends=boxAmts!.get(type_box$)
+                if type_box$="DIV3" then cap_gain_distributions=boxAmts!.get(type_box$)
+                if type_box$="DIV4" then unrecaptured_1250_gain=boxAmts!.get(type_box$)
+                if type_box$="DIV5" then nondividend_distribution=boxAmts!.get(type_box$)
 
-                if type_box$="INT1" then interest_income=boxAmts!.getProperty(type_box$)
+                if type_box$="INT1" then interest_income=boxAmts!.get(type_box$)
 
-                if type_box$="MISC1" then rents=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC2" then royalties=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC3" then other_income=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC4" then fishing_boat_proceeds=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC5" then medical_health_care=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC6" then substitute_payments=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC7" then crop_insurance_proceeds=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC8" then gross_paid_to_attorney=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC9" then fish_purchased_for_resale=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC10" then section_409_deferrals=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC11" then golden_parachute_payments=boxAmts!.getProperty(type_box$)
-                if type_box$="MISC12" then nonqualified_deferred_compensation=boxAmts!.getProperty(type_box$)
+                if type_box$="MISC1" then rents=boxAmts!.get(type_box$)
+                if type_box$="MISC2" then royalties=boxAmts!.get(type_box$)
+                if type_box$="MISC3" then other_income=boxAmts!.get(type_box$)
+                if type_box$="MISC4" then fishing_boat_proceeds=boxAmts!.get(type_box$)
+                if type_box$="MISC5" then medical_health_care=boxAmts!.get(type_box$)
+                if type_box$="MISC6" then substitute_payments=boxAmts!.get(type_box$)
+                if type_box$="MISC7" then crop_insurance_proceeds=boxAmts!.get(type_box$)
+                if type_box$="MISC8" then gross_paid_to_attorney=boxAmts!.get(type_box$)
+                if type_box$="MISC9" then fish_purchased_for_resale=boxAmts!.get(type_box$)
+                if type_box$="MISC10" then section_409_deferrals=boxAmts!.get(type_box$)
+                if type_box$="MISC11" then golden_parachute_payments=boxAmts!.get(type_box$)
+                if type_box$="MISC12" then nonqualified_deferred_compensation=boxAmts!.get(type_box$)
     
                 if type_box$="NEC1" then nonemployee_compensation=boxAmts!.get(type_box$)
             wend
-    
+  
 rem --- Fix Up Fed ID Number (Strip out all but the 9 digits)
     
             tmp_fedid$=cvs(apm01a.federal_id$,2)
