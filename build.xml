@@ -452,6 +452,10 @@
 ulimit -n 10000]]></replacevalue>
         </replace>
         
+        <!-- Make sure bbjservices has execute permissions -->
+        <exec executable="chmod 755 ${install.dir}/bin/bbjservices">
+        </exec>
+        
         <!-- Use killBBjProcs to shutdown BBj -->
         <exec executable="${install.dir}/bin/bbjservices">
               <env key="DISPLAY" value="${display}"/>
