@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opr_opnorddetail"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opr_opnorddetail">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opr_opnorddetail">20080220</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opr_opnorddetail">20221123</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opr_opnorddetail">20221123</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opr_opnorddetail">165136</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opr_opnorddetail">20221222</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opr_opnorddetail">20221222</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opr_opnorddetail">134650</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opr_opnorddetail"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opr_opnorddetail">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opr_opnorddetail"></DD_ATTR_DKNM>
@@ -60,6 +60,10 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.opr_opnorddetailarec">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opr_opnorddetailarec">OPR_OPNORDDETAIL</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opr_opnorddetailarec">AREC</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opr_opnorddetailarer">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opr_opnorddetailarer">OPR_OPNORDDETAIL</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opr_opnorddetailarer">ARER</DD_ATTR_CPRO>
@@ -512,7 +516,7 @@
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail008">0</DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail008">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_CTLH>
@@ -531,14 +535,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opr_opnorddetail008">9</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opr_opnorddetail008">10</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opr_opnorddetail008">OPEN_BACK</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opr_opnorddetail008">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opr_opnorddetail008">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opr_opnorddetail008">3011</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.opr_opnorddetail008">3012</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.opr_opnorddetail008">cbx_open_back</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.opr_opnorddetail008">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_RADG>
@@ -582,14 +586,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opr_opnorddetail009">10</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opr_opnorddetail009">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opr_opnorddetail009">OPEN_HOLD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opr_opnorddetail009">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opr_opnorddetail009">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opr_opnorddetail009">3012</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.opr_opnorddetail009">3013</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.opr_opnorddetail009">cbx_open_hold</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.opr_opnorddetail009">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_RADG>
@@ -614,7 +618,7 @@
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail010">0</DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail010">+2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CTLH>
@@ -633,14 +637,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opr_opnorddetail010">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opr_opnorddetail010">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opr_opnorddetail010">OPEN_SHIPPED</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opr_opnorddetail010">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opr_opnorddetail010">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opr_opnorddetail010">3013</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.opr_opnorddetail010">3011</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.opr_opnorddetail010">cbx_open_shipped</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.opr_opnorddetail010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_RADG>
