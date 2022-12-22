@@ -1,3 +1,7 @@
+[[OPR_OPNORDDETAIL.AREC]]
+rem --- Disable Shipped Orders
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",0)
+
 [[OPR_OPNORDDETAIL.ARER]]
 rem --- Enable Open Orders' Non-Stock Options ListButton
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
@@ -13,7 +17,7 @@ if open$="Y" then
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_BACK",1)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_HOLD",1)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_NEW",1)
-	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",1)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",0); rem --- Disable Shipped Orders
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_BACK","Y",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_HOLD","Y",1)
@@ -25,7 +29,7 @@ else
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_BACK",0)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_HOLD",0)
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_NEW",0)
-	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",0)
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",1); rem --- Enable Shipped Orders
 	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.NON_STOCK_OPTION",0)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_BACK","N",1)
 	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_HOLD","N",1)
@@ -72,6 +76,17 @@ endif
 rem --- Skip if not changed
 open_new$=callpoint!.getUserInput()
 if open_new$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_new") then break
+
+rem --- Enable/disable Shipped Orders checkbox
+if open_new$="Y" then
+	rem --- Check and disable Shipped Orders when New Orders is checked
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",0)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_SHIPPED","Y",1)
+else
+	rem --- Unheck and enable Shipped Orders when New Orders is NOT checked
+	callpoint!.setColumnEnabled("OPR_OPNORDDETAIL.OPEN_SHIPPED",1)
+	callpoint!.setColumnData("OPR_OPNORDDETAIL.OPEN_SHIPPED","N",1)
+endif
 
 rem --- Enable/disable Open Orders' Non-Stock Options ListButton
 open_back$=callpoint!.getColumnData("OPR_OPNORDDETAIL.OPEN_BACK")
