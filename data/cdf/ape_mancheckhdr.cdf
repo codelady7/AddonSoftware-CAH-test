@@ -741,7 +741,7 @@ rem --- not found in entry file, so see if in open checks
 						msg_id$="AP_RETAIN_PAY_APPROV"
 						msg_opt$=""
 						gosub disp_message
-						callpoint!.setColumnData("APE_MANCHECKHDR.RETAIN_APPROVALS","N")
+						if msg_opt$="N" then callpoint!.setColumnData("APE_MANCHECKHDR.RETAIN_APPROVALS","N")
 					endif
 				else
 					callpoint!.setStatus("ABORT")
