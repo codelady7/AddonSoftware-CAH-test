@@ -324,6 +324,10 @@ rem --- Automatically launch OPT_FILLMNTLSDET grid for lot/serial items
 	item_id$=callpoint!.getColumnData("OPT_FILLMNTDET.ITEM_ID")
 	gosub lot_ser_check
 	if lotser_item$="Y" and 	callpoint!.getDevObject("autoLaunchGrid") then
+		rem --- Get order detail line unit_cost
+		unitcostMap!=callpoint!.getDevObject("unitcostMap")
+		callpoint!.setDevObject("unit_cost",unitcostMap!.get(row))
+
 		callpoint!.setDevObject("autoLaunchGrid",0)
 		ar_type$=callpoint!.getColumnData("OPT_FILLMNTDET.AR_TYPE")
 		cust$=callpoint!.getColumnData("OPT_FILLMNTDET.CUSTOMER_ID")
