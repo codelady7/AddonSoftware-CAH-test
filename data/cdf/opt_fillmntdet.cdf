@@ -45,6 +45,7 @@ rem --- Get corresponding order detail line.
 rem --- What is this line type? Is this a dropship detail line?
 	curr_row=callpoint!.getValidationRow()
 	pickGrid!=callpoint!.getDevObject("pickGrid")
+	picked_col=callpoint!.getDevObject("picked_col")
 	linetypeMap!=callpoint!.getDevObject("linetypeMap")
 	dropshipMap!=callpoint!.getDevObject("dropshipMap")
 	opcLineCode_dev=fnget_dev("OPC_LINECODE")
@@ -57,7 +58,6 @@ rem --- What is this line type? Is this a dropship detail line?
 		pickGrid!.setRowForeColor(curr_row,callpoint!.getDevObject("disabledColor"))
 		pickGrid!.setCellEditable(curr_row,picked_col,0)
 	else
-		picked_col=callpoint!.getDevObject("picked_col")
 		if qty_picked<>ship_qty then
 			pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("boldFont"))
 			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("redColor"))
@@ -66,7 +66,11 @@ rem --- What is this line type? Is this a dropship detail line?
 			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("blackColor"))
 		endif
 		if callpoint!.getDevObject("all_packed")<>"Y" and callpoint!.isEditMode() then
-			pickGrid!.setCellEditable(curr_row,picked_col,1)
+			if callpoint!.isEditMode() then
+				pickGrid!.setCellEditable(curr_row,picked_col,1)
+			else
+				pickGrid!.setCellEditable(curr_row,picked_col,0)
+			endif
 		else
 			rem --- Cannot change qty_picked when "All Packed"
 			pickGrid!.setCellEditable(curr_row,picked_col,0)
@@ -125,6 +129,24 @@ rem --- Auto launch lot/serial grid once
 rem --- Force focus on the row's qty_picked cell
 	row=callpoint!.getValidationRow()
 	callpoint!.setFocus(row,"<<DISPLAY>>.QTY_PICKED_DSP",1)
+
+rem --- Enable/disable qty_picked cell
+	pickGrid!=callpoint!.getDevObject("pickGrid")
+	disabledColor!=callpoint!.getDevObject("disabledColor")
+	picked_col=callpoint!.getDevObject("picked_col")
+	if pickGrid!.getCellForeColor(row,picked_col)=disabledColor! then
+		pickGrid!.setCellEditable(row,picked_col,0)
+	else
+		if callpoint!.getDevObject("all_packed")="Y" then
+			pickGrid!.setCellEditable(row,picked_col,0)
+		else
+			if callpoint!.isEditMode() then
+				pickGrid!.setCellEditable(row,picked_col,1)
+			else
+				pickGrid!.setCellEditable(row,picked_col,0)
+			endif
+		endif
+	endif
 
 rem --- Get order detail line unit_cost
 	unitcostMap!=callpoint!.getDevObject("unitcostMap")
