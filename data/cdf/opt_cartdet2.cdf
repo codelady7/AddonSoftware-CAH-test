@@ -192,6 +192,10 @@ rem ---Initialize fields needed for CARTON_NO lookup
 	callpoint!.setColumnData("OPT_CARTDET2.AR_INV_NO",optCartDet2_keyPrefix.ar_inv_no$)
 	callpoint!.setColumnData("OPT_CARTDET2.ORDDET_SEQ_REF",optCartDet2_keyPrefix.orddet_seq_ref$)
 
+rem --- Also init firm_id and trans_status for work around to Barista bug 10541
+	callpoint!.setColumnData("OPT_CARTDET2.FIRM_ID",optCartDet2_keyPrefix.firm_id$)
+	callpoint!.setColumnData("OPT_CARTDET2.TRANS_STATUS",optCartDet2_keyPrefix.trans_status$) 
+
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
 	callpoint!.setColumnData("OPT_CARTDET2.CREATED_USER",sysinfo.user_id$)
