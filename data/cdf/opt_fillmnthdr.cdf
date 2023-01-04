@@ -347,7 +347,7 @@ rem --- Disable qty_picked on picking tab
 		picked_col=callpoint!.getDevObject("picked_col")
 		for i=0 to rows-2
 			if pickGrid!.getCellForeColor(i,picked_col)<>disabledColor! then
-				if all_packed$<>"Y" then
+				if all_packed$="Y" then
 					pickGrid!.setCellEditable(i,picked_col,0)
 				else
 					pickGrid!.setCellEditable(i,picked_col,1)
