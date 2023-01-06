@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2022-12-19
+ Report Date:   2023-01-06
  Report Branch: AddonSoftware 22.13
  Last Release:  AddonSoftware 22.12
 =======================================================================================================================================
@@ -28,4 +28,19 @@ Bug 10537 - AP - Export to 1099 throws err 252, and can put out incorrect entrie
 (cherry picked from commit 772b36562ec29ff6dd6024de902a0c4b1257d04d)
 ----
 Modified: ap/src/apx_export_1099.aon
+
+=======================================================================================================================================
+Revision: 1e9820eb5fbe9d4372af173aa973bece8fb59252
+Author: Christine <chawkins@basis.com>
+Date: 1/6/2023 10:08:03 AM
+Message:
+Bug 10491 - AP - Minor control position adjustment needed in AP Params
+ - a Barista control sizing issue at heart, but working around for this control by setting a fixed width. Makes both Windows and Linux presentations look better.
+
+(cherry picked from commit 2da0e0dde4c0b21dd81d54d5aed9121ffae3dd28)
+----
+Modified: data/bar/apr_checks.xml
+Modified: data/bar/aps_ach.xml
+Modified: data/bar/aps_params.xml
+Modified: data/bar/aps_payauth.xml
 
