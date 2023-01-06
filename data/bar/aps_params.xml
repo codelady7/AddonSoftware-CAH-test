@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.aps_params">FE57BCD7C580014E15D29197353ADF2B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.aps_params">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.aps_params">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.aps_params">20220613</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.aps_params">20220613</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.aps_params">160916</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.aps_params">20230105</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.aps_params">20230105</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.aps_params">102426</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.aps_params"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.aps_params">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.aps_params">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.aps_params"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.aps_params"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.aps_params">T</DD_ATTR_FTYP>
@@ -786,7 +786,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params006">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params006">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params006"></DD_ATTR_CTLY>
@@ -1959,7 +1959,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params029">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params029"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params029"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params029">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params029">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params029"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params029"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params029"></DD_ATTR_CTLY>
@@ -2010,7 +2010,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params030">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params030"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params030"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params030">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params030">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params030"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params030"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params030"></DD_ATTR_CTLY>
@@ -2167,7 +2167,7 @@
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params033">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params033"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params033"></DD_ATTR_CTLY>
-			<DD_ATTR_CTLW id="ddm_table_cols.aps_params033"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLW id="ddm_table_cols.aps_params033">265</DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.aps_params033"></DD_ATTR_CTLH>
 			<DD_ATTR_DFLT id="ddm_table_cols.aps_params033"></DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.aps_params033"></DD_ATTR_DRLE>
@@ -2367,7 +2367,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params037">20210324</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params037">APS_PARAMS.SCAN_DOCS_TO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params037">!NOT</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params037">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params037">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params037">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params037"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params037"></DD_ATTR_CTLY>
@@ -2469,7 +2469,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params039">20210324</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params039"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params039"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params039">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params039">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params039">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params039"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params039"></DD_ATTR_CTLY>
@@ -2520,7 +2520,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.aps_params040">20210324</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.aps_params040">APS_PARAMS.PRNT_SIGNATURE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.aps_params040">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.aps_params040">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.aps_params040">../apps/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.aps_params040">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.aps_params040"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.aps_params040"></DD_ATTR_CTLY>
@@ -3450,7 +3450,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ap_dist_code">Distribution Code</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ap_dist_code">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ap_dist_code">2</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ap_dist_code"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ap_dist_code"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ap_dist_code">N</DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ap_dist_code">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ap_dist_code">AP </ASC_PROD_ID>
@@ -3464,8 +3464,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ap_dist_code"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ap_dist_code">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ap_dist_code">CODE_DESC       </DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ap_dist_code">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ap_dist_code">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ap_dist_code"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ap_dist_code"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ap_dist_code"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ap_dist_code"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ap_dist_code">[+FIRM_ID]+"B"+@ </DD_ATTR_DKEY>
@@ -4906,7 +4906,7 @@
 			<DD_DESCRIPTION id="ddm_elements.name">Name</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.name">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.name">30</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.name"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.name"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.name">Y</DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.name">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.name">ADB</ASC_PROD_ID>
@@ -4920,8 +4920,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.name"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.name">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.name"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.name"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.name"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.name">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.name">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.name"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.name"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.name"></DD_ATTR_DKEY>
@@ -5114,7 +5114,7 @@
 			<DD_DESCRIPTION id="ddm_elements.gl_acct_desc">GL Account Description</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.gl_acct_desc">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.gl_acct_desc">35</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.gl_acct_desc"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.gl_acct_desc"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.gl_acct_desc"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.gl_acct_desc">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.gl_acct_desc">GL </ASC_PROD_ID>
@@ -5128,8 +5128,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.gl_acct_desc"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.gl_acct_desc">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.gl_acct_desc"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.gl_acct_desc">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.gl_acct_desc">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.gl_acct_desc"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.gl_acct_desc"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.gl_acct_desc"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.gl_acct_desc"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.gl_acct_desc"></DD_ATTR_DKEY>
