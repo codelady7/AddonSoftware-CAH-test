@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-01-06
+ Report Date:   2023-01-11
  Report Branch: AddonSoftware 22.13
  Last Release:  AddonSoftware 22.12
 =======================================================================================================================================
@@ -43,4 +43,21 @@ Modified: data/bar/apr_checks.xml
 Modified: data/bar/aps_ach.xml
 Modified: data/bar/aps_params.xml
 Modified: data/bar/aps_payauth.xml
+
+=======================================================================================================================================
+Revision: fc9f15360d8aca93d53c53bd36144c172e1aff37
+Author: Christine <chawkins@basis.com>
+Date: 1/11/2023 3:08:52 PM
+Message:
+Bug 10549 - PO - Selecting an item from Item ID query doesn't fill in remaining fields on the line
+ - augmented code in the validate_whse_item routine to also set the changed flag if the getGridRowNewStatus() for the row is "Y."
+
+(cherry picked from commit d42c76f5da1a24c75e0e432bd1b0f4c10d91ad29)
+----
+Modified: data/bar/poe_podet.xml
+Modified: data/bar/poe_recdet.xml
+Modified: data/bar/poe_reqdet.xml
+Modified: data/cdf/poe_podet.cdf
+Modified: data/cdf/poe_recdet.cdf
+Modified: data/cdf/poe_reqdet.cdf
 
