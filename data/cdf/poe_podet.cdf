@@ -1089,7 +1089,7 @@ rem ==========================================================================
 	change_flag=0
 	if callpoint!.getVariableName()="POE_PODET.ITEM_ID" then
 		item_id$=callpoint!.getUserInput()
-		if item_id$<>callpoint!.getColumnData("POE_PODET.ITEM_ID") then 
+		if item_id$<>callpoint!.getColumnData("POE_PODET.ITEM_ID") or callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y"
 			change_flag=1
 		 endif
 	else
@@ -1097,7 +1097,7 @@ rem ==========================================================================
 	endif
 	if callpoint!.getVariableName()="POE_PODET.WAREHOUSE_ID" then
 		whse$=callpoint!.getUserInput()
-		if whse$<>callpoint!.getColumnData("POE_PODET.WAREHOUSE_ID") then
+		if whse$<>callpoint!.getColumnData("POE_PODET.WAREHOUSE_ID") or callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y"
 			change_flag=1
 		endif
 	else
