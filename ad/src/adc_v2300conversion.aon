@@ -185,6 +185,148 @@ ER10303: rem --- BARCODE_SOURCE field won't be added to OPS_PARAMS until require
         gosub disp_meter
         print(log_dev)meter_text$
     endif
+
+rem --- For version 23.00, initialize new MICR_PRINT and MICR_ACCT fieldS in ADC_BANKACCTCODE, using corresponding STBL values, if present (ER 10043)
+    this_module$="AD"
+    if installMap!.get(this_module$)="Y" then
+        task$="2300_AD_adc_bankacctcode"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=1
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="ADC_BANKACCTCODE",   open_opts$[1]="OTA"
+    
+            gosub open_tables
+    
+            adcBankacctcode_dev=num(open_chans$[1])
+            dim adcBankacctcode$:open_tpls$[1]
+
+            rem --- Open new aon/config/addon.syn
+            open_success=0
+            new_addonsyn_dev=unt
+            open(new_addonsyn_dev,isz=-1,err=*next)aonDir$+"config/addon.syn"; open_success=1
+
+            rem --- Get current +MICR_PRINT+firm+bankacctcode and +MICR_ACCT+firm+bankacctcode STBLs, and don't write them back into addon.syn
+            micrGlobals!=new HashMap()
+            if open_success then
+                rem --- Make copy of new addon.syn without the STBLs 
+                counter=1
+                while 1
+                    rem --- Find a backup file that doesn't exist
+                    backup$=aonDir$+"config/addon.syn.bak"+str(counter)
+                    backupFile! = new File(backup$)
+                    if !backupFile!.exists() then break
+                    counter=counter+1
+                wend
+                string backup$
+                backup_dev=unt
+                open(backup_dev)backup$
+            
+                while 1
+                    read(new_addonsyn_dev,end=*break)record$
+                    if record$="" then continue
+                    rem --- Process +MICR_PRINT+firm+bankacctcode and +MICR_ACCT+firm+bankacctcode lines
+                    if pos("+MICR_PRINT"=record$)<>0
+                        xpos = pos("="=record$,-1)
+                        if xpos
+                            wval$=cvs(record$(xpos+1),3)
+                            wkey$=record$(1,xpos-1)
+                            wkey$=wkey$(pos("+"=wkey$))
+                            wkey$=wkey$(12)+wkey$(1,11)
+                            micrGlobals!.put(wkey$,wval$)
+                            continue
+                        endif
+                    endif
+                    if pos("+MICR_ACCT"=record$)<>0
+                        xpos = pos("="=record$,-1)
+                        if xpos
+                            wval$=cvs(record$(xpos+1),3)
+                            wkey$=record$(1,xpos-1)
+                            wkey$=wkey$(pos("+"=wkey$))
+                            wkey$=wkey$(11)+wkey$(1,10)
+                            micrGlobals!.put(wkey$,wval$)
+                            continue
+                        endif
+                    endif                    
+                    write(backup_dev)record$
+                wend
+                close(backup_dev,err=*next)
+            endif
+
+            rem --- Initialize new MICR_PRINT and MICR_ACCT fields in ADC_BANKACCTCODE with STBL values stored in hashmap
+            iter!=micrGlobals!.keySet().iterator()
+            while iter!.hasNext()
+                wky$=iter!.next()
+                redim adcBankacctcode$
+                wval$=micrGlobals!.get(wky$)
+                reckey$=wky$(1,pos("+"=wky$)-1)
+                adcBankacctcode.firm_id$=reckey$(1,2)
+                adcBankacctcode.bnk_acct_cd$=reckey$(3)
+
+                readrecord(adcBankacctcode_dev,key=adcBankacctcode.firm_id$+adcBankacctcode.bnk_acct_cd$,dom=*continue)adcBankacctcode$
+                if pos("+MICR_PRINT"=wky$) then adcBankacctcode.micr_print$=wval$
+                if pos("+MICR_ACCT"=wky$) then adcBankacctcode.micr_acct$=wval$
+              
+                writerecord(adcBankacctcode_dev)adcBankacctcode$
+            wend
+
+            rem --- Save current addon.syn, and replace it with updated addon.syn
+            if micrGlobals!.size() then
+                close(new_addonsyn_dev,err=*next)
+                erase aonDir$+"config/addon.syn.bakMicr", err=*next
+                success=0
+                rename aonDir$+"config/addon.syn" to aonDir$+"config/addon.syn.bakMicr", err=*next; success=1
+                if success then
+                    erase aonDir$+"config/addon.syn", err=*next
+                    rename backup$ to aonDir$+"config/addon.syn", err=*next
+                endif
+            endif            
+            
+            rem --- close files opened for this conversion
+            num_files=1
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="ADC_BANKACCTCODE", open_opts$[1]="C"
+            gosub open_tables
+
+            close(new_addonsyn_dev,err=*next)
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+                
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
     
 done: rem --- Done, close things up
 

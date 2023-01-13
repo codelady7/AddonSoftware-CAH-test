@@ -1,0 +1,89 @@
+rem AP MICR character translations
+rem Proprietary Software. BASIS International Ltd.
+rem Program ID: apd_micr_code.aon
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- Portions Copyright 2016 by Assorted Business Services Inc.
+rem ---  All Rights Reserved.
+
+
+setesc std_error
+seterr std_error
+
+enter gui_dev, Form!, expand_col$, ddm_drill_defs$, drill_pfx$, table_chans$[all]
+
+rem --- Main process
+			user_id$=stbl("+USER_ID")
+			dim dflt_data$[1,2]
+			call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:				"APX_MICRCODE",
+:				user_id$,
+:				"MNT",
+:				"",
+:				table_chans$[all],
+:				"",
+:				dflt_data$[all]
+
+goto std_exit
+
+rem --- Functions
+
+def fnget_dev(tmp0$)=num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3))
+def fnget_tpl$(tmp0$)=table_chans$[num(table_chans$[0,0](pos(pad(tmp0$,17)=table_chans$[0,0],20)+17,3)),0]
+
+open_tables:rem --- Open Tables
+
+call stbl("+DIR_SYP")+"bac_open_tables.bbj",  open_beg,  open_end,  open_tables$[all],  open_opts$[all],  open_chans$[all],  open_tpls$[all],  rd_table_chans$[all],  open_batch,  open_status$
+
+if open_status$<>"" then
+   msg_id$="ENTRY_OPEN_ERROR"
+   dim msg_tokens$[1]
+   msg_tokens$[1]=open_status$
+   gosub disp_message
+   goto std_exit
+endif
+
+return
+
+disp_message:
+rem --- Display Message Dialog
+
+call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+
+return
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (18Nov2014)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$=""
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+std_exit:
+rem --- Exit Program
+
+exit
+

@@ -223,8 +223,8 @@ rem --- For version 21.00, initialize new paramaters in APS_PARAMS
             read(apsParams_dev,key="",dom=*next)
             while 1
                 readrecord(apsParams_dev,end=*break)apsParams$
-                apsParams.prnt_aba_no$="N"
-                apsParams.prnt_bnk_acct_no$="N"
+                field apsParams$,"PRNT_ABA_NO"="N",err=*next; rem ER 10043 this field removed in v23.00
+                field apsParams$,"PRNT_BNK_ACCT_NO"="N",err=*next; rem ER 10043 this field removed in v23.00
                 apsParams.scan_docs_to$="NOT"
                 apsParams.warn_in_reg$="N"
                 apsParams.ok_to_update$="N"

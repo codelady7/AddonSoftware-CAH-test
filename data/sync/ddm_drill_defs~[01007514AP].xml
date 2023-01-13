@@ -33,4 +33,13 @@
 		<DD_ATTR_IDEF>AP_VENDPAYMENTS </DD_ATTR_IDEF>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
+	<barista_record>
+		<DRILL_DEF_ID>AP_MICR_CODE    </DRILL_DEF_ID>
+		<DESCRIPTION>MICR Code Display</DESCRIPTION>
+		<DD_ATTR_DTAB>APX_MICRCODE    </DD_ATTR_DTAB>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<DD_ATTR_DINQ>[+DIR_PGM]apd_micr_code.aon</DD_ATTR_DINQ>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
 </barista_admin_records>

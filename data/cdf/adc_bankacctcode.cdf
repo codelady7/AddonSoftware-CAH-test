@@ -32,6 +32,19 @@ rem --- Bank routing number must be 9-digit number, or blank, and pass 371371371
 		endif
 	endif
 
+[[ADC_BANKACCTCODE.ADIS]]
+rem --- display formatted bank acct number (using MICR font if loaded on the client)
+
+		disp_acct$=cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_NO"),3)
+		micr_acct$=cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_ACCT"),3)
+		gosub format_acct_no
+
+[[ADC_BANKACCTCODE.AREC]]
+rem --- init static text field that displays MICR
+
+	micr_static_ctl!=Form!.getControl(num(callpoint!.getDevObject("micr_static_ctl")))
+	micr_static_ctl!.setText("")
+
 [[ADC_BANKACCTCODE.BDEL]]
 rem --- Don’t allow deletinging BNK_ACCT_CD if currently in use in either APS_ACH or GLM_BANKMASTER (glm-05)
 	bnk_acct_cd$=callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_CD")
@@ -92,6 +105,12 @@ rem --- Bank account number must be a number with at least 4 digits, or blank
 		endif
 	endif
 
+rem --- Reset micr account format if bank account number has changed
+	if cvs(bnk_acct_no$,3)<>cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_NO"),3)
+		callpoint!.setColumnData("ADC_BANKACCTCODE.MICR_ACCT",fill(len(cvs(bnk_acct_no$,3)),"#"),1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
 [[ADC_BANKACCTCODE.BNK_ACCT_TYPE.AVAL]]
 rem --- Disable and clear NXT_CHECK_NO if this is NOT a checking account
 	if callpoint!.getUserInput()<>"C" then
@@ -102,6 +121,8 @@ rem --- Disable and clear NXT_CHECK_NO if this is NOT a checking account
 	endif
 
 [[ADC_BANKACCTCODE.BSHO]]
+	use ::ado_util.src::util
+
 rem --- Open tables
 	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -109,7 +130,76 @@ rem --- Open tables
 	open_tables$[2]="GLM_BANKMASTER",   open_opts$[2]="OTA"
 	gosub open_tables
 
+rem --- Add static text to display MICR for bank acct number
+	micr_acct!=fnget_control!("ADC_BANKACCTCODE.MICR_ACCT")
+	micrx=micr_acct!.getX()
+	micry=micr_acct!.getY()
+	micr_height=micr_acct!.getHeight()
+	micr_width=micr_acct!.getWidth()
+
+	nxt_ctlID=util.getNextControlID()
+	Form!.addStaticText(nxt_ctlID,micrx,micry+micr_height+5,micr_width,micr_height,"")
+	callpoint!.setDevObject("micr_static_ctl",nxt_ctlID)
+	micr_ctl!=Form!.getControl(nxt_ctlID)
+	micr_ctl!.setFont(SysGUI!.makeFont("MICR Encoding",14,SysGUI!.PLAIN))
+
+[[ADC_BANKACCTCODE.MICR_ACCT.AVAL]]
+rem --- sanity test input
+rem --- micr_acct length needs to be at least as long as the decrypted bank account number
+rem --- any character not a # must be space, or one of the MICR characters (should 0 thru 9 be allowed or only A,B,C,D?)
+
+	bnk_acct_no$=cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_NO"),3)
+	micr_acct$=callpoint!.getRawUserInput()
+	micr_len=pos("#"=micr_acct$,1,0)
+	mask = mask("","^[A-D#\ ]+$")
+
+	disp_acct$=bnk_acct_no$
+	if len(bnk_acct_no$)=micr_len and mask(micr_acct$)
+		gosub format_acct_no
+	else
+		msg_id$="AD_BNKACCT_MICR"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[ADC_BANKACCTCODE.MICR_PRINT.AVAL]]
+rem --- default micr_acct to a # for each character of bank account number
+
+	if callpoint!.getUserInput()<>"Y"
+		micr_static_ctl!=Form!.getControl(num(callpoint!.getDevObject("micr_static_ctl")))
+		micr_static_ctl!.setText("")
+	else
+		if cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_ACCT"),3)="" 
+			bnk_acct_no$=cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_NO"),3)
+			callpoint!.setColumnData("ADC_BANKACCTCODE.MICR_ACCT",pad(callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_ACCT"),len(bnk_acct_no$),"#"),1)
+		endif
+	endif
+
 [[ADC_BANKACCTCODE.<CUSTOM>]]
+rem ====================================================
+format_acct_no:
+rem --- send in bank_acct_no as disp_acct$ and the micr_acct$ formatting string; parse and display in static text
+rem --- will display using MICR font, if present on client, otherwise just shows regular characters (0 - 9, A - D)
+
+	micr_static_ctl!=Form!.getControl(num(callpoint!.getDevObject("micr_static_ctl")))
+	if callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_PRINT")="Y"
+		cntr=1
+		p=1
+		while p
+			p=pos("#"<>micr_acct$,1,cntr)
+			if p<>0
+				disp_acct$=disp_acct$(1,p-1)+micr_acct$(p,1)+disp_acct$(p)
+				cntr=cntr+1
+			endif
+		wend
+		micr_static_ctl!.setText(disp_acct$)
+	else
+		micr_static_ctl!.setText("")
+	endif
+	return
+
+
+#include [+ADDON_LIB]fnget_control.src
 #include [+ADDON_LIB]std_functions.aon
 
 
