@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_slstaxtrans"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_slstaxtrans">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_slstaxtrans">20210104</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_slstaxtrans">20221115</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_slstaxtrans">20221115</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_slstaxtrans">182122</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_slstaxtrans">20221116</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_slstaxtrans">20221116</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_slstaxtrans">085020</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_slstaxtrans"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_slstaxtrans"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_slstaxtrans"></DD_ATTR_DKNM>
@@ -113,7 +113,7 @@
 		<RECORD id="ddm_table_tpls.opt_slstaxtrans">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opt_slstaxtrans">OPT_SLSTAXTRANS </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opt_slstaxtrans">opt_slstaxtrans</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.opt_slstaxtrans">firm_id:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),sequence_no:c(3),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),city:c(30),zip_code:c(9),state_code:c(2),cntry_id:c(2),trans_tstamp:c(14),server:c(20),test_mode:n(1),slstax_trans_rec:c(22),slstax_date:c(20),slstax_status:c(30),entity_use_cd:c(3),exempt_no:c(10),tot_amount:n(7*),tot_discount:n(7*),tot_exempt:n(7*),tot_taxable:n(7*),tot_tax:n(7*),json_text:o(50000)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.opt_slstaxtrans">firm_id:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),sequence_no:c(3),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),city:c(30),zip_code:c(9),state_code:c(2),cntry_id:c(2),trans_tstamp:c(14),server:c(20),test_mode:n(1),slstax_trans_rec:c(22),slstax_date:c(28),slstax_status:c(30),entity_use_cd:c(3),exempt_no:c(10),tot_amount:n(7*),tot_discount:n(7*),tot_exempt:n(7*),tot_taxable:n(7*),tot_tax:n(7*),json_text:o(50000)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1954,7 +1954,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ar_inv_no">AR Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ar_inv_no">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ar_inv_no">7</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ar_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ar_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ar_inv_no">AD </ASC_PROD_ID>
@@ -1968,8 +1968,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ar_inv_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ar_inv_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ar_inv_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ar_inv_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ar_inv_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ar_inv_no"></DD_ATTR_DKEY>
@@ -2629,14 +2629,14 @@
 			<DD_DATA_NAME id="ddm_elements.slstax_date">SLSTAX_DATE     </DD_DATA_NAME>
 			<DD_DESCRIPTION id="ddm_elements.slstax_date">Sales Tax Date</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.slstax_date">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.slstax_date">20</DD_DATA_LENGTH>
+			<DD_DATA_LENGTH id="ddm_elements.slstax_date">28</DD_DATA_LENGTH>
 			<DD_MASK_TYPE id="ddm_elements.slstax_date"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.slstax_date"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.slstax_date">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.slstax_date">OP </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.slstax_date">N</LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.slstax_date">2459219</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.slstax_date">20210104</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.slstax_date">20230116</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.slstax_date"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.slstax_date">N</DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.slstax_date"></DD_ATTR_CDAT>
