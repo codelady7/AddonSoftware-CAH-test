@@ -302,6 +302,7 @@ rem --- Get next record
         tran_date$=ivt01a_key.trans_date$
         whse$=ivt01a_key.warehouse_id$
         item$=ivt01a_key.item_id$
+        lotser$=ivt01a_key.lotser_no$
 
     rem --- Valid Warehouse/Item?
 
@@ -356,12 +357,13 @@ rem --- Get next record
 
     rem --- Level breaks?
 
-        if all$="Y" and totals$="Y" and item$<>t1$ gosub get_bb
+        if all$="Y" and totals$="Y" and (item$<>t1$ or whse$<>t0$) gosub get_bb
+        if all$="Y" and totals$="N" and (lotserno$<>t2$ or item$<>t1$ or whse$<>t0$)  then gosub get_bb
+        beginning_balance=balance
+
         if whse$<>t0$ then gosub wh_break
         if item$<>t1$ then gosub item_break
-        if all$="Y" and totals$="N" and ivt01a_key.lotser_no$<>t2$ then gosub get_bb
-
-        if ivt01a.lotser_no$<>t2$ then
+        if lotser$<>t2$ then
             if totals$="N" then gosub print_totals
             ser_lot_no$=ivt01a.lotser_no$
             t2$=ivt01a.lotser_no$
@@ -376,7 +378,12 @@ rem --- Get next record
             OutVect!.addItem(cvs(fnmask$(ivt01a.item_id$,ivIMask$),3)+" "+cvs(ivm01a.item_desc$,3))
             xwk=fnblank(2)
             OutVect!.addItem(Translate!.getTranslation("AON_PRODUCT_TYPE:_")+ivm01a.product_type$)
-            wkx=fnblank(columns-4)
+            if totals$="Y" and item_type$="" then
+                wkx=fnblank(columns-5)
+                OutVect!.addItem(str(beginning_balance))
+            else
+                wkx=fnblank(columns-4)
+            endif
             subhead$=""
         endif
 
@@ -471,7 +478,6 @@ item_break: rem --- Item Break
     subhead$=ivt01a.item_id$
     t1$=ivt01a.item_id$
     ser_lot_no$=ivt01a.lotser_no$
-    t2$=ivt01a.lotser_no$
 
     return
 
@@ -518,7 +524,7 @@ get_bb: rem --- Determine starting beginning balance
     balance=0
 
     read (ivt01_dev2,key=firm_id$+whse$+item$+ivt01a.lotser_no$+beg_date$,dom=*next)
-    let ivt01alt$=key(ivt01_dev,end=*return)
+    let ivt01alt$=key(ivt01_dev2,end=*return)
     first=1
     flag=0
 
