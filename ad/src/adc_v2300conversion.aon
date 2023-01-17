@@ -58,134 +58,6 @@ rem --- Start progress meter
     meter_action$="WIN-LST"
     gosub disp_meter
 
-rem --- For version 23.00, initialize new BARCODE_SOURCE field in OPS_PARAMS
-    this_module$="OP"
-    if installMap!.get(this_module$)="Y" then
-goto ER10303; rem --- BARCODE_SOURCE field won't be added to OPS_PARAMS until required 3rd party jars are included in Addon
-        task$="2300_OP_ops_params"
-        if convCtrl!.getProperty(task$)<>"Completed" then
-
-            rem --- Increment progress meter
-            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
-:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-    
-            rem --- Open File(s)
-            num_files=1
-            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-            open_tables$[1]="OPS_PARAMS",   open_opts$[1]="OTA"
-    
-            gosub open_tables
-    
-            opsParams_dev=num(open_chans$[1])
-            dim opsParams$:open_tpls$[1]
-
-            rem --- Open new aon/config/addon.syn
-            open_success=0
-            new_addonsyn_dev=unt
-            open(new_addonsyn_dev,isz=-1,err=*next)aonDir$+"config/addon.syn"; open_success=1
-
-            rem --- Get current +ORDER_PICK_LIST_BARCODES STBL, and remove it if it exists
-            barcode$=""
-            if open_success then
-                rem --- Make copy of new addon.syn without the +ORDER_PICK_LIST_BARCODES STBL line
-                counter=1
-                while 1
-                    rem --- Find a backup file that doesn't exist
-                    backup$=aonDir$+"config/addon.syn.bak"+str(counter)
-                    backupFile! = new File(backup$)
-                    if !backupFile!.exists() then break
-                    counter=counter+1
-                wend
-                string backup$
-                backup_dev=unt
-                open(backup_dev)backup$
-            
-                while 1
-                    read(new_addonsyn_dev,end=*break)record$
-                    
-                    rem --- Process +ORDER_PICK_LIST_BARCODES line
-                    if pos("+ORDER_PICK_LIST_BARCODES="=record$) then
-                        xpos = pos("="=record$,-1)
-                        barcode$ = cvs(record$(xpos+1),3)
-                        continue
-                    endif
-                    
-                    write(backup_dev)record$
-                wend
-                close(backup_dev,err=*next)
-            endif
-
-            rem --- Initialize new BARCODE_SOURCE field with current +ORDER_PICK_LIST_BARCODES STBL
-            read(opsParams_dev,key="",dom=*next)
-            while 1
-                readrecord(opsParams_dev,end=*break)opsParams$
-                switch (BBjAPI().TRUE)
-                    case barcode$ = "BAR"
-                        opsParams.barcode_source$="B"
-                        break
-                    case barcode$ = "UPC"
-                        opsParams.barcode_source$="U"
-                        break
-                    case default
-                        opsParams.barcode_source$="X"
-                        break
-                swend
-            wend
-            
-            rem --- Save current addon.syn, and replace it with updated addon.syn
-            if barcode$<>"" then
-                close(new_addonsyn_dev,err=*next)
-                erase aonDir$+"config/addon.syn.bak0", err=*next
-                success=0
-                rename aonDir$+"config/addon.syn" to aonDir$+"config/addon.syn.bak0", err=*next; success=1
-                if success then
-                    erase aonDir$+"config/addon.syn", err=*next
-                    rename backup$ to aonDir$+"config/addon.syn", err=*next
-                endif
-            endif            
-            
-            rem --- close files opened for this conversion
-            num_files=1
-            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-            open_tables$[1]="OPS_PARAMS", open_opts$[1]="C"
-            gosub open_tables
-
-            close(new_addonsyn_dev,err=*next)
-           
-            write(convCtrlFileChan)task$+"=Completed"
-
-            rem --- This task$ conversion completed successfully
-            rem --- Increment progress meter
-            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
-:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-                
-        else
-            rem --- Increment progress meter
-            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-        endif
-ER10303: rem --- BARCODE_SOURCE field won't be added to OPS_PARAMS until required 3rd party jars are included in Addon
-    else
-        rem --- Increment progress meter
-        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
-:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
-        meter_proc_recs=meter_proc_recs+1
-        meter_action$="MTR-LST"
-        gosub disp_meter
-        print(log_dev)meter_text$
-    endif
-
 rem --- For version 23.00, initialize new MICR_PRINT and MICR_ACCT fieldS in ADC_BANKACCTCODE, using corresponding STBL values, if present (ER 10043)
     this_module$="AD"
     if installMap!.get(this_module$)="Y" then
@@ -318,6 +190,320 @@ rem --- For version 23.00, initialize new MICR_PRINT and MICR_ACCT fieldS in ADC
             gosub disp_meter
             print(log_dev)meter_text$
         endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
+rem --- For version 23.00, move fields from old APS_PAYAUTH to new APS_PARAMS (ER 9731)
+    this_module$="AP"
+    if installMap!.get(this_module$)="Y" then
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+
+        task$="2300_AP_aps_params"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_UPDATING","Updating")+": APS_PARAMS "
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+
+            rem --- Open File(s)
+            num_files=2
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="APS_PARAMS",   open_opts$[1]="OTA"
+            open_tables$[2]="APS_PAYAUTH",  open_opts$[2]="OTA"
+            
+            gosub open_tables
+            
+            apsParams_dev=num(open_chans$[1])
+            apsPayAuth_dev=num(open_chans$[2])
+            
+            dim apsParams$:open_tpls$[1]
+            dim apsPayAuth$:open_tpls$[2]
+
+            rem --- Is Payment Authorization currently being used?
+            using_PayAuth=0
+            read(apsPayAuth_dev,key="",dom=*next)
+            while 1
+                readrecord(apsPayAuth_dev,end=*break)apsPayAuth$
+                if apsPayAuth.use_pay_auth then
+                    using_PayAuth=1
+                    break
+                endif
+            wend
+
+            if using_PayAuth then
+                rem --- Need SCAN_DOCS_TO, WARN_IN_REGISTER and OK_TO_UPDATE fields from the old APS_PAYAUTH
+                oldStbl$="+APDATA"
+                oldFile$="aps_payauth"
+                gosub get_path_to_old_file
+                old_apsPayAuth$=oldPathToFile$
+                open_success=0
+                old_apsPayAuth_dev=unt
+                open(old_apsPayAuth_dev,err=*next)old_apsPayAuth$; open_success=1
+                if open_success then
+                    rem --- Get record template for old source APS_PAYAUTH file
+                    ddm_table_tpls$=convCtrl!.getProperty("barista_source")+"/barista/sys/data/ddm_table_tpls.dat"
+                    open_success=0
+                    ddm_table_tpls=unt
+                    open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
+                    if open_success then
+                        dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
+                        tpl_found=0
+                        findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
+                        if tpl_found then
+                            dim old_apsPayAuth_tpl$:ddm_table_tpls.template$
+                        else
+                            rem --- Required template missing
+                            err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
+:                                   " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+oldFile$+" *****"
+                            goto done
+                        endif
+                    else
+                        rem --- Required file missing
+                        msg_id$="AD_FILE_MISSING"
+                        dim msg_tokens$[1]
+                        msg_tokens$[1]=ddm_table_tpls$
+                        gosub disp_message
+                        err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                               Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+ddm_table_tpls$+" *****"
+                        goto done
+                    endif
+    
+                    rem --- Initialize SCAN_DOCS_TO, WARN_IN_REG and OK_TO_UPDATE fields in APS_PARAMS from fields in the old APS_PAYAUTH
+                    read(apsParams_dev,key="",dom=*next)
+                    while 1
+                        readrecord(apsParams_dev,end=*break)apsParams$
+                    
+                        readrecord(old_apsPayAuth_dev,key=apsParams.firm_id$+"AP00",dom=*continue)old_apsPayAuth_tpl$
+                        if !old_apsPayAuth_tpl.use_pay_auth then continue
+                        
+                        rem --- Update APS_PARAMS record
+                        apsParams.scan_docs_to$=old_apsPayAuth_tpl.scan_docs_to$
+                        if old_apsPayAuth_tpl.warn_in_register then
+                            apsParams.warn_in_reg$="Y"
+                        else
+                            apsParams.warn_in_reg$="N"
+                        endif
+                        if old_apsPayAuth_tpl.ok_to_update then
+                            apsParams.ok_to_update$="Y"
+                        else
+                            apsParams.ok_to_update$="N"
+                        endif
+                        apsParams$=field(apsParams$)
+                        writerecord(apsParams_dev)apsParams$
+                    wend
+                
+                    rem --- close files opened for this conversion
+                    num_files=2
+                    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                    open_tables$[1]="APS_PARAMS",  open_opts$[1]="C"
+                    open_tables$[2]="APS_PAYAUTH", open_opts$[2]="C"
+                    gosub open_tables
+        
+                    close(old_apsPayAuth_dev,err=*next)
+                   
+                    write(convCtrlFileChan)task$+"=Completed"
+        
+                    rem --- This task$ conversion completed successfully
+                    rem --- Increment progress meter
+                    meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+                    meter_proc_recs=meter_proc_recs+1
+                    meter_action$="MTR-LST"
+                    gosub disp_meter
+                    print(log_dev)meter_text$
+                else
+                    rem --- Required file missing
+                    msg_id$="AD_FILE_MISSING"
+                    dim msg_tokens$[1]
+                    msg_tokens$[1]=old_apsPayAuth$
+                    gosub disp_message
+                    err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                           Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+old_apsPayAuth$+" *****"
+                    goto done
+                endif
+            else
+                rem --- Not Using Payment Authorization
+                read(apsParams_dev,key="",dom=*next)
+                while 1
+                    readrecord(apsParams_dev,end=*break)apsParams$
+                    if cvs(apsParams.scan_docs_to$,2)="" then
+                        apsParams.scan_docs_to$="NOT"
+                        apsParams.warn_in_reg$="N"
+                        apsParams.ok_to_update$="N"
+                        apsParams$=field(apsParams$)
+                        writerecord(apsParams_dev)apsParams$
+                    endif
+                wend
+                
+                rem --- close files opened for this conversion
+                num_files=2
+                dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                open_tables$[1]="APS_PARAMS",  open_opts$[1]="C"
+                open_tables$[2]="APS_PAYAUTH", open_opts$[2]="C"
+                gosub open_tables
+               
+                write(convCtrlFileChan)task$+"=Completed"
+    
+                rem --- This task$ conversion completed successfully
+                rem --- Increment progress meter
+                meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+            endif
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
+rem --- For version 23.00, initialize new BARCODE_SOURCE field in OPS_PARAMS
+    this_module$="OP"
+    if installMap!.get(this_module$)="Y" then
+goto ER10303; rem --- BARCODE_SOURCE field won't be added to OPS_PARAMS until required 3rd party jars are included in Addon
+        task$="2300_OP_ops_params"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=1
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="OPS_PARAMS",   open_opts$[1]="OTA"
+    
+            gosub open_tables
+    
+            opsParams_dev=num(open_chans$[1])
+            dim opsParams$:open_tpls$[1]
+
+            rem --- Open new aon/config/addon.syn
+            open_success=0
+            new_addonsyn_dev=unt
+            open(new_addonsyn_dev,isz=-1,err=*next)aonDir$+"config/addon.syn"; open_success=1
+
+            rem --- Get current +ORDER_PICK_LIST_BARCODES STBL, and remove it if it exists
+            barcode$=""
+            if open_success then
+                rem --- Make copy of new addon.syn without the +ORDER_PICK_LIST_BARCODES STBL line
+                counter=1
+                while 1
+                    rem --- Find a backup file that doesn't exist
+                    backup$=aonDir$+"config/addon.syn.bak"+str(counter)
+                    backupFile! = new File(backup$)
+                    if !backupFile!.exists() then break
+                    counter=counter+1
+                wend
+                string backup$
+                backup_dev=unt
+                open(backup_dev)backup$
+            
+                while 1
+                    read(new_addonsyn_dev,end=*break)record$
+                    
+                    rem --- Process +ORDER_PICK_LIST_BARCODES line
+                    if pos("+ORDER_PICK_LIST_BARCODES="=record$) then
+                        xpos = pos("="=record$,-1)
+                        barcode$ = cvs(record$(xpos+1),3)
+                        continue
+                    endif
+                    
+                    write(backup_dev)record$
+                wend
+                close(backup_dev,err=*next)
+            endif
+
+            rem --- Initialize new BARCODE_SOURCE field with current +ORDER_PICK_LIST_BARCODES STBL
+            read(opsParams_dev,key="",dom=*next)
+            while 1
+                readrecord(opsParams_dev,end=*break)opsParams$
+                switch (BBjAPI().TRUE)
+                    case barcode$ = "BAR"
+                        opsParams.barcode_source$="B"
+                        break
+                    case barcode$ = "UPC"
+                        opsParams.barcode_source$="U"
+                        break
+                    case default
+                        opsParams.barcode_source$="X"
+                        break
+                swend
+            wend
+            
+            rem --- Save current addon.syn, and replace it with updated addon.syn
+            if barcode$<>"" then
+                close(new_addonsyn_dev,err=*next)
+                erase aonDir$+"config/addon.syn.bak0", err=*next
+                success=0
+                rename aonDir$+"config/addon.syn" to aonDir$+"config/addon.syn.bak0", err=*next; success=1
+                if success then
+                    erase aonDir$+"config/addon.syn", err=*next
+                    rename backup$ to aonDir$+"config/addon.syn", err=*next
+                endif
+            endif            
+            
+            rem --- close files opened for this conversion
+            num_files=1
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="OPS_PARAMS", open_opts$[1]="C"
+            gosub open_tables
+
+            close(new_addonsyn_dev,err=*next)
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+                
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+ER10303: rem --- BARCODE_SOURCE field won't be added to OPS_PARAMS until required 3rd party jars are included in Addon
     else
         rem --- Increment progress meter
         meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
