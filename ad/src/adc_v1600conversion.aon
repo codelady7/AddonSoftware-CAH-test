@@ -165,7 +165,7 @@ rem --- For version 16.00, initialize 3-char sequence_no in ape_invoicedet, ape_
         rem --- If starting conversion from v14 or earlier, need to initialize invoice_bal in apt_invoicehdr (see Bug 9294 for details).
         if num(convCtrl!.getProperty("start_version"))<15 then
             task$="1600_AP_invoice_bal"
-            if convCtrl!.getProperty(task$)<>"Completed" and convCtrl!.getProperty("data_source")="OCJ" then
+            if convCtrl!.getProperty(task$)<>"Completed"
                 rem --- Rebuild AP Invoice Balance
                 theFirm$=""
                 call pgmdir$+"apc_rebuildinvbal.aon",theFirm$,status
