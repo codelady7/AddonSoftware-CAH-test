@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_invoicehdr">8457477C9CB78B39AE28BA75572C9682</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_invoicehdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_invoicehdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_invoicehdr">20230117</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_invoicehdr">20230117</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_invoicehdr">150826</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_invoicehdr">20230118</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_invoicehdr">20230118</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_invoicehdr">140828</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_invoicehdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_invoicehdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_invoicehdr">BATCH_KEY</DD_ATTR_DKNM>
@@ -1597,7 +1597,7 @@
 			<DD_ATTR_LABL id="ddm_table_disp.ape_invoicehdr001">Vendor Comments</DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_disp.ape_invoicehdr001"></DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.ape_invoicehdr001"></DD_ATTR_CALC>
-			<DD_ATTR_CTLX id="ddm_table_disp.ape_invoicehdr001">+29</DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_disp.ape_invoicehdr001">+40</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_disp.ape_invoicehdr001">-4</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_disp.ape_invoicehdr001"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_disp.ape_invoicehdr001">80</DD_ATTR_CTLH>

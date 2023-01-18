@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_recurringhdr">639F77497E0E67A18E299E3AC9DF3D73</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_recurringhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_recurringhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_recurringhdr">20220815</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_recurringhdr">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_recurringhdr">182834</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_recurringhdr">20230118</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_recurringhdr">20230118</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_recurringhdr">141424</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_recurringhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_recurringhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_recurringhdr"></DD_ATTR_DKNM>
@@ -1378,7 +1378,7 @@
 			<DD_ATTR_LABL id="ddm_table_disp.ape_recurringhdr001">Vendor Comments</DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_disp.ape_recurringhdr001"></DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.ape_recurringhdr001"></DD_ATTR_CALC>
-			<DD_ATTR_CTLX id="ddm_table_disp.ape_recurringhdr001">+28</DD_ATTR_CTLX>
+			<DD_ATTR_CTLX id="ddm_table_disp.ape_recurringhdr001">+40</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_disp.ape_recurringhdr001">-4</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_disp.ape_recurringhdr001"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_disp.ape_recurringhdr001">80</DD_ATTR_CTLH>
