@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.ape_payselect">20071023</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ape_payselect">20230117</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ape_payselect">20230117</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_payselect">152844</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_payselect">152852</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_payselect"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_payselect">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_payselect"></DD_ATTR_DKNM>
@@ -173,7 +173,7 @@
 		<RECORD id="ddm_table_tpls.ape_payselect">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ape_payselect">APE_PAYSELECT   </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ape_payselect"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.ape_payselect">firm_id:c(2),system_date:c(8),payment_grp:c(2),payment_method:c(30),ap_type:c(2),vendor_id:c(6),due_date_dt:c(8),due_date_op:c(1),disc_date_op:c(1),disc_date_dt:c(8),include_disc:c(1),ap_inv_no:c(10)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.ape_payselect">firm_id:c(2),system_date:c(8),payment_grp:c(2),payment_method:c(30),ap_type:c(2),vendor_id:c(6),due_date_dt:c(8),due_date_op:c(1),disc_date_op:c(1),disc_date_dt:c(8),include_disc:c(1),ap_inv_no:c(20)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -1549,14 +1549,14 @@
 			<DD_DATA_NAME id="ddm_elements.ap_inv_no">AP_INV_NO       </DD_DATA_NAME>
 			<DD_DESCRIPTION id="ddm_elements.ap_inv_no">AP Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ap_inv_no">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.ap_inv_no">10</DD_DATA_LENGTH>
+			<DD_DATA_LENGTH id="ddm_elements.ap_inv_no">20</DD_DATA_LENGTH>
 			<DD_MASK_TYPE id="ddm_elements.ap_inv_no"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ap_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ap_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ap_inv_no">AD </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.ap_inv_no"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.ap_inv_no">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.ap_inv_no">20230104</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.ap_inv_no">20230118</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.ap_inv_no"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.ap_inv_no"></DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.ap_inv_no"></DD_ATTR_CDAT>

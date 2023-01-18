@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_checks">7E186685FA1383F2621F3992931C9C32</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_checks">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_checks">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_checks">20220613</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_tables.ape_checks">20220815</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ape_checks">20220613</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_checks">091922</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_checks">091924</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_checks"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_checks"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_checks"></DD_ATTR_DKNM>
@@ -90,7 +90,7 @@
 		<RECORD id="ddm_table_tpls.ape_checks">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ape_checks">APE_CHECKS      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ape_checks">ape-04</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.ape_checks">firm_id:c(2),ap_type:c(2),vendor_id:c(6),ap_inv_no:c(10),reserved_str:c(9),reference:c(10),ap_inv_memo:c(16),check_no:c(7),invoice_date:c(8),inv_due_date:c(8),disc_date:c(8*),invoice_amt:n(7*),discount_amt:n(7*),retention:n(7*),orig_inv_amt:n(7*),payment_amt:n(7*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.ape_checks">firm_id:c(2),ap_type:c(2),vendor_id:c(6),ap_inv_no:c(20),reserved_str:c(9),reference:c(10),ap_inv_memo:c(16),check_no:c(7),invoice_date:c(8),inv_due_date:c(8),disc_date:c(8*),invoice_amt:n(7*),discount_amt:n(7*),retention:n(7*),orig_inv_amt:n(7*),payment_amt:n(7*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1187,14 +1187,14 @@
 			<DD_DATA_NAME id="ddm_elements.ap_inv_no">AP_INV_NO       </DD_DATA_NAME>
 			<DD_DESCRIPTION id="ddm_elements.ap_inv_no">AP Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ap_inv_no">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.ap_inv_no">10</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ap_inv_no"> </DD_MASK_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.ap_inv_no">20</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.ap_inv_no"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ap_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ap_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ap_inv_no">AD </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.ap_inv_no"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.ap_inv_no">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.ap_inv_no">20071214</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.ap_inv_no">20230118</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.ap_inv_no"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.ap_inv_no"></DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.ap_inv_no"></DD_ATTR_CDAT>
@@ -1229,7 +1229,7 @@
 			<DD_ATTR_SDLG id="ddm_elements.ap_inv_no"></DD_ATTR_SDLG>
 			<DD_ATTR_SLEV id="ddm_elements.ap_inv_no"></DD_ATTR_SLEV>
 			<DD_ATTR_STYP id="ddm_elements.ap_inv_no"></DD_ATTR_STYP>
-			<DD_ATTR_STEP id="ddm_elements.ap_inv_no"></DD_ATTR_STEP>
+			<DD_ATTR_STEP id="ddm_elements.ap_inv_no">0</DD_ATTR_STEP>
 			<DD_ATTR_FLPT id="ddm_elements.ap_inv_no"></DD_ATTR_FLPT>
 			<DD_ATTR_OEMD id="ddm_elements.ap_inv_no"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.ap_inv_no"></DD_ATTR_Y2KW>
