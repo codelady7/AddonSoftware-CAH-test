@@ -39,8 +39,7 @@ rem --- get disc % assoc w/ terms in this rec, and disp distributed bal
 rem --- Disable Load Image and View Images options as needed
 	use_pay_auth=callpoint!.getDevObject("use_pay_auth")
 	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
-        scan_docs_param$=callpoint!.getDevObject("scan_docs_param")
- 	if (!use_pay_auth and pos(scan_docs_param$="GD BDA",3)=0)  or (use_pay_auth and pos(scan_docs_to$="GD BDA",3)=0) then
+ 	if pos(scan_docs_to$="GD BDA",3)=0 then
 		callpoint!.setOptionEnabled("LIIM",0)
 		callpoint!.setOptionEnabled("VIDI",0)
 	endif
@@ -57,18 +56,9 @@ rem --- Select invoice image and upload
 	man_check$ ="N"
 	
 	use_pay_auth=callpoint!.getDevObject("use_pay_auth")
-
-	if use_pay_auth then
-		scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
-	endif
-	if !use_pay_auth then
-		scan_docs_to$=callpoint!.getDevObject("scan_docs_param")
- 	endif
-
+	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
 
 	call "apc_imageupload.aon", channels[all],templates$[all],ap_type$,vendor_id$,ap_inv_no$,man_check$,scan_docs_to$,status
-
-	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
 
 [[APE_INVOICEHDR.AOPT-VIDI]]
 rem --- Display invoice images
@@ -342,8 +332,7 @@ endif
 rem --- Disable Load Image and View Images options as needed
 	use_pay_auth=callpoint!.getDevObject("use_pay_auth")
 	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
-      scan_docs_param$=callpoint!.getDevObject("scan_docs_param")
- 	if (!use_pay_auth and pos(scan_docs_param$="GD BDA",3)=0)  or (use_pay_auth and pos(scan_docs_to$="GD BDA",3)=0) then
+ 	if pos(scan_docs_to$="GD BDA",3)=0 then
 		callpoint!.setOptionEnabled("LIIM",0)
 		callpoint!.setOptionEnabled("VIDI",0)
 	endif
@@ -373,7 +362,7 @@ rem --- get default date
 rem --- Disable Load Image and View Images options as needed
 	use_pay_auth=callpoint!.getDevObject("use_pay_auth")
 	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
- 	if (!use_pay_auth and pos(scan_docs_param$="GD BDA",3)=0)  or (use_pay_auth and pos(scan_docs_to$="GD BDA",3)=0) then
+ 	if pos(scan_docs_to$="GD BDA",3)=0 then
 		callpoint!.setOptionEnabled("LIIM",0)
 		callpoint!.setOptionEnabled("VIDI",0)
 	endif
@@ -571,7 +560,7 @@ user_tpl.multi_types$=aps01a.multi_types$
 user_tpl.multi_dist$=aps01a.multi_dist$
 user_tpl.ret_flag$=aps01a.ret_flag$
 user_tpl.misc_entry$=aps01a.misc_entry$
-callpoint!.setDevObject("scan_docs_param",aps01a.scan_docs_to$)
+callpoint!.setDevObject("scan_docs_to",aps01a.scan_docs_to$)
 gls01a_key$=firm_id$+"GL00"
 find record (gls01_dev,key=gls01a_key$,err=std_missing_params) gls01a$
 find record (gls_calendar_dev,key=firm_id$+gls01a.current_year$,err=*next) gls_calendar$
@@ -628,7 +617,6 @@ rem --- Get Payment Authorization parameter record
 	dim aps_payauth$:templates$[10]
 	readrecord(aps_payauth,key=firm_id$+"AP00",dom=*next)aps_payauth$
 	callpoint!.setDevObject("use_pay_auth",aps_payauth.use_pay_auth)
-	callpoint!.setDevObject("scan_docs_to",aps_payauth.scan_docs_to$)
 
 rem --- Open apt_invapproval as needed
 	if callpoint!.getDevObject("use_pay_auth") then
@@ -642,8 +630,7 @@ rem --- Open apt_invapproval as needed
 rem --- Disable Load Image and View Images options as needed
 	use_pay_auth=callpoint!.getDevObject("use_pay_auth")
 	scan_docs_to$=callpoint!.getDevObject("scan_docs_to")
-	scan_docs_param$=callpoint!.getDevObject("scan_docs_param")
- 	if (!use_pay_auth and pos(scan_docs_param$="GD BDA",3)=0)  or (use_pay_auth and pos(scan_docs_to$="GD BDA",3)=0) then
+ 	if pos(scan_docs_to$="GD BDA",3)=0 then
 		callpoint!.setOptionEnabled("LIIM",0)
 		callpoint!.setOptionEnabled("VIDI",0)
 	endif

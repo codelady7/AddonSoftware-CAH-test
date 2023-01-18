@@ -491,16 +491,10 @@ rem --- Disable signature_file when not using prnt_signature
 		callpoint!.setColumnEnabled("APS_PARAMS.SIGNATURE_FILE",0)
 	endif
 
-[[APS_PAYAUTH.SCAN_DOCS_TO.AVAL]]
-rem --- Restrict selection to currently available options
-	scan_docs_to$=callpoint!.getUserInput()
-	if pos(scan_docs_to$="NOTGD BDA",3)=0 then
-		callpoint!.setMessage("AD_OPTION_NOT")
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
+[[APS_PARAMS.SCAN_DOCS_TO.AVAL]]
+rem wgh ... 
 rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
+	scan_docs_to$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
 	gosub able_scan_docs
 
 [[APS_PARAMS.SIGNATURE_FILE.AVAL]]
@@ -550,12 +544,7 @@ rem --- Enable/Disable Payment Authorization
 
 [[APS_PARAMS.WARN_IN_REG.AVAL]]
 rem --- Disable ok_to_update if not warning in register
-	warn_in_register_nopayauth$=callpoint!.getUserInput()
-	gosub able_ok_to_update
-
-[[APS_PAYAUTH.WARN_IN_REGISTER.AVAL]]
-rem --- Disable ok_to_update if not warning in register
-	warn_in_register=num(callpoint!.getUserInput())
+	warn_in_register$=callpoint!.getUserInput()
 	gosub able_ok_to_update
 
 [[APS_PARAMS.<CUSTOM>]]
@@ -566,30 +555,13 @@ able_payauth: rem --- Enable/Disable Payment Authorization
 	rem --- input: use_pay_auth
 rem =========================================================
 	callpoint!.setColumnEnabled("APS_PAYAUTH.SEND_EMAIL",use_pay_auth)
-	callpoint!.setColumnEnabled("APS_PAYAUTH.SCAN_DOCS_TO",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.ALL_AUTH_COLOR",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.ONE_AUTH_COLOR",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_AUTH_COLOR",use_pay_auth)
-	callpoint!.setColumnEnabled("APS_PAYAUTH.WARN_IN_REGISTER",use_pay_auth)
-	callpoint!.setColumnEnabled("APS_PAYAUTH.OK_TO_UPDATE",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_SIG_REQ",use_pay_auth)
 	callpoint!.setColumnEnabled("APS_PAYAUTH.TWO_SIG_AMT",use_pay_auth)
 
-	callpoint!.setColumnEnabled("APS_PARAMS.SCAN_DOCS_TO",!use_pay_auth)
-	callpoint!.setColumnEnabled("APS_PARAMS.WARN_IN_REG",!use_pay_auth)
-	callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",!use_pay_auth)
-
 	if use_pay_auth then
-		rem --- Initialize SCAN_DOCS_TO
-		if cvs(callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO"),2)="" then
-			callpoint!.setColumnData("APS_PAYAUTH.SCAN_DOCS_TO","NOT",1); rem --- Not scanned
-		endif
-
-		rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
-		scan_docs_to$=callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO")
-		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
-		gosub able_scan_docs
-
 		rem --- Initialize ALL_AUTH_COLOR
 		if cvs(callpoint!.getColumnData("APS_PAYAUTH.ALL_AUTH_COLOR"),2)="" then
 			callpoint!.setColumnData("APS_PAYAUTH.ALL_AUTH_COLOR","255,255,255",1); rem --- White
@@ -611,39 +583,27 @@ rem =========================================================
 		gosub able_two_sig
 
 	endif
-	if !use_pay_auth then
-		rem --- Initialize SCAN_DOCS_TO
-		if cvs(callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO"),2)="" then
-			callpoint!.setColumnData("APS_PARAMS.SCAN_DOCS_TO","NOT",1); rem --- Not scanned
-		endif
 
-		rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
-		scan_docs_to$=callpoint!.getColumnData("APS_PAYAUTH.SCAN_DOCS_TO")
-		scan_docs_nopayauth$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
-		gosub able_scan_docs
-
+	rem --- Initialize SCAN_DOCS_TO
+	if cvs(callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO"),2)="" then
+		callpoint!.setColumnData("APS_PARAMS.SCAN_DOCS_TO","NOT",1); rem --- Not scanned
 	endif
+
+	rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
+	scan_docs_to$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
+	gosub able_scan_docs
+
 	return
 
 rem =========================================================
 able_ok_to_update: rem --- Enable/Disable OK_TO_UPDATE
 	rem --- input: warn_in_register
 rem =========================================================
-	if use_pay_auth then
-		if warn_in_register then
-			callpoint!.setColumnEnabled("APS_PAYAUTH.OK_TO_UPDATE",1)
-		else
-			callpoint!.setColumnData("APS_PAYAUTH.OK_TO_UPDATE","0",1)
-			callpoint!.setColumnEnabled("APS_PAYAUTH.OK_TO_UPDATE",0)
-		endif
-	endif
-	if !use_pay_auth then
-		if warn_in_register_nopayauth$ = "Y" then
-			callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",1)
-		else
-			callpoint!.setColumnData("APS_PARAMS.OK_TO_UPDATE","N",1)
-			callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",0)
-		endif
+	if warn_in_register$ = "Y" then
+		callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",1)
+	else
+		callpoint!.setColumnData("APS_PARAMS.OK_TO_UPDATE","N",1)
+		callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",0)
 	endif
 	return
 
@@ -667,35 +627,18 @@ rem =========================================================
 able_scan_docs: rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 	rem --- input: scan_docs_to$
 rem =========================================================
-	if use_pay_auth then
-		if scan_docs_to$="NOT" then
-			rem --- Disable if not scanning invoices
-			callpoint!.setColumnData("APS_PAYAUTH.WARN_IN_REGISTER","0",1)
-			callpoint!.setColumnEnabled("APS_PAYAUTH.WARN_IN_REGISTER",0)
-			callpoint!.setColumnData("APS_PAYAUTH.OK_TO_UPDATE","0",1)
-			callpoint!.setColumnEnabled("APS_PAYAUTH.OK_TO_UPDATE",0)
-		else
-			rem --- Enable if scanning invoices
-			callpoint!.setColumnEnabled("APS_PAYAUTH.WARN_IN_REGISTER",1)
-			rem --- Disable ok_to_update if not warning in register
-			warn_in_register=num(callpoint!.getColumnData("APS_PAYAUTH.WARN_IN_REGISTER"))
-			gosub able_ok_to_update
-		endif
-	endif
-	if !use_pay_auth then
-		if scan_docs_nopayauth$="NOT" then
-			rem --- Disable if not scanning invoices
-			callpoint!.setColumnData("APS_PARAMS.WARN_IN_REG","N",1)
-			callpoint!.setColumnEnabled("APS_PARAMS.WARN_IN_REG",0)
-			callpoint!.setColumnData("APS_PARAMS.OK_TO_UPDATE","N",1)
-			callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",0)
-		else
-			rem --- Enable if scanning invoices
-			callpoint!.setColumnEnabled("APS_PARAMSWARN_IN_REG",1)
-			rem --- Disable ok_to_update if not warning in register
-			warn_in_register_nopayauth$=callpoint!.getColumnData("APS_PARAMS.WARN_IN_REG")
-			gosub able_ok_to_update
-		endif
+	if scan_docs_to$="NOT" then
+		rem --- Disable if not scanning invoices
+		callpoint!.setColumnData("APS_PARAMS.WARN_IN_REG","N",1)
+		callpoint!.setColumnEnabled("APS_PARAMS.WARN_IN_REG",0)
+		callpoint!.setColumnData("APS_PARAMS.OK_TO_UPDATE","N",1)
+		callpoint!.setColumnEnabled("APS_PARAMS.OK_TO_UPDATE",0)
+	else
+		rem --- Enable if scanning invoices
+		callpoint!.setColumnEnabled("APS_PARAMSWARN_IN_REG",1)
+		rem --- Disable ok_to_update if not warning in register
+		warn_in_register$=callpoint!.getColumnData("APS_PARAMS.WARN_IN_REG")
+		gosub able_ok_to_update
 	endif
 	return
 

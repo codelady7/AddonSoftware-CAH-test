@@ -446,7 +446,7 @@ rem --- Refresh grid
 
 [[APE_PAYSELECT.ARER]]
 rem --- disable view scanned images button and 'undo' option if not using Pay Auth
-    if !callpoint!.getDevObject("use_pay_auth") and callpoint!.getDevObject("scan_docs_param")="NOT"
+    if callpoint!.getDevObject("scan_docs_to")="NOT"
         callpoint!.setOptionEnabled("VIEW",0)
     endif
     if !callpoint!.getDevObject("use_pay_auth") 
@@ -653,7 +653,7 @@ rem --- Get parameter record
 
 	readrecord(aps_params, key=firm_id$+"AP00", dom=std_missing_params) aps_params$
 	callpoint!.setDevObject("multi_types",aps_params.multi_types$)
-	callpoint!.setDevObject("scan_docs_param",aps_params.scan_docs_to$)
+	callpoint!.setDevObject("scan_docs_to",aps_params.scan_docs_to$)
 	
 	readrecord(aps_ach,key=firm_id$+"AP00",dom=*next)aps_ach$
 	callpoint!.setDevObject("ach_allowed",iff(cvs(aps_ach.bnk_acct_cd$,2)="",0,1))
@@ -661,7 +661,6 @@ rem --- Get parameter record
 	readrecord(aps_payauth,key=firm_id$+"AP00",dom=*next)aps_payauth$
 	callpoint!.setDevObject("use_pay_auth",aps_payauth.use_pay_auth)
 	callpoint!.setDevObject("send_email",aps_payauth.send_email)
-	callpoint!.setDevObject("scan_docs_to",aps_payauth.scan_docs_to$)
 	callpoint!.setDevObject("all_auth_color",aps_payauth.all_auth_color$)
 	callpoint!.setDevObject("default_color","255,255,255"); rem --- white
 	callpoint!.setDevObject("one_auth_color",aps_payauth.one_auth_color$)
@@ -863,13 +862,13 @@ rem --- Misc other init
 	popUpMenu!.addSeparator()
 	menuItem_view!=popUpMenu!.addMenuItem(-300,Translate!.getTranslation("AON_VIEW_IMAGES"))
 	menuItem_view!.setCallback(menuItem_view!.ON_POPUP_ITEM_SELECT,"custom_event")
-	if callpoint!.getDevObject("scan_docs_param")="NOT" 
+	if callpoint!.getDevObject("scan_docs_to")="NOT" 
 		menuItem_view!.setEnabled(0)
         	endif
         
 	callpoint!.setOptionEnabled("UNDO",0)
 
-        if callpoint!.getDevObject("scan_docs_param")="NOT"
+        if callpoint!.getDevObject("scan_docs_to")="NOT"
        	 	callpoint!.setOptionEnabled("VIEW",0)
 	endif
 
