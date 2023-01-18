@@ -492,7 +492,6 @@ rem --- Disable signature_file when not using prnt_signature
 	endif
 
 [[APS_PARAMS.SCAN_DOCS_TO.AVAL]]
-rem wgh ... 
 rem --- Enable/Disable WARN_IN_REGISTER and OK_TO_UPDATE
 	scan_docs_to$=callpoint!.getColumnData("APS_PARAMS.SCAN_DOCS_TO")
 	gosub able_scan_docs
