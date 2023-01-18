@@ -46,9 +46,7 @@ apt-11A                  |APT_INVOICEDET    |
 apt-11B                  |APT_INVDETAIL     |
 apw-01A                  |APW_CHECKINVOICE  |
 apw-02A                  |APW_INVOICENAME   |
-apw-04A                  |APW_PURCHASEGL    |
 apw-05A                  |APW_DISBURSEMNTS  |
-apw-14A                  |APW_PURCHASENAME  |
 are-01A                  |ARE_CASHHDR       |
 are-02A                  |ARE_FINCHG        |
 are-05A                  |ARE_INVHDR        |

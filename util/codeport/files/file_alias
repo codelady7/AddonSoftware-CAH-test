@@ -357,10 +357,8 @@ apt-05A                  |APT_CHECKHISTORY|N
 apt-11A                  |APT_INVOICEDET  |N
 apw-01A                  |APW_CHECKINVOICE|N
 apw-02A                  |APW_INVOICENAME |N
-apw-04A                  |APW_PURCHASEGL  |N
 apw-05A                  |APW_DISBURSEMNTS|N
 apw-06A                  |APW_INVOICEPURGE|N
-apw-14A                  |APW_PURCHASENAME|N
 apw-16A                  |APW_CHECKPURGE  |N
 are-01A                  |ARE_CASHHDR     |N
 are-02A                  |ARE_CNVINV      |N
