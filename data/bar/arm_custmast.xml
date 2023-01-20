@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custmast">B0AE4537C94866F0AF91493A5C8B7BCB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custmast">20220613</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custmast">20220613</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custmast">092830</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custmast">20230120</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custmast">20230120</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custmast">152944</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custmast"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arm_custmast">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arm_custmast">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custmast"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arm_custmast"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arm_custmast">T</DD_ATTR_FTYP>
@@ -1088,6 +1088,13 @@
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast15">RCTL</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast15">M</DD_ATTR_AOPT_FM>
 		</RECORD>
+		<RECORD id="ddm_table_aopt.arm_custmast16">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast16">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast16">16</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast16">Payment History</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast16">PHST</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast16">M</DD_ATTR_AOPT_FM>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
@@ -1122,6 +1129,10 @@
 		<RECORD id="ddm_table_cpro.arm_custmastaopt-oriv">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custmastaopt-oriv">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custmastaopt-oriv">AOPT-ORIV</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custmastaopt-phst">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custmastaopt-phst">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custmastaopt-phst">AOPT-PHST</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.arm_custmastaopt-pric">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custmastaopt-pric">ARM_CUSTMAST    </DD_TABLE_ALIAS>
@@ -1859,7 +1870,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_custmast002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_custmast002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_custmast002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_custmast002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_custmast002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custmast002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custmast002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_custmast002"></DD_ATTR_CTLY>
@@ -1910,7 +1921,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_custmast003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_custmast003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_custmast003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_custmast003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_custmast003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custmast003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custmast003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_custmast003"></DD_ATTR_CTLY>
@@ -3389,7 +3400,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_custmast032">20190408</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_custmast032">ARM_CUSTMAST.PAY_ONLINE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_custmast032">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_custmast032">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_custmast032">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custmast032">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custmast032"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_custmast032"></DD_ATTR_CTLY>
@@ -4989,7 +5000,7 @@
 			<DD_DESCRIPTION id="ddm_elements.opened_date">Date Opened</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.opened_date">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.opened_date">8</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.opened_date"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.opened_date"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.opened_date"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.opened_date">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.opened_date">AD </ASC_PROD_ID>
@@ -5003,8 +5014,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.opened_date"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.opened_date">D</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.opened_date"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.opened_date">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.opened_date">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.opened_date"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.opened_date"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.opened_date"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.opened_date"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.opened_date"></DD_ATTR_DKEY>

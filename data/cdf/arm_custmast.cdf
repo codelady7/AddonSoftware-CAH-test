@@ -352,6 +352,35 @@ rem --- assume this should only run if OP installed...
 	endif
 	callpoint!.setStatus("ACTIVATE")
 
+[[ARM_CUSTMAST.AOPT-PHST]]
+rem --- Show payments, with drill on check# to invoices paid with that check, and then drill on invoice# to AR Inv History
+
+	custControl!=callpoint!.getControl("ARM_CUSTMAST.CUSTOMER_ID")
+	cust_id$=custControl!.getText()
+
+	if cvs(cust_id$,2)<>""
+		dim filter_defs$[2,2]
+		filter_defs$[0,0]="ART_CASHHDR.FIRM_ID"
+		filter_defs$[0,1]="='"+firm_id$+"'"
+		filter_defs$[0,2]="LOCK"
+		filter_defs$[1,0]="ART_CASHHDR.AR_TYPE"
+		filter_defs$[1,1]="='  '"
+		filter_defs$[1,2]="LOCK"
+		filter_defs$[2,0]="ART_CASHHDR.CUSTOMER_ID"
+		filter_defs$[2,1]="='"+cust_id$+"'"
+		filter_defs$[2,2]="LOCK"
+
+		call stbl("+DIR_SYP")+"bax_query.bbj",
+:			gui_dev,
+:			Form!,
+:			"AR_CUST_PYMTS",
+:			"",
+:			table_chans$[all],
+:			"",
+:			filter_defs$[all]
+
+	endif
+
 [[ARM_CUSTMAST.AOPT-PRIC]]
 rem --- Launch Price Quote Inquiry form
 	dim dflt_data$[2,1]
