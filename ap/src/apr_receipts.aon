@@ -120,7 +120,7 @@ rem --- column headings
     columns$[0,0]="PO #",columns$[0,1]="C",columns$[0,2]="15"
     columns$[1,0]=Translate!.getTranslation("AON_RECEIVER_#"),columns$[1,1]="C",columns$[1,2]="15"
     columns$[2,0]=Translate!.getTranslation("AON_RECEIVED"),columns$[2,1]="C",columns$[2,2]="15"
-    columns$[3,0]=Translate!.getTranslation("AON_INVOICE_#"),columns$[3,1]="C",columns$[3,2]="15"
+    columns$[3,0]=Translate!.getTranslation("AON_INVOICE_#"),columns$[3,1]="C",columns$[3,2]="20"
     columns$[4,0]=Translate!.getTranslation("AON_INVOICED"),columns$[4,1]="C",columns$[4,2]="15"
     columns$[5,0]=Translate!.getTranslation("AON_ORDERED"),columns$[5,1]="N",columns$[5,2]="15",columns$[5,3]=m1iv$
     columns$[6,0]=Translate!.getTranslation("AON_RECEIVED"),columns$[6,1]="N",columns$[6,2]="15",columns$[6,3]=m1iv$

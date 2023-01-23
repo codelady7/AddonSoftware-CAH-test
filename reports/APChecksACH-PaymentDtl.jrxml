@@ -42,8 +42,8 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="0" width="100" height="26" forecolor="#FFFFFF" uuid="43a85aa0-e6bd-4baf-933a-c6b3d3ca9e5a">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				<reportElement x="0" y="0" width="95" height="26" forecolor="#FFFFFF" uuid="43a85aa0-e6bd-4baf-933a-c6b3d3ca9e5a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
@@ -72,9 +72,9 @@
 				<textFieldExpression><![CDATA[$R{AON_AMOUNT_PAID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="0" width="130" height="26" forecolor="#FFFFFF" uuid="cb1c7b14-7033-44ca-93d7-fd444f157dd2">
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				<reportElement x="100" y="0" width="135" height="26" forecolor="#FFFFFF" uuid="cb1c7b14-7033-44ca-93d7-fd444f157dd2">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
@@ -104,8 +104,8 @@
 				</graphicElement>
 			</rectangle>
 			<line>
-				<reportElement stretchType="RelativeToTallestObject" x="102" y="0" width="1" height="21" forecolor="#B4BEC8" uuid="1e4b25b7-d0d2-4ce7-9df5-c4ed5abb63c9">
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				<reportElement stretchType="RelativeToTallestObject" x="97" y="0" width="1" height="21" forecolor="#B4BEC8" uuid="1e4b25b7-d0d2-4ce7-9df5-c4ed5abb63c9">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 			</line>
 			<line>
@@ -124,9 +124,9 @@
 				</reportElement>
 			</line>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="105" y="1" width="130" height="20" uuid="2908451f-d5f1-4238-b85b-23834892f1e5">
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				<reportElement x="100" y="1" width="135" height="20" uuid="2908451f-d5f1-4238-b85b-23834892f1e5">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
@@ -164,8 +164,8 @@
 				<textFieldExpression><![CDATA[$F{AMOUNT_PAID}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="1" width="100" height="20" uuid="8cfc4ebc-3a5a-4e36-bb3f-6ce78000bd9f">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				<reportElement x="0" y="1" width="95" height="20" uuid="8cfc4ebc-3a5a-4e36-bb3f-6ce78000bd9f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>

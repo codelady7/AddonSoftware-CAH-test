@@ -133,7 +133,7 @@ rem    if retention$="Y" o[8]=width-m1+1
 
     columns$[0,0]=Translate!.getTranslation("AON_VENDOR"),columns$[0,1]="C",columns$[0,2]="10"
     columns$[1,0]=Translate!.getTranslation("AON_NAME"),columns$[1,1]="C",columns$[1,2]="30"
-    columns$[2,0]=Translate!.getTranslation("AON_INVOICE"),columns$[2,1]="C",columns$[2,2]="10"
+    columns$[2,0]=Translate!.getTranslation("AON_INVOICE"),columns$[2,1]="C",columns$[2,2]="20"
     columns$[3,0]=Translate!.getTranslation("AON_DATE"),columns$[3,1]="C",columns$[3,2]="10"
     columns$[4,0]=Translate!.getTranslation("AON_DUE_DATE"),columns$[4,1]="C",columns$[4,2]="10"
     columns$[5,0]=Translate!.getTranslation("AON_PAY_GP"),columns$[5,1]="C",columns$[5,2]="6"

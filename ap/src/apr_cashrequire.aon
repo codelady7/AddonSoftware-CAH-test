@@ -246,7 +246,7 @@ rem --- Headings and print positions
     if detail
         head2$=Translate!.getTranslation("AON_REFERENCE")
         head3$=Translate!.getTranslation("AON_INVOICE")
-        head4$=Translate!.getTranslation("AON_AGING_DATE")
+        head4$=Translate!.getTranslation("AON_AGING^DATE")
         head5$="PG"
         head6$="H"
     endif
@@ -273,11 +273,11 @@ rem --- Headings and print positions
     endif    
 
     if summary=0
-        columns$[columns-10,0]=head2$,               columns$[columns-10,1]="C",columns$[columns-10,2]="8"
-        columns$[columns-9,0]=head3$,               columns$[columns-9,1]="C",columns$[columns-9,2]="8"
-        columns$[columns-8,0]=head4$,               columns$[columns-8,1]="C",columns$[columns-8,2]="8"
-        columns$[columns-7,0]=head5$,               columns$[columns-7,1]="C",columns$[columns-7,2]="3"
-        columns$[columns-6,0]=head6$,               columns$[columns-6,1]="C",columns$[columns-6,2]="3"
+        columns$[columns-10,0]=head2$,               columns$[columns-10,1]="C",columns$[columns-10,2]="9"
+        columns$[columns-9,0]=head3$,               columns$[columns-9,1]="C",columns$[columns-9,2]="18"
+        columns$[columns-8,0]=head4$,               columns$[columns-8,1]="C",columns$[columns-8,2]="6"
+        columns$[columns-7,0]=head5$,               columns$[columns-7,1]="C",columns$[columns-7,2]="2"
+        columns$[columns-6,0]=head6$,               columns$[columns-6,1]="C",columns$[columns-6,2]="1"
 	else
 		rem --- even tho' these columns won't be used in summary format, need to be set up or DocOut will get confused
         if export_format$<>"Y"

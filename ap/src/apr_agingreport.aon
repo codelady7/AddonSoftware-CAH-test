@@ -288,7 +288,7 @@ rem --- Headings and print positions
 
     if summary=0
         columns$[columns-10,0]=head2$,  columns$[columns-10,1]="C", columns$[columns-10,2]="10"
-        columns$[columns-9,0]=head3$,   columns$[columns-9,1]="C",  columns$[columns-9,2]="10"
+        columns$[columns-9,0]=head3$,   columns$[columns-9,1]="C",  columns$[columns-9,2]="20"
         columns$[columns-8,0]=head4$,   columns$[columns-8,1]="C",  columns$[columns-8,2]="8"
         columns$[columns-7,0]=head5$,   columns$[columns-7,1]="C",  columns$[columns-7,2]="3"
         columns$[columns-6,0]=head6$,   columns$[columns-6,1]="C",  columns$[columns-6,2]="3"

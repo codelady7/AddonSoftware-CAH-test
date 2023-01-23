@@ -107,10 +107,10 @@ rem --- column headings
 			columns$[column,0]=Translate!.getTranslation("AON_AP_TYPE"),columns$[column,1]="C",columns$[column,2]="6",column=column+1
 		endif
 		columns$[column,0]=Translate!.getTranslation("AON_VENDOR"),columns$[column,1]="C",columns$[column,2]="8",column=column+1
-        columns$[column,0]=Translate!.getTranslation("AON_INVOICE_NO"),columns$[column,1]="C",columns$[column,2]="15",column=column+1
+        columns$[column,0]=Translate!.getTranslation("AON_INVOICE_NO"),columns$[column,1]="C",columns$[column,2]="20",column=column+1
         columns$[column,0]=Translate!.getTranslation("AON_TRANSACTION"),columns$[column,1]="C",columns$[column,2]="20",column=column+1
-        columns$[column,0]=Translate!.getTranslation("AON_DATE"),columns$[column,1]="C",columns$[column,2]="15",column=column+1
-        columns$[column,0]=Translate!.getTranslation("AON_DUE"),columns$[column,1]="C",columns$[column,2]="15",column=column+1
+        columns$[column,0]=Translate!.getTranslation("AON_DATE"),columns$[column,1]="C",columns$[column,2]="10",column=column+1
+        columns$[column,0]=Translate!.getTranslation("AON_DUE"),columns$[column,1]="C",columns$[column,2]="10",column=column+1
         columns$[column,0]="PG",columns$[column,1]="C",columns$[column,2]="5",column=column+1
         columns$[column,0]="H",columns$[column,1]="C",columns$[column,2]="5",column=column+1
         columns$[column,0]=Translate!.getTranslation("AON_AMOUNT"),columns$[column,1]="N",columns$[column,2]="15",columns$[column,3]=mask$,column=column+1

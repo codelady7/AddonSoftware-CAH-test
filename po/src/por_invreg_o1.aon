@@ -86,11 +86,11 @@ rem --- Column headings
 
 	dim columns$[12,10]
 	columns=13
-	columns$[0,0]=Translate!.getTranslation("AON_VENDOR"),columns$[0,1]="C",columns$[0,2]="10"
-	columns$[1,0]=Translate!.getTranslation("AON_PO^NUMBER"),columns$[0,1]="C",columns$[1,2]="10"
-	columns$[2,0]=Translate!.getTranslation("AON_REC_#"),columns$[2,1]="C",columns$[2,2]="10"
+	columns$[0,0]=Translate!.getTranslation("AON_VENDOR"),columns$[0,1]="C",columns$[0,2]="8"
+	columns$[1,0]=Translate!.getTranslation("AON_PO^NUMBER"),columns$[0,1]="C",columns$[1,2]="9"
+	columns$[2,0]=Translate!.getTranslation("AON_REC_#"),columns$[2,1]="C",columns$[2,2]="9"
 	columns$[3,0]=Translate!.getTranslation("AON_ITEM"),columns$[3,1]="C",columns$[3,2]="15"
-	columns$[4,0]=Translate!.getTranslation("AON_INVOICE"),columns$[4,1]="C",columns$[4,2]="10"
+	columns$[4,0]=Translate!.getTranslation("AON_INVOICE"),columns$[4,1]="C",columns$[4,2]="20"
 	columns$[5,0]=Translate!.getTranslation("AON_RECEIVED"),columns$[5,1]="C",columns$[5,2]="10"
 	columns$[6,0]=Translate!.getTranslation("AON_QUANTITY"),columns$[6,1]="N",columns$[6,2]="10",columns$[6,3]=m2$
 	columns$[7,0]=Translate!.getTranslation("AON_UM"),columns$[7,1]="C",columns$[7,2]="6"

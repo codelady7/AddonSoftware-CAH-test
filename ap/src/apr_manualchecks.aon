@@ -165,8 +165,8 @@ rem --- column headings
         columns$[1,0]=Translate!.getTranslation("AON_CHK_NO"),       columns$[1,1]="C",columns$[1,2]="7"
         columns$[2,0]=Translate!.getTranslation("AON_CHK_DATE"),     columns$[2,1]="C",columns$[2,2]="7"
         columns$[3,0]=Translate!.getTranslation("AON_TYPE"),         columns$[3,1]="C",columns$[3,2]="7"
-        columns$[4,0]=Translate!.getTranslation("AON_VENDOR"),       columns$[4,1]="C",columns$[4,2]="25"
-        columns$[5,0]=Translate!.getTranslation("AON_INVOICE_NO"),   columns$[5,1]="C",columns$[5,2]="10"
+        columns$[4,0]=Translate!.getTranslation("AON_VENDOR"),       columns$[4,1]="C",columns$[4,2]="15"
+        columns$[5,0]=Translate!.getTranslation("AON_INVOICE_NO"),   columns$[5,1]="C",columns$[5,2]="18"
         columns$[6,0]=Translate!.getTranslation("AON_INV_DATE"),     columns$[6,1]="C",columns$[6,2]="7"
         columns$[7,0]=Translate!.getTranslation("AON_INVOICE_AMT"),  columns$[7,1]="N",columns$[7,2]="10",columns$[7,3]=m1$,columns$[7,10]="T"
         columns$[8,0]=Translate!.getTranslation("AON_DISCOUNT_AMT"), columns$[8,1]="N",columns$[8,2]="10",columns$[8,3]=m1$,columns$[8,10]="T"
@@ -480,7 +480,7 @@ rem --- Manual check
 					OutVect!.addItem(ape02a.check_no$)
 					OutVect!.addItem(fndate$(ape02a.check_date$))
 					OutVect!.addItem(Translate!.getTranslation("AON_MANUAL"))
-					OutVect!.addItem(vendor$)
+                    OutVect!.addItem(vendor$)
 					xwk=fnblank(9)
 
 					lines=lines+1
@@ -756,14 +756,6 @@ rem --- run overlay$,err=std_exit
     else
         goto std_exit
     endif
-
-
-vendor_heading: rem --- Vendor subheading
-rem --- used?.CAH
-
-       OutVect!.addItem(vendor$)
-       lines=lines+1
-       return
 
 print_invoice: rem --- Print invoice detail line
 

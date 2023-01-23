@@ -171,7 +171,7 @@ rem --- Headings and print positions
     columns$[0,0]=Translate!.getTranslation("AON_VENDOR"),           columns$[0,1]="C",columns$[0,2]="6"
     columns$[1,0]=Translate!.getTranslation("AON_NAME"),             columns$[1,1]="C",columns$[1,2]="25"
     columns$[2,0]=Translate!.getTranslation("AON_ACH"),              columns$[2,1]="C",columns$[2,2]="4"
-    columns$[3,0]=Translate!.getTranslation("AON_INVOICE"),          columns$[3,1]="C",columns$[3,2]="10"
+    columns$[3,0]=Translate!.getTranslation("AON_INVOICE"),          columns$[3,1]="C",columns$[3,2]="20"
     columns$[4,0]=Translate!.getTranslation("AON_INVOICE_DT"),       columns$[4,1]="C",columns$[4,2]="10"
     columns$[5,0]=Translate!.getTranslation("AON_DUE_DT"),           columns$[5,1]="C",columns$[5,2]="10"
     columns$[6,0]=Translate!.getTranslation("AON_DISCOUNT_DT"),      columns$[6,1]="C",columns$[6,2]="10"
