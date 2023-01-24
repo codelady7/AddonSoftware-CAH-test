@@ -188,7 +188,7 @@ dim columns$[6,10]
         columns$[1,0]=dh$,             columns$[1,1]="C",columns$[1,2]="25"
         columns$[2,0]=Translate!.getTranslation("AON_VENDOR"),        columns$[2,1]="C",columns$[2,2]="10"
         columns$[3,0]=Translate!.getTranslation("AON_NAME"),          columns$[3,1]="C",columns$[3,2]="25"
-        columns$[4,0]=Translate!.getTranslation("AON_INV/CHK"),       columns$[4,1]="C",columns$[4,2]="10"
+        columns$[4,0]=Translate!.getTranslation("AON_INV/CHK"),       columns$[4,1]="C",columns$[4,2]="20"
         columns$[5,0]=Translate!.getTranslation("AON_DATE"),          columns$[5,1]="C",columns$[5,2]="8"
         columns$[6,0]=Translate!.getTranslation("AON_AMOUNT"),        columns$[6,1]="N",columns$[6,2]="10",columns$[6,3]=m1$,columns$[6,10]="T"
     endif
@@ -196,7 +196,7 @@ dim columns$[6,10]
     if sequence$="V" then 
         columns$[0,0]=Translate!.getTranslation("AON_VENDOR"),        columns$[0,1]="C",columns$[0,2]="10"
         columns$[1,0]=Translate!.getTranslation("AON_NAME"),          columns$[1,1]="C",columns$[1,2]="25"
-        columns$[2,0]=Translate!.getTranslation("AON_INV/CHK"),       columns$[2,1]="C",columns$[2,2]="10"
+        columns$[2,0]=Translate!.getTranslation("AON_INV/CHK"),       columns$[2,1]="C",columns$[2,2]="20"
         columns$[3,0]=Translate!.getTranslation("AON_DATE"),          columns$[3,1]="C",columns$[3,2]="8"
         columns$[4,0]=ah$,             columns$[4,1]="C",columns$[4,2]="10"
         columns$[5,0]=dh$,             columns$[5,1]="C",columns$[5,2]="25"
@@ -206,7 +206,7 @@ dim columns$[6,10]
     if sequence$="A" then 
         columns$[0,0]=Translate!.getTranslation("AON_ALT_SEQ"),       columns$[0,1]="C",columns$[0,2]="10"
         columns$[1,0]=Translate!.getTranslation("AON_VENDOR"),        columns$[1,1]="C",columns$[1,2]="25"
-        columns$[2,0]=Translate!.getTranslation("AON_INV/CHK"),       columns$[2,1]="C",columns$[2,2]="10"
+        columns$[2,0]=Translate!.getTranslation("AON_INV/CHK"),       columns$[2,1]="C",columns$[2,2]="20"
         columns$[3,0]=Translate!.getTranslation("AON_DATE"),          columns$[3,1]="C",columns$[3,2]="8"
         columns$[4,0]=ah$,             columns$[4,1]="C",columns$[4,2]="10"
         columns$[5,0]=dh$,             columns$[5,1]="C",columns$[5,2]="25"
