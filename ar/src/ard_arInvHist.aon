@@ -1,11 +1,14 @@
 rem --- ard_arInvHist.aon
 rem --- launches AR  Invoice History Inquiry
 
-enter rd_gui_dev,rdWindow!,rd_field_tvar$,rd_ddm_drill_defs$,rd_drill_pfx$,rd_table_chans$[all]
+    setesc std_error
+    seterr std_error
+
+    enter rd_gui_dev,rdWindow!,rd_field_tvar$,rd_ddm_drill_defs$,rd_drill_pfx$,rd_table_chans$[all]
      
-        dim dflt_data$[2,1]
-        sel_key$=rd_drill_pfx$
-        call stbl("+DIR_SYP")+"bam_run_prog.bbj","ART_INVHDR",stbl("+USER_ID"),"",sel_key$,rd_table_chans$[all],"",dflt_data$[all]
+    dim dflt_data$[2,1]
+    sel_key$=rd_drill_pfx$
+    call stbl("+DIR_SYP")+"bam_run_prog.bbj","ART_INVHDR",stbl("+USER_ID"),"",sel_key$,rd_table_chans$[all],"",dflt_data$[all]
 
     goto exit_prog
 
@@ -51,14 +54,6 @@ std_error: rem --- Standard error handler (11Oct2017)
 rem #endinclude std_error.src
 
 exit_prog:rem --- Exit Program
-
-    if op$="Y"
-        rem - can't remember why this seemingly extra file close is here...I *think* it had to do w/ launching drilldown, then going into hist invoice, then doing a print... had err 0 along the way, or instances of opt_invhdr were stacking up?
-        num_files=1
-        dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-        open_tables$[1]="OPT_INVHDR",open_opts$[1]="CX"
-        gosub open_tables;rem close OPT_INVHDR
-    endif
 
     exit
                 
