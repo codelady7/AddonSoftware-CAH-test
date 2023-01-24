@@ -768,7 +768,7 @@ rem --- now add them back (i.e., drop, then add, in case anything has changed)
 
     sproc_vw_name$="APACH_PAYMENT_HDR"
     sqlprep$="CREATE PROCEDURE APACH_PAYMENT_HDR "
-    sqlprep$=sqlprep$+"(FIRM_ID VARCHAR(2) IN, AP_TYPE CHAR(2) IN, BNK_ACCT_CD CHAR(10) IN, CHECK_NO CHAR(7) IN, "
+    sqlprep$=sqlprep$+"(FIRM_ID VARCHAR(2) IN, AP_TYPE CHAR(2) IN, BNK_ACCT_CD CHAR(10) IN, CHECK_NO CHAR(7) IN, CHK_PAGENUM CHAR(3) IN, "
     sqlprep$=sqlprep$+"VENDOR_ID VARCHAR(6) IN, VEND_MASK VARCHAR(20) IN, AMT_MASK VARCHAR(20) IN, "
     sqlprep$=sqlprep$+"BARISTA_WD VARCHAR(50) IN) "
     sqlprep$=sqlprep$+"'"+sproc_path$+"APACH_PAYMENT_HDR.prc' '"+barista_cfg_path$+"barista.cfg' "

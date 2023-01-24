@@ -410,6 +410,8 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
     findrecord(apm01_dev,key=firm_id$+apw01a.vendor_id$,dom=*next)apm01a$
 
     rem --- Get info for this check
+    max_chkPageNum$=""
+    chkAmt=0
     read(apwChkJasperPrn_dev,key=firm_id$+apw01a.ap_type$+apw01a.bnk_acct_cd$+apw01a.check_no$,dom=*next)
     while 1
         redim apwChkJasperPrn$
@@ -417,7 +419,10 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
         if pos(firm_id$+apw01a.ap_type$+apw01a.bnk_acct_cd$+apw01a.check_no$=thisKey$)<>1 then break
         readrecord(apwChkJasperPrn_dev)apwChkJasperPrn$
         if apwChkJasperPrn.section_type$<>"C" then continue
-        break
+        if num(apwChkJasperPrn.chk_pagenum$)>num(max_chkPageNum$) then 
+            max_chkPageNum$=apwChkJasperPrn.chk_pagenum$
+            chkAmt=apwChkJasperPrn.chk_amt
+        endif
     wend
 
     rem --- NACHA Entry Detail Record (Record Type Code 6)
@@ -430,7 +435,7 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
     vendor_bnk_acct_no!=encryptor!.decryptData(cvs(apm01a.bnk_acct_no$,2))
     vendor_bak_acct_no$=vendor_bnk_acct_no!.replace("-",""); rem --- remove hyphens
     nachaEntryDetail$=nachaEntryDetail$+pad(vendor_bak_acct_no$,17);                        rem --- DFI Account Number
-    nachaEntryDetail$=nachaEntryDetail$+str(apwChkJasperPrn.chk_amt*100:"0000000000");      rem --- Amount
+    nachaEntryDetail$=nachaEntryDetail$+str(chkAmt*100:"0000000000");                       rem --- Amount
     nachaEntryDetail$=nachaEntryDetail$+pad("AP"+apm01a.vendor_id$+apw01a.check_no$,15);    rem --- Individual Identification Number
     nachaEntryDetail$=nachaEntryDetail$+pad(cvs(apm01a.vendor_name$,2),22);                 rem --- Individual Name
     nachaEntryDetail$=nachaEntryDetail$+fill(2);                                            rem --- Discretionary Data
@@ -450,16 +455,16 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
     nacha_recs=nacha_recs+1
     route_hash$=vendor_bak_acct_no$
     batch_hash=batch_hash+num(route_hash$)
-    if apwChkJasperPrn.chk_amt>0 then
-        total_credits=total_credits+apwChkJasperPrn.chk_amt
+    if chkAmt>0 then
+        total_credits=total_credits+chkAmt
     else
-        total_debits=total_debits+apwChkJasperPrn.chk_amt
+        total_debits=total_debits+chkAmt
     endif
     if apsACH.total_required$="Y" then
-        if apwChkJasperPrn.chk_amt<=0 then
-            total_credits=total_credits+apwChkJasperPrn.chk_amt
+        if chkAmt<=0 then
+            total_credits=total_credits+chkAmt
         else
-            total_debits=total_debits+apwChkJasperPrn.chk_amt
+            total_debits=total_debits+chkAmt
         endif
     endif
 

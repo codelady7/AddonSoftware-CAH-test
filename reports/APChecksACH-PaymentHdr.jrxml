@@ -16,6 +16,7 @@
 	<parameter name="AP_TYPE" class="java.lang.String"/>
 	<parameter name="BNK_ACCT_CD" class="java.lang.String"/>
 	<parameter name="CHECK_NO" class="java.lang.String"/>
+	<parameter name="CHK_PAGENUM" class="java.lang.String"/>
 	<parameter name="VENDOR_ID" class="java.lang.String"/>
 	<parameter name="VEND_MASK" class="java.lang.String"/>
 	<parameter name="FIRM_NAME" class="java.lang.String"/>
@@ -25,7 +26,7 @@
 	<parameter name="FIRM_PHONE_NO" class="java.lang.String"/>
 	<parameter name="FIRM_FAX_NO" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL APACH_PAYMENT_HDR($P{FIRM_ID},$P{AP_TYPE},$P{BNK_ACCT_CD},$P{CHECK_NO},$P{VENDOR_ID},$P{VEND_MASK},$P{AMT_MASK},$P{BARISTA_WD})]]>
+		<![CDATA[CALL APACH_PAYMENT_HDR($P{FIRM_ID},$P{AP_TYPE},$P{BNK_ACCT_CD},$P{CHECK_NO},$P{CHK_PAGENUM},$P{VENDOR_ID},$P{VEND_MASK},$P{AMT_MASK},$P{BARISTA_WD})]]>
 	</queryString>
 	<field name="ADDRESS1" class="java.lang.String"/>
 	<field name="ADDRESS2" class="java.lang.String"/>

@@ -20,6 +20,7 @@ rem --- Get 'IN' SPROC parameters
     ap_type$ = sp!.getParameter("AP_TYPE")
     bnk_acct_cd$ = sp!.getParameter("BNK_ACCT_CD")
     check_no$ = sp!.getParameter("CHECK_NO")
+    chk_pagenum$ = sp!.getParameter("CHK_PAGENUM")
     vendor_id$=sp!.getParameter("VENDOR_ID")
     vend_mask$ = sp!.getParameter("VEND_MASK")
     amt_mask$ = sp!.getParameter("AMT_MASK")
@@ -82,6 +83,7 @@ rem --- Get check date and amount
     sql_prep$=sql_prep$+"  AND ap_type='"+ap_type$+"' "
     sql_prep$=sql_prep$+"  AND bnk_acct_cd='"+bnk_acct_cd$+"' "
     sql_prep$=sql_prep$+"  AND check_no='"+check_no$+"' "
+    sql_prep$=sql_prep$+"  AND chk_pagenum='"+chk_pagenum$+"' "
     sql_prep$=sql_prep$+"  AND section_type='C' "
     
     sql_chan=sqlunt
