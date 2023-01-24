@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-01-17
+ Report Date:   2023-01-24
  Report Branch: AddonSoftware 22.13
  Last Release:  AddonSoftware 22.12
 =======================================================================================================================================
@@ -83,4 +83,18 @@ Bug 9294 - AD - Expected failure of apt-11 in OCJ can cause v1400 conversion not
 ----
 Modified: ad/src/adc_v1600conversion.aon
 
-
+=======================================================================================================================================
+Revision: 9bf8e06fb4ad314677683e9d06784d4b43d58ea1
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 1/24/2023 9:38:37 AM
+Message:
+Bug 10559: The ACH Payment check amount must use the
+apw_chkjasperprn.chk_amt for the check's largest
+apw_chkjasperprn.chk_pagenum where apw_chkjasperprn.section_type is "C".
+----
+Modified: ad/src/adx_build_sproc.aon
+Modified: ap/src/apr_chkregister.aon
+Modified: ap/src/apu_chkregister.aon
+Modified: reports/APChecksACH-PaymentHdr.jasper
+Modified: reports/APChecksACH-PaymentHdr.jrxml
+Modified: sprocs/APACH_PAYMENT_HDR.prc
