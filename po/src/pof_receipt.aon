@@ -45,6 +45,7 @@ rem --- Open tables
 
 rem --- Accumulate receipt total
     poLineCode$=""
+    fully_invoiced=1
     read(pot_recdet_dev,key=rec_tpl.firm_id$+rec_tpl.po_no$+rec_tpl.receiver_no$,dom=*next)
     while 1
         readrecord(pot_recdet_dev,end=*break)pot_recdet$
@@ -60,8 +61,13 @@ rem --- Accumulate receipt total
             recQty=pot_recdet.qty_received
         endif
         received=received+(recQty*pot_recdet.unit_cost)
+        
+        if pos(poc_linecode.line_type$="OMV")=0
+            if (pot_recdet.qty_received>=0 and pot_recdet.qty_received>pot_recdet.qty_invoiced) or (pot_recdet.qty_received<=0 and pot_recdet.qty_received<pot_recdet.qty_invoiced) then fully_invoiced=0
+        endif
     wend
     calc_tpl.amt_received=received
+    if fully_invoiced then status$="SKIP";rem don't bother including fully invoiced rows in the query results
 
 rem --- Done
     goto exit_prog
