@@ -18,6 +18,9 @@ rem status$        - Returned status: "SKIP" = Skip current record
 
 rem --- Initialize data
     status$=""
+    dim sysinfo$:stbl("+SYSINFO_TPL",err=*next)
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    task_id$=field(sysinfo$,"TASK_ID",err=*next)
 
 rem --- Open tables
 
@@ -67,7 +70,7 @@ rem --- Accumulate receipt total
         endif
     wend
     calc_tpl.amt_received=received
-    if fully_invoiced then status$="SKIP";rem don't bother including fully invoiced rows in the query results
+    if pos("POE_INVHDR"=task_id$) and fully_invoiced then status$="SKIP";rem don't bother including fully invoiced rows in the query results when calling from PO Invoice Entry
 
 rem --- Done
     goto exit_prog
