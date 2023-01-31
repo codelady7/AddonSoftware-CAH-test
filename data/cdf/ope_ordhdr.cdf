@@ -217,6 +217,13 @@ rem --- Enable buttons
 	if callpoint!.getColumnData("OPE_ORDHDR.INVOICE_TYPE")<>"P" then callpoint!.setOptionEnabled("OACK",1)
 	callpoint!.setOptionEnabled("CUST",1)
 
+rem --- Enable/disable Freight Amount
+	if cvs(callpoint!.getColumnData("OPE_ORDHDR.SHIPPING_ID"),2)<>"" then
+		callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",0)
+		callpoint!.setColumnData("OPE_ORDHDR.FREIGHT_AMT",str(0),1)
+	else
+		callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",1)
+	endif
 
 rem --- Set all previous values
 
@@ -1472,6 +1479,9 @@ rem --- Acknowledgement not printed yet for new order, so save empty HashMap if 
 
 rem --- Reset default warehouse for new order
 	user_tpl.warehouse_id$ = callpoint!.getDevObject("defaultWhse")
+
+rem --- Enable Freight Amount
+	callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",1)
 
 [[OPE_ORDHDR.ASHO]]
 rem --- Get default dates, POS station
@@ -3315,6 +3325,18 @@ rem --- Warn if Shipment Date isn't in an appropriate GL period
 	shipmnt_date$=callpoint!.getUserInput()        
 	if user_tpl.glint$="Y" 
 		call stbl("+DIR_PGM")+"glc_datecheck.aon",shipmnt_date$,"Y",per$,yr$,status
+	endif
+
+[[OPE_ORDHDR.SHIPPING_ID.AVAL]]
+rem --- Enable/disable Freight Amount
+	shipping_id$=callpoint!.getUserInput()
+	if shipping_id$=callpoint!.getColumnData("OPE_ORDHDR.SHIPPING_ID") then break
+
+	if cvs(shipping_id$,2)<>"" then
+		callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",0)
+		callpoint!.setColumnData("OPE_ORDHDR.FREIGHT_AMT",str(0),1)
+	else
+		callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",1)
 	endif
 
 [[OPE_ORDHDR.SHIPTO_NO.AVAL]]

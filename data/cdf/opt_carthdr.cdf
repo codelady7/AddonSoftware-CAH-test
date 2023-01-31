@@ -20,13 +20,18 @@ rem --- Disable/enable fields depending on shipped_flag
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.WEIGHT",0)
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",0)
 	else
-		rem --- Enable fields if carton has not been shipped
+		rem --- Enable fields if carton has NOT been shipped
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARTON_NO",1)
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.TRACKING_NO",1)
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.CARRIER_CODE",1)
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.SCAC_CODE",1)
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.WEIGHT",1)
 		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",1)
+
+		rem --- Disable Freight Amount if using a 3rd Party Shipping ID
+		if cvs(callpoint!.getDevObject("shipping_id"),2)<>"" then
+			callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",0)
+		endif
 	endif
 
 [[OPT_CARTHDR.AGRN]]
@@ -35,6 +40,14 @@ rem --- Disable Pack Carton button for new rows
 		callpoint!.setOptionEnabled("CART",0)
 	else
 		callpoint!.setOptionEnabled("CART",1)
+	endif
+
+rem --- Disable Freight Amount if using a 3rd Party Shipping ID
+	row=callpoint!.getValidationRow()
+	if cvs(callpoint!.getDevObject("shipping_id"),2)<>"" then
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",0)
+	else
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",1)
 	endif
 
 rem --- Capture starting freight_amt and weight
@@ -195,6 +208,12 @@ rem --- Initialize other displayed fields
 	callpoint!.setColumnData("OPT_CARTHDR.SHIPPED_FLAG","N",1)
 	callpoint!.setColumnData("OPT_CARTHDR.WEIGHT","0",1)
 	callpoint!.setColumnData("OPT_CARTHDR.FREIGHT_AMT","0",1)
+
+	if cvs(callpoint!.getDevObject("shipping_id"),2)<>"" then
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",0)
+	else
+		callpoint!.setColumnEnabled(row,"OPT_CARTHDR.FREIGHT_AMT",1)
+	endif
 
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value

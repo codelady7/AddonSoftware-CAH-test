@@ -44,8 +44,9 @@ rem --- Set record deleted flag
 rem --- Capture starting record data so can tell later if anything changed
 	callpoint!.setDevObject("initial_rec_data$",rec_data$)
 
-rem --- Hold onto ar_ship_via for use in opt_carthdr
+rem --- Hold onto ar_ship_via and shipping_id for use in opt_carthdr
 	callpoint!.setDevObject("ar_ship_via",callpoint!.getColumnData("OPT_FILLMNTHDR.AR_SHIP_VIA"))
+	callpoint!.setDevObject("shipping_id",callpoint!.getColumnData("OPT_FILLMNTHDR.SHIPPING_ID"))
 
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
@@ -593,8 +594,9 @@ rem --- Initialize new Order Fulfillment Entry with corresponding OPE_ORDHDR dat
 	optFillmntHdr.trans_status$="E"
 	writerecord(optFillmntHdr_dev)optFillmntHdr$
 
-rem --- Hold onto ar_ship_via for use in opt_carthdr
+rem --- Hold onto ar_ship_via and shipping_id for use in opt_carthdr
 	callpoint!.setDevObject("ar_ship_via",optFillmntHdr.ar_ship_via$)
+	callpoint!.setDevObject("shipping_id",optFillmntHdr.shipping_id$)
 
 rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 	optFillmntDet_dev=fnget_dev("OPT_FILLMNTDET")
@@ -1007,6 +1009,7 @@ rem --- Disable all detail grid buttons
 
 rem --- Initializations
 	callpoint!.setDevObject("recordDeleted",0)
+	callpoint!.setDevObject("shipping_id","")
 
 [[OPT_FILLMNTHDR.BWRI]]
 rem --- Initialize RTP modified fields for modified existing records
@@ -1056,6 +1059,40 @@ rem --- Validate this is an existing open Order (not Quote) with a printed Picki
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break
+	endif
+
+[[OPT_FILLMNTHDR.SHIPPING_ID.AVAL]]
+rem --- Hold onto shipping_id for use in opt_carthdr
+	shipping_id$=callpoint!.getUserInput()
+	if shipping_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.SHIPPING_ID") then break
+	callpoint!.setDevObject("shipping_id",shipping_id$)
+
+rem --- Zero Freight Amount when using 3rd Party Shipping ID
+	if cvs(shipping_id$,2)<>"" then
+		optCartHdr_dev=fnget_dev("OPT_CARTHDR")
+		dim optCartHdr$:fnget_tpl$("OPT_CARTHDR")
+		ar_type$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_TYPE")
+		customer_id$=callpoint!.getColumnData("OPT_FILLMNTHDR.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.ORDER_NO")
+		ar_inv_no$=callpoint!.getColumnData("OPT_FILLMNTHDR.AR_INV_NO")
+		optCartHdr_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$
+		read(optCartHdr_dev,key=optCartHdr_trip$,knum="AO_STATUS",dom=*next)
+		while 1
+			optCartHdr_key$=key(optCartHdr_dev,end=*break)
+			if pos(optCartHdr_trip$=optCartHdr_key$)<>1 then break
+			readrecord(optCartHdr_dev)optCartHdr$
+			optCartHdr.freight_amt=0
+			writerecord(optCartHdr_dev)optCartHdr$
+		wend
+
+		rem --- Need to refresh display of OPT_CARTHDR Freight Amounts
+		optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
+		dim optFillmntHdr$:fnget_tpl$("OPT_FILLMNTHDR")
+		optFillmntHdr_key$=callpoint!.getRecordKey()
+		readrecord(optFillmntHdr_dev,key=optFillmntHdr_key$)optFillmntHdr$
+		optFillmntHdr.shipping_id$=shipping_id$
+		writerecord(optFillmntHdr_dev)optFillmntHdr$
+		callpoint!.setStatus("RECORD:["+optFillmntHdr_key$+"]")
 	endif
 
 [[OPT_FILLMNTHDR.<CUSTOM>]]
