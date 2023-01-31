@@ -178,6 +178,14 @@ rem --- Enable buttons
 
 	callpoint!.setOptionEnabled("AGNG",iff(callpoint!.getDevObject("on_demand_aging")="Y",1,0))
 
+rem --- Enable/disable Freight Amount
+	if cvs(callpoint!.getColumnData("OPE_INVHDR.SHIPPING_ID"),2)<>"" then
+		callpoint!.setColumnEnabled("OPE_INVHDR.FREIGHT_AMT",0)
+		callpoint!.setColumnData("OPE_INVHDR.FREIGHT_AMT",str(0),1)
+	else
+		callpoint!.setColumnEnabled("OPE_INVHDR.FREIGHT_AMT",1)
+	endif
+
 rem --- Set all previous values
 
 	user_tpl.prev_ext_cost     = num(callpoint!.getColumnData("OPE_INVHDR.TOTAL_COST"))
@@ -1149,6 +1157,9 @@ rem --- Make sure sales tax gets calculated, and hide possible leftover TAX_AMOU
 
 rem --- Reset default warehouse for new order
 	user_tpl.warehouse_id$ = callpoint!.getDevObject("defaultWhse")
+
+rem --- Enable Freight Amount
+	callpoint!.setColumnEnabled("OPE_INVHDR.FREIGHT_AMT",1)
 
 [[OPE_INVHDR.AR_DIST_CODE.BINP]]
 rem --- Enable/Disable Cash Sale button
@@ -2971,6 +2982,18 @@ rem --- Warn if Shipment Date isn't in an appropriate GL period
 [[OPE_INVHDR.SHIPMNT_DATE.BINP]]
 rem --- Enable/Disable Cash Sale button
 	gosub able_cash_sale
+
+[[OPE_INVHDR.SHIPPING_ID.AVAL]]
+rem --- Enable/disable Freight Amount
+	shipping_id$=callpoint!.getUserInput()
+	if shipping_id$=callpoint!.getColumnData("OPE_INVHDR.SHIPPING_ID") then break
+
+	if cvs(shipping_id$,2)<>"" then
+		callpoint!.setColumnEnabled("OPE_INVHDR.FREIGHT_AMT",0)
+		callpoint!.setColumnData("OPE_INVHDR.FREIGHT_AMT",str(0),1)
+	else
+		callpoint!.setColumnEnabled("OPE_INVHDR.FREIGHT_AMT",1)
+	endif
 
 [[OPE_INVHDR.SHIPTO_NO.AVAL]]
 rem --- Check Ship-to's if SHIPTO_NO has changed
