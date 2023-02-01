@@ -157,8 +157,12 @@ close_last_period: rem --- Closing last period of year
             goto std_exit_no_update
         endif
         new_curr_yr=num(gls_calendar.year$)
+        rem --- get ending date of new Current and add a day to establish starting date for new FY
+        new_curr_end$=field(gls_calendar$,"period_end_"+str(num(gls_calendar.total_pers$):"00"))
+        julian=jul(num(new_curr_end$(1,4)),num(new_curr_end$(5,2)),num(new_curr_end$(7,2)))+1
+        startdate$=date(julian:"%Yl%Mz%Dz")
+        gls_calendar.start_date$=startdate$       
         gls_calendar.year$=str(num(gls01a.current_year$)+1)
-        new_next_yyyy$=gls_calendar.year$
         for x=1 to num(gls_calendar.total_pers$)    
             field gls_calendar$,"locked_flag_"+str(x:"00")="N"
             field gls_calendar$,"locked_date_"+str(x:"00")=""
@@ -166,9 +170,12 @@ close_last_period: rem --- Closing last period of year
             call pgmdir$+"adc_perioddates.aon",x,new_curr_yr,begdate$,enddate$,table_chans$[all],status
             mm$=enddate$(5,2)
             dd$=enddate$(7,2)
+            yyyy$=str(num(enddate$(1,4))+1:"0000");rem --- enddate's year for new Next will be one more than new Current
             if mm$="02" then
-                if dd$="29" and !Calendar!.isLeapYear(num(new_next_yyyy$)) then field gls_calendar$,"period_end_"+str(x:"00")=mm$+"28"
-                if dd$="28" and Calendar!.isLeapYear(num(new_next_yyyy$)) and gls01a.adjust_february then field gls_calendar$,"period_end_"+str(x:"00")=mm$+"29"
+                if dd$="29" and !Calendar!.isLeapYear(num(yyyy$)) then field gls_calendar$,"period_end_"+str(x:"00")=yyyy$+mm$+"28"
+                if dd$="28" and Calendar!.isLeapYear(num(yyyy$)) and gls01a.adjust_february then field gls_calendar$,"period_end_"+str(x:"00")=yyyy$+mm$+"29"
+            else
+                field gls_calendar$,"period_end_"+str(x:"00")=yyyy$+mm$+dd$
             endif
         next x
     endif
