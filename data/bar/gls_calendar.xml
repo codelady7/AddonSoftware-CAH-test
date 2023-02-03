@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.gls_calendar">20070915</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.gls_calendar">20230203</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.gls_calendar">20230203</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.gls_calendar">163910</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.gls_calendar">182604</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.gls_calendar"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.gls_calendar">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.gls_calendar"></DD_ATTR_DKNM>
@@ -4506,6 +4506,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.gls_calendaradjust_februaryc">GLS_CALENDAR    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.gls_calendaradjust_februaryc">ADJUST_FEBRUARY </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.gls_calendaradjust_februaryc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.gls_calendarcreate_next_calc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.gls_calendarcreate_next_calc">GLS_CALENDAR    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.gls_calendarcreate_next_calc">CREATE_NEXT_CAL </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.gls_calendarcreate_next_calc">C</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
