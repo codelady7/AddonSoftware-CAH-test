@@ -137,11 +137,14 @@ rem --- When fiscal calendar for the initial fiscal year is saved, create duplic
 		rem --- Create prior fiscal year's calendar
 		dim prior_cal$:fnget_tpl$("GLS_CALENDAR")
 		prior_cal$=gls_calendar$
-		prior_cal.year$=str(num(gls_calendar.year$)-1)
+		prior_cal.year$=str(num(prior_cal.year$)-1)
+		prior_cal.start_date$(1,4)=str(num(prior_cal.start_date$(1,4))-1)
 		for per=1 to num(prior_cal.total_pers$)
 			field prior_cal$,"LOCKED_FLAG_"+str(per:"00")="Y"
 			field prior_cal$,"LOCKED_DATE_"+str(per:"00")=date(0:"%Yd%Mz%Dz")
 			period_end$=field(prior_cal$,"PERIOD_END_"+str(per:"00"))
+			period_end$(1,4)=str(num(period_end$(1,4))-1)
+			field prior_cal$,"PERIOD_END_"+str(per:"00")=period_end$
 			if (gls_params.adjust_february and period_end$(5)="0228") or period_end$(5)="0229" then
 				rem --- Adjust last day of February for leap year
 				Calendar! = new java.util.GregorianCalendar()
@@ -160,11 +163,14 @@ rem --- When fiscal calendar for the initial fiscal year is saved, create duplic
 			rem --- Next fiscal year
 			dim next_cal$:fnget_tpl$("GLS_CALENDAR")
 			next_cal$=gls_calendar$
-			next_cal.year$=str(num(gls_calendar.year$)+1)
+			next_cal.year$=str(num(next_cal.year$)+1)
+			next_cal.start_date$(1,4)=str(num(next_cal.start_date$(1,4))+1)
 			for per=1 to num(next_cal.total_pers$)
 				field next_cal$,"LOCKED_FLAG_"+str(per:"00")="N"
 				field next_cal$,"LOCKED_DATE_"+str(per:"00")=""
 				period_end$=field(next_cal$,"PERIOD_END_"+str(per:"00"))
+				period_end$(1,4)=str(num(period_end$(1,4))+1)
+				field next_cal$,"PERIOD_END_"+str(per:"00")=period_end$	
 				if (gls_params.adjust_february and period_end$(5)="0228") or period_end$(5)="0229" then
 					rem --- Adjust last day of February for leap year
 					Calendar! = new java.util.GregorianCalendar()
@@ -969,7 +975,7 @@ copy_fiscal_calendar: rem --- Copy calendar from current fiscal year
 	delta_years=num(year$)-num(current_fiscal_yr$)
 	readrecord(gls_calendar_dev,key=firm_id$+current_fiscal_yr$,dom=*endif)gls_calendar$
 	start_date$=gls_calendar.start_date$
-	start_year$=str(num(current_fiscal_yr$)+delta_years)
+	start_year$=str(num(start_date$(1,4))+delta_years)
 	callpoint!.setColumnData("GLS_CALENDAR.START_DATE",start_year$+start_date$(5))
 	total_pers$=gls_calendar.total_pers$
 	callpoint!.setColumnData("GLS_CALENDAR.TOTAL_PERS",total_pers$)
