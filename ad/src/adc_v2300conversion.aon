@@ -386,6 +386,116 @@ rem --- For version 23.00, move fields from old APS_PAYAUTH to new APS_PARAMS (E
         print(log_dev)meter_text$
     endif
 
+rem --- For version 23.00, split IVE_TRANSFER into IVE_TRANSFERHDR and IVE_TRANSFERDET (ER 10412)
+    this_module$="IV"
+    if installMap!.get(this_module$)="Y" then
+        task$="2300_IV_ive_transfer"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=3
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="IVE_TRANSFER",    open_opts$[1]="OTA"
+            open_tables$[2]="IVE_TRANSFERHDR", open_opts$[2]="OTA"
+            open_tables$[3]="IVE_TRANSFERDET", open_opts$[3]="OTA"
+    
+            gosub open_tables
+    
+            iveTransfer_dev=num(open_chans$[1])
+            iveTransferHdr_dev=num(open_chans$[2])
+            iveTransferDet_dev=num(open_chans$[3])
+            dim iveTransfer$:open_tpls$[1]
+            dim iveTransferHdr$:open_tpls$[2]
+            dim iveTransferDet$:open_tpls$[3]
+
+            rem --- Split IVE_TRANSFER (ive-02) into IVE_TRANSFERHDR and IVE_TRANSFERDET
+            read(iveTransfer_dev,key="",dom=*next)
+            while 1
+                readrecord(iveTransfer_dev,end=*break)iveTransfer$
+                if iveTransferHdr.firm_id$=iveTransfer.firm_id$ and
+:                   iveTransferHdr.warehouse_id$=iveTransfer.warehouse_id$ and
+:                   iveTransferHdr.warehouse_id_to$=iveTransfer.warehouse_id_to$ and
+:                   iveTransferHdr.trans_date$=iveTransfer.trans_date$ and
+:                   iveTransferHdr.inv_xfer_no$=iveTransfer.inv_xfer_no$ then
+
+                    rem --- Increment sequence number for the next detail record
+                    sequenceNo=sequenceNo+1
+                else
+                    rem --- Initialize sequence number for first detail record
+                    sequenceNo=1
+                    
+                    rem --- Write IVE_TRANSFERHDR header record
+                    iveTransferHdr.firm_id$=iveTransfer.firm_id$    
+                    iveTransferHdr.warehouse_id$=iveTransfer.warehouse_id$
+                    iveTransferHdr.warehouse_id_to$=iveTransfer.warehouse_id_to$
+                    iveTransferHdr.trans_date$=iveTransfer.trans_date$
+                    iveTransferHdr.inv_xfer_no$=iveTransfer.inv_xfer_no$
+                    iveTransferHdr.batch_no$=iveTransfer.batch_no$
+                    writerecord(iveTransferHdr_dev)iveTransferHdr$
+                endif
+                
+                rem --- Write IVE_TRANSFERDET detail record
+                iveTransferDet.firm_id$=iveTransfer.firm_id$    
+                iveTransferDet.warehouse_id$=iveTransfer.warehouse_id$
+                iveTransferDet.warehouse_id_to$=iveTransfer.warehouse_id_to$
+                iveTransferDet.trans_date$=iveTransfer.trans_date$
+                iveTransferDet.inv_xfer_no$=iveTransfer.inv_xfer_no$
+                iveTransferDet.sequence_no$=str(sequenceNo:"000")
+                iveTransferDet.item_id$=iveTransfer.item_id$
+                iveTransferDet.lotser_no$=iveTransfer.lotser_no$
+                iveTransferDet.inv_xfer_no$=iveTransfer.inv_xfer_no$
+                iveTransferDet.trans_qty=iveTransfer.trans_qty
+                iveTransferDet.ext_cost=iveTransfer.ext_cost
+                iveTransferDet.unit_cost=iveTransfer.unit_cost
+                iveTransferDet.batch_no$=iveTransfer.batch_no$
+                writerecord(iveTransferDet_dev)iveTransferDet$
+            wend
+
+            rem --- close files opened for this conversion
+            num_files=3
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="IVE_TRANSFER",    open_opts$[1]="C"
+            open_tables$[2]="IVE_TRANSFERHDR", open_opts$[2]="C"
+            open_tables$[3]="IVE_TRANSFERDET", open_opts$[3]="C"
+            gosub open_tables
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
 rem --- For version 23.00, initialize new BARCODE_SOURCE field in OPS_PARAMS
     this_module$="OP"
     if installMap!.get(this_module$)="Y" then
