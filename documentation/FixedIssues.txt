@@ -8,6 +8,33 @@
 BBjBaristaAddonDemos2213_02-02-2023_1436.jar
 
 =======================================================================================================================================
+Revision: cba56ef42dce966647af1eb7b3ea9712aaf0ea29
+Author: Christine <chawkins@basis.com>
+Date: 2/3/2023 4:56:50 PM
+Message:
+-Bug 10566 - GL - When creating Fiscal Calendar from scratch, the prior and next calendars are incorrect
+-Bug 10568 - GL - Creating new Fiscal Calendar based on current one is incorrect if basing FY on the ending date
+
+=======================================================================================================================================
+Revision: 3c7599c401cf6818d0d21d0e3c9828f7fbd38a14
+Author: Christine <chawkins@basis.com>
+Date: 2/3/2023 6:29:40 PM
+Message:
+Bug 10569 - GL - Create next fiscal yr calendar checkbox on Fiscal Calendar form should be display only
+ - corrected as suggested
+----
+Modified: data/bar/gls_calendar.xml
+
+=======================================================================================================================================
+Revision: 4934877f6190820aa010b4fc1cd817cd61708f43
+Author: Christine <chawkins@basis.com>
+Date: 2/7/2023 11:36:27 AM
+Message:
+Fixed corrupted demo data.
+
+----
+Modified: data/apt-05
+Modified: data/apt_vendpayments
 
 
 
