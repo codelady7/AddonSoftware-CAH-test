@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-02-08
+ Report Date:   2023-02-10
  Report Branch: AddonSoftware 22.14
  Last Release:  AddonSoftware 22.13
 =======================================================================================================================================
@@ -35,6 +35,23 @@ Fixed corrupted demo data.
 ----
 Modified: data/apt-05
 Modified: data/apt_vendpayments
+
+=======================================================================================================================================
+Revision: 48f8eb71926ba6da9686f625ccfe1485cd6c6fd5
+Author: Christine <chawkins@basis.com>
+Date: 2/10/2023 6:33:19 PM
+Message:
+Bug 10579 - AD - In Expresso Customers > Historical Invoices grid, clicking drill down to Historical Invoice form causes error
+ - took unnecessary file close out of the drill down program
+ - altered History Invoice form and print to stop upward creep of open files
+
+(cherry picked from commit e0a4dabcdba06defa027cade883de208e52dfbc4)
+----
+Modified: ar/src/ard_custInvoices.aon
+Modified: data/bar/opr_hist_inv.xml
+Modified: data/cdf/opr_hist_inv.cdf
+Modified: op/src/opr_hist_inv.aon
+
 
 
 
