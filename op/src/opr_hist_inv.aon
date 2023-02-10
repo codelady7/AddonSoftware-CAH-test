@@ -45,7 +45,7 @@ rem --- Assign form input values to local variables
     
 rem --- Call the invoice printing program
 
-    call pgmdir$+"opc_invoice.aon::historical", cust_id$, order_no$, option!, table_chans$[all], status
+    call pgmdir$+"opc_invoice.aon::historical", cust_id$, order_no$, option!, rd_table_chans$[all], status
     goto std_exit
     
 rem #include std_error.src
