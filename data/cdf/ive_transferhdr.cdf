@@ -11,6 +11,75 @@ rem --- New Batch?
 		if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
 	endif
 
+[[IVE_TRANSFERHDR.BDEL]]
+rem --- Uncommit inventory
+	iveTransferDet_dev = fnget_dev("IVE_TRANSFERDET")
+	dim iveTransferDet$:fnget_tpl$("IVE_TRANSFERDET")
+	trip_key$=callpoint!.getRecordKey()
+	read (iveTransferDet_dev, key=trip_key$,knum="BATCH_KEY",dom=*next)
+	while 1
+		iveTransferDet_key$=key(iveTransferDet_dev,end=*break)
+		if pos(trip_key$=iveTransferDet_key$)=0 then break
+		readrecord(iveTransferDet_dev)iveTransferDet$
+
+		qty = iveTransferDet.trans_qty
+		if qty then 
+			rem --- Initialize Inventory Item Update
+			status = 999
+			call stbl("+DIR_PGM") + "ivc_itemupdt.aon::init",
+:				err=*next,
+:				chan[all],
+:				ivs01a$,
+:				items$[all],
+:				refs$[all],
+:				refs[all],
+:				table_chans$[all],
+:				status
+			if status then
+				rem --- Error updating inventory
+				message$=Translate!.getTranslation("AON_ERROR")
+				message$=message$+" "+Translate!.getTranslation("AON_UPDATING")
+				message$=message$+" "+Translate!.getTranslation("AON_INVENTORY")
+
+				msg_id$="GENERIC_WARN"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=message$
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+				break
+			endif
+
+			rem --- Uncommit qty
+			action$ = "UC"
+			items$[1] = callpoint!.getColumnData("IVE_TRANSFERHDR.WAREHOUSE_ID")
+			items$[2] = iveTransferDet.item_id$
+			items$[3] = iveTransferDet.lotser_no$
+			refs[0]   = qty
+			call stbl("+DIR_PGM") + "ivc_itemupdt.aon",
+:				action$,	
+:				chan[all],
+:				ivs01a$,
+:				items$[all],
+:				refs$[all],
+:				refs[all],
+:				table_chans$[all],
+:				status
+			if status then
+				rem --- Error updating inventory
+				message$=Translate!.getTranslation("AON_ERROR")
+				message$=message$+" "+Translate!.getTranslation("AON_UPDATING")
+				message$=message$+" "+Translate!.getTranslation("AON_INVENTORY")
+
+				msg_id$="GENERIC_WARN"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=message$
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+				break
+			endif
+		endif
+	wend
+
 [[IVE_TRANSFERHDR.BEND]]
 rem --- Remove software lock on batch, if batching
 	batch$=stbl("+BATCH_NO",err=*next)

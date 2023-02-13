@@ -7,7 +7,7 @@
 			<DD_ALIAS_DESC id="ddm_tables.ive_transferhdr">Inventory Transfers Header</DD_ALIAS_DESC>
 			<DD_FILE_NAME id="ddm_tables.ive_transferhdr"></DD_FILE_NAME>
 			<DD_TABLE_PATH id="ddm_tables.ive_transferhdr">[+IVDATA]</DD_TABLE_PATH>
-			<DD_ALIAS_TYPE id="ddm_tables.ive_transferhdr">X</DD_ALIAS_TYPE>
+			<DD_ALIAS_TYPE id="ddm_tables.ive_transferhdr">V</DD_ALIAS_TYPE>
 			<DD_KEY_LENGTH id="ddm_tables.ive_transferhdr">0</DD_KEY_LENGTH>
 			<DD_NBR_RECORD id="ddm_tables.ive_transferhdr">0</DD_NBR_RECORD>
 			<DD_RECORD_LEN id="ddm_tables.ive_transferhdr">0</DD_RECORD_LEN>
@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ive_transferhdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_transferhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_transferhdr">2459977</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_transferhdr">20230207</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ive_transferhdr">20230207</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_transferhdr">123738</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ive_transferhdr">20230213</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ive_transferhdr">20230213</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_transferhdr">105838</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_transferhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ive_transferhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_transferhdr">BATCH_KEY</DD_ATTR_DKNM>
@@ -63,6 +63,10 @@
 		<RECORD id="ddm_table_cpro.ive_transferhdrarnf">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferhdrarnf">IVE_TRANSFERHDR </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferhdrarnf">ARNF</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferhdrbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferhdrbdel">IVE_TRANSFERHDR </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferhdrbdel">BDEL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ive_transferhdrbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferhdrbend">IVE_TRANSFERHDR </DD_TABLE_ALIAS>
@@ -794,9 +798,9 @@
 			<ASC_PROD_ID id="ddm_elements.inv_xfer_no">IV </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.inv_xfer_no"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.inv_xfer_no">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.inv_xfer_no">20230207</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.inv_xfer_no">20230213</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.inv_xfer_no"></DD_AUTO_COMP>
-			<DD_ATTR_BLNK id="ddm_elements.inv_xfer_no"></DD_ATTR_BLNK>
+			<DD_ATTR_BLNK id="ddm_elements.inv_xfer_no">N</DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.inv_xfer_no"></DD_ATTR_CDAT>
 			<DD_ATTR_CTLW id="ddm_elements.inv_xfer_no"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_elements.inv_xfer_no"></DD_ATTR_CTLH>
@@ -821,8 +825,8 @@
 			<DD_ATTR_MINV id="ddm_elements.inv_xfer_no"></DD_ATTR_MINV>
 			<DD_ATTR_MSKI id="ddm_elements.inv_xfer_no"></DD_ATTR_MSKI>
 			<DD_ATTR_MSKO id="ddm_elements.inv_xfer_no"></DD_ATTR_MSKO>
-			<DD_ATTR_PADC id="ddm_elements.inv_xfer_no"></DD_ATTR_PADC>
-			<DD_ATTR_PADJ id="ddm_elements.inv_xfer_no"></DD_ATTR_PADJ>
+			<DD_ATTR_PADC id="ddm_elements.inv_xfer_no">20</DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.inv_xfer_no">L</DD_ATTR_PADJ>
 			<DD_ATTR_PREC id="ddm_elements.inv_xfer_no">0</DD_ATTR_PREC>
 			<DD_ATTR_PROM id="ddm_elements.inv_xfer_no"></DD_ATTR_PROM>
 			<DD_ATTR_PVAL id="ddm_elements.inv_xfer_no"></DD_ATTR_PVAL>

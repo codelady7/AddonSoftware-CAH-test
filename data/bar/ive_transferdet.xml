@@ -7,7 +7,7 @@
 			<DD_ALIAS_DESC id="ddm_tables.ive_transferdet">Inventory Transfer Detail</DD_ALIAS_DESC>
 			<DD_FILE_NAME id="ddm_tables.ive_transferdet"></DD_FILE_NAME>
 			<DD_TABLE_PATH id="ddm_tables.ive_transferdet">[+IVDATA]</DD_TABLE_PATH>
-			<DD_ALIAS_TYPE id="ddm_tables.ive_transferdet">X</DD_ALIAS_TYPE>
+			<DD_ALIAS_TYPE id="ddm_tables.ive_transferdet">V</DD_ALIAS_TYPE>
 			<DD_KEY_LENGTH id="ddm_tables.ive_transferdet">0</DD_KEY_LENGTH>
 			<DD_NBR_RECORD id="ddm_tables.ive_transferdet">0</DD_NBR_RECORD>
 			<DD_RECORD_LEN id="ddm_tables.ive_transferdet">0</DD_RECORD_LEN>
@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ive_transferdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_transferdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_transferdet">2459977</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_transferdet">20230207</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ive_transferdet">20230207</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_transferdet">123950</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ive_transferdet">20230213</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ive_transferdet">20230213</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_transferdet">104130</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_transferdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ive_transferdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_transferdet">BATCH_KEY</DD_ATTR_DKNM>
@@ -58,15 +58,57 @@
 			<DD_ATTR_PADG id="ddm_tables.ive_transferdet">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.ive_transferdet01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.ive_transferdet01">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.ive_transferdet01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ive_transferdet01">Lot/Serial Lookup</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ive_transferdet01">LOTS</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ive_transferdet01">B</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.ive_transferdetadge">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetadge">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetadge">ADGE</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.ive_transferdetagdr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetagdr">IVE_TRANSFERDET </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetagdr">AGDR</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetagrn">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetagrn">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetagrn">AGRN</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetaopt-lots">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetaopt-lots">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetaopt-lots">AOPT-LOTS</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.ive_transferdetarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetarec">IVE_TRANSFERDET </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetarec">AREC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetawri">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetawri">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetawri">AWRI</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetbdel">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetbdel">BDEL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetbdgx">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetbdgx">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetbdgx">BDGX</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetbude">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetbude">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetbude">BUDE</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ive_transferdetbwri">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ive_transferdetbwri">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ive_transferdetbwri">BWRI</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -711,7 +753,7 @@
 			<DD_ATTR_LABL id="ddm_table_cols.ive_transferdet008"></DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.ive_transferdet008"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ive_transferdet008">N</DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.ive_transferdet008">1</DD_ATTR_MINL>
+			<DD_ATTR_MINL id="ddm_table_cols.ive_transferdet008"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.ive_transferdet008"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ive_transferdet008"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ive_transferdet008"></DD_ATTR_MAXV>
@@ -749,7 +791,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ive_transferdet009">20230201</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ive_transferdet009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ive_transferdet009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ive_transferdet009"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ive_transferdet009">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ive_transferdet009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ive_transferdet009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ive_transferdet009"></DD_ATTR_CTLY>
@@ -976,6 +1018,16 @@
 			<DD_DVAR_NAME id="ddm_column_cpro.ive_transferdetlotser_noaval">LOTSER_NO       </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.ive_transferdetlotser_noaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_column_cpro.ive_transferdetlotser_nobinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.ive_transferdetlotser_nobinp">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.ive_transferdetlotser_nobinp">LOTSER_NO       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.ive_transferdetlotser_nobinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.ive_transferdettrans_qtyaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.ive_transferdettrans_qtyaval">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.ive_transferdettrans_qtyaval">TRANS_QTY       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.ive_transferdettrans_qtyaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
 		<ID id="ddm_column_opts">DDM_COLUMN_OPTS</ID>
@@ -1044,6 +1096,16 @@
 			<DD_DVAR_NAME id="ddm_column_opts.ive_transferdetlotser_nou">LOTSER_NO       </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.ive_transferdetlotser_nou">u</DD_ATTR_OPTS>
 		</RECORD>
+		<RECORD id="ddm_column_opts.ive_transferdetext_costc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ive_transferdetext_costc">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ive_transferdetext_costc">EXT_COST        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ive_transferdetext_costc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.ive_transferdetunit_costc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ive_transferdetunit_costc">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ive_transferdetunit_costc">UNIT_COST       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ive_transferdetunit_costc">C</DD_ATTR_OPTS>
+		</RECORD>
 		<RECORD id="ddm_column_opts.ive_transferdetbatch_nog">
 			<DD_TABLE_ALIAS id="ddm_column_opts.ive_transferdetbatch_nog">IVE_TRANSFERDET </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.ive_transferdetbatch_nog">BATCH_NO        </DD_DVAR_NAME>
@@ -1053,6 +1115,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.ive_transferdetbatch_now">IVE_TRANSFERDET </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.ive_transferdetbatch_now">BATCH_NO        </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.ive_transferdetbatch_now">W</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.ive_transferdetunit_of_salec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ive_transferdetunit_of_salec">IVE_TRANSFERDET </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ive_transferdetunit_of_salec">UNIT_OF_SALE    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ive_transferdetunit_of_salec">C</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
@@ -1224,9 +1291,9 @@
 			<ASC_PROD_ID id="ddm_elements.inv_xfer_no">IV </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.inv_xfer_no"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.inv_xfer_no">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.inv_xfer_no">20230207</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.inv_xfer_no">20230213</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.inv_xfer_no"></DD_AUTO_COMP>
-			<DD_ATTR_BLNK id="ddm_elements.inv_xfer_no"></DD_ATTR_BLNK>
+			<DD_ATTR_BLNK id="ddm_elements.inv_xfer_no">N</DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.inv_xfer_no"></DD_ATTR_CDAT>
 			<DD_ATTR_CTLW id="ddm_elements.inv_xfer_no"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_elements.inv_xfer_no"></DD_ATTR_CTLH>
@@ -1251,8 +1318,8 @@
 			<DD_ATTR_MINV id="ddm_elements.inv_xfer_no"></DD_ATTR_MINV>
 			<DD_ATTR_MSKI id="ddm_elements.inv_xfer_no"></DD_ATTR_MSKI>
 			<DD_ATTR_MSKO id="ddm_elements.inv_xfer_no"></DD_ATTR_MSKO>
-			<DD_ATTR_PADC id="ddm_elements.inv_xfer_no"></DD_ATTR_PADC>
-			<DD_ATTR_PADJ id="ddm_elements.inv_xfer_no"></DD_ATTR_PADJ>
+			<DD_ATTR_PADC id="ddm_elements.inv_xfer_no">20</DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.inv_xfer_no">L</DD_ATTR_PADJ>
 			<DD_ATTR_PREC id="ddm_elements.inv_xfer_no">0</DD_ATTR_PREC>
 			<DD_ATTR_PROM id="ddm_elements.inv_xfer_no"></DD_ATTR_PROM>
 			<DD_ATTR_PVAL id="ddm_elements.inv_xfer_no"></DD_ATTR_PVAL>
