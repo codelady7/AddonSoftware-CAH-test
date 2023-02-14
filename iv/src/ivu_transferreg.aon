@@ -90,103 +90,112 @@ rem --- Initialize update arrays
 
     call pgmdir$+"ivc_itemupdt.aon::init",files[all],ivs01a$,item$[all],refs$[all],refs[all],rd_table_chans$[all],ignore_status
 
-    more=1
-
     call pgmdir$+"adc_progress.aon","N","","","","",0,arm01_dev,1,meter_num,status
 
 rem --- Position file
 
-    read (ive02_dev,key=firm_id$+batch_no$,knum="BATCH_KEY",dom=*next)
+    read (iveTransferHdr_dev,key=firm_id$+batch_no$,knum="BATCH_KEY",dom=*next)
 
 rem --- Loop starts
 
-    while more
+    while 1
 
-        ive02a_key$=key(ive02_dev,end=*break)
-        if pos(firm_id$+batch_no$=ive02a_key$)<>1 then break
-        read record (ive02_dev) ive02a$
+        iveTransferHdr_key$=key(iveTransferHdr_dev,end=*break)
+        if pos(firm_id$+batch_no$=iveTransferHdr_key$)<>1 then break
+        read record (iveTransferHdr_dev) iveTransferHdr$
         
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,ignore_status
-        
-        if ive02a.trans_qty then 
 
+        read(iveTransferDet_dev,key=iveTransferHdr_key$,dom=*next)
+        while 1
+            iveTransferDet_key$=key(iveTransferDet_dev,end=*break)
+            if pos(iveTransferhdr_key$=iveTransferDet_key$)<>1 then break
+
+            readrecord(iveTransferDet_dev)iveTransferDet$
+            if iveTransferDet.trans_qty then 
+    
 rem --- Retrieve item
-            
-            find record (ivm01_dev,key=firm_id$+ive02a.item_id$,dom=remove_record) ivm01a$
-
+                
+                find record (ivm01_dev,key=firm_id$+iveTransferDet.item_id$,dom=remove_record) ivm01a$
+    
 rem --- Inventory initializations
-
-            dim item$[3],refs$[20],refs[20]
-            
-            item$[2] = ive02a.item_id$
-            if ls$="Y" then item$[3] = ive02a.lotser_no$
-            refs$[0] = ive02a.trans_date$
-            refs$[2] = ive02a.inv_xfer_no$
-            account$ = ""
-            refs[1] = ive02a.unit_cost
-
+    
+                dim item$[3],refs$[20],refs[20]
+                
+                item$[2] = iveTransferDet.item_id$
+                if ls$="Y" then item$[3] = iveTransferDet.lotser_no$
+                refs$[0] = iveTransferDet.trans_date$
+                refs$[2] = iveTransferDet.inv_xfer_no$
+                account$ = ""
+                refs[1] = iveTransferDet.unit_cost
+    
 rem --- GL initializations
-
-            if gl$="Y"
-            
-                when$ = ive02a.trans_date$
-                memo$ = ive02a.item_id$ + " " + fnitem$(ivm01a.item_desc$, p[3], p[4], p[5])
-                ref1$ = Translate!.getTranslation("AON_XFR_") + ive02a.inv_xfer_no$
+    
+                if gl$="Y"
                 
+                    when$ = iveTransferDet.trans_date$
+                    memo$ = iveTransferDet.item_id$ + " " + fnitem$(ivm01a.item_desc$, p[3], p[4], p[5])
+                    ref1$ = Translate!.getTranslation("AON_XFR_") + iveTransferDet.inv_xfer_no$
+                    
 rem --- From warehouse GL update
-
-                find record (ivm02_dev,key=firm_id$+ive02a.warehouse_id$+ive02a.item_id$,dom=remove_record) ivm02a$
-                ive02a.ext_cost = round(ive02a.trans_qty * ivm02a.unit_cost, 2)
-                amount = -ive02a.ext_cost
-                units  = -ive02a.trans_qty
-                ref2$  = Translate!.getTranslation("AON_FR_WHSE_") + ive02a.warehouse_id$
-                ref3$  = Translate!.getTranslation("AON_TO_WHSE_") + ive02a.warehouse_id_to$
-                
-                gosub update_gl
-                
-            endif
-                
+    
+                    find record (ivm02_dev,key=firm_id$+iveTransferDet.warehouse_id$+iveTransferDet.item_id$,dom=remove_record) ivm02a$
+                    iveTransferDet.ext_cost = round(iveTransferDet.trans_qty * ivm02a.unit_cost, 2)
+                    amount = -iveTransferDet.ext_cost
+                    units  = -iveTransferDet.trans_qty
+                    ref2$  = Translate!.getTranslation("AON_FR_WHSE_") + iveTransferDet.warehouse_id$
+                    ref3$  = Translate!.getTranslation("AON_TO_WHSE_") + iveTransferDet.warehouse_id_to$
+                    
+                    gosub update_gl
+                    
+                endif
+                    
 rem --- From warehouse inventory update
-
-            item$[1]=ive02a.warehouse_id$
-            refs$[4]=ive02a.warehouse_id_to$
-            refs$[7]=account$
-            action$="TO"
-            refs[0]=-ive02a.trans_qty
-            
-            gosub update_inventory
-
-rem --- To warehouse GL update
-
-            if gl$="Y"
-       
-                find record (ivm02_dev,key=firm_id$+ive02a.warehouse_id_to$+ive02a.item_id$,dom=remove_record) ivm02a$
-                amount = ive02a.ext_cost
-                units  = ive02a.trans_qty
-                ref3$  = Translate!.getTranslation("AON_FR_WHSE_") + ive02a.warehouse_id$
-                ref2$  = Translate!.getTranslation("AON_TO_WHSE_") + ive02a.warehouse_id_to$
+    
+                item$[1]=iveTransferDet.warehouse_id$
+                refs$[4]=iveTransferDet.warehouse_id_to$
+                refs$[7]=account$
+                action$="TO"
+                refs[0]=-iveTransferDet.trans_qty
                 
-                gosub update_gl
+                gosub update_inventory
+    
+rem --- To warehouse GL update
+    
+                if gl$="Y"
+           
+                    find record (ivm02_dev,key=firm_id$+iveTransferDet.warehouse_id_to$+iveTransferDet.item_id$,dom=remove_record) ivm02a$
+                    amount = iveTransferDet.ext_cost
+                    units  = iveTransferDet.trans_qty
+                    ref3$  = Translate!.getTranslation("AON_FR_WHSE_") + iveTransferDet.warehouse_id$
+                    ref2$  = Translate!.getTranslation("AON_TO_WHSE_") + iveTransferDet.warehouse_id_to$
+                    
+                    gosub update_gl
+                    
+                endif
+    
+rem --- To warehouse inventory update
+    
+                item$[1]=iveTransferDet.warehouse_id_to$
+                refs$[4]=iveTransferDet.warehouse_id$
+                refs$[7]=account$
+                action$="TI"
+                refs[0]=iveTransferDet.trans_qty
+                
+                gosub update_inventory
                 
             endif
-
-rem --- To warehouse inventory update
-
-            item$[1]=ive02a.warehouse_id_to$
-            refs$[4]=ive02a.warehouse_id$
-            refs$[7]=account$
-            action$="TI"
-            refs[0]=ive02a.trans_qty
             
-            gosub update_inventory
-            
-        endif
-        
-remove_record: rem --- Remove record
+    remove_record: rem --- Remove record
+    
+            primaryKey$=iveTransferDet.firm_id$+iveTransferDet.warehouse_id$+iveTransferDet.warehouse_id_to$+
+:               iveTransferDet.trans_date$+iveTransferDet.inv_xfer_no$
+            remove (iveTransferDet_dev,key=primaryKey$,dom=*next)
+        wend
 
-        remove (ive02_dev,key=ive02a.firm_id$+ive02a.warehouse_id$+ive02a.trans_date$+
-:           ive02a.warehouse_id_to$+ive02a.item_id$+ive02a.lotser_no$,dom=*next)
-
+        primaryKey$=iveTransferHdr.firm_id$+iveTransferHdr.warehouse_id$+iveTransferHdr.warehouse_id_to$+
+:           iveTransferHdr.trans_date$+iveTransferHdr.inv_xfer_no$
+        remove (iveTransferHdr_dev,key=primaryKey$,dom=*next)
     wend
 
 rem --- All done

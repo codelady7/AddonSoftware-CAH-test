@@ -140,7 +140,7 @@ rem --- Initialize Data
     blanks$=fill(width)
     dim entry$[4],file_id$[4]
     entry$[1]="ive-01",file_id$[1]="IVE_TRANSHDR"
-    entry$[2]="ive-02",file_id$[2]="IVE_TRANSFER"
+    entry$[2]="ive_transferhdr",file_id$[2]="IVE_TRANSFERHDR"
     if wo$="Y" entry$[3]="sfe-14",file_id$[3]="SFE_WOLSISSU"
 
 rem --- Verify no IV transactions/transfers & no L/S Materials Issues

@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.ive_transfer">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ive_transfer">20230213</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ive_transfer">20230213</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_transfer">104118</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_transfer">104300</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_transfer"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ive_transfer">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_transfer">BATCH_KEY</DD_ATTR_DKNM>
@@ -155,7 +155,7 @@
 		<RECORD id="ddm_table_tpls.ive_transfer">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ive_transfer">IVE_TRANSFER    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ive_transfer">ive-02</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.ive_transfer">firm_id:c(2),warehouse_id:c(2),trans_date:c(8),warehouse_id_to:c(2),item_id:c(20),lotser_no:c(20*),inv_xfer_no:c(20),reserved_str:c(1*),trans_qty:n(7*),ext_cost:n(15*),unit_cost:n(7*),batch_no:c(7*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.ive_transfer">firm_id:c(2),warehouse_id:c(2),trans_date:c(8),warehouse_id_to:c(2),item_id:c(20),lotser_no:c(20*),inv_xfer_no:c(7),reserved_str:c(1*),trans_qty:n(7*),ext_cost:n(15*),unit_cost:n(7*),batch_no:c(7*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1370,7 +1370,7 @@
 			<DD_DATA_NAME id="ddm_elements.inv_xfer_no">INV_XFER_NO     </DD_DATA_NAME>
 			<DD_DESCRIPTION id="ddm_elements.inv_xfer_no">Inventory Transfer Reference</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.inv_xfer_no">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.inv_xfer_no">20</DD_DATA_LENGTH>
+			<DD_DATA_LENGTH id="ddm_elements.inv_xfer_no">7</DD_DATA_LENGTH>
 			<DD_MASK_TYPE id="ddm_elements.inv_xfer_no"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.inv_xfer_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.inv_xfer_no">01007514</ASC_COMP_ID>

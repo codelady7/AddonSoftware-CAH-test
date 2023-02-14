@@ -54,12 +54,13 @@ rem --- Open/Lock files
 
     files=30,begfile=6,endfile=14
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
-    files$[6]="ive-02",        ids$[6]="IVE_TRANSFER"
-    files$[7]="ivm-01",        ids$[7]="IVM_ITEMMAST"
-    files$[8]="ivm-02",        ids$[8]="IVM_ITEMWHSE"
-    files$[10]="ivc_whsecode", ids$[10]="IVC_WHSECODE"
-    files$[12]="ars_params",   ids$[12]="ARS_PARAMS"
-    files$[14]="ivs_params",   ids$[14]="IVS_PARAMS"
+    files$[6]="ive_transferhdr", ids$[6]="IVE_TRANSFERHDR"
+    files$[7]="ivm-01",          ids$[7]="IVM_ITEMMAST"
+    files$[8]="ivm-02",          ids$[8]="IVM_ITEMWHSE"
+    files$[9]="ive_transferdet", ids$[9]="IVE_TRANSFERdet"
+    files$[10]="ivc_whsecode",   ids$[10]="IVC_WHSECODE"
+    files$[12]="ars_params",     ids$[12]="ARS_PARAMS"
+    files$[14]="ivs_params",     ids$[14]="IVS_PARAMS"
     
     if num(batch_no$)=0 then options$[6]="L";rem lock if not batching.CAH    
 
@@ -67,18 +68,20 @@ rem --- Open/Lock files
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status then goto std_exit_no_report
 
-    ive02_dev  = channels[6]
+    iveTransferHdr_dev  = channels[6]
     ivm01_dev  = channels[7]
     ivm02_dev  = channels[8]
+    iveTransferDet_dev  = channels[9]
     ivm10c_dev = channels[10]
     ars01a_dev = channels[12]
     ivs01a_dev = channels[14]
 
 rem --- Dimension string templates
 
-    dim ive02a$:templates$[6]
+    dim iveTransferHdr$:templates$[6]
     dim ivm01a$:templates$[7]
     dim ivm02a$:templates$[8]
+    dim iveTransferDet$:templates$[9]
     dim ivm10c$:templates$[10]
     dim ars01a$:templates$[12]
     dim ivs01a$:templates$[14]
@@ -161,7 +164,6 @@ rem --- Other initializations
 
     errors=0
     glstatus=0
-    more=1
     recs=0
 
 rem --- Column headings
@@ -171,13 +173,13 @@ rem --- Column headings
     col_2$ = Translate!.getTranslation("AON_ITEM_") + p8$ + Translate!.getTranslation("AON_^DESCRIPTION")
 
     columns$[0,0]=Translate!.getTranslation("AON_TO"),         columns$[0,1]="C", columns$[0,2]="5"
-    columns$[1,0]=Translate!.getTranslation("AON_WAREHOUSE"),  columns$[1,1]="C", columns$[1,2]="24"
-    columns$[2,0]=col_2$,       columns$[2,1]="C", columns$[2,2]=str( p[0]+p[1]+1 )
-    columns$[3,0]="UM",         columns$[3,1]="C", columns$[3,2]="8"
-    columns$[4,0]=Translate!.getTranslation("AON_COST"),       columns$[4,1]="N", columns$[4,2]=str(m3), columns$[4,3]=m3$
-    columns$[5,0]=Translate!.getTranslation("AON_QUANTITY"),   columns$[5,1]="N", columns$[5,2]=str(m2), columns$[4,3]=m2$
-    columns$[6,0]=Translate!.getTranslation("AON_TOTAL_COST"), columns$[6,1]="N", columns$[6,2]=str(m1), columns$[6,3]=m1$, columns$[5,10]="T" 
-    columns$[7,0]=Translate!.getTranslation("AON_REFERENCE"),  columns$[7,1]="C", columns$[7,2]="9"
+    columns$[1,0]=Translate!.getTranslation("AON_WAREHOUSE"),  columns$[1,1]="C", columns$[1,2]="18"
+    columns$[2,0]=Translate!.getTranslation("AON_REFERENCE"),  columns$[2,1]="C", columns$[2,2]="10"
+    columns$[3,0]=col_2$,                                      columns$[3,1]="C", columns$[3,2]=str( p[0]+p[1]+1 )
+    columns$[4,0]="UM",                                        columns$[4,1]="C", columns$[4,2]="8"
+    columns$[5,0]=Translate!.getTranslation("AON_COST"),       columns$[5,1]="N", columns$[5,2]=str(m3), columns$[5,3]=m3$
+    columns$[6,0]=Translate!.getTranslation("AON_QUANTITY"),   columns$[6,1]="N", columns$[6,2]=str(m2), columns$[6,3]=m2$
+    columns$[7,0]=Translate!.getTranslation("AON_TOTAL_COST"), columns$[7,1]="N", columns$[7,2]=str(m1), columns$[7,3]=m1$, columns$[7,10]="T" 
 
     call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
 
@@ -245,7 +247,7 @@ rem --- Lifo/fifo setup
 
 rem --- Progress meter
 
-    call pgmdir$+"adc_progress.aon","N",sysinfo.task_desc$,"",Translate!.getTranslation("AON_PRINTING"),"",p[0]+3,ive02_dev,1,meter_num,ignore_status
+    call pgmdir$+"adc_progress.aon","N",sysinfo.task_desc$,"",Translate!.getTranslation("AON_PRINTING"),"",p[0]+3,iveTransferHdr_dev,1,meter_num,ignore_status
 
 rem --- Initial Read
 
@@ -253,138 +255,147 @@ rem --- Initial Read
     prev_trans_date$=""
     last_time$="N"
 
-    read (ive02_dev,key=firm_id$+batch_no$,knum="BATCH_KEY",dom=*next)
+    read (iveTransferHdr_dev,key=firm_id$+batch_no$,knum="BATCH_KEY",dom=*next)
 
 rem --- Heading Read
 
-    while more
-        read record (ive02_dev,end=*break) ive02a$
-        if firm_id$ <> ive02a.firm_id$ or batch_no$ <> ive02a.batch_no$ then break
-        cost=ive02a.unit_cost
+    while 1
+        iveTransferHdr_key$=key(iveTransferHdr_dev,end=*break)
+        if pos(firm_id$+batch_no$=iveTransferHdr_key$)<>1 then break
+        read record (iveTransferHdr_dev,end=*break) iveTransferHdr$
 
 rem --- Breaks
 
-        if ive02a.warehouse_id$ <> prev_whse$ then 
+        if iveTransferHdr.warehouse_id$ <> prev_whse$ then 
             gosub trans_date_totals
             gosub whse_totals
             gosub whse_new
             gosub trans_date_new
         else
-            if ive02a.trans_date$<>prev_trans_date$ then 
+            if iveTransferHdr.trans_date$<>prev_trans_date$ then 
                 gosub trans_date_totals
                 gosub trans_date_new
             endif
         endif
 
-        call pgmdir$+"adc_progress.aon","S","","","",ive02a.warehouse_id$+" "+fnmask$(ive02a.item_id$,ivIMask$),0,0,1,meter_num,ignore_status
+        prev_whse$=iveTransferHdr.warehouse_id$
+        prev_trans_date$=iveTransferHdr.trans_date$
+    
+        call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,ignore_status
 
-        gosub get_item_data
-        
-        prev_whse$=ive02a.warehouse_id$
-        prev_trans_date$=ive02a.trans_date$
-
+        read(iveTransferDet_dev,key=iveTransferHdr_key$,knum="BATCH_KEY",dom=*next)
+        while 1
+            iveTransferDet_key$=key(iveTransferDet_dev,end=*break)
+            if pos(iveTransferHdr_key$=iveTransferDet_key$)<>1 then break
+            readrecord(iveTransferDet_dev)iveTransferDet$
+    
+            gosub get_item_data
+            
+            cost=iveTransferDet.unit_cost
+    
 rem --- LIFO/FIFO?
-
-        if lf$="Y" then
-
-            lf_item$[1] = ive02a.warehouse_id$
-            lf_item$[2] = ive02a.item_id$
-            lf_date$    = ive02a.trans_date$
-            action$     = ivs01a.lifofifo$ + "I"
-            quantity    = ive02a.trans_qty
-            cost        = ive02a.unit_cost
-            ret_cost    = 0
-            type$       = "R"
-
-            call pgmdir$+"ivc_lifofifo.aon",action$,type$,lf_date$,lf_chans[all],lf_tmpls$[all],lf_item$[all],places,quantity,cost,ret_cost,ignore_status
-
+    
+            if lf$="Y" then
+    
+                lf_item$[1] = iveTransferDet.warehouse_id$
+                lf_item$[2] = iveTransferDet.item_id$
+                lf_date$    = iveTransferDet.trans_date$
+                action$     = ivs01a.lifofifo$ + "I"
+                quantity    = iveTransferDet.trans_qty
+                cost        = iveTransferDet.unit_cost
+                ret_cost    = 0
+                type$       = "R"
+    
+                call pgmdir$+"ivc_lifofifo.aon",action$,type$,lf_date$,lf_chans[all],lf_tmpls$[all],lf_item$[all],places,quantity,cost,ret_cost,ignore_status
+    
 rem --- Cost change?
-
-            if ret_cost and ive02a.ext_cost <> ive02a.trans_qty * ret_cost then
-                ive02a.ext_cost = ive02a.trans_qty * ret_cost
-                ive02a.unit_cost = ret_cost
-                cost = ret_cost
-
-                ive02a$ = field(ive02a$)
-                write record (ive02_dev) ive02a$
+    
+                if ret_cost and iveTransferDet.ext_cost <> iveTransferDet.trans_qty * ret_cost then
+                    iveTransferDet.ext_cost = iveTransferDet.trans_qty * ret_cost
+                    iveTransferDet.unit_cost = ret_cost
+                    cost = ret_cost
+    
+                    iveTransferDet$ = field(iveTransferDet$)
+                    write record (iveTransferDet_dev) iveTransferDet$
+                endif
+    
             endif
-
-        endif
-
+    
 rem --- Detail line
-
-        tot_cost=round(ive02a.ext_cost, 2)
-        OutVect!.addItem(ive02a.warehouse_id_to$)
-        OutVect!.addItem(ivm10c.short_name$)
-        OutVect!.addItem(cvs(fnmask$(ive02a.item_id$,ivIMask$),2)+" "+ive02a.lotser_no$)
-        OutVect!.addItem(um$)
-        OutVect!.addItem(str(cost))
-        OutVect!.addItem(str(ive02a.trans_qty))
-        OutVect!.addItem(str(tot_cost))
-        OutVect!.addItem(ive02a.inv_xfer_no$)
-
-        ignore = fnblank(2)
-        OutVect!.addItem(item_desc$)
-        ignore = fnblank(5)
-
-        whse_total=whse_total+tot_cost
-        date_total=date_total+tot_cost
-        recs=recs+1
-        
+    
+            tot_cost=round(iveTransferDet.ext_cost, 2)
+            OutVect!.addItem(iveTransferDet.warehouse_id_to$)
+            OutVect!.addItem(ivm10c.short_name$)
+            OutVect!.addItem(iveTransferDet.inv_xfer_no$)
+            OutVect!.addItem(cvs(fnmask$(iveTransferDet.item_id$,ivIMask$),2)+" "+iveTransferDet.lotser_no$)
+            OutVect!.addItem(um$)
+            OutVect!.addItem(str(cost))
+            OutVect!.addItem(str(iveTransferDet.trans_qty))
+            OutVect!.addItem(str(tot_cost))
+    
+            ignore = fnblank(3)
+            OutVect!.addItem(item_desc$)
+            ignore = fnblank(4)
+    
+            whse_total=whse_total+tot_cost
+            date_total=date_total+tot_cost
+            recs=recs+1
+            
 rem --- Warn if date is outside the GL period
-
-        if gl$="Y" then
-            call pgmdir$+"glc_datecheck.aon",ive02a.trans_date$,"N",period$,year$,glstatus
-
-            if glstatus then
-                call pgmdir$+"glc_datewarn.aon",0,ive02a.trans_date$,glstatus,lines,errors,ignore_status
-
-                if stbl("+DTWARN_MSG",err=*endif)<>""
-                    ignore = fnblank(2)
-                    OutVect!.addItem(stbl("+DTWARN_MSG"))
-                    ignore = fnblank(5)
+    
+            if gl$="Y" then
+                call pgmdir$+"glc_datecheck.aon",iveTransferDet.trans_date$,"N",period$,year$,glstatus
+    
+                if glstatus then
+                    call pgmdir$+"glc_datewarn.aon",0,iveTransferDet.trans_date$,glstatus,lines,errors,ignore_status
+    
+                    if stbl("+DTWARN_MSG",err=*endif)<>""
+                        ignore = fnblank(3)
+                        OutVect!.addItem(stbl("+DTWARN_MSG"))
+                        ignore = fnblank(4)
+                    endif
                 endif
             endif
-        endif
-
+    
 rem --- Generate G/L Recap
-
-        if gl$<>"Y" or dist_gl_by_item$<>"Y" then continue
-
+    
+            if gl$<>"Y" or dist_gl_by_item$<>"Y" then continue
+    
 rem --- From Warehouse
-
-        gldate$=ive02a.trans_date$
-        ref1$=Translate!.getTranslation("AON_XFR_")+ive02a.inv_xfer_no$
-        memo$=cvs(fnmask$(ive02a.item_id$,ivIMask$),2)+" "+item_desc$
-        ref2$=Translate!.getTranslation("AON_FR_WHSE_")+ive02a.warehouse_id$
-        ref3$=Translate!.getTranslation("AON_TO_WHSE_")+ive02a.warehouse_id_to$
-
-        find record (ivm02_dev,key=firm_id$+ive02a.warehouse_id$+ive02a.item_id$,dom=to_whse) ivm02a$
-        find record (arm10d_dev,key=firm_id$+"D"+ivm02a.ar_dist_code$,dom=to_whse) arm10d$
-
-        account$=arm10d.gl_inv_acct$
-        amount=-(ive02a.trans_qty)*cost
-        units=0
-
-        gosub glrecap
-
+    
+            gldate$=iveTransferDet.trans_date$
+            ref1$=Translate!.getTranslation("AON_XFR_")+iveTransferDet.inv_xfer_no$
+            memo$=cvs(fnmask$(iveTransferDet.item_id$,ivIMask$),2)+" "+item_desc$
+            ref2$=Translate!.getTranslation("AON_FR_WHSE_")+iveTransferDet.warehouse_id$
+            ref3$=Translate!.getTranslation("AON_TO_WHSE_")+iveTransferDet.warehouse_id_to$
+    
+            find record (ivm02_dev,key=firm_id$+iveTransferDet.warehouse_id$+iveTransferDet.item_id$,dom=to_whse) ivm02a$
+            find record (arm10d_dev,key=firm_id$+"D"+ivm02a.ar_dist_code$,dom=to_whse) arm10d$
+    
+            account$=arm10d.gl_inv_acct$
+            amount=-(iveTransferDet.trans_qty)*cost
+            units=0
+    
+            gosub glrecap
+    
 to_whse: rem --- To Warehouse
-
-        x$=ref2$
-        ref2$=ref3$
-        ref3$=x$
-
-        find record (ivm02_dev,key=firm_id$+ive02a.warehouse_id_to$+ive02a.item_id$,dom=gl_recap_done) ivm02a$
-        find record (arm10d_dev,key=firm_id$+"D"+ivm02a.ar_dist_code$,dom=gl_recap_done) arm10d$
-
-        account$=arm10d.gl_inv_acct$
-        amount=ive02a.trans_qty*cost
-        units=0
-
-        gosub glrecap
-
+    
+            x$=ref2$
+            ref2$=ref3$
+            ref3$=x$
+    
+            find record (ivm02_dev,key=firm_id$+iveTransferDet.warehouse_id_to$+iveTransferDet.item_id$,dom=gl_recap_done) ivm02a$
+            find record (arm10d_dev,key=firm_id$+"D"+ivm02a.ar_dist_code$,dom=gl_recap_done) arm10d$
+    
+            account$=arm10d.gl_inv_acct$
+            amount=iveTransferDet.trans_qty*cost
+            units=0
+    
+            gosub glrecap
+    
 gl_recap_done:
-
+    
+        wend
     wend
 
 rem --- End of register
@@ -434,11 +445,10 @@ whse_totals: rem --- Previous Warehouse Totals
         ignore = fnblank_line(void)
 
         TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-        ignore = fnblank(2)
+        ignore = fnblank(3)
         OutVect!.addItem(Translate!.getTranslation("AON_**TOTAL_FOR_WAREHOUSE_") + prev_whse$ + " " + whse_desc$)
         ignore = fnblank(3)
         OutVect!.addItem(str(whse_total))
-        ignore = fnblank(1)
 
         whse_total=0
 
@@ -452,10 +462,10 @@ whse_new: rem --- Start a new warehouse
 
         ivm10c.short_name$=Translate!.getTranslation("AON_UNKNOWN_WAREHOUSE")
         date_total=0
-        find record (ivm10c_dev,key=firm_id$+"C"+ive02a.warehouse_id$,dom=*next) ivm10c$
+        find record (ivm10c_dev,key=firm_id$+"C"+iveTransferHdr.warehouse_id$,dom=*next) ivm10c$
 
 rem --- Break goes on the header
-        new_whse$ = Translate!.getTranslation("AON_FROM_WAREHOUSE_") + cvs(ive02a.warehouse_id$ + " " + ivm10c.short_name$, 2)
+        new_whse$ = Translate!.getTranslation("AON_FROM_WAREHOUSE_") + cvs(iveTransferHdr.warehouse_id$ + " " + ivm10c.short_name$, 2)
         BrkVect!.addItem(str(OutVect!.size()/(columns+1)))
         HdrVect!.addItem(new_whse$)
         whse_desc$=cvs(ivm10c.short_name$,2)
@@ -463,9 +473,9 @@ rem --- Break goes on the header
 rem --- Print new whse on the report
         ignore = fnblank_line(void)
 
-        ignore = fnblank(2)
+        ignore = fnblank(3)
         OutVect!.addItem(new_whse$)
-        ignore = fnblank(5)
+        ignore = fnblank(4)
 
     endif
 
@@ -478,11 +488,10 @@ trans_date_totals: rem --- Trans Date, previous totals
         ignore = fnblank_line(void)
 
         TotVect!.addItem(str(OutVect!.size()/(columns+1)))
-        ignore = fnblank(2)
+        ignore = fnblank(3)
         OutVect!.addItem(Translate!.getTranslation("AON_*TOTAL_FOR_")+fndate$(prev_trans_date$))
         ignore = fnblank(3)
         OutVect!.addItem(str(date_total))
-        ignore = fnblank(1)
 
     endif
 
@@ -495,7 +504,7 @@ trans_date_new: rem --- Trans Date: start new date
         date_total=0
 
 rem --- Print break on header
-        new_date$ = Translate!.getTranslation("AON_TRANSFER_DATE_") + fndate$(ive02a.trans_date$)
+        new_date$ = Translate!.getTranslation("AON_TRANSFER_DATE_") + fndate$(iveTransferHdr.trans_date$)
         rem debug --- I don't think you can have two page-level breaks in the same report
         rem BrkVect!.addItem(str(OutVect!.size()/(columns+1)))
         rem HdrVect!.addItem(new_date$)
@@ -503,9 +512,9 @@ rem --- Print break on header
 rem --- Print break on report
         ignore = fnblank_line(void)
 
-        ignore = fnblank(2)
+        ignore = fnblank(3)
         OutVect!.addItem(new_date$)
-        ignore = fnblank(5)
+        ignore = fnblank(4)
 
     endif
 
@@ -517,8 +526,8 @@ get_item_data: rem --- Get item data
     um$=""
     ivm01a$=""
     ivm10c.short_name$=Translate!.getTranslation("AON_UNKNOWN_WAREHOUSE")
-    find record (ivm01_dev,key=firm_id$+ive02a.item_id$,dom=*next) ivm01a$
-    find record (ivm10c_dev,key=firm_id$+"C"+ive02a.warehouse_id_to$,dom=*next) ivm10c$
+    find record (ivm01_dev,key=firm_id$+iveTransferDet.item_id$,dom=*next) ivm01a$
+    find record (ivm10c_dev,key=firm_id$+"C"+iveTransferDet.warehouse_id_to$,dom=*next) ivm10c$
 
     if ivm01a$<>"" then 
         item_desc$ = fnitem$(ivm01a.item_desc$, p[3], p[4], p[5])
