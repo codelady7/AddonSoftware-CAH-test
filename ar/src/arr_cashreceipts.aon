@@ -779,23 +779,23 @@ rem --- Destroy the progress meter and run the next overlay
 rem     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,status
 
     update$=pgmdir$+"aru_cashreceipts.aon"
-    if errors
-        gosub Display_Message
-        if special_flag$<>"Y" then update$=""
-    endif
 
-    overlay$=update$
-    if gl overlay$=pgmdir$+"glr_recap.aon"
-    
+    if errors
+        msg_id$="AON_REG_ERRS"
+        gosub disp_message
+        if pos("PASSVALID"=msg_opt$)=0 then update$=""
+    endif
+  
 	if bal_errors
         msg_id$="AON_REG_OOB"
         dim msg_tokens$[1]
         msg_tokens$[1]=cvs(str(balance:m1$),3)
         gosub disp_message
-		update$=""
-		gl_overlay$=""
-		overlay$=""
+        if pos("PASSVALID"=msg_opt$)=0 then update$=""
 	endif
+
+    overlay$=update$
+    if gl overlay$=pgmdir$+"glr_recap.aon"
 
 rem --- When using Bank Rec, don't allow update if a Deposit’s TOT_DEPOSIT_AMT is not equal to
 rem --- the sum of the PAYMENT_AMTs for all the cash receipts in the Deposit.
@@ -1107,13 +1107,6 @@ glrecap: rem --- Standard GL Recap Routine
 
     if gl$="Y" call pgmdir$+"glc_glpost.aon",glm01_dev,glw11_dev,notused,account$,gldate$,
 :                                            ref1$,ref2$,ref3$,memo$,amount,units,status
-    return
-
-Display_Message: rem --- Display Message Routine
-
-    msg_id$="AON_REG_ERRS"
-    gosub disp_message
-    if pos("PASSVALID"=msg_opt$)<>0 special_flag$="Y"
     return
 
 rem --- Functions
