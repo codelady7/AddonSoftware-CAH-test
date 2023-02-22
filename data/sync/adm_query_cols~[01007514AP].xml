@@ -2,11 +2,166 @@
 <barista_record_table>ADM_QUERY_COLS</barista_record_table>
 <barista_admin_records>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
 		<SEQUENCE_NO>001</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>H</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDHIST    </DD_TABLE_ALIAS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>FIRM_ID         </DD_TABLE_COL>
+		<COLUMN_HDR>Firm ID</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>002</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>AP_TYPE         </DD_TABLE_COL>
+		<COLUMN_HDR>AP Type</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>003</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>VENDOR_ID       </DD_TABLE_COL>
+		<COLUMN_HDR>Vendor Num</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>004</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>AP_INV_NO       </DD_TABLE_COL>
+		<COLUMN_HDR>AP Inv No</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>005</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>SEQUENCE_NO     </DD_TABLE_COL>
+		<COLUMN_HDR>Seq No</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>006</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_TYPE      </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Type</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>007</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_REF       </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Ref</COLUMN_HDR>
+		<COLUMN_DRILL>AP_VENDPAYMENTS </COLUMN_DRILL>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>008</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_DATE      </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Date</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>009</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_AMT       </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Amt</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>010</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_DISC      </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Disc</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<SEQUENCE_NO>011</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRANS_RET       </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Retention</COLUMN_HDR>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
+		<SEQUENCE_NO>001</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
 		<DD_TABLE_COL>FIRM_ID         </DD_TABLE_COL>
 		<COLUMN_HDR>Firm ID</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
@@ -18,15 +173,14 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>002</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDHIST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>VENDOR_ID       </DD_TABLE_COL>
-		<COLUMN_HDR>Vend ID</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>TRNS_DATE       </DD_TABLE_COL>
+		<COLUMN_HDR>Trans Date</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
-		<COLUMN_PROG>[+DIR_PGM]apf_vend_payto_addr.aon</COLUMN_PROG>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
@@ -35,13 +189,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>003</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDHIST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>AP_TYPE         </DD_TABLE_COL>
-		<COLUMN_HDR>AP Type</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>GL_ACCOUNT      </DD_TABLE_COL>
+		<COLUMN_HDR>GL Account</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -51,13 +205,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>004</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>VENDOR_NAME     </DD_TABLE_COL>
-		<COLUMN_HDR>Vend Name</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>JOURNAL_ID      </DD_TABLE_COL>
+		<COLUMN_HDR>Journal</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -67,13 +221,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>005</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>CONTACT_NAME    </DD_TABLE_COL>
-		<COLUMN_HDR>Cont Name</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>GL_ADT_NO       </DD_TABLE_COL>
+		<COLUMN_HDR>Audit No.</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -83,13 +237,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>006</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>ADDR_LINE_1     </DD_TABLE_COL>
-		<COLUMN_HDR>Address</COLUMN_HDR>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>POSTING_YEAR    </DD_TABLE_COL>
+		<COLUMN_HDR>Post Yr</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -99,13 +253,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>007</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>ADDR_LINE_2     </DD_TABLE_COL>
-		<COLUMN_HDR>Address</COLUMN_HDR>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>POSTING_PER     </DD_TABLE_COL>
+		<COLUMN_HDR>Post Perid</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -115,13 +269,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>008</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>CITY            </DD_TABLE_COL>
-		<COLUMN_HDR>City</COLUMN_HDR>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>SEQ_NO          </DD_TABLE_COL>
+		<COLUMN_HDR>Seq No.</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -131,13 +285,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>009</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>STATE_CODE      </DD_TABLE_COL>
-		<COLUMN_HDR>State</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>REFERENCE_01    </DD_TABLE_COL>
+		<COLUMN_HDR>Reference 1</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -147,13 +301,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>010</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>ZIP_CODE        </DD_TABLE_COL>
-		<COLUMN_HDR>Zip</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>REFERENCE_02    </DD_TABLE_COL>
+		<COLUMN_HDR>Reference 2</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -163,13 +317,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>011</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>PHONE_NO        </DD_TABLE_COL>
-		<COLUMN_HDR>Telephone</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>REFERENCE_03    </DD_TABLE_COL>
+		<COLUMN_HDR>Reference 3</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -179,13 +333,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>012</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>PHONE_EXTEN     </DD_TABLE_COL>
-		<COLUMN_HDR>Ext</COLUMN_HDR>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>DESCRIPTION     </DD_TABLE_COL>
+		<COLUMN_HDR>Description</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -195,13 +349,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>013</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>FAX_NO          </DD_TABLE_COL>
-		<COLUMN_HDR>Fax Tel</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>DEBIT_AMT       </DD_TABLE_COL>
+		<COLUMN_HDR>Debit Amt</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -211,13 +365,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>014</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>ALT_SEQUENCE    </DD_TABLE_COL>
-		<COLUMN_HDR>Alt Seq</COLUMN_HDR>
+		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>CREDIT_AMT      </DD_TABLE_COL>
+		<COLUMN_HDR>Credit Amt</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -227,13 +381,13 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
 		<SEQUENCE_NO>015</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>VEND_INACTIVE   </DD_TABLE_COL>
-		<COLUMN_HDR>Vend Inact?</COLUMN_HDR>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>UNITS           </DD_TABLE_COL>
+		<COLUMN_HDR>Units</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
@@ -530,158 +684,244 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>001</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>H</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
+		<DD_TABLE_ALIAS>APM_VENDHIST    </DD_TABLE_ALIAS>
 		<DD_TABLE_COL>FIRM_ID         </DD_TABLE_COL>
 		<COLUMN_HDR>Firm ID</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>002</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>H</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>AP_TYPE         </DD_TABLE_COL>
-		<COLUMN_HDR>AP Type</COLUMN_HDR>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APM_VENDHIST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>VENDOR_ID       </DD_TABLE_COL>
+		<COLUMN_HDR>Vend ID</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_PROG>[+DIR_PGM]apf_vend_payto_addr.aon</COLUMN_PROG>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>003</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>H</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>VENDOR_ID       </DD_TABLE_COL>
-		<COLUMN_HDR>Vendor Num</COLUMN_HDR>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APM_VENDHIST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>AP_TYPE         </DD_TABLE_COL>
+		<COLUMN_HDR>AP Type</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>004</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>AP_INV_NO       </DD_TABLE_COL>
-		<COLUMN_HDR>AP Inv No</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>VENDOR_NAME     </DD_TABLE_COL>
+		<COLUMN_HDR>Vend Name</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>005</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>SEQUENCE_NO     </DD_TABLE_COL>
-		<COLUMN_HDR>Seq No</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>CONTACT_NAME    </DD_TABLE_COL>
+		<COLUMN_HDR>Cont Name</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>006</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>TRANS_TYPE      </DD_TABLE_COL>
-		<COLUMN_HDR>Trans Type</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ADDR_LINE_1     </DD_TABLE_COL>
+		<COLUMN_HDR>Address</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>007</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>TRANS_REF       </DD_TABLE_COL>
-		<COLUMN_HDR>Trans Ref</COLUMN_HDR>
-		<COLUMN_DRILL>AP_VENDPAYMENTS </COLUMN_DRILL>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ADDR_LINE_2     </DD_TABLE_COL>
+		<COLUMN_HDR>Address</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>008</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>TRANS_DATE      </DD_TABLE_COL>
-		<COLUMN_HDR>Trans Date</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>CITY            </DD_TABLE_COL>
+		<COLUMN_HDR>City</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>009</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>TRANS_AMT       </DD_TABLE_COL>
-		<COLUMN_HDR>Trans Amt</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>STATE_CODE      </DD_TABLE_COL>
+		<COLUMN_HDR>State</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>010</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>TRANS_DISC      </DD_TABLE_COL>
-		<COLUMN_HDR>Trans Disc</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ZIP_CODE        </DD_TABLE_COL>
+		<COLUMN_HDR>Zip</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<QUERY_ID>AP_HISTINVDET   </QUERY_ID>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
 		<SEQUENCE_NO>011</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
-		<DD_TABLE_ALIAS>APT_INVOICEDET  </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>TRANS_RET       </DD_TABLE_COL>
-		<COLUMN_HDR>Trans Retention</COLUMN_HDR>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>PHONE_NO        </DD_TABLE_COL>
+		<COLUMN_HDR>Telephone</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<SEQUENCE_NO>012</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>PHONE_EXTEN     </DD_TABLE_COL>
+		<COLUMN_HDR>Ext</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<SEQUENCE_NO>013</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>FAX_NO          </DD_TABLE_COL>
+		<COLUMN_HDR>Fax Tel</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<SEQUENCE_NO>014</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>ALT_SEQUENCE    </DD_TABLE_COL>
+		<COLUMN_HDR>Alt Seq</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_VEND_PAYTO   </QUERY_ID>
+		<SEQUENCE_NO>015</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>APM_VENDMAST    </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>VEND_INACTIVE   </DD_TABLE_COL>
+		<COLUMN_HDR>Vend Inact?</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 </barista_admin_records>

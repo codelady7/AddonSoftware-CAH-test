@@ -1,0 +1,251 @@
+rem --- AP Invoice GL Transactions Drilldown (AP_INV_GL_TRANS)
+rem --- Program apd_invgltrans.aon
+
+rem --- AddonSoftware Version 23.0
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+rem --- Drilldown's Data Key rd_drill_pfx$: [FIRM_ID]+[AP_TYPE]+[VENDOR_ID]+[AP_INV_NO]
+
+    use java.util.Properties
+
+    setesc std_error
+    seterr std_error
+
+    enter rd_gui_dev,rdWindow!,rd_field_tvar$,rd_ddm_drill_defs$,rd_drill_pfx$,rd_table_chans$[all]
+
+rem --- Skip drilldown if GL not installed
+    call dir_pgm$+"adc_application.aon","GL",info$[all]
+    gl$=info$[20]
+    if gl$<>"Y"
+        msg_id$="AD_MODULE_NOT_INSTAL"
+        dim msg_tokens$[1]
+        msg_tokens$[1]="GL"
+        gosub disp_message
+        goto exit_prog
+    endif
+
+rem --- Open/Lock files
+    num_files=5
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="APT_INVOICEHDR",open_opts$[1]="OTA@"
+    open_tables$[2]="APT_CHECKHISTORY",open_opts$[2]="OTA@"
+    open_tables$[3]="GLT_TRANSDETAIL",open_opts$[3]="OTA@"
+    open_tables$[4]="GLW_TRANSDETAIL",open_opts$[4]="OTA@"
+    open_tables$[5]="ADM_AUDITCONTROL",open_opts$[5]="OTA@"
+    
+    gosub open_tables
+        
+    aptInvoiceHdr_dev=num(open_chans$[1])
+    aptCheckHistory_dev=num(open_chans$[2])
+    gltTransDetail_dev=num(open_chans$[3])
+    glwTransDetail_dev=num(open_chans$[4])
+    admAuditControl_dev=num(open_chans$[5])
+
+    dim aptInvoiceHdr$:open_tpls$[1]
+    dim aptCheckHistory$:open_tpls$[2]
+    dim gltTransDetail$:open_tpls$[3]
+    dim glwTransDetail$:open_tpls$[4]
+    dim admAuditControl$:open_tpls$[5]
+
+rem --- Initializations
+    call stbl("+DIR_SYP")+"bac_key_template.bbj","APT_INVOICEHDR","PRIMARY",key_tpl$,table_chans$[all],status$
+    dim aptInvoiceHdr_key$:key_tpl$
+    aptInvoiceHdr_key$=rd_drill_pfx$
+
+    firm_id$=aptInvoiceHdr_key.firm_id$
+    ap_type$=aptInvoiceHdr_key.ap_type$
+    vendor_id$=aptInvoiceHdr_key.vendor_id$
+    ap_inv_no$=aptInvoiceHdr_key.ap_inv_no$
+
+    call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","I","",vendMask$,0,vendor_size
+    vendor$=fnmask$(vendor_id$(1,vendor_size),vendMask$)
+
+rem --- Clear work file
+    call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glwTransDetail_dev,firm_id$,status
+
+rem --- Get the JOURNAL_IDs used by registers that update tables APT_INVOICEHDR, APT_INVOICEDET, APT_INVOICEDIST and APT_CHECKHISTORY.
+    registerPgms!=BBjAPI().makeVector()
+    registerPgms!.addItem("apr_invoiceentry.aon"); rem --- AP Invoice Entry Register [IE]: ref1=masked vendor_id, ref2=ap_inv_no
+    registerPgms!.addItem("apr_chkregister.aon"); rem --- AP Computer Check Register [CD]: ref1=masked vendor_id, ref2=ap_inv_no, ref3=check_no + ap_type
+    registerPgms!.addItem("apr_manualchecks.aon"); rem --- AP Manual Check Register [MC]: ref1=masked vendor_id, ref2=CHECK_NO
+    registerPgms!.addItem("por_invreg.aon"); rem --- PO Invoice Entry Register [PO]: ref1=masked vendor_id, ref2=ap_inv_no
+
+    journalRegisterPgm!=new Properties()
+    for j=0 to registerPgms!.size()-1
+        processPgm$=registerPgms!.getItem(j)
+        read(admAuditControl_dev,key=firm_id$+processPgm$,knum="AO_PROG_PROCESS",dom=*next)
+        while 1
+            admAuditControl_key$=key(admAuditControl_dev,end=*break)
+            if pos(firm_id$=admAuditControl_key$)<>1 then break
+            readrecord(admAuditControl_dev)admAuditControl$
+            if cvs(admAuditControl.process_program$,2)<>processPgm$ then continue
+            journalRegisterPgm!.setProperty(admAuditControl.journal_id$,processPgm$)
+        wend
+    next j
+
+rem --- Write GLT_TRANSDETAIL glt-06) records to work file GLW_TRANSDETAIL
+    journalIds!=journalRegisterPgm!.propertyNames()
+    while journalIds!.hasMoreElements()
+        thisJournal$=journalIds!.nextElement()
+        registerPgm$=journalRegisterPgm!.getProperty(thisJournal$)
+
+        gltTransDetail_trip$=firm_id$+thisJournal$+pad(vendor$,len(gltTransDetail.reference_01$),"L"," ")
+        if registerPgm$<>"apr_manualchecks.aon" then gltTransDetail_trip$=gltTransDetail_trip$+pad(ap_inv_no$,len(gltTransDetail.reference_02$),"L"," ")
+        read(gltTransDetail_dev,key=gltTransDetail_trip$,knum="AO_JOURNAL_REFS",dom=*next)
+        while 1
+            gltTransDetail_key$=key(gltTransDetail_dev,end=*break)
+            if pos(gltTransDetail_trip$=gltTransDetail_key$)<>1 then break
+            readrecord(gltTransDetail_dev)gltTransDetail$
+
+            if registerPgm$="apr_manualchecks.aon" then
+                check_no$=pad(gltTransDetail.reference_02$,len(aptCheckHistory.check_no$),"L"," ")
+                aptCheckHistory_trip$=firm_id$+vendor_id$+ap_inv_no$+check_no$
+                read(aptCheckHistory_dev,key=aptCheckHistory_trip$,knum="AO_VEND_INV_CHK",dom=*next)
+                aptCheckHistory_key$=key(aptCheckHistory_dev,end=*continue)
+                if pos(aptCheckHistory_trip$=aptCheckHistory_key$)<>1 then continue
+                readrecord(aptCheckHistory_dev)aptCheckHistory$
+                
+                gltTransDetail.reference_03$=aptCheckHistory.ap_inv_no$
+                if gltTransDetail.trans_amt<0 then
+                    gltTransDetail.trans_amt=-(aptCheckHistory.invoice_amt-aptCheckHistory.discount_amt-aptCheckHistory.retention)
+                else
+                    gltTransDetail.trans_amt=aptCheckHistory.invoice_amt-aptCheckHistory.discount_amt-aptCheckHistory.retention
+                endif
+            endif
+
+            redim glwTransDetail$
+            glwTransDetail.firm_id$=gltTransDetail.firm_id$
+            glwTransDetail.trns_date$=gltTransDetail.trns_date$
+            glwTransDetail.gl_account$=gltTransDetail.gl_account$
+            glwTransDetail.journal_id$=gltTransDetail.journal_id$
+            glwTransDetail.gl_adt_no$=gltTransDetail.gl_adt_no$
+            glwTransDetail.posting_year$=gltTransDetail.posting_year$
+            glwTransDetail.posting_per$=gltTransDetail.posting_per$
+            glwTransDetail.seq_no$=gltTransDetail.seq_no$
+            glwTransDetail.reference_01$=gltTransDetail.reference_01$
+            glwTransDetail.reference_02$=gltTransDetail.reference_02$
+            glwTransDetail.reference_03$=gltTransDetail.reference_03$
+            glwTransDetail.description$=gltTransDetail.description$
+            if gltTransDetail.trans_amt>0 then
+                glwTransDetail.debit_amt=gltTransDetail.trans_amt
+                glwTransDetail.credit_amt=0
+            else
+                glwTransDetail.debit_amt=0
+                glwTransDetail.credit_amt=abs(gltTransDetail.trans_amt)
+            endif
+            glwTransDetail.units=gltTransDetail.units
+            writerecord(glwTransDetail_dev)glwTransDetail$
+        wend
+    wend
+
+rem --- Query transactions for this Invoice in GLW_TRANSDETAIL
+        dim filter_defs$[2,2]
+        filter_defs$[1,0]="GLW_TRANSDETAIL.FIRM_ID"
+        filter_defs$[1,1]="='"+firm_id$+"'"
+        filter_defs$[1,2]="LOCK"
+        filter_defs$[2,0]="GLW_TRANSDETAIL.REFERENCE_01"
+        filter_defs$[2,1]="='"+vendor$+"'"
+        filter_defs$[2,2]="LOCK"
+
+        call STBL("+DIR_SYP")+"bax_query.bbj",
+:			rd_gui_dev, 
+:			rdWindow!,
+:			"AP_INV_GL_TRANS",
+:			"DEFAULT",
+:			rd_table_chans$[all],
+:			"",
+:			filter_defs$[all],
+:           "",
+:           rd_drill_pfx$
+
+    goto exit_prog
+    
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       rd_table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+
+    return
+    
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+
+    return
+
+rem --- Functions
+
+rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
+
+    def fnmask$(q1$,q2$)
+        if cvs(q1$,2)="" return ""
+        if q2$="" q2$=fill(len(q1$),"0")
+        if pos("E"=cvs(q1$,4)) goto alpha_mask
+:      else return str(-num(q1$,err=alpha_mask):q2$,err=alpha_mask)
+alpha_mask:
+        q=1
+        q0=0
+        while len(q2$(q))
+            if pos(q2$(q,1)="-()") q0=q0+1 else q2$(q,1)="X"
+            q=q+1
+        wend
+        if len(q1$)>len(q2$)-q0 q1$=q1$(1,len(q2$)-q0)
+        return str(q1$:q2$)
+    fnend
+    
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+exit_prog:rem --- Exit Program
+
+    exit
+                
