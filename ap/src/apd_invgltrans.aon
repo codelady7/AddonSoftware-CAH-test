@@ -142,16 +142,13 @@ rem --- Write GLT_TRANSDETAIL glt-06) records to work file GLW_TRANSDETAIL
     wend
 
 rem --- Query transactions for this Invoice in GLW_TRANSDETAIL
-        dim filter_defs$[3,2]
+        dim filter_defs$[2,2]
         filter_defs$[1,0]="GLW_TRANSDETAIL.SYS_INFO"
         filter_defs$[1,1]="='"+sys_info$+"'"
         filter_defs$[1,2]="LOCK"
         filter_defs$[2,0]="GLW_TRANSDETAIL.FIRM_ID"
         filter_defs$[2,1]="='"+firm_id$+"'"
         filter_defs$[2,2]="LOCK"
-        filter_defs$[3,0]="GLW_TRANSDETAIL.REFERENCE_01"
-        filter_defs$[3,1]="='"+vendor$+"'"
-        filter_defs$[3,2]="LOCK"
 
         call STBL("+DIR_SYP")+"bax_query.bbj",
 :			rd_gui_dev, 

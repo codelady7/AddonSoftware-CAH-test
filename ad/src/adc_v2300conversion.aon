@@ -15,6 +15,7 @@ rem --- CONV_STATUS      : Status code/0=No error (Returned)
     use java.io.File
     use java.util.HashMap
     use java.util.GregorianCalendar
+    use java.util.Properties
 
     use ::ado_file.src::FileObject
     use ::ado_SyncRecords.aon::SyncRecords
@@ -368,6 +369,134 @@ rem --- For version 23.00, move fields from old APS_PAYAUTH to new APS_PARAMS (E
                 gosub disp_meter
                 print(log_dev)meter_text$
             endif
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
+rem --- For version 23.00, correct old v6 GLT_TRANSDETAIL postings for Manual Check JOURNAL_ID (ER 10572)
+    this_module$="GL"
+    if installMap!.get(this_module$)="Y" then
+        task$="2300_GL_glt_transdetail"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=4
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="GLT_TRANSDETAIL",  open_opts$[1]="OTA"
+            open_tables$[2]="ADM_AUDITCONTROL", open_opts$[2]="OTA"
+            open_tables$[3]="ADM_FIRMS",        open_opts$[3]="OTA"
+            open_tables$[4]="APS_PARAMS",       open_opts$[4]="OTA"
+    
+            gosub open_tables
+    
+            gltTransDetail_dev=num(open_chans$[1])
+            admAuditControl_dev=num(open_chans$[2])
+            admFirms_dev=num(open_chans$[3])
+            apsParams_dev=num(open_chans$[4])
+            dim gltTransDetail$:open_tpls$[1]
+            dim admAuditControl$:open_tpls$[2]
+            dim admFirms$:open_tpls$[3]
+            dim apsParams$:open_tpls$[4]
+
+            rem --- Get JOURNAL_ID used by Manual Checks, which could vary by firm
+            firms!=BBjAPI().makeVector()
+            read(admFirms_dev,key="",dom=*next)
+            while 1
+                readrecord(admFirms_dev,end=*break)admFirms$
+                firms!.addItem(admFirms.company_id$)
+            wend
+
+            rem --- Get the JOURNAL_IDs for each firm.
+            processPgm$="apr_manualchecks.aon"
+            firmJournal!=new Properties()
+            for i=0 to firms!.size()-1
+                firm$=firms!.getItem(i)
+                read(admAuditControl_dev,key=firm$+processPgm$,knum="AO_PROG_PROCESS",dom=*next)
+                while 1
+                    admAuditControl_key$=key(admAuditControl_dev,end=*break)
+                    if pos(firm$=admAuditControl_key$)<>1 then break
+                    readrecord(admAuditControl_dev)admAuditControl$
+                    if cvs(admAuditControl.process_program$,2)<>processPgm$ then continue
+                    firmJournal!.setProperty(firm$,journalIds$+admAuditControl.journal_id$)
+                    break
+                wend
+            next i
+
+            rem --- Update old v6 GLT_TRANSDETAIL postings for Manual Checks
+            for i=0 to firms!.size()-1
+                firm$=firms!.getItem(i)
+                if firmJournal!.getProperty(firm$)=null() then continue
+                
+                rem --- Does this firm use multiple AP types?
+                redim apsParams$
+                readrecord(apsParams_dev,key=firm$+"AP00",dom=*next)apsParams$
+                
+                journalId$=firmJournal!.getProperty(firm$)
+                read(gltTransDetail_dev,key=firm$+journalId$,knum="AO_JOURNAL_REFS",dom=*next)
+                while 1
+                    gltTransDetail_key$=key(gltTransDetail_dev,end=*break)
+                    if pos(firm$+journalId$=gltTransDetail_key$)<>1 then break
+                    readrecord(gltTransDetail_dev)gltTransDetail$
+            
+                    rem --- v6 sets reference_03 to check_no+" "+ap_type.
+                    rem --- Barista-Addon sets reference_03=ap_type if multiple AP types and NOT a reversal
+                    ref3$=cvs(gltTransDetail.reference_03$,2)
+                    if len(ref3$)>3 then
+                        check_no$=ref3$(1,pos(" "=ref3$)-1)
+                        ap_type$=ref3$(pos(" "=ref3$)+1)
+            
+                        gltTransDetail.reference_02$=check_no$
+                        if apsParams.multi_types$="Y" then
+                            gltTransDetail.reference_03$=ap_type$
+                        else
+                            gltTransDetail.reference_03$=""
+                        endif
+                        writerecord(gltTransDetail_dev)gltTransDetail$
+                    endif
+                wend
+            next i
+                
+            rem --- close files opened for this conversion
+            num_files=4
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="GLT_TRANSDETAIL",  open_opts$[1]="C"
+            open_tables$[2]="ADM_AUDITCONTROL", open_opts$[2]="C"
+            open_tables$[3]="ADM_FIRMS",        open_opts$[3]="C"
+            open_tables$[4]="APS_PARAMS",       open_opts$[4]="C"
+            gosub open_tables
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
         else
             rem --- Increment progress meter
             meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$

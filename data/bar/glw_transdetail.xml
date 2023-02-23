@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.glw_transdetail">20230221</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.glw_transdetail">20230222</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.glw_transdetail">20230222</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glw_transdetail">163124</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.glw_transdetail">163210</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glw_transdetail"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glw_transdetail"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glw_transdetail"></DD_ATTR_DKNM>
@@ -74,13 +74,6 @@
 			<DD_KEY_DESC id="ddm_keys.glw_transdetail00">Primary</DD_KEY_DESC>
 			<DD_KEY_ID id="ddm_keys.glw_transdetail00">PRIMARY         </DD_KEY_ID>
 			<DD_KEY_AUTO_GEN id="ddm_keys.glw_transdetail00"></DD_KEY_AUTO_GEN>
-		</RECORD>
-		<RECORD id="ddm_keys.glw_transdetail01">
-			<DD_TABLE_ALIAS id="ddm_keys.glw_transdetail01">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_keys.glw_transdetail01">01</DD_KEY_NUMBER>
-			<DD_KEY_DESC id="ddm_keys.glw_transdetail01">By Ref 1 + Ref 2 + Ref 3</DD_KEY_DESC>
-			<DD_KEY_ID id="ddm_keys.glw_transdetail01">REFERENCES      </DD_KEY_ID>
-			<DD_KEY_AUTO_GEN id="ddm_keys.glw_transdetail01"></DD_KEY_AUTO_GEN>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_key_segs">
@@ -201,149 +194,6 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0009">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0009">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0009">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0101">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0101">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0101">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0101">01</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0101">FIRM_ID</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0101"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0101"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0101"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0101">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0101">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0101">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0101">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0102">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0102">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0102">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0102">02</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0102">REFERENCE_01</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0102"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0102"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0102"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0102">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0102">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0102">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0102">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0103">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0103">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0103">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0103">03</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0103">REFERENCE_02</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0103"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0103"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0103"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0103">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0103">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0103">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0103">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0104">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0104">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0104">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0104">04</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0104">REFERENCE_03</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0104"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0104"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0104"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0104">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0104">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0104">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0104">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0105">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0105">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0105">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0105">05</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0105">JOURNAL_ID</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0105"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0105"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0105"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0105">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0105">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0105">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0105">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0106">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0106">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0106">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0106">06</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0106">GL_ADT_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0106"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0106"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0106"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0106">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0106">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0106">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0106">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0107">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0107">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0107">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0107">07</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0107">GL_ACCOUNT</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0107"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0107"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0107"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0107">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0107">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0107">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0107">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0108">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0108">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0108">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0108">08</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0108">TRNS_DATE</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0108"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0108"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0108"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0108">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0108">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0108">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0108">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0109">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0109">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0109">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0109">09</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0109">POSTING_YEAR</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0109"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0109"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0109"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0109">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0109">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0109">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0109">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0110">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0110">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0110">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0110">10</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0110">POSTING_PER</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0110"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0110"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0110"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0110">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0110">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0110">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0110">N</DD_SEGMENT_NUM>
-		</RECORD>
-		<RECORD id="ddm_key_segs.glw_transdetail0111">
-			<DD_TABLE_ALIAS id="ddm_key_segs.glw_transdetail0111">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
-			<DD_KEY_NUMBER id="ddm_key_segs.glw_transdetail0111">01</DD_KEY_NUMBER>
-			<DD_SEGMENT_SEQ id="ddm_key_segs.glw_transdetail0111">11</DD_SEGMENT_SEQ>
-			<DD_SEGMENT_COL id="ddm_key_segs.glw_transdetail0111">SEQ_NO</DD_SEGMENT_COL>
-			<DD_SEGMENT_POS id="ddm_key_segs.glw_transdetail0111"></DD_SEGMENT_POS>
-			<DD_SEGMENT_OFF id="ddm_key_segs.glw_transdetail0111"></DD_SEGMENT_OFF>
-			<DD_SEGMENT_LEN id="ddm_key_segs.glw_transdetail0111"></DD_SEGMENT_LEN>
-			<DD_SEGMENT_SORT id="ddm_key_segs.glw_transdetail0111">N</DD_SEGMENT_SORT>
-			<DD_SEGMENT_UNIQ id="ddm_key_segs.glw_transdetail0111">N</DD_SEGMENT_UNIQ>
-			<DD_SEGMENT_MATH id="ddm_key_segs.glw_transdetail0111">N</DD_SEGMENT_MATH>
-			<DD_SEGMENT_NUM id="ddm_key_segs.glw_transdetail0111">N</DD_SEGMENT_NUM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
