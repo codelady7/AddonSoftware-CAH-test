@@ -162,6 +162,22 @@
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>H</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+		<DD_TABLE_COL>SYS_INFO        </DD_TABLE_COL>
+		<COLUMN_HDR>System Info</COLUMN_HDR>
+		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
+		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AP </ASC_PROD_ID>
+		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
+		<SEQUENCE_NO>002</SEQUENCE_NO>
+		<COLUMN_TYPE>C</COLUMN_TYPE>
+		<QUERY_COL_VIS>H</QUERY_COL_VIS>
+		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
 		<DD_TABLE_COL>FIRM_ID         </DD_TABLE_COL>
 		<COLUMN_HDR>Firm ID</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
@@ -174,7 +190,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>002</SEQUENCE_NO>
+		<SEQUENCE_NO>003</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -190,7 +206,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>003</SEQUENCE_NO>
+		<SEQUENCE_NO>004</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -206,7 +222,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>004</SEQUENCE_NO>
+		<SEQUENCE_NO>005</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -222,7 +238,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>005</SEQUENCE_NO>
+		<SEQUENCE_NO>006</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -238,7 +254,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>006</SEQUENCE_NO>
+		<SEQUENCE_NO>007</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -254,7 +270,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>007</SEQUENCE_NO>
+		<SEQUENCE_NO>008</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -270,7 +286,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>008</SEQUENCE_NO>
+		<SEQUENCE_NO>009</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>H</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -286,7 +302,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>009</SEQUENCE_NO>
+		<SEQUENCE_NO>010</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -302,7 +318,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>010</SEQUENCE_NO>
+		<SEQUENCE_NO>011</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -318,7 +334,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>011</SEQUENCE_NO>
+		<SEQUENCE_NO>012</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -334,7 +350,7 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>012</SEQUENCE_NO>
+		<SEQUENCE_NO>013</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -350,39 +366,39 @@
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>013</SEQUENCE_NO>
+		<SEQUENCE_NO>014</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
 		<DD_TABLE_COL>DEBIT_AMT       </DD_TABLE_COL>
 		<COLUMN_HDR>Debit Amt</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_TOTAL>S</COLUMN_TOTAL>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
-		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>014</SEQUENCE_NO>
+		<SEQUENCE_NO>015</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>V</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>
 		<DD_TABLE_COL>CREDIT_AMT      </DD_TABLE_COL>
 		<COLUMN_HDR>Credit Amt</COLUMN_HDR>
 		<COLUMN_CASE>N</COLUMN_CASE>
+		<COLUMN_TOTAL>S</COLUMN_TOTAL>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>AP </ASC_PROD_ID>
-		<COL_FILT_UNLOCK>N</COL_FILT_UNLOCK>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
 		<QUERY_ID>AP_INV_GL_TRANS </QUERY_ID>
-		<SEQUENCE_NO>015</SEQUENCE_NO>
+		<SEQUENCE_NO>016</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
 		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLW_TRANSDETAIL </DD_TABLE_ALIAS>

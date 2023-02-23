@@ -60,8 +60,10 @@ rem --- Initializations
     call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","I","",vendMask$,0,vendor_size
     vendor$=fnmask$(vendor_id$(1,vendor_size),vendMask$)
 
+    sys_info$=hta(info(3,1))
+
 rem --- Clear work file
-    call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glwTransDetail_dev,firm_id$,status
+    call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glwTransDetail_dev,sys_info$+firm_id$,status
 
 rem --- Get the JOURNAL_IDs used by registers that update tables APT_INVOICEHDR, APT_INVOICEDET, APT_INVOICEDIST and APT_CHECKHISTORY.
     registerPgms!=BBjAPI().makeVector()
@@ -114,6 +116,7 @@ rem --- Write GLT_TRANSDETAIL glt-06) records to work file GLW_TRANSDETAIL
             endif
 
             redim glwTransDetail$
+            glwTransDetail.sys_info$=sys_info$
             glwTransDetail.firm_id$=gltTransDetail.firm_id$
             glwTransDetail.trns_date$=gltTransDetail.trns_date$
             glwTransDetail.gl_account$=gltTransDetail.gl_account$
@@ -139,13 +142,16 @@ rem --- Write GLT_TRANSDETAIL glt-06) records to work file GLW_TRANSDETAIL
     wend
 
 rem --- Query transactions for this Invoice in GLW_TRANSDETAIL
-        dim filter_defs$[2,2]
-        filter_defs$[1,0]="GLW_TRANSDETAIL.FIRM_ID"
-        filter_defs$[1,1]="='"+firm_id$+"'"
+        dim filter_defs$[3,2]
+        filter_defs$[1,0]="GLW_TRANSDETAIL.SYS_INFO"
+        filter_defs$[1,1]="='"+sys_info$+"'"
         filter_defs$[1,2]="LOCK"
-        filter_defs$[2,0]="GLW_TRANSDETAIL.REFERENCE_01"
-        filter_defs$[2,1]="='"+vendor$+"'"
+        filter_defs$[2,0]="GLW_TRANSDETAIL.FIRM_ID"
+        filter_defs$[2,1]="='"+firm_id$+"'"
         filter_defs$[2,2]="LOCK"
+        filter_defs$[3,0]="GLW_TRANSDETAIL.REFERENCE_01"
+        filter_defs$[3,1]="='"+vendor$+"'"
+        filter_defs$[3,2]="LOCK"
 
         call STBL("+DIR_SYP")+"bax_query.bbj",
 :			rd_gui_dev, 
@@ -158,6 +164,10 @@ rem --- Query transactions for this Invoice in GLW_TRANSDETAIL
 :           "",
 :           rd_drill_pfx$
 
+rem --- Clear work file
+    call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glwTransDetail_dev,sys_info$+firm_id$,status
+
+rem --- Done
     goto exit_prog
     
 open_tables:rem --- Open Tables
