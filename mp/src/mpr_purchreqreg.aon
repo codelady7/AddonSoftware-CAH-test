@@ -46,7 +46,6 @@ rem --- Open/Lock files
         files$[19]="mpw-03",ids$[19]="MPX_REQVEND"
         files$[20]="mpw-04",ids$[20]="MPW_REQVEND"
         files$[21]="pos_params",ids$[21]="POS_PARAMS"
-        files$[22]="pos-10",ids$[22]="POS_NUMBERS"
         files$[23]="ivm-10",ids$[23]="IVC_BUYCODE"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
@@ -72,7 +71,6 @@ rem --- Open/Lock files
         mpw03_dev=channels[19]
         mpw04_dev=channels[20]
         pos01a_dev=channels[21]
-        pos10n_dev=channels[22]
         ivm10f_dev=channels[23]
 
 rem --- Dimension string templates
@@ -83,7 +81,7 @@ rem --- Dimension string templates
 :       poe11a$:templates$[13],poe21a$:templates$[14],opt01a$:templates$[15],
 :       poe03a$:templates$[16],poe13a$:templates$[17],pom02a$:templates$[18],
 :       mpw03a$:templates$[19],mpw04a$:templates$[20],pos01a$:templates$[22],
-:       pos10n$:templates$[22],ivm10f$:templates$[23]
+:       ivm10f$:templates$[23]
 
 rem --- Assign form input values to local variables
 
