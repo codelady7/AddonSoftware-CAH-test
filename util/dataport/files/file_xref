@@ -97,7 +97,6 @@ arm-10F     |ARC_SALECODE      |
 arm-10H     |ARC_TERRCODE      |
 arm-10L     |ARC_CUSTTYPE      |
 ars-10C     |ARS_MTDCASH       |
-ars-10N     |ARS_NEXT_SEQ      |
 ars-10S     |OPS_MTDSALES      |
 ivm-10A     |IVC_PRODCODE      |
 ivm-10B     |IVC_TRANCODE      |
@@ -127,7 +126,6 @@ prs-01C     |PRS_REPORT        |
 opm-04A     |opc_message       |previously OPC_MSG_HDR used prior to v17.10
 opm-14A     |opc_message       |previously OPC_MSG_DET used prior to v17.10
 ops-10C     |ARS_MTDCASH       |
-ops-10N     |OPS_NUMBERS       |
 ops-10S     |OPS_MTDSALES      |
 pom-04A     |poc_message       |previously opm-04 used prior to v17.10
 pom-14A     |poc_message       |previously opm-14 used prior to v17.10

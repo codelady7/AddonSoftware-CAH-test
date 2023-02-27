@@ -12,7 +12,6 @@ arm-10L                  |ARC_CUSTTYPE    |Y
 ars-01A                  |ARS_PARAMS      |Y
 ars-10C                  |ARS_MTDCASH     |Y
 ars-10D                  |ARS_CUSTDFLT    |Y
-ars-10N                  |ARS_NEXT_SEQ    |Y
 gls-01A                  |GLS_PARAMS      |Y
 gls-01B                  |GLS_EARNINGS    |Y
 gls-01C                  |GLS_FINANCIALS  |Y
@@ -32,7 +31,6 @@ ivs-10I                  |IVS_ABCITEM     |Y
 ivs-10N                  |IVS_NUMBERS     |Y
 ivs-10W                  |IVS_ABCWHSE     |Y
 ops-10D                  |OPS_CUSTDFLT    |Y
-ops-10N                  |OPS_NUMBERS     |Y
 ops-10S                  |OPS_MTDSALES    |Y
 apm-01A                  |APM_VENDMAST    |N
 ivm-01A                  |IVM_ITEMMAST    |N
@@ -163,7 +161,6 @@ poe-54A                  |POE_POBYREC     |N
 poe-63A                  |POE_QAREJDET    |N
 pom-01A                  |POM_CALENDAR    |N
 pom-02A                  |POC_LINECODE    |N
-pos-10A                  |POS_NUMBERS     |N
 pot-03A                  |POT_QAREJHST    |N
 pot-04A                  |POT_RECHDR      |N
 pot-05A                  |POT_INVHDR      |N
@@ -350,7 +347,6 @@ apm-06A                  |APM_VENDREPL    |N
 apm-09A                  |APM_VENDCMTS    |N
 apm-14A                  |APM_RPTCTRL     |N
 apm-15A                  |APM_EMAILFAX    |N
-aps-10A                  |APS_NUMBERS     |N
 apt-01A                  |APT_INVOICEHDR  |N
 apt-02A                  |APT_INVOICEDIST |N
 apt-05A                  |APT_CHECKHISTORY|N

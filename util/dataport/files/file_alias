@@ -38,7 +38,6 @@ apm-10B                  |APC_DISTRIBUTION  |
 apm-10C                  |APC_TERMSCODE     |
 apm-10D                  |APC_PAYMENTGROUP  |
 apm-15A                  |APM_EMAILFAX      |
-aps-10N                  |APS_NUMBERS       |
 apt-01A                  |APT_INVOICEHDR    |
 apt-02A                  |APT_INVOICEDIST   |
 apt-05A                  |APT_CHECKHISTORY  |
@@ -245,7 +244,6 @@ pom-03A                  |POC_REJCTCOD      |
 pom-04A                  |POC_MSGCODE       |
 pom-13A                  |POC_REJCTCMT      |
 pom-14A                  |POC_MSGLINE       |
-pos-10N                  |POS_NUMBERS       |
 pot-03A                  |POT_QAREJHST      |
 pot-04A                  |POT_RECHDR        |
 pot-05A                  |POT_INVHDR        |
@@ -421,7 +419,6 @@ ARC_CUSTTYPE             |ARC_CUSTTYPE      |
 ARM_CUSTRPT_CTL          |ARM_CUSTRPT_CTL   |
 ARS_MTDCASH              |ARS_MTDCASH       |
 ARS_CUSTDFLT             |ARS_CUSTDFLT      |
-ARS_NEXT_SEQ             |ARS_NEXT_SEQ      |
 IVC_PRODCODE             |IVC_PRODCODE      |
 IVC_TRANCODE             |IVC_TRANCODE      |
 IVC_WHSECODE             |IVC_WHSECODE      |
@@ -446,7 +443,6 @@ PRC_TOTLCODE             |PRC_TOTLCODE      |
 PRC_UNNCODE              |PRC_UNNCODE       |
 PRC_W2BOX                |PRC_W2BOX         |
 OPS_CUSTDFLT             |OPS_CUSTDFLT      |
-OPS_NUMBERS              |OPS_NUMBERS       |
 OPS_MTDSALES             |OPS_MTDSALES      |
 APS_PARAMS               |APS_PARAMS        |
 APS_REPORT               |APS_REPORT        |
