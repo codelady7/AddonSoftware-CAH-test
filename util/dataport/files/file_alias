@@ -428,7 +428,6 @@ IVC_PHYSCODE             |IVC_PHYSCODE      |
 IVS_ZEROBAL              |IVS_ZEROBAL       |
 IVS_DEFAULTS             |IVS_DEFAULTS      |
 IVS_ABCITEM              |IVS_ABCITEM       |
-IVS_NUMBERS              |IVS_NUMBERS       |
 IVS_ABCWHSE              |IVS_ABCWHSE       |
 OPM_POINTOFSALE          |OPM_POINTOFSALE   |
 PRC_CONTCODE             |PRC_CONTCODE      |

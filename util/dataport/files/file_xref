@@ -107,7 +107,6 @@ ivm-10P     |IVC_PHYSCODE      |
 ivs-10A     |IVS_ZEROBAL       |
 ivs-10D     |IVS_DEFAULTS      |
 ivs-10I     |IVS_ABCITEM       |
-ivs-10N     |IVS_NUMBERS       | 
 ivs-10W     |IVS_ABCWHSE       |
 prm-10D     |PRC_CONTCODE      |
 prm-10B     |PRC_DDCTCODE      |

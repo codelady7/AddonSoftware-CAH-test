@@ -28,7 +28,6 @@ ivs-01D                  |IVS_COLUMNS     |Y
 ivs-10A                  |IVS_ZEROBAL     |Y
 ivs-10D                  |IVS_DEFAULTS    |Y
 ivs-10I                  |IVS_ABCITEM     |Y
-ivs-10N                  |IVS_NUMBERS     |Y
 ivs-10W                  |IVS_ABCWHSE     |Y
 ops-10D                  |OPS_CUSTDFLT    |Y
 ops-10S                  |OPS_MTDSALES    |Y

@@ -588,7 +588,6 @@ rem --- Open/Lock files
 	open_tables$[3]="GLS_PARAMS",open_opts$[3]="OTA"
 	open_tables$[4]="ARS_PARAMS",open_opts$[4]="OTA"
 	open_tables$[5]="IVM_ITEMWHSE",open_opts$[5]="OTA"
-	open_tables$[6]="IVS_NUMBERS",open_opts$[6]="OTA"
 	open_tables$[7]="IVM_ITEMSYN",open_opts$[7]="OTA"
 	open_tables$[8]="IVT_ITEMTRAN",open_opts$[8]="OTA"
 	if op$="Y" then open_tables$[9]="OPS_PARAMS",open_opts$[9]="OTA"
@@ -597,12 +596,12 @@ rem --- Open/Lock files
 	if status$ <> ""  then goto std_exit
 
 	ivs01_dev=num(open_chans$[1]),ivs01d_dev=num(open_chans$[2]),gls01_dev=num(open_chans$[3])
-	ars01_dev=num(open_chans$[4]),ivm02_dev=num(open_chans$[5]),ivs10_dev=num(open_chans$[6])
+	ars01_dev=num(open_chans$[4]),ivm02_dev=num(open_chans$[5])
 
 rem --- Dimension miscellaneous string templates
 
 	dim ivs01a$:open_tpls$[1],ivs01d$:open_tpls$[2],gls01a$:open_tpls$[3],ars01a$:open_tpls$[4]
-	dim ivm02a$:open_tpls$[5],ivs10n$:open_tpls$[6]
+	dim ivm02a$:open_tpls$[5]
 
 rem --- check to see if main GL param rec (firm/GL/00) exists; if not, tell user to set it up first
 	gls01a_key$=firm_id$+"GL00"
@@ -983,8 +982,6 @@ rem --- See if Auto Numbering in effect
 	if cvs(callpoint!.getUserInput(), 2) = "" then 
 		ivs01_dev = fnget_dev("IVS_PARAMS")
 		dim ivs01a$:fnget_tpl$("IVS_PARAMS")
-		ivs10_dev = fnget_dev("IVS_NUMBERS")
-		dim ivs10n$:fnget_tpl$("IVS_NUMBERS")
 		read record (ivs01_dev, key=firm_id$+"IV00") ivs01a$
 
 		if ivs01a.auto_no_iv$="N" then
@@ -992,38 +989,30 @@ rem --- See if Auto Numbering in effect
 		else
 			item_len = num(callpoint!.getTableColumnAttribute("IVM_ITEMMAST.ITEM_ID","MAXL"))
 			if item_len=0 then item_len=20; rem Needed?
-			chk_digit$ = ""
 			if ivs01a.auto_no_iv$="C" then item_len=item_len-1
-			extract record (ivs10_dev,key=firm_id$+"N",dom=*next) ivs10n$; rem Advisory Locking
-			ivs10n.firm_id$ = firm_id$
-			ivs10n.record_id_n$ = "N"
 
-			if ivs10n.nxt_item_id=0
-				next_num=1
-			else
-				next_num=ivs10n.nxt_item_id
+			call stbl("+DIR_SYP")+"bas_sequences.bbj","ITEM_ID",item_id$,table_chans$[all]
+			if item_id$="" then
+				callpoint!.setStatus("ABORT")
+				break
 			endif
+			next_num=num(item_id$)
 
 			dim max_num$(min(item_len,10),"9")
-
 			if next_num>num(max_num$) then 
-				read (ivs10_dev)
 				msg_id$="NO_MORE_NUMBERS"
 				gosub disp_message
 				callpoint!.setStatus("ABORT")
+				break
 			else
-				ivs10n.nxt_item_id=next_num+1
-				ivs10n$=field(ivs10n$)
-				write record (ivs10_dev) ivs10n$
-				next_num$=str(next_num)
-
+				chk_digit$ = ""
 				if ivs01a.auto_no_iv$="C" then 
 					precision 4
 					chk_digit$=str(tim*10000),chk_digit$=chk_digit$(len(chk_digit$),1)
 					precision num(ivs01a.precision$)
 				endif
 
-				callpoint!.setUserInput(next_num$+chk_digit$)
+				callpoint!.setUserInput(item_id$+chk_digit$)
 				callpoint!.setStatus("REFRESH")
 			endif
 		endif
