@@ -147,12 +147,10 @@
 		<QUERY_ID>GL_AMOUNT_INQ   </QUERY_ID>
 		<SEQUENCE_NO>011</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLT_TRANSDETAIL </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>REFERENCE       </DD_TABLE_COL>
-		<COLUMN_ALIAS>REFERENCE_01    </COLUMN_ALIAS>
-		<COLUMN_HDR>Ref 1</COLUMN_HDR>
-		<COLUMN_CASE>N</COLUMN_CASE>
+		<DD_TABLE_COL>REFERENCE_01    </DD_TABLE_COL>
+		<COLUMN_HDR>Reference 01</COLUMN_HDR>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
@@ -163,12 +161,10 @@
 		<QUERY_ID>GL_AMOUNT_INQ   </QUERY_ID>
 		<SEQUENCE_NO>012</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLT_TRANSDETAIL </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>REFERENCE       </DD_TABLE_COL>
-		<COLUMN_ALIAS>REFERENCE_02    </COLUMN_ALIAS>
-		<COLUMN_HDR>Ref 2</COLUMN_HDR>
-		<COLUMN_CASE>N</COLUMN_CASE>
+		<DD_TABLE_COL>REFERENCE_02    </DD_TABLE_COL>
+		<COLUMN_HDR>Reference 02</COLUMN_HDR>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
@@ -179,12 +175,10 @@
 		<QUERY_ID>GL_AMOUNT_INQ   </QUERY_ID>
 		<SEQUENCE_NO>013</SEQUENCE_NO>
 		<COLUMN_TYPE>C</COLUMN_TYPE>
-		<QUERY_COL_VIS>V</QUERY_COL_VIS>
+		<QUERY_COL_VIS>U</QUERY_COL_VIS>
 		<DD_TABLE_ALIAS>GLT_TRANSDETAIL </DD_TABLE_ALIAS>
-		<DD_TABLE_COL>REFERENCE       </DD_TABLE_COL>
-		<COLUMN_ALIAS>REFERENCE_03    </COLUMN_ALIAS>
-		<COLUMN_HDR>Ref 3</COLUMN_HDR>
-		<COLUMN_CASE>N</COLUMN_CASE>
+		<DD_TABLE_COL>REFERENCE_03    </DD_TABLE_COL>
+		<COLUMN_HDR>Reference 03</COLUMN_HDR>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
@@ -213,6 +207,7 @@
 		<DD_TABLE_ALIAS>GLT_TRANSDETAIL </DD_TABLE_ALIAS>
 		<DD_TABLE_COL>TRANS_AMT       </DD_TABLE_COL>
 		<COLUMN_HDR>Trans Amt</COLUMN_HDR>
+		<COLUMN_TOTAL>S</COLUMN_TOTAL>
 		<COLUMN_FILTER>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_FILTER>
 		<COLUMN_CALC>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </COLUMN_CALC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
