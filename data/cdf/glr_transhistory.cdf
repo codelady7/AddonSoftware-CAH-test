@@ -98,6 +98,9 @@ rem --- Open and get Current Period/Year parameters
 
 	gosub open_tables
 
+rem --- Disable SORT_BY unless detail report and both audit number and journal ID entered 
+	callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",0)
+
 [[GLR_TRANSHISTORY.END_GL_PER.AVAL]]
 rem --- Verify haven't exceeded calendar total periods for ending fiscal year
 	period$=callpoint!.getUserInput()
@@ -185,15 +188,39 @@ rem --- Clear and disable date, period and year fields when audit number entered
 	if gl_adt_no$<>"" then
 		rem --- Only EXPORT_FORMAT and PICK_LISTBUTTON remain enabled
 		callpoint!.setColumnData("GLR_TRANSHISTORY.TRNS_DATE","",1)
-		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.TRNS_DATE",0)
 		callpoint!.setColumnData("GLR_TRANSHISTORY.BEG_GL_PER","",1)
-		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.BEG_GL_PER",0)
 		callpoint!.setColumnData("GLR_TRANSHISTORY.BEG_YEAR","",1)
-		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.BEG_YEAR",0)
 		callpoint!.setColumnData("GLR_TRANSHISTORY.END_GL_PER","",1)
-		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.END_GL_PER",0)
 		callpoint!.setColumnData("GLR_TRANSHISTORY.END_YEAR","",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.TRNS_DATE",0)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.BEG_GL_PER",0)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.BEG_YEAR",0)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.END_GL_PER",0)
 		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.END_YEAR",0)
+	else
+		gls01_dev=fnget_dev("GLS_PARAMS")
+		dim gls01a$:fnget_tpl$("GLS_PARAMS")
+		readrecord(gls01_dev,key=firm_id$+"GL00")gls01a$
+		callpoint!.setColumnData("GLR_TRANSHISTORY.BEG_GL_PER",gls01a.current_per$,1)
+		callpoint!.setColumnData("GLR_TRANSHISTORY.BEG_YEAR",gls01a.current_year$,1)
+		callpoint!.setColumnData("GLR_TRANSHISTORY.END_GL_PER",gls01a.current_per$,1)
+		callpoint!.setColumnData("GLR_TRANSHISTORY.END_YEAR",gls01a.current_year$,1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.TRNS_DATE",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.BEG_GL_PER",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.BEG_YEAR",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.END_GL_PER",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.END_YEAR",1)
+	endif
+
+rem --- Initialize SORT_BY=R and enable when detail report and both audit number and journal ID entered
+	report$=callpoint!.getColumnData("GLR_TRANSHISTORY.PICK_LISTBUTTON")
+	journal_id$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.PICK_JOURNAL_ID"),2)
+	if report$="D" and gl_adt_no$<>"" and journal_id$<>"" then
+		callpoint!.setColumnData("GLR_TRANSHISTORY.SORT_BY","R",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",1)
+	else
+		callpoint!.setColumnData("GLR_TRANSHISTORY.SORT_BY","A",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",0)
 	endif
 
 [[GLR_TRANSHISTORY.GL_WILDCARD.AVAL]]
@@ -205,6 +232,32 @@ rem --- Check length of wildcard against defined mask for GL Account
 			gosub disp_message
 			callpoint!.setStatus("ABORT")
 		endif
+	endif
+
+[[GLR_TRANSHISTORY.PICK_JOURNAL_ID.AVAL]]
+rem --- Initialize SORT_BY=R and enable when detail report and both audit number and journal ID entered
+	journal_id$=cvs(callpoint!.getUserInput(),2)
+	gl_adt_no$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.GL_ADT_NO"),2)
+	report$=callpoint!.getColumnData("GLR_TRANSHISTORY.PICK_LISTBUTTON")
+	if report$="D" and gl_adt_no$<>"" and journal_id$<>"" then
+		callpoint!.setColumnData("GLR_TRANSHISTORY.SORT_BY","R",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",1)
+	else
+		callpoint!.setColumnData("GLR_TRANSHISTORY.SORT_BY","A",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",0)
+	endif
+
+[[GLR_TRANSHISTORY.PICK_LISTBUTTON.AVAL]]
+rem --- Initialize SORT_BY=R and enable when detail report and both audit number and journal ID entered
+	report$=callpoint!.getUserInput()
+	gl_adt_no$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.GL_ADT_NO"),2)
+	journal_id$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.PICK_JOURNAL_ID"),2)
+	if report$="D" and gl_adt_no$<>"" and journal_id$<>"" then
+		callpoint!.setColumnData("GLR_TRANSHISTORY.SORT_BY","R",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",1)
+	else
+		callpoint!.setColumnData("GLR_TRANSHISTORY.SORT_BY","A",1)
+		callpoint!.setColumnEnabled("GLR_TRANSHISTORY.SORT_BY",0)
 	endif
 
 [[GLR_TRANSHISTORY.TRNS_DATE.AVAL]]

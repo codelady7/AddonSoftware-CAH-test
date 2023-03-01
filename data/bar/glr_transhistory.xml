@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.glr_transhistory">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.glr_transhistory">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.glr_transhistory">GL </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.glr_transhistory">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.glr_transhistory">22.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.glr_transhistory">020905D5B1A167DB3A310D24B4B843C3</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glr_transhistory">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glr_transhistory">20060602</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glr_transhistory">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glr_transhistory">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glr_transhistory">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glr_transhistory">20230228</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glr_transhistory">20230228</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glr_transhistory">155830</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glr_transhistory"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glr_transhistory">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glr_transhistory">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glr_transhistory"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glr_transhistory"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glr_transhistory">S</DD_ATTR_FTYP>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.glr_transhistory"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.glr_transhistory"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.glr_transhistory"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.glr_transhistory"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.glr_transhistory"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.glr_transhistory"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.glr_transhistory"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.glr_transhistory"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.glr_transhistory"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.glr_transhistory"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.glr_transhistory">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.glr_transhistory">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.glr_transhistory">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.glr_transhistory">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.glr_transhistory">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.glr_transhistory">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.glr_transhistory">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -109,7 +109,7 @@
 		<RECORD id="ddm_table_tpls.glr_transhistory">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glr_transhistory">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glr_transhistory"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.glr_transhistory">firm_id:c(2),beg_gl_per:i(2),beg_year:c(4),end_gl_per:i(2),end_year:c(4),gl_account_01:c(10),gl_account_02:c(10),gl_wildcard:c(19),pick_journal_id:c(2),pick_listbutton:c(1),export_format:c(1),acct_inactive:c(1),gl_adt_no:c(7),trns_date:c(8)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.glr_transhistory">firm_id:c(2),beg_gl_per:i(2),beg_year:c(4),end_gl_per:i(2),end_year:c(4),gl_account_01:c(10),gl_account_02:c(10),gl_wildcard:c(19),pick_journal_id:c(2),pick_listbutton:c(1),export_format:c(1),acct_inactive:c(1),gl_adt_no:c(7),trns_date:c(8),sort_by:c(30)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -121,7 +121,7 @@
 			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory001">FIRM_ID         </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory001"></DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory001"></DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory001"></DD_FIELD_DELIM>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory001">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory001"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory001"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory001"></DD_SYSTEM_ID>
@@ -181,7 +181,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory002">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory002"></DD_ATTR_CTLY>
@@ -223,7 +223,7 @@
 			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory003">BEG_YEAR        </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory003"></DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory003">1</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory003"></DD_FIELD_DELIM>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory003">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory003"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory003"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory003"></DD_SYSTEM_ID>
@@ -232,7 +232,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory003">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory003">130</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory003"></DD_ATTR_CTLY>
@@ -283,7 +283,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory004">20060428</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory004"></DD_ATTR_CTLY>
@@ -334,7 +334,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory005">20060428</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory005">130</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory005"></DD_ATTR_CTLY>
@@ -376,7 +376,7 @@
 			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory006">GL_ACCOUNT      </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory006"></DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory006">2</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory006"></DD_FIELD_DELIM>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory006">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory006"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory006"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory006"></DD_SYSTEM_ID>
@@ -385,7 +385,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory006">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory006">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory006"></DD_ATTR_CTLY>
@@ -427,7 +427,7 @@
 			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory007">GL_WILDCARD     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory007"></DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory007"></DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory007"></DD_FIELD_DELIM>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory007">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory007"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory007"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory007"></DD_SYSTEM_ID>
@@ -436,7 +436,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory007">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory007">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory007"></DD_ATTR_CTLY>
@@ -478,7 +478,7 @@
 			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory008">PICK_JOURNAL_ID </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory008"></DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory008"></DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory008"></DD_FIELD_DELIM>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory008">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory008"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory008"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory008"></DD_SYSTEM_ID>
@@ -487,7 +487,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory008">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory008"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory008"></DD_ATTR_CTLY>
@@ -529,7 +529,7 @@
 			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory009">PICK_LISTBUTTON </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory009"></DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory009"></DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory009"></DD_FIELD_DELIM>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory009">N</DD_FIELD_DELIM>
 			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory009"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory009"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory009"></DD_SYSTEM_ID>
@@ -538,7 +538,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory009">20060419</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory009"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory009">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory009"></DD_ATTR_CTLY>
@@ -610,14 +610,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glr_transhistory010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glr_transhistory010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glr_transhistory010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glr_transhistory010">12</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glr_transhistory010">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glr_transhistory010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glr_transhistory010">EXPORT_FORMAT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glr_transhistory010"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glr_transhistory010"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glr_transhistory010"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glr_transhistory010"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glr_transhistory010">3012</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.glr_transhistory010">3013</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.glr_transhistory010">cbx_export_format</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.glr_transhistory010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glr_transhistory010"></DD_ATTR_RADG>
@@ -661,14 +661,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glr_transhistory011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glr_transhistory011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glr_transhistory011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glr_transhistory011">13</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glr_transhistory011">14</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glr_transhistory011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glr_transhistory011">ACCT_INACTIVE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glr_transhistory011"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glr_transhistory011"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glr_transhistory011">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glr_transhistory011"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glr_transhistory011">3013</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.glr_transhistory011">3014</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.glr_transhistory011">cbx_acct_inactive</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.glr_transhistory011">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glr_transhistory011"></DD_ATTR_RADG>
@@ -691,7 +691,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory012">20170411</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory012">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory012">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory012"></DD_ATTR_CTLY>
@@ -742,7 +742,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory013">20170418</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory013">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory013">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory013"></DD_ATTR_CTLY>
@@ -777,6 +777,57 @@
 			<DD_ATTR_RKEY id="ddm_table_cols.glr_transhistory013">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glr_transhistory013">C</DD_ATTR_BTNS>
 		</RECORD>
+		<RECORD id="ddm_table_cols.glr_transhistory014">
+			<DD_TABLE_ALIAS id="ddm_table_cols.glr_transhistory014">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.glr_transhistory014">014</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.glr_transhistory014">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.glr_transhistory014">SORT_BY         </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.glr_transhistory014">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.glr_transhistory014">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.glr_transhistory014">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.glr_transhistory014"></DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.glr_transhistory014"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.glr_transhistory014"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.glr_transhistory014"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.glr_transhistory014">20230228</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.glr_transhistory014">20230228</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.glr_transhistory014"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.glr_transhistory014"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_transhistory014"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.glr_transhistory014">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.glr_transhistory014"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.glr_transhistory014"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.glr_transhistory014"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.glr_transhistory014"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.glr_transhistory014">A</DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.glr_transhistory014"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.glr_transhistory014"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.glr_transhistory014"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.glr_transhistory014">Sort By</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.glr_transhistory014">Sort By</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.glr_transhistory014">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.glr_transhistory014"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.glr_transhistory014"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.glr_transhistory014"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.glr_transhistory014"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.glr_transhistory014"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.glr_transhistory014"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.glr_transhistory014"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.glr_transhistory014"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.glr_transhistory014">12</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.glr_transhistory014"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.glr_transhistory014">SORT_BY</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.glr_transhistory014"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.glr_transhistory014"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.glr_transhistory014">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.glr_transhistory014">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.glr_transhistory014">3012</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glr_transhistory014">lbn_sort_by</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glr_transhistory014">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.glr_transhistory014"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.glr_transhistory014">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.glr_transhistory014"></DD_ATTR_BTNS>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
 		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
@@ -810,6 +861,16 @@
 			<DD_DVAR_NAME id="ddm_column_cpro.glr_transhistorygl_wildcardaval">GL_WILDCARD     </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.glr_transhistorygl_wildcardaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_column_cpro.glr_transhistorypick_journal_idaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.glr_transhistorypick_journal_idaval">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.glr_transhistorypick_journal_idaval">PICK_JOURNAL_ID </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.glr_transhistorypick_journal_idaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.glr_transhistorypick_listbuttonaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.glr_transhistorypick_listbuttonaval">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.glr_transhistorypick_listbuttonaval">PICK_LISTBUTTON </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.glr_transhistorypick_listbuttonaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_column_cpro.glr_transhistorygl_adt_noaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.glr_transhistorygl_adt_noaval">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.glr_transhistorygl_adt_noaval">GL_ADT_NO       </DD_DVAR_NAME>
@@ -836,6 +897,20 @@
 			<DD_ATTR_SEQ id="ddm_column_ldat.glr_transhistorypick_listbutton02">02</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_column_ldat.glr_transhistorypick_listbutton02">S</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorypick_listbutton02">Summary</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_column_ldat.glr_transhistorysort_by01">
+			<DD_TABLE_ALIAS id="ddm_column_ldat.glr_transhistorysort_by01">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_ldat.glr_transhistorysort_by01">SORT_BY         </DD_DVAR_NAME>
+			<DD_ATTR_SEQ id="ddm_column_ldat.glr_transhistorysort_by01">01</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_column_ldat.glr_transhistorysort_by01">A</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorysort_by01">Account Number</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_column_ldat.glr_transhistorysort_by02">
+			<DD_TABLE_ALIAS id="ddm_column_ldat.glr_transhistorysort_by02">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_ldat.glr_transhistorysort_by02">SORT_BY         </DD_DVAR_NAME>
+			<DD_ATTR_SEQ id="ddm_column_ldat.glr_transhistorysort_by02">02</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_column_ldat.glr_transhistorysort_by02">R</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorysort_by02">References</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
@@ -1440,6 +1515,58 @@
 			<DD_ATTR_Y2KW id="ddm_elements.trns_date"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.trns_date"></DD_ATTR_CASB>
 		</RECORD>
+		<RECORD id="ddm_elements.generic_list">
+			<DD_DATA_NAME id="ddm_elements.generic_list">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.generic_list">Generic ListButton</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.generic_list">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.generic_list">30</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.generic_list"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.generic_list"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.generic_list">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.generic_list">AD </ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.generic_list"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.generic_list">20071226</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.generic_list">20101221</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.generic_list"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.generic_list"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.generic_list"></DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.generic_list"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.generic_list"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.generic_list">L</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.generic_list"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.generic_list"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.generic_list"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.generic_list"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.generic_list"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.generic_list"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.generic_list"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.generic_list"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.generic_list"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.generic_list"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.generic_list">Generic ListButton</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.generic_list">Generic ListButton</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.generic_list">O</DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.generic_list"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.generic_list"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.generic_list"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.generic_list"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.generic_list"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.generic_list"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.generic_list"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.generic_list"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.generic_list"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.generic_list">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.generic_list"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.generic_list"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.generic_list"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.generic_list"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.generic_list"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.generic_list"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.generic_list"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.generic_list"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.generic_list"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.generic_list"></DD_ATTR_CASB>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_element_ldat">
 		<ID id="ddm_element_ldat">DDM_ELEMENT_LDAT</ID>
@@ -1448,6 +1575,12 @@
 			<DD_ATTR_SEQ id="ddm_element_ldat.pick_listbutton01">01</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_element_ldat.pick_listbutton01">X</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_element_ldat.pick_listbutton01">Default List Item</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.generic_list01">
+			<DD_DATA_NAME id="ddm_element_ldat.generic_list01">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.generic_list01">01</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.generic_list01">X</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.generic_list01">Default List Item</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 </GLR_TRANSHISTORY>

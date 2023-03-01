@@ -1,4 +1,4 @@
-rem glr - GL Transaction History Report (Report Overlay)
+rem glr - GL Transaction History Report (Account Number Sort)
 rem Program glr_transhistory v8.0.0 19Apr2006 (glr_cb)
 rem Created by adx_progconv.bbx v1.0.0 (04/19/2006 12:57:02)
 
@@ -66,6 +66,7 @@ rem --- Assign input values to local variables
     wildcard$=Option!.getOptionData("GL_WILDCARD")
     journal$=Option!.getOptionData("PICK_JOURNAL_ID")
     detail$=Option!.getOptionData("PICK_LISTBUTTON")
+    sort_by$=Option!.getOptionData("SORT_BY")
     export_format$=Option!.getOptionData("EXPORT_FORMAT")
     rd_alias_id$=Option!.getAlias()
     rem "GL INACTIVE FEATURE"
@@ -164,6 +165,9 @@ rem --- Initializations
     endindex=(mp+1)*(numYears-1)
     dim as[(mp+1)*numYears],us[(mp+1)*numYears],o[10],at[2],et[2],pt[2],jt[2],rt[2],n[2]
     ln_desc$=Translate!.getTranslation("AON_TOTAL")+" "+Translate!.getTranslation("AON_DEBITS")+" "+Translate!.getTranslation("AON_AND")+" "+Translate!.getTranslation("AON_CREDITS")+" "+Translate!.getTranslation("AON_FOR_")
+
+rem --- Detail Report Sorted by References handled in another program
+    if sort_by$="R" then run pgmdir$+"glr_transhistory2.aon"
     
 rem --- Document columns
 

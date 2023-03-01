@@ -1,0 +1,634 @@
+rem --- glr - GL Transaction History Report (References Sort)
+rem --- Program glr_transhistory2
+
+rem --- AddonSoftware Version 23.0
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+    setesc std_error
+    seterr std_error
+
+    use ::ado_func.src::func
+    
+rem --- Document columns
+    rem --- Detail Report Sorted by References handled in another program
+
+    columns=11
+    dim columns$[11,10]
+    columns$[0,0]=Translate!.getTranslation("AON_REF_1"),columns$[0,1]="C",columns$[0,2]="10"
+    columns$[1,0]=Translate!.getTranslation("AON_REF_2"),columns$[1,1]="C",columns$[1,2]="18"
+    columns$[2,0]=Translate!.getTranslation("AON_REF_3"),columns$[2,1]="C",columns$[2,2]="10"
+    columns$[3,0]=Translate!.getTranslation("AON_ACCOUNT"),columns$[3,1]="C",columns$[3,2]=str(m0),columns$[3,3]=m0$,columns$[3,10]="1"
+    columns$[4,0]=Translate!.getTranslation("AON_ACCT")+" "+Translate!.getTranslation("AON_DESCRIPTION"),columns$[4,1]="C"
+    if export_format$="Y" then columns$[4,2]="30" else columns$[4,2]="0"
+    columns$[5,0]=Translate!.getTranslation("AON_DATE"),columns$[5,1]="C",columns$[5,2]="10"
+    columns$[6,0]=Translate!.getTranslation("AON_JRNL"),columns$[6,1]="C",columns$[6,2]="4"
+    columns$[7,0]=Translate!.getTranslation("AON_AUDIT_#"),columns$[7,1]="C",columns$[7,2]="7"
+    columns$[8,0]=Translate!.getTranslation("AON_MEMO"),columns$[8,1]="C",columns$[8,2]="40"
+    columns$[9,0]=Translate!.getTranslation("AON_DEBITS"),columns$[9,1]="N",columns$[9,2]=str(len(m1$)),columns$[9,3]=m1$,columns$[9,10]="T"
+    columns$[10,0]=Translate!.getTranslation("AON_CREDITS"),columns$[10,1]="N",columns$[10,2]=str(len(m1$)),columns$[10,3]=m1$,columns$[10,10]="T"
+    columns$[11,0]=Translate!.getTranslation("AON_UNITS"),columns$[11,1]="N",columns$[11,2]=str(len(m2$)),columns$[11,3]=m2$,columns$[11,10]="T"
+
+    call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
+
+rem --- Initialize report headings
+
+    headings=5
+    dim headings$[headings]
+    if audit_no$="" then
+        x$="",y$=""
+        x$=field(begCalendar$,"period_name_"+begper$,err=*next)
+        y$=field(endCalendar$,"period_name_"+endper$,err=*next)
+        if x$<>"" and y$<>""
+            headings$[2]=Translate!.getTranslation("AON_FROM_")+cvs(x$,2)+Translate!.getTranslation("AON__(PERIOD_")+begper$+") "+begyear$+Translate!.getTranslation("AON__THROUGH_")+
+:               cvs(y$,2)+Translate!.getTranslation("AON__(PERIOD_")+endper$+") "+endyear$
+        else
+            rem --- Report for specific transaction date
+            headings$[2]=Translate!.getTranslation("AON_TRANSACTION_DATE")+": "+fndate$(trns_date$)
+        endif
+    else
+        headings$[2]=Translate!.getTranslation("AON_AUDIT_NUMBER")+": "+audit_no$
+    endif
+    if cvs(begacct$,2)="" x$=Translate!.getTranslation("AON_FIRST_ACCOUNT")
+:       else x$=Translate!.getTranslation("AON_ACCOUNT_")+fnmask$(begacct$(1,m0),m0$)
+    if cvs(endacct$,2)="" y$=Translate!.getTranslation("AON_LAST_ACCOUNT")
+:       else y$=Translate!.getTranslation("AON_ACCOUNT_")+fnmask$(endacct$(1,m0),m0$)
+    x$=Translate!.getTranslation("AON_FROM_")+x$+Translate!.getTranslation("AON__THROUGH_")+y$
+    if cvs(wildcard$,2)<>"" then x$=x$+Translate!.getTranslation("AON__(WILDCARD_")+$22$+cvs(wildcard$,2)+$22$+")"
+    headings$[3]=x$
+    x$=Translate!.getTranslation("AON_DETAIL")
+    if cvs(journal$,2)="" y$=Translate!.getTranslation("AON_ALL_JOURNALS") 
+:       else y$=Translate!.getTranslation("AON_JOURNAL_ID_")+glm03a.journal_id$+" "+cvs(glm03a.code_desc$,2)
+    headings$[4]=x$+Translate!.getTranslation("AON__REPORT_FOR_")+y$
+    headings$[5]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_GENERAL_LEDGER_ACCOUNTS")+" = "+inactive$
+    headings$[0]=cvs(sysinfo.firm_name$,2)
+    headings$[1]=cvs(sysinfo.task_desc$,2)
+
+    ln_desc$="Ref 1 & Ref 2 "+ ln_desc$
+
+rem --- Start progress meter
+
+    call stbl("+DIR_PGM")+"adc_progress.aon","NC","GLT_TRANSDETAIL","","","",0,glt06_dev,1,meter_num,status
+
+rem --- Sort transactions by references
+    refTree!=new java.util.TreeMap()
+    glt06_trip$=firm_id$+audit_no$
+    read(glt06_dev,key=glt06_trip$,knum="BY_AUDIT_NO",dom=*next)
+    while 1
+        glt06_key$=key(glt06_dev,end=*break)
+        if pos(glt06_trip$=glt06_key$)<>1 then break
+        total_recs=total_recs+1
+        if mod(total_recs,milestone)=0 then call stbl("+DIR_PGM")+"adc_progress.aon","S","","","","",0,0,milestone,meter_num,status
+
+        readrecord(glt06_dev,end=*break)glt06a$
+        if gl_inactive_acct$<>"" and glt06a.gl_account$=gl_inactive_acct$ then continue
+        if begacct$<>"" and glt06a.gl_account$<begacct$ then continue
+        if endacct$<>"" and glt06a.gl_account$>endacct$ then break
+        if journal$<>"" and glt06a.journal_id$<>journal$ then continue
+
+        gosub wildcard
+        if status continue
+
+        refKey$=glt06a.reference_01$+glt06a.reference_02$
+        refKey$=refKey$+glt06a.gl_account$+glt06a.posting_year$+glt06a.posting_per$+glt06a.trns_date$+glt06a.journal_id$+glt06a.seq_no$
+        refTree!.put(refKey$,glt06a$)
+    wend
+
+rem --- Process next transaction history (glt-06) record
+    refIter!=refTree!.keySet().iterator()
+    while refIter!.hasNext()
+        refKey$=refIter!.next()
+        glt06a$=refTree!.get(refKey$)
+        transdate$=glt06a.posting_year$+glt06a.posting_per$
+        nothing_to_print=0
+
+        rem --- Level breaks?
+        
+        if glt06a.gl_account$<>t0$ gosub account_break
+        
+        rem --- Print subheadings
+
+        if h0$<>"" gosub account_heading
+        if h1$<>"" gosub period_heading
+        
+        rem --- Format detail line fields
+        
+        debits=0
+        credits=0
+        amount=glt06a.trans_amt
+        units=glt06a.units
+        debit$=""
+        credit$=""
+        unit$=""
+        if amount>0 debits=amount,debit$=str(amount)
+        if amount<0 credits=amount,credit$=str(abs(amount))
+        if units_flag$="Y" if units unit$=stars$,unit$=str(units,err=*next)
+        n[0]=debits
+        n[1]=credits
+        n[2]=units
+        
+        rem --- Split detail line comments into multiple lines
+        lineVect!=func.splitMultiLineField(glt06a.memo_1024$,40)
+        
+        rem --- Print detail line
+        
+        OutVect!.addItem(glt06a.reference_01$)
+        OutVect!.addItem(glt06a.reference_02$)
+        OutVect!.addItem(glt06a.reference_03$)
+        if export_format$="Y"
+            OutVect!.addItem(export_acct$)
+            OutVect!.addItem(export_desc$)
+        else
+            abc=fnblank(2)
+        endif
+        OutVect!.addItem(fndate$(glt06a.trns_date$))
+        OutVect!.addItem(glt06a.journal_id$)
+        OutVect!.addItem(glt06a.gl_adt_no$)
+        if lineVect!.size() then
+            OutVect!.addItem(lineVect!.getItem(0))
+            lineVect!.removeItem(0)
+        else
+            OutVect!.addItem("")
+        endif
+        OutVect!.addItem(debit$)
+        OutVect!.addItem(credit$)
+        OutVect!.addItem(unit$)
+        l1=l1+1
+        
+        rem --- Print rest of detail line comments 
+        if lineVect!.size() then
+            for i=0 to lineVect!.size()-1
+                xwk=fnblank(8)
+                OutVect!.addItem(lineVect!.getItem(i))
+                xwk=fnblank(3)
+            next i
+        endif
+    
+      rem --- Accumulate totals
+    
+      for x=0 to 2
+          at[x]=at[x]+n[x]
+          pt[x]=pt[x]+n[x]
+          jt[x]=jt[x]+n[x]
+          rt[x]=rt[x]+n[x]
+          et[x]=et[x]+n[x]
+      next x
+    
+      rem --- Loop back for next transaction history (glt-06) record
+    wend
+
+rem --- All Done
+
+    if nothing_to_print
+        msg_id$="DOC_OUTPUT_NODATA"
+        gosub disp_message
+        OutVect!=null()  
+        goto std_exit
+rem        goto std_exit_no_report
+    endif
+
+    done=1
+    gosub account_break
+    
+    if nothing_to_print then
+        ignore = fnblank(8)
+        OutVect!.addItem(Translate!.getTranslation("AON_NOTHING_TO_PRINT_WITHIN_THESE_PARAMETERS"))
+        ignore = fnblank(3)
+    else
+        total$=Translate!.getTranslation("AON_TOTAL_FOR_REPORT")
+        debits=rt[0]
+        credits=rt[1]
+        units=rt[2]
+        amount=debits+credits
+        if amount<>0 then gosub print_totals
+    endif
+    
+    goto std_exit
+
+account_heading: rem --- Account Heading
+
+    h0$=cvs(h0$,2)
+
+    if export_format$="Y"
+        OutVect!.addItem(h1$)
+        OutVect!.addItem(bb$)
+        abc=fnblank(1)
+        OutVect!.addItem(export_acct$)
+        OutVect!.addItem(export_desc$)
+        abc=fnblank(4)
+        OutVect!.addItem(begdebit$)
+        OutVect!.addItem(begcredit$)
+        OutVect!.addItem(begunits$)
+        h1$=""
+    else
+        abc=fnblank(12)
+        
+        abc=fnblank(3)
+        OutVect!.addItem(acct$)
+        OutVect!.addItem("")
+        OutVect!.addItem(desc$)
+        abc=fnblank(2)
+        OutVect!.addItem(bb$)
+        OutVect!.addItem(begdebit$)
+        OutVect!.addItem(begcredit$)
+        OutVect!.addItem(begunits$)
+    endif
+
+    h0$=""
+    return
+
+period_heading: rem --- Period Heading
+
+    if export_format$="Y"
+        abc=fnblank(3)
+        OutVect!.addItem(export_acct$)
+        OutVect!.addItem(export_desc$)
+        abc=fnblank(4)
+        OutVect!.addItem(h1$)
+        abc=fnblank(2)
+    else
+        abc=fnblank(5)            
+        OutVect!.addItem(h1$)
+        abc=fnblank(6)            
+    endif
+    l1=l1+1
+
+    rem --- Reset beginning balance for Period 1 or First Period if not an Asset/Liability/Capital account
+    year=num(glt06a.posting_year$)
+    if  pos(glm01a.gl_acct_type$="ALC")=0 and (year<>last_year_reported and last_year_reported<>0)  then
+        credits=0
+        debits=0
+        endbal=0
+        units=0
+        dim et[2],n[2],at[2]
+    endif
+
+    last_year_reported=year
+
+    h1$=""
+    return
+
+account_break: rem --- Account number break
+
+    if t0$="" goto new_account
+    if export_format$="Y"
+        total$=Translate!.getTranslation("AON_ACCOUNT_TOTAL")
+        x$="",y$=""
+    else
+        total$=Translate!.getTranslation("AON_TOTAL_FOR_ACCOUNT_")+fnmask$(glm01a.gl_account$(1,m0),m0$)
+    endif
+    if audit_no$<>"" then total$="Ref 1 & Ref 2"+" "+total$
+    if trns_date$<>"" then total$=fndate$(trns_date$)+" "+total$
+    debits=at[0]
+    credits=at[1]
+    units=at[2]
+    drcr_account$=fnmask$(glm01a.gl_account$(1,m0),m0$)
+    gosub print_totals_dr_cr
+    drcr_account$=""
+    gosub print_totals
+    if journal$<>"" goto new_account
+
+rem --- Calculate account ending balance
+
+    amount=as[endindex]
+    units=us[endindex]
+    for x=1 to endper
+        amount=amount+as[endindex+x]
+        units=units+us[endindex+x]
+    next x
+
+    rem --- EndBal may not represent Sum of Revenue and Expense Accounts for Ending Period/Year ---
+    if  pos(glm01a.gl_acct_type$="ALC")=0 and (report_end_year<>last_year_reported and last_year_reported<>0) then
+        rem --- Reset beginning balance to zero
+        credits=0
+        debits=0
+        endbal=0
+        units=0
+        dim et[2],n[2],at[2]
+    endif
+
+rem --- Print warning if calculated balance doesn't match transaction total
+
+    if endbal=amount goto new_account
+    debits=endbal-amount
+    credits=0
+    units=et[2]-units
+    if debits<0 credits=debits,debits=0
+    total$=Translate!.getTranslation("AON_WARNING:_TRANSACTION_TOTAL_DIFFERS_FROM_SUMMARY_ACTIVITY_BY")
+    if audit_no$="" and trns_date$="" then gosub print_totals
+
+new_account: rem --- New account
+
+    if done return
+    dim as[(mp+1)*numYears],us[(mp+1)*numYears],at[2],et[2]
+    t0$=glt06a.gl_account$
+    glm01a.firm_id$=firm_id$
+    glm01a.gl_account$=glt06a.gl_account$
+    glm01a.gl_acct_desc$=Translate!.getTranslation("AON_(NOT_ON_FILE)")
+    glm01_key$=glm01a.firm_id$+glm01a.gl_account$
+    find record (glm01_dev,key=glm01_key$,dom=*next)glm01a$
+    h0$=fnmask$(glm01a.gl_account$(1,m0),m0$)+" "+glm01a.gl_acct_desc$
+    acct$=fnmask$(glm01a.gl_account$(1,m0),m0$)
+    desc$=glm01a.gl_acct_desc$
+    export_acct$=acct$
+    export_desc$=glm01a.gl_acct_desc$
+
+    rem "GL INACTIVE FEATURE"
+    gl_inactive_acct$=""
+    if inactive$="Y" and glm01a.acct_inactive$="Y" then gl_inactive_acct$=glm01a.gl_account$,t0$=""
+
+rem --- Load summary activity for account
+
+    for x=0 to numYears-1
+        dim a[mp],u[mp]
+        y=(mp+1)*x
+        glm02_key$=glm01a.firm_id$+glm01a.gl_account$+str(begyear+x:"0000")
+        find record (glm02_dev,key=glm02_key$,dom=*continue) glm02a$
+        call stbl("+DIR_PGM")+"glc_summary.aon","R",glm02a$,a[all],u[all],status
+        for p=0 to mp
+            as[y+p]=a[p]
+            us[y+p]=u[p]
+        next p
+    next x
+
+rem --- Initialize account totals
+
+    et[1]=as[begindex]
+    et[2]=us[begindex]
+    if begper
+       for x=1 to begper
+           et[1]=et[1]+as[begindex+x]
+           et[2]=et[2]+us[begindex+x]
+       next x
+    endif
+    begcredit$=str(abs(et[1]))
+    begdebit$=""
+    begunits$=""
+    if units_flag$="Y" begunits$=str(et[2])
+    if et[1]>0
+       et[0]=et[1]
+       et[1]=0
+       begdebit$=str(et[0])
+       begcredit$=""
+    endif
+    last_year_reported=0
+    
+    return
+
+period_break: rem --- Period break
+
+    if t1$="" goto new_period
+    if l1<1 goto period_balance
+    y$=t1$(1,4)
+    find record (gls_calendar_dev,key=firm_id$+y$,err=*next) gls_calendar$
+    if cvs(gls_calendar.firm_id$,2)="" then
+        msg_id$="AD_NO_FISCAL_CAL"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=y$
+        gosub disp_message
+        goto std_exit_no_report
+    endif
+    x$=field(gls_calendar$,"abbr_name_"+str(num(t1$(5,2)):"00"))
+    if export_format$="Y"
+        total$=Translate!.getTranslation("AON_TOTAL")
+    else
+        total$=Translate!.getTranslation("AON_TOTAL_FOR_")+x$+" "+y$
+    endif
+    if audit_no$<>"" then total$="Ref 1 & Ref 2"+" "+total$
+    debits=pt[0]
+    credits=pt[1]
+    units=pt[2]
+    if trns_date$="" then 
+    	gosub print_totals_dr_cr
+    	gosub print_totals
+    endif
+    
+period_balance: rem --- Print ending balance for period
+
+    if export_format$="Y"
+        total$=Translate!.getTranslation("AON_ENDING_BALANCE")
+    else
+        total$=Translate!.getTranslation("AON_ENDING_BALANCE_FOR_")+x$+" "+y$
+    endif
+    endbal=et[0]+et[1]
+    debits=endbal
+    credits=0
+    units=et[2]
+    if endbal<0 credits=endbal,debits=0
+    if audit_no$="" and trns_date$="" then gosub print_totals
+
+new_period: rem --- New period
+
+    if done return
+    dim pt[2]
+    y$=glt06a.posting_year$
+    m$=glt06a.posting_per$
+    period=num(m$)
+
+    find record (gls_calendar_dev,key=firm_id$+y$,err=*next) gls_calendar$
+    x$=field(gls_calendar$,"abbr_name_"+str(period:"00"))
+    t1$=y$+m$
+    h1$=x$+" "+y$
+    l1=0
+    return
+
+print_totals: rem --- Print totals line
+
+    amount=debits+credits
+    debit$=str(amount)
+    credit$=""
+    unit$=""
+    if amount<0 credit$=str(abs(amount)),debit$=""
+    if units_flag$="Y" unit$=stars$,unit$=str(units,err=*next)
+
+    if export_format$="Y"
+        OutVect!.addItem(x$+" "+y$)
+        OutVect!.addItem(total$)
+        abc=fnblank(1)
+        OutVect!.addItem(export_acct$)
+        OutVect!.addItem(export_desc$)
+        abc=fnblank(4)
+        OutVect!.addItem(debit$)
+        OutVect!.addItem(credit$)
+        OutVect!.addItem(unit$)
+    else
+        TotVect!.addItem(str(OutVect!.size()/(columns+1)))
+        abc=fnblank(8)
+        OutVect!.addItem(total$)
+        OutVect!.addItem(debit$)
+        OutVect!.addItem(credit$)
+        OutVect!.addItem(unit$)
+    endif
+
+    return
+
+print_totals_dr_cr: rem --- at each break print a total debit and credit line
+
+    debit$=str(debits)
+    credit$=str(abs(credits))
+    unit$=""
+    if drcr_account$<>"" then
+    	line_desc$=ln_desc$+drcr_account$
+    else
+        line_desc$=ln_desc$+x$+" "+y$
+    endif
+    
+    if export_format$="Y"
+        OutVect!.addItem(x$+" "+y$)
+        OutVect!.addItem(line_desc$)
+        abc=fnblank(1)
+        OutVect!.addItem(export_acct$)
+        OutVect!.addItem(export_desc$)
+        abc=fnblank(4)
+        OutVect!.addItem(debit$)
+        OutVect!.addItem(credit$)
+        OutVect!.addItem(unit$)
+    else
+        TotVect!.addItem(str(OutVect!.size()/(columns+1)))
+        abc=fnblank(8)
+        OutVect!.addItem(line_desc$)
+        OutVect!.addItem(debit$)
+        OutVect!.addItem(credit$)
+        OutVect!.addItem(unit$)
+    endif
+
+    return
+
+wildcard: rem --- Test account number against specified wildcard mask
+
+    status=0
+    if wildcard$="" return
+    if wildcard<>len(wildcard$) wildcard=len(wildcard$)
+    x$=fnmask$(glt06a.gl_account$(1,m0),m0$)
+    for x=1 to wildcard
+        if wildcard$(x,1)="?" continue
+        if x$(x,1)<>wildcard$(x,1) status=1
+    next x
+    return
+
+rem --- Functions
+
+    def fndate$(q$)
+        q1$=""
+        q1$=date(jul(num(q$(1,4)),num(q$(5,2)),num(q$(7,2)),err=*next),err=*next)
+        if q1$="" q1$=q$
+        return q1$
+    fnend
+
+rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
+
+    def fnmask$(q1$,q2$)
+        if cvs(q1$,2)="" return ""
+        if q2$="" q2$=fill(len(q1$),"0")
+        if pos("E"=cvs(q1$,4)) goto alpha_mask
+:      else return str(-num(q1$,err=alpha_mask):q2$,err=alpha_mask)
+alpha_mask:
+        q=1
+        q0=0
+        while len(q2$(q))
+            if pos(q2$(q,1)="-()") q0=q0+1 else q2$(q,1)="X"
+            q=q+1
+        wend
+        if len(q1$)>len(q2$)-q0 q1$=q1$(1,len(q2$)-q0)
+        return str(q1$:q2$)
+    fnend
+
+rem --- Create blank line in OutVect! (no return value wanted or needed)
+
+    def fnblank(q0)
+        for q1=1 to q0
+            OutVect!.addItem("")
+        next q1
+        return q1
+    fnend
+
+rem #include disp_message.src
+
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+    return
+    
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_missing_params.src
+
+std_missing_params: rem --- Standard missing parameter handler (01Apr2006)
+
+    rd_err_text$=""
+    if tcb(5)<>0 and pgm(-1)=pgm(-2) rd_err_text$=pgm(tcb(5))
+    pgmdir$=stbl("+DIR_PGM",err=std_missing_params_exit)
+    call pgmdir$+"adc_noparams.aon",err=std_missing_params_exit,pgm(-2),str(tcb(5)),
+:                                   str(err),rd_err_text$,rd_err_act$
+    if pos("EXIT"=rd_err_act$) goto std_missing_params_exit
+    if pos("ESCAPE"=rd_err_act$) seterr 0;setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+std_missing_params_exit:
+    master_user$=cvs(stbl("+MASTER_USER",err=std_missing_params_release),2)
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=std_missing_params_release)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=std_missing_params_release)
+    if cvs(sysinfo.user_id$,2)=master_user$ escape
+std_missing_params_release:
+    status=999
+    if pgm(-1)<>pgm(-2) exit
+    release
+
+rem #endinclude std_missing_params.src
+
+rem #include std_end.src
+
+std_exit: rem --- Standard program end (01Mar2006)
+
+    call stbl("+DIR_PGM")+"adc_progress.aon","D","","","","",0,0,0,0,status
+    close (gls01_dev,err=*next)
+    close (glm01_dev,err=*next)
+    close (glm02_dev,err=*next)
+    close (glm03_dev,err=*next)
+    close (glt06_dev,err=*next)
+    close (gls_calendar_dev,err=*next)
+    
+    run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
+    release
+
+rem #endinclude std_end.src
+
+std_exit_no_report:
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,status    
+    OutVect!=null()
+    goto std_exit
+
+    end
