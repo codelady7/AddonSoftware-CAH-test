@@ -515,9 +515,10 @@ rem --- For version 23.00, correct old v6 GLT_TRANSDETAIL postings for Manual Ch
         print(log_dev)meter_text$
     endif
 
-rem --- For version 23.00, split IVE_TRANSFER into IVE_TRANSFERHDR and IVE_TRANSFERDET (ER 10412)
+rem --- For version 23.00, Inventory conversions
     this_module$="IV"
     if installMap!.get(this_module$)="Y" then
+        rem --- Split IVE_TRANSFER into IVE_TRANSFERHDR and IVE_TRANSFERDET (ER 10412)
         task$="2300_IV_ive_transfer"
         if convCtrl!.getProperty(task$)<>"Completed" then
 
@@ -615,6 +616,69 @@ rem --- For version 23.00, split IVE_TRANSFER into IVE_TRANSFERHDR and IVE_TRANS
             gosub disp_meter
             print(log_dev)meter_text$
         endif
+
+        rem --- Move IVS_NUMBERS data to ITEM_ID records in ADS_SEQUENCES (ER 10586)
+        task$="2300_IV_ivs_numbers"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=2
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="IVS_NUMBERS",    open_opts$[1]="OTA"
+            open_tables$[2]="ADS_SEQUENCES",  open_opts$[2]="OTA"
+    
+            gosub open_tables
+    
+            ivsNumbers_dev=num(open_chans$[1])
+            adsSequences_dev=num(open_chans$[2])
+            dim ivsNumbers$:open_tpls$[1]
+            dim adsSequences$:open_tpls$[2]
+
+            rem --- Move IVS_NUMBERS data to ITEM_ID records in ADS_SEQUENCES (ER 10586)
+            read(ivsNumbers_dev,key="",dom=*next)
+            while 1
+                readrecord(ivsNumbers_dev,end=*break)ivsNumbers$
+                
+                readrecord(adsSequences_dev,key=ivsNumbers.firm_id$+pad("ITEM_ID",16," "),dom=*continue)adsSequences$
+                adsSequences.seq_last_used=ivsNumbers.nxt_item_id
+                writerecord(adsSequences_dev)adsSequences$
+            wend
+
+            rem --- close files opened for this conversion
+            num_files=2
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="IVS_NUMBERS",    open_opts$[1]="C"
+            open_tables$[2]="ADS_SEQUENCES",  open_opts$[2]="C"
+            gosub open_tables
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+        
     else
         rem --- Increment progress meter
         meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
