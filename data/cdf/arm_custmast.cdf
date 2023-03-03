@@ -284,6 +284,33 @@ rem --- Show invoices
 :		"",
 :		"AO_STATUS"
 
+[[ARM_CUSTMAST.AOPT-INVQ]]
+rem --- Show AR invoices
+
+	custControl!=callpoint!.getControl("ARM_CUSTMAST.CUSTOMER_ID")
+	cust_id$=custControl!.getText()
+
+	dim filter_defs$[3,2]
+	filter_defs$[0,0]="ART_INVHDR.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+	filter_defs$[1,0]="ART_INVHDR.AR_TYPE"
+	filter_defs$[1,1]="='  '"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0] = "ART_INVHDR.CUSTOMER_ID"
+	filter_defs$[2,1] = "='" + cust_id$ + "'"
+	filter_defs$[2,2]="LOCK"
+
+
+	call stbl("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev,
+:		Form!,
+:		"AR_INVOICES",
+:		"",
+:		table_chans$[all],
+:		"",
+:		filter_defs$[all]
+
 [[ARM_CUSTMAST.AOPT-ORDR]]
 rem --- Show orders
 

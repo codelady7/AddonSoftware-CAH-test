@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<barista_record_table>ADM_QUERY_MENU</barista_record_table>
+<barista_admin_records>
+	<barista_record>
+		<QUERY_ID>AR_INVOICES     </QUERY_ID>
+		<SEQUENCE_NO>001</SEQUENCE_NO>
+		<MENU_OPT_ID>GLTR</MENU_OPT_ID>
+		<MENU_OPT_TEXT>Invoice GL Transactions</MENU_OPT_TEXT>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AR </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+</barista_admin_records>

@@ -31,4 +31,34 @@
 		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
+		<FILTER_ID>PAID                          </FILTER_ID>
+		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
+		<FILTER_ID>PAID                          </FILTER_ID>
+		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
+		<FILTER_ID>UNPAID                        </FILTER_ID>
+		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
+		<FILTER_ID>UNPAID                        </FILTER_ID>
+		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
 </barista_admin_records>

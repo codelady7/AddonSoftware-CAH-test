@@ -1,0 +1,277 @@
+rem ar_inv_gl_trans_inq.aon --- View GL Transactions for this AR Invoice
+
+    setesc std_error
+    seterr std_error
+
+    use java.util.Properties
+
+    enter
+:       rd_gui_dev,
+:       rdInqWin!,
+:       rd_inq_event$,
+:       rd_alias_id$,
+:       rd_sel_keys$,
+:       rd_table_chans$[all],
+:       rd_status$
+
+rem    rd_gui_dev - GUI device channel
+rem    rdInqWin! - Calling inquiry form object
+rem    rd_inq_event$ - Inquiry event triggering call (MEN-xx code, or 'SELECT' for selected items)
+rem    rd_alias_id$ - Primary inquiry table
+rem    rd_sel_keys$ - Selected inquiry keys
+rem    rd_table_chans$[] - Opened table/channels array (Required)
+rem    rd_status$ - returned status (i.e., UPDATE, REFRESH, QUERY)
+
+rem --- Route inquiry event action
+
+    rdInqEvent!=rd_inq_event$
+    switch (1)
+        case rdInqEvent!.equals("SELECT")
+            x=msgbox("Incoming option was SELECT")
+        break
+        case rdInqEvent!.equals("OPT-TST1")
+            x=msgbox("Incoming option was TEST 1")
+        break
+        case rdInqEvent!.equals("OPT-TST2")
+            x=msgbox("Incoming option was TEST 2")
+        break
+        case rdInqEvent!.equals("OPT-GLTR")
+
+            rem --- Skip drilldown if GL not installed
+            call stbl("+DIR_PGM")+"adc_application.aon","GL",info$[all]
+            gl$=info$[20]
+            if gl$<>"Y"
+                rd_msg_id$="AD_MODULE_NOT_INSTAL"
+                dim rd_msg_tokens$[1]
+                rd_msg_tokens$[1]="GL"
+                gosub disp_message
+                break
+            endif
+
+            rem --- Open/Lock files
+            num_files=4
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="ART_INVHDR",open_opts$[1]="OTA@"
+            open_tables$[2]="GLT_TRANSDETAIL",open_opts$[2]="OTA@"
+            open_tables$[3]="GLW_TRANSDETAIL",open_opts$[3]="OTA@"
+            open_tables$[4]="ADM_AUDITCONTROL",open_opts$[4]="OTA@"
+            
+            gosub open_tables
+                
+            artInvHdr_dev=num(open_chans$[1])
+            gltTransDetail_dev=num(open_chans$[2])
+            glwTransDetail_dev=num(open_chans$[3])
+            admAuditControl_dev=num(open_chans$[4])
+
+            dim artInvHdr$:open_tpls$[1]
+            dim gltTransDetail$:open_tpls$[2]
+            dim glwTransDetail$:open_tpls$[3]
+            dim admAuditControl$:open_tpls$[4]
+
+            rem --- Initializations
+            call stbl("+DIR_SYP")+"bac_key_template.bbj","ART_INVHDR","PRIMARY",key_tpl$,table_chans$[all],status$
+            dim artInvHdr_key$:key_tpl$
+            artInvHdr_key$=rd_sel_keys$(1,pos("^"=rd_sel_keys$)-1)
+
+            firm_id$=artInvHdr_key.firm_id$
+            ap_type$=artInvHdr_key.ar_type$
+            customer_id$=artInvHdr_key.customer_id$
+            ar_inv_no$=artInvHdr_key.ar_inv_no$
+
+            call stbl("+DIR_PGM")+"adc_getmask.aon","","AR","I","",custMask$,0,customer_size
+            customer$=fnmask$(customer_id$(1,customer_size),custMask$)
+
+            sys_info$=hta(info(3,1))
+
+            rem --- Clear work file
+            call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glwTransDetail_dev,sys_info$+firm_id$,status
+
+            rem --- Get the JOURNAL_IDs used by registers that update tables ART_INVHDR, ART_INVDET
+            registerPgms!=BBjAPI().makeVector()
+            registerPgms!.addItem("arr_invoiceentry.aon"); rem --- AR Simple Invoice Register [AR]: ref1=masked customer_id, ref2=ar_inv_no, ref3=line_no (or blank if dist summary)
+            registerPgms!.addItem("arr_otherentry.aon"); rem --- AR Finance Charge Register [FC]: ref1=masked customer_id, ref2=ar_inv_no, ref3=blank
+            registerPgms!.addItem("arr_cnvinv.aon"); rem --- AR Conversion Invoice Register [AR]: ref1=masked customer_id, ref2=ar_inv_no, ref3=blank
+            registerPgms!.addItem("opr_salesregister.aon"); rem --- OP Invoice Register [OP]; ref1=masked customer_id, ref2=ar_inv_no, ref3=line_no or 'cash sale'
+
+            journalRegisterPgm!=new Properties()
+            for j=0 to registerPgms!.size()-1
+                processPgm$=registerPgms!.getItem(j)
+                read(admAuditControl_dev,key=firm_id$+processPgm$,knum="AO_PROG_PROCESS",dom=*next)
+                while 1
+                    admAuditControl_key$=key(admAuditControl_dev,end=*break)
+                    if pos(firm_id$=admAuditControl_key$)<>1 then break
+                    readrecord(admAuditControl_dev)admAuditControl$
+                    if cvs(admAuditControl.process_program$,2)<>processPgm$ then continue
+                    journalRegisterPgm!.setProperty(admAuditControl.journal_id$,processPgm$)
+                wend
+            next j
+
+            rem --- For Cash Receipts, the register runs from an option entry form, so look up by ALIAS instead of by program name
+            rem ---     journal [CR], ref1=masked customer, ref2=ar_check_no, ref3=ar_inv_no (or blank if GL dist)
+            processAlias$="ARR_CASHRECEIPTS"
+            read(admAuditControl_dev,key=firm_id$+processAlias$,knum="AO_ALIAS_PROCESS",dom=*next)
+                while 1
+                    admAuditControl_key$=key(admAuditControl_dev,end=*break)
+                    if pos(firm_id$=admAuditControl_key$)<>1 then break
+                    readrecord(admAuditControl_dev)admAuditControl$
+                    if cvs(admAuditControl.process_alias$,2)<>processAlias$ then continue
+                    journalRegisterPgm!.setProperty(admAuditControl.journal_id$,processAlias$)
+                wend
+
+            rem --- Write GLT_TRANSDETAIL (glt-06) records to work file GLW_TRANSDETAIL
+            journalIds!=journalRegisterPgm!.propertyNames()
+            while journalIds!.hasMoreElements()
+                thisJournal$=journalIds!.nextElement()
+                registerAlias$=journalRegisterPgm!.getProperty(thisJournal$)
+
+                gltTransDetail_trip$=firm_id$+thisJournal$+pad(customer$,len(gltTransDetail.reference_01$),"L"," ")
+                if registerAlias$="ARR_CASHRECEIPTS"
+                    gltTransDetail_trip$=gltTransDetail_trip$+pad(ar_inv_no$,len(gltTransDetail.reference_03$),"L"," ")
+                    readky$="AO_JRN_REF0103"
+                else
+                    gltTransDetail_trip$=gltTransDetail_trip$+pad(ar_inv_no$,len(gltTransDetail.reference_02$),"L"," ")
+                    readky$="AO_JOURNAL_REFS"
+                endif
+                read(gltTransDetail_dev,key=gltTransDetail_trip$,knum=readky$,dom=*next)
+                while 1
+                    gltTransDetail_key$=key(gltTransDetail_dev,end=*break)
+                    if pos(gltTransDetail_trip$=gltTransDetail_key$)<>1 then break
+                    readrecord(gltTransDetail_dev)gltTransDetail$
+
+                    redim glwTransDetail$
+                    glwTransDetail.sys_info$=sys_info$
+                    glwTransDetail.firm_id$=gltTransDetail.firm_id$
+                    glwTransDetail.trns_date$=gltTransDetail.trns_date$
+                    glwTransDetail.gl_account$=gltTransDetail.gl_account$
+                    glwTransDetail.journal_id$=gltTransDetail.journal_id$
+                    glwTransDetail.gl_adt_no$=gltTransDetail.gl_adt_no$
+                    glwTransDetail.posting_year$=gltTransDetail.posting_year$
+                    glwTransDetail.posting_per$=gltTransDetail.posting_per$
+                    glwTransDetail.seq_no$=gltTransDetail.seq_no$
+                    glwTransDetail.reference_01$=gltTransDetail.reference_01$
+                    glwTransDetail.reference_02$=gltTransDetail.reference_02$
+                    glwTransDetail.reference_03$=gltTransDetail.reference_03$
+                    glwTransDetail.description$=gltTransDetail.description$
+                    if gltTransDetail.trans_amt>0 then
+                        glwTransDetail.debit_amt=gltTransDetail.trans_amt
+                        glwTransDetail.credit_amt=0
+                    else
+                        glwTransDetail.debit_amt=0
+                        glwTransDetail.credit_amt=abs(gltTransDetail.trans_amt)
+                    endif
+                    glwTransDetail.units=gltTransDetail.units
+                    writerecord(glwTransDetail_dev)glwTransDetail$
+                wend
+            wend
+
+            rem --- Query transactions for this Invoice in GLW_TRANSDETAIL
+                dim filter_defs$[3,2]
+                filter_defs$[1,0]="GLW_TRANSDETAIL.SYS_INFO"
+                filter_defs$[1,1]="='"+sys_info$+"'"
+                filter_defs$[1,2]="LOCK"
+                filter_defs$[2,0]="GLW_TRANSDETAIL.FIRM_ID"
+                filter_defs$[2,1]="='"+firm_id$+"'"
+                filter_defs$[2,2]="LOCK"
+                filter_defs$[3,0]="GLW_TRANSDETAIL.REFERENCE_01"
+                filter_defs$[3,1]="='"+customer$+"'"
+                filter_defs$[3,2]="LOCK"
+
+                call STBL("+DIR_SYP")+"bax_query.bbj",rd_gui_dev,rdInqWin!,"AR_INV_GL_TRANS","DEFAULT",rd_table_chans$[all],"",filter_defs$[all],"",artInvHdr_key$
+
+            rem --- Clear work file
+            call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glwTransDetail_dev,sys_info$+firm_id$,status
+        break
+        case default
+        break
+    swend
+
+    goto exit_prog
+
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       rd_table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+
+    return
+    
+rem --- Functions
+
+rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
+
+    def fnmask$(q1$,q2$)
+        if cvs(q1$,2)="" return ""
+        if q2$="" q2$=fill(len(q1$),"0")
+        if pos("E"=cvs(q1$,4)) goto alpha_mask
+:      else return str(-num(q1$,err=alpha_mask):q2$,err=alpha_mask)
+alpha_mask:
+        q=1
+        q0=0
+        while len(q2$(q))
+            if pos(q2$(q,1)="-()") q0=q0+1 else q2$(q,1)="X"
+            q=q+1
+        wend
+        if len(q1$)>len(q2$)-q0 q1$=q1$(1,len(q2$)-q0)
+        return str(q1$:q2$)
+    fnend
+
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",
+:       rd_msg_id$,
+:       rd_msg_tokens$[all],
+:       rd_msg_opt$,
+:       rd_table_chans$[all]
+
+    return
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+exit_prog:rem --- Exit Program
+
+    exit

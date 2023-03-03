@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custmast">B0AE4537C94866F0AF91493A5C8B7BCB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custmast">20230120</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custmast">20230120</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custmast">152944</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custmast">20230303</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custmast">20230303</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custmast">173542</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custmast"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custmast">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custmast"></DD_ATTR_DKNM>
@@ -1000,100 +1000,107 @@
 		<RECORD id="ddm_table_aopt.arm_custmast03">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast03">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast03">03</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast03">Invoice Detail Inquiry</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast03">IDTL</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast03">Invoice Inquiry</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast03">INVQ</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast03">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast04">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast04">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast04">04</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast04">Hard Copy</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast04">HCPY</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast04">Invoice Detail Report</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast04">IDTL</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast04">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast05">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast05">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast05">05</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast05">Order/Invoice History Inquiry</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast05">ORIV</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast05">Hard Copy</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast05">HCPY</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast05">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast06">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast06">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast06">06</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast06">Statement</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast06">STMT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast06">Order/Invoice History Report</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast06">ORIV</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast06">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast07">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast07">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast07">07</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast07">Sales History</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast07">SHST</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast07">Statement</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast07">STMT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast07">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast08">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast08">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast08">08</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast08">Customer Pricing</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast08">PRIC</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast08">Sales History</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast08">SHST</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast08">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast09">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast09">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast09">09</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast09">Credit Card &Responses</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast09">RESP</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast09">Customer Pricing</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast09">PRIC</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast09">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast10">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast10">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast10">10</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast10">Quotations</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast10">QUOT</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast10">F</DD_ATTR_AOPT_FM>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast10">Credit Card &Responses</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast10">RESP</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast10">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast11">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast11">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast11">11</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast11">Orders</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast11">ORDR</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast11">Quotations</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast11">QUOT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast11">F</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast12">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast12">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast12">12</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast12">Invoices</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast12">INVC</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast12">Orders</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast12">ORDR</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast12">F</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast13">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast13">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast13">13</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast13">Sales Tax Exemptions</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast13">XMPT</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast13">M</DD_ATTR_AOPT_FM>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast13">Invoices</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast13">INVC</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast13">F</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast14">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast14">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast14">14</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast14">Refresh Aging</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast14">AGNG</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast14">Sales Tax Exemptions</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast14">XMPT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast14">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast15">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast15">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast15">15</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast15">Report Control</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast15">RCTL</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast15">Refresh Aging</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast15">AGNG</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast15">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.arm_custmast16">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast16">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast16">16</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast16">Payment History</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast16">PHST</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast16">Report Control</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast16">RCTL</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast16">M</DD_ATTR_AOPT_FM>
+		</RECORD>
+		<RECORD id="ddm_table_aopt.arm_custmast17">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.arm_custmast17">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.arm_custmast17">17</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.arm_custmast17">Payment History</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.arm_custmast17">PHST</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.arm_custmast17">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -1121,6 +1128,10 @@
 		<RECORD id="ddm_table_cpro.arm_custmastaopt-invc">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custmastaopt-invc">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custmastaopt-invc">AOPT-INVC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custmastaopt-invq">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custmastaopt-invq">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custmastaopt-invq">AOPT-INVQ</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.arm_custmastaopt-ordr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custmastaopt-ordr">ARM_CUSTMAST    </DD_TABLE_ALIAS>
@@ -1305,10 +1316,6 @@
 		<RECORD id="ddm_table_opts.arm_custmastn">
 			<DD_TABLE_ALIAS id="ddm_table_opts.arm_custmastn">ARM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.arm_custmastn">N</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_table_opts.arm_custmasto">
-			<DD_TABLE_ALIAS id="ddm_table_opts.arm_custmasto">ARM_CUSTMAST    </DD_TABLE_ALIAS>
-			<DD_ATTR_OPTS id="ddm_table_opts.arm_custmasto">O</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.arm_custmastp">
 			<DD_TABLE_ALIAS id="ddm_table_opts.arm_custmastp">ARM_CUSTMAST    </DD_TABLE_ALIAS>

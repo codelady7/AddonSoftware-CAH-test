@@ -8,7 +8,8 @@ enter rd_gui_dev,rdWindow!,rd_field_tvar$,rd_ddm_drill_defs$,rd_drill_pfx$,rd_ta
     dim info$[20]
     call stbl("+DIR_PGM")+"adc_application.aon","OP",info$[all]
 	op$=info$[20]
-    found=0
+    op_found=0
+    ar_found=0
     
     if op$="Y"
         num_files=1
@@ -19,27 +20,46 @@ enter rd_gui_dev,rdWindow!,rd_field_tvar$,rd_ddm_drill_defs$,rd_drill_pfx$,rd_ta
         
         opt_invhdr=num(open_chans$[1])
         dim opt_invhdr$:open_tpls$[1]
-        readrecord(opt_invhdr,key=rd_drill_pfx$,knum="AO_CUST_INV",err=*next)opt_invhdr$;found=1
-        if opt_invhdr.trans_status$<>"U" then dim opt_invhdr$:fattr(opt_invhdr$);found=0;rem shouldn't happen - precautionary with new RTP mods
-        rem --- if this invoice is in opt_invhdr, run Hist Inv Inquiry
-        rem --- otherwise, launch query to view archived AR Simple Invoices
+        readrecord(opt_invhdr,key=rd_drill_pfx$,knum="AO_CUST_INV",err=*next)opt_invhdr$;op_found=1
+        if opt_invhdr.trans_status$<>"U" then dim opt_invhdr$:fattr(opt_invhdr$);op_found=0;rem shouldn't happen - precautionary with new RTP mods
+
 
         num_files=1
         dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
         open_tables$[1]="@"+"OPT_INVHDR",open_opts$[1]="CX"
         gosub open_tables;rem close OPT_INVHDR
     endif
+    
+    if !op_found
+        num_files=1
+        dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+        open_tables$[1]="ART_INVHDR",open_opts$[1]="OTA@"
+        
+        gosub open_tables
+        
+        art_invhdr=num(open_chans$[1])
+        dim art_invhdr$:open_tpls$[1]
+        readrecord(art_invhdr,key=rd_drill_pfx$+"00",err=*next)art_invhdr$;ar_found=1
 
-    if found=1
+        num_files=1
+        dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+        open_tables$[1]="@"+"ART_INVHDR",open_opts$[1]="CX"
+        gosub open_tables;rem close ART_INVHDR
+    endif
+ 
+
+    rem --- if this an OP invoice run OP Inv Hist Inquiry
+    rem --- otherwise (OP not installed or invoice not from OP), run AR Inv Hist Inquiry (ar_found *should* always be 1)
+
+    if op_found
         dim dflt_data$[2,1]
         sel_key$=opt_invhdr.firm_id$+opt_invhdr.trans_status$+opt_invhdr.ar_type$+opt_invhdr.customer_id$+opt_invhdr.ar_inv_no$
         call stbl("+DIR_SYP")+"bam_run_prog.bbj","OPT_INVHDR",stbl("+USER_ID"),"",sel_key$,rd_table_chans$[all],"",dflt_data$[all]
     else
-        dim filter_defs$[1,2]
-        filter_defs$[1,0]="ADS_DOCUMENTS.DOC_KEYWORDS"
-        filter_defs$[1,1]="LIKE '%Invoice: "+rd_drill_pfx$(len(rd_drill_pfx$)-6,7)+"%'"
-        filter_defs$[1,2]="LOCK"
-        call STBL("+DIR_SYP")+"bax_query.bbj",rd_gui_dev, rdWindow!,"BAR_DOCUMENTS","DEFAULT",rd_table_chans$[all],sel_key$,filter_defs$[all]       
+        if ar_found
+            sel_key$=art_invhdr.firm_id$+art_invhdr.ar_type$+art_invhdr.ar_inv_no$+art_invhdr.customer_id$
+            call stbl("+DIR_SYP")+"bam_run_prog.bbj","ART_INVHDR",stbl("+USER_ID"),"",sel_key$,rd_table_chans$[all],"",dflt_data$[all]
+        endif
     endif
 
     goto exit_prog
