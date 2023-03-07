@@ -5410,6 +5410,16 @@
 	</barista_record>
 	<barista_record>
 		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>d291adba-07dc-4d39-91ad-df38cb1dbf88</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Archived AR Invoice Inquiry</MENU_DESC>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>AR </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
 		<MENUITEM_ID>d48d4051-60d7-4f24-8341-dc8d14d8efc6</MENUITEM_ID>
 		<LANG_ID>DEU</LANG_ID>
 		<NO_SHOW>Y</NO_SHOW>
