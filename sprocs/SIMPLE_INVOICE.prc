@@ -49,7 +49,7 @@ files$[4]="ars_cc_custpmt",ids$[4]="ARS_CC_CUSTPMT"
 call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 if status then
     seterr 0
-    x$=stbl("+THROWN_ERR","TRUE")   
+    x$=stbl("+THROWN_ERR","TRUE")
     throw "File open error.",1001
 endif
 
@@ -64,7 +64,7 @@ dim arm01$:templates$[1]
 dim ars_report$:templates$[2]
 dim arc_termcode$:templates$[3]
 dim ars_cc_custpmt$:templates$[4]
-    
+
 rem --- get payment_url for the cash_rec_cd used for customer payments (only one record allowed at present)
 
 readrecord(ars_cc_custpmt,key=firm_id$,dom=*next)
@@ -122,7 +122,7 @@ format_address_block:
 	read record(arm01,key=firm_id$ + customer$)arm01$
     address$=arm01.addr_line_1$+arm01.addr_line_2$+arm01.addr_line_3$+arm01.addr_line_4$+arm01.city$+arm01.state_code$+arm01.zip_code$
     call pgmdir$+"adc_address.aon",address$,30,5,9,30
-    
+
 return
 
 rem --- format company and remit-to addresses
@@ -143,7 +143,7 @@ format_return_remit_addresses:
     ar_phone_no$=str(cvs(ars_report.phone_no$,2):phone_mask$)
     ar_fax_no$=cvs(ars_report.fax_no$,2)
     if ar_fax_no$<>"" then ar_fax_no$=str(ar_fax_no$:phone_mask$)
-    
+
 return
 
 rem --- format terms code
@@ -152,10 +152,10 @@ format_terms_code:
     arc_termcode.firm_id$=firm_id$
     arc_termcode.record_id_a$="A"
     arc_termcode.code_desc$="Undefined"
-    
+
     find record (arc_termcode,key=arc_termcode.firm_id$+arc_termcode.record_id_a$+terms_cd$,dom=*next)arc_termcode$
     terms_desc$=cvs(arc_termcode.code_desc$,3)
-    
+
 return
 
 rem --- Date/time handling functions
@@ -192,10 +192,8 @@ alpha_mask:
 sproc_error:rem --- SPROC error trap/handler
     rd_err_text$="", err_num=err
     if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
-    x$=stbl("+THROWN_ERR","TRUE")   
+    x$=stbl("+THROWN_ERR","TRUE")
     throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
 
 std_exit:
 end
-
-

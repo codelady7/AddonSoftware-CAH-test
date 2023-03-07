@@ -1,0 +1,500 @@
+rem --- Print Archived Simple Invoice
+rem --- Program arr_invoices_arc
+
+rem --- AddonSoftware
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+rem --- All Rights Reserved
+
+    setesc std_error
+    seterr std_error
+
+    use ::bbjasper.bbj::BBJasperReport
+    use ::bbjasper.bbj::BBJasperViewerWindow
+    use ::bbjasper.bbj::BBJasperViewerControl
+
+    use ::ado_rptControl.src::ReportControl
+    use ::ado_func.src::func
+    use ::ado_util.src::util
+    use ::sys/prog/bao_utilities.bbj::BarUtils
+
+	declare BBJasperReport BBjReport!
+    
+    params! = Option!.getOptionMap()
+		
+    ScreenSize!   = bbjAPI().getSysGui().getSystemMetrics().getScreenSize()
+    screen_width  = ScreenSize!.width - 200; rem keep it in the MDI w/ no scroll bars
+    screen_height = ScreenSize!.height - 100
+
+rem --- Retrieve the program path
+
+    pgmdir$=stbl("+DIR_PGM",err=*next)
+
+rem --- Set document Directory
+
+    docdir$=util.resolvePathStbls(stbl("+DOC_DIR_PDF",err=*next))
+    mkdir docdir$,err=*next
+
+rem --- Retrieve sysinfo data
+
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    firm_id$=sysinfo.firm_id$
+
+    milestone=50
+    milestone=num(stbl("+MILESTONE",err=*next),err=*next)
+
+rem --- Get logo to go on form; start w/ company logo, fall back to default logo from config if no company logo specified
+
+    logo_filename$=""
+    logo_filename$=func.getCompanyLogo()
+    if logo_filename$=""
+        logo_file$=stbl("+CUST_IMAGES",err=*next)+stbl("+FORM_LOGO",err=*next)
+        if logo_file$<>""
+            logo_filename$=BBjAPI().getFileSystem().resolvePath(util.resolvePathStbls(logo_file$,err=*next))
+        endif
+    endif
+
+rem --- Set Report Name & Subreport directory
+
+    reportDir$ = stbl("+DIR_REPORTS",err=*next)   
+    temp = unt
+    open (temp)reportDir$
+    reportDir$ = fid(temp)(9)+"/"
+    close (temp)
+    reportBaseName$ = "SimpleInvoice"
+    filename$ = reportDir$ + reportBaseName$ + ".jasper"
+
+    declare BBJasperReport report!
+
+rem --- Open/Lock files
+
+    files=2,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="art_invhdr_arc",ids$[1]="ART_INVHDR_ARC"
+    files$[2]="ars_cc_custpmt",ids$[2]="ARS_CC_CUSTPMT"
+
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
+    if status goto std_exit
+
+    art_invhdr_arc=channels[1]
+    ars_cc_custpmt=channels[2]
+
+rem --- Dimension string templates
+
+    dim art_invhdr_arc$:templates$[1]
+	dim ars_cc_custpmt$:templates$[2]
+
+rem --- Assign form input values to local variables
+
+    send_via_rpt_ctl$=option!.getOptionData("PICK_CHECK")
+    invoice$=option!.getOptionData("AR_INV_NO")
+    message$=option!.getOptionData("PICK_TEXT")
+
+    rptctl_alias$="ARR_INVOICES";rem using same rpt ctl record as simple invoices, so you don't need to enter in every customer twice (once for simple invoices, once for on-demand)
+
+    call pgmdir$+"adc_getmask.aon","CUSTOMER_ID","","","",m0$,0,customer_size
+    call pgmdir$+"adc_getmask.aon","","AR","A","",m1$,0,m1
+    call pgmdir$+"adc_getmask.aon","","GL","U","",m2$,0,m2
+
+    emailFax! = BBjAPI().makeVector()
+
+rem --- get payment_url for the cash_rec_cd used for customer payments (only one record allowed at present)
+
+	readrecord(ars_cc_custpmt,key=firm_id$,dom=*next)
+	while 1
+		redim ars_cc_custpmt$
+		readrecord(ars_cc_custpmt,end=*break)ars_cc_custpmt$
+		if ars_cc_custpmt.firm_id$<>firm_id$ then break
+		if ars_cc_custpmt.allow_cust_cc$="Y" then break
+	wend
+
+rem --- See if this document is set up in Addon Report Control
+
+    reportControl!=new ReportControl()
+    reportControl!.setDocExtension("pdf")
+    rpt_ctl$=reportControl!.getReportControl(rptctl_alias$)
+    rpt_ctl$=iff(rpt_ctl$="","NO","YES")
+    rpt_id$=iff(rpt_ctl$="YES",reportControl!.getReportID(),"")
+    rpt_logo_file$=iff(rpt_ctl$="YES",reportControl!.getLogoFile(),"")
+    logo_filename$=iff(rpt_logo_file$="",logo_filename$,rpt_logo_file$);rem doc-specific logo supersedes default or company logo
+
+rem --- Read the specified Invoice Header from the art_invhdr_arc (archived Simple Invoices) file
+
+    read record (art_invhdr_arc,key=firm_id$+invoice$,end=*break) art_invhdr_arc$
+    if art_invhdr_arc.firm_id$<>firm_id$ or art_invhdr_arc.ar_inv_no$<>invoice$ then break
+
+rem --- Make Document Archive Record and Get Document ID
+
+    rep_date$=date(0:stbl("+DATE_MASK"))
+    rep_date_stamp$=date(0:"%Yd%Mz%Dz")
+    rep_time$=date(0:"%hz:%mz %p")
+    rep_time_stamp$=date(0:"%Hz%mz%sz")
+
+    new_doc_id$=""
+    new_doc_name$=""
+    doc_name$=reportBaseName$+"_"+art_invhdr_arc.customer_id$
+    doc_keywords$="AR Archived Invoice: "+art_invhdr_arc.ar_inv_no$+", generated: "+fndate$(art_invhdr_arc.inv_date$)
+
+    rd_source_alias$=option!.getAlias()
+    rd_source_type$="O"
+    rd_doc_source$="E"
+    rd_doc_ext$="PDF"
+    rd_source_id$="C"
+    rd_source_ref$=art_invhdr_arc.customer_id$
+    rd_doc_keywords$=doc_keywords$
+
+rem --- Get Next Document Number and update Document Audit for individual pdf
+
+    call stbl("+DIR_SYP")+"bas_sequences.bbj","DOC_NO",new_doc_id$,rd_table_chans$[all] 
+    new_doc_name$=new_doc_id$+"_"+doc_name$+".pdf"        
+    
+    call stbl("+DIR_SYP")+"bac_documents.bbj",new_doc_id$,rep_date_stamp$,rep_time_stamp$,rd_doc_source$,rd_doc_ext$,docdir$,
+:           rd_source_type$,rd_source_alias$,rd_source_id$,rd_source_ref$,rd_table_chans$[all],"",new_doc_name$,doc_name$,doc_keywords$
+
+rem --- Use ReportControl object to see if customer wants print, email, or fax
+
+    add_to_print_report=1
+    if rpt_ctl$="YES"     
+        found=reportControl!.getRecipientInfo(rpt_id$,art_invhdr_arc.customer_id$,"")
+        if found         
+            if reportControl!.getPrintYN()<>"Y" then add_to_print_report=0
+            if reportControl!.getEmailYN()="Y" or reportControl!.getFaxYN()="Y"
+                emailFax!.add(rpt_id$)
+                emailFax!.add(art_invhdr_arc.customer_id$)
+                emailFax!.add(new_doc_id$)
+                url$=cvs(ars_cc_custpmt.payment_url$,3)
+                if url$<>"" then
+                    url_message$=Translate!.getTranslation("AON_PAY_ONLINE")+" "+url$
+                    if reportControl!.getEmailYN()="Y" then
+                        AdmRptctlRcp!=reportControl!.getAdmRptctlRcp()
+                        email$=AdmRptctlRcp!.getFieldAsString("EMAIL_MESSAGE")
+                        email$=cvs(email$,2)+$0A$+url_message$
+                        AdmRptctlRcp!.setFieldValue("EMAIL_MESSAGE",email$)
+                        reportControl!.setAdmRptctlRcp(AdmRptctlRcp!)
+                    endif
+                    if reportControl!.getFaxYN()="Y" then
+                        AdmRptctlRcp!=reportControl!.getAdmRptctlRcp()
+                        fax$=AdmRptctlRcp!.getFieldAsString("FAX_MESSAGE")
+                        fax$=cvs(fax$,2)+$0A$+url_message$
+                        AdmRptctlRcp!.setFieldValue("FAX_MESSAGE",fax$)
+                        reportControl!.setAdmRptctlRcp(AdmRptctlRcp!)
+                    endif
+                endif
+            endif
+        endif
+    endif
+
+rem --- Document Output Report Parameters
+
+    params!.put("DOC_NO",new_doc_id$)
+    params!.put("DATE_REP",rep_date$+"  "+rep_time$)
+
+rem --- Other params
+
+    params!.put("BARISTA_WD",dir(""))
+    params!.put("LOGO_FILE",logo_filename$)
+    params!.put("FIRM_ID",firm_id$)
+    params!.put("AR_INV_NO",art_invhdr_arc.ar_inv_no$)
+    params!.put("CUSTOMER_ID",art_invhdr_arc.customer_id$)
+    params!.put("MESSAGE",message$)
+    params!.put("AMT_MASK",m1$)
+    params!.put("CUST_MASK",m0$)
+    params!.put("CUST_SIZE",str(customer_size))
+    params!.put("UNIT_MASK",m2$)
+    params!.put("TERMS_CD",art_invhdr_arc.ar_terms_code$)
+    params!.put("INVOICE_DATE",fndate$(art_invhdr_arc.inv_date$))
+    params!.put("ARCHIVED","Y");rem --- Y if creating archived invoice, and will cause the detail sproc to open art_invdet_arc instead of are-15
+
+rem --- invoke jasper
+
+    locale$ = stbl("!LOCALE")
+    locale$ = stbl("+USER_LOCALE",err=*next)    
+
+    params!.put("MESSAGE",message$)
+    report! = BarUtils.getBBJasperReport(filename$)
+    report!.putParams(params!)
+    report!.setLocale(locale$)
+    rc=report!.fill(1)
+    if rc<>BBJasperReport.getSUCCESS() then goto close_win
+
+    rem --- get a pdf path from +DOC_DIR_PDF
+    rem --- this will eventually be replaced with code to get output formats/types based on doc group and/or print settings
+    gosub doc_path
+
+    repTitle$=doc_name$
+    rd_doc_name$=new_doc_name$
+    rd_doc_id$=new_doc_id$
+
+    gosub exportToPDF
+
+rem --- bring up jasper viewer
+
+    declare BBJasperViewerWindow viewerWindow!
+    declare BBjTopLevelWindow bbjWindow!
+
+rem --- create Jasper viewer; auto-save to doc archives
+    
+    viewerWindow! = new BBJasperViewerWindow(report!,5,5,screen_width,screen_height,repTitle$,$00080093$)
+    viewerControl! = viewerWindow!.getViewerControl()
+    viewerControl!.setGoogleDefaultDocument(repTitle$)
+    viewerControl!.setDefaultSaveFolder(rd_doc_path$)
+    viewerControl!.setDefaultSaveFile(repTitle$)
+    viewerControl!.setFitWidth()
+
+    rem --- set callbacks for when user presses save or email buttons in jasper viewer
+    rem --- note: saveAs or saveAsGDoc not intercepted, just regular save
+    saveMenuButton! = viewerControl!.getControl(BBJasperViewerControl.getSAVE_MENU_BUTTON_NAME())
+    saveMenuButton!.setCallback(BBjMenuButton.ON_BUTTON_PUSH ,"OnSaveMenuButton")
+
+    savMenuItem! = viewerControl!.getControl(BBJasperViewerControl.getSAVE_MENU_ITEM_NAME())
+    savMenuItem!.setCallback(BBjMenuItem.ON_POPUP_ITEM_SELECT,"OnSaveMenuButton")
+
+    EmailToolButton! = viewerControl!.getControl(BBJasperViewerControl.getEMAIL_TOOL_BUTTON_NAME())
+    EmailToolButton!.setCallback(BBjMenuButton.ON_TOOL_BUTTON_PUSH ,"OnEmailToolButton")
+
+    viewerWindow!.setReleaseOnClose(0)
+    viewerWindow!.show(0)
+
+    bbjWindow!= viewerWindow!.getViewerWindow()
+    bbjWindow!.setCallback(bbjWindow!.ON_CLOSE,"exit_viewer",err=exit_viewer)
+    
+rem --- Event Control
+
+    process_events,err=*same
+
+    release
+
+ document_whse:rem --- Write record to Barista document warehouse (ads_documents)
+
+    call stbl("+DIR_SYP")+"bac_documents.bbj",
+:       rd_doc_id$,
+:       rep_date_stamp$,
+:       rep_time_stamp$,
+:       rd_doc_source$,
+:       rd_doc_ext$,
+:       rd_doc_path$,
+:       rd_source_type$,
+:       rd_source_alias$,
+:       rd_source_id$,
+:       rd_source_ref$,
+:       rd_table_chans$[all],
+:       rd_archive_action$,
+:       rd_doc_name$,
+:       rep_title$,
+:       rd_doc_keywords$
+
+    return
+
+doc_path:rem --- Get Document Path
+rem --- forcing a pdf save to this location for release 13.03
+rem --- eventually, want to make the save functionality mimic (as closely as possible) Barista
+rem --- so it can save based on user's doc group and doc settings
+
+    if rd_doc_path$="" then
+        rd_doc_path$=dsk("")+dir("")
+        rd_doc_path$=BBjAPI().getFileSystem().resolvePath(util.resolvePathStbls(stbl("+DOC_DIR_PDF",err=*next)),err=*next)+"/"
+        mkdir rd_doc_path$,err=*next
+    endif
+
+    return
+
+OnSaveMenuButton:
+rem --- save save and display confirmation dialog
+
+    show_save_dlg$="YES"
+ 
+exportToPDF:
+rem --- exportToPDF and record in doc warehouse
+
+    if rd_doc_path$<>"" and repTitle$<>""
+        rd_doc_ext$="PDF"
+        rep_title$=repTitle$
+        rd_source_id$="C"
+        rd_source_ref$=""
+        rd_doc_keywords$=""
+        report!.exportToPDF(BBjAPI().FALSE, rd_doc_path$+rd_doc_name$)
+        gosub document_whse
+    endif
+
+    if show_save_dlg$="YES"
+        msg_id$="DOC_OUTPUT_COMP"
+        gosub disp_message
+        show_save_dlg$=""
+    endif
+    return    
+
+OnEmailToolButton:rem --- Add document to fax/email queue
+rem --- force exportToPDF first, in case it hasn't already been saved
+    
+    rem --- force exportToPDF in case not already saved
+    gosub exportToPDF
+
+    if rd_doc_id$<>"" and rd_doc_ext$<>""
+        call stbl("+DIR_SYP")+"bac_faxemail_jasper.bbj",rd_doc_id$,rd_doc_ext$,rd_table_chans$[all]
+    endif
+
+    return
+
+exit_viewer:
+    
+    if emailFax!.size()
+        msg_id$ = "CONF_RPTCTL"
+        gosub disp_message
+        if msg_opt$="Y"
+            for email_fax=0 to emailFax!.size()-1 step 3
+                reportControl!.addToDocQueue(emailFax!.get(email_fax),emailFax!.get(email_fax+1),"",emailFax!.get(email_fax+2))    
+            next email_fax
+        endif
+    endif    
+    
+close_win:rem --- Viewer Window Closed
+    
+    reportControl!.destroy(err=*next)
+    reportControl!=null()
+    viewerWindow!.destroy(err=*next)
+    if tcb(13) then exit
+    release
+
+rem --- Functions
+
+rem --- fntestvalue: Return maximum numeric value for a given mask
+
+    def fntestvalue(q$)
+        q1$=""
+        for q=1 to len(q$)
+            if pos(q$(q,1)="#0") q1$=q1$+"9"
+            if q$(q,1)="." q1$=q1$+"."
+        next q
+        q=num(q1$)
+        return q
+    fnend
+
+rem --- Functions used to retrieve form values
+
+    def fnstr_pos(q0$,q1$,q1)=int((pos(q0$=q1$,q1)+q1-1)/q1)
+    def fnget_rec_date$(q0$)=rd_rec_data$[fnstr_pos(cvs(q0$,1+2+4)+"."+cvs(q0$,1+2+4),rd_rec_data$[0,0],40),0]
+    def fnget_fld_data$(q0$,q1$)=cvs(rd_rec_data$[fnstr_pos(cvs(q0$,1+2+4)+"."+cvs(q1$,1+2+4),rd_rec_data$[0,0],40),0],2)
+
+rem --- Date/time handling functions
+
+    def fndate$(q$)
+        q1$=""
+        q1$=date(jul(num(q$(1,4)),num(q$(5,2)),num(q$(7,2)),err=*next),err=*next)
+        if q1$="" q1$=q$
+        return q1$
+    fnend
+
+    def fnyy$(q$)=q$(3,2)
+    def fnclock$(q$)=date(0:"%hz:%mz %p")
+    def fntime$(q$)=date(0:"%Hz%mz")
+
+rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
+
+    def fnmask$(q1$,q2$)
+        if cvs(q1$,2)="" return ""
+        if q2$="" q2$=fill(len(q1$),"0")
+        if pos("E"=cvs(q1$,4)) goto alpha_mask
+:      else return str(-num(q1$,err=alpha_mask):q2$,err=alpha_mask)
+alpha_mask:
+        q=1
+        q0=0
+        while len(q2$(q))
+            if pos(q2$(q,1)="-()") q0=q0+1 else q2$(q,1)="X"
+            q=q+1
+        wend
+        if len(q1$)>len(q2$)-q0 q1$=q1$(1,len(q2$)-q0)
+        return str(q1$:q2$)
+    fnend
+
+rem #include disp_message.src
+
+disp_message: rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,rd_table_chans$[all]
+    return
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_missing_params.src
+
+std_missing_params: rem --- Standard missing parameter handler (15Apr2006)
+
+    rd_err_text$=""
+    if tcb(5)<>0 and pgm(-1)=pgm(-2) rd_err_text$=pgm(tcb(5))
+    pgmdir$=stbl("+DIR_PGM",err=std_missing_params_exit)
+    call pgmdir$+"adc_noparams.aon",err=std_missing_params_exit,pgm(-2),str(tcb(5)),str(err),rd_err_text$,rd_err_act$
+std_missing_params_exit: 
+    master_user$=cvs(stbl("+MASTER_USER",err=std_missing_params_release),2)
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=std_missing_params_release)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=std_missing_params_release)
+    if cvs(sysinfo.user_id$,2)=master_user$ escape
+std_missing_params_release: 
+    status=999
+    if pgm(-1)<>pgm(-2) exit
+    release
+
+rem #endinclude std_missing_params.src
+
+rem #include std_end.src
+
+std_exit: rem --- Standard program end (01Mar2006)
+
+    if num(batch_no$)<>0
+        unlock_key$=firm_id$+stbl("+PROCESS_ID")+stbl("+BATCH_NO")
+        lock_status$=""
+        call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHES",unlock_key$,"X","",rd_table_chan,rd_table_chans$[all],lock_status$
+    endif
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
+
+std_exit_no_report: 
+
+    if num(batch_no$)<>0
+        unlock_key$=firm_id$+stbl("+PROCESS_ID")+stbl("+BATCH_NO")
+        lock_status$=""
+        call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHES",unlock_key$,"X","",rd_table_chan,rd_table_chans$[all],lock_status$
+    endif
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    release
+
+rem #endinclude std_end.src
+
+    end
+

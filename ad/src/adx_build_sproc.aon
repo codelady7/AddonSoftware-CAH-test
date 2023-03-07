@@ -714,7 +714,7 @@ rem --- now add them back (i.e., drop, then add, in case anything has changed)
 
     sproc_vw_name$="SIMPLE_INVOICE_DTL"
 	sqlprep$="CREATE PROCEDURE SIMPLE_INVOICE_DTL"
-    sqlprep$=sqlprep$+"(FIRM_ID VARCHAR(2) IN, AR_INV_NO VARCHAR(7) IN, AMT_MASK VARCHAR(20) IN, UNIT_MASK VARCHAR(20) IN, BARISTA_WD VARCHAR(50) IN) "
+    sqlprep$=sqlprep$+"(FIRM_ID VARCHAR(2) IN, AR_INV_NO VARCHAR(7) IN, AMT_MASK VARCHAR(20) IN, UNIT_MASK VARCHAR(20) IN, ARCHIVED VARCHAR(1) IN, BARISTA_WD VARCHAR(50) IN) "
     sqlprep$=sqlprep$+"'"+sproc_path$+"SIMPLE_INVOICE_DTL.prc' '"+barista_cfg_path$+"barista.cfg' "
     sqlprep$=sqlprep$+"RESULT_SET "
     sqlprep$=sqlprep$+"{_begin_}{_end_} 'AR Simple Invoice Detail'"

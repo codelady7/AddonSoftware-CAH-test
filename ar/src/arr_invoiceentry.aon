@@ -52,7 +52,7 @@ rem --- Assign form input values to local variables
 
 rem --- Open/Lock files
 
-    files=11,begfile=1,endfile=files
+    files=13,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="ars_params",ids$[1]="ARS_PARAMS"
     files$[2]="are-05",ids$[2]="ARE_INVHDR"
@@ -64,6 +64,9 @@ rem --- Open/Lock files
     files$[8]="art-01",ids$[8]="ART_INVHDR"
     files$[9]="art-11",ids$[9]="ART_INVDET"
     files$[11]="arc_distcode",ids$[11]="ARC_DISTCODE"
+    files$[12]="art_invhdr_arc",ids$[12]="ART_INVHDR_ARC";rem ER 10595
+    files$[13]="art_invdet_arc",ids$[13]="ART_INVDET_ARC"
+
     if num(batch_no$)=0 then options$[2]="L";rem lock if not batching.CAH
     if num(batch_no$)=0 then options$[3]="L";rem lock if not batching.CAH
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
@@ -79,6 +82,8 @@ rem --- Open/Lock files
     art01_dev=channels[8]
     art11_dev=channels[9]
     arc_distcode_dev=channels[11]
+    art_invhdr_arc=channels[12]
+    art_invdet_arc=channels[13]
 
 rem --- Dimension string templates
 

@@ -20,6 +20,7 @@
 	<parameter name="CUSTOMER_ID" class="java.lang.String"/>
 	<parameter name="TERMS_CD" class="java.lang.String"/>
 	<parameter name="UNIT_MASK" class="java.lang.String"/>
+	<parameter name="ARCHIVED" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[CALL SIMPLE_INVOICE($P{FIRM_ID},$P{AMT_MASK},$P{CUST_MASK},$P{CUST_SIZE},$P{CUSTOMER_ID},$P{TERMS_CD},$P{UNIT_MASK},$P{AR_INV_NO},$P{BARISTA_WD})]]>
 	</queryString>
@@ -352,6 +353,9 @@
 				<subreportParameter name="UNIT_MASK">
 					<subreportParameterExpression><![CDATA[$P{UNIT_MASK}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="ARCHIVED">
+					<subreportParameterExpression><![CDATA[$P{ARCHIVED}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="TOT_PRICE" toVariable="TOT_PRICE"/>
 				<subreportExpression><![CDATA["SimpleInvoiceDtl.jasper"]]></subreportExpression>
@@ -377,7 +381,7 @@
 				<textFieldExpression><![CDATA[$F{REMIT3}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField" x="195" y="42" width="360" height="15" forecolor="#646464" backcolor="#FFFFFF" uuid="3a0fc2b1-8278-4ef9-82c2-846f71d0f3dc">
+				<reportElement key="textField" x="195" y="57" width="360" height="15" forecolor="#646464" backcolor="#FFFFFF" uuid="3a0fc2b1-8278-4ef9-82c2-846f71d0f3dc">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
@@ -389,7 +393,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Serif" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Generated on " + new SimpleDateFormat("EEEE, MMM dd, yyyy").format(new java.util.Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Created on " + new SimpleDateFormat("EEEE, MMM dd, yyyy").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="555" height="20" uuid="1aca5b35-da78-483a-aff9-21e76ab4c146"/>
@@ -435,7 +439,7 @@
 				<textFieldExpression><![CDATA[$F{REMIT1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="480" y="57" width="60" height="15" forecolor="#646464" uuid="fa7ca738-6fc9-49a9-880c-7102a3243371">
+				<reportElement x="481" y="72" width="60" height="15" forecolor="#646464" uuid="fa7ca738-6fc9-49a9-880c-7102a3243371">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -444,7 +448,7 @@
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="540" y="57" width="14" height="15" forecolor="#646464" uuid="8789545f-f47a-49d7-83ed-db86b807e3be">
+				<reportElement x="541" y="72" width="14" height="15" forecolor="#646464" uuid="8789545f-f47a-49d7-83ed-db86b807e3be">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -469,6 +473,16 @@
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AON_PAY_ONLINE}+" "+$F{PAYMENT_URL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="413" y="41" width="142" height="15" forecolor="#646464" uuid="87be4899-e9d5-4b6b-bfe4-c4c557cb4918">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$P{ARCHIVED}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Serif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Generated from Archived History"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

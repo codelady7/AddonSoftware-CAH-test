@@ -20,6 +20,7 @@ firm_id$ = sp!.getParameter("FIRM_ID")
 ar_inv_no$ = sp!.getParameter("AR_INV_NO")
 amt_mask$ = sp!.getParameter("AMT_MASK")
 unit_mask$ = sp!.getParameter("UNIT_MASK")
+archived$ = sp!.getParameter("ARCHIVED")
 barista_wd$ = sp!.getParameter("BARISTA_WD")
 
 chdir barista_wd$
@@ -32,9 +33,13 @@ rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
 
 rem --- open files
 
-files=3,begfile=1,endfile=files
+files=1,begfile=1,endfile=files
 dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
-files$[1]="are-15",ids$[1]="ARE_INVDET"
+if archived$="Y"
+    files$[1]="art_invdet_arc",ids$[1]="ART_INVDET_ARC"
+else
+    files$[1]="are-15",ids$[1]="ARE_INVDET"
+endif
 
 call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 if status then

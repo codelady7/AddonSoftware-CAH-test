@@ -60,8 +60,10 @@ rem --- Skip voided invoices
                 read record (are15_dev) are15a$
                 extension=extension+are15a.ext_price
                 qty=qty+are15a.units
+                writerecord(art_invdet_arc)are15a$
                 remove (are15_dev,key=k$)
             wend
+            writerecord(art_invhdr_arc)are05a
             remove (are05_dev,key=are05a_key$)
             continue
           endif
@@ -112,6 +114,7 @@ rem --- Read the next Invoice Detail (are-15) record
                 read record (are15_dev) are15a$
                 extension=extension+are15a.ext_price
                 qty=qty+are15a.units
+                writerecord(art_invdet_arc)are15a$
                 remove (are15_dev,key=k$)
           wend
 
@@ -286,6 +289,7 @@ rem --- Update Last Invoice Date, Sales and High Credit
 
 rem --- Delete Invoice Header (are-05) record and loop back for the next one
 
+          writerecord(art_invhdr_arc)are05a$
           remove (are05_dev,key=are05a_key$)
     wend
 

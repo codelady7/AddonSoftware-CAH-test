@@ -269,6 +269,7 @@ rem --- Read next Invoice Header (are-05) record
         params!.put("RESTART",restart$)
         params!.put("RESTART_INVOICE",restart_invoice$)
         params!.put("COPIES",str(copies))
+        params!.put("ARCHIVED","");rem --- Y if creating archived invoice, and will cause the detail sproc to open art_invdet_arc instead of are-15 (ER 10595)
 
     rem --- invoke jasper
 
