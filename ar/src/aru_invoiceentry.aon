@@ -63,7 +63,7 @@ rem --- Skip voided invoices
                 writerecord(art_invdet_arc)are15a$
                 remove (are15_dev,key=k$)
             wend
-            writerecord(art_invhdr_arc)are05a
+            writerecord(art_invhdr_arc)are05a$
             remove (are05_dev,key=are05a_key$)
             continue
           endif
