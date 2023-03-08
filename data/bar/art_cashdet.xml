@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.art_cashdet">5769F0DF31B58AE589FCA73B673F9E18</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.art_cashdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.art_cashdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.art_cashdet">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.art_cashdet">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.art_cashdet">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.art_cashdet">20220815</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.art_cashdet">20230307</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.art_cashdet">122404</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.art_cashdet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.art_cashdet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.art_cashdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.art_cashdet"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.art_cashdet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.art_cashdet">T</DD_ATTR_FTYP>
@@ -153,6 +153,13 @@
 			<DD_KEY_DESC id="ddm_keys.art_cashdet01">Customer</DD_KEY_DESC>
 			<DD_KEY_ID id="ddm_keys.art_cashdet01">AO_CUST         </DD_KEY_ID>
 			<DD_KEY_AUTO_GEN id="ddm_keys.art_cashdet01"></DD_KEY_AUTO_GEN>
+		</RECORD>
+		<RECORD id="ddm_keys.art_cashdet02">
+			<DD_TABLE_ALIAS id="ddm_keys.art_cashdet02">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_keys.art_cashdet02">02</DD_KEY_NUMBER>
+			<DD_KEY_DESC id="ddm_keys.art_cashdet02">By Customer + Invoice</DD_KEY_DESC>
+			<DD_KEY_ID id="ddm_keys.art_cashdet02">AO_CUST_INV     </DD_KEY_ID>
+			<DD_KEY_AUTO_GEN id="ddm_keys.art_cashdet02"></DD_KEY_AUTO_GEN>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_key_segs">
@@ -286,6 +293,123 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0101">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0101">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0101"></DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0201">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0201">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0201">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0201">01</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0201">FIRM_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0201"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0201"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0201"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0201">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0201">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0201">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0201">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0202">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0202">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0202">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0202">02</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0202">AR_TYPE</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0202"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0202"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0202"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0202">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0202">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0202">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0202">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0203">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0203">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0203">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0203">03</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0203">CUSTOMER_ID</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0203"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0203"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0203"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0203">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0203">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0203">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0203">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0204">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0204">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0204">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0204">04</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0204">AR_INV_NO</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0204"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0204"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0204"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0204">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0204">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0204">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0204">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0205">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0205">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0205">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0205">05</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0205">RECEIPT_DATE</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0205"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0205"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0205"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0205">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0205">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0205">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0205">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0206">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0206">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0206">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0206">06</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0206">AR_CHECK_NO</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0206"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0206"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0206"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0206">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0206">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0206">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0206">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0207">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0207">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0207">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0207">07</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0207">CASH_REC_CD</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0207"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0207"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0207"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0207">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0207">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0207">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0207">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0208">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0208">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0208">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0208">08</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0208">RESERVED_KEY_01</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0208"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0208"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0208"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0208">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0208">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0208">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0208">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.art_cashdet0209">
+			<DD_TABLE_ALIAS id="ddm_key_segs.art_cashdet0209">ART_CASHDET     </DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.art_cashdet0209">02</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.art_cashdet0209">09</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.art_cashdet0209">RESERVED_KEY_02</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.art_cashdet0209"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.art_cashdet0209"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.art_cashdet0209"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.art_cashdet0209">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.art_cashdet0209">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.art_cashdet0209">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.art_cashdet0209">N</DD_SEGMENT_NUM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -1555,7 +1679,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ar_inv_no">AR Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ar_inv_no">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ar_inv_no">7</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ar_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ar_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ar_inv_no">AD </ASC_PROD_ID>
@@ -1569,8 +1693,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ar_inv_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ar_inv_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ar_inv_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ar_inv_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ar_inv_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ar_inv_no"></DD_ATTR_DKEY>

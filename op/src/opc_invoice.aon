@@ -66,6 +66,7 @@ historical: rem --- Historical invoice printing
     
     custIds!.addItem( cust_id$ )
     orderNos!.addItem( order_no$ )   
+    show_payments$=option!.getOptionData("show_payments")
     
     type = 3
     goto done_with_enter
@@ -577,6 +578,40 @@ rem --- Main Read
     rem --- Loop back for next Customer/Order
 
     next next_item
+
+if type=historical and show_payments$="Y" then
+    reportDir$ = stbl("+DIR_REPORTS",err=*next)   
+    temp = unt
+    open (temp)reportDir$
+    reportDir$ = fid(temp)(9)+"/"
+    close (temp)
+    reportBaseName$ = "Cust_InvoicePayments"
+    filename$ = reportDir$ + reportBaseName$ + ".jasper"
+
+    params!.put("DOC_NO",rd_doc_id$)
+    params!.put("DATE_REP",rep_date$+"  "+rep_time$)
+    params!.put("BARISTA_WD",dir(""))
+    params!.put("LOGO_FILE",logo_filename$)
+    params!.put("FIRM_ID",firm_id$)
+    params!.put("STATEMENT_DATE",DATE(0:"%Yd%Mz%Dz"))
+    params!.put("CUSTOMER_ID",ope01a.customer_id$)
+    params!.put("AR_INV_NO",invoice_no$)
+    params!.put("AGE_BASIS","")
+    params!.put("AMT_MASK",amt_mask$)
+    params!.put("CUST_MASK",cust_mask$)
+    params!.put("CUST_SIZE",str(cust_size))
+
+    declare BBJasperReport payments!
+    payments! = BarUtils.getBBJasperReport(filename$)
+    payments!.putParams(params!)
+
+    locale$ = stbl("!LOCALE")
+    locale$ = stbl("+USER_LOCALE",err=*next)
+    payments!.setLocale(locale$)
+ 
+    rc=payments!.fill(1)
+    if rc=BBJasperReport.getSUCCESS() then report!.appendReport(payments!)
+endif
 
 rem --- bring up jasper viewers (master doc and print doc for Batch Invoices; single doc for On-Demand)
 

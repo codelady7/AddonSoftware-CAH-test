@@ -25,6 +25,8 @@ rem --- SFHARDCOPYCOSTSUM
 rem --- SFHARDCOPYTRANS
 rem --- SFHARDCOPYFGLS
 rem --- CUSTSTATEMENTS
+rem --- CUST_INVOICEPAYMENTS
+rem --- CUST_INVOICEPAYMENTSDET
 rem --- SIMPLE_INVOICE
 rem --- SIMPLE_INVOICE_DTL
 rem --- APCHECKS_MAIN
@@ -282,6 +284,14 @@ rem --- first drop all std Addon SPROCs
     gosub create_sproc_def
 
 	sproc_vw_name$="CUST_STATEMENTS"
+    sqlprep$=sql_action$+" "+sproc_vw_name$+" "
+    gosub create_sproc_def
+
+    sproc_vw_name$="CUST_INVOICEPAYMENTS"
+    sqlprep$=sql_action$+" "+sproc_vw_name$+" "
+    gosub create_sproc_def
+
+    sproc_vw_name$="CUST_INVOICEPAYMENTSDET"
     sqlprep$=sql_action$+" "+sproc_vw_name$+" "
     gosub create_sproc_def
 
@@ -698,6 +708,27 @@ rem --- now add them back (i.e., drop, then add, in case anything has changed)
     sqlprep$=sqlprep$+"'"+sproc_path$+"CUSTSTATEMENTS.prc' '"+barista_cfg_path$+"barista.cfg' "
     sqlprep$=sqlprep$+"RESULT_SET "
     sqlprep$=sqlprep$+"{_begin_}{_end_} 'Customer statements'"
+
+    gosub create_sproc_def
+
+    sproc_vw_name$="CUST_INVOICEPAYMENTS"
+    sqlprep$="CREATE PROCEDURE CUST_INVOICEPAYMENTS "
+    sqlprep$=sqlprep$+"(FIRM_ID CHAR(2) IN, STATEMENT_DATE CHAR(8) IN, CUSTOMER_ID CHAR(6) IN, AR_INV_NO CHAR(7) IN, "
+    sqlprep$=sqlprep$+"AMT_MASK CHAR(20) IN, CUST_MASK CHAR(20) IN, CUST_SIZE CHAR(1) IN, "
+    sqlprep$=sqlprep$+"BARISTA_WD VARCHAR(50) IN) "
+    sqlprep$=sqlprep$+"'"+sproc_path$+"CUST_INVOICEPAYMENTS.prc' '"+barista_cfg_path$+"barista.cfg' "
+    sqlprep$=sqlprep$+"RESULT_SET "
+    sqlprep$=sqlprep$+"{_begin_}{_end_} 'Customer Invoice Payments'"
+
+    gosub create_sproc_def
+
+    sproc_vw_name$="CUST_INVOICEPAYMENTSDET"
+    sqlprep$="CREATE PROCEDURE CUST_INVOICEPAYMENTSDET "
+    sqlprep$=sqlprep$+"(FIRM_ID CHAR(2) IN, CUSTOMER_ID CHAR(6) IN, AR_INV_NO CHAR(7) IN, "
+    sqlprep$=sqlprep$+"AMT_MASK CHAR(20) IN, BARISTA_WD VARCHAR(50) IN) "
+    sqlprep$=sqlprep$+"'"+sproc_path$+"CUST_INVOICEPAYMENTSDET.prc' '"+barista_cfg_path$+"barista.cfg' "
+    sqlprep$=sqlprep$+"RESULT_SET "
+    sqlprep$=sqlprep$+"{_begin_}{_end_} 'Customer Invoice Payments Detail'"
 
     gosub create_sproc_def
 
