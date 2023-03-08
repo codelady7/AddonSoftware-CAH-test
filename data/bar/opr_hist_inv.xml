@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.opr_hist_inv">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.opr_hist_inv">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.opr_hist_inv">OP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.opr_hist_inv">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.opr_hist_inv">22.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.opr_hist_inv"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opr_hist_inv">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opr_hist_inv">20150225</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opr_hist_inv">20230210</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opr_hist_inv">20230210</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opr_hist_inv">182952</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opr_hist_inv">20230307</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opr_hist_inv">20230307</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opr_hist_inv">171730</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opr_hist_inv"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.opr_hist_inv">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.opr_hist_inv">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opr_hist_inv"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opr_hist_inv"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opr_hist_inv">S</DD_ATTR_FTYP>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.opr_hist_inv"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.opr_hist_inv"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.opr_hist_inv"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.opr_hist_inv"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.opr_hist_inv"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.opr_hist_inv"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.opr_hist_inv"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.opr_hist_inv"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.opr_hist_inv"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.opr_hist_inv"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.opr_hist_inv">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.opr_hist_inv">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.opr_hist_inv">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.opr_hist_inv">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.opr_hist_inv">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.opr_hist_inv">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.opr_hist_inv">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -101,7 +101,7 @@
 		<RECORD id="ddm_table_tpls.opr_hist_inv">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opr_hist_inv">OPR_HIST_INV    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opr_hist_inv"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.opr_hist_inv">customer_id:c(6*),order_no:c(7*),ar_inv_no:c(7*),pick_text:c(60*),pick_check:c(1*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.opr_hist_inv">customer_id:c(6*),order_no:c(7*),ar_inv_no:c(7*),pick_text:c(60*),pick_check:c(1*),show_payments:c(30*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -347,19 +347,87 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opr_hist_inv005">5</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opr_hist_inv005">6</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.opr_hist_inv005">PICK_CHECK</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opr_hist_inv005">3005</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.opr_hist_inv005">3006</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.opr_hist_inv005">cbx_pick_check</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.opr_hist_inv005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opr_hist_inv005">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opr_hist_inv005"></DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.opr_hist_inv006">
+			<DD_TABLE_ALIAS id="ddm_table_cols.opr_hist_inv006">OPR_HIST_INV    </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.opr_hist_inv006">006</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.opr_hist_inv006">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opr_hist_inv006">SHOW_PAYMENTS   </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.opr_hist_inv006">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.opr_hist_inv006">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.opr_hist_inv006">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.opr_hist_inv006">0A</DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.opr_hist_inv006"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.opr_hist_inv006"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.opr_hist_inv006"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.opr_hist_inv006">20230306</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opr_hist_inv006">20230306</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.opr_hist_inv006">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.opr_hist_inv006">X</DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.opr_hist_inv006">Payments</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opr_hist_inv006">Payments</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.opr_hist_inv006">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.opr_hist_inv006">5</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opr_hist_inv006">SHOW_PAYMENTS</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.opr_hist_inv006">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.opr_hist_inv006">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.opr_hist_inv006">3005</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opr_hist_inv006">lbn_show_payments</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opr_hist_inv006">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.opr_hist_inv006">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.opr_hist_inv006"></DD_ATTR_BTNS>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_ldat">
+		<ID id="ddm_column_ldat">DDM_COLUMN_LDAT</ID>
+		<RECORD id="ddm_column_ldat.opr_hist_invshow_payments01">
+			<DD_TABLE_ALIAS id="ddm_column_ldat.opr_hist_invshow_payments01">OPR_HIST_INV    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_ldat.opr_hist_invshow_payments01">SHOW_PAYMENTS   </DD_DVAR_NAME>
+			<DD_ATTR_SEQ id="ddm_column_ldat.opr_hist_invshow_payments01">01</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_column_ldat.opr_hist_invshow_payments01">X</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.opr_hist_invshow_payments01">Do NOT Show Payments</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_column_ldat.opr_hist_invshow_payments02">
+			<DD_TABLE_ALIAS id="ddm_column_ldat.opr_hist_invshow_payments02">OPR_HIST_INV    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_ldat.opr_hist_invshow_payments02">SHOW_PAYMENTS   </DD_DVAR_NAME>
+			<DD_ATTR_SEQ id="ddm_column_ldat.opr_hist_invshow_payments02">02</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_column_ldat.opr_hist_invshow_payments02">Y</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.opr_hist_invshow_payments02">Show Payments</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
@@ -491,7 +559,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ar_inv_no">AR Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ar_inv_no">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ar_inv_no">7</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ar_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ar_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ar_inv_no">AD </ASC_PROD_ID>
@@ -505,8 +573,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ar_inv_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ar_inv_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ar_inv_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ar_inv_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ar_inv_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ar_inv_no"></DD_ATTR_DKEY>
@@ -641,6 +709,67 @@
 			<DD_ATTR_OEMD id="ddm_elements.pick_check"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.pick_check"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.pick_check"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.generic_list">
+			<DD_DATA_NAME id="ddm_elements.generic_list">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.generic_list">Generic ListButton</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.generic_list">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.generic_list">30</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.generic_list"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.generic_list"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.generic_list">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.generic_list">AD </ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.generic_list"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.generic_list">20071226</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.generic_list">20101221</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.generic_list"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.generic_list"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.generic_list"></DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.generic_list"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.generic_list"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.generic_list">L</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.generic_list"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.generic_list"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.generic_list"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.generic_list"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.generic_list"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.generic_list"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.generic_list"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.generic_list"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.generic_list"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.generic_list"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.generic_list">Generic ListButton</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.generic_list">Generic ListButton</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.generic_list">O</DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.generic_list"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.generic_list"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.generic_list"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.generic_list"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.generic_list"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.generic_list"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.generic_list"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.generic_list"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.generic_list"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.generic_list">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.generic_list"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.generic_list"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.generic_list"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.generic_list"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.generic_list"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.generic_list"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.generic_list"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.generic_list"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.generic_list"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.generic_list"></DD_ATTR_CASB>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_element_ldat">
+		<ID id="ddm_element_ldat">DDM_ELEMENT_LDAT</ID>
+		<RECORD id="ddm_element_ldat.generic_list01">
+			<DD_DATA_NAME id="ddm_element_ldat.generic_list01">GENERIC_LIST    </DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.generic_list01">01</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.generic_list01">X</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.generic_list01">Default List Item</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 </OPR_HIST_INV>
