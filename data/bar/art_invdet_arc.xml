@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.art_invdet_arc">0ACD373A78E653DC4AFC8E088299AA17</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.art_invdet_arc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.art_invdet_arc">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.art_invdet_arc">20230303</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.art_invdet_arc">20230303</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.art_invdet_arc">140916</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.art_invdet_arc">20230308</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.art_invdet_arc">20230308</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.art_invdet_arc">130118</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.art_invdet_arc"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.art_invdet_arc"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.art_invdet_arc">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.art_invdet_arc">PRIMARY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.art_invdet_arc"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.art_invdet_arc">G</DD_ATTR_FTYP>
@@ -56,6 +56,13 @@
 			<DD_ATTR_PADW id="ddm_tables.art_invdet_arc">0</DD_ATTR_PADW>
 			<DD_ATTR_PADH id="ddm_tables.art_invdet_arc">0</DD_ATTR_PADH>
 			<DD_ATTR_PADG id="ddm_tables.art_invdet_arc">0</DD_ATTR_PADG>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_cpro">
+		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.art_invdet_arcagcl">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.art_invdet_arcagcl">ART_INVDET_ARC  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.art_invdet_arcagcl">AGCL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -922,6 +929,11 @@
 			<DD_DVAR_NAME id="ddm_column_opts.art_invdet_arcgl_accountc">GL_ACCOUNT      </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.art_invdet_arcgl_accountc">C</DD_ATTR_OPTS>
 		</RECORD>
+		<RECORD id="ddm_column_opts.art_invdet_arcgl_accountv">
+			<DD_TABLE_ALIAS id="ddm_column_opts.art_invdet_arcgl_accountv">ART_INVDET_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.art_invdet_arcgl_accountv">GL_ACCOUNT      </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.art_invdet_arcgl_accountv">V</DD_ATTR_OPTS>
+		</RECORD>
 		<RECORD id="ddm_column_opts.art_invdet_arcdescriptionc">
 			<DD_TABLE_ALIAS id="ddm_column_opts.art_invdet_arcdescriptionc">ART_INVDET_ARC  </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.art_invdet_arcdescriptionc">DESCRIPTION     </DD_DVAR_NAME>
@@ -961,6 +973,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.art_invdet_arcmemo_1024c">ART_INVDET_ARC  </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.art_invdet_arcmemo_1024c">MEMO_1024       </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.art_invdet_arcmemo_1024c">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.art_invdet_arcmemo_1024i">
+			<DD_TABLE_ALIAS id="ddm_column_opts.art_invdet_arcmemo_1024i">ART_INVDET_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.art_invdet_arcmemo_1024i">MEMO_1024       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.art_invdet_arcmemo_1024i">I</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
