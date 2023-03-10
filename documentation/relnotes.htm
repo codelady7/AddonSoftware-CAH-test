@@ -137,6 +137,9 @@
                         <li>The Bank Account Code table contains two new fields: one to control whether or not to include a MICR band at the bottom of AP Checks and On-demand Manual Checks, and the other to specify how to format the bank account number. The bank account number format has a drilldown to view valid MICR characters.</li>
                         <li>New filters and drill downs in the Vendor form's Historical Invoices query provide a link to the new Payment History Inquiry, so users can drill from invoices to payments/adjustments, then to check detail.</li>
                         <li>A new Payment History option on the Customer form shows payments, with a drill down from any given payment to the payment details/invoices paid. Drill on a given invoice to launch the AR Invoice History Inquiry form. The Payment History has also been added to the Customers node in Expresso Search.</li>
+                        <li>A new right-click context menu option on the Historical Invoices query shows all the GL transactions associated with the selected Invoice.</li>
+                        <li>A new AR Invoices query shows all, open, or paid invoices for a customer, and a right-click context menu option shows all the GL transactions associated with the selected Invoice.</li>
+                        <li>The AR Simple Invoice update writes the entry header/detail records to a new set of archival files before removing them from the entry files. A new Archived AR Invoices form allows users to view and print the archival invoices.</li>
                     </ul>
                     <li>Distribution</li>
                     <ul>
