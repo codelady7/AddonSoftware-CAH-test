@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivs_setcarry">90AC00EFBF99F7E5A83626C384B6D906</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivs_setcarry">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivs_setcarry">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivs_setcarry">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivs_setcarry">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivs_setcarry">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivs_setcarry">20230120</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivs_setcarry">20220422</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivs_setcarry">150404</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivs_setcarry"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivs_setcarry">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivs_setcarry"></DD_ATTR_DKNM>
@@ -125,7 +125,7 @@
 		<ID id="ddm_table_tpls">DDM_TABLE_TPLS</ID>
 		<RECORD id="ddm_table_tpls.ivs_setcarry">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivs_setcarry">IVS_SETCARRY    </DD_TABLE_ALIAS>
-			<DD_FILE_NAME id="ddm_table_tpls.ivs_setcarry">ivs-01</DD_FILE_NAME>
+			<DD_FILE_NAME id="ddm_table_tpls.ivs_setcarry"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivs_setcarry">firm_id:c(2),iv:c(2),sequence_01:c(2*),reserved_str:c(1*),carry_cost:n(7*),setup_cost:n(7*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>

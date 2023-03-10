@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivs_abcparam">36000E626A4A3329C97B67C7FF3A2B7A</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivs_abcparam">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivs_abcparam">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivs_abcparam">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivs_abcparam">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivs_abcparam">172412</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivs_abcparam">20230120</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivs_abcparam">20220422</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivs_abcparam">150404</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivs_abcparam"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivs_abcparam"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivs_abcparam"></DD_ATTR_DKNM>
@@ -89,7 +89,7 @@
 		<ID id="ddm_table_tpls">DDM_TABLE_TPLS</ID>
 		<RECORD id="ddm_table_tpls.ivs_abcparam">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivs_abcparam">IVS_ABCPARAM    </DD_TABLE_ALIAS>
-			<DD_FILE_NAME id="ddm_table_tpls.ivs_abcparam">ivs-01</DD_FILE_NAME>
+			<DD_FILE_NAME id="ddm_table_tpls.ivs_abcparam"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivs_abcparam">firm_id:c(2),iv:c(2),sequence_02:c(2*),abc_percents_01:n(7*),abc_percents_02:n(7*),abc_percents_03:n(7*),abc_percents_04:n(7*),abc_percents_05:n(7*),abc_percents_06:n(7*),abc_percents_07:n(7*),abc_percents_08:n(7*),abc_percents_09:n(7*),abc_percents_10:n(7*),abc_percents_11:n(7*),abc_percents_12:n(7*),abc_percents_13:n(7*),abc_percents_14:n(7*),abc_percents_15:n(7*),abc_percents_16:n(7*),abc_percents_17:n(7*),abc_percents_18:n(7*),abc_percents_19:n(7*),abc_percents_20:n(7*),abc_percents_21:n(7*),abc_percents_22:n(7*),abc_percents_23:n(7*),abc_percents_24:n(7*),abc_percents_25:n(7*),abc_percents_26:n(7*),abc_factors_01:n(7*),abc_factors_02:n(7*),abc_factors_03:n(7*),abc_factors_04:n(7*),abc_factors_05:n(7*),abc_factors_06:n(7*),abc_factors_07:n(7*),abc_factors_08:n(7*),abc_factors_09:n(7*),abc_factors_10:n(7*),abc_factors_11:n(7*),abc_factors_12:n(7*),abc_factors_13:n(7*),abc_factors_14:n(7*),abc_factors_15:n(7*),abc_factors_16:n(7*),abc_factors_17:n(7*),abc_factors_18:n(7*),abc_factors_19:n(7*),abc_factors_20:n(7*),abc_factors_21:n(7*),abc_factors_22:n(7*),abc_factors_23:n(7*),abc_factors_24:n(7*),abc_factors_25:n(7*),abc_factors_26:n(7*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>

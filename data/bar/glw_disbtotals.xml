@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.glw_disbtotals">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glw_disbtotals">20080726</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.glw_disbtotals">20220118</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glw_disbtotals">20220118</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glw_disbtotals">172412</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.glw_disbtotals">20220422</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glw_disbtotals">150404</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glw_disbtotals"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glw_disbtotals"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glw_disbtotals"></DD_ATTR_DKNM>
@@ -62,7 +62,7 @@
 		<ID id="ddm_table_tpls">DDM_TABLE_TPLS</ID>
 		<RECORD id="ddm_table_tpls.glw_disbtotals">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glw_disbtotals">GLW_DISBTOTALS  </DD_TABLE_ALIAS>
-			<DD_FILE_NAME id="ddm_table_tpls.glw_disbtotals">glw-04</DD_FILE_NAME>
+			<DD_FILE_NAME id="ddm_table_tpls.glw_disbtotals"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glw_disbtotals">firm_id:c(2),gl_account:c(10*),gl_post_amt:n(7*),units:n(7*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
