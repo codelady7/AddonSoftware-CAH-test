@@ -1371,6 +1371,10 @@ std_exit:
         REM Verify that location exists
         if (! #directoryExists(installationLocation!)) then
             methodret "Directory must exist."
+        else
+            installationLocationFile!=new File(installationLocation!)
+            installationLocationFile!.setReadable(1,0)
+            installationLocationFile!.setWritable(1,0)
         endif
 
         methodret ""
@@ -1744,14 +1748,19 @@ std_exit:
       if (#PackagerPackagingType=#PRODUCTION_PACKAGING_TYPE) then
           rem --- For production un-package in Barista base directory
           baseDir$=barDir$(1,pos(File.separator+"barista"=barDir$,-1)-1)
-            
-          rem --- Create the diretory if it doesn't exist
+           
+          rem --- Create directories that don't exist and set perms
           baseDir!=new File(baseDir$)
           if !baseDir!.exists() then
               baseDir!.mkdirs()
-              baseDir!.setReadable(1,0)
-              baseDir!.setWritable(1,0)
           endif
+          tmpDir$=baseDir$
+          while tmpDir$<>aonProdDir$
+              tmpDir!=new File(tmpDir$)
+              tmpDir!.setReadable(1,0)
+              tmpDir!.setWritable(1,0)
+              tmpDir$=tmpDir$(1,pos(File.separator=tmpDir$,-1)-1)
+          wend
       else
           rem --- For test un-package in installation base directory
           baseDir$=aonProdDir$
