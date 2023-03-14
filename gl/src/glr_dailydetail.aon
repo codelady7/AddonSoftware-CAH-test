@@ -451,7 +451,10 @@ rem --- balance is not over the balance limit, post the OOB to suspense
             if msg_opt$="Y" then                
                 rem --- Write to glt04
                 gosub create_suspense
-                goto balanced
+
+                msg_id$="AON_REG_OOB_POSTED"
+                gosub disp_message
+                goto std_exit
             endif
         endif
         
