@@ -87,6 +87,10 @@ rem --- Display invoice images
 		callpoint!.setDevObject("urlVect",urlVect!)
 	endif
 
+[[APT_INVHDR_ARC.AP_INV_NO.AVAL]]
+rem --- Show the first record for this invoice
+	callpoint!.setColumnData("APT_INVHDR_ARC.GENERIC_SEQ2","01")
+
 [[APT_INVHDR_ARC.AREC]]
 rem --- Disable buttons/options for new record
 	callpoint!.setOptionEnabled("ADJT",0)
