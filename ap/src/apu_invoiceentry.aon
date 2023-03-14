@@ -93,6 +93,7 @@ rem --- Read next Invoice Header (ape-01) record
         if apt01a.firm_id$="XX"
 
         rem --- took dom; New Invoice
+            nextArc=1
             apt01a.firm_id$=ape01a.firm_id$
             apt01a.ap_type$=ape01a.ap_type$
             apt01a.vendor_id$=ape01a.vendor_id$
@@ -119,6 +120,21 @@ rem --- Read next Invoice Header (ape-01) record
             write record (apt01_dev, dom=open_invoice) apt01a$
 
         else
+            rem --- Adjusting an old invoice already in apt_invoicehdr (apt-01)
+
+            rem --- Invoice already in the invoice arhive files?
+            read(aptInvHdrArc_dev,key=ape01a.firm_id$+ape01a.ap_type$+ape01a.vendor_id$+ape01a.ap_inv_no$+"99",dom=*next)
+            aptInvHdrArc_key$=""
+            aptInvHdrArc_key$=keyp(aptInvHdrArc_dev,end=*next)
+            if pos(ape01a.firm_id$+ape01a.ap_type$+ape01a.vendor_id$+ape01a.ap_inv_no$=aptInvHdrArc_key$)<>1 then
+                rem --- This must be an adjustment to an invoice updated before the invoice archive files were available.
+                rem --- So do NOT update the invoice archive files with this adjustment since the resulting historical invoice would be inaccurate.
+                nextArc=0
+            else
+                readrecord(aptInvHdrArc_dev,key=aptInvHdrArc_key$)aptInvHdrArc$
+                nextArc=num(aptInvHdrArc.generic_seq2$)+1
+            endif
+
             if apt01a.mc_inv_flag$="M" then apt01a.mc_inv_adj$="A"
             apt01a.payment_grp$=ape01a.payment_grp$
             apt01a.ap_terms_code$=ape01a.ap_terms_code$
@@ -142,7 +158,7 @@ rem --- Read next Invoice Header (ape-01) record
 
             while moredetail
                 k$=key(apt11_dev,end=*break)
-                if k$(1,len(apt11_key$))<>apt11_key$ break
+                if pos(apt11_key$=k$)<>1 break
                 extract record (apt11_dev) apt11a$;rem Advisory Locking (other files were already extracting)
                 c1=num(apt11a.sequence_no$)
 
@@ -207,12 +223,56 @@ rem --- Read next Invoice Header (ape-01) record
 
             write record (apt02_dev) apt02a$
 
-        rem --- ****** end missing code.CH
+            if nextArc then
+                rem --- Skip write if it's an adjustment and apt_invhdr_arc record wasn't found
+                redim aptInvDetArc$
+                aptInvDetArc.firm_id$=ape11a.firm_id$
+                aptInvDetArc.ap_type$=ape11a.ap_type$
+                aptInvDetArc.vendor_id$=ape11a.vendor_id$
+                aptInvDetArc.ap_inv_no$=ape11a.ap_inv_no$
+                aptInvDetArc.generic_seq2$=str(nextArc:"00")
+                aptInvDetArc.sequence_no3$=ape11a.sequence_no$
+                aptInvDetArc.gl_account$=ape11a.gl_account$
+                aptInvDetArc.miscellanea$=ape11a.miscellanea$
+                aptInvDetArc.gl_post_amt=ape11a.gl_post_amt
+                aptInvDetArc.units=ape11a.units
+                aptInvDetArc.batch_no$=ape11a.batch_no$
+                writerecord(aptInvDetArc_dev)aptInvDetArc$
+            endif
             remove (ape11_dev,key=k$)
         wend
 
     rem --- remove header and loop back
 
+        if nextArc then
+            rem --- Skip write if it's an adjustment and apt_invhdr_arc record wasn't found
+            redim aptInvHdrArc$
+            aptInvHdrArc.firm_id$=ape01a.firm_id$
+            aptInvHdrArc.ap_type$=ape01a.ap_type$
+            aptInvHdrArc.vendor_id$=ape01a.vendor_id$
+            aptInvHdrArc.ap_inv_no$=ape01a.ap_inv_no$
+            aptInvHdrArc.generic_seq2$=str(nextArc:"00")
+            aptInvHdrArc.ap_dist_code$=ape01a.ap_dist_code$
+            aptInvHdrArc.payment_grp$=ape01a.payment_grp$
+            aptInvHdrArc.ap_terms_code$=ape01a.ap_terms_code$
+            aptInvHdrArc.reserved_str$=ape01a.reserved_str$
+            aptInvHdrArc.reference$=ape01a.reference$
+            aptInvHdrArc.ap_inv_memo$=ape01a.ap_inv_memo$
+            aptInvHdrArc.hold_flag$=ape01a.hold_flag$
+            aptInvHdrArc.invoice_type$=ape01a.invoice_type$
+            aptInvHdrArc.reserved_str_02$=ape01a.reserved_str_02$
+            aptInvHdrArc.invoice_date$=ape01a.invoice_date$
+            aptInvHdrArc.accting_date$=ape01a.accting_date$
+            aptInvHdrArc.inv_due_date$=ape01a.inv_due_date$
+            aptInvHdrArc.disc_date$=ape01a.disc_date$
+            aptInvHdrArc.invoice_amt=ape01a.invoice_amt
+            aptInvHdrArc.discount_amt=ape01a.discount_amt
+            aptInvHdrArc.retention=ape01a.retention
+            aptInvHdrArc.net_inv_amt=ape01a.net_inv_amt
+            aptInvHdrArc.batch_no$=ape01a.batch_no$
+            aptInvHdrArc.memo_1024$=ape01a.memo_1024$
+            writerecord(aptInvHdrArc_dev)aptInvHdrArc$
+        endif
         remove (ape01_dev,key=invoice$)
     wend
 
