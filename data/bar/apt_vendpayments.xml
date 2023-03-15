@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apt_vendpayments">N</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apt_vendpayments">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apt_vendpayments">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apt_vendpayments">22.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apt_vendpayments">23.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apt_vendpayments"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apt_vendpayments">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_vendpayments">20220727</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apt_vendpayments">20220802</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_vendpayments">20220802</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_vendpayments">120042</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apt_vendpayments">20230315</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_vendpayments">20230315</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_vendpayments">104254</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_vendpayments"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_vendpayments"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_vendpayments"></DD_ATTR_DKNM>
@@ -91,6 +91,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apt_vendpayments">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apt_vendpayments">apt_vendpayments</DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.apt_vendpayments">firm_id:c(2),vendor_id:c(6),check_no:c(7),bnk_acct_cd:c(10),acct_desc:c(35),check_date:c(8),trans_type:c(1),payment_amt:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apt_vendpaymentsbnk_acct_cdadc_bankacctcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apt_vendpaymentsbnk_acct_cdadc_bankacctcode">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apt_vendpaymentsbnk_acct_cdadc_bankacctcode">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apt_vendpaymentsbnk_acct_cdadc_bankacctcode">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apt_vendpaymentsbnk_acct_cdadc_bankacctcode">FK_APT_VENDPAYMENTS_BNK_ACCT_CD_ADC_BANKACCTCODE                                                                                                                                                                                                               </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.apt_vendpaymentsvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apt_vendpaymentsvendor_idapm_vendmast">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apt_vendpaymentsvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apt_vendpaymentsvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apt_vendpaymentsvendor_idapm_vendmast">FK_APT_VENDPAYMENTS_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsbnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_vendpaymentsvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -673,8 +727,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.vendor_id"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.vendor_id">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.vendor_id">VENDOR_NAME</DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.vendor_id"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.vendor_id"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.vendor_id">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.vendor_id">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.vendor_id"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.vendor_id"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.vendor_id">[+FIRM_ID]+@</DD_ATTR_DKEY>
@@ -725,8 +779,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.check_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.check_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.check_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.check_no"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.check_no"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.check_no">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.check_no">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.check_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.check_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.check_no"></DD_ATTR_DKEY>
@@ -815,7 +869,7 @@
 			<DD_DESCRIPTION id="ddm_elements.gl_acct_desc">GL Account Description</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.gl_acct_desc">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.gl_acct_desc">35</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.gl_acct_desc"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.gl_acct_desc"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.gl_acct_desc"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.gl_acct_desc">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.gl_acct_desc">GL </ASC_PROD_ID>
@@ -829,8 +883,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.gl_acct_desc"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.gl_acct_desc">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.gl_acct_desc"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.gl_acct_desc"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.gl_acct_desc"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.gl_acct_desc">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.gl_acct_desc">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.gl_acct_desc"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.gl_acct_desc"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.gl_acct_desc"></DD_ATTR_DKEY>
@@ -867,7 +921,7 @@
 			<DD_DESCRIPTION id="ddm_elements.check_date">Check Date                    </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.check_date">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.check_date">8</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.check_date"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.check_date"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.check_date"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.check_date">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.check_date">AD </ASC_PROD_ID>
@@ -881,8 +935,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.check_date"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.check_date">D</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.check_date"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.check_date"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.check_date"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.check_date">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.check_date">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.check_date"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.check_date"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.check_date"></DD_ATTR_DKEY>
@@ -933,8 +987,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.trans_type"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.trans_type">L</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.trans_type"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.trans_type"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.trans_type"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.trans_type">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.trans_type">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.trans_type"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.trans_type"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.trans_type"></DD_ATTR_DKEY>
@@ -985,8 +1039,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.payment_amt"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.payment_amt">N</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.payment_amt"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.payment_amt"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.payment_amt"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.payment_amt">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.payment_amt">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.payment_amt"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.payment_amt"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.payment_amt"></DD_ATTR_DKEY>

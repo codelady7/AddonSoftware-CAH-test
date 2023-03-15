@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.ivc_physcode"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.ivc_physcode">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.ivc_physcode">IV </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.ivc_physcode">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.ivc_physcode">23.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.ivc_physcode">EB52741B14831F5AD8CA3BF2C74B486F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivc_physcode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivc_physcode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivc_physcode">20220323</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivc_physcode">20220322</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivc_physcode">154912</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivc_physcode">20230315</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivc_physcode">20230315</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivc_physcode">104254</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivc_physcode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivc_physcode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivc_physcode">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivc_physcode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivc_physcode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivc_physcode">T</DD_ATTR_FTYP>
@@ -259,7 +259,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.ivc_physcode002"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivc_physcode002">3001</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.ivc_physcode002">dis_warehouse_id</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode002">5</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivc_physcode002"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivc_physcode002">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivc_physcode002">F</DD_ATTR_BTNS>
@@ -310,7 +310,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.ivc_physcode003"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivc_physcode003">3002</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.ivc_physcode003">ine_pi_cyclecode</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode003">5</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivc_physcode003"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivc_physcode003">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivc_physcode003"></DD_ATTR_BTNS>
@@ -361,7 +361,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.ivc_physcode004"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivc_physcode004">3003</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.ivc_physcode004">ine_description</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode004">5</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivc_physcode004"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivc_physcode004">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivc_physcode004"></DD_ATTR_BTNS>
@@ -412,7 +412,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.ivc_physcode005"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivc_physcode005">3004</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.ivc_physcode005">lbn_phys_inv_sts</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode005">5</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivc_physcode005"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivc_physcode005">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivc_physcode005"></DD_ATTR_BTNS>
@@ -463,7 +463,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.ivc_physcode006"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivc_physcode006">3005</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.ivc_physcode006">lbn_pending_action</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode006">5</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode006">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivc_physcode006"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivc_physcode006">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivc_physcode006"></DD_ATTR_BTNS>
@@ -514,7 +514,7 @@
 			<DD_ATTR_CWID id="ddm_table_cols.ivc_physcode007"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.ivc_physcode007">3006</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.ivc_physcode007">ind_cutoff_date</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode007">5</DD_ATTR_CTLC>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivc_physcode007">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.ivc_physcode007"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivc_physcode007">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivc_physcode007"></DD_ATTR_BTNS>

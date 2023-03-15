@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.opt_slstaxtrans">N</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.opt_slstaxtrans">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.opt_slstaxtrans">OP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.opt_slstaxtrans">22.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.opt_slstaxtrans">23.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.opt_slstaxtrans"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_slstaxtrans">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_slstaxtrans">20210104</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_slstaxtrans">20221116</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_slstaxtrans">20221116</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_slstaxtrans">085020</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_slstaxtrans">20230315</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_slstaxtrans">20230315</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_slstaxtrans">104254</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_slstaxtrans"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_slstaxtrans"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_slstaxtrans"></DD_ATTR_DKNM>
@@ -1902,7 +1902,7 @@
 			<DD_DESCRIPTION id="ddm_elements.order_no">Sales Order Number            </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.order_no">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.order_no">7</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.order_no"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.order_no"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.order_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.order_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.order_no">AD </ASC_PROD_ID>
@@ -1916,8 +1916,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.order_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.order_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.order_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.order_no"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.order_no"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.order_no">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.order_no">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.order_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.order_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.order_no"></DD_ATTR_DKEY>
@@ -1954,7 +1954,7 @@
 			<DD_DESCRIPTION id="ddm_elements.ar_inv_no">AR Invoice Number</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.ar_inv_no">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.ar_inv_no">7</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.ar_inv_no"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.ar_inv_no"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.ar_inv_no">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.ar_inv_no">AD </ASC_PROD_ID>
@@ -1968,8 +1968,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.ar_inv_no"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.ar_inv_no">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.ar_inv_no"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.ar_inv_no">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.ar_inv_no">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.ar_inv_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.ar_inv_no"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.ar_inv_no"></DD_ATTR_DKEY>

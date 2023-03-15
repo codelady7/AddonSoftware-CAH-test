@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.glw_transdetail">N</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.glw_transdetail">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.glw_transdetail">GL </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.glw_transdetail">23.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.glw_transdetail">23.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.glw_transdetail"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glw_transdetail">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glw_transdetail">20230221</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glw_transdetail">20230222</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glw_transdetail">20230222</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glw_transdetail">163210</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glw_transdetail">20230315</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glw_transdetail">20230315</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glw_transdetail">104254</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glw_transdetail"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glw_transdetail"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glw_transdetail"></DD_ATTR_DKNM>
@@ -58,12 +58,93 @@
 			<DD_ATTR_PADG id="ddm_tables.glw_transdetail">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_opts">
+		<ID id="ddm_table_opts">DDM_TABLE_OPTS</ID>
+		<RECORD id="ddm_table_opts.glw_transdetaila">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glw_transdetaila">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glw_transdetaila">A</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glw_transdetailn">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glw_transdetailn">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glw_transdetailn">N</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glw_transdetailp">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glw_transdetailp">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glw_transdetailp">P</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glw_transdetailu">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glw_transdetailu">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glw_transdetailu">U</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glw_transdetailv">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glw_transdetailv">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glw_transdetailv">V</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.glw_transdetailr">
+			<DD_TABLE_ALIAS id="ddm_table_opts.glw_transdetailr">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.glw_transdetailr">r</DD_ATTR_OPTS>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_tpls">
 		<ID id="ddm_table_tpls">DDM_TABLE_TPLS</ID>
 		<RECORD id="ddm_table_tpls.glw_transdetail">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glw_transdetail">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glw_transdetail"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glw_transdetail">sys_info:c(16),firm_id:c(2),trns_date:c(8),gl_account:c(10),journal_id:c(2),gl_adt_no:c(7),posting_year:c(4),posting_per:c(2),seq_no:c(5),reference_01:c(10),reference_02:c(20),reference_03:c(10),description:c(30),debit_amt:n(12*),credit_amt:n(12*),units:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glw_transdetailgl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glw_transdetailgl_accountglm_acct">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glw_transdetailgl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glw_transdetailgl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glw_transdetailgl_accountglm_acct">FK_GLW_TRANSDETAIL_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.glw_transdetailjournal_idglc_journalcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glw_transdetailjournal_idglc_journalcode">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glw_transdetailjournal_idglc_journalcode">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glw_transdetailjournal_idglc_journalcode">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glw_transdetailjournal_idglc_journalcode">FK_GLW_TRANSDETAIL_JOURNAL_ID_GLC_JOURNALCODE                                                                                                                                                                                                                  </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glw_transdetailgl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">JOURNAL_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glw_transdetailjournal_idglc_journalcode0002">JOURNAL_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -235,18 +316,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail001"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail001"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail001"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail001">1</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail001"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail001">SYS_INFO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail001"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail001"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail001">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail001">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail001"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail001"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail001"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail001">3001</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail001">ine_sys_info</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail001">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail001"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail001"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail001">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail001"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail002">
@@ -286,7 +367,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail002"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail002"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail002">2</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail002"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail002">FIRM_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail002"></DD_ATTR_FONT>
@@ -297,7 +378,7 @@
 			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail002"></DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail002"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail002"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail002"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail002">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail002"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail003">
@@ -337,19 +418,19 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail003"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail003"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail003"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail003">3</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail003"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail003">TRNS_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail003"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail003"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail003">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail003">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail003"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail003"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail003"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail003">3002</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail003">ind_trns_date</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail003"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail003"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail003"></DD_ATTR_BTNS>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail003">Y</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail003">C</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail004">
 			<DD_TABLE_ALIAS id="ddm_table_cols.glw_transdetail004">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -388,19 +469,19 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail004"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail004"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail004"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail004">4</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail004"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail004">GL_ACCOUNT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail004"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail004"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail004">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail004">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail004"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail004"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail004"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail004">3003</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail004">dis_gl_account</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail004"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail004"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail004"></DD_ATTR_BTNS>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail004">Y</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail004">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail005">
 			<DD_TABLE_ALIAS id="ddm_table_cols.glw_transdetail005">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -439,19 +520,19 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail005"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail005"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail005">5</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail005"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail005">JOURNAL_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail005"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail005"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail005">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail005">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail005"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail005"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail005"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail005">3004</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail005">dis_journal_id</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail005"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail005"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail005"></DD_ATTR_BTNS>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail005">Y</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail005">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail006">
 			<DD_TABLE_ALIAS id="ddm_table_cols.glw_transdetail006">GLW_TRANSDETAIL </DD_TABLE_ALIAS>
@@ -490,18 +571,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail006"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail006"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail006"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail006">6</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail006"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail006">GL_ADT_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail006"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail006"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail006">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail006">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail006"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail006"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail006"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail006">3005</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail006">ine_gl_adt_no</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail006">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail006"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail006"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail006">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail006"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail007">
@@ -541,18 +622,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail007"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail007"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail007">7</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail007"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail007">POSTING_YEAR</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail007"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail007"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail007">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail007">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail007"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail007"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail007"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail007">3006</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail007">ine_posting_year</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail007">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail007"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail007"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail007">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail007"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail008">
@@ -592,18 +673,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail008"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail008">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail008">POSTING_PER</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail008"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail008"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail008">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail008">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail008"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail008"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail008"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail008">3007</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail008">ine_posting_per</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail008">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail008"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail008"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail008">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail008"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail009">
@@ -643,7 +724,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail009"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail009">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail009">SEQ_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail009"></DD_ATTR_FONT>
@@ -654,7 +735,7 @@
 			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail009"></DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail009"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail009"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail009"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail009">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail009"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail010">
@@ -694,18 +775,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail010"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail010">10</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail010">REFERENCE_01</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail010"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail010"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail010">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail010">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail010"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail010"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail010"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail010">3008</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail010">ine_reference_01</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail010">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail010"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail010"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail010">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail010"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail011">
@@ -745,18 +826,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail011"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail011">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail011">REFERENCE_02</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail011"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail011"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail011">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail011">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail011"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail011"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail011"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail011">3009</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail011">ine_reference_02</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail011">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail011"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail011"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail011">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail011"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail012">
@@ -796,18 +877,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail012"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail012">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail012">REFERENCE_03</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail012"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail012"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail012">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail012">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail012"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail012"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail012"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail012">3010</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail012">ine_reference_03</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail012">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail012"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail012"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail012">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail012"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail013">
@@ -847,18 +928,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail013"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail013">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail013">DESCRIPTION</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail013"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail013"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail013">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail013">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail013"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail013"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail013"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail013">3011</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail013">ine_description</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail013">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail013"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail013"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail013">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail013"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail014">
@@ -898,18 +979,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail014"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail014">14</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail014">DEBIT_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail014"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail014"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail014">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail014">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail014"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail014"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail014"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail014">3012</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail014">inn_debit_amt</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail014">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail014"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail014"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail014">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail014"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail015">
@@ -949,18 +1030,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail015"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail015"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail015"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail015"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail015">15</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail015"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail015">CREDIT_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail015"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail015"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail015">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail015">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail015"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail015"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail015"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail015">3013</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail015">inn_credit_amt</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail015">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail015"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail015"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail015">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail015"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.glw_transdetail016">
@@ -1000,18 +1081,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.glw_transdetail016"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.glw_transdetail016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.glw_transdetail016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail016"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.glw_transdetail016">16</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.glw_transdetail016"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.glw_transdetail016">UNITS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.glw_transdetail016"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.glw_transdetail016"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.glw_transdetail016">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.glw_transdetail016">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail016"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail016"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail016"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.glw_transdetail016">3014</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.glw_transdetail016">inn_units</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.glw_transdetail016">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.glw_transdetail016"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail016"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.glw_transdetail016">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glw_transdetail016"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>

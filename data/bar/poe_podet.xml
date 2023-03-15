@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.poe_podet"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.poe_podet">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.poe_podet">PO </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.poe_podet">22.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.poe_podet">23.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.poe_podet">CAECFA361FDD3C6AC5A607CD13BA554F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_podet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_podet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_podet">20230111</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_podet">20230111</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_podet">130530</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_podet">20230315</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_podet">20230315</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_podet">104254</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_podet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poe_podet">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poe_podet">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_podet">DISPLAY_KEY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poe_podet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poe_podet">G</DD_ATTR_FTYP>
@@ -885,7 +885,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet005">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet005">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet005"></DD_ATTR_CTLY>
@@ -1344,7 +1344,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet014">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet014">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet014"></DD_ATTR_CTLY>
@@ -1395,7 +1395,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet015">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet015">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet015"></DD_ATTR_CTLY>
@@ -1446,7 +1446,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet016">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet016"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet016">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet016">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet016"></DD_ATTR_CTLY>
@@ -1548,7 +1548,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet018">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet018"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet018"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet018">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet018">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet018"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet018"></DD_ATTR_CTLY>
@@ -1650,7 +1650,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet020">20081128</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet020"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet020"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet020">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet020">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet020"></DD_ATTR_CTLY>
@@ -1701,7 +1701,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet021">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet021">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet021">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet021"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet021"></DD_ATTR_CTLY>
@@ -1752,7 +1752,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet022">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet022"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet022">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet022">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet022"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet022"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet022"></DD_ATTR_CTLY>
@@ -1803,7 +1803,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet023">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet023"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet023"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet023">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet023">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet023"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet023"></DD_ATTR_CTLY>
@@ -1956,7 +1956,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet026">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet026"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet026"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet026">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet026">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet026"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet026"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet026"></DD_ATTR_CTLY>
@@ -2007,7 +2007,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet027">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet027"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet027"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet027">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet027">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet027"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet027"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet027"></DD_ATTR_CTLY>
@@ -2109,7 +2109,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet029">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet029"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet029"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet029">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet029">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet029"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet029"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet029"></DD_ATTR_CTLY>
@@ -2568,7 +2568,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_podet038">20170328</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_podet038"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_podet038"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet038">../apps/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_podet038">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_podet038">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_podet038"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_podet038"></DD_ATTR_CTLY>
@@ -3160,8 +3160,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.po_line_cd_list"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.po_line_cd_list">L</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.po_line_cd_list">CODE_DESC</DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.po_line_cd_list"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.po_line_cd_list"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.po_line_cd_list">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.po_line_cd_list">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.po_line_cd_list"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.po_line_cd_list"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.po_line_cd_list">[+FIRM_ID]+@</DD_ATTR_DKEY>
@@ -3250,7 +3250,7 @@
 			<DD_DESCRIPTION id="ddm_elements.lead_tim_flg">Use Line for Lead Time Calc?  </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.lead_tim_flg">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.lead_tim_flg">1</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.lead_tim_flg"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.lead_tim_flg"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.lead_tim_flg"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.lead_tim_flg">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.lead_tim_flg">PO </ASC_PROD_ID>
@@ -3264,8 +3264,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.lead_tim_flg"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.lead_tim_flg">C</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.lead_tim_flg"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.lead_tim_flg"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.lead_tim_flg"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.lead_tim_flg">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.lead_tim_flg">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.lead_tim_flg"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.lead_tim_flg"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.lead_tim_flg"></DD_ATTR_DKEY>
@@ -3406,7 +3406,7 @@
 			<DD_DESCRIPTION id="ddm_elements.source_code">Source                        </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.source_code">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.source_code">1</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.source_code"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.source_code"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.source_code"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.source_code">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.source_code">AD </ASC_PROD_ID>
@@ -3420,8 +3420,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.source_code"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.source_code">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.source_code"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.source_code"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.source_code"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.source_code">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.source_code">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.source_code"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.source_code"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.source_code"></DD_ATTR_DKEY>
@@ -3458,7 +3458,7 @@
 			<DD_DESCRIPTION id="ddm_elements.forecast">MRP Forecast Type</DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.forecast">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.forecast">3</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.forecast"> </DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.forecast"></DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.forecast"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.forecast">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.forecast">MP </ASC_PROD_ID>
@@ -3472,8 +3472,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.forecast"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.forecast">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.forecast">DESCRIPTION_01</DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.forecast">            </DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.forecast">            </DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.forecast"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.forecast"></DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.forecast"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.forecast"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.forecast">[+FIRM_ID]+@</DD_ATTR_DKEY>
@@ -4030,7 +4030,7 @@
 			<DD_DESCRIPTION id="ddm_elements.order_memo">Memo / Non-Stock Description  </DD_DESCRIPTION>
 			<DD_DATA_TYPE id="ddm_elements.order_memo">C</DD_DATA_TYPE>
 			<DD_DATA_LENGTH id="ddm_elements.order_memo">40</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.order_memo"></DD_MASK_TYPE>
+			<DD_MASK_TYPE id="ddm_elements.order_memo"> </DD_MASK_TYPE>
 			<DD_SYSTEM_REC id="ddm_elements.order_memo"></DD_SYSTEM_REC>
 			<ASC_COMP_ID id="ddm_elements.order_memo">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_elements.order_memo">AD </ASC_PROD_ID>
@@ -4044,8 +4044,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.order_memo"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.order_memo">E</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.order_memo"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.order_memo"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.order_memo"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.order_memo">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.order_memo">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.order_memo"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.order_memo"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.order_memo"></DD_ATTR_DKEY>
@@ -4148,8 +4148,8 @@
 			<DD_ATTR_CTLH id="ddm_elements.conv_factor"></DD_ATTR_CTLH>
 			<DD_ATTR_CTYP id="ddm_elements.conv_factor">N</DD_ATTR_CTYP>
 			<DD_ATTR_DCOL id="ddm_elements.conv_factor"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.conv_factor"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.conv_factor"></DD_ATTR_DEXP>
+			<DD_ATTR_DCOM id="ddm_elements.conv_factor">            </DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.conv_factor">            </DD_ATTR_DEXP>
 			<DD_ATTR_DFLT id="ddm_elements.conv_factor"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.conv_factor"></DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.conv_factor"></DD_ATTR_DKEY>
