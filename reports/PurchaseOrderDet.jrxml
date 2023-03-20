@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2021-04-06T10:37:49 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PurchaseOrderDet" language="groovy" pageWidth="554" pageHeight="320" columnWidth="554" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a46c6452-81bd-4023-bafb-8f0488b8a578">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
@@ -44,8 +43,9 @@
 	<parameter name="NOT_B4_PROMPT" class="java.lang.String"/>
 	<parameter name="SHIPFROM_PROMPT" class="java.lang.String"/>
 	<parameter name="ITEM_MASK" class="java.lang.String"/>
+	<parameter name="HISTORICAL_PRINT" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL PURCHASEORDER_DET ($P{FIRM_ID},$P{PO_NO},$P{VENDOR_ID},$P{IV_PRECISION},$P{PRT_VDR_ITEM},$P{HDR_MSG_CODE},$P{HDR_SHIP_FROM},$P{QTY_MASK},$P{COST_MASK},$P{EXT_MASK},$P{NOF_PROMPT},$P{VEND_ITEM_PROMPT},$P{PROMISE_PROMPT},$P{NOT_B4_PROMPT},$P{SHIPFROM_PROMPT},$P{ITEM_MASK},$P{BARISTA_WD})]]>
+		<![CDATA[CALL PURCHASEORDER_DET ($P{FIRM_ID},$P{PO_NO},$P{VENDOR_ID},$P{IV_PRECISION},$P{PRT_VDR_ITEM},$P{HDR_MSG_CODE},$P{HDR_SHIP_FROM},$P{QTY_MASK},$P{COST_MASK},$P{EXT_MASK},$P{NOF_PROMPT},$P{VEND_ITEM_PROMPT},$P{PROMISE_PROMPT},$P{NOT_B4_PROMPT},$P{SHIPFROM_PROMPT},$P{ITEM_MASK},$P{HISTORICAL_PRINT},$P{BARISTA_WD})]]>
 	</queryString>
 	<field name="QTY_ORDERED" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -95,7 +95,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{QTY_ORDERED}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
+				<textField textAdjust="StretchHeight">
 					<reportElement x="75" y="0" width="205" height="12" uuid="07cc452a-7d0b-4400-8332-df0e4d24feeb">
 						<property name="local_mesure_unitwidth" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>

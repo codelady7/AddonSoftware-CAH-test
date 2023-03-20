@@ -87,12 +87,16 @@ rem --- Set Report Name & Subreport directory
 
 rem --- Open files
 
-	num_files=4
+	num_files=8
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="POE_POPRINT",open_opts$[1]="OTA@"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA@"
     open_tables$[3]="POS_PARAMS",open_opts$[3]="OTA@"
     open_tables$[4]="APS_REPORT",open_opts$[4]="OTA@"
+    open_tables$[5]="POE_POHDR",open_opts$[5]="OTA@"
+    open_tables$[6]="POE_PODET",open_opts$[6]="OTA@"
+    open_tables$[7]="POT_POHDR_ARC",open_opts$[7]="OTA@"
+    open_tables$[8]="POT_PODET_ARC",open_opts$[8]="OTA@"
     
     gosub open_tables
 
@@ -100,6 +104,10 @@ rem --- Open files
     ivs_params=num(open_chans$[2])
     pos_params=num(open_chans$[3])
     aps_report=num(open_chans$[4])
+    poePOHdr_dev=num(open_chans$[5])
+    poePODet_dev=num(open_chans$[6])
+    potPOHdrArc_dev=num(open_chans$[7])
+    potPODetArc_dev=num(open_chans$[8])
 
 rem --- Dimension string templates
 
@@ -107,6 +115,10 @@ rem --- Dimension string templates
 	dim ivs_params$:open_tpls$[2]
 	dim pos_params$:open_tpls$[3]
 	dim aps_report$:open_tpls$[4]
+    dim poePOHdr$:open_tpls$[5]
+    dim poePODet$:open_tpls$[6]
+    dim potPOHdrArc$:open_tpls$[7]
+    dim potPODetArc$:open_tpls$[8]
 
 rem --- Retrieve parameter records
 
@@ -149,6 +161,7 @@ rem --- Assign form input values to local variables
         pomessage$=option!.getOptionData("MESSAGE_TEXT")
         send_via_rpt_ctl$=option!.getOptionData("RPT_CONTROL")
         rptctl_alias$ = "POR_POPRINT";rem --- use actual alias (i.e., POR_POPRINT_DMD) when putting in doc archive so you know it was an on-demand PO, but use POR_POPRINT for report control so you don't need two report control records for each vendor to handle on-demand vs. batch.        
+        historical_print$=option!.getOptionData("historical_print")
     else
         sequence$=option!.getOptionData("REPORT_TYPE")
         pomessage$=option!.getOptionData("MESSAGE_TEXT")
@@ -157,6 +170,7 @@ rem --- Assign form input values to local variables
         rptctl_alias$ = alias$
         master_document=1
         print_document=1
+        historical_print$="N"
     endif
 
 rem --- Initializations
@@ -382,6 +396,7 @@ rem --- Process SQL fetch results
         params!.put("NOT_B4_PROMPT",Translate!.getTranslation("AON_NOT_BEFORE_"))
         params!.put("SHIPFROM_PROMPT",Translate!.getTranslation("AON_SHIP_FROM:_"))
         params!.put("BANDED_ROWS","Y");rem --- controls whether or not detail portion of report is striped
+        params!.put("HISTORICAL_PRINT",historical_print$)
 
     rem --- invoke jasper
 
@@ -710,43 +725,41 @@ close_win:rem --- Viewer Window Closed
     endif
     
 rem --- remove from print file?
-    msg_id$="PO_UPDTPRT"
-    dim msg_tokens$[1]
-    msg_tokens$[1]=Translate!.getTranslation("AON_PURCHASE_ORDER")
-    gosub disp_message
-    if msg_opt$<>"Y" then goto all_done
-
-    if single_vendor$<>"Y"
+    if historical_print$<>"Y" then
+        msg_id$="PO_UPDTPRT"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=Translate!.getTranslation("AON_PURCHASE_ORDER")
+        gosub disp_message
+        if msg_opt$<>"Y" then goto all_done
+    
         for del_recs = 0 to UpdateRecs!.size() - 1
             k$=UpdateRecs!.getItem(del_recs)
-            remove (poe_poprint,key=k$,dom=*next)
-        next del_recs
-      
-        if emailFax!.size()
-            msg_id$ = "CONF_RPTCTL"
-            gosub disp_message
-            if msg_opt$="Y"
-                for email_fax=0 to emailFax!.size()-1 step 3
-                    reportControl!.addToDocQueue(emailFax!.get(email_fax),"",emailFax!.get(email_fax+1),emailFax!.get(email_fax+2))    
-                next email_fax
-            endif   
-        endif
-   
-    else
-    rem --- on demand print
- 
-        remove (poe_poprint,key=firm_id$+vendor_id$+po_no$,dom=*next)
-        if emailFax!.size() and send_via_rpt_ctl$="Y"
-            msg_id$ = "CONF_RPTCTL"
-            gosub disp_message
-            if msg_opt$="Y"
-                for email_fax=0 to emailFax!.size()-1 step 3
-                    reportControl!.addToDocQueue(emailFax!.get(email_fax),"",emailFax!.get(email_fax+1),emailFax!.get(email_fax+2))    
-                next email_fax
-            endif
-        endif
-    endif 
+            remove (poe_poprint,key=k$,dom=*continue)
     
+            rem --- Create historical PO archive for PO Entry records
+            readrecord(poePOHdr_dev,key=k$,knum="AO_VEND_PO",dom=*continue)poePOHdr$
+            writerecord(potPOHdrArc_dev)poePOHdr$
+            
+            read(poePODet_dev,key=poePOHdr.firm_id$+poePOHdr.po_no$,dom=*next)
+            while 1
+                poePODet_key$=key(poePODet_dev,end=*break)
+                if pos(poePOHdr.firm_id$+poePOHdr.po_no$=poePODet_key$)<>1 then break
+                readrecord(poePODet_dev)poePODet$
+                writerecord(potPODetArc_dev)poePODet$
+            wend
+        next del_recs
+    endif
+  
+    if emailFax!.size() and (single_vendor$<>"Y" or send_via_rpt_ctl$="Y")
+        msg_id$ = "CONF_RPTCTL"
+        gosub disp_message
+        if msg_opt$="Y"
+            for email_fax=0 to emailFax!.size()-1 step 3
+                reportControl!.addToDocQueue(emailFax!.get(email_fax),"",emailFax!.get(email_fax+1),emailFax!.get(email_fax+2))    
+            next email_fax
+        endif   
+    endif
+       
 all_done:
 
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,ignore_status

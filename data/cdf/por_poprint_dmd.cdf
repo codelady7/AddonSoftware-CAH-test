@@ -19,3 +19,14 @@ rem --- See if this document/recipient is set up in Addon Report Control
 	rem --- destroy to close files so they don't get opened repeatedly with each iteration
 	reportControl!.destroy()
 	reportControl! = null()
+
+rem --- Set historical print flag
+	if callpoint!.getDevObject("historical_print")<>null() then
+		historical_print$=callpoint!.getDevObject("historical_print")
+		callpoint!.setColumnData("POR_POPRINT_DMD.HISTORICAL_PRINT",historical_print$)
+	else
+		callpoint!.setColumnData("POR_POPRINT_DMD.HISTORICAL_PRINT","")
+	endif
+
+
+
