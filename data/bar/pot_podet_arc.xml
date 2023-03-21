@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.pot_podet_arc">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pot_podet_arc">20230320</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.pot_podet_arc">20230320</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_podet_arc">105406</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_podet_arc">172912</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_podet_arc"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pot_podet_arc">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_podet_arc"></DD_ATTR_DKNM>
@@ -63,6 +63,10 @@
 		<RECORD id="ddm_table_cpro.pot_podet_arcadge">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_podet_arcadge">POT_PODET_ARC   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.pot_podet_arcadge">ADGE</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.pot_podet_arcagcl">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_podet_arcagcl">POT_PODET_ARC   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.pot_podet_arcagcl">AGCL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_podet_arcagdr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_podet_arcagdr">POT_PODET_ARC   </DD_TABLE_ALIAS>
