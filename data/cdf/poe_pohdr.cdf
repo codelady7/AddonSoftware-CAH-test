@@ -16,44 +16,34 @@ else
 endif
 gosub enable_dropship_fields 
 
-rem --- check if receiver, QA receiver, or invoice exists for this PO.  If so, give warning and don't allow edits
-rem --- old code checked poe-33 (QA), 34(receiver) and 35 (invoice GL dist); we'll use alt_key_01 on the 33 and 34 files, and we still have 35.
-rem --- v6 code that accessed poe-35 looks like it could never have worked?
-
-poe_qahdr_dev=fnget_dev("POE_QAHDR")
-dim poe_qahdr$:fnget_tpl$("POE_QAHDR")
-
-poe_rechdr_dev=fnget_dev("POE_RECHDR")
-dim poe_rechdr$:fnget_tpl$("POE_RECHDR")
-
-poe_invdet_dev=fnget_dev("POE_INVDET")
-dim poe_invdet$:fnget_tpl$("POE_INVDET")
-
+rem --- Check if PO receiver or QA receiver exists for this PO.  If so, give warning and don't allow edits
 vendor_id$=callpoint!.getColumnData("POE_POHDR.VENDOR_ID")
 po_no$=callpoint!.getColumnData("POE_POHDR.PO_NO")
 
-read (poe_rechdr_dev,key=firm_id$+po_no$+vendor_id$,knum="AO_VEND_RCVR_PO",dom=*next)
-read record (poe_rechdr_dev,err=*next)poe_rechdr$
-if poe_rechdr.firm_id$=firm_id$ and poe_rechdr.vendor_id$=vendor_id$ and poe_rechdr.po_no$=po_no$
+poe_rechdr_dev=fnget_dev("POE_RECHDR")
+dim poe_rechdr$:fnget_tpl$("POE_RECHDR")
+read (poe_rechdr_dev,key=firm_id$+vendor_id$,knum="AO_VEND_RCVR_PO",dom=*next)
+while 1
+	poe_rechdr_key$=key(poe_rechdr_dev,end=*break)
+	if pos(firm_id$+vendor_id$=poe_rechdr_key$)<>1 then break
+	read record (poe_rechdr_dev)poe_rechdr$
+	if poe_rechdr.po_no$<>po_no$ then continue
+
 	msg_id$="PO_REC_EXISTS"
 	gosub disp_message
 	callpoint!.setStatus("NEWREC")
-endif
+	break
+wend
 
+poe_qahdr_dev=fnget_dev("POE_QAHDR")
+dim poe_qahdr$:fnget_tpl$("POE_QAHDR")
 read (poe_qahdr_dev,key=firm_id$+po_no$+vendor_id$,knum="AO_PO_VEND_RCVR",dom=*next)
 read record (poe_qahdr_dev,err=*next)poe_qahdr$
 if poe_qahdr.firm_id$=firm_id$ and poe_qahdr.vendor_id$=vendor_id$ and poe_qahdr.po_no$=po_no$
 	msg_id$="PO_QA_EXISTS"
 	gosub disp_message
 	callpoint!.setStatus("NEWREC")
-endif
-
-read (poe_invdet_dev,key=firm_id$+po_no$+vendor_id$,knum="AO_PO_VEND",dom=*next)
-read record (poe_invdet_dev,err=*next)poe_invdet$
-if poe_invdet.firm_id$=firm_id$ and poe_invdet.vendor_id$=vendor_id$ and poe_invdet.po_no$=po_no$
-	msg_id$="PO_INV_EXISTS"
-	gosub disp_message
-	callpoint!.setStatus("NEWREC")
+	break
 endif
 
 so_lines_used$=callpoint!.getDevObject("so_lines_used")
@@ -750,6 +740,7 @@ if cvs(callpoint!.getRawUserInput(),3)<>""
 		msg_id$="PO_INVAL_PO"
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
+		break
 	endif
 endif
 
