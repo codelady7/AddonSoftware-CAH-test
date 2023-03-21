@@ -103,18 +103,44 @@
 				<reportElement x="0" y="0" width="555" height="225" backcolor="#FAFAFA" uuid="3594d069-0647-4418-81c5-0ce057a2ab1d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="3" y="7" width="550" height="39" forecolor="#CCCCCC" uuid="c2097777-3970-4749-9e09-a14cdbcb5d2e"/>
+				<reportElement x="3" y="7" width="550" height="39" forecolor="#CCCCCC" uuid="c2097777-3970-4749-9e09-a14cdbcb5d2e">
+					<printWhenExpression><![CDATA[!$P{ARCHIVED}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Serif" size="30" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVOICE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="5" width="550" height="39" forecolor="#000000" uuid="6e003f64-87f6-43fc-b464-6fa74a6b2182"/>
+				<reportElement x="2" y="5" width="550" height="39" forecolor="#000000" uuid="6e003f64-87f6-43fc-b464-6fa74a6b2182">
+					<printWhenExpression><![CDATA[!$P{ARCHIVED}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Serif" size="30" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INVOICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="7" width="550" height="39" forecolor="#CCCCCC" uuid="e1f106a5-cb47-43ff-a5e9-5f34d545dd53">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$P{ARCHIVED}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORICAL INVOICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="5" width="550" height="39" forecolor="#000000" uuid="5050be3a-d666-4102-910c-4ec2c31c3874">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$P{ARCHIVED}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORICAL INVOICE]]></text>
 			</staticText>
 			<rectangle radius="4">
 				<reportElement mode="Opaque" x="15" y="45" width="230" height="147" forecolor="#000000" backcolor="#FFFFFF" uuid="ed224ff5-6a8b-4fd3-b24f-2b03b3f6c429"/>
