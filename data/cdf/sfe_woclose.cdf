@@ -1,359 +1,3 @@
-[[SFE_WOCLOSE.BOVE]]
-rem --- Do custom query
-
-	query_id$="SF_CLOSE_1"
-	query_mode$="DEFAULT"
-	dim filter_defs$[2,2]
-	filter_defs$[1,0] = "SFE_WOMASTR.FIRM_ID"
-	filter_defs$[1,1] = "='"+firm_id$+"'"
-	filter_defs$[1,2] = "LOCK"
-	filter_defs$[2,0] = "SFE_WOMASTR.WO_STATUS"
-	filter_defs$[2,1] = "='O'"
-	filter_defs$[2,2] = "LOCK"
-
-	call stbl("+DIR_SYP")+"bax_query.bbj",
-:		gui_dev,
-:		form!,
-:		query_id$,
-:		query_mode$,
-:		table_chans$[all],
-:		sel_key$,filter_defs$[all]
-
-	if sel_key$<>""
-		call stbl("+DIR_SYP")+"bac_key_template.bbj",
-:			"SFE_WOCLOSE",
-:			"PRIMARY",
-:			sfe_close_key$,
-:			table_chans$[all],
-:			status$
-		dim sfe_close_key$:sfe_close_key$
-		sfe_close_key$=sel_key$
-		callpoint!.setColumnData("SFE_WOCLOSE.WO_NO",sfe_close_key.wo_no$,1)
-	endif
-	callpoint!.setStatus("ACTIVATE-ABORT")
-[[SFE_WOCLOSE.AOPT-LSNO]]
-rem --- Launch sfe_wolotser form to assign lot/serial numbers
-	gosub do_wolotser
-[[SFE_WOCLOSE.ASVA]]
-rem --- Don't do close stuff when SAVE comes from callpoint!.setStatus("SAVE")
-	if callpoint!.getDevObject("set_status_save") then 
-		callpoint!.setDevObject("set_status_save",0)
-		break
-	endif
-
-rem --- If the WO is being closed complete, and is linked to a Sales Order, warn if the total Close Quantity
-rem --- is less than the quantity needed for the Sales Order ship quantity.
-	if callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")="Y" and num(callpoint!.getColumnData("SFE_WOCLOSE.SLS_ORD_SEQ_REF"))>0 then
-		customer_id$=callpoint!.getColumnData("SFE_WOCLOSE.CUSTOMER_ID")
-		order_no$=callpoint!.getColumnData("SFE_WOCLOSE.ORDER_NO")
-		sls_ord_seq_ref$=callpoint!.getColumnData("SFE_WOCLOSE.SLS_ORD_SEQ_REF")
-		soCreateWO!=new SalesOrderCreateWO(firm_id$,customer_id$,order_no$)
-
-		dim opeOrdDetRec$:soCreateWO!.gettplOpeOrdDet()
-		opeOrdDetRec$=soCreateWO!.getSODetailRow(sls_ord_seq_ref$)
-		tempWoVect!=soCreateWO!.addSODetailLine(opeOrdDetRec$, "temporary item description")
-		rem --- WO's sch prod qty is included in the qty on order, so need to back it out when calculating the qty needed.
-		sch_prod_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.SCH_PROD_QTY"))
-		qtyNeeded=soCreateWO!.calculateQtyNeeded(tempWoVect!,opeOrdDetRec.qty_shipped,sch_prod_qty,sls_ord_seq_ref$,1)
-
-		qty_cls_todt=num(callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
-		cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
-		total_cls_qty=qty_cls_todt+cls_inp_qty
-		if qtyNeeded>total_cls_qty then
-			maskIvU$=soCreateWO!.getmaskIvU()
-			maskSfU$=soCreateWO!.getmaskSfU()
-			qty_needed$=cvs(str(qtyNeeded:maskIvU$),3)
-			so_qty_shipped$=cvs(str(opeOrdDetRec.qty_shipped:maskIvU$),3)
-			total_cls_qty$=cvs(str(total_cls_qty:maskSfU$),3)
-
-			msg_id$="SF_CLOSE_COMPLETE_Q"
-			dim msg_tokens$[5]
-			msg_tokens$[1]=order_no$
-			msg_tokens$[2]=customer_id$
-			msg_tokens$[3]=total_cls_qty$
-			msg_tokens$[4]=qty_needed$
-			msg_tokens$[5]=so_qty_shipped$
-			gosub disp_message
-			if msg_opt$<>"Y" then
-				callpoint!.setStatus("ABORT")
-				break
-			else
-				rem --- Add WO comment with close quantity info plus audit info.
-				wo_comment$ =Translate!.getTranslation("AON_CLOSED2")+" "+Translate!.getTranslation("AON_COMPLETE")+" "
-				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_QTY")+" "+total_cls_qty$+" "
-				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_IS_LESS_THAN")+" "
-				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_SALES_ORDER")+" "
-				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_QTY_NEEDED")+" "+qty_needed$
-				soCreateWO!.addWOCmnt(callpoint!.getColumnData("SFE_WOCLOSE.WO_NO"),wo_comment$)
-			endif
-		endif
-		soCreateWO!.close()
-		soCreateWO!=null()
-	endif
-
-rem --- Write sfe_closedwo record
-	closedwo_dev=fnget_dev("1SFE_CLOSEDWO")
-	dim closedwo$:fnget_tpl$("1SFE_CLOSEDWO")
-	closedwo.firm_id$=firm_id$
-	closedwo.wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
-	closedwo.wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
-	writerecord(closedwo_dev,dom=*next)closedwo$
-
-rem --- Recalculate standards
- 	if callpoint!.getColumnData("SFE_WOCLOSE.RECALC_FLAG")="Y" then
-		qty_cls_todt=num(callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
-		cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
-		msg_id$="SF_RECALC_STDS"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=str(qty_cls_todt+cls_inp_qty)
-		gosub disp_message
-		if msg_opt$="N" then
-			callpoint!.setStatus("ABORT")
-			break
-		endif
-
-		rem --- Adjust inventory on order quantity if necessary
-		sch_prod_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.SCH_PROD_QTY"))
-		if callpoint!.getColumnData("SFE_WOCLOSE.WO_CATEGORY")="I" and sch_prod_qty-(qty_cls_todt+cls_inp_qty)<>0 then
-
-			rem --- Initialize inventory item update
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-			rem --- Reduce inventory on order for close incomplete work order
-			items$[1]=callpoint!.getColumnData("SFE_WOCLOSE.WAREHOUSE_ID")
-			items$[2]=callpoint!.getColumnData("SFE_WOCLOSE.ITEM_ID")
-			refs[0]=-(sch_prod_qty-(qty_cls_todt+cls_inp_qty))
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon","OO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-		endif
-
-		rem --- Adjust standards for closed incomplete work order
-		precision$=callpoint!.getDevObject("precision")
-		sch_prod_qty=qty_cls_todt+cls_inp_qty
-		callpoint!.setColumnData("SFE_WOCLOSE.SCH_PROD_QTY",str(sch_prod_qty),1)
-		est_yield=num(callpoint!.getColumnData("SFE_WOCLOSE.EST_YIELD"))
-		for req=1 to 3
-			switch req
-				case 1
-					woreq_dev=fnget_dev("1SFE_WOOPRTN")
-					dim woreq$:fnget_tpl$("1SFE_WOOPRTN")
-					break
-				case 2
-					woreq_dev=fnget_dev("1SFE_WOMATL")
-					dim woreq$:fnget_tpl$("1SFE_WOMATL")
-					break
-				case 3
-					woreq_dev=fnget_dev("1SFE_WOSUBCNT")
-					dim woreq$:fnget_tpl$("1SFE_WOSUBCNT")
-					break
-			swend
-			read(woreq_dev,key=closedwo.firm_id$+closedwo.wo_location$+closedwo.wo_no$,dom=*next)
-			while 1
-				woreq_key$=key(woreq_dev,end=*break)
-				if pos(closedwo.firm_id$+closedwo.wo_location$+closedwo.wo_no$=woreq_key$)<>1 then break
-				extractrecord(woreq_dev)woreq$; rem Advisory locking
-				switch req
-					case 1; rem sfe_wooprtn (sfe-02)
-						if woreq.pcs_per_hour=0 then woreq.pcs_per_hour=1
-						woreq.total_time=SfUtils.opTime(1,
-:										  		sch_prod_qty,
-:										  		woreq.hrs_per_pce,
-:										  		woreq.pcs_per_hour,
-:										  		100,
-:										  		woreq.setup_time)
-						precision 2
-						woreq.tot_std_cost= SfUtils.opTotStdCost(sch_prod_qty,
-:												woreq.hrs_per_pce,
-:												woreq.direct_rate,
-:												woreq.ovhd_rate,
-:												woreq.pcs_per_hour,
-:												est_yield,
-:												woreq.setup_time)
-						break
-					case 2; rem sfe_womatl (sfe-22)
-						if woreq.divisor=0 then woreq.divisor=1
-						woreq.units= SfUtils.matQtyWorkOrd(woreq.qty_required,
-:												 woreq.alt_factor,
-:												 woreq.divisor,
-:												 woreq.scrap_factor,
-:												 est_yield)
-						woreq.unit_cost=woreq.units*woreq.iv_unit_cost
-						woreq.total_units=woreq.units*sch_prod_qty
-						precision 2
-						woreq.total_cost=woreq.total_units*woreq.iv_unit_cost
-						break
-					case 3; rem sfe_wosubcnt (sfe-32)
-						woreq.unit_cost=woreq.units*woreq.rate
-						woreq.total_units=woreq.units*sch_prod_qty
-						precision 2
-						woreq.total_cost=woreq.unit_cost*sch_prod_qty
-						break
-					case default
-						break
-				swend
-				precision num(precision$)
-				writerecord(woreq_dev)woreq$
-			wend
-		next req
-
-		rem --- Clear recalculate flang
-		callpoint!.setColumnData("SFE_WOCLOSE.RECALC_FLAG","",1)
-	endif
-
-rem --- Lot/serial processing if needed
-	if callpoint!.getColumnData("SFE_WOCLOSE.WO_CATEGORY")="I" and 
-:	callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_ITEM")="Y" and 
-:	pos(callpoint!.getDevObject("lotser")="LS") then
-		gosub do_wolotser
-	endif
-[[SFE_WOCLOSE.CLOSED_COST.BINP]]
-rem --- As needed, initialize actual closed cost and closed value
-	if num(callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))=0 then
-		stdact_flag$=callpoint!.getDevObject("stdact_flag")
-		complete_flg$=callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")
-		cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
-		gosub update_act_closed_cost
-	endif
-[[SFE_WOCLOSE.CLOSED_COST.AVAL]]
-rem --- Update closed value
-	closed_cost=num(callpoint!.getUserInput())
-	cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
-	callpoint!.setColumnData("<<DISPLAY>>.CLOSED_VALUE",str(cls_inp_qty*closed_cost),1)
-[[SFE_WOCLOSE.COMPLETE_FLG.AVAL]]
-rem --- Enable/disable closed cost
-	complete_flg$=callpoint!.getUserInput()
-	stdact_flag$=callpoint!.getDevObject("stdact_flag")
-	gosub enable_closed_cost
-
-rem --- Update actual closed cost and closed value
-	closed_cost=num(callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))
-	cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
-	gosub update_act_closed_cost
-
-rem --- Enable/disable recalculate flag
-	gosub enable_recalc_flg
-
-rem --- Check for open POs for subcontracts for this work order
-	if cvs(callpoint!.getUserInput(),2)="Y" and callpoint!.getDevObject("po")="Y" then
-		open$=""
-		wosubcnt_dev=fnget_dev("1SFE_WOSUBCNT")
-		dim wosubcnt$:fnget_tpl$("1SFE_WOSUBCNT")
-		podet_dev=fnget_dev("@POE_PODET")
-		reqdet_dev=fnget_dev("@POE_REQDET")
-
-		wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
-		wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
-		wosubcnt_trip$=firm_id$+wo_location$+wo_no$
-		read(wosubcnt_dev,key=wosubcnt_trip$,dom=*next)
-		while 1
-			wosubcnt_key$=key(wosubcnt_dev,end=*break)
-			if pos(wosubcnt_trip$=wosubcnt_key$)<>1 then break
-			readrecord(wosubcnt_dev)wosubcnt$
-			if num(wosubcnt.po_no$)=0 then continue
-
-			rem --- Check purchase order detail
-			dim podet$:fnget_tpl$("@POE_PODET")
-			readrecord(podet_dev,key=firm_id$+wosubcnt.po_no$+wosubcnt.pur_ord_seq_ref$,dom=*next)podet$
-			if podet.wo_no$+podet.wk_ord_seq_ref$=wosubcnt.wo_no$+wosubcnt.internal_seq_no$ then
-				open$=cvs(Translate!.getTranslation("AON_ORDERS"),8)
-				break
-			endif
-
-			rem --- Check PO requisition detail
-			dim reqdet$:fnget_tpl$("@POE_REQDET")
-			readrecord(reqdet_dev,key=firm_id$+wosubcnt.po_no$+wosubcnt.pur_ord_seq_ref$,dom=*next)reqdet$
-			if reqdet.wo_no$+reqdet.wk_ord_seq_ref$=wosubcnt.wo_no$+wosubcnt.internal_seq_no$ then
-				open$=cvs(Translate!.getTranslation("AON_REQUISITIONS"),8)
-				break
-			endif
-		wend
-
-		if open$<>"" then
-			callpoint!.setUserInput("N")
-			msg_id$="SF_OPEN_SUBCONTRACTS"
-			dim msg_tokens$[1]
-			msg_tokens$[1]=open$
-			gosub disp_message
-		endif
-	endif
-[[SFE_WOCLOSE.CLS_INP_QTY.AVAL]]
-rem --- Can't unclose more than previously closed
-	cls_inp_qty=num(callpoint!.getUserInput())
-	qty_cls_todt=num(callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
-	if cls_inp_qty<>0 and qty_cls_todt<>0 and sgn(cls_inp_qty)<>sgn(qty_cls_todt) and abs(cls_inp_qty)>abs(qty_cls_todt) then
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
-rem --- Work order complete?
-	complete_flg$=callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")
-	if cls_inp_qty+qty_cls_todt>=num(callpoint!.getColumnData("SFE_WOCLOSE.SCH_PROD_QTY")) then
-		complete_flg$="Y"
-		callpoint!.setColumnData("SFE_WOCLOSE.COMPLETE_FLG",complete_flg$,1)
-		callpoint!.setStatus("MODIFIED")
-		stdact_flag$=callpoint!.getDevObject("stdact_flag")
-		gosub enable_closed_cost
-	endif
-
-rem --- Update actual closed cost and closed value
-	closed_cost=num(callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))
-	stdact_flag$=callpoint!.getDevObject("stdact_flag")
-	gosub update_act_closed_cost
-
-rem --- Enable/disable recalculate flag
-	gosub enable_recalc_flg
-[[SFE_WOCLOSE.ASHO]]
-rem --- Get system info
-	dim sysinfo$:stbl("+SYSINFO_TPL")
-	sysinfo$=stbl("+SYSINFO")
-[[SFE_WOCLOSE.CLS_INP_DATE.AVAL]]
-rem --- Verify date when GL installed
-	cls_inp_date$=callpoint!.getUserInput()
-	if callpoint!.getDevObject("gl")="Y" then
-		rem --- Verify date is in an open period
-		call stbl("+DIR_PGM")+"glc_datecheck.aon",cls_inp_date$,"Y",per$,yr$,status
-		if status>99 then 
-			callpoint!.setStatus("ABORT")
-			break
-		endif
-
-		rem --- Verify date is not in prior period
-		if cls_inp_date$<callpoint!.getDevObject("gl_beg_date") then
-			msg_id$="SF_CLOSE_PRIOR"
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			break
-		endif
-	endif
-[[SFE_WOCLOSE.CLS_INP_DATE.BINP]]
-rem --- Close this work order?
-	ask_close_question=num(callpoint!.getDevObject("ask_close_question"))
-	if ask_close_question and callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")<>"Y" then
-		rem --- Work order scheduled to be closed?
-		closedwo_dev=fnget_dev("1SFE_CLOSEDWO")
-		wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
-		wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
-		closedwo_found=0
-		findrecord(closedwo_dev,key=firm_id$+wo_location$+wo_no$,dom=*next);closedwo_found=1
-		if !closedwo_found then
-			callpoint!.setDevObject("ask_close_question","0")
-			msg_id$="SF_CLOSE_WO"
-			gosub disp_message
-			if msg_opt$="N" then
-				rem --- Done with this work order
-				callpoint!.setStatus("NEWREC")
-				break
-			endif
-		endif
-	endif
-
-rem --- Initialize input close date
-	if cvs(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_DATE"),2)="" then
-		callpoint!.setColumnData("SFE_WOCLOSE.CLS_INP_DATE",sysinfo.system_date$,1)
-		callpoint!.setStatus("MODIFIED")
-	endif
-
-rem --- Display isn't being refreshed after wo reopened in ADIS , so must do it here
-	callpoint!.setStatus("REFRESH")
 [[SFE_WOCLOSE.ADIS]]
 rem --- Need to ask about closing this work order
 	callpoint!.setDevObject("ask_close_question","1")
@@ -560,6 +204,505 @@ rem -- Disable lot/serial option if not lotted/serialized, and scheduled for clo
 	else
 		callpoint!.setOptionEnabled("LSNO",0)
 	endif
+
+[[SFE_WOCLOSE.AOPT-LSNO]]
+rem --- Launch sfe_wolotser form to assign lot/serial numbers
+	gosub do_wolotser
+
+[[SFE_WOCLOSE.ASHO]]
+rem --- Get system info
+	dim sysinfo$:stbl("+SYSINFO_TPL")
+	sysinfo$=stbl("+SYSINFO")
+
+[[SFE_WOCLOSE.ASVA]]
+rem --- Don't do close stuff when SAVE comes from callpoint!.setStatus("SAVE")
+	if callpoint!.getDevObject("set_status_save") then 
+		callpoint!.setDevObject("set_status_save",0)
+		break
+	endif
+
+rem --- If the WO is being closed complete, and is linked to a Sales Order, warn if the total Close Quantity
+rem --- is less than the quantity needed for the Sales Order ship quantity.
+	if callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")="Y" and num(callpoint!.getColumnData("SFE_WOCLOSE.SLS_ORD_SEQ_REF"))>0 then
+		customer_id$=callpoint!.getColumnData("SFE_WOCLOSE.CUSTOMER_ID")
+		order_no$=callpoint!.getColumnData("SFE_WOCLOSE.ORDER_NO")
+		sls_ord_seq_ref$=callpoint!.getColumnData("SFE_WOCLOSE.SLS_ORD_SEQ_REF")
+		soCreateWO!=new SalesOrderCreateWO(firm_id$,customer_id$,order_no$)
+
+		dim opeOrdDetRec$:soCreateWO!.gettplOpeOrdDet()
+		opeOrdDetRec$=soCreateWO!.getSODetailRow(sls_ord_seq_ref$)
+		tempWoVect!=soCreateWO!.addSODetailLine(opeOrdDetRec$, "temporary item description")
+		rem --- WO's sch prod qty is included in the qty on order, so need to back it out when calculating the qty needed.
+		sch_prod_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.SCH_PROD_QTY"))
+		qtyNeeded=soCreateWO!.calculateQtyNeeded(tempWoVect!,opeOrdDetRec.qty_shipped,sch_prod_qty,sls_ord_seq_ref$,1)
+
+		qty_cls_todt=num(callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
+		cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
+		total_cls_qty=qty_cls_todt+cls_inp_qty
+		if qtyNeeded>total_cls_qty then
+			maskIvU$=soCreateWO!.getmaskIvU()
+			maskSfU$=soCreateWO!.getmaskSfU()
+			qty_needed$=cvs(str(qtyNeeded:maskIvU$),3)
+			so_qty_shipped$=cvs(str(opeOrdDetRec.qty_shipped:maskIvU$),3)
+			total_cls_qty$=cvs(str(total_cls_qty:maskSfU$),3)
+
+			msg_id$="SF_CLOSE_COMPLETE_Q"
+			dim msg_tokens$[5]
+			msg_tokens$[1]=order_no$
+			msg_tokens$[2]=customer_id$
+			msg_tokens$[3]=total_cls_qty$
+			msg_tokens$[4]=qty_needed$
+			msg_tokens$[5]=so_qty_shipped$
+			gosub disp_message
+			if msg_opt$<>"Y" then
+				callpoint!.setStatus("ABORT")
+				break
+			else
+				rem --- Add WO comment with close quantity info plus audit info.
+				wo_comment$ =Translate!.getTranslation("AON_CLOSED2")+" "+Translate!.getTranslation("AON_COMPLETE")+" "
+				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_QTY")+" "+total_cls_qty$+" "
+				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_IS_LESS_THAN")+" "
+				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_SALES_ORDER")+" "
+				wo_comment$ =wo_comment$+Translate!.getTranslation("AON_QTY_NEEDED")+" "+qty_needed$
+				soCreateWO!.addWOCmnt(callpoint!.getColumnData("SFE_WOCLOSE.WO_NO"),wo_comment$)
+			endif
+		endif
+		soCreateWO!.close()
+		soCreateWO!=null()
+	endif
+
+rem --- For partial close of new entries only, warn if there are any non-updated transactions for the WO
+	if callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")<>"Y" then
+		rem --- This is a partial close
+		closedwo_dev=fnget_dev("1SFE_CLOSEDWO")
+		dim closedwo$:fnget_tpl$("1SFE_CLOSEDWO")
+		wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
+		wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
+		findrecord(closedwo_dev,key=firm_id$+wo_location$+wo_no$,dom=*next)closedwo$
+		if closedwo.wo_no$<>wo_no$ then
+			rem --- This is a new entry
+			rem --- Check for non-updated Material Issues transactions for this work order
+			sfutils!=new SfUtils(firm_id$)
+			transactions=sfutils!.checkMaterialTransactions(wo_no$,wo_location$)
+			if transactions then
+				msg_id$="SF_MAT_ISSUES_WARN"
+				gosub disp_message
+			endif
+
+			rem --- Check for non-updated Time Sheet transactions (i.e. operations) for this work order
+			transactions=sfutils!.checkOperationTransactions(wo_no$)
+			if transactions then
+				msg_id$="SF_TIME_SHEET_WARN"
+				gosub disp_message
+			endif
+
+			rem --- Check for open POs for subcontracts for this work order
+			if callpoint!.getDevObject("po")="Y" then
+				transactions=sfutils!.checkSubcontractTransactions(wo_no$,wo_location$)
+				open$=""
+				if transactions=1 then open$=cvs(Translate!.getTranslation("AON_ORDERS"),8)
+				if transactions=2 then open$=cvs(Translate!.getTranslation("AON_REQUISITIONS"),8)
+				if open$<>"" then
+					msg_id$="SF_SUBCONTRACTS_WARN"
+					dim msg_tokens$[1]
+					msg_tokens$[1]=open$
+					gosub disp_message
+				endif
+			endif
+
+			rem --- Close channels opened in SFUtils class/object
+			sfutils!.close()
+		endif
+	endif
+
+rem --- Write sfe_closedwo record
+	closedwo_dev=fnget_dev("1SFE_CLOSEDWO")
+	dim closedwo$:fnget_tpl$("1SFE_CLOSEDWO")
+	closedwo.firm_id$=firm_id$
+	closedwo.wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
+	closedwo.wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
+	writerecord(closedwo_dev,dom=*next)closedwo$
+
+rem --- Recalculate standards
+ 	if callpoint!.getColumnData("SFE_WOCLOSE.RECALC_FLAG")="Y" then
+		qty_cls_todt=num(callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
+		cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
+		msg_id$="SF_RECALC_STDS"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=str(qty_cls_todt+cls_inp_qty)
+		gosub disp_message
+		if msg_opt$="N" then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Adjust inventory on order quantity if necessary
+		sch_prod_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.SCH_PROD_QTY"))
+		if callpoint!.getColumnData("SFE_WOCLOSE.WO_CATEGORY")="I" and sch_prod_qty-(qty_cls_todt+cls_inp_qty)<>0 then
+
+			rem --- Initialize inventory item update
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+			rem --- Reduce inventory on order for close incomplete work order
+			items$[1]=callpoint!.getColumnData("SFE_WOCLOSE.WAREHOUSE_ID")
+			items$[2]=callpoint!.getColumnData("SFE_WOCLOSE.ITEM_ID")
+			refs[0]=-(sch_prod_qty-(qty_cls_todt+cls_inp_qty))
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon","OO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+		endif
+
+		rem --- Adjust standards for closed incomplete work order
+		precision$=callpoint!.getDevObject("precision")
+		sch_prod_qty=qty_cls_todt+cls_inp_qty
+		callpoint!.setColumnData("SFE_WOCLOSE.SCH_PROD_QTY",str(sch_prod_qty),1)
+		est_yield=num(callpoint!.getColumnData("SFE_WOCLOSE.EST_YIELD"))
+		for req=1 to 3
+			switch req
+				case 1
+					woreq_dev=fnget_dev("1SFE_WOOPRTN")
+					dim woreq$:fnget_tpl$("1SFE_WOOPRTN")
+					break
+				case 2
+					woreq_dev=fnget_dev("1SFE_WOMATL")
+					dim woreq$:fnget_tpl$("1SFE_WOMATL")
+					break
+				case 3
+					woreq_dev=fnget_dev("1SFE_WOSUBCNT")
+					dim woreq$:fnget_tpl$("1SFE_WOSUBCNT")
+					break
+			swend
+			read(woreq_dev,key=closedwo.firm_id$+closedwo.wo_location$+closedwo.wo_no$,dom=*next)
+			while 1
+				woreq_key$=key(woreq_dev,end=*break)
+				if pos(closedwo.firm_id$+closedwo.wo_location$+closedwo.wo_no$=woreq_key$)<>1 then break
+				extractrecord(woreq_dev)woreq$; rem Advisory locking
+				switch req
+					case 1; rem sfe_wooprtn (sfe-02)
+						if woreq.pcs_per_hour=0 then woreq.pcs_per_hour=1
+						woreq.total_time=SfUtils.opTime(1,
+:										  		sch_prod_qty,
+:										  		woreq.hrs_per_pce,
+:										  		woreq.pcs_per_hour,
+:										  		100,
+:										  		woreq.setup_time)
+						precision 2
+						woreq.tot_std_cost= SfUtils.opTotStdCost(sch_prod_qty,
+:												woreq.hrs_per_pce,
+:												woreq.direct_rate,
+:												woreq.ovhd_rate,
+:												woreq.pcs_per_hour,
+:												est_yield,
+:												woreq.setup_time)
+						break
+					case 2; rem sfe_womatl (sfe-22)
+						if woreq.divisor=0 then woreq.divisor=1
+						woreq.units= SfUtils.matQtyWorkOrd(woreq.qty_required,
+:												 woreq.alt_factor,
+:												 woreq.divisor,
+:												 woreq.scrap_factor,
+:												 est_yield)
+						woreq.unit_cost=woreq.units*woreq.iv_unit_cost
+						woreq.total_units=woreq.units*sch_prod_qty
+						precision 2
+						woreq.total_cost=woreq.total_units*woreq.iv_unit_cost
+						break
+					case 3; rem sfe_wosubcnt (sfe-32)
+						woreq.unit_cost=woreq.units*woreq.rate
+						woreq.total_units=woreq.units*sch_prod_qty
+						precision 2
+						woreq.total_cost=woreq.unit_cost*sch_prod_qty
+						break
+					case default
+						break
+				swend
+				precision num(precision$)
+				writerecord(woreq_dev)woreq$
+			wend
+		next req
+
+		rem --- Clear recalculate flang
+		callpoint!.setColumnData("SFE_WOCLOSE.RECALC_FLAG","",1)
+	endif
+
+rem --- Lot/serial processing if needed
+	if callpoint!.getColumnData("SFE_WOCLOSE.WO_CATEGORY")="I" and 
+:	callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_ITEM")="Y" and 
+:	pos(callpoint!.getDevObject("lotser")="LS") then
+		gosub do_wolotser
+	endif
+
+[[SFE_WOCLOSE.BOVE]]
+rem --- Do custom query
+
+	query_id$="SF_CLOSE_1"
+	query_mode$="DEFAULT"
+	dim filter_defs$[2,2]
+	filter_defs$[1,0] = "SFE_WOMASTR.FIRM_ID"
+	filter_defs$[1,1] = "='"+firm_id$+"'"
+	filter_defs$[1,2] = "LOCK"
+	filter_defs$[2,0] = "SFE_WOMASTR.WO_STATUS"
+	filter_defs$[2,1] = "='O'"
+	filter_defs$[2,2] = "LOCK"
+
+	call stbl("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev,
+:		form!,
+:		query_id$,
+:		query_mode$,
+:		table_chans$[all],
+:		sel_key$,filter_defs$[all]
+
+	if sel_key$<>""
+		call stbl("+DIR_SYP")+"bac_key_template.bbj",
+:			"SFE_WOCLOSE",
+:			"PRIMARY",
+:			sfe_close_key$,
+:			table_chans$[all],
+:			status$
+		dim sfe_close_key$:sfe_close_key$
+		sfe_close_key$=sel_key$
+		callpoint!.setColumnData("SFE_WOCLOSE.WO_NO",sfe_close_key.wo_no$,1)
+	endif
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
+[[SFE_WOCLOSE.BSHO]]
+rem --- Initializations
+	use ::opo_SalesOrderCreateWO.aon::SalesOrderCreateWO
+	use ::sfo_SfUtils.aon::SfUtils
+
+rem --- Open Files
+	num_files=15
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="SFS_PARAMS",open_opts$[1]="OTA@"
+	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA@"
+	open_tables$[3]="SFE_WOOPRTN",open_opts$[3]="OTA[1]"
+	open_tables$[4]="SFE_CLOSEDWO",open_opts$[4]="OTA[1]"
+	open_tables$[5]="SFE_WOMATL",open_opts$[5]="OTA[1]"
+	open_tables$[6]="SFE_WOSUBCNT",open_opts$[6]="OTA[1]"
+	open_tables$[7]="SFC_WOTYPECD",open_opts$[7]="OTA@"
+	open_tables$[8]="SFT_OPNOPRTR",open_opts$[8]="OTA@"
+	open_tables$[9]="SFT_OPNMATTR",open_opts$[9]="OTA@"
+	open_tables$[10]="SFT_OPNSUBTR",open_opts$[10]="OTA@"
+	open_tables$[11]="IVM_ITEMMAST",open_opts$[11]="OTA@"
+	open_tables$[12]="IVM_ITEMWHSE",open_opts$[12]="OTA@"
+	open_tables$[13]="IVC_WHSECODE",open_opts$[13]="OTA@"
+	open_tables$[14]="SFE_WOMASTR",open_opts$[14]="OTA"
+	open_tables$[15]="SFE_WOLOTSER",open_opts$[15]="OTA[1]"
+
+	gosub open_tables
+
+	sfs_params_dev=num(open_chans$[1]),sfs_params_tpl$=open_tpls$[1]
+	ivs_params_dev=num(open_chans$[2]),ivs_params_tpl$=open_tpls$[2]
+
+rem --- Get SF parameters
+	dim sfs_params$:sfs_params_tpl$
+	read record (sfs_params_dev,key=firm_id$+"SF00",dom=std_missing_params) sfs_params$
+	po$=sfs_params.po_interface$
+	gl$=sfs_params.post_to_gl$
+
+	if po$="Y" then
+		call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
+		po$=info$[20]
+	endif
+	callpoint!.setDevObject("po",po$)
+
+	if gl$="Y" then
+		gl$="N"
+		status=0
+		source$=pgm(-2)
+		call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"SF",glw11$,gl$,status
+		if status<>0 goto std_exit
+	endif
+	callpoint!.setDevObject("gl",gl$)
+
+rem --- Get IV parameters
+	dim ivs_params$:ivs_params_tpl$
+	read record (ivs_params_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs_params$
+	lotser$=ivs_params.lotser_flag$
+	callpoint!.setDevObject("lotser",lotser$)
+	precision$=ivs_params.precision$
+	callpoint!.setDevObject("precision",precision$)
+	precision num(precision$)
+	cost_method$=ivs_params.cost_method$
+	callpoint!.setDevObject("cost_method",cost_method$)
+
+rem --- Additional file opens
+	num_files=4
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	if po$="Y" then
+		open_tables$[1]="POE_REQDET",open_opts$[1]="OTA@"
+		open_tables$[2]="POE_PODET",open_opts$[2]="OTA@"
+	endif
+	if pos(lotser$="LS") then
+		open_tables$[3]="IVM_LSMASTER",open_opts$[3]="OTA@"
+	endif
+
+	gosub open_tables
+
+	if gl$="Y" then
+		rem --- Get GL period start date for current SF period
+		call stbl("+DIR_PGM")+"adc_perioddates.aon",num(sfs_params.current_per$),num(sfs_params.current_year$),beg_date$,end_date$,table_chans$[all],status
+		if status=0 then callpoint!.setDevObject("gl_beg_date",beg_date$)
+	endif
+
+[[SFE_WOCLOSE.CLOSED_COST.AVAL]]
+rem --- Update closed value
+	closed_cost=num(callpoint!.getUserInput())
+	cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
+	callpoint!.setColumnData("<<DISPLAY>>.CLOSED_VALUE",str(cls_inp_qty*closed_cost),1)
+
+[[SFE_WOCLOSE.CLOSED_COST.BINP]]
+rem --- As needed, initialize actual closed cost and closed value
+	if num(callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))=0 then
+		stdact_flag$=callpoint!.getDevObject("stdact_flag")
+		complete_flg$=callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")
+		cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
+		gosub update_act_closed_cost
+	endif
+
+[[SFE_WOCLOSE.CLS_INP_DATE.AVAL]]
+rem --- Verify date when GL installed
+	cls_inp_date$=callpoint!.getUserInput()
+	if callpoint!.getDevObject("gl")="Y" then
+		rem --- Verify date is in an open period
+		call stbl("+DIR_PGM")+"glc_datecheck.aon",cls_inp_date$,"Y",per$,yr$,status
+		if status>99 then 
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Verify date is not in prior period
+		if cls_inp_date$<callpoint!.getDevObject("gl_beg_date") then
+			msg_id$="SF_CLOSE_PRIOR"
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+[[SFE_WOCLOSE.CLS_INP_DATE.BINP]]
+rem --- Close this work order?
+	ask_close_question=num(callpoint!.getDevObject("ask_close_question"))
+	if ask_close_question and callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")<>"Y" then
+		rem --- Work order scheduled to be closed?
+		closedwo_dev=fnget_dev("1SFE_CLOSEDWO")
+		wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
+		wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
+		closedwo_found=0
+		findrecord(closedwo_dev,key=firm_id$+wo_location$+wo_no$,dom=*next);closedwo_found=1
+		if !closedwo_found then
+			callpoint!.setDevObject("ask_close_question","0")
+			msg_id$="SF_CLOSE_WO"
+			gosub disp_message
+			if msg_opt$="N" then
+				rem --- Done with this work order
+				callpoint!.setStatus("NEWREC")
+				break
+			endif
+		endif
+	endif
+
+rem --- Initialize input close date
+	if cvs(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_DATE"),2)="" then
+		callpoint!.setColumnData("SFE_WOCLOSE.CLS_INP_DATE",sysinfo.system_date$,1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+rem --- Display isn't being refreshed after wo reopened in ADIS , so must do it here
+	callpoint!.setStatus("REFRESH")
+
+[[SFE_WOCLOSE.CLS_INP_QTY.AVAL]]
+rem --- Can't unclose more than previously closed
+	cls_inp_qty=num(callpoint!.getUserInput())
+	qty_cls_todt=num(callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
+	if cls_inp_qty<>0 and qty_cls_todt<>0 and sgn(cls_inp_qty)<>sgn(qty_cls_todt) and abs(cls_inp_qty)>abs(qty_cls_todt) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Work order complete?
+	complete_flg$=callpoint!.getColumnData("SFE_WOCLOSE.COMPLETE_FLG")
+	if cls_inp_qty+qty_cls_todt>=num(callpoint!.getColumnData("SFE_WOCLOSE.SCH_PROD_QTY")) then
+		complete_flg$="Y"
+		callpoint!.setColumnData("SFE_WOCLOSE.COMPLETE_FLG",complete_flg$,1)
+		callpoint!.setStatus("MODIFIED")
+		stdact_flag$=callpoint!.getDevObject("stdact_flag")
+		gosub enable_closed_cost
+	endif
+
+rem --- Update actual closed cost and closed value
+	closed_cost=num(callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))
+	stdact_flag$=callpoint!.getDevObject("stdact_flag")
+	gosub update_act_closed_cost
+
+rem --- Enable/disable recalculate flag
+	gosub enable_recalc_flg
+
+[[SFE_WOCLOSE.COMPLETE_FLG.AVAL]]
+rem --- Enable/disable closed cost
+	complete_flg$=callpoint!.getUserInput()
+	stdact_flag$=callpoint!.getDevObject("stdact_flag")
+	gosub enable_closed_cost
+
+rem --- Update actual closed cost and closed value
+	closed_cost=num(callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))
+	cls_inp_qty=num(callpoint!.getColumnData("SFE_WOCLOSE.CLS_INP_QTY"))
+	gosub update_act_closed_cost
+
+rem --- Enable/disable recalculate flag
+	gosub enable_recalc_flg
+
+rem --- Check complete WOs for non-updated transactions
+	if cvs(callpoint!.getUserInput(),2)="Y" then
+		rem --- Check for non-updated Material Issues transactions for this work order
+		wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
+		wo_no$=callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
+		sfutils!=new SfUtils(firm_id$)
+		transactions=sfutils!.checkMaterialTransactions(wo_no$,wo_location$)
+		if transactions then
+			msg_id$="SF_MAT_ISSUES_EXIST"
+			gosub disp_message
+
+			callpoint!.setColumnData("SFE_WOCLOSE.COMPLETE_FLG","N",1)
+			callpoint!.setStatus("ABORT")
+			sfutils!.close()
+			break
+		endif
+
+		rem --- Check for non-updated Time Sheet transactions (i.e. operations) for this work order
+		transactions=sfutils!.checkOperationTransactions(wo_no$)
+		if transactions then
+			msg_id$="SF_TIME_SHEET_EXIST"
+			gosub disp_message
+
+			callpoint!.setColumnData("SFE_WOCLOSE.COMPLETE_FLG","N",1)
+			callpoint!.setStatus("ABORT")
+			sfutils!.close()
+			break
+		endif
+
+		rem --- Check for open POs for subcontracts for this work order
+		if callpoint!.getDevObject("po")="Y" then
+			transactions=sfutils!.checkSubcontractTransactions(wo_no$,wo_location$)
+			open$=""
+			if transactions=1 then open$=cvs(Translate!.getTranslation("AON_ORDERS"),8)
+			if transactions=2 then open$=cvs(Translate!.getTranslation("AON_REQUISITIONS"),8)
+			if open$<>"" then
+				msg_id$="SF_OPEN_SUBCONTRACTS"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=open$
+				gosub disp_message
+
+				callpoint!.setColumnData("SFE_WOCLOSE.COMPLETE_FLG","N",1)
+				callpoint!.setStatus("ABORT")
+				sfutils!.close()
+				break
+			endif
+		endif
+
+		rem --- Close channels opened in SFUtils class/object
+		sfutils!.close()
+	endif
+
 [[SFE_WOCLOSE.<CUSTOM>]]
 #include [+ADDON_LIB]std_missing_params.aon
 
@@ -647,82 +790,6 @@ rem ==========================================================================
 :		dflt_data$[all]
 
 	return
-[[SFE_WOCLOSE.BSHO]]
-rem --- Initializations
-	use ::opo_SalesOrderCreateWO.aon::SalesOrderCreateWO
-	use ::sfo_SfUtils.aon::SfUtils
 
-rem --- Open Files
-	num_files=15
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="SFS_PARAMS",open_opts$[1]="OTA@"
-	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA@"
-	open_tables$[3]="SFE_WOOPRTN",open_opts$[3]="OTA[1]"
-	open_tables$[4]="SFE_CLOSEDWO",open_opts$[4]="OTA[1]"
-	open_tables$[5]="SFE_WOMATL",open_opts$[5]="OTA[1]"
-	open_tables$[6]="SFE_WOSUBCNT",open_opts$[6]="OTA[1]"
-	open_tables$[7]="SFC_WOTYPECD",open_opts$[7]="OTA@"
-	open_tables$[8]="SFT_OPNOPRTR",open_opts$[8]="OTA@"
-	open_tables$[9]="SFT_OPNMATTR",open_opts$[9]="OTA@"
-	open_tables$[10]="SFT_OPNSUBTR",open_opts$[10]="OTA@"
-	open_tables$[11]="IVM_ITEMMAST",open_opts$[11]="OTA@"
-	open_tables$[12]="IVM_ITEMWHSE",open_opts$[12]="OTA@"
-	open_tables$[13]="IVC_WHSECODE",open_opts$[13]="OTA@"
-	open_tables$[14]="SFE_WOMASTR",open_opts$[14]="OTA"
-	open_tables$[15]="SFE_WOLOTSER",open_opts$[15]="OTA[1]"
 
-	gosub open_tables
 
-	sfs_params_dev=num(open_chans$[1]),sfs_params_tpl$=open_tpls$[1]
-	ivs_params_dev=num(open_chans$[2]),ivs_params_tpl$=open_tpls$[2]
-
-rem --- Get SF parameters
-	dim sfs_params$:sfs_params_tpl$
-	read record (sfs_params_dev,key=firm_id$+"SF00",dom=std_missing_params) sfs_params$
-	po$=sfs_params.po_interface$
-	gl$=sfs_params.post_to_gl$
-
-	if po$="Y" then
-		call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
-		po$=info$[20]
-	endif
-	callpoint!.setDevObject("po",po$)
-
-	if gl$="Y" then
-		gl$="N"
-		status=0
-		source$=pgm(-2)
-		call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"SF",glw11$,gl$,status
-		if status<>0 goto std_exit
-	endif
-	callpoint!.setDevObject("gl",gl$)
-
-rem --- Get IV parameters
-	dim ivs_params$:ivs_params_tpl$
-	read record (ivs_params_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs_params$
-	lotser$=ivs_params.lotser_flag$
-	callpoint!.setDevObject("lotser",lotser$)
-	precision$=ivs_params.precision$
-	callpoint!.setDevObject("precision",precision$)
-	precision num(precision$)
-	cost_method$=ivs_params.cost_method$
-	callpoint!.setDevObject("cost_method",cost_method$)
-
-rem --- Additional file opens
-	num_files=4
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	if po$="Y" then
-		open_tables$[1]="POE_REQDET",open_opts$[1]="OTA@"
-		open_tables$[2]="POE_PODET",open_opts$[2]="OTA@"
-	endif
-	if pos(lotser$="LS") then
-		open_tables$[3]="IVM_LSMASTER",open_opts$[3]="OTA@"
-	endif
-
-	gosub open_tables
-
-	if gl$="Y" then
-		rem --- Get GL period start date for current SF period
-		call stbl("+DIR_PGM")+"adc_perioddates.aon",num(sfs_params.current_per$),num(sfs_params.current_year$),beg_date$,end_date$,table_chans$[all],status
-		if status=0 then callpoint!.setDevObject("gl_beg_date",beg_date$)
-	endif

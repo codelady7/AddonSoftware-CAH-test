@@ -9,7 +9,269 @@ rem --- All Rights Reserved
 rem ==========================================================================
 
 class public AO_SfUtils
+    field protected BBjNumber devPoePodet = -1
+    field protected BBjNumber devPoeReqdet = -1
+    field protected BBjNumber devSfeTimedatedet = -1
+    field protected BBjNumber devSfeTimeempldet = -1
+    field protected BBjNumber devSfeTimewodet = -1
+    field protected BBjNumber devSfeWomatisd = -1
+    field protected BBjNumber devSfeWosubcnt = -1
+    field protected BBjNumber devSfsParams = -1
+    field protected BBjString firmID$
+    field protected BBjString poInterface$
+    field protected BBjString timeSheetBy$
+    field protected BBjString tplPoePodet$
+    field protected BBjString tplPoeReqdet$
+    field protected BBjString tplSfeTimedatedet$
+    field protected BBjString tplSfeTimeempldet$
+    field protected BBjString tplSfeTimewodet$
+    field protected BBjString tplSfeWomatisd$
+    field protected BBjString tplSfeWosubcnt$
+    field protected BBjString tplSfsParams$
 
+    rem /**
+    rem  * Constructor.
+    rem  *
+    rem  * @param BBjString firmID$
+    rem  */
+    method public AO_SfUtils(BBjString firm_id$)
+        def fnget_dev1(tmp0$)=num(rd_table_chans$[0,0](pos(pad(tmp0$,17)=rd_table_chans$[0,0],20)+17,3))
+        seterr AO_SfUtils_error
+
+        rem --- Initialize field variables
+        #firmID$ = firm_id$
+
+        rem --- Open needed files          
+        num_files=5
+        dim open_tables$[1:num_files], open_opts$[1:num_files], open_chans$[1:num_files], open_tpls$[1:num_files]
+        open_tables$[1] ="SFE_TIMEDATEDET",   open_opts$[1] = "OTA[1]"
+        open_tables$[2] ="SFE_TIMEEMPLDET",   open_opts$[2] = "OTA[1]"
+        open_tables$[3] ="SFE_TIMEWODET",   open_opts$[3] = "OTA[1]"
+        open_tables$[4] ="SFE_WOMATISD",    open_opts$[4] = "OTA[1]"
+        open_tables$[5] ="SFS_PARAMS",      open_opts$[5] = "OTA[1]"
+    
+        rem --- Note that rd_table_chans$[all] is NOT being shared/passed.
+        call stbl("+DIR_SYP")+"bac_open_tables.bbj",open_beg,open_end,open_tables$[all],open_opts$[all],open_chans$[all],open_tpls$[all],rd_table_chans$[all],open_batch,open_status$
+
+        if open_status$ = "" then
+            rem --- Hold on to channels and record templates
+            #devSfeTimedatedet = num(open_chans$[1])
+            #devSfeTimeempldet = num(open_chans$[2])
+            #devSfeTimewodet = num(open_chans$[3])
+            #devSfeWomatisd = num(open_chans$[4])
+            #devSfsParams = num(open_chans$[5])
+
+            #tplSfeTimedatedet$ = open_tpls$[1]
+            #tplSfeTimeempldet$ = open_tpls$[2]
+            #tplSfeTimewodet$ = open_tpls$[3]
+            #tplSfeWomatisd$ = open_tpls$[4]
+            #tplSfsParams$ = open_tpls$[5]
+        else
+            #close()
+            
+            rem --- Throw error
+            err_num=err
+            err_num=num(open_status$,err=*next)
+            seterr 0
+            x$=stbl("+THROWN_ERR","TRUE")   
+            throw "["+pgm(-2)+"] Constructor failed to open files: "+open_status$,err_num
+        endif
+
+        rem --- Get SF params
+        dim sfsParamsRec$:#tplSfsParams$
+        readrecord(#devSfsParams,key=#firmID$+"SF00",err=AO_SfUtils_error)sfsParamsRec$
+        #timeSheetBy$=sfsParamsRec.time_entry_s$
+        #poInterface$=sfsParamsRec.po_interface$
+        if #poInterface$="Y" then
+            rem --- Open PO Receipt Detail table
+            num_files=3
+            dim open_tables$[1:num_files], open_opts$[1:num_files], open_chans$[1:num_files], open_tpls$[1:num_files]
+            open_tables$[1] ="POE_PODET",    open_opts$[1] = "OTA[1]"
+            open_tables$[2] ="POE_REQDET",   open_opts$[2] = "OTA[1]"
+            open_tables$[3] ="SFE_WOSUBCNT", open_opts$[3] = "OTA[1]"
+            call stbl("+DIR_SYP")+"bac_open_tables.bbj",open_beg,open_end,open_tables$[all],open_opts$[all],open_chans$[all],open_tpls$[all],rd_table_chans$[all],open_batch,open_status$
+            if open_status$ = "" then
+                rem --- Hold on to channels and record templates
+                #devPoePodet = num(open_chans$[1])
+                #devPoeReqdet = num(open_chans$[2])
+                #devSfeWosubcnt = num(open_chans$[3])
+
+                #tplPoePodet$ = open_tpls$[1]
+                #tplPoeReqdet$ = open_tpls$[2]
+                #tplSfeWosubcnt$ = open_tpls$[3]
+            else
+                #close()
+                
+                rem --- Throw error
+                err_num=err
+                err_num=num(open_status$,err=*next)
+                seterr 0
+                x$=stbl("+THROWN_ERR","TRUE")   
+                throw "["+pgm(-2)+"] Constructor failed to open "+sourceFile$+": "+open_status$,err_num
+            endif
+        endif
+
+        methodret
+            
+AO_SfUtils_error:rem --- Method error trap/handler (11Oct2017)
+    rd_err_text$="", err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+    if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+    if pos("RETRY"=rd_err_act$)<>0 retry
+    x$=stbl("+THROWN_ERR","TRUE")   
+    throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+    methodend
+
+    rem /**
+    rem  * Check Materials Issues Entry to determine if there are any non-updated material issue transactions.
+    rem  * 
+    rem  * @param BBjString wo_no$
+    rem  * @param BBjString wo_location$
+    rem  *
+    rem  * @return BBjNumber 0=no transactions
+    rem  *                   1=transactions in Materials Issues Entry
+    rem  */
+    method public BBjNumber checkMaterialTransactions(BBjString wo_no$, BBjString wo_location$)
+        seterr checkMaterialTransactions_error
+        transactions=0
+
+        womatisd_trip$=#firmID$+wo_location$+wo_no$
+        read(#devSfeWomatisd,key=womatisd_trip$,dom=*next)
+        womatisd_key$=key(#devSfeWomatisd,end=*next)
+        if pos(womatisd_trip$=womatisd_key$)=1 then transactions=1
+        
+        methodret transactions
+        
+checkMaterialTransactions_error:rem --- Method error trap/handler (11Oct2017)
+    rd_err_text$="", err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+    if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+    if pos("RETRY"=rd_err_act$)<>0 retry
+    x$=stbl("+THROWN_ERR","TRUE")   
+    throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+    methodend
+
+    rem /**
+    rem  * Check Time Sheet Entry to determine if there are any non-updated operation transactions.
+    rem  * 
+    rem  * @param BBjString wo_no$
+    rem  *
+    rem  * @return BBjNumber 0=no transactions
+    rem  *                   1=transactions in Time Sheet Issues Entry
+    rem  */
+    method public BBjNumber checkOperationTransactions(BBjString wo_no$)
+        seterr checkOperationTransactions_error
+        transactions=0
+
+        switch (BBjAPI().TRUE)
+            case #timeSheetBy$="D"
+                channel=#devSfeTimedatedet
+                knum$="AO_WO_DATE_EMPL"
+                break
+            case #timeSheetBy$="E"
+                channel=#devSfeTimeempldet
+                knum$="AO_WO_EMPL_DATE"
+                break
+            case #timeSheetBy$="W"
+                channel=#devSfeTimewodet
+                knum$="PRIMARY"
+                break
+        swend
+
+        timedet_trip$=#firmID$+wo_no$
+        read(channel,key=timedet_trip$,knum=knum$,dom=*next)
+        timedet_key$=key(channel,end=*next)
+        if pos(timedet_trip$=timedet_key$)=1 then transactions=1
+        
+        methodret transactions
+        
+checkOperationTransactions_error:rem --- Method error trap/handler (11Oct2017)
+    rd_err_text$="", err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+    if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+    if pos("RETRY"=rd_err_act$)<>0 retry
+    x$=stbl("+THROWN_ERR","TRUE")   
+    throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+    methodend
+
+    rem /**
+    rem  * Check Purchase Order Entry and Purchase Requisition Entry to determine if there are any
+    rem  * non-updated subcontract transactions.
+    rem  * 
+    rem  * @param BBjString wo_no$
+    rem  * @param BBjString wo_location$
+    rem  *
+    rem  * @return BBjNumber 0=no transactions
+    rem  *                   1=transactions in Purchase Order Entry
+    rem  *                   2=transactions in Purchase Requisition Entry
+    rem  */
+    method public BBjNumber checkSubcontractTransactions(BBjString wo_no$, BBjString wo_location$)
+        seterr checkSubcontractTransactions_error
+        transactions=0
+
+        if #poInterface$="Y" then
+            wosubcnt_trip$=#firmID$+wo_location$+wo_no$
+            read(#devSfeWosubcnt,key=wosubcnt_trip$,dom=*next)
+            while 1
+                wosubcnt_key$=key(#devSfeWosubcnt,end=*break)
+                if pos(wosubcnt_trip$=wosubcnt_key$)<>1 then break
+                dim wosubcnt$:#tplSfeWosubcnt$
+                readrecord(#devSfeWosubcnt)wosubcnt$
+                if num(wosubcnt.po_no$)=0 then continue
+    
+                rem --- Check purchase order detail
+                dim podet$:#tplPoePodet$
+                readrecord(#devPoePodet,key=#firmID$+wosubcnt.po_no$+wosubcnt.pur_ord_seq_ref$,dom=*next)podet$
+                if podet.wo_no$+podet.wk_ord_seq_ref$=wosubcnt.wo_no$+wosubcnt.internal_seq_no$ then
+                    transactions=1
+                    break
+                endif
+    
+                rem --- Check PO requisition detail
+                dim reqdet$:#tplPoeReqdet$
+                readrecord(#devPoeReqdet,key=#firmID$+wosubcnt.po_no$+wosubcnt.pur_ord_seq_ref$,dom=*next)reqdet$
+                if reqdet.wo_no$+reqdet.wk_ord_seq_ref$=wosubcnt.wo_no$+wosubcnt.internal_seq_no$ then
+                    transactions=2
+                    break
+                endif
+            wend
+        endif
+        
+        methodret transactions
+        
+checkSubcontractTransactions_error:rem --- Method error trap/handler (11Oct2017)
+    rd_err_text$="", err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+    if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+    if pos("RETRY"=rd_err_act$)<>0 retry
+    x$=stbl("+THROWN_ERR","TRUE")   
+    throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+    methodend
+ 
 	rem /**
 	rem  * Calculates Actual Subcontract Quantity Required (was fnsub)
 	rem  *
@@ -158,7 +420,7 @@ method_error:rem --- Method error trap/handler (11Oct2017)
 	rem  * @param BBjNumber Pieces per Hour (from Op Code Requirements)
 	rem  * @param BBjNumber Estimated Yield (From WO Header)
 	rem  * @param BBjNumber Setup Time (from Op Code Requirements)
-	rem /**
+	rem */
 	method public static BBjNumber opTotStdCost(BBjNumber qntyRequired,
 :												BBjNumber hrsPerPiece,
 :												BBjNumber dirRate,
@@ -258,4 +520,35 @@ method_error:rem --- Method error trap/handler (11Oct2017)
     x$=stbl("+THROWN_ERR","TRUE")   
     throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
 	methodend
+
+    rem /**
+    rem  * Close all open channels and connections.
+    rem  */
+    method public void close()
+        seterr close_error
+
+        rem --- Note that even though tables were opened using bac_open_tables.bbj, rd_table_chans$[all] is NOT being shared/passed.
+        if #devPoePodet>0 then close(#devPoePodet,err=*next)
+        if #devPoeReqdet>0 then close(#devPoeReqdet,err=*next)
+        if #devSfeTimewodet>0 then close(#devSfeTimewodet,err=*next)
+        if #devSfeWomatisd>0 then close(#devSfeWomatisd,err=*next)
+        if #devSfeWosubcnt>0 then close(#devSfeWosubcnt,err=*next)
+        if #devSfsParams>0 then close(#devSfsParams,err=*next)
+        methodret
+            
+close_error:rem --- Method error trap/handler (11Oct2017)
+        rd_err_text$="", err_num=err
+        if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+        if err_num=252 then
+            E!=BBjAPI().getLastBBjException()
+            rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+            if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+        endif
+        call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+        if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+        if pos("RETRY"=rd_err_act$)<>0 retry
+        x$=stbl("+THROWN_ERR","TRUE")   
+        throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+        methodend
+
 classend

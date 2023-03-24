@@ -8,12 +8,26 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem --- All Rights Reserved
 rem ==========================================================================
 
+rem --- Customized SF helper class for collection of utilities.
+
 rem --- Use statements and declares
 
     use ::sfo_AO_SfUtils.aon::AO_SfUtils
 
-rem --- Customized SF helper class for collection of utilities.
-
     class public SfUtils extends AO_SfUtils
+
+        rem /**
+        rem  * Constructor.
+        rem  *
+        rem  * @param BBjString firmID$
+        rem  * 
+        rem  */
+        method public SfUtils(BBjString firmID$)
+
+            #super!(firmID$)
+
+            methodret
+
+        methodend
 
     classend
