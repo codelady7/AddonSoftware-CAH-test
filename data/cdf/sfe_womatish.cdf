@@ -46,6 +46,19 @@ rem --- Existing materials issues?
 		endif
 	endif
 
+rem --- Warn if WO is being closed complete
+	wo_location$=callpoint!.getColumnData("SFE_WOMATISH.WO_LOCATION")
+	wo_no$=callpoint!.getColumnData("SFE_WOMATISH.WO_NO")
+	sfutils!=new SfUtils(firm_id$)
+	closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+	sfutils!.close()
+	if closeComplete then
+		msg_id$="SF_CLOSE_COMP_EXIST"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=wo_no$
+		gosub disp_message
+	endif
+
 [[SFE_WOMATISH.AREA]]
 rem --- Hold on to sfe_womatish key
 
@@ -220,10 +233,11 @@ rem --- Remove software lock on batch when batching
 	endif
 
 [[SFE_WOMATISH.BSHO]]
-rem --- Init Java classes
-
+rem --- Initializations
 	use java.util.HashMap
 	use java.util.Iterator
+
+	use ::sfo_SfUtils.aon::SfUtils
 
 rem --- Open Files
 	num_files=14
@@ -530,6 +544,24 @@ verify_wo_status: rem -- Verify WO status
 		gosub disp_message
 		callpoint!.setStatus("NEWREC")
 		bad_wo=1
+	endif
+
+	rem --- Don't allow new transactions if WO is being closed complete
+	if !bad_wo and status$="O" then
+		wo_location$=callpoint!.getColumnData("SFE_WOMATISH.WO_LOCATION")
+		wo_no$=callpoint!.getColumnData("SFE_WOMATISH.WO_NO")
+		sfutils!=new SfUtils(firm_id$)
+		closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+		sfutils!.close()
+		if closeComplete then
+			msg_id$="SF_CLOSE_COMP_EXIST"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=wo_no$
+			gosub disp_message
+
+			callpoint!.setStatus("NEWREC")
+			bad_wo=1
+		endif
 	endif
 
 	return

@@ -8,12 +8,17 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem --- All Rights Reserved
 rem ==========================================================================
 
+rem --- Use statements and declares
+
+    use java.lang.Boolean
+
 class public AO_SfUtils
     field protected BBjNumber devPoePodet = -1
     field protected BBjNumber devPoeReqdet = -1
     field protected BBjNumber devSfeTimedatedet = -1
     field protected BBjNumber devSfeTimeempldet = -1
     field protected BBjNumber devSfeTimewodet = -1
+    field protected BBjNumber devSfeWoclose = -1
     field protected BBjNumber devSfeWomatisd = -1
     field protected BBjNumber devSfeWosubcnt = -1
     field protected BBjNumber devSfsParams = -1
@@ -25,6 +30,7 @@ class public AO_SfUtils
     field protected BBjString tplSfeTimedatedet$
     field protected BBjString tplSfeTimeempldet$
     field protected BBjString tplSfeTimewodet$
+    field protected BBjString tplSfeWoclose$
     field protected BBjString tplSfeWomatisd$
     field protected BBjString tplSfeWosubcnt$
     field protected BBjString tplSfsParams$
@@ -42,13 +48,14 @@ class public AO_SfUtils
         #firmID$ = firm_id$
 
         rem --- Open needed files          
-        num_files=5
+        num_files=6
         dim open_tables$[1:num_files], open_opts$[1:num_files], open_chans$[1:num_files], open_tpls$[1:num_files]
         open_tables$[1] ="SFE_TIMEDATEDET",   open_opts$[1] = "OTA[1]"
         open_tables$[2] ="SFE_TIMEEMPLDET",   open_opts$[2] = "OTA[1]"
         open_tables$[3] ="SFE_TIMEWODET",   open_opts$[3] = "OTA[1]"
-        open_tables$[4] ="SFE_WOMATISD",    open_opts$[4] = "OTA[1]"
-        open_tables$[5] ="SFS_PARAMS",      open_opts$[5] = "OTA[1]"
+        open_tables$[4] ="SFE_WOCLOSE",   open_opts$[4] = "OTA[1]"
+        open_tables$[5] ="SFE_WOMATISD",    open_opts$[5] = "OTA[1]"
+        open_tables$[6] ="SFS_PARAMS",      open_opts$[6] = "OTA[1]"
     
         rem --- Note that rd_table_chans$[all] is NOT being shared/passed.
         call stbl("+DIR_SYP")+"bac_open_tables.bbj",open_beg,open_end,open_tables$[all],open_opts$[all],open_chans$[all],open_tpls$[all],rd_table_chans$[all],open_batch,open_status$
@@ -58,14 +65,16 @@ class public AO_SfUtils
             #devSfeTimedatedet = num(open_chans$[1])
             #devSfeTimeempldet = num(open_chans$[2])
             #devSfeTimewodet = num(open_chans$[3])
-            #devSfeWomatisd = num(open_chans$[4])
-            #devSfsParams = num(open_chans$[5])
+            #devSfeWoclose = num(open_chans$[4])
+            #devSfeWomatisd = num(open_chans$[5])
+            #devSfsParams = num(open_chans$[6])
 
             #tplSfeTimedatedet$ = open_tpls$[1]
             #tplSfeTimeempldet$ = open_tpls$[2]
             #tplSfeTimewodet$ = open_tpls$[3]
-            #tplSfeWomatisd$ = open_tpls$[4]
-            #tplSfsParams$ = open_tpls$[5]
+            #tplSfeWoclose$ = open_tpls$[4]
+            #tplSfeWomatisd$ = open_tpls$[5]
+            #tplSfsParams$ = open_tpls$[6]
         else
             #close()
             
@@ -520,6 +529,43 @@ method_error:rem --- Method error trap/handler (11Oct2017)
     x$=stbl("+THROWN_ERR","TRUE")   
     throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
 	methodend
+
+    rem /**
+    rem  * Check if this work order is in the process of being closed complete.
+    rem  * 
+    rem  * @param BBjString wo_no$
+    rem  * @param BBjString wo_location$
+    rem  *
+    rem  * @return boolean  0=NOT being closed complete, 1=IS being closed complete
+    rem  *                   1=transactions in Materials Issues Entry
+    rem  */
+    method public boolean woClosedComplete(BBjString wo_no$, BBjString wo_location$)
+        seterr woClosedComplete_error
+        closeComplete=Boolean.valueOf("false")
+
+        dim woclose$:#tplSfeWoclose$
+        woclose_trip$=#firmID$+wo_location$+wo_no$
+        readrecord(#devSfeWoclose,key=woclose_trip$,dom=*next)woclose$
+        if pos(woclose_trip$=woclose$)=1 then
+            if woclose.complete_flg$="Y" then closeComplete=Boolean.valueOf("true")
+        endif
+        
+        methodret closeComplete
+        
+woClosedComplete_error:rem --- Method error trap/handler (11Oct2017)
+    rd_err_text$="", err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+    if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+    if pos("RETRY"=rd_err_act$)<>0 retry
+    x$=stbl("+THROWN_ERR","TRUE")   
+    throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+    methodend
 
     rem /**
     rem  * Close all open channels and connections.
