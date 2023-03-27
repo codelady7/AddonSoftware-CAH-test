@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfe_timedatedet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfe_timedatedet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfe_timedatedet">20120430</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfe_timedatedet">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfe_timedatedet">20230322</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfe_timedatedet">182220</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfe_timedatedet">20230327</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfe_timedatedet">20230327</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfe_timedatedet">085054</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfe_timedatedet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sfe_timedatedet">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfe_timedatedet">BATCH_KEY</DD_ATTR_DKNM>
@@ -64,9 +64,17 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.sfe_timedatedetadge">SFE_TIMEDATEDET </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.sfe_timedatedetadge">ADGE</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.sfe_timedatedetadtw">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.sfe_timedatedetadtw">SFE_TIMEDATEDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.sfe_timedatedetadtw">ADTW</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.sfe_timedatedetagcl">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.sfe_timedatedetagcl">SFE_TIMEDATEDET </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.sfe_timedatedetagcl">AGCL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.sfe_timedatedetagdr">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.sfe_timedatedetagdr">SFE_TIMEDATEDET </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.sfe_timedatedetagdr">AGDR</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.sfe_timedatedetagre">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.sfe_timedatedetagre">SFE_TIMEDATEDET </DD_TABLE_ALIAS>

@@ -1,3 +1,37 @@
+[[SFE_TIMEWO.ADIS]]
+rem --- Init entered hrs
+	entered_hrs=0
+	timedet_dev=fnget_dev("@SFE_TIMEWODET")
+	dim timedet$:fnget_tpl$("@SFE_TIMEWODET")
+	trip_key$=firm_id$+callpoint!.getColumnData("SFE_TIMEWO.WO_NO")+callpoint!.getColumnData("SFE_TIMEWO.TRANS_DATE")
+	read(timedet_dev,key=trip_key$,dom=*next)
+	while 1
+		timedet_key$=key(timedet_dev,end=*break)
+		if pos(trip_key$=timedet_key$)<>1 then break
+		readrecord(timedet_dev)timedet$
+		entered_hrs=entered_hrs+timedet.hrs+timedet.setup_time
+	wend
+	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
+
+rem --- Warn existing transactions if WO is being closed complete.
+	wo_no$=callpoint!.getColumnData("SFE_TIMEWO.WO_NO")
+	wo_location$="  "
+	sfutils!=new SfUtils(firm_id$)
+	closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+	sfutils!.close()
+	if closeComplete then
+		msg_id$="SF_CLOSE_COMP_EXIST"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=wo_no$
+		gosub disp_message
+	endif
+
+[[SFE_TIMEWO.AREC]]
+rem --- Init new record
+	entered_hrs=0
+	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
+	callpoint!.setDevObject("entered_hrs",entered_hrs)
+
 [[SFE_TIMEWO.ARNF]]
 if num(stbl("+BATCH_NO"),err=*next)<>0
 	rem --- Check if this record exists in a different batch
@@ -8,6 +42,34 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
 	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
 endif
+
+rem --- Don't allow new transactions if WO is being closed complete. Warn existing transactions.
+	wo_no$=callpoint!.getColumnData("SFE_TIMEWO.WO_NO")
+	wo_location$="  "
+	sfutils!=new SfUtils(firm_id$)
+	closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+	sfutils!.close()
+	if closeComplete then
+		msg_id$="SF_CLOSE_COMP_EXIST"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=wo_no$
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[SFE_TIMEWO.BEND]]
+rem --- Remove software lock on batch when batching
+	batch$=stbl("+BATCH_NO",err=*next)
+	if num(batch$)<>0
+		lock_table$="ADM_PROCBATCHES"
+		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
+		lock_type$="X"
+		lock_status$=""
+		lock_disp$=""
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
 [[SFE_TIMEWO.BFMC]]
 rem --- Open Files
 	num_files=6
@@ -134,6 +196,19 @@ rem --- Additional file opens
 	endif
 	callpoint!.setDevObject("opcode_dev",num(open_chans$[9]))
 	callpoint!.setDevObject("opcode_tpl",open_tpls$[9])
+
+[[SFE_TIMEWO.BSHO]]
+rem --- Initializations
+	use ::sfo_SfUtils.aon::SfUtils
+
+rem --- Hold on to the control for entered_hrs so it can be updated in detail grid
+	callpoint!.setDevObject("control_entered_hrs",callpoint!.getControl("<<DISPLAY>>.ENTERED_HRS"))
+
+[[SFE_TIMEWO.BTBL]]
+rem --- Get Batch information
+	call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
+	callpoint!.setTableColumnAttribute("SFE_TIMEWO.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
 [[SFE_TIMEWO.BWAR]]
 rem --- Check entered hrs
 	total_hrs=num(callpoint!.getColumnData("SFE_TIMEWO.TOTAL_HRS"))
@@ -153,25 +228,22 @@ rem --- Check entered hrs
 			break
 		endif
 	endif
-[[SFE_TIMEWO.ADIS]]
-rem --- Init entered hrs
-	entered_hrs=0
-	timedet_dev=fnget_dev("@SFE_TIMEWODET")
-	dim timedet$:fnget_tpl$("@SFE_TIMEWODET")
-	trip_key$=firm_id$+callpoint!.getColumnData("SFE_TIMEWO.WO_NO")+callpoint!.getColumnData("SFE_TIMEWO.TRANS_DATE")
-	read(timedet_dev,key=trip_key$,dom=*next)
-	while 1
-		timedet_key$=key(timedet_dev,end=*break)
-		if pos(trip_key$=timedet_key$)<>1 then break
-		readrecord(timedet_dev)timedet$
-		entered_hrs=entered_hrs+timedet.hrs+timedet.setup_time
-	wend
-	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
-[[SFE_TIMEWO.AREC]]
-rem --- Init new record
-	entered_hrs=0
-	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
-	callpoint!.setDevObject("entered_hrs",entered_hrs)
+
+[[SFE_TIMEWO.TRANS_DATE.AVAL]]
+rem --- Validate trans_date
+	if cvs(callpoint!.getUserInput(),2)="" then callpoint!.setUserInput(stbl("+SYSTEM_DATE"))
+	trans_date$=callpoint!.getUserInput()        
+	if callpoint!.getDevObject("gl")="Y"
+		call stbl("+DIR_PGM")+"glc_datecheck.aon",trans_date$,"Y",per$,yr$,status
+		if status>99 then callpoint!.setStatus("ABORT")
+	endif
+
+[[SFE_TIMEWO.TRANS_DATE.BINP]]
+rem --- Initialize trans_date
+	if cvs(callpoint!.getColumnData("SFE_TIMEWO.TRANS_DATE"),2)="" then 
+		callpoint!.setColumnData("SFE_TIMEWO.TRANS_DATE",stbl("+SYSTEM_DATE"),1)
+	endif
+
 [[SFE_TIMEWO.WO_NO.AVAL]]
 rem --- Verify this WO is open
 	wo_no$=callpoint!.getUserInput()
@@ -185,6 +257,18 @@ rem --- Verify this WO is open
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+rem --- Don't allow new transactions if WO is being closed complete. Warn existing transactions.
+	sfutils!=new SfUtils(firm_id$)
+	closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+	sfutils!.close()
+	if closeComplete then
+		msg_id$="SF_CLOSE_COMP_EXIST"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=wo_no$
+		gosub disp_message
+	endif
+
 [[SFE_TIMEWO.WO_NO.BINQ]]
 rem --- Open WO lookup
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMASTR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
@@ -202,36 +286,9 @@ rem --- Open WO lookup
 	if cvs(womastr_key$,2)<>"" then callpoint!.setColumnData("SFE_TIMEWO.WO_NO",womastr_key.wo_no$,1)
 
 	callpoint!.setStatus("ACTIVATE-ABORT")
-[[SFE_TIMEWO.TRANS_DATE.BINP]]
-rem --- Initialize trans_date
-	if cvs(callpoint!.getColumnData("SFE_TIMEWO.TRANS_DATE"),2)="" then 
-		callpoint!.setColumnData("SFE_TIMEWO.TRANS_DATE",stbl("+SYSTEM_DATE"),1)
-	endif
-[[SFE_TIMEWO.TRANS_DATE.AVAL]]
-rem --- Validate trans_date
-	if cvs(callpoint!.getUserInput(),2)="" then callpoint!.setUserInput(stbl("+SYSTEM_DATE"))
-	trans_date$=callpoint!.getUserInput()        
-	if callpoint!.getDevObject("gl")="Y"
-		call stbl("+DIR_PGM")+"glc_datecheck.aon",trans_date$,"Y",per$,yr$,status
-		if status>99 then callpoint!.setStatus("ABORT")
-	endif
-[[SFE_TIMEWO.BEND]]
-rem --- Remove software lock on batch when batching
-	batch$=stbl("+BATCH_NO",err=*next)
-	if num(batch$)<>0
-		lock_table$="ADM_PROCBATCHES"
-		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
-		lock_type$="X"
-		lock_status$=""
-		lock_disp$=""
-		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-	endif
-[[SFE_TIMEWO.BSHO]]
-rem --- Hold on to the control for entered_hrs so it can be updated in detail grid
-	callpoint!.setDevObject("control_entered_hrs",callpoint!.getControl("<<DISPLAY>>.ENTERED_HRS"))
+
 [[SFE_TIMEWO.<CUSTOM>]]
 #include [+ADDON_LIB]std_missing_params.aon
-[[SFE_TIMEWO.BTBL]]
-rem --- Get Batch information
-	call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
-	callpoint!.setTableColumnAttribute("SFE_TIMEWO.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
+
+
