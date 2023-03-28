@@ -192,6 +192,9 @@ rem --- Initializations
     when$=sysinfo.system_date$
     clock$=""
 
+    use ::sfo_SfUtils.aon::SfUtils
+    sfutils!=new SfUtils(firm_id$)
+
 rem --- Document initializations
 
     OutVect!=bbjAPI().makeVector()
@@ -427,6 +430,7 @@ rem --- Main Read
 
 rem --- Assign values from SQL query
 		
+        woWarnings=0
 		wo_no$	 			= read_tpl.WO_NO$
 		wo_location$	 	= read_tpl.WO_LOCATION$
 		wo_type$		 	= read_tpl.WO_TYPE$
@@ -627,6 +631,32 @@ rem --- Print
         OutVect!.addItem(x1$)
         xwk=fnblank(1)
         xwk=fnblank(14)
+
+        if complete_yn$="Y" then
+            rem --- Check for non-updated Material Issues transactions for this work order
+            transactions=sfutils!.checkMaterialTransactions(wo_no$,wo_location$)
+            if transactions then
+                OutVect!.addItem("  *** "+Translate!.getTranslation("AON_MATERIAL_TRANS_EXIST")+" ***"+$00$+"B")
+                xwk=fnblank(18)
+                woWarnings=1
+            endif
+        
+            rem --- Check for non-updated Time Sheet transactions (i.e. operations) for this work order
+            transactions=sfutils!.checkOperationTransactions(wo_no$)
+            if transactions then
+                OutVect!.addItem("  *** "+Translate!.getTranslation("AON_OPERATION_TRANS_EXIST")+" ***"+$00$+"B")
+                xwk=fnblank(18)
+                woWarnings=1
+            endif
+        
+            rem --- Check for open POs for subcontracts for this work order
+            transactions=sfutils!.checkSubcontractTransactions(wo_no$,wo_location$)
+            if transactions then
+                OutVect!.addItem("  *** "+Translate!.getTranslation("AON_SUBCONTRACT_TRANS_EXIST")+" ***"+$00$+"B")
+                xwk=fnblank(18)
+                woWarnings=1
+            endif
+        endif
 		
         rem --- Second line for WO
         xwk=fnblank(1)
@@ -844,15 +874,27 @@ rem --- Report Totals Again (For WO Type section)
     
 rem --- All done
 
+    out_action$="FORMAT"
+
     if recs=0
         msg_id$="DOC_OUTPUT_NODATA"
         gosub disp_message
         goto std_exit_no_report
     endif
 				
-rem --- Destroy the progress meter and run the next overlay
+    rem --- Destroy the progress meter and run the next overlay
 
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+
+    rem --- Warn if there are transactions for this work order being closed complete
+    sfutils!.close()
+    if woWarnings then
+        msg_id$="SF_WO_TRAN_STOP_UPDT"
+        gosub disp_message
+    
+        rem --- Do NOT update!
+        goto std_exit_no_update
+    endif
 
     update$=pgmdir$+"sfu_clsdworeg.aon"
     if missing_lotser
