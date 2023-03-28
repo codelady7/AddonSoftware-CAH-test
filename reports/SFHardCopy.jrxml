@@ -89,6 +89,9 @@
 	<field name="IMAGE_PATH" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="WARN_MATERIAL_TRANS" class="java.lang.String"/>
+	<field name="WARN_OPERATION_TRANS" class="java.lang.String"/>
+	<field name="WARN_SUBCONTRACT_TRANS" class="java.lang.String"/>
 	<variable name="MAST_CLS_INP_QTY" class="java.lang.Float">
 		<variableExpression><![CDATA[]]></variableExpression>
 		<initialValueExpression><![CDATA[Float.valueOf($F{MAST_CLS_INP_QTY_STR}.replaceAll( ",","" )).floatValue()]]></initialValueExpression>
@@ -563,6 +566,9 @@
 				<subreportParameter name="WO_LOCATION">
 					<subreportParameterExpression><![CDATA[$P{WO_LOCATION}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="WARN_OPERATION_TRANS">
+					<subreportParameterExpression><![CDATA[$F{WARN_OPERATION_TRANS}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="COST_EA_BIGDEC" toVariable="COST_EA_STDTOT_BIGDEC" calculation="Sum"/>
 				<returnValue subreportVariable="COST_TOT_BIGDEC" toVariable="COST_TOT_STDTOT_BIGDEC" calculation="Sum"/>
@@ -595,6 +601,9 @@
 				</subreportParameter>
 				<subreportParameter name="WO_LOCATION">
 					<subreportParameterExpression><![CDATA[$P{WO_LOCATION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="WARN_MATERIAL_TRANS">
+					<subreportParameterExpression><![CDATA[$F{WARN_MATERIAL_TRANS}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="COST_EA_BIGDEC" toVariable="COST_EA_STDTOT_BIGDEC" calculation="Sum"/>
@@ -637,6 +646,9 @@
 				</subreportParameter>
 				<subreportParameter name="WO_LOCATION">
 					<subreportParameterExpression><![CDATA[$P{WO_LOCATION}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="WARN_SUBCONTRACT_TRANS">
+					<subreportParameterExpression><![CDATA[$F{WARN_SUBCONTRACT_TRANS}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="COST_EA_BIGDEC" toVariable="COST_EA_STDTOT_BIGDEC" calculation="Sum"/>

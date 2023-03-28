@@ -346,6 +346,9 @@ rem --- Check for user authentication
 
 rem --- Fill Report and Show
 
+    global_ns!=BBjAPI().getGlobalNamespace()
+    global_ns!.setValue(info(3,2)+date(0)+"_WOCloseCompleteWarning","")
+
     rc=report!.fill(1)
     if rc<>BBJasperReport.getSUCCESS() then goto close_win
     
@@ -381,6 +384,14 @@ rem --- Fill Report and Show
     cancelled=1
     bbjWindow!.setCallback(bbjWindow!.ON_CLOSE,"close_win",err=*next); cancelled=0
     if cancelled then goto close_win
+
+    global_ns!=BBjAPI().getGlobalNamespace()
+    woWarnings$=global_ns!.getValue(info(3,2)+date(0)+"_WOCloseCompleteWarning",err=*next)
+    if cvs(woWarnings$,2)<>"" then
+        title$=Translate!.getTranslation("AON_NON-UPDATED_TRANS")
+        message$=Translate!.getTranslation("AON_WO_CLOSE_COMPLETE_NON-UPDATED_TRANS")+woWarnings$
+        x=msgbox(message$,16,title$)
+    endif
 
 rem --- Event Control
 

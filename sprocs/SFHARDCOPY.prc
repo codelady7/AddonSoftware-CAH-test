@@ -16,6 +16,7 @@ rem --- Set of utility methods
 
 	use ::ado_func.src::func
     use ::ado_util.src::util
+    use ::sfo_SfUtils.aon::SfUtils
 
 rem --- Declare some variables ahead of time
 
@@ -73,9 +74,9 @@ rem --- Columns for the record set are defined using a string template
 	temp$=temp$+"TYPE_DESC:C(1*), PRIORITY:C(1*), UOM:C(1*), YIELD:C(1*), SCH_PROD_QTY:C(1*), PROD_QTY:C(1*), COMPLETED:C(1*), "
 	temp$=temp$+"LAST_ACT_DATE:C(1*), ITEM_DESC_1:C(1*), ITEM_DESC_2:C(1*), IMAGE_PATH:C(1*), DRAWING_NO:C(1*), REV:C(1*), "
 	temp$=temp$+"INCLUDE_LOTSER:C(1*), MAST_CLS_INP_QTY_STR:C(1*), MAST_CLS_INP_DT:C(1*), MAST_CLOSED_COST_STR:C(1*), "
-	temp$=temp$+"COMPLETE_YN:C(1*), COST_MASK:C(1*), UNITS_MASK:C(1*), AMT_MASK:C(1*), "	
-	temp$=temp$+"COST_MASK_PATTERN:C(1*), UNITS_MASK_PATTERN:C(1*), AMT_MASK_PATTERN:C(1*), "	
-	temp$=temp$+"WO_STATUS_LETTER:C(1*), CLOSED_DATE_RAW:C(1*), "	
+	temp$=temp$+"COMPLETE_YN:C(1*), COST_MASK:C(1*), UNITS_MASK:C(1*), AMT_MASK:C(1*), COST_MASK_PATTERN:C(1*), "	
+	temp$=temp$+"UNITS_MASK_PATTERN:C(1*), AMT_MASK_PATTERN:C(1*), WO_STATUS_LETTER:C(1*), CLOSED_DATE_RAW:C(1*), "	
+	temp$=temp$+"WARN_MATERIAL_TRANS:C(1*), WARN_OPERATION_TRANS:C(1*), WARN_SUBCONTRACT_TRANS:C(1*), "	
 	temp$=temp$+"ITEM_LEN_PARAM:C(1*),"	; rem Used in MatStd to get more real estate for desc
 	temp$=temp$+"PRINT_COSTS:C(1*)"	; rem Used throughout to determine whether cost(s) and cost header(s) prints
 	
@@ -290,10 +291,18 @@ rem  	 	report_type$ rem M = WO Detail Rpt from *M*enu
 
 rem --- Trip Read
 
+    if report_type$="C" then
+        woWarnings$=""
+        sfutils!=new SfUtils(firm_id$)
+    endif
+
 	while 1
 		read_tpl$ = sqlfetch(sql_chan,end=*break)
 
 		data! = rs!.getEmptyRecordData()
+        warnMaterialTransactions$="N"
+        warnOperationTransactions$="N"
+        warnSubcontractTransactions$="N"
 
 		dim ivm_itemmast$:fattr(ivm_itemmast$)
 		find record (ivm_itemmast_dev,key=firm_id$+read_tpl.item_id$,dom=*next)ivm_itemmast$
@@ -303,6 +312,34 @@ rem --- Trip Read
 		else	
 			include_lotser$="N"
 		endif
+
+        if report_type$="C" and sfutils!.woClosedComplete(read_tpl.wo_no$,read_tpl.wo_location$) then
+            rem --- Check for non-updated Material Issues transactions for this work order
+            transactions=sfutils!.checkMaterialTransactions(read_tpl.wo_no$,read_tpl.wo_location$)
+            if transactions then
+                warnMaterialTransactions$="Y"
+                if pos(read_tpl.wo_no$=woWarnings$)=0 then woWarnings$=woWarnings$+"  "+read_tpl.wo_no$
+            endif
+        
+            rem --- Check for non-updated Time Sheet transactions (i.e. operations) for this work order
+            transactions=sfutils!.checkOperationTransactions(read_tpl.wo_no$)
+            if transactions then
+                warnOperationTransactions$="Y"
+                if pos(read_tpl.wo_no$=woWarnings$)=0 then woWarnings$=woWarnings$+"  "+read_tpl.wo_no$
+            endif
+        
+            rem --- Check for open POs for subcontracts for this work order
+            transactions=sfutils!.checkSubcontractTransactions(read_tpl.wo_no$,read_tpl.wo_location$)
+            if transactions then
+                warnSubcontractTransactions$="Y"
+                if pos(read_tpl.wo_no$=woWarnings$)=0 then woWarnings$=woWarnings$+"  "+read_tpl.wo_no$
+            endif
+        
+            if cvs(woWarnings$,2)<>"" then
+                global_ns!=BBjAPI().getGlobalNamespace()
+                global_ns!.setValue(info(3,2)+date(0)+"_WOCloseCompleteWarning",woWarnings$)
+            endif
+        endif
 		
 		data!.setFieldValue("FIRM_ID",firm_id$)
 		data!.setFieldValue("WO_NO",read_tpl.wo_no$)
@@ -403,8 +440,15 @@ rem --- Trip Read
 		data!.setFieldValue("UNITS_MASK_PATTERN",sf_units_mask_pattern$); rem Pattern used in iReports
 		data!.setFieldValue("AMT_MASK_PATTERN",sf_amt_mask_pattern$); rem Pattern used in iReports
 
+        data!.setFieldValue("WARN_MATERIAL_TRANS",warnMaterialTransactions$)
+        data!.setFieldValue("WARN_OPERATION_TRANS",warnOperationTransactions$)
+        data!.setFieldValue("WARN_SUBCONTRACT_TRANS",warnSubcontractTransactions$)
+
 		rs!.insert(data!)
 	wend
+
+    rem --- Close channels opened in SFUtils class/object
+    if report_type$="C" then sfutils!.close()
 	
 rem --- Tell the stored procedure to return the result set.
 
