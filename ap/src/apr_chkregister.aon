@@ -116,6 +116,9 @@ rem --- Retrieve parameter records
             msg_tokens$[1]=apsACH.bnk_acct_cd$
             gosub disp_message
             goto std_exit_no_report
+        else
+            dim AchBankCode$:fattr(adcBankAcctCode$)
+            AchBankCode$=adcBankAcctCode$
         endif
         findrecord(apsReport_dev,key=firm_id$+"AP02",err=std_missing_params)apsReport$
     endif

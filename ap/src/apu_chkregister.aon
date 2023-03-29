@@ -362,9 +362,9 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
         batch_hash=0
         total_credits=0
         total_debits=0
-        aba_no!=cvs(adcBankAcctCode.aba_no$,2)
+        aba_no!=cvs(AchBankCode.aba_no$,2)
         aba_no$=aba_no!.replace("-",""); rem --- remove hyphens
-        bnk_acct_no!=encryptor!.decryptData(cvs(adcBankAcctCode.bnk_acct_no$,2))
+        bnk_acct_no!=encryptor!.decryptData(cvs(AchBankCode.bnk_acct_no$,2))
         bnk_acct_no$=bnk_acct_no!.replace("-",""); rem --- remove hyphens
         federal_id!=cvs(apsReport.federal_id$,2)
         federal_id$=federal_id!.replace("-",""); rem --- remove hyphens
@@ -381,7 +381,7 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
         nachaFileHdr$=nachaFileHdr$+"094";                                          rem --- Record Size
         nachaFileHdr$=nachaFileHdr$+"10";                                           rem --- Blocking Factor
         nachaFileHdr$=nachaFileHdr$+"1";                                            rem --- Format Code
-        nachaFileHdr$=nachaFileHdr$+pad(adcBankAcctCode.bank_name$,23);             rem --- Immediate Destination Name
+        nachaFileHdr$=nachaFileHdr$+pad(AchBankCode.bank_name$,23);                 rem --- Immediate Destination Name
         nachaFileHdr$=nachaFileHdr$+pad(apsACH.firm_name$,23);                      rem --- Immediate Origin Name
         checkDate$=pad(apw01a.check_date$,8)
         nachaFileHdr$=nachaFileHdr$+checkDate$;                                     rem --- Reference Code
