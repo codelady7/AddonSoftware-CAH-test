@@ -102,6 +102,12 @@ else
 endif
 gosub enable_dropship_fields 
 
+rem --- After displaying a new PO Receipt record, put form in Edit mode
+if callpoint!.getDevObject("new PO Receipt")="Y" then
+	callpoint!.setStatus("EDITON")
+	callpoint!.setDevObject("new PO Receipt","N")
+endif
+
 [[POE_RECHDR.APFE]]
 rem --- set total order amt
 
@@ -137,6 +143,9 @@ endif
 
 [[POE_RECHDR.AREC]]
 gosub  form_inits
+
+rem --- Initializations
+callpoint!.setDevObject("new PO Receipt","N")
 
 [[POE_RECHDR.ARNF]]
 rem -- set default values
@@ -521,8 +530,9 @@ if cvs(callpoint!.getUserInput(),3)<>""
 
 			wend
 
+			rem --- Display the new PO record and put form in Edit mode
 			callpoint!.setStatus("RECORD:["+firm_id$+stbl("+BATCH_NO")+receiver_no$+"]")
-
+			callpoint!.setDevObject("new PO Receipt","Y")
 		else
 
 			callpoint!.setStatus("ABORT")
