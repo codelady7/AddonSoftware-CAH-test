@@ -123,7 +123,7 @@ endif
 rem --- Update grid data when leave checkbox and value has changed
 
 	alignPeriods$=callpoint!.getUserInput()
-	if align_periods$<>callpoint!.getColumnData("GLM_BUDGETMAINT.ALIGN_PERIODS") then
+	if alignperiods$<>callpoint!.getColumnData("GLM_BUDGETMAINT.ALIGN_PERIODS") then
 		callpoint!.setDevObject("align_fiscal_periods",alignPeriods$)
 		gl_account$=callpoint!.getColumnData("GLM_BUDGETMAINT.GL_ACCOUNT")
 
@@ -195,6 +195,12 @@ tps!=UserObj!.getItem(num(user_tpl.tps_ofst$))
 codes!=UserObj!.getItem(num(user_tpl.codes_ofst$))
 gridBudgets!=UserObj!.getItem(num(user_tpl.grid_ofst$))
 
+rem --- when user clicks run process, the ASVA updates tables as needed, then this form calls adx_dummy.aon and stays open 
+rem --- the next two lines are a redundant on first AREC
+rem --- but if user clicks New/Clear to view another account, they're needed to clear the grid then re-display the descriptions in column 0
+gridBudgets!.clearMainGrid()
+gosub extraRowsDescriptions
+
 for x=0 to cols!.size()-1
 	this_col$=cols!.getItem(x)
 	this_tp$=tps!.getItem(x)
@@ -234,6 +240,8 @@ for x=0 to cols!.size()-1
 	wend
 next x
 
+callpoint!.setFocus("GLM_BUDGETMAINT.GL_ACCOUNT")
+
 [[GLM_BUDGETMAINT.ASIZ]]
 if UserObj!<>null()
 	gridBudgets!=UserObj!.getItem(num(user_tpl.grid_ofst$))
@@ -247,6 +255,7 @@ rem --- Save changes to grid
 	gridBudgets!=UserObj!.getItem(num(user_tpl.grid_ofst$))
 	numRows=gridBudgets!.getNumRows()
 	for curr_row=0 to numRows-1
+		if !gridBudgets!.isRowEditable(curr_row) then continue
 		vectGLSummary!=SysGUI!.makeVector() 
 		for x=1 to num(user_tpl.pers$)+1
 			vectGLSummary!.addItem(gridBudgets!.getCellText(curr_row,x))
@@ -475,7 +484,7 @@ rem --- Only budget and planned budget rows are editable. Actual rows are disabl
 cols=vectGLSummary!.size()-1
 if cols>0
 	label$=gridBudgets!.getCellText(curr_row,0)
-	if len(cd_tp$)<2 then return; rem --- Skip budget code (none)
+	if len(label$)<2 then return; rem --- Skip budget code (none)
 	record_type$=label$(pos(" ("=label$,-1)+2)
 	record_type$=record_type$(1,len(record_type$)-2)
 	amt_or_units$=label$(len(label$)-1,1)
@@ -759,8 +768,6 @@ replicate_amt:
 			if x>=curr_col then
 				if x-1<=num_pers then
 					vectGLSummary!.addItem(curr_amt$)
-				else
-					vectGLSummary!.addItem(str(0:user_tpl.amt_mask$))
 				endif
 			else
 				vectGLSummary!.addItem(gridBudgets!.getCellText(curr_row,x))
