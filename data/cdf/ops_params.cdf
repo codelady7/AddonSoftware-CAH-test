@@ -1,5 +1,4 @@
 [[OPS_PARAMS.ADIS]]
-
 rem --- Default Line Code is required when Line Code Entry is skipped
 
 if callpoint!.getColumnData("OPS_PARAMS.SKIP_LN_CODE")="Y"
@@ -28,6 +27,13 @@ rem --- Disable TAX_SVC_CD_SRC when not using a sales tax service
 		callpoint!.setColumnEnabled("OPS_PARAMS.TAX_SVC_CD_SRC",0)
 	else
 		callpoint!.setColumnEnabled("OPS_PARAMS.TAX_SVC_CD_SRC",1)
+	endif
+
+rem --- Disable UNIT_COST when entering cost for dropships
+	if callpoint!.getColumnData("OPS_PARAMS.DROPSHP_COST")="Y" then
+		callpoint!.setColumnEnabled("OPS_PARAMS.HIDE_COST",0)
+	else
+		callpoint!.setColumnEnabled("OPS_PARAMS.HIDE_COST",1)
 	endif
 
 [[OPS_PARAMS.ARAR]]
@@ -180,6 +186,15 @@ rem --- TAX_SVC_CD_SRC is required when using a sales tax service
 		callpoint!.setFocus("OPS_PARAMS.TAX_SVC_CD_SRC")
 		callpoint!.setStatus("ABORT")
 		break
+	endif
+
+[[OPS_PARAMS.DROPSHP_COST.AVAL]]
+rem --- Disable UNIT_COST when entering cost for dropships
+	if callpoint!.getUserInput()="Y" then
+		callpoint!.setColumnData("OPS_PARAMS.HIDE_COST","N",1)
+		callpoint!.setColumnEnabled("OPS_PARAMS.HIDE_COST",0)
+	else
+		callpoint!.setColumnEnabled("OPS_PARAMS.HIDE_COST",1)
 	endif
 
 [[OPS_PARAMS.END_CMT_LINE.AVAL]]

@@ -2254,13 +2254,21 @@ rem --- get AR Params
 	callpoint!.setDevObject("sls_tax_intrface", cvs(ars01a.sls_tax_intrface$,2))
 	callpoint!.setDevObject("warn_not_avail",ars01a.warn_not_avail$)
 	callpoint!.setDevObject("auto_ord_conf",ars01a.auto_ord_conf$)
-	if ars01a.on_demand_aging$="Y"
+	callpoint!.setDevObject("hide_cost",ars01a.hide_cost$)
 		callpoint!.setDevObject("on_demand_aging",ars01a.on_demand_aging$)
 		callpoint!.setDevObject("dflt_age_by",ars01a.dflt_age_by$)
 	endif
 
 	dim ars_credit$:open_tpls$[7]
 	read record (num(open_chans$[7]), key=firm_id$+"AR01") ars_credit$
+
+	rem --- Hide Unit Cost in detail grid?
+	grid!  = util.getGrid(Form!)
+	if ars01a.hide_cost$="Y" then
+		grid!.setColumnWidth(8,0)
+	else
+		if grid!.getColumnWidth(8)<70 then grid!.setColumnWidth(8,70)
+	endif
 
 rem --- get IV Params
 
