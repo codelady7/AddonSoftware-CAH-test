@@ -1,3 +1,37 @@
+[[SFR_WOVARREP.AREC]]
+rem --- Set default Warehouse
+
+	whse$=callpoint!.getDevObject("dflt_whse")
+	callpoint!.setColumnData("SFR_WOVARREP.WAREHOUSE_ID",whse$,1)
+
+[[SFR_WOVARREP.ASVA]]
+rem --- Ensure that at least one status option (Open/Closed) is checked
+
+if callpoint!.getColumnData("SFR_WOVARREP.OPEN")="N" AND callpoint!.getColumnData("SFR_WOVARREP.CLOSED")="N"
+	msg_id$="SF_STATUS_REQUIRED"
+	gosub disp_message
+	callpoint!.setStatus("ABORT")
+	callpoint!.setFocus("SFR_WOVARREP.OPEN")
+endif
+
+[[SFR_WOVARREP.BILL_NO.AVAL]]
+rem --- Validate against BOM_BILLMAST
+
+	bmm_billmast=fnget_dev("BMM_BILLMAST")
+	found=0
+	bill$=callpoint!.getUserInput()
+	while 1
+		find (bmm_billmast,key=firm_id$+bill$,dom=*break)
+		found=1
+		break
+	wend
+
+	if found=0 and cvs(bill$,3)<>""
+		msg_id$="INPUT_ERR_DATA"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+	endif
+
 [[SFR_WOVARREP.BILL_NO.BINQ]]
 rem --- Bill of Materials Item/Whse Lookup
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","IVM_ITEMWHSE","PRIMARY",key_tpl$,rd_table_chans$[all],status$
@@ -25,58 +59,14 @@ rem --- Bill of Materials Item/Whse Lookup
 	endif
 
 	callpoint!.setStatus("ACTIVATE-ABORT")
-[[SFR_WOVARREP.BILL_NO.AVAL]]
-rem --- Validate against BOM_BILLMAST
 
-	bmm_billmast=fnget_dev("BMM_BILLMAST")
-	found=0
-	bill$=callpoint!.getUserInput()
-	while 1
-		find (bmm_billmast,key=firm_id$+bill$,dom=*break)
-		found=1
-		break
-	wend
-
-	if found=0 and cvs(bill$,3)<>""
-		msg_id$="INPUT_ERR_DATA"
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-	endif
-
-[[SFR_WOVARREP.ASVA]]
-rem --- Ensure that at least one status option (Open/Closed) is checked
-
-if callpoint!.getColumnData("SFR_WOVARREP.OPEN")="N" AND callpoint!.getColumnData("SFR_WOVARREP.CLOSED")="N"
-	msg_id$="SF_STATUS_REQUIRED"
-	gosub disp_message
-	callpoint!.setStatus("ABORT")
-	callpoint!.setFocus("SFR_WOVARREP.OPEN")
-endif
-[[SFR_WOVARREP.REPORT_SEQ.AVAL]]
-rem ---- If By Bill and a whse hasn't been entered, default whse
-
-whse_columndat$=callpoint!.getColumnData("SFR_WOVARREP.WAREHOUSE_ID")
-
-if callpoint!.getUserInput()="B"
-	if cvs(whse_columndat$,2)="" then 
-		whse$=callpoint!.getDevObject("dflt_whse")
-		callpoint!.setColumnData("SFR_WOVARREP.WAREHOUSE_ID",whse$,1)
-	endif
-endif
-[[SFR_WOVARREP.AREC]]
-rem --- Set default Warehouse
-
-	whse$=callpoint!.getDevObject("dflt_whse")
-	callpoint!.setColumnData("SFR_WOVARREP.WAREHOUSE_ID",whse$,1)
-
-[[SFR_WOVARREP.<CUSTOM>]]
-#include [+ADDON_LIB]std_missing_params.aon
 [[SFR_WOVARREP.BSHO]]
 rem --- Open needed IV tables
 rem --- Get default warehouse from IV params
-	num_files=1
+	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVS_PARAMS",open_opts$[1]="OTA"
+	open_tables$[2]="SFE_WOMASTR",open_opts$[2]="OTA"
 	gosub open_tables
 
 	ivs01_dev=num(open_chans$[1])
@@ -114,7 +104,7 @@ rem           (form builds list w/o regards to the params)
 
 	if bm$="Y"
 		dim bill_no$(code_len)
-		bill_no$(1)=Translate!.getTranslation("AON_BILL_NUMBER")
+		bill_no$(1)=Translate!.getTranslation("AON_BILL_NUMBER")+" (B)"
 		bill_no$(desc_len,1)="~"
 		bill_no$(desc_len+1,1)="B"
 		bill_no$(code_len,1)=";"
@@ -123,7 +113,7 @@ rem           (form builds list w/o regards to the params)
 
 	if op$="Y"
 		dim cust_no$(code_len)
-		cust_no$(1)=Translate!.getTranslation("AON_CUSTOMER_ID")
+		cust_no$(1)=Translate!.getTranslation("AON_CUSTOMER_ID")+" (C)"
 		cust_no$(desc_len,1)="~"
 		cust_no$(desc_len+1,1)="C"
 		cust_no$(code_len,1)=";"
@@ -139,3 +129,48 @@ rem           (form builds list w/o regards to the params)
 		open_tables$[1]="BMM_BILLMAST",open_opts$[1]="OTA"
 		gosub open_tables
 	endif
+
+[[SFR_WOVARREP.NON_STOCK_ITEM.BDRL]]
+rem --- Non-stock work order lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMASTR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim sfeWoMastr_key$:key_tpl$
+	dim filter_defs$[1,2]
+	filter_defs$[1,0]="OPT_INVHDR.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"SF_WO_NONSTOCK","",table_chans$[all],sfeWoMastr_key$,filter_defs$[all]
+
+	rem --- Show non-stock item for the selected work order
+	if cvs(sfeWoMastr_key$,2)<>"" then 
+		sfeWoMastr_dev=fnget_dev("SFE_WOMASTR")
+		dim sfeWoMastr$:fnget_tpl$("SFE_WOMASTR")
+		sfeWoMastr_key$=sfeWoMastr_key$(1,len(sfeWoMastr_key$)-1)
+		readrecord(sfeWoMastr_dev,key=sfeWoMastr_key$,dom=*next)sfeWoMastr$
+
+		rem --- Get which non_stock_item control was used
+		non_stock_item$="SFR_WOVARREP.NON_STOCK_ITEM_1"
+		if num(callpoint!.getControlID())<>callpoint!.getControl(non_stock_item$).getID() then
+			non_stock_item$="SFR_WOVARREP.NON_STOCK_ITEM_2"
+		endif
+
+		callpoint!.setColumnData(non_stock_item$,sfeWoMastr.description_01$,1)
+	endif
+
+[[SFR_WOVARREP.REPORT_SEQ.AVAL]]
+rem ---- If By Bill and a whse hasn't been entered, default whse
+
+whse_columndat$=callpoint!.getColumnData("SFR_WOVARREP.WAREHOUSE_ID")
+
+if callpoint!.getUserInput()="B"
+	if cvs(whse_columndat$,2)="" then 
+		whse$=callpoint!.getDevObject("dflt_whse")
+		callpoint!.setColumnData("SFR_WOVARREP.WAREHOUSE_ID",whse$,1)
+	endif
+endif
+
+[[SFR_WOVARREP.<CUSTOM>]]
+#include [+ADDON_LIB]std_missing_params.aon
+
+
+

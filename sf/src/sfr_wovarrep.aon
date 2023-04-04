@@ -110,6 +110,8 @@ rem --- Assign form input values to local variables
         wotthru$=Option!.getOptionData("wo_type_2")
         billfrom$=Option!.getOptionData("bill_no_1")
         billthru$=Option!.getOptionData("bill_no_2")
+        nonstockfrom$=Option!.getOptionData("non_stock_item_1")
+        nonstockthru$=Option!.getOptionData("non_stock_item_2")
         custfrom$=Option!.getOptionData("customer_ID_1")
         custthru$=Option!.getOptionData("customer_ID_2")
         as_of_date$=Option!.getOptionData("as_of_date")
@@ -185,6 +187,7 @@ rem --- Retrieve key templates
         call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMASTR","AO_TYP_LOC_WO",sfe01a_key_alt1$,rd_table_chans$[all],status$
         call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMASTR","AO_CST_ORD_LINE",sfe01a_key_alt2$,rd_table_chans$[all],status$
         call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMASTR","AO_WH_ITM_LOC_WO",sfe01a_key_alt3$,rd_table_chans$[all],status$
+        call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMASTR","AO_NON_STOCK",sfe01a_key_alt4$,rd_table_chans$[all],status$
 
         call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOOPRTN","PRIMARY",sfe02a_key_tpl$,rd_table_chans$[all],status$
         call stbl("+DIR_SYP")+"bac_key_template.bbj","SFE_WOMATL","PRIMARY",sfe22a_key_tpl$,rd_table_chans$[all],status$

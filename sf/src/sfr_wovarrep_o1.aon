@@ -50,7 +50,7 @@ rem --- Check & Adjust Masks
 		
 rem --- Assign Title, Record, and keys
 
-        action=pos(sequence$="WBCT")-1
+        action=pos(sequence$="WBCTN")-1
         switch action
             case 0
                 h3$=Translate!.getTranslation("AON_WORK_ORDER_SEQUENCE")
@@ -83,6 +83,14 @@ rem --- Assign Title, Record, and keys
                 dim key_tpl$:sfe01a_key_alt1$
                 begin_key$=firm_id$+beging$
                 keynum$="AO_TYP_LOC_WO"
+                break
+            case 4
+                h3$=Translate!.getTranslation("AON_NON-STOCK_ITEM_SEQUENCE")
+                beging$=nonstockfrom$
+                ending$=nonstockthru$
+                dim key_tpl$:sfe01a_key_alt4$
+                begin_key$=firm_id$+beging$
+                keynum$="AO_NON_STOCK"
                 break
             case default
                 break
@@ -161,10 +169,14 @@ rem        flag=0
 
 rem --- Column Headings 
 
-        dim columns$[15,10]
         columns = 15
+        dim columns$[columns,10]
         columns$[0,0]=Translate!.getTranslation("AON_^^WO#"),                 columns$[0,1]="C", columns$[0,2]="7"
-        columns$[1,0]=Translate!.getTranslation("AON_^TYPE/^BILL"),                columns$[1,1]="C", columns$[1,2]="10"
+        if sequence$="N" then
+            columns$[1,0]=Translate!.getTranslation("AON_TYPE")+"/^"+Translate!.getTranslation("AON_ITEM"), columns$[1,1]="C", columns$[1,2]="10"
+        else
+            columns$[1,0]=Translate!.getTranslation("AON_^TYPE/^BILL"),       columns$[1,1]="C", columns$[1,2]="10"
+        endif
         columns$[2,0]=Translate!.getTranslation("AON_STANDARDS^OPS^HOURS"),   columns$[2,1]="N", columns$[2,2]="8",  columns$[2,3]=sf_hours_mask$,columns$[2,10]="T"
         columns$[3,0]=Translate!.getTranslation("AON_STANDARDS^OPS^DIRECT"),  columns$[3,1]="N", columns$[3,2]="9",  columns$[3,3]=sf_amt_mask$,  columns$[3,10]="T"
         columns$[4,0]=Translate!.getTranslation("AON_STANDARDS^OPS^OVRHD"),   columns$[4,1]="N", columns$[4,2]="9",  columns$[4,3]=sf_amt_mask$,  columns$[4,10]="T"
@@ -178,7 +190,7 @@ rem --- Column Headings
         columns$[12,0]=Translate!.getTranslation("AON_ACTUALS^SUB'S^TOTAL"),  columns$[12,1]="N",columns$[12,2]="9", columns$[12,3]=sf_amt_mask$, columns$[12,10]="T"
         columns$[13,0]=Translate!.getTranslation("AON_ACTUALS^W.O.^TOTAL"),   columns$[13,1]="N",columns$[13,2]="8", columns$[13,3]=grand_amt_mask$, columns$[13,10]="T"
         columns$[14,0]=Translate!.getTranslation("AON_^VARIANCE"),            columns$[14,1]="N",columns$[14,2]="8", columns$[14,3]=sf_amt_mask$, columns$[14,10]="T"
-        columns$[15,0]="%",                    columns$[15,1]="N",columns$[15,2]="6", columns$[15,3]=pct_mask$,    columns$[15,10]="T"
+        columns$[15,0]="%",                                                   columns$[15,1]="N",columns$[15,2]="6", columns$[15,3]=pct_mask$,    columns$[15,10]="T"
 
         call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
 
@@ -205,6 +217,7 @@ rem --- Main Read
             if sequence$="B" and key_tpl.firm_id$+key_tpl.warehouse_id$+key_tpl.item_id$>firm_id$+whse$+ending$ then break
             if sequence$="C" and key_tpl.firm_id$+key_tpl.customer_id$>firm_id$+ending$ then break
             if sequence$="T" and key_tpl.firm_id$+key_tpl.wo_type$>firm_id$+ending$ then break   
+            if sequence$="N" and key_tpl.firm_id$+key_tpl.description_01$>firm_id$+ending$ then break   
         else
             if sequence$="B" and whse$<>"" and key_tpl.warehouse_id$>whse$ then break
         endif
@@ -220,19 +233,20 @@ rem --- Main Read
 				read (sfe01a_dev)
 				continue
 			endif
+            
+        rem --- If by non-stock make sure the non-stock item is NOT blank
+            if sequence$="N" and (cvs(key_tpl.description_01$,2))="" then
+                read (sfe01a_dev)
+                continue
+            endif
         			
 rem --- Breaks
         if sequence$<>"W" then
-            if sequence$="B" then
-                data1$=key_tpl.warehouse_id$+key_tpl.item_id$
-            else
-                if sequence$="T" then
-                    data1$=key_tpl.wo_type$
-                else
-                    data1$=key_tpl.customer_id$
-                endif
-            endif
-			
+            if sequence$="B" then data1$=key_tpl.warehouse_id$+key_tpl.item_id$
+            if sequence$="C" then data1$=key_tpl.customer_id$
+            if sequence$="T" then data1$=key_tpl.wo_type$
+            if sequence$="N" then data1$=key_tpl.description_01$
+ 			
             if data1$<>t0$ then gosub first_sub_tot
             read (sfe01a_dev,knum=keynum$)
         endif
@@ -429,7 +443,11 @@ rem --- Print
 
 		blank=fnblank(16)
         OutVect!.addItem(sfe01a.wo_no$)
-        OutVect!.addItem(sfe01a.wo_type$+" "+sfe01a.description_01$)
+        if sequence$="N" then
+            OutVect!.addItem(sfe01a.wo_type$+" "+cvs(sfe01a.description_01$,2)+" "+cvs(sfe01a.description_02$,2))
+        else
+            OutVect!.addItem(sfe01a.wo_type$+" "+sfe01a.description_01$)
+        endif
                 
         if abs(a3_variance_percent)>999.9 then 
             a3_variance_percent$=" ****** " 
@@ -884,18 +902,22 @@ first_sub_tot:   rem --- First Sub Total
 
             blank=fnblank(16)
             TotVect!.addItem(str(OutVect!.size()/(columns+1))) 
-			
+
             if sequence$="T" then 
-                OutVect!.addItem(Translate!.getTranslation("AON_TYPE_")+t0$)
-                OutVect!.addItem(Translate!.getTranslation("AON__TOTALS"))
-            else 
-                if sequence$="C" then
-                    OutVect!.addItem(Translate!.getTranslation("AON_CUSTOMER"))
-                    OutVect!.addItem(str(fnmask$(t0$(1,custmask),c1$))+Translate!.getTranslation("AON__TOTALS"))
-                else
-                    OutVect!.addItem(Translate!.getTranslation("AON_ITEM_")+cvs(fnmask$(t0$(3),ivIMask$),2)+" "+Translate!.getTranslation("AON__TOTALS:"))
-                    blank=fnblank(1)
-                endif
+                OutVect!.addItem(Translate!.getTranslation("AON_TYPE_")+t0$+" "+Translate!.getTranslation("AON__TOTALS:"))
+                blank=fnblank(1)
+            endif
+            if sequence$="C" then
+                OutVect!.addItem(Translate!.getTranslation("AON_CUSTOMER")+" "+fnmask$(t0$(1,custmask),c1$)+Translate!.getTranslation("AON__TOTALS:"))
+                blank=fnblank(1)
+            endif
+            if sequence$="B" then
+                OutVect!.addItem(Translate!.getTranslation("AON_BILL_")+cvs(fnmask$(t0$(3),ivIMask$),2)+Translate!.getTranslation("AON__TOTALS:"))
+                blank=fnblank(1)
+            endif
+            if sequence$="N" then
+                OutVect!.addItem(Translate!.getTranslation("AON_ITEM_")+cvs(t0$,2)+" "+Translate!.getTranslation("AON__TOTALS:"))
+                blank=fnblank(1)
             endif
 			
 			OutVect!.addItem(str(t_standards[0]:sf_hours_mask$)); rem Op hours
