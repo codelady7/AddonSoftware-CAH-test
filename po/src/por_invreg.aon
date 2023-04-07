@@ -47,7 +47,7 @@ rem --- Assign form input values to local variables
 
 rem --- Open/Lock Files
 
-    files=36,begfile=1,endfile=files
+    files=37,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
 
     files$[1]="aps_params",ids$[1]="APS_PARAMS"
@@ -79,6 +79,7 @@ rem --- Open/Lock Files
     files$[28]="ivm-01",ids$[28]="IVM_ITEMMAST"
     files$[29]="ivm-02",ids$[29]="IVM_ITEMWHSE"
     files$[36]="gls_calendar",ids$[36]="GLS_CALENDAR"
+    files$[37]="pot_reclsdet",ids$[37]="POT_RECLSDET"
 
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
@@ -113,6 +114,7 @@ rem --- Open/Lock Files
     ivm01_dev=channels[28]
     ivm02_dev=channels[29]
     gls_calendar_dev=channels[36]
+    potRecLsDet_dev=channels[37]
 
 rem --- Dimension string templates
 
@@ -127,7 +129,8 @@ rem --- Dimension string templates
 :       apm10a$:templates$[22],apm10b$:templates$[23],apm10c$:templates$[24],
 :       apt01a$:templates$[25],apt02a$:templates$[26],
 :       apt11a$:templates$[27],      
-:       ivm01a$:templates$[28],ivm02a$:templates$[29],gls_calendar$:templates$[36]
+:       ivm01a$:templates$[28],ivm02a$:templates$[29],gls_calendar$:templates$[36],
+:       potRecLsDet$:templates$[37]
 
 rem --- Retrieve parameter records
 
