@@ -194,7 +194,8 @@ rem --- Deal with Schedule Records
 	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
 	yield=num(callpoint!.getDevObject("wo_est_yield"))
-	run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
+	sched_qty=num(callpoint!.getDevObject("prod_qty"))
+	total_time=SfUtils.opTime(1,sched_qty,hrs_per_pc,pcs_per_hr,yield,setup)
 	move_time=num(callpoint!.getUserInput())
 	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
 	if callpoint!.getUserInput()<>callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME")
@@ -240,7 +241,8 @@ rem --- Deal with Schedule Records
 	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 	pcs_per_hr=num(callpoint!.getUserInput())
 	yield=num(callpoint!.getDevObject("wo_est_yield"))
-	run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
+	sched_qty=num(callpoint!.getDevObject("prod_qty"))
+	total_time=SfUtils.opTime(1,sched_qty,hrs_per_pc,pcs_per_hr,yield,setup)
 	move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
 	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
 
@@ -267,7 +269,8 @@ rem --- Deal with Schedule Records
 		hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 		pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
 		yield=num(callpoint!.getDevObject("wo_est_yield"))
-		run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
+		sched_qty=num(callpoint!.getDevObject("prod_qty"))
+		total_time=SfUtils.opTime(1,sched_qty,hrs_per_pc,pcs_per_hr,yield,setup)
 		move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
 		add_date$=callpoint!.getUserInput()
 		gosub add_sched
@@ -280,7 +283,8 @@ rem --- Deal with Schedule Records
 	hrs_per_pc=num(callpoint!.getColumnData("SFE_WOOPRTN.HRS_PER_PCE"))
 	pcs_per_hr=num(callpoint!.getColumnData("SFE_WOOPRTN.PCS_PER_HOUR"))
 	yield=num(callpoint!.getDevObject("wo_est_yield"))
-	run_time=SfUtils.opUnits(hrs_per_pc,pcs_per_hr,yield)
+	sched_qty=num(callpoint!.getDevObject("prod_qty"))
+	total_time=SfUtils.opTime(1,sched_qty,hrs_per_pc,pcs_per_hr,yield,setup)
 	move_time=num(callpoint!.getColumnData("SFE_WOOPRTN.MOVE_TIME"))
 	add_date$=callpoint!.getColumnData("SFE_WOOPRTN.REQUIRE_DATE")
 
@@ -393,6 +397,7 @@ rem ===============================================================
 	ovhd_rate=num(callpoint!.getColumnData("SFE_WOOPRTN.OVHD_RATE"))
 	setup=num(callpoint!.getColumnData("SFE_WOOPRTN.SETUP_TIME"))
 	setup_time=setup
+
 	gosub calc_totals
 
 	return
@@ -415,17 +420,16 @@ rem ===============================================================
 	callpoint!.setColumnData("SFE_WOOPRTN.UNIT_COST",str(unit_cost),1)
 
 	old_tot_time=num(callpoint!.getColumnData("SFE_WOOPRTN.TOTAL_TIME"))
-	new_tot_time=SfUtils.opTime(1,sched_qty,hrs_per_pc,pcs_per_hr,yield,setup)
-	new_tot_dols=SfUtils.opTotStdCost(sched_qty,hrs_per_pc,dir_rate,ovhd_rate,pcs_per_hr,yield,setup)
-	callpoint!.setColumnData("SFE_WOOPRTN.TOTAL_TIME",str(new_tot_time))
-	callpoint!.setColumnData("SFE_WOOPRTN.TOT_STD_COST",str(new_tot_dols))
+	total_time=SfUtils.opTime(1,sched_qty,hrs_per_pc,pcs_per_hr,yield,setup)
+	total_dols=SfUtils.opTotStdCost(sched_qty,hrs_per_pc,dir_rate,ovhd_rate,pcs_per_hr,yield,setup)
+	callpoint!.setColumnData("SFE_WOOPRTN.TOTAL_TIME",str(total_time))
+	callpoint!.setColumnData("SFE_WOOPRTN.TOT_STD_COST",str(total_dols))
 
-rem	if old_tot_time<>new_tot_time * need to make this happen every time - 12/12/12
+	rem --- don't remove/re-add sched recs if only displaying the grid row (otherwise have to reschedule for no good reason)
+	if callpoint!.getEvent()<>"AGDR"
 		gosub remove_sched
-rem jpb need to add the correct records back in - not happening right now.
-rem jpb None of the input variables are being sent in * I think this is happening now - need more testing - 12/12/12
 		gosub add_sched
-rem	endif * need to make this happen every time - 12/12/12
+	endif
 
 	return
 
@@ -450,7 +454,7 @@ rem ===============================================================
 rem ===============================================================
 add_sched:
 rem setup_time:	input
-rem run_time:		input
+rem total_time:	input
 rem move_time:	input
 rem add_date$:	input
 rem ===============================================================
@@ -467,7 +471,7 @@ rem ===============================================================
 		sfm05a.oper_seq_ref$=callpoint!.getColumnData("SFE_WOOPRTN.INTERNAL_SEQ_NO")
 		sfm05a.queue_time=queue_time
 		sfm05a.setup_time=setup_time
-		sfm05a.runtime_hrs=run_time
+		sfm05a.runtime_hrs=total_time-setup_time
 		sfm05a.move_time=move_time
 		sfm05a$=field(sfm05a$)
 		write record (sfm05_dev) sfm05a$

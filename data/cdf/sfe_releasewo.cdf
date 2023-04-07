@@ -118,9 +118,6 @@ rem --- Release/commit
 
 			endif
 
-			sfe_womastr.wo_status$="O"
-			sfe_womastr$=field(sfe_womastr$)
-			write record (sfe01_dev)sfe_womastr$
 			callpoint!.setDevObject("wo_status","O")
 
 		endif

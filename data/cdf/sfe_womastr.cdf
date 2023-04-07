@@ -730,7 +730,8 @@ rem --- Release/Commit the Work Order
 :		dflt_data$[all]
 
 	if callpoint!.getDevObject("wo_status")="O"
-		callpoint!.setStatus("RECORD:["+firm_id$+callpoint!.getDevObject("wo_loc")+callpoint!.getDevObject("wo_no")+"]")
+		callpoint!.setColumnData("SFE_WOMASTR.WO_STATUS","O")
+		callpoint!.setStatus("SAVE-RECORD:["+firm_id$+callpoint!.getDevObject("wo_loc")+callpoint!.getDevObject("wo_no")+"]")
 	endif
 
 	rem --- Remove temporary soft lock used just for this task 
@@ -805,7 +806,7 @@ rem --- Schedule the Work Order
 		callpoint!.setColumnData("SFE_WOMASTR.SCHED_FLAG",sched_method$,1)
 		callpoint!.setColumnData("SFE_WOMASTR.ESTSTT_DATE",start_date$,1)
 		callpoint!.setColumnData("SFE_WOMASTR.ESTCMP_DATE",comp_date$,1)
-		callpoint!.setStatus("MODIFIED")
+		callpoint!.setStatus("SAVE-RECORD:["+firm_id$+callpoint!.getDevObject("wo_loc")+callpoint!.getDevObject("wo_no")+"]")
 	endif
 
 	rem --- Remove temporary soft lock used just for this task 
