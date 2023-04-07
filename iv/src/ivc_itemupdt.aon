@@ -514,7 +514,7 @@ update_lot_serial: rem --- ivm-07 Lot/Serial Number
 
     if ls=0 or cvs(lotser$,2)="" then goto done
     if ivm01a.inventoried$<>"Y" then goto lot_serial_trans
-    if pos(action$="BBOOPOTAPI",2) then goto update_lot_act
+    if pos(action$="BBOOPOTA",2) then goto update_lot_act
     ivm07a.firm_id$=firm_id$
     ivm07a.warehouse_id$=whse$
     ivm07a.item_id$=item$
@@ -560,6 +560,7 @@ update_lot_master: rem --- Update lot/serial master
     gosub update_comtd_on_order
     if action then gosub update_whse_lots
     if action$="PH" then ivm07a.lstphy_date$=ymd$,ivm07a.physical_cnt=refs[5]
+    if action$="PI" then ivm07a.landed_cost=refs[4]
     vendor$=ivm07a.vendor_id$
     if ivm07a.qty_on_hand=0 then ivm07a.closed_flag$="C" else ivm07a.closed_flag$=""
     ivm07a$=field(ivm07a$)

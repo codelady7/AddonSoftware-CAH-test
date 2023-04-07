@@ -6,6 +6,8 @@ rem --- AddonSoftware Version 8.0.0 - 01Jan2007
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 rem --- All Rights Reserved
 
+    use java.util.HashMap
+
     seterr std_error
     setesc std_error
 
@@ -33,6 +35,7 @@ rem --- Initializations
     params$[2]=i2$
     params$[3]=i3$
     params$[4]=i4$
+    lotserMap!=new HashMap()
 
 rem --- Get user approval to update
 
@@ -177,6 +180,23 @@ rem --- Update history detail record
     pot14a.qty_invoiced=pot14a.qty_invoiced+poe25a.qty_received
     found=1
     write record (pot14_dev) pot14a$
+
+    rem --- Hold on to the lot/serial numbers for lotted/serialized item
+    read(potRecLsDet_dev,key=pot14a.firm_id$+pot14a.receiver_no$+pot14a.po_int_seq_ref$,dom=*next)
+    while 1
+        potRecLsDet_key$=key(potRecLsDet_dev,end=*break)
+        if pos(pot14a.firm_id$+pot14a.receiver_no$+pot14a.po_int_seq_ref$=potRecLsDet_key$)<>1 then break
+        readrecord(potRecLsDet_dev)potRecLsDet$
+        if lotserMap!.containsKey(pot14a.warehouse_id$+pot14a.item_id$) then
+            lotserVect!=cast(BBjVector, lotserMap!.get(pot14a.warehouse_id$+pot14a.item_id$))
+            lotserVect!.addItem(potRecLsDet.lotser_no$)
+        else
+            lotserVect!=BBjAPI().makeVector()
+            lotserVect!.addItem(potRecLsDet.lotser_no$)
+            lotserMap!.put(pot14a.warehouse_id$+pot14a.item_id$,lotserVect!)
+        endif
+    wend
+
 l2370:
     dim pom02a$:fattr(pom02a$)
     dim sv_pom02a$:fattr(pom02a$)
@@ -349,7 +369,18 @@ rem --- Call standard inventory update program
     item$[1]=pow17a.warehouse_id$
     item$[2]=pow17a.item_id$
     refs[4]=pow17a.landed_cost
-    call pgmdir$+"ivc_itemupdt.aon",action$,files[all],ivs01a$,item$[all],refs$[all],refs[all],rd_table_chans$[all],ignore_status
+    if lotserMap!.containsKey(pow17a.warehouse_id$+pow17a.item_id$) then
+        rem --- Set item$[3] for lotted/serialized items
+        lotserVect!=cast(BBjVector, lotserMap!.get(pow17a.warehouse_id$+pow17a.item_id$))
+        lotserIter!=lotserVect!.iterator()
+        while lotserIter!.hasNext()
+            item$[3]=lotserIter!.next()
+            call pgmdir$+"ivc_itemupdt.aon",action$,files[all],ivs01a$,item$[all],refs$[all],refs[all],rd_table_chans$[all],ignore_status
+        wend
+    else
+        call pgmdir$+"ivc_itemupdt.aon",action$,files[all],ivs01a$,item$[all],refs$[all],refs[all],rd_table_chans$[all],ignore_status
+    endif
+
     goto l4100
 
 l4900: rem --- All done

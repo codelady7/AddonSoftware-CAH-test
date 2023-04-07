@@ -175,14 +175,16 @@ l630:
 
     if ls$="Y"     
         files$[23]="sfe-14",ids$[23]="SFE_WOLSISSU"
-        call pgmdir$+"adc_fileopen.aon",action,23,23,files$[all],options$[all],
+        files$[24]="pot_reclsdet",ids$[24]="POT_RECLSDET"
+        call pgmdir$+"adc_fileopen.aon",action,23,24,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
 
         if status goto std_exit
     
         sfe14_dev=channels[23]
-    
+        potRecLsDet_dev=channels[24]
         dim sfe14a$:templates$[23]
+        dim potRecLsDet$:templates$[24]
     endif
 
 l675: rem --- done file opens
@@ -389,12 +391,13 @@ l3000: rem --- Remove receipt detail
 rem --- Remove Receipt Lot/Serial Detail
 
         read (poe24_dev,key=poe14a.firm_id$+poe14a.receiver_no$+poe14a.internal_seq_no$,dom=*next)
-l3120:
-        k$=key(poe24_dev,end=l3200)
-        if pos(poe14a.firm_id$+poe14a.receiver_no$+poe14a.internal_seq_no$=k$)<>1 goto l3200
-        remove (poe24_dev,key=k$)
-
-        goto l3120
+        while 1
+            k$=key(poe24_dev,end=*break)
+            if pos(poe14a.firm_id$+poe14a.receiver_no$+poe14a.internal_seq_no$=k$)<>1 then break
+            readrecord(poe24_dev,key=k$)poe24a$
+            writerecord(potRecLsDet_dev)poe24a$
+            remove (poe24_dev,key=k$)
+        wend
 
 l3200: rem --- Update PO detail
 
