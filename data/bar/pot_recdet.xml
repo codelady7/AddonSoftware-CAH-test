@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.pot_recdet">89EC4BA76870997A7FE0145E4F14CCF3</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pot_recdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_recdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pot_recdet">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_recdet">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_recdet">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pot_recdet">20230410</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_recdet">20230410</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_recdet">170706</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_recdet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.pot_recdet">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.pot_recdet">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_recdet"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.pot_recdet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.pot_recdet">T</DD_ATTR_FTYP>
@@ -58,6 +58,16 @@
 			<DD_ATTR_PADG id="ddm_tables.pot_recdet"></DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.pot_recdet01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.pot_recdet01">POT_RECDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.pot_recdet01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.pot_recdet01">Lot/Serial Detail</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.pot_recdet01">LENT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.pot_recdet01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.pot_recdetagcl">
@@ -71,6 +81,18 @@
 		<RECORD id="ddm_table_cpro.pot_recdetagds">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_recdetagds">POT_RECDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.pot_recdetagds">AGDS</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.pot_recdetagrn">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_recdetagrn">POT_RECDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.pot_recdetagrn">AGRN</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.pot_recdetaopt-lent">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_recdetaopt-lent">POT_RECDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.pot_recdetaopt-lent">AOPT-LENT</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.pot_recdetbdgx">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_recdetbdgx">POT_RECDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.pot_recdetbdgx">BDGX</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_recdetbgds">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_recdetbgds">POT_RECDET      </DD_TABLE_ALIAS>
@@ -1717,7 +1739,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_recdet026">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_recdet026"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_recdet026"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_recdet026">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_recdet026">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_recdet026"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_recdet026"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_recdet026"></DD_ATTR_CTLY>
