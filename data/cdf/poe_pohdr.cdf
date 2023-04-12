@@ -81,8 +81,8 @@ rem --- PO changes must be saved before on-demand PO print
 		endif
 	endif
 
-[[POE_POHDR.AOPT-DREC]]
-rem --- Duplicate Historical Receipt
+[[POE_POHDR.AOPT-DUPP]]
+rem --- Duplicate Old PO
 	dim filter_defs$[2,2]
 	filter_defs$[1,0] = "POT_RECHDR.FIRM_ID"
 	filter_defs$[1,1] = "='"+firm_id$+"'"
@@ -96,7 +96,7 @@ rem --- Duplicate Historical Receipt
 	call stbl("+DIR_SYP")+"bax_query.bbj",
 :		gui_dev,
 :		Form!,
-:		"PO_INVRECPT",
+:		"PO_HIST_PO",
 :		"DEFAULT",
 :		table_chans$[all],
 :		sel_key$,
@@ -104,9 +104,9 @@ rem --- Duplicate Historical Receipt
 
 	if sel_key$<>""
 		call stbl("+DIR_SYP")+"bac_key_template.bbj",
-:			"POT_RECHDR",
+:			"POT_POHDR_ARC",
 :			"PRIMARY",
-:			pot_rechdr_key$,
+:			pot_pohdr_key$,
 :			table_chans$[all],
 :			status$
 
@@ -120,31 +120,31 @@ rem --- Duplicate Historical Receipt
 			poe_pohdr_dev = fnget_dev("POE_POHDR")
 			dim poe_pohdr$:fnget_tpl$("POE_POHDR")
 
-			pot_rechdr_dev = fnget_dev("POT_RECHDR")
-			dim pot_rechdr$:fnget_tpl$("POT_RECHDR")
-			dim pot_rechdr_key$:pot_rechdr_key$
-			pot_rechdr_key$=sel_key$(1,len(pot_rechdr_key$))
-			read record (pot_rechdr_dev, key=pot_rechdr_key$,dom=*endif) pot_rechdr$
+			pot_pohdr_dev = fnget_dev("POT_POHDR_ARC")
+			dim pot_pohdr$:fnget_tpl$("POT_POHDR_ARC")
+			dim pot_pohdr_key$:pot_pohdr_key$
+			pot_pohdr_key$=sel_key$(1,len(pot_pohdr_key$))
+			read record (pot_pohdr_dev, key=pot_pohdr_key$,dom=*endif) pot_pohdr$
 
-			call stbl("+DIR_PGM")+"adc_copyfile.aon",pot_rechdr$,poe_pohdr$,status
+			call stbl("+DIR_PGM")+"adc_copyfile.aon",pot_pohdr$,poe_pohdr$,status
 			if status=0 then
 				dim sysinfo$:stbl("+SYSINFO_TPL")
 				sysinfo$=stbl("+SYSINFO")
 				today$=sysinfo.system_date$
 				today_jul=jul(num(today$(1,4)),num(today$(5,2)),num(today$(7,2)))
-				rec_ord_date_jul=jul(num(pot_rechdr.ord_date$(1,4)),num(pot_rechdr.ord_date$(5,2)),num(pot_rechdr.ord_date$(7,2)))
-				rec_promise_date_jul=jul(num(pot_rechdr.promise_date$(1,4)),num(pot_rechdr.promise_date$(5,2)),num(pot_rechdr.promise_date$(7,2)))
-				rec_not_b4_date_jul=jul(num(pot_rechdr.not_b4_date$(1,4)),num(pot_rechdr.not_b4_date$(5,2)),num(pot_rechdr.not_b4_date$(7,2)))
-				rec_reqd_date_jul=jul(num(pot_rechdr.reqd_date$(1,4)),num(pot_rechdr.reqd_date$(5,2)),num(pot_rechdr.reqd_date$(7,2)))
+				rec_ord_date_jul=jul(num(pot_pohdr.ord_date$(1,4)),num(pot_pohdr.ord_date$(5,2)),num(pot_pohdr.ord_date$(7,2)))
+				rec_promise_date_jul=jul(num(pot_pohdr.promise_date$(1,4)),num(pot_pohdr.promise_date$(5,2)),num(pot_pohdr.promise_date$(7,2)))
+				rec_not_b4_date_jul=jul(num(pot_pohdr.not_b4_date$(1,4)),num(pot_pohdr.not_b4_date$(5,2)),num(pot_pohdr.not_b4_date$(7,2)))
+				rec_reqd_date_jul=jul(num(pot_pohdr.reqd_date$(1,4)),num(pot_pohdr.reqd_date$(5,2)),num(pot_pohdr.reqd_date$(7,2)))
 
 				poe_pohdr.po_no$=seq_id$
 				poe_pohdr.req_no$=""
 				poe_pohdr.ord_date$=today$
-				if cvs(pot_rechdr.promise_date$,2)<>"" then poe_pohdr.promise_date$=date(today_jul+(rec_promise_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
-				if cvs(pot_rechdr.not_b4_date$,2)<>"" poe_pohdr.not_b4_date$=date(today_jul+(rec_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
-				if cvs(pot_rechdr.reqd_date$,2)<>"" poe_pohdr.reqd_date$=date(today_jul+(rec_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+				if cvs(pot_pohdr.promise_date$,2)<>"" then poe_pohdr.promise_date$=date(today_jul+(rec_promise_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+				if cvs(pot_pohdr.not_b4_date$,2)<>"" poe_pohdr.not_b4_date$=date(today_jul+(rec_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+				if cvs(pot_pohdr.reqd_date$,2)<>"" poe_pohdr.reqd_date$=date(today_jul+(rec_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
 				poe_pohdr.recpt_date$=""
-				poe_pohdr.ds_state_cd$=pot_rechdr.ds_state_code$
+				poe_pohdr.ds_state_cd$=pot_pohdr.ds_state_cd$
 				poe_pohdr.entered_by$=""
 
 				poe_pohdr$=field(poe_pohdr$)
@@ -162,28 +162,28 @@ rem --- Duplicate Historical Receipt
 				rem --- Initialize ATAMO
 				call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs_params$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
-				pot_recdet_dev = fnget_dev("POT_RECDET")
-				dim pot_recdet$:fnget_tpl$("POT_RECDET")
-				read(pot_recdet_dev, key=pot_rechdr_key$,dom=*next)
+				pot_podet_dev = fnget_dev("POT_PODET_ARC")
+				dim pot_podet$:fnget_tpl$("POT_PODET_ARC")
+				read(pot_podet_dev, key=pot_pohdr_key$,dom=*next)
 				while 1
-					pot_recdet_key$=key(pot_recdet_dev,end=*break)
-					if pos(pot_rechdr_key$=pot_recdet_key$)<>1 then break
-					readrecord(pot_recdet_dev)pot_recdet$
+					pot_podet_key$=key(pot_podet_dev,end=*break)
+					if pos(pot_pohdr_key$=pot_podet_key$)<>1 then break
+					readrecord(pot_podet_dev)pot_podet$
 
 					redim poe_podet$
-					call stbl("+DIR_PGM")+"adc_copyfile.aon",pot_recdet$,poe_podet$,status
+					call stbl("+DIR_PGM")+"adc_copyfile.aon",pot_podet$,poe_podet$,status
 					if status then continue
 
 					call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",int_seq_no$,table_chans$[all]
-					recdet_reqd_date_jul=jul(num(pot_recdet.reqd_date$(1,4)),num(pot_recdet.reqd_date$(5,2)),num(pot_recdet.reqd_date$(7,2)))
-					recdet_promise_date_jul=jul(num(pot_recdet.promise_date$(1,4)),num(pot_recdet.promise_date$(5,2)),num(pot_recdet.promise_date$(7,2)))
-					recdet_not_b4_date_jul=jul(num(pot_recdet.not_b4_date$(1,4)),num(pot_recdet.not_b4_date$(5,2)),num(pot_recdet.not_b4_date$(7,2)))
+					recdet_reqd_date_jul=jul(num(pot_podet.reqd_date$(1,4)),num(pot_podet.reqd_date$(5,2)),num(pot_podet.reqd_date$(7,2)))
+					recdet_promise_date_jul=jul(num(pot_podet.promise_date$(1,4)),num(pot_podet.promise_date$(5,2)),num(pot_podet.promise_date$(7,2)))
+					recdet_not_b4_date_jul=jul(num(pot_podet.not_b4_date$(1,4)),num(pot_podet.not_b4_date$(5,2)),num(pot_podet.not_b4_date$(7,2)))
 
 					poe_podet.po_no$=poe_pohdr.po_no$
 					poe_podet.internal_seq_no$=int_seq_no$
-					if cvs(pot_recdet.reqd_date$,2)<>"" poe_podet.reqd_date$=date(today_jul+(recdet_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
-					if cvs(pot_recdet.promise_date$,2)<>"" then poe_podet.promise_date$=date(today_jul+(recdet_promise_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
-					if cvs(pot_recdet.not_b4_date$,2)<>"" poe_podet.not_b4_date$=date(today_jul+(recdet_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+					if cvs(pot_podet.reqd_date$,2)<>"" poe_podet.reqd_date$=date(today_jul+(recdet_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+					if cvs(pot_podet.promise_date$,2)<>"" then poe_podet.promise_date$=date(today_jul+(recdet_promise_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+					if cvs(pot_podet.not_b4_date$,2)<>"" poe_podet.not_b4_date$=date(today_jul+(recdet_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
 					poe_podet.req_no$=""
 					poe_podet.wo_no$=""
 					poe_podet.wk_ord_seq_ref$=""
@@ -510,7 +510,7 @@ rem --- inits
 	use java.util.Properties
 
 rem --- Open Files
-	num_files=22
+	num_files=24
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -534,6 +534,8 @@ rem --- Open Files
 	open_tables$[20]="POT_RECHDR",open_opts$[20]="OTA"
 	open_tables$[21]="POT_RECDET",open_opts$[21]="OTA"
 	open_tables$[22]="ADM_RPTCTL_RCP",open_opts$[22]="OTA"
+	open_tables$[23]="POT_POHDR_ARC",open_opts$[23]="OTA"
+	open_tables$[24]="POT_PODET_ARC",open_opts$[24]="OTA"
 
 	gosub open_tables
 
