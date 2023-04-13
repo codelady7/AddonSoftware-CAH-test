@@ -505,8 +505,14 @@ while 1
 	v6h$=stbl("+V6DATA",err=*break)
 	if v6h$<>""
 		callpoint!.setTableColumnAttribute("APM_VENDMAST.ADDR_LINE_1","MAXL","24")
+		addr1!=callpoint!.getControl("APM_VENDMAST.ADDR_LINE_1")
+		addr1!.setLength(24)
 		callpoint!.setTableColumnAttribute("APM_VENDMAST.ADDR_LINE_2","MAXL","24")
+		addr2!=callpoint!.getControl("APM_VENDMAST.ADDR_LINE_2")
+		addr2!.setLength(24)
 		callpoint!.setTableColumnAttribute("APM_VENDMAST.CITY","MAXL","24")
+		city!=callpoint!.getControl("APM_VENDMAST.CITY")
+		city!.setLength(24)
 	endif
 	break
 wend
