@@ -56,6 +56,125 @@ if so_lines_used$="SOME" then
 	gosub disp_message
 endif
 
+[[POE_POHDR.AOPT-COPY]]
+rem --- Get vendor to copy this PO to
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj", "POE_NEWVENDOR", stbl("+USER_ID"), "MNT", "", table_chans$[all]
+	new_vendor$=cvs(callpoint!.getDevObject("new_vendor"),2)
+	new_purchAddr$=cvs(callpoint!.getDevObject("new_purchAddr"),2)
+
+rem --- Make sure focus returns to this form
+	callpoint!.setStatus("ACTIVATE")
+
+rem --- Save modified records before copying it for the new vendor
+	if cvs(new_vendor$,2)="" then break
+	if pos("M"=callpoint!.getRecordStatus())
+		rem --- Add Barista soft lock for this record if not already in edit mode
+		if !callpoint!.isEditMode() then
+			rem --- Is there an existing soft lock?
+			lock_table$="POE_POHDR"
+			lock_record$=current_key$
+			lock_type$="C"
+			lock_status$=""
+			lock_disp$=""
+			call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+			if lock_status$="" then
+				rem --- Add temporary soft lock used just for this task
+				lock_type$="L"
+				call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+			else
+				rem --- Record locked by someone else
+				msg_id$="ENTRY_REC_LOCKED"
+				gosub disp_message
+				break
+			endif
+		endif
+
+		rem --- Get current form data and write it to disk
+		gosub get_disk_rec
+		writerecord(poePoHdr_dev)poePoHdr$
+	endif
+
+rem --- Copy this PO using new vendor
+	call stbl("+DIR_SYP")+"bas_sequences.bbj","PO_NO",seq_id$,rd_table_chans$[all]
+	if seq_id$<>"" then
+		rem --- Copy header record
+		poe_pohdr_dev  = fnget_dev("POE_POHDR")
+		dim poe_pohdr$:fnget_tpl$("POE_POHDR")
+		po_no$=callpoint!.getColumnData("POE_POHDR.PO_NO")
+		found = 0
+		extractrecord(poe_pohdr_dev, key=firm_id$+po_no$, dom=*next)poe_pohdr$; found = 1; rem Advisory Locking
+		if found then
+			poe_pohdr.po_no$=seq_id$
+			poe_pohdr.vendor_id$=new_vendor$
+			poe_pohdr.purch_addr$=new_purchAddr$
+			poe_pohdr.entered_by$=""
+
+			poe_pohdr$=field(poe_pohdr$)
+			write record (poe_pohdr_dev) poe_pohdr$
+			poe_pohdr_key$=poe_pohdr.firm_id$+poe_pohdr.po_no$
+			extractrecord(poe_pohdr_dev,key=poe_pohdr_key$)poe_pohdr$; rem Advisory Locking
+			callpoint!.setStatus("SETORIG")
+
+			rem --- Copy detail records
+			poe_podet_dev = fnget_dev("POE_PODET")
+			dim poe_podet$:fnget_tpl$("POE_PODET")
+			poe_podet_dev2=fnget_dev("2_POE_PODET")
+			poc_linecode_dev=fnget_dev("POC_LINECODE")
+			dim poc_linecode$:fnget_tpl$("POC_LINECODE")
+
+			rem --- Initialize ATAMO
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs_params$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+			read(poe_podet_dev, key=firm_id$+po_no$,dom=*next)
+			while 1
+				poe_podet_key$=key(poe_podet_dev,end=*break)
+				if pos(firm_id$+po_no$=poe_podet_key$)<>1 then break
+				readrecord(poe_podet_dev)poe_podet$
+				call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",int_seq_no$,table_chans$[all]
+				poe_podet.po_no$=poe_pohdr.po_no$
+				poe_podet.internal_seq_no$=int_seq_no$
+
+				status=0
+				call stbl("+DIR_PGM")+"poc_itemvend.aon","R","P",
+:					poe_pohdr.vendor_id$,
+:					poe_pohdr.ord_date$,
+:					poe_podet.item_id$,
+:					poe_podet.conv_factor,
+:					unit_cost,
+:					poe_podet.qty_ordered,
+:					callpoint!.getDevObject("iv_prec"),
+:					status
+
+				if status=0 then poe_podet.unit_cost=unit_cost
+				poe_podet$=field(poe_podet$)
+				writerecord(poe_podet_dev2)poe_podet$
+
+				rem --- Update On Order quantity for this item, unless it's a dropship PO
+				if callpoint!.getColumnData("POE_POHDR.DROPSHIP")<>"Y"
+					redim poc_linecode$
+					find record (poc_linecode_dev,key=firm_id$+poe_podet.po_line_code$,dom=*next)poc_linecode$
+					if poc_linecode.line_type$="S"
+						items$[0]=firm_id$
+						items$[1]=poe_podet.warehouse_id$
+						items$[2]=poe_podet.item_id$
+						refs[0]=poe_podet.qty_ordered*poe_podet.conv_factor
+						action$="OO"
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs_params$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					endif
+				endif
+			wend
+			callpoint!.setStatus("RECORD:["+poe_pohdr.firm_id$+poe_pohdr.po_no$+"]")
+		else
+			callpoint!.setStatus("NEWREC")
+		endif
+	endif
+
+rem --- Remove temporary soft lock used just for this task 
+	if !callpoint!.isEditMode() and lock_type$="L" then
+		lock_type$="U"
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
 [[POE_POHDR.AOPT-DPRT]]
 rem --- PO changes must be saved before on-demand PO print
 
@@ -144,7 +263,6 @@ rem --- Duplicate Old PO
 				if cvs(pot_pohdr.not_b4_date$,2)<>"" poe_pohdr.not_b4_date$=date(today_jul+(rec_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
 				if cvs(pot_pohdr.reqd_date$,2)<>"" poe_pohdr.reqd_date$=date(today_jul+(rec_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
 				poe_pohdr.recpt_date$=""
-				poe_pohdr.ds_state_cd$=pot_pohdr.ds_state_cd$
 				poe_pohdr.entered_by$=""
 
 				poe_pohdr$=field(poe_pohdr$)
@@ -252,16 +370,22 @@ gosub enable_dropship_fields
 rem --- enable/disable buttons
 
 	po_no$=cvs(callpoint!.getColumnData("POE_POHDR.PO_NO"),3)
-	vendor_id$=cvs(callpoint!.getColumnData("POE_POHDR.VENDOR_ID"),3)
+	req_no$=cvs(callpoint!.getColumnData("POE_POHDR.REQ_NO"),3)
 
-	if po_no$<>""
+	if po_no$<>"" then
 		callpoint!.setOptionEnabled("QPRT",1)
 		callpoint!.setOptionEnabled("DPRT",1)
-		callpoint!.setOptionEnabled("DREC",0)
+		callpoint!.setOptionEnabled("DUPP",0)
+		if req_no$="" then
+			callpoint!.setOptionEnabled("COPY",1)
+		else
+			callpoint!.setOptionEnabled("COPY",0)
+		endif
 	else
 		callpoint!.setOptionEnabled("QPRT",0)
 		callpoint!.setOptionEnabled("DPRT",0)
-		callpoint!.setOptionEnabled("DREC",1)
+		callpoint!.setOptionEnabled("DUPP",1)
+		callpoint!.setOptionEnabled("COPY",0)
 	endif
 
 [[POE_POHDR.ARAR]]
@@ -499,7 +623,8 @@ rem --- disable buttons
 
 	callpoint!.setOptionEnabled("QPRT",0)
 	callpoint!.setOptionEnabled("DPRT",0)
-	callpoint!.setOptionEnabled("DREC",0)
+	callpoint!.setOptionEnabled("DUPP",0)
+	callpoint!.setOptionEnabled("COPY",0)
 
 [[POE_POHDR.BSHO]]
 rem print 'show';rem debug
@@ -510,7 +635,7 @@ rem --- inits
 	use java.util.Properties
 
 rem --- Open Files
-	num_files=24
+	num_files=25
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -536,6 +661,7 @@ rem --- Open Files
 	open_tables$[22]="ADM_RPTCTL_RCP",open_opts$[22]="OTA"
 	open_tables$[23]="POT_POHDR_ARC",open_opts$[23]="OTA"
 	open_tables$[24]="POT_PODET_ARC",open_opts$[24]="OTA"
+	open_tables$[25]="POE_PODET",open_opts$[25]="OTAN[2_]"
 
 	gosub open_tables
 
@@ -1338,6 +1464,30 @@ warn_dates: rem --- warn about possible bad dates
 	endif
 
 return
+
+rem ==========================================================================
+get_disk_rec: rem --- Get disk record, update with current form data
+              rem     OUT: found - true/false (1/0)
+              rem           : ordhdr_rec$, updated (if record found)
+              rem           : ordhdr_dev
+rem ==========================================================================
+	poePoHdr_dev  = fnget_dev("POE_POHDR")
+	poePoHdr_tpl$ = fnget_tpl$("POE_POHDR")
+	dim poePoHdr$:poePoHdr_tpl$
+	po_no$=callpoint!.getColumnData("POE_POHDR.PO_NO")
+	found = 0
+	extractrecord(poePoHdr_dev, key=firm_id$+po_no$, dom=*next) poePoHdr$; found = 1; rem Advisory Locking
+
+	rem --- Copy in any form data that's changed
+	poePoHdr$ = util.copyFields(poePoHdr_tpl$, callpoint!)
+	poePoHdr$ = field(poePoHdr$)
+
+	if !found then 
+		extractrecord(poePoHdr_dev, key=firm_id$+po_no$, dom=*next) poePoHdr$; rem Advisory Locking
+		callpoint!.setStatus("SETORIG")
+	endif
+
+	return
 
 
 
