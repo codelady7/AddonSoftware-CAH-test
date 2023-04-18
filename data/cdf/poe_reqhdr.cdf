@@ -22,6 +22,108 @@ else
 endif
 gosub enable_dropship_fields 
 
+[[POE_REQHDR.AOPT-COPY]]
+rem --- Get vendor to copy this Requisition to
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj", "POE_NEWVENDOR", stbl("+USER_ID"), "MNT", "", table_chans$[all]
+	new_vendor$=cvs(callpoint!.getDevObject("new_vendor"),2)
+	new_purchAddr$=cvs(callpoint!.getDevObject("new_purchAddr"),2)
+
+rem --- Make sure focus returns to this form
+	callpoint!.setStatus("ACTIVATE")
+
+rem --- Save modified records before copying it for the new vendor
+	if cvs(new_vendor$,2)="" then break
+	if pos("M"=callpoint!.getRecordStatus())
+		rem --- Add Barista soft lock for this record if not already in edit mode
+		if !callpoint!.isEditMode() then
+			rem --- Is there an existing soft lock?
+			lock_table$="POE_REQHDR"
+			lock_record$=current_key$
+			lock_type$="C"
+			lock_status$=""
+			lock_disp$=""
+			call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+			if lock_status$="" then
+				rem --- Add temporary soft lock used just for this task
+				lock_type$="L"
+				call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+			else
+				rem --- Record locked by someone else
+				msg_id$="ENTRY_REC_LOCKED"
+				gosub disp_message
+				break
+			endif
+		endif
+
+		rem --- Get current form data and write it to disk
+		gosub get_disk_rec
+		writerecord(poeReqHdr_dev)poeReqHdr$
+	endif
+
+rem --- Copy this Requisition using new vendor
+	call stbl("+DIR_SYP")+"bas_sequences.bbj","REQ_NO",seq_id$,rd_table_chans$[all]
+	if seq_id$<>"" then
+		rem --- Copy header record
+		poe_reqhdr_dev  = fnget_dev("POE_REQHDR")
+		dim poe_reqhdr$:fnget_tpl$("POE_REQHDR")
+		req_no$=callpoint!.getColumnData("POE_REQHDR.REQ_NO")
+		found = 0
+		extractrecord(poe_reqhdr_dev, key=firm_id$+req_no$, dom=*next)poe_reqhdr$; found = 1; rem Advisory Locking
+		if found then
+			poe_reqhdr.req_no$=seq_id$
+			poe_reqhdr.vendor_id$=new_vendor$
+			poe_reqhdr.purch_addr$=new_purchAddr$
+			poe_reqhdr.entered_by$=""
+
+			poe_reqhdr$=field(poe_reqhdr$)
+			write record (poe_reqhdr_dev) poe_reqhdr$
+			poe_reqhdr_key$=poe_reqhdr.firm_id$+poe_reqhdr.req_no$
+			extractrecord(poe_reqhdr_dev,key=poe_reqhdr_key$)poe_reqhdr$; rem Advisory Locking
+			callpoint!.setStatus("SETORIG")
+
+			rem --- Copy detail records
+			poe_reqdet_dev = fnget_dev("POE_REQDET")
+			dim poe_reqdet$:fnget_tpl$("POE_REQDET")
+			poe_reqdet_dev2=fnget_dev("2_POE_REQDET")
+			poc_linecode_dev=fnget_dev("POC_LINECODE")
+			dim poc_linecode$:fnget_tpl$("POC_LINECODE")
+
+			read(poe_reqdet_dev, key=firm_id$+req_no$,dom=*next)
+			while 1
+				poe_reqdet_key$=key(poe_reqdet_dev,end=*break)
+				if pos(firm_id$+req_no$=poe_reqdet_key$)<>1 then break
+				readrecord(poe_reqdet_dev)poe_reqdet$
+				call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",int_seq_no$,table_chans$[all]
+				poe_reqdet.req_no$=poe_reqhdr.req_no$
+				poe_reqdet.internal_seq_no$=int_seq_no$
+
+				status=0
+				call stbl("+DIR_PGM")+"poc_itemvend.aon","R","R",
+:					poe_reqhdr.vendor_id$,
+:					poe_reqhdr.ord_date$,
+:					poe_reqdet.item_id$,
+:					poe_reqdet.conv_factor,
+:					unit_cost,
+:					poe_reqdet.req_qty,
+:					callpoint!.getDevObject("iv_prec"),
+:					status
+
+				if status=0 then poe_reqdet.unit_cost=unit_cost
+				poe_reqdet$=field(poe_reqdet$)
+				writerecord(poe_reqdet_dev2)poe_reqdet$
+			wend
+			callpoint!.setStatus("RECORD:["+poe_reqhdr.firm_id$+poe_reqhdr.req_no$+"]")
+		else
+			callpoint!.setStatus("NEWREC")
+		endif
+	endif
+
+rem --- Remove temporary soft lock used just for this task 
+	if !callpoint!.isEditMode() and lock_type$="L" then
+		lock_type$="U"
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
 [[POE_REQHDR.AOPT-DPRT]]
 rem --- on-demand requisition print
 
@@ -53,6 +155,14 @@ tamt!.setValue(total_amt)
 rem --- check dtl_posted flag to see if dropship fields should be disabled
 
 gosub enable_dropship_fields 
+
+rem --- enable/disable buttons
+	req_no$=cvs(callpoint!.getColumnData("POE_REQHDR.REQ_NO"),3)
+	if req_no$<>"" then
+		callpoint!.setOptionEnabled("COPY",1)
+	else
+		callpoint!.setOptionEnabled("COPY",0)
+	endif
 
 [[POE_REQHDR.ARAR]]
 vendor_id$=callpoint!.getColumnData("POE_REQHDR.VENDOR_ID")
@@ -137,6 +247,10 @@ rem --- Update links to Work Orders
 		wend
 	endif
 
+[[POE_REQHDR.BPFX]]
+rem --- disable buttons
+	callpoint!.setOptionEnabled("COPY",0)
+
 [[POE_REQHDR.BSHO]]
 rem --- inits
 
@@ -144,7 +258,7 @@ rem --- inits
 	use ::ado_util.src::util
 
 rem --- Open Files
-	num_files=11
+	num_files=12
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -157,6 +271,7 @@ rem --- Open Files
 	open_tables$[9]="POE_REQPRINT",open_opts$[9]="OTA"
 	open_tables$[10]="APM_VENDMAST",open_opts$[10]="OTA"
 	open_tables$[11]="POE_REQDET",open_opts$[11]="OTA"
+	open_tables$[12]="POE_REQDET",open_opts$[12]="OTAN[2_]"
 
 	gosub open_tables
 	aps_params_dev=num(open_chans$[1]),aps_params_tpl$=open_tpls$[1]
@@ -706,6 +821,30 @@ poe_reqprint.req_no$=callpoint!.getColumnData("POE_REQHDR.REQ_NO")
 writerecord (poe_reqprint_dev)poe_reqprint$
 
 return
+
+rem ==========================================================================
+get_disk_rec: rem --- Get disk record, update with current form data
+              rem     OUT: found - true/false (1/0)
+              rem           : ordhdr_rec$, updated (if record found)
+              rem           : ordhdr_dev
+rem ==========================================================================
+	poeReqHdr_dev  = fnget_dev("POE_REQHDR")
+	poeReqHdr_tpl$ = fnget_tpl$("POE_REQHDR")
+	dim poeReqHdr$:poeReqHdr_tpl$
+	req_no$=callpoint!.getColumnData("POE_REQHDR.REQ_NO")
+	found = 0
+	extractrecord(poeReqHdr_dev, key=firm_id$+req_no$, dom=*next) poeReqHdr$; found = 1; rem Advisory Locking
+
+	rem --- Copy in any form data that's changed
+	poeReqHdr$ = util.copyFields(poeReqHdr_tpl$, callpoint!)
+	poeReqHdr$ = field(poeReqHdr$)
+
+	if !found then 
+		extractrecord(poeReqHdr_dev, key=firm_id$+req_no$, dom=*next) poeReqHdr$; rem Advisory Locking
+		callpoint!.setStatus("SETORIG")
+	endif
+
+	return
 
 
 

@@ -107,6 +107,7 @@ rem --- Copy this PO using new vendor
 			poe_pohdr.po_no$=seq_id$
 			poe_pohdr.vendor_id$=new_vendor$
 			poe_pohdr.purch_addr$=new_purchAddr$
+			poe_pohdr.req_no$=""
 			poe_pohdr.entered_by$=""
 
 			poe_pohdr$=field(poe_pohdr$)
@@ -376,11 +377,7 @@ rem --- enable/disable buttons
 		callpoint!.setOptionEnabled("QPRT",1)
 		callpoint!.setOptionEnabled("DPRT",1)
 		callpoint!.setOptionEnabled("DUPP",0)
-		if req_no$="" then
-			callpoint!.setOptionEnabled("COPY",1)
-		else
-			callpoint!.setOptionEnabled("COPY",0)
-		endif
+		callpoint!.setOptionEnabled("COPY",1)
 	else
 		callpoint!.setOptionEnabled("QPRT",0)
 		callpoint!.setOptionEnabled("DPRT",0)
