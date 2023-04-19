@@ -29,7 +29,7 @@
 	<parameter name="ITEM_MASK" class="java.lang.String"/>
 	<parameter name="COMMENTS" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL SFPICKLIST($P{FIRM_ID}, $P{WO_LOCATION}, $P{WO_NO}, $P{CUST_MASK}, $P{QTY_MASK}, $P{BOM_INTERFACE}, $P{KEY_NUM}, $P{IV_PRECISION}, $P{IV_LOTSER}, $P{COMMENTS}, $P{INFO_31}, $P{CUST_MASK}, $P{BARISTA_WD})]]>
+		<![CDATA[CALL SFPICKLIST($P{FIRM_ID}, $P{WO_LOCATION}, $P{WO_NO}, $P{CUST_MASK}, $P{QTY_MASK}, $P{BOM_INTERFACE}, $P{KEY_NUM}, $P{IV_PRECISION}, $P{IV_LOTSER}, $P{COMMENTS}, $P{INFO_31}, $P{ITEM_MASK}, $P{BARISTA_WD})]]>
 	</queryString>
 	<field name="WO_TYPE" class="java.lang.String"/>
 	<field name="WO_CAT_CD" class="java.lang.String"/>
