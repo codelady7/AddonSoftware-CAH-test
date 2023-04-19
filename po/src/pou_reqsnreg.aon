@@ -25,7 +25,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    num_files=17,open_beg=1,open_end=num_files
+    num_files=19,open_beg=1,open_end=num_files
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
     open_tables$[1]="APS_PARAMS", open_opts$[1]="OTA"
@@ -45,6 +45,8 @@ rem --- Open/Lock files
     open_tables$[15]="POW_REQREGALT", open_opts$[15]="OTA"
     open_tables$[16]="POW_REQREGVEN", open_opts$[16]="OTA"
     open_tables$[17]="POW_REQREGREQ", open_opts$[17]="OTA"
+    open_tables$[18]="POT_REQHDR_ARC", open_opts$[18]="OTA"
+    open_tables$[19]="POT_REQDET_ARC", open_opts$[19]="OTA"
 
     gosub open_tables
 
@@ -65,6 +67,8 @@ rem --- Open/Lock files
     pow_reqregalt_dev=num(open_chans$[15])
     pow_reqregven_dev=num(open_chans$[16])
     pow_reqregreq_dev=num(open_chans$[17])
+    potReqHdrArc_dev=num(open_chans$[18])
+    potReqDetArc_dev=num(open_chans$[19])
 
     dim aps_params$:open_tpls$[1]
     dim ivm_itemmast$:open_tpls$[2]
@@ -83,6 +87,8 @@ rem --- Open/Lock files
     dim pow_reqregalt$:open_tpls$[15]
     dim pow_reqregven$:open_tpls$[16]
     dim pow_reqregreq$:open_tpls$[17]
+    dim potReqHdrArc$:open_tpls$[18]
+    dim potReqDetArc$:open_tpls$[19]
 
 rem --- Retrieve parameter records
 
@@ -143,6 +149,9 @@ rem --- Read requisition header
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,ignore_status
         find record (poe_reqhdr_dev,key=poe_reqhdr.firm_id$+poe_reqhdr.vendor_id$+poe_reqhdr.req_no$,knum="AO_VEND_REQ",dom=*continue) poe_reqhdr$
 
+        rem --- Add record to historical Purchase Requisition archive before it gets deleted
+        writerecord(potReqHdrArc_dev)poe_reqhdr$
+
 
 rem --- Create purchase order from requisition
 
@@ -179,10 +188,12 @@ rem --- Position detail file
             read record (poe_reqdet_dev,end=*break) poe_reqdet$
             if pos(firm_id$=poe_reqdet$)<>1 then break
             if poe_reqdet.req_no$<>poe_reqhdr.req_no$ then break
-            dim poe_podet$:fattr(poe_podet$)
+
+            writerecord(potReqDetArc_dev)poe_reqdet$
 
             rem --- Copy all common fields from requisition to po detail  
 
+            dim poe_podet$:fattr(poe_podet$)
             dim source_rec$:fattr(poe_reqdet$)
             source_rec$=poe_reqdet$
             dim dest_rec$:fattr(poe_podet$)
@@ -255,8 +266,7 @@ rem --- Read line code
 
         wend
 
-    rem --- Delete requisition source
-
+        rem --- Delete requisition source
         sf_installed$="N"
         dtl_tpl$=fattr(poe_reqdet$)
         hdr_pri_key$=poe_reqhdr.firm_id$+poe_reqhdr.req_no$
