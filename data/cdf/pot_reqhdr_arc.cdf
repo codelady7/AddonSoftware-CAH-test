@@ -1,7 +1,7 @@
-[[POT_POHDR_ARC.ADIS]]
+[[POT_REQHDR_ARC.ADIS]]
 rem --- Set DISPLAY fields
-	vendor_id$=callpoint!.getColumnData("POT_POHDR_ARC.VENDOR_ID")
-	purch_addr$=callpoint!.getColumnData("POT_POHDR_ARC.PURCH_ADDR")
+	vendor_id$=callpoint!.getColumnData("POT_REQHDR_ARC.VENDOR_ID")
+	purch_addr$=callpoint!.getColumnData("POT_REQHDR_ARC.PURCH_ADDR")
 	gosub vendor_info
 	gosub disp_vendor_comments
 	gosub purch_addr_info
@@ -10,56 +10,23 @@ rem --- Set DISPLAY fields
 rem --- Depending on whether or not drop-ship flag is selected and OP is installed...
 rem --- If drop-ship is selected, load up sales order line#'s for the detail grid's SO reference listbutton
 	callpoint!.setDevObject("so_lines_used","")
-	if callpoint!.getColumnData("POT_POHDR_ARC.DROPSHIP")="Y"
+	if callpoint!.getColumnData("POT_REQHDR_ARC.DROPSHIP")="Y"
 		if callpoint!.getDevObject("OP_installed")="Y"
-			tmp_customer_id$=callpoint!.getColumnData("POT_POHDR_ARC.CUSTOMER_ID")
-			tmp_order_no$=callpoint!.getColumnData("POT_POHDR_ARC.ORDER_NO")
+			tmp_customer_id$=callpoint!.getColumnData("POT_REQHDR_ARC.CUSTOMER_ID")
+			tmp_order_no$=callpoint!.getColumnData("POT_REQHDR_ARC.ORDER_NO")
 			gosub get_dropship_order_lines
 		endif
 	endif
 
-rem --- Show Purchase Order Print Report Controls
-	admRptCtlRcp=fnget_dev("ADM_RPTCTL_RCP")
-	dim admRptCtlRcp$:fnget_tpl$("ADM_RPTCTL_RCP")
-	admRptCtlRcp.dd_table_alias$="POR_POPRINT"
-	vendor_id$=callpoint!.getColumnData("POT_POHDR_ARC.VENDOR_ID")
-	readrecord(admRptCtlRcp,key=firm_id$+vendor_id$+admRptCtlRcp.dd_table_alias$,knum="AO_VEND_ALIAS",dom=*next)admRptCtlRcp$
-	if admRptCtlRcp.email_yn$<>"Y" and admRptCtlRcp.fax_yn$<>"Y" then
-		callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_NONE"))
-	else
-		if admRptCtlRcp.email_yn$="Y" and admRptCtlRcp.fax_yn$="Y" then
-			callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_EMAIL")+" + "+Translate!.getTranslation("AON_FAX"))
-		else
-			if admRptCtlRcp.email_yn$="Y" then
-				callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_EMAIL")+" "+Translate!.getTranslation("AON_ONLY"))
-			else
-				callpoint!.setColumnData("<<DISPLAY>>.RPT_CTL",Translate!.getTranslation("AON_FAX")+" "+Translate!.getTranslation("AON_ONLY"))
-			endif
-		endif
-	endif
+[[POT_REQHDR_ARC.AOPT-DPRT]]
+rem wgh ... 10631 ... Print archived Requisition
 
-[[POT_POHDR_ARC.AOPT-DPRT]]
-rem ---Print archived PO
-	vendor_id$=callpoint!.getColumnData("POT_POHDR_ARC.VENDOR_ID")
-	po_no$=callpoint!.getColumnData("POT_POHDR_ARC.PO_NO")
-	if cvs(vendor_id$,3)<>"" and cvs(po_no$,3)<>""
-		gosub queue_for_printing
-
-		callpoint!.setDevObject("historical_print","Y")
-		dim dflt_data$[2,1]
-		dflt_data$[1,0]="PO_NO"
-		dflt_data$[1,1]=po_no$
-		dflt_data$[2,0]="VENDOR_ID"
-		dflt_data$[2,1]=vendor_id$
-		call stbl("+DIR_SYP")+"bam_run_prog.bbj","POR_POPRINT_DMD",stbl("+USER_ID"),"","",table_chans$[all],"",dflt_data$[all]
-	endif
-
-[[POT_POHDR_ARC.APFE]]
+[[POT_REQHDR_ARC.APFE]]
 rem --- Set PO  total amount
 	total_amt=num(callpoint!.getDevObject("total_amt"))
 	callpoint!.setColumnData("<<DISPLAY>>.ORDER_TOTAL",str(total_amt),1)
 
-[[POT_POHDR_ARC.AREC]]
+[[POT_REQHDR_ARC.AREC]]
 rem --- Initialize new record
 	callpoint!.setDevObject("so_line_type",new Properties())
 	callpoint!.setDevObject("ds_orders","")
@@ -67,7 +34,7 @@ rem --- Initialize new record
 	callpoint!.setDevObject("so_lines_list","")
 	callpoint!.setDevObject("total_amt","0")
 
-[[POT_POHDR_ARC.BSHO]]
+[[POT_REQHDR_ARC.BSHO]]
 rem --- Initializations
 	use java.util.Properties
 
@@ -118,10 +85,10 @@ rem --- Hold on to detail grid object dtlGrid! for later use
 	dtlGrid!=dtlWin!.getControl(5900)
 	callpoint!.setDevObject("dtl_grid",dtlGrid!)
 
-[[POT_POHDR_ARC.<CUSTOM>]]
+[[POT_REQHDR_ARC.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
 
-vendor_info: rem --- Get and display Vendor Information
+vendor_info: rem --- get and display Vendor Information
 	apm01_dev=fnget_dev("APM_VENDMAST")
 	dim apm01a$:fnget_tpl$("APM_VENDMAST")
 	read record(apm01_dev,key=firm_id$+vendor_id$,dom=*next)apm01a$
@@ -139,7 +106,8 @@ vendor_info: rem --- Get and display Vendor Information
 
 	return
 
-disp_vendor_comments:	rem --- Get and display Vendor Comments
+disp_vendor_comments:	
+	rem --- You must pass in vendor_id$ because we don't know whether it's verified or not
 	apm_vendmast_dev=fnget_dev("APM_VENDMAST")
 	dim apm_vendmast$:fnget_tpl$("APM_VENDMAST")
 	readrecord(apm_vendmast_dev,key=firm_id$+vendor_id$,dom=*next)apm_vendmast$		 
@@ -147,7 +115,7 @@ disp_vendor_comments:	rem --- Get and display Vendor Comments
 
 	return
 
-purch_addr_info: rem --- Get and display Purchase Address Info
+purch_addr_info: rem --- get and display Purchase Address Info
 	apm05_dev=fnget_dev("APM_VENDADDR")
 	dim apm05a$:fnget_tpl$("APM_VENDADDR")
 	read record(apm05_dev,key=firm_id$+vendor_id$+purch_addr$,dom=*next)apm05a$
@@ -155,23 +123,25 @@ purch_addr_info: rem --- Get and display Purchase Address Info
 	callpoint!.setColumnData("<<DISPLAY>>.PA_ADDR2",apm05a.addr_line_2$,1)
 	callpoint!.setColumnData("<<DISPLAY>>.PA_CITY",apm05a.city$,1)
 	callpoint!.setColumnData("<<DISPLAY>>.PA_STATE",apm05a.state_code$,1)
-	callpoint!.setColumnData("<<DISPLAY>>.PA_ZIP",apm05a.zip_code$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.PA_ZIP_CODE",apm05a.zip_code$,1)
 	callpoint!.setColumnData("<<DISPLAY>>.PA_CNTRY_ID",apm05a.cntry_id$,1)
 
 	return
 
-whse_addr_info: rem --- Get and display Warehouse Address Info when not a dropship
+whse_addr_info: rem --- get and display Warehouse Address Info
 	ivc_whsecode_dev=fnget_dev("IVC_WHSECODE")
 	dim ivc_whsecode$:fnget_tpl$("IVC_WHSECODE")
-	if callpoint!.getColumnData("POT_POHDR_ARC.DROPSHIP")<>"Y" then
-		warehouse_id$=callpoint!.getColumnData("POT_POHDR_ARC.WAREHOUSE_ID")
-		read record(ivc_whsecode_dev,key=firm_id$+"C"+warehouse_id$,dom=*next)ivc_whsecode$
+	if pos("WAREHOUSE_ID.AVAL"=callpoint!.getCallpointEvent())<>0
+		warehouse_id$=callpoint!.getUserInput()
+	else
+		warehouse_id$=callpoint!.getColumnData("POT_REQHDR_ARC.WAREHOUSE_ID")
 	endif
-	callpoint!.setColumnData("<<DISPLAY>>.W_ADDR1",ivc_whsecode$.addr_line_1$,1)
-	callpoint!.setColumnData("<<DISPLAY>>.W_ADDR2",ivc_whsecode$.addr_line_2$,1)
-	callpoint!.setColumnData("<<DISPLAY>>.W_CITY",ivc_whsecode$.city$,1)
-	callpoint!.setColumnData("<<DISPLAY>>.W_STATE",ivc_whsecode$.state_code$,1)
-	callpoint!.setColumnData("<<DISPLAY>>.W_ZIP",ivc_whsecode$.zip_code$,1)
+	read record(ivc_whsecode_dev,key=firm_id$+"C"+warehouse_id$,dom=*next)ivc_whsecode$
+	callpoint!.setColumnData("<<DISPLAY>>.W_ADDR1",ivc_whsecode.addr_line_1$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.W_ADDR2",ivc_whsecode.addr_line_2$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.W_CITY",ivc_whsecode.city$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.W_STATE",ivc_whsecode.state_code$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.W_ZIP_CODE",ivc_whsecode.zip_code$,1)
 
 	return
 
@@ -180,13 +150,11 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 	ope_orddet_dev=fnget_dev("OPE_ORDDET")
 	ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
 	opc_linecode_dev=fnget_dev("OPC_LINECODE")
-	poe_linked_dev=fnget_dev("POE_LINKED")
 
 	dim ope_ordhdr$:fnget_tpl$("OPE_ORDHDR")
 	dim ope_orddet$:fnget_tpl$("OPE_ORDDET")
 	dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
 	dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
-	dim poe_linked$:fnget_tpl$("POE_LINKED")
 
 	order_lines!=SysGUI!.makeVector()
 	order_items!=SysGUI!.makeVector()
@@ -206,8 +174,6 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 	wend
 	if !found_ope_ordhdr then return
 
-	so_on_another_po=0
-	po_no$=callpoint!.getColumnData("POT_POHDR_ARC.PO_NO")
 	read (ope_orddet_dev,key=ope_ordhdr_key$,dom=*next)
 	while 1
 		ope_orddet_key$=key(ope_orddet_dev,end=*break)
@@ -215,15 +181,6 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 		read record (ope_orddet_dev)ope_orddet$
 		if ope_orddet.trans_status$<>"U" then continue
 		if pos(ope_orddet.line_code$=callpoint!.getDevObject("oe_ds_line_codes"))<>0
-			rem --- Check poe_linked to see if this SO detail line is on another PO
-			dim poe_linked$:fattr(poe_linked$)
-			readrecord(poe_linked_dev,key=firm_id$+tmp_customer_id$+tmp_order_no$+ope_orddet.internal_seq_no$,knum="AO_CUST_ORD",dom=*next)poe_linked$
-			if cvs(poe_linked.po_no$,2)<>"" and poe_linked.po_no$<>po_no$ then
-				rem --- Skip this SO detail line since it's already on another PO
-				so_on_another_po=1
-				continue
-			endif
-
 			if cvs(ope_orddet.item_id$,2)="" then
 				rem --- Non-stock item
 				order_lines!.addItem(ope_orddet.internal_seq_no$)
@@ -257,7 +214,6 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 			soLineType!.setProperty(ope_orddet.internal_seq_no$,opc_linecode.line_type$)
 		endif
 	wend
-	read(poe_linked_dev,key=firm_id$,knum="PRIMARY",dom=*next); rem --- Reset poe_linked key to PRIMARY
 
 	callpoint!.setDevObject("so_line_type",soLineType!)
 	if order_lines!.size()=0 
@@ -265,10 +221,6 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 		callpoint!.setDevObject("so_ldat","")
 		callpoint!.setDevObject("so_lines_list","")
 		callpoint!.setDevObject("so_line_type",new Properties())
-
-		if so_on_another_po then
-			callpoint!.setDevObject("so_lines_used","ALL")
-		endif
 	else 
 		ldat$=""
 		descVect!=BBjAPI().makeVector()
@@ -282,21 +234,7 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 		callpoint!.setDevObject("ds_orders","Y")		
 		callpoint!.setDevObject("so_ldat",ldat$)
 		callpoint!.setDevObject("so_lines_list",order_list!)
-
-		if so_on_another_po then
-			callpoint!.setDevObject("so_lines_used","SOME")
-		endif
 	endif	
-
-	return
-
-queue_for_printing:
-	poe_poprint_dev=fnget_dev("POE_POPRINT")
-	dim poe_poprint$:fnget_tpl$("POE_POPRINT")
-	poe_poprint.firm_id$=firm_id$
-	poe_poprint.vendor_id$=callpoint!.getColumnData("POT_POHDR_ARC.VENDOR_ID")
-	poe_poprint.po_no$=callpoint!.getColumnData("POT_POHDR_ARC.PO_NO")
-	writerecord (poe_poprint_dev)poe_poprint$
 
 	return
 

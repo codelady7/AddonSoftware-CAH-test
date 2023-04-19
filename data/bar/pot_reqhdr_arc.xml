@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.pot_reqhdr_arc">F9FC21F71215048005A59538BE93E299</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pot_reqhdr_arc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_reqhdr_arc">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pot_reqhdr_arc">20230418</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_reqhdr_arc">20230418</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_reqhdr_arc">103704</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pot_reqhdr_arc">20230419</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_reqhdr_arc">20230419</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_reqhdr_arc">133708</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_reqhdr_arc"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pot_reqhdr_arc">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_reqhdr_arc"></DD_ATTR_DKNM>
@@ -63,74 +63,28 @@
 		<RECORD id="ddm_table_aopt.pot_reqhdr_arc01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.pot_reqhdr_arc01">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.pot_reqhdr_arc01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.pot_reqhdr_arc01">&Queue for Printing</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.pot_reqhdr_arc01">QPRT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.pot_reqhdr_arc01">&Print Requisition</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.pot_reqhdr_arc01">DPRT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.pot_reqhdr_arc01">B</DD_ATTR_AOPT_FM>
-		</RECORD>
-		<RECORD id="ddm_table_aopt.pot_reqhdr_arc02">
-			<DD_TABLE_ALIAS id="ddm_table_aopt.pot_reqhdr_arc02">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_SEQ id="ddm_table_aopt.pot_reqhdr_arc02">02</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.pot_reqhdr_arc02">&Print Requisition</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.pot_reqhdr_arc02">DPRT</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.pot_reqhdr_arc02">B</DD_ATTR_AOPT_FM>
-		</RECORD>
-		<RECORD id="ddm_table_aopt.pot_reqhdr_arc03">
-			<DD_TABLE_ALIAS id="ddm_table_aopt.pot_reqhdr_arc03">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_SEQ id="ddm_table_aopt.pot_reqhdr_arc03">03</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.pot_reqhdr_arc03">Copy This Requisition</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.pot_reqhdr_arc03">COPY</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.pot_reqhdr_arc03">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcadel">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcadel">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcadel">ADEL</DD_ATTR_CPRO>
-		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_reqhdr_arcadis">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcadis">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcadis">ADIS</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcaopt-copy">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcaopt-copy">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcaopt-copy">AOPT-COPY</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_reqhdr_arcaopt-dprt">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcaopt-dprt">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcaopt-dprt">AOPT-DPRT</DD_ATTR_CPRO>
 		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcaopt-qprt">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcaopt-qprt">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcaopt-qprt">AOPT-QPRT</DD_ATTR_CPRO>
-		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_reqhdr_arcapfe">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcapfe">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcapfe">APFE</DD_ATTR_CPRO>
 		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcarar">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcarar">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcarar">ARAR</DD_ATTR_CPRO>
-		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_reqhdr_arcarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcarec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcarec">AREC</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcarnf">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcarnf">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcarnf">ARNF</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcawri">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcawri">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcawri">AWRI</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcbdel">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcbdel">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcbdel">BDEL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.pot_reqhdr_arcbpfx">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcbpfx">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.pot_reqhdr_arcbpfx">BPFX</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.pot_reqhdr_arcbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.pot_reqhdr_arcbsho">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -154,10 +108,6 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
 		<ID id="ddm_table_opts">DDM_TABLE_OPTS</ID>
-		<RECORD id="ddm_table_opts.pot_reqhdr_arc0">
-			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arc0">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_OPTS id="ddm_table_opts.pot_reqhdr_arc0">0</DD_ATTR_OPTS>
-		</RECORD>
 		<RECORD id="ddm_table_opts.pot_reqhdr_arca">
 			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arca">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.pot_reqhdr_arca">A</DD_ATTR_OPTS>
@@ -169,10 +119,6 @@
 		<RECORD id="ddm_table_opts.pot_reqhdr_arcp">
 			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arcp">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.pot_reqhdr_arcp">P</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_table_opts.pot_reqhdr_arcs">
-			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arcs">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_ATTR_OPTS id="ddm_table_opts.pot_reqhdr_arcs">S</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.pot_reqhdr_arcu">
 			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arcu">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -216,31 +162,37 @@
 			<DD_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arccustomer_idarm_custmast">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.pot_reqhdr_arccustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
 			<REF_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arccustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arccustomer_idarm_custmast">FK_POT_REQHDR_ARC_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
+			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arccustomer_idarm_custmast">FK_POT_REQHDR_ARC_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                     </TABLE_REF_NAME>
 		</RECORD>
 		<RECORD id="ddm_table_ref.pot_reqhdr_arcpo_msg_codepoc_message">
 			<DD_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcpo_msg_codepoc_message">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.pot_reqhdr_arcpo_msg_codepoc_message">PO_MSG_CODE     </DD_TABLE_COL>
 			<REF_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcpo_msg_codepoc_message">POC_MESSAGE     </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcpo_msg_codepoc_message">FK_POT_REQHDR_ARC_PO_MSG_CODE_POC_MESSAGE                                                                                                                                                                                                                          </TABLE_REF_NAME>
+			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcpo_msg_codepoc_message">FK_POT_REQHDR_ARC_PO_MSG_CODE_POC_MESSAGE                                                                                                                                                                                                                      </TABLE_REF_NAME>
 		</RECORD>
 		<RECORD id="ddm_table_ref.pot_reqhdr_arcpurch_addrapm_vendaddr">
 			<DD_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcpurch_addrapm_vendaddr">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.pot_reqhdr_arcpurch_addrapm_vendaddr">PURCH_ADDR      </DD_TABLE_COL>
 			<REF_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcpurch_addrapm_vendaddr">APM_VENDADDR    </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcpurch_addrapm_vendaddr">FK_POT_REQHDR_ARC_PURCH_ADDR_APM_VENDADDR                                                                                                                                                                                                                          </TABLE_REF_NAME>
+			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcpurch_addrapm_vendaddr">FK_POT_REQHDR_ARC_PURCH_ADDR_APM_VENDADDR                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.pot_reqhdr_arcreq_nopoe_reqhdr">
+			<DD_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcreq_nopoe_reqhdr">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.pot_reqhdr_arcreq_nopoe_reqhdr">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcreq_nopoe_reqhdr">POE_REQHDR      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcreq_nopoe_reqhdr">FK_POT_REQHDR_ARC_REQ_NO_POE_REQHDR                                                                                                                                                                                                                            </TABLE_REF_NAME>
 		</RECORD>
 		<RECORD id="ddm_table_ref.pot_reqhdr_arcshipto_noarm_custship">
 			<DD_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcshipto_noarm_custship">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.pot_reqhdr_arcshipto_noarm_custship">SHIPTO_NO       </DD_TABLE_COL>
 			<REF_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcshipto_noarm_custship">ARM_CUSTSHIP    </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcshipto_noarm_custship">FK_POT_REQHDR_ARC_SHIPTO_NO_ARM_CUSTSHIP                                                                                                                                                                                                                           </TABLE_REF_NAME>
+			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcshipto_noarm_custship">FK_POT_REQHDR_ARC_SHIPTO_NO_ARM_CUSTSHIP                                                                                                                                                                                                                       </TABLE_REF_NAME>
 		</RECORD>
 		<RECORD id="ddm_table_ref.pot_reqhdr_arcvendor_idapm_vendmast">
 			<DD_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcvendor_idapm_vendmast">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.pot_reqhdr_arcvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
 			<REF_TABLE_ALIAS id="ddm_table_ref.pot_reqhdr_arcvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcvendor_idapm_vendmast">FK_POT_REQHDR_ARC_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+			<TABLE_REF_NAME id="ddm_table_ref.pot_reqhdr_arcvendor_idapm_vendmast">FK_POT_REQHDR_ARC_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_refcol">
@@ -307,6 +259,24 @@
 			<REF_KEY_SEGMENT id="ddm_table_refcol.pot_reqhdr_arcpurch_addrapm_vendaddr0003">03</REF_KEY_SEGMENT>
 			<REF_KEY_COLUMN id="ddm_table_refcol.pot_reqhdr_arcpurch_addrapm_vendaddr0003">PURCH_ADDR      </REF_KEY_COLUMN>
 			<FK_TABLE_COL id="ddm_table_refcol.pot_reqhdr_arcpurch_addrapm_vendaddr0003">PURCH_ADDR      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">REQ_NO          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">POE_REQHDR      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">REQ_NO          </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.pot_reqhdr_arcreq_nopoe_reqhdr0002">REQ_NO          </FK_TABLE_COL>
 		</RECORD>
 		<RECORD id="ddm_table_refcol.pot_reqhdr_arcshipto_noarm_custship0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.pot_reqhdr_arcshipto_noarm_custship0001">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -508,7 +478,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc002">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_CTLY>
@@ -537,11 +507,11 @@
 			<DD_ATTR_FTSR id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.pot_reqhdr_arc002">3001</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.pot_reqhdr_arc002">ine_req_no</DD_ATTR_CTLN>
+			<DD_ATTR_CTLN id="ddm_table_cols.pot_reqhdr_arc002">dis_req_no</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc002">Y</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc002"></DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc002">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc003">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc003">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -559,7 +529,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc003">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc003">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_CTLY>
@@ -592,7 +562,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc003">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc003">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc003"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc004">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc004">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -610,7 +580,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc004">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_CTLY>
@@ -643,7 +613,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc004">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc004">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc004">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc004"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc005">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc005">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -661,7 +631,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc005">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc005"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc005">+33</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc005">-8</DD_ATTR_CTLY>
@@ -694,7 +664,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc005">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc005"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc005">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc005">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc005"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc006">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc006">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -796,7 +766,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc007">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc007"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc007">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc007">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc007"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc008">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc008">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1051,7 +1021,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc012">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc012"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc012">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc012">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc012"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc013">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc013">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1102,7 +1072,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc013">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc013"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc013">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc013">C</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc013"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc014">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc014">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1120,7 +1090,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc014">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc014">POT_REQHDR_ARC.REQ_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc014">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc014">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc014"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc014"></DD_ATTR_CTLY>
@@ -1153,7 +1123,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc014">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc014"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc014">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc014">C</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc014"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc015">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc015">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1171,7 +1141,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc015">POT_REQHDR_ARC.REQ_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc015">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc015">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc015"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc015"></DD_ATTR_CTLY>
@@ -1204,7 +1174,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc015">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc015"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc015">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc015">C</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc015"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc016">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc016">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1222,7 +1192,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc016">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc016">POT_REQHDR_ARC.REQ_NO</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc016">!</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc016">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc016"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc016"></DD_ATTR_CTLY>
@@ -1255,7 +1225,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc016">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc016"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc016">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc016">C</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc016"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc017">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc017">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1273,7 +1243,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc017">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc017"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc017"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc017">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc017"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc017">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc017">+1</DD_ATTR_CTLY>
@@ -1324,7 +1294,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc018">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc018">POT_REQHDR_ARC.DROPSHIP</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc018">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc018">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc018"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc018">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc018"></DD_ATTR_CTLY>
@@ -1357,7 +1327,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc018">2</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc018"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc018">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc018">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc018"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc019">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc019">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1375,7 +1345,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc019">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc019">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc019">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_CTLY>
@@ -1408,7 +1378,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc019">2</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc019">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc019">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc019"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc020">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc020">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -1426,7 +1396,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.pot_reqhdr_arc020">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.pot_reqhdr_arc020">POT_REQHDR_ARC.DROPSHIP</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.pot_reqhdr_arc020">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc020">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.pot_reqhdr_arc020"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.pot_reqhdr_arc020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.pot_reqhdr_arc020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.pot_reqhdr_arc020"></DD_ATTR_CTLY>
@@ -1459,7 +1429,7 @@
 			<DD_ATTR_CTLC id="ddm_table_cols.pot_reqhdr_arc020">2</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.pot_reqhdr_arc020"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.pot_reqhdr_arc020">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc020">F</DD_ATTR_BTNS>
+			<DD_ATTR_BTNS id="ddm_table_cols.pot_reqhdr_arc020"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.pot_reqhdr_arc021">
 			<DD_TABLE_ALIAS id="ddm_table_cols.pot_reqhdr_arc021">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -2384,64 +2354,6 @@
 			<DD_ATTR_CPGM id="ddm_table_disp.pot_reqhdr_arc020"></DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
-	<ALIAS id="ddm_column_cpro">
-		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcreq_noaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcreq_noaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcreq_noaval">REQ_NO          </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcreq_noaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcvendor_idaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcvendor_idaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcvendor_idaval">VENDOR_ID       </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcvendor_idaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcwarehouse_idaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcwarehouse_idaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcwarehouse_idaval">WAREHOUSE_ID    </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcwarehouse_idaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcpurch_addraval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcpurch_addraval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcpurch_addraval">PURCH_ADDR      </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcpurch_addraval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcpromise_dateaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcpromise_dateaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcpromise_dateaval">PROMISE_DATE    </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcpromise_dateaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcnot_b4_dateaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcnot_b4_dateaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcnot_b4_dateaval">NOT_B4_DATE     </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcnot_b4_dateaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcreqd_dateaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcreqd_dateaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcreqd_dateaval">REQD_DATE       </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcreqd_dateaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcdropshipaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcdropshipaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcdropshipaval">DROPSHIP        </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcdropshipaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arccustomer_idaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arccustomer_idaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arccustomer_idaval">CUSTOMER_ID     </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arccustomer_idaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcorder_noaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcorder_noaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcorder_noaval">ORDER_NO        </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcorder_noaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.pot_reqhdr_arcshipto_noaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.pot_reqhdr_arcshipto_noaval">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.pot_reqhdr_arcshipto_noaval">SHIPTO_NO       </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.pot_reqhdr_arcshipto_noaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-	</ALIAS>
 	<ALIAS id="ddm_column_opts">
 		<ID id="ddm_column_opts">DDM_COLUMN_OPTS</ID>
 		<RECORD id="ddm_column_opts.pot_reqhdr_arcfirm_ido">
@@ -2449,50 +2361,95 @@
 			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcfirm_ido">FIRM_ID         </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcfirm_ido">O</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcreq_no#">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcreq_no#">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcreq_no#">REQ_NO          </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcreq_no#">#</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcvendor_idc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcvendor_idc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcvendor_idc">VENDOR_ID       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcvendor_idc">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcvendor_idb">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcvendor_idb">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcvendor_idb">VENDOR_ID       </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcvendor_idb">B</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcwarehouse_idc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcwarehouse_idc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcwarehouse_idc">WAREHOUSE_ID    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcwarehouse_idc">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcvendor_idu">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcvendor_idu">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcvendor_idu">VENDOR_ID       </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcvendor_idu">u</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcpurch_addrc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcpurch_addrc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcpurch_addrc">PURCH_ADDR      </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcpurch_addrc">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcwarehouse_idu">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcwarehouse_idu">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcwarehouse_idu">WAREHOUSE_ID    </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcwarehouse_idu">u</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_archold_flagc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_archold_flagc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_archold_flagc">HOLD_FLAG       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_archold_flagc">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcpurch_addru">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcpurch_addru">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcpurch_addru">PURCH_ADDR      </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcpurch_addru">u</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcap_terms_codec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcap_terms_codec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcap_terms_codec">AP_TERMS_CODE   </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcap_terms_codec">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcap_terms_codeu">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcap_terms_codeu">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcap_terms_codeu">AP_TERMS_CODE   </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcap_terms_codeu">u</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcpo_frt_termsc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcpo_frt_termsc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcpo_frt_termsc">PO_FRT_TERMS    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcpo_frt_termsc">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcpo_msg_codeu">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcpo_msg_codeu">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcpo_msg_codeu">PO_MSG_CODE     </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcpo_msg_codeu">u</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcap_ship_viac">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcap_ship_viac">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcap_ship_viac">AP_SHIP_VIA     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcap_ship_viac">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcorder_nou">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcorder_nou">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcorder_nou">ORDER_NO        </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcorder_nou">u</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcacknowledgec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcacknowledgec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcacknowledgec">ACKNOWLEDGE     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcacknowledgec">C</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.pot_reqhdr_arcorder_nov">
-			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcorder_nov">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcorder_nov">ORDER_NO        </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcorder_nov">v</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcfobc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcfobc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcfobc">FOB             </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcfobc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcpo_msg_codec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcpo_msg_codec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcpo_msg_codec">PO_MSG_CODE     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcpo_msg_codec">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcord_datec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcord_datec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcord_datec">ORD_DATE        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcord_datec">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcpromise_datec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcpromise_datec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcpromise_datec">PROMISE_DATE    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcpromise_datec">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcnot_b4_datec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcnot_b4_datec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcnot_b4_datec">NOT_B4_DATE     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcnot_b4_datec">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcreqd_datec">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcreqd_datec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcreqd_datec">REQD_DATE       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcreqd_datec">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcdropshipc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcdropshipc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcdropshipc">DROPSHIP        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcdropshipc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arccustomer_idc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arccustomer_idc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arccustomer_idc">CUSTOMER_ID     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arccustomer_idc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcorder_noc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcorder_noc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcorder_noc">ORDER_NO        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcorder_noc">C</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcshipto_noc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcshipto_noc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcshipto_noc">SHIPTO_NO       </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcshipto_noc">C</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.pot_reqhdr_arcds_namec">
 			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcds_namec">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -2568,6 +2525,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcds_zip_codel">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcds_zip_codel">DS_ZIP_CODE     </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcds_zip_codel">L</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcentered_byc">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcentered_byc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcentered_byc">ENTERED_BY      </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcentered_byc">C</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.pot_reqhdr_arcentered_byg">
 			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcentered_byg">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -2828,7 +2790,7 @@
 			<DD_ATTR_DFLT id="ddm_elements.req_no"></DD_ATTR_DFLT>
 			<DD_ATTR_DKNM id="ddm_elements.req_no">PRIMARY         </DD_ATTR_DKNM>
 			<DD_ATTR_DKEY id="ddm_elements.req_no">[+FIRM_ID]+@</DD_ATTR_DKEY>
-			<DD_ATTR_DTAB id="ddm_elements.req_no">POT_REQHDR_ARC  </DD_ATTR_DTAB>
+			<DD_ATTR_DTAB id="ddm_elements.req_no">POE_REQHDR      </DD_ATTR_DTAB>
 			<DD_ATTR_DINQ id="ddm_elements.req_no"></DD_ATTR_DINQ>
 			<DD_ATTR_ENCR id="ddm_elements.req_no"></DD_ATTR_ENCR>
 			<DD_ATTR_IDEF id="ddm_elements.req_no"></DD_ATTR_IDEF>
