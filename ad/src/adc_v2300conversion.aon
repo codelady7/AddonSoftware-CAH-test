@@ -817,10 +817,11 @@ ER10303: rem --- BARCODE_SOURCE field won't be added to OPS_PARAMS until require
         print(log_dev)meter_text$
     endif
 
-rem --- For version 23.00, build POT_POHDR_ARC and POT_PODET_ARC from POT_RECHDR and POT_RECDET
+rem --- For version 23.00, build POT_POHDR_ARC and POT_PODET_ARC, and POT_REQHDR_ARC and POT_REQDET_ARC
     this_module$="PO"
     if installMap!.get(this_module$)="Y" then
-        task$="2300_OP_pot_pohdr_arc"
+        rem --- Build POT_POHDR_ARC and POT_PODET_ARC from POT_RECHDR and POT_RECDET
+        task$="2300_PO_pot_pohdr_arc"
         if convCtrl!.getProperty(task$)<>"Completed" then
 
             rem --- Increment progress meter
@@ -897,6 +898,102 @@ rem --- For version 23.00, build POT_POHDR_ARC and POT_PODET_ARC from POT_RECHDR
             open_tables$[2]="POT_PODET_ARC",  open_opts$[2]="C"
             open_tables$[3]="POT_RECHDR",     open_opts$[3]="C"
             open_tables$[4]="POT_RECDETS",    open_opts$[4]="C"
+            gosub open_tables
+           
+            write(convCtrlFileChan)task$+"=Completed"
+
+            rem --- This task$ conversion completed successfully
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+
+        rem --- Build POT_REQHDR_ARC and POT_REQDET_ARC from POT_POHDR_ARC and POT_PODET_ARC
+        task$="2300_PO_pot_reqhdr_arc"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+
+            rem --- Increment progress meter
+            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+    
+            rem --- Open File(s)
+            num_files=4
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="POT_POHDR_ARC",  open_opts$[1]="OTA"
+            open_tables$[2]="POT_PODET_ARC",  open_opts$[2]="OTA"
+            open_tables$[3]="POT_REQHDR_ARC", open_opts$[3]="OTA"
+            open_tables$[4]="POT_REQDET_ARC", open_opts$[4]="OTA"
+    
+            gosub open_tables
+    
+            potPoHdrArc_dev=num(open_chans$[1])
+            potPoDetArc_dev=num(open_chans$[2])
+            potReqHdrArc_dev=num(open_chans$[3])
+            potReqDetArc_dev=num(open_chans$[4])
+            dim potPoHdrArc$:open_tpls$[1]
+            dim potPoDetArc$:open_tpls$[2]
+            dim potReqHdrArc$:open_tpls$[3]
+            dim potReqDetArc$:open_tpls$[4]
+                
+            rem --- Use POT_POHDR_ARC and POT_PODET_ARC to build POT_REQHDR_ARC and POT_REQDET_ARC
+            read(potPoHdrArc_dev,key="",dom=*next)
+            while 1
+                potPoHdrArc_key$=key(potPoHdrArc_dev,end=*break)
+                readrecord(potPoHdrArc_dev)potPoHdrArc$
+                if cvs(potPoHdrArc.req_no$,2)="" then continue; rem --- not a requisition
+                
+                call pgmdir$+"adc_copyfile.aon",potPoHdrArc$,potReqHdrArc$,status
+                if status<>0 then
+                    print(log_dev)"    "+Translate!.getTranslation("AON_SKIPPED")+" POT_POHDR_ARC: "+potPoHdrArc_key$
+                    continue
+                endif
+                potReqHdrArc$=field(potReqHdrArc$)
+                writerecord(potReqHdrArc_dev)potReqHdrArc$
+
+                read(potPoDetArc_dev,key=potPoHdrArc_key$,dom=*next)
+                while 1
+                    potPoDetArc_key$=key(potPoDetArc_dev,end=*break)
+                    if pos(potPoHdrArc_key$=potPoDetArc_key$)<>1 then break
+                    readrecord(potPoDetArc_dev)potPoDetArc$
+                    
+                    call pgmdir$+"adc_copyfile.aon",potPoDetArc$,potReqDetArc$,status
+                    if status<>0 then
+                        print(log_dev)"    "+Translate!.getTranslation("AON_SKIPPED")+" POT_PODET_ARC: "+potPoDetArc_key$
+                        continue
+                    endif
+                    potReqDetArc.reserved_num_03=0
+                    potReqDetArc.reserved_num_04=0
+                    potReqDetArc.reserved_num_05=0
+                    potReqDetArc.reserved_num_06=0
+                    potReqDetArc.reserved_num_07=0
+                    potReqDetArc.reserved_num_08=0
+                    potReqDetArc$=field(potReqDetArc$)
+                    writerecord(potReqDetArc_dev)potReqDetArc$
+                wend
+            wend
+
+            rem --- close files opened for this conversion
+            num_files=4
+            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+            open_tables$[1]="POT_POHDR_ARC",  open_opts$[1]="C"
+            open_tables$[2]="POT_PODET_ARC",  open_opts$[2]="C"
+            open_tables$[3]="POT_RECHDR_ARC", open_opts$[3]="C"
+            open_tables$[4]="POT_RECDET_ARC", open_opts$[4]="C"
             gosub open_tables
            
             write(convCtrlFileChan)task$+"=Completed"
