@@ -1,9 +1,10 @@
-rem --- Vendor Pay-To Address Query filter program
+rem --- SO linked to WO query filter program
 rem --- Program ID: opf_orddet_items.aon
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
 rem --- Run by Barista as part of the OP_ORDDET_ITEMS query.
-rem --- For each row in the result set, this program runs to show apm_vendpayto info when available instead of apm_vendmast info.
+rem --- For each row in the result set, apply various filters to present user with the SO line item(s) that can be linked to a given WO
+rem --- User has already specified customer and order number when this query gets called
 
     use ::bbtranslator.bbj::BBTranslator
 
@@ -43,7 +44,7 @@ rem --- Get BBTranslator from Group Namespace
 rem --- Open tables
     num_files=2
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-    open_tables$[1]="SFE_WOMASTR",open_opts$[1]="OTA"
+    open_tables$[1]="SFE_WOMASTR",open_opts$[1]="OTA@";rem WO Master will have opened SFE_WOMASTER this way, so should be returning existing channel
     open_tables$[2]="OPC_LINECODE",open_opts$[2]="OTA"
             
     gosub open_tables        
