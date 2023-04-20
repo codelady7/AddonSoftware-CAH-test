@@ -748,6 +748,9 @@ rem --- remove from print file?
                 writerecord(potPODetArc_dev)poePODet$
             wend
         next del_recs
+    else
+        rem --- on demand print
+        remove (poe_poprint,key=firm_id$+vendor_id$+po_no$,dom=*next)
     endif
   
     if emailFax!.size() and (single_vendor$<>"Y" or send_via_rpt_ctl$="Y")

@@ -44,6 +44,7 @@ rem --- Get 'IN' SPROC parameters
     promise_prompt$=sp!.getParameter("PROMISE_PROMPT")
     not_b4_prompt$=sp!.getParameter("NOT_B4_PROMPT")
     shipfrom_prompt$=sp!.getParameter("SHIPFROM_PROMPT")
+    historical_print$=sp!.getParameter("HISTORICAL_PRINT")
 	barista_wd$=sp!.getParameter("BARISTA_WD")
 
 	chdir barista_wd$
@@ -65,7 +66,11 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     files=6,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
-    files$[1]="poe-11",ids$[1]="POE_REQDET"
+    if historical_print$="Y" then
+        files$[1]="pot_reqdet_arc",ids$[1]="POT_REQDET_ARC"
+    else
+        files$[1]="poe-11",ids$[1]="POE_REQDET"
+    endif
     files$[2]="poc_message",ids$[2]="POC_MESSAGE"
     files$[3]="pom-02",ids$[3]="POC_LINECODE"
     files$[4]="ivm-01",ids$[4]="IVM_ITEMMAST"

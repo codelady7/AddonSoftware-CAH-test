@@ -19,7 +19,15 @@ rem --- If drop-ship is selected, load up sales order line#'s for the detail gri
 	endif
 
 [[POT_REQHDR_ARC.AOPT-DPRT]]
-rem wgh ... 10631 ... Print archived Requisition
+rem --- Print archived Requisition
+	vendor_id$=callpoint!.getColumnData("POT_REQHDR_ARC.VENDOR_ID")
+	req_no$=callpoint!.getColumnData("POT_REQHDR_ARC.REQ_NO")
+	if cvs(vendor_id$,3)<>"" and cvs(req_no$,3)<>""
+		gosub queue_for_printing
+
+		historical_print$="Y"
+		call "por_reqprint.aon",vendor_id$,req_no$,historical_print$,table_chans$[all]
+	endif
 
 [[POT_REQHDR_ARC.APFE]]
 rem --- Set PO  total amount
@@ -47,7 +55,7 @@ rem --- Open Files
 	open_tables$[4]="APM_VENDADDR",open_opts$[4]="OTA"
 	open_tables$[5]="ADM_RPTCTL_RCP",open_opts$[5]="OTA"
 	open_tables$[6]="IVC_WHSECODE",open_opts$[6]="OTA"
-	open_tables$[7]="POE_POPRINT",open_opts$[7]="OTA"
+	open_tables$[7]="POE_REQPRINT",open_opts$[7]="OTA"
 
 	gosub open_tables
 
@@ -235,6 +243,18 @@ get_dropship_order_lines: rem --- Read thru selected sales order and build list 
 		callpoint!.setDevObject("so_ldat",ldat$)
 		callpoint!.setDevObject("so_lines_list",order_list!)
 	endif	
+
+	return
+
+queue_for_printing:
+	poe_reqprint_dev=fnget_dev("POE_REQPRINT")
+	dim poe_reqprint$:fnget_tpl$("POE_REQPRINT")
+
+	poe_reqprint.firm_id$=firm_id$
+	poe_reqprint.vendor_id$=callpoint!.getColumnData("POT_REQHDR_ARC.VENDOR_ID")
+	poe_reqprint.req_no$=callpoint!.getColumnData("POT_REQHDR_ARC.REQ_NO")
+
+	writerecord (poe_reqprint_dev)poe_reqprint$
 
 	return
 

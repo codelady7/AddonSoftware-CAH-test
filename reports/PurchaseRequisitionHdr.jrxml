@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2021-04-06T11:01:01 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PurchaseRequisition" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="addon" uuid="ea22a6d6-67f2-4294-82f2-d5ea1455f2e0">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
@@ -39,8 +38,9 @@
 	<parameter name="BANDED_ROWS" class="java.lang.String"/>
 	<parameter name="ITEM_MASK" class="java.lang.String"/>
 	<parameter name="AP_FAX_NO" class="java.lang.String"/>
+	<parameter name="HISTORICAL_PRINT" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[CALL PURCHASEREQUISITION_HDR ($P{FIRM_ID} , $P{REQ_NO}, $P{VEND_MASK}, $P{DFLT_MSG},$P{BARISTA_WD})]]>
+		<![CDATA[CALL PURCHASEREQUISITION_HDR ($P{FIRM_ID} , $P{REQ_NO}, $P{VEND_MASK}, $P{DFLT_MSG}, $P{HISTORICAL_PRINT}, $P{BARISTA_WD})]]>
 	</queryString>
 	<field name="ORD_DATE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -332,6 +332,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[!$P{HISTORICAL_PRINT}.equals("Y")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="22" isBold="true"/>
@@ -346,11 +347,44 @@
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[!$P{HISTORICAL_PRINT}.equals("Y")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="22" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PURCHASE REQUISITION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="7" width="332" height="35" forecolor="#CCCCCC" uuid="adf07259-7aa2-4ef4-a358-587bbf44339d">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$P{HISTORICAL_PRINT}.equals("Y")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORICAL REQUISITION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="5" width="332" height="35" forecolor="#000000" uuid="0ee88e8b-2375-447d-ba2e-637376357770">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$P{HISTORICAL_PRINT}.equals("Y")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORICAL REQUISITION]]></text>
 			</staticText>
 			<rectangle radius="4">
 				<reportElement mode="Opaque" x="10" y="122" width="260" height="94" uuid="578b4b51-5813-4b5a-b368-c30e9d114d2e">
@@ -1116,6 +1150,9 @@
 				</subreportParameter>
 				<subreportParameter name="ITEM_MASK">
 					<subreportParameterExpression><![CDATA[$P{ITEM_MASK}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="HISTORICAL_PRINT">
+					<subreportParameterExpression><![CDATA[$P{HISTORICAL_PRINT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<returnValue subreportVariable="REQ_TOTAL" toVariable="REQ_TOTAL"/>

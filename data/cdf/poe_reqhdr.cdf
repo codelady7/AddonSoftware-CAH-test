@@ -133,10 +133,10 @@ req_no$=callpoint!.getColumnData("POE_REQHDR.REQ_NO")
 gosub queue_for_printing
 
 if cvs(vendor_id$,3)<>"" and cvs(req_no$,3)<>""
-
 	gosub queue_for_printing
-	call "por_reqprint.aon",vendor_id$,req_no$,table_chans$[all]
 
+	historical_print$=""
+	call "por_reqprint.aon",vendor_id$,req_no$,historical_print$,table_chans$[all]
 endif
 
 [[POE_REQHDR.AOPT-QPRT]]

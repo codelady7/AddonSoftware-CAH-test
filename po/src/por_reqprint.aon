@@ -8,7 +8,7 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
     rem --- err= on enter because pgm can be run batch mode from menu, but can also be called
     rem --- on demand from w/in requisition entry
-    enter single_vendor_id$,single_req_no$,rd_table_chans$[all],err=*next
+    enter single_vendor_id$,single_req_no$,historical_print$,rd_table_chans$[all],err=*next
 
     seterr end_instantiate
     use ::bbtranslator.bbj::BBTranslator
@@ -238,7 +238,7 @@ rem --- Build SQL query to drive the report
                 order_by$="order by apm_vendmast.alt_sequence,poe_reqprint.vendor_id,poe_reqprint.req_no"
                 break
              case whse_seq
-                order_by$="order by poe_podet.warehouse_id,poe_reqprint.vendor_id,poe_reqprint.req_no"
+                order_by$="order by poe_reqhdr.warehouse_id,poe_reqprint.vendor_id,poe_reqprint.req_no"
                 break
              case default
                 more=0
@@ -353,6 +353,7 @@ rem --- Process SQL fetch results
         params!.put("NOT_B4_PROMPT",Translate!.getTranslation("AON_NOT_BEFORE_"))
         params!.put("SHIPFROM_PROMPT",Translate!.getTranslation("AON_SHIP_FROM:_"))
         params!.put("BANDED_ROWS","Y");rem --- controls whether or not detail portion of report is striped
+        params!.put("HISTORICAL_PRINT",historical_print$)
 
     rem --- invoke jasper
 
@@ -595,23 +596,22 @@ rem --- force exportToPDF first, in case it hasn't already been saved
 close_win:rem --- Viewer Window Closed
     
 rem --- remove from print file?
-    msg_id$="PO_UPDTPRT"
-    dim msg_tokens$[1]
-    msg_tokens$[1]=Translate!.getTranslation("AON_PURCHASE_REQUISITION")
-    gosub disp_message
-    if msg_opt$<>"Y" then goto all_done
+    if historical_print$<>"Y"then
+        msg_id$="PO_UPDTPRT"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=Translate!.getTranslation("AON_PURCHASE_REQUISITION")
+        gosub disp_message
+        if msg_opt$<>"Y" then goto all_done
+    endif
 
     if single_vendor$<>"Y"
         for del_recs = 0 to UpdateRecs!.size() - 1
             k$=UpdateRecs!.getItem(del_recs)
             remove (poe_reqprint,key=k$,dom=*next)
         next del_recs  
-   
     else
-    rem --- on demand print
- 
+        rem --- on demand print
         remove (poe_reqprint,key=firm_id$+vendor_id$+req_no$,dom=*next)
-
     endif 
     
 all_done:

@@ -30,6 +30,7 @@ rem --- get SPROC parameters
     req_no$=sp!.getParameter("REQ_NO")
     vend_mask$=sp!.getParameter("VEND_MASK")
     dflt_msg$=sp!.getParameter("DFLT_MSG")
+    historical_print$=sp!.getParameter("HISTORICAL_PRINT")
     barista_wd$=sp!.getParameter("BARISTA_WD")
 
     chdir barista_wd$
@@ -67,7 +68,11 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     files=4,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
-    files$[1]="poe-01",ids$[1]="POE_REQHDR"
+    if historical_print$="Y" then
+        files$[1]="pot_reqhdr_arc",ids$[1]="POT_REQHDR_ARC"
+    else
+        files$[1]="poe-01",ids$[1]="POE_REQHDR"
+    endif
     files$[2]="apm-01",ids$[2]="APM_VENDMAST"
     files$[3]="ivc_whsecode",ids$[3]="IVC_WHSECODE"
     files$[4]="apc_termscode",ids$[4]="APC_TERMSCODE"
