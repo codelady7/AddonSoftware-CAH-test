@@ -139,6 +139,148 @@ if cvs(vendor_id$,3)<>"" and cvs(req_no$,3)<>""
 	call "por_reqprint.aon",vendor_id$,req_no$,historical_print$,table_chans$[all]
 endif
 
+[[POE_REQHDR.AOPT-DUPP]]
+rem --- Duplicate Old Purchase Requisition
+	dim filter_defs$[2,2]
+	filter_defs$[1,0] = "POT_REQHDR_ARC.FIRM_ID"
+	filter_defs$[1,1] = "='"+firm_id$+"'"
+	filter_defs$[1,2] = "LOCK"
+	if cvs(callpoint!.getColumnData("POE_REQHDR.VENDOR_ID"),2)<>"" then
+		filter_defs$[2,0] = "POT_REQHDR_ARC.VENDOR_ID"
+		filter_defs$[2,1] = "='"+callpoint!.getColumnData("POE_REQHDR.VENDOR_ID")+"'"
+		filter_defs$[2,2] = "LOCK"
+	endif
+
+	call stbl("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev,
+:		Form!,
+:		"PO_HIST_REQ",
+:		"DEFAULT",
+:		table_chans$[all],
+:		sel_key$,
+:		filter_defs$[all]
+
+
+	if sel_key$<>""
+		call stbl("+DIR_SYP")+"bac_key_template.bbj",
+:			"POT_REQHDR_ARC",
+:			"PRIMARY",
+:			pot_reqhdr_key$,
+:			table_chans$[all],
+:			status$
+
+		if cvs(callpoint!.getColumnData("POE_REQHDR.REQ_NO"),2)="" then
+			call stbl("+DIR_SYP")+"bas_sequences.bbj","REQ_NO",seq_id$,rd_table_chans$[all]
+		else
+			seq_id$=callpoint!.getColumnData("POE_REQHDR.REQ_NO")
+		endif
+		if seq_id$<>"" then
+			rem --- Copy header record
+			poe_reqhdr_dev = fnget_dev("POE_REQHDR")
+			dim poe_reqhdr$:fnget_tpl$("POE_REQHDR")
+
+			pot_reqhdr_dev = fnget_dev("POT_REQHDR_ARC")
+			dim pot_reqhdr$:fnget_tpl$("POT_REQHDR_ARC")
+			dim pot_reqhdr_key$:pot_reqhdr_key$
+			pot_reqhdr_key$=sel_key$(1,len(pot_reqhdr_key$))
+			read record (pot_reqhdr_dev, key=pot_reqhdr_key$,dom=*endif) pot_reqhdr$
+
+			call stbl("+DIR_PGM")+"adc_copyfile.aon",pot_reqhdr$,poe_reqhdr$,status
+			if status=0 then
+				warn_SalesOrder=0
+				warn_WorkOrder=0
+
+				dim sysinfo$:stbl("+SYSINFO_TPL")
+				sysinfo$=stbl("+SYSINFO")
+				today$=sysinfo.system_date$
+				today_jul=jul(num(today$(1,4)),num(today$(5,2)),num(today$(7,2)))
+				rec_ord_date_jul=jul(num(pot_reqhdr.ord_date$(1,4)),num(pot_reqhdr.ord_date$(5,2)),num(pot_reqhdr.ord_date$(7,2)))
+				rec_promise_date_jul=jul(num(pot_reqhdr.promise_date$(1,4)),num(pot_reqhdr.promise_date$(5,2)),num(pot_reqhdr.promise_date$(7,2)))
+				rec_not_b4_date_jul=jul(num(pot_reqhdr.not_b4_date$(1,4)),num(pot_reqhdr.not_b4_date$(5,2)),num(pot_reqhdr.not_b4_date$(7,2)))
+				rec_reqd_date_jul=jul(num(pot_reqhdr.reqd_date$(1,4)),num(pot_reqhdr.reqd_date$(5,2)),num(pot_reqhdr.reqd_date$(7,2)))
+
+				poe_reqhdr.req_no$=seq_id$
+				poe_reqhdr.ord_date$=today$
+				if cvs(pot_reqhdr.promise_date$,2)<>"" then poe_reqhdr.promise_date$=date(today_jul+(rec_promise_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+				if cvs(pot_reqhdr.not_b4_date$,2)<>"" poe_reqhdr.not_b4_date$=date(today_jul+(rec_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+				if cvs(pot_reqhdr.reqd_date$,2)<>"" poe_reqhdr.reqd_date$=date(today_jul+(rec_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+				poe_reqhdr.entered_by$=""
+				if cvs(poe_reqhdr.order_no$,2)<>"" then
+					warn_SalesOrder=1
+					poe_reqhdr.order_no$=""
+				endif
+
+				poe_reqhdr$=field(poe_reqhdr$)
+				write record (poe_reqhdr_dev) poe_reqhdr$
+				poe_reqhdr_key$=poe_reqhdr.firm_id$+poe_reqhdr.req_no$
+				extractrecord(poe_reqhdr_dev,key=poe_reqhdr_key$)poe_reqhdr$; rem Advisory Locking
+				callpoint!.setStatus("SETORIG")
+
+				rem --- Copy detail records
+				poe_reqdet_dev = fnget_dev("POE_REQDET")
+				dim poe_reqdet$:fnget_tpl$("POE_REQDET")
+
+				pot_reqdet_dev = fnget_dev("POT_REQDET_ARC")
+				dim pot_reqdet$:fnget_tpl$("POT_REQDET_ARC")
+				read(pot_reqdet_dev, key=pot_reqhdr_key$,dom=*next)
+				while 1
+					pot_reqdet_key$=key(pot_reqdet_dev,end=*break)
+					if pos(pot_reqhdr_key$=pot_reqdet_key$)<>1 then break
+					readrecord(pot_reqdet_dev)pot_reqdet$
+
+					redim poe_reqdet$
+					call stbl("+DIR_PGM")+"adc_copyfile.aon",pot_reqdet$,poe_reqdet$,status
+					if status then continue
+
+					call stbl("+DIR_SYP")+"bas_sequences.bbj","INTERNAL_SEQ_NO",int_seq_no$,table_chans$[all]
+					recdet_reqd_date_jul=jul(num(pot_reqdet.reqd_date$(1,4)),num(pot_reqdet.reqd_date$(5,2)),num(pot_reqdet.reqd_date$(7,2)))
+					recdet_promise_date_jul=jul(num(pot_reqdet.promise_date$(1,4)),num(pot_reqdet.promise_date$(5,2)),num(pot_reqdet.promise_date$(7,2)))
+					recdet_not_b4_date_jul=jul(num(pot_reqdet.not_b4_date$(1,4)),num(pot_reqdet.not_b4_date$(5,2)),num(pot_reqdet.not_b4_date$(7,2)))
+
+					poe_reqdet.req_no$=poe_reqhdr.req_no$
+					poe_reqdet.internal_seq_no$=int_seq_no$
+					if cvs(pot_reqdet.reqd_date$,2)<>"" poe_reqdet.reqd_date$=date(today_jul+(recdet_reqd_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+					if cvs(pot_reqdet.promise_date$,2)<>"" then poe_reqdet.promise_date$=date(today_jul+(recdet_promise_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+					if cvs(pot_reqdet.not_b4_date$,2)<>"" poe_reqdet.not_b4_date$=date(today_jul+(recdet_not_b4_date_jul-rec_ord_date_jul):"%Yl%Mz%Dz")
+					if cvs(poe_reqdet.wo_no$,2)<>"" then
+						warn_WorkOrder=1
+						poe_reqdet.wo_no$=""
+					endif
+					poe_reqdet.wk_ord_seq_ref$=""
+					poe_reqdet.so_int_seq_ref$=""
+
+					status=0
+					call stbl("+DIR_PGM")+"poc_itemvend.aon","R","R",
+:						poe_reqhdr.vendor_id$,
+:						poe_reqhdr.ord_date$,
+:						poe_reqdet.item_id$,
+:						poe_reqdet.conv_factor,
+:						unit_cost,
+:						poe_reqdet.req_qty,
+:						callpoint!.getDevObject("iv_prec"),
+:						status
+
+					if status=0 then poe_reqdet.unit_cost=unit_cost
+					poe_reqdet$=field(poe_reqdet$)
+					write record (poe_reqdet_dev) poe_reqdet$
+				wend
+				callpoint!.setStatus("RECORD:["+poe_reqhdr.firm_id$+poe_reqhdr.req_no$+"]")
+
+				rem --- Warn if sales order not duplicated
+				if warn_SalesOrder then
+					msg_id$="PO_SO_NOT_DUPD"
+					gosub disp_message
+				endif
+
+				rem --- Warn if WO not duplicated
+				if warn_WorkOrder then
+					msg_id$="PO_WO_NOT_DUPD"
+					gosub disp_message
+				endif
+			endif
+		endif
+	endif
+
 [[POE_REQHDR.AOPT-QPRT]]
 gosub queue_for_printing
 msg_id$="PO_REQ_QPRT"
@@ -159,8 +301,14 @@ gosub enable_dropship_fields
 rem --- enable/disable buttons
 	req_no$=cvs(callpoint!.getColumnData("POE_REQHDR.REQ_NO"),3)
 	if req_no$<>"" then
+		callpoint!.setOptionEnabled("QPRT",1)
+		callpoint!.setOptionEnabled("DPRT",1)
+		callpoint!.setOptionEnabled("DUPP",0)
 		callpoint!.setOptionEnabled("COPY",1)
 	else
+		callpoint!.setOptionEnabled("QPRT",0)
+		callpoint!.setOptionEnabled("DPRT",0)
+		callpoint!.setOptionEnabled("DUPP",1)
 		callpoint!.setOptionEnabled("COPY",0)
 	endif
 
@@ -249,6 +397,9 @@ rem --- Update links to Work Orders
 
 [[POE_REQHDR.BPFX]]
 rem --- disable buttons
+	callpoint!.setOptionEnabled("QPRT",0)
+	callpoint!.setOptionEnabled("DPRT",0)
+	callpoint!.setOptionEnabled("DUPP",0)
 	callpoint!.setOptionEnabled("COPY",0)
 
 [[POE_REQHDR.BSHO]]
@@ -258,7 +409,7 @@ rem --- inits
 	use ::ado_util.src::util
 
 rem --- Open Files
-	num_files=12
+	num_files=14
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -272,6 +423,8 @@ rem --- Open Files
 	open_tables$[10]="APM_VENDMAST",open_opts$[10]="OTA"
 	open_tables$[11]="POE_REQDET",open_opts$[11]="OTA"
 	open_tables$[12]="POE_REQDET",open_opts$[12]="OTAN[2_]"
+	open_tables$[13]="POT_REQHDR_ARC",open_opts$[13]="OTA"
+	open_tables$[14]="POT_REQDET_ARC",open_opts$[14]="OTA"
 
 	gosub open_tables
 	aps_params_dev=num(open_chans$[1]),aps_params_tpl$=open_tpls$[1]

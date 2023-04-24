@@ -204,11 +204,11 @@ rem --- PO changes must be saved before on-demand PO print
 [[POE_POHDR.AOPT-DUPP]]
 rem --- Duplicate Old PO
 	dim filter_defs$[2,2]
-	filter_defs$[1,0] = "POT_RECHDR.FIRM_ID"
+	filter_defs$[1,0] = "POT_POHDR_ARC.FIRM_ID"
 	filter_defs$[1,1] = "='"+firm_id$+"'"
 	filter_defs$[1,2] = "LOCK"
 	if cvs(callpoint!.getColumnData("POE_POHDR.VENDOR_ID"),2)<>"" then
-		filter_defs$[2,0] = "POT_RECHDR.VENDOR_ID"
+		filter_defs$[2,0] = "POT_POHDR_ARC.VENDOR_ID"
 		filter_defs$[2,1] = "='"+callpoint!.getColumnData("POE_POHDR.VENDOR_ID")+"'"
 		filter_defs$[2,2] = "LOCK"
 	endif
