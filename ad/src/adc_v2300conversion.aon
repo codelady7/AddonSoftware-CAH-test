@@ -932,12 +932,14 @@ rem --- For version 23.00, build POT_POHDR_ARC and POT_PODET_ARC, and POT_REQHDR
             print(log_dev)meter_text$
     
             rem --- Open File(s)
-            num_files=4
+            num_files=6
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="POT_POHDR_ARC",  open_opts$[1]="OTA"
             open_tables$[2]="POT_PODET_ARC",  open_opts$[2]="OTA"
             open_tables$[3]="POT_REQHDR_ARC", open_opts$[3]="OTA"
             open_tables$[4]="POT_REQDET_ARC", open_opts$[4]="OTA"
+            open_tables$[5]="POE_POHDR",      open_opts$[5]="OTA"
+            open_tables$[6]="POE_PODET",      open_opts$[6]="OTA"            
     
             gosub open_tables
     
@@ -945,10 +947,14 @@ rem --- For version 23.00, build POT_POHDR_ARC and POT_PODET_ARC, and POT_REQHDR
             potPoDetArc_dev=num(open_chans$[2])
             potReqHdrArc_dev=num(open_chans$[3])
             potReqDetArc_dev=num(open_chans$[4])
+            poePoHdr_dev=num(open_chans$[5])
+            poePoDet_dev=num(open_chans$[6])
             dim potPoHdrArc$:open_tpls$[1]
             dim potPoDetArc$:open_tpls$[2]
             dim potReqHdrArc$:open_tpls$[3]
             dim potReqDetArc$:open_tpls$[4]
+            dim poePoHdr$:open_tpls$[5]
+            dim poePoDet$:open_tpls$[6]
                 
             rem --- Use POT_POHDR_ARC and POT_PODET_ARC to build POT_REQHDR_ARC and POT_REQDET_ARC
             read(potPoHdrArc_dev,key="",dom=*next)
@@ -987,13 +993,55 @@ rem --- For version 23.00, build POT_POHDR_ARC and POT_PODET_ARC, and POT_REQHDR
                 wend
             wend
 
+            rem --- For all POs in entry that use a Requisition, make sure the Requisition is captured in POT_REQHDR_ARC and POT_REQDET_ARC
+            read(poePoHdr_dev,key="",dom=*next)
+            while 1
+                poePoHdr_key$=key(poePoHdr_dev,end=*break)
+                readrecord(poePoHdr_dev)poePoHdr$
+                if cvs(poePoHdr.req_no$,2)="" then continue; rem --- not a requisition
+                
+                rem --- Skip Requisition if it's already in history
+                find(potReqHdrArc_dev,key=poePoHdr.firm_id$+poePoHdr.req_no$,dom=*next); continue
+
+                call pgmdir$+"adc_copyfile.aon",poePoHdr$,potReqHdrArc$,status
+                if status<>0 then
+                    print(log_dev)"    "+Translate!.getTranslation("AON_SKIPPED")+" POE_POHDR: "+poePoHdr_key$
+                    continue
+                endif
+                potReqHdrArc$=field(potReqHdrArc$)
+                writerecord(potReqHdrArc_dev)potReqHdrArc$
+
+                read(poePoDet_dev,key=poePoHdr_key$,dom=*next)
+                while 1
+                    poePoDet_key$=key(poePoDet_dev,end=*break)
+                    if pos(poePoHdr_key$=poePoDet_key$)<>1 then break
+                    readrecord(poePoDet_dev)poePoDet$
+                    
+                    call pgmdir$+"adc_copyfile.aon",poePoDet$,potReqDetArc$,status
+                    if status<>0 then
+                        print(log_dev)"    "+Translate!.getTranslation("AON_SKIPPED")+" POE_PODET: "+poePoDet_key$
+                        continue
+                    endif
+                    potReqDetArc.reserved_num_03=0
+                    potReqDetArc.reserved_num_04=0
+                    potReqDetArc.reserved_num_05=0
+                    potReqDetArc.reserved_num_06=0
+                    potReqDetArc.reserved_num_07=0
+                    potReqDetArc.reserved_num_08=0
+                    potReqDetArc$=field(potReqDetArc$)
+                    writerecord(potReqDetArc_dev)potReqDetArc$
+                wend
+            wend
+
             rem --- close files opened for this conversion
-            num_files=4
+            num_files=6
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="POT_POHDR_ARC",  open_opts$[1]="C"
             open_tables$[2]="POT_PODET_ARC",  open_opts$[2]="C"
             open_tables$[3]="POT_RECHDR_ARC", open_opts$[3]="C"
             open_tables$[4]="POT_RECDET_ARC", open_opts$[4]="C"
+            open_tables$[5]="POE_POHDR",      open_opts$[5]="C"
+            open_tables$[6]="POE_PODET",      open_opts$[6]="C"            
             gosub open_tables
            
             write(convCtrlFileChan)task$+"=Completed"

@@ -632,7 +632,7 @@ rem --- inits
 	use java.util.Properties
 
 rem --- Open Files
-	num_files=25
+	num_files=27
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -659,6 +659,8 @@ rem --- Open Files
 	open_tables$[23]="POT_POHDR_ARC",open_opts$[23]="OTA"
 	open_tables$[24]="POT_PODET_ARC",open_opts$[24]="OTA"
 	open_tables$[25]="POE_PODET",open_opts$[25]="OTAN[2_]"
+	open_tables$[26]="POT_REQHDR_ARC",open_opts$[26]="OTA"
+	open_tables$[27]="POT_REQDET_ARC",open_opts$[27]="OTA"
 
 	gosub open_tables
 
@@ -920,6 +922,8 @@ if req_no$<>""
 		dim poe_reqdet$:fnget_tpl$("POE_REQDET")
 		poe_podet_dev=fnget_dev("POE_PODET")
 		poe_reqprint_dev=fnget_dev("POE_REQPRINT")
+		pot_reqhdr_dev=fnget_dev("POT_REQHDR_ARC")
+		pot_reqdet_dev=fnget_dev("POT_REQDET_ARC")
 
 		poe_linked_dev=fnget_dev("POE_LINKED")
 		dim poe_linked$:fnget_tpl$("POE_LINKED")
@@ -935,6 +939,7 @@ if req_no$<>""
 		call stbl("+DIR_PGM")+"adc_copyfile.aon",poe_reqhdr$,poe_pohdr$,status	
 		poe_pohdr.po_no$=po_no$
 		write record (poe_pohdr_dev) poe_pohdr$
+		write record (pot_reqhdr_dev) poe_reqhdr$
 
 		poe_poprint.firm_id$=firm_id$
 		poe_poprint.vendor_id$=poe_pohdr.vendor_id$
@@ -951,6 +956,7 @@ if req_no$<>""
 			poe_podet.po_no$=po_no$
 			poe_podet.qty_ordered=poe_reqdet.req_qty
 			write record (poe_podet_dev) poe_podet$
+			write record (pot_reqdet_dev) poe_reqdet$
 
 			find record (poc_linecode_dev,key=firm_id$+poe_podet.po_line_code$,dom=*next)poc_linecode$
 			if poc_linecode.line_type$="S"
