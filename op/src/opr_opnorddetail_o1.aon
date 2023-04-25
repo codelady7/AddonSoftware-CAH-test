@@ -33,6 +33,10 @@ rem --- Document initializations
     rep_time$=date(0:"%hz:%mz %p")
     rep_time_stamp$=date(0:"%Hz%mz%sz")
     rep_prog$=pgm(-2)
+    
+    dim sysinfo$:stbl("+SYSINFO_TPL")
+    sysinfo$=stbl("+SYSINFO")
+    processDate$ = sysinfo.system_date$
 
 rem --- Retrieve the program path
 
@@ -41,7 +45,11 @@ rem --- Retrieve the program path
 rem --- Parameters
 
     h0=132
-    headings=8
+    if past_ship_date$="Y" then
+        headings=9
+    else
+        headings=8
+    endif
 
 rem --- Initializations
 
@@ -186,6 +194,8 @@ rem    if end_ship_date$="" then headings$[5]=headings$[5]+" -- Ending Ship Date
         h9$=h9$+"None"
     endif
     headings$[9]=h9$
+    
+    if past_ship_date$="Y" then headings$[10]="Past Scheduled Ship Date"
 
 rem --- Background
 
@@ -210,6 +220,7 @@ rem --- Main Loop Starts
 
         if s2$<>"" and ope01a.order_date$<s2$ then continue
         if s3$<>"" and ope01a.order_date$>s3$ then continue
+        if past_ship_date$="Y" and processDate$<=ope01a.shipmnt_date$ then continue
 rem        if start_ship_date$<>"" and ope01a.shipmnt_date$<start_ship_date$ then continue
 rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then continue
         if s5$<>"" and cvs(ope01a.ord_taken_by$,3)<>s5$ then continue

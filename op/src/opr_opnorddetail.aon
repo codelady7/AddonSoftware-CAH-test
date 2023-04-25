@@ -86,6 +86,7 @@ rem --- Assign form input values to local variables
     s3$  =  option!.getOptionData("ORDER_DATE_2")
     s5$  =  option!.getOptionData("ORD_TAKEN_BY")
     s7$  =  option!.getOptionData("SALESPERSON")
+    past_ship_date$=Option!.getOptionData("PAST_SHIP_DATE")
     s6$  =  option!.getOptionData("PRINT_UPRINT_ALL")
     open$=Option!.getOptionData("OPEN")
     open_new$=Option!.getOptionData("OPEN_NEW")
