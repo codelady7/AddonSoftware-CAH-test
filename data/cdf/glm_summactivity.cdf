@@ -304,7 +304,7 @@ for x=0 to num_cols-1
 	this_col$=cols!.getItem(x)
 	this_tp$=tps!.getItem(x)
 	x1=0
-	while x1<num_codes-1
+	while x1<num_codes
 		wcd$=codes!.getItem(x1)
 		col$=pad(wcd$(1,len(wcd$)-1),len(this_col$))
 		tp$=wcd$(len(wcd$))
