@@ -201,6 +201,26 @@ rem --- Sorts
         if cvs(datefrom$,3)<>"" and testdateh$<datefrom$ then continue
         if cvs(datethru$,3)<>"" and testdateh$>datethru$ then continue
 
+        rem --- Work Order filter
+        if woFrom$<>"" or woThru$<>"" then
+            skipReq=1
+            dim poe11a_key$:poe11a_key_tpl$
+            p11_key$=poe01a.firm_id$+poe01a.req_no$
+            read (poe11_dev,key=p11_key$,knum="AO_REQ_LINE",dom=*next)
+            while 1
+                poe11a_key$=key(poe11_dev,end=*break)
+                if poe11a_key.firm_id$+poe11a_key.req_no$<>poe01a_key.firm_id$+poe01a_key.req_no$ break
+                read record (poe11_dev) poe11a$
+                wo_no$=cvs(poe11a.wo_no$,2)
+                if wo_no$="" then continue
+                if cvs(woFrom$,3)<>"" and woFrom$>wo_no$ then continue
+                if cvs(woThru$,3)<>"" and woThru$<wo_no$ then continue
+                skipReq=0
+                break
+            wend
+            if skipReq then continue
+        endif
+
     rem --- Header passed tests
     
         gosub testbreaks

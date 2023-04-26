@@ -87,6 +87,8 @@ rem --- Assign form input values to local variables
     datethru$=cvs(option!.getOptionData("pick_date_2"),3)
     altfrom$=cvs(option!.getOptionData("alt_sequence_1"),3)
     altthru$=cvs(option!.getOptionData("alt_sequence_2"),3)
+    woFrom$=cvs(option!.getOptionData("wo_no_1"),3)
+    woThru$=cvs(option!.getOptionData("wo_no_2"),3)
 
     if whse$="" whse$="ALL"
     if vendfrom$="" vendfrom$=altfrom$
