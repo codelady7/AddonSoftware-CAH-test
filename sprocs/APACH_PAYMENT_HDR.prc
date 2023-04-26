@@ -37,7 +37,7 @@ rem --- Set up Encryptor
 rem --- Create the memory record set for return to jasper
     dataTemplate$ = "vendor_id:C(1*),vendor_name:C(30),address1:C(30),address2:C(30),address3:C(30),"
     dataTemplate$ = dataTemplate$ + "check_no:C(1*),check_date:C(1*),check_amt:C(1*),"
-    dataTemplate$ = dataTemplate$ + "sent_to1:C(1*),sent_to2:C(1*)"
+    dataTemplate$ = dataTemplate$ + "sent_to1:C(1*),sent_to2:C(1*),vendor_acct:C(1*)"
     rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
 
 rem --- open files
@@ -111,6 +111,7 @@ rem --- put data into recordset
         bnkAcctNo$=pad(bnkAcctNo$,6,"R","x")
     endif
     data!.setFieldValue("SENT_TO2", bnkAcctNo$)
+    data!.setFieldValue("VENDOR_ACCT", apm01a.vendor_acct$)
     rs!.insert(data!)
 
 rem --- close files

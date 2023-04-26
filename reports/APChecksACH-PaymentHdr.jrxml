@@ -38,6 +38,7 @@
 	<field name="CHECK_NO" class="java.lang.String"/>
 	<field name="CHECK_DATE" class="java.lang.String"/>
 	<field name="CHECK_AMT" class="java.lang.String"/>
+	<field name="VENDOR_ACCT" class="java.lang.String"/>
 	<variable name="TOTAL_AMT_PAID" class="java.lang.String"/>
 	<group name="VENDOR" isStartNewPage="true" isResetPageNumber="true" isReprintHeaderOnEachPage="true" footerPosition="StackAtBottom">
 		<groupExpression><![CDATA[$F{VENDOR_ID}]]></groupExpression>
@@ -45,7 +46,7 @@
 			<band height="1"/>
 		</groupHeader>
 		<groupFooter>
-			<band height="50">
+			<band height="53">
 				<rectangle radius="0">
 					<reportElement x="0" y="22" width="555" height="15" backcolor="#000000" uuid="9f54f8be-1da3-4c69-abdc-c2099bad0d9c"/>
 					<graphicElement>
@@ -88,6 +89,32 @@
 						<font fontName="SansSerif" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$R{AON_TOTAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="5" y="22" width="100" height="25" forecolor="#FFFFFF" uuid="832dc0b9-7d11-49b1-a64c-3903a01dead2">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[!$F{VENDOR_ACCT}.isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{AON_ACCOUNT}+": "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="110" y="22" width="100" height="25" forecolor="#FFFFFF" uuid="bd8cd4bf-c86f-401e-9dbd-4c24de27fd59">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[!$F{VENDOR_ACCT}.isEmpty()]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{VENDOR_ACCT}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>

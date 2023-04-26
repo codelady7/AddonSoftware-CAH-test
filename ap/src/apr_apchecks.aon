@@ -413,8 +413,12 @@ rem --- Check From Address
     aps01b_key$=firm_id$+"AP02"
     find record (aps01b_dev,key=aps01b_key$,err=std_missing_params) aps01b$
     ap_address$=aps01b.addr_line_1$+aps01b.addr_line_2$+aps01b.city$+aps01b.state_code$+aps01b.zip_code$
-    call pgmdir$+"adc_address.aon",ap_address$,30,3,9,35
 
+    call stbl("+DIR_SYP")+"bac_getmask.bbj","T",cvs(aps01b.phone_no$,2),"",phone_mask$
+    ap_phone_no$=cvs(aps01b.phone_no$,2)
+    ap_phone_no$=str(ap_phone_no$:phone_mask$,err=*next)
+
+    call pgmdir$+"adc_address.aon",ap_address$,30,3,9,35
     if cvs(ap_address$(71),2)<>"" then
         stub_address$=ap_address$(71)
     else
@@ -447,6 +451,7 @@ rem --- Assign needed jasper params
 	params!.put("AP_ADDRESS3",ap_address$(36,35))
 	params!.put("AP_ADDRESS4",ap_address$(71))
 	params!.put("AP_ADDR3_STUB",stub_address$)
+    params!.put("AP_PHONE_NO",cvs(ap_phone_no$,2))
 
 	params!.put("LOGO_FILE",logo_filename$)	
 	params!.put("MAX_STUB_ROWS",str(max_stub_rows))

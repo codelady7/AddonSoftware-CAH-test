@@ -20,6 +20,7 @@
 	<parameter name="AP_ADDRESS3" class="java.lang.String"/>
 	<parameter name="AP_ADDRESS4" class="java.lang.String"/>
 	<parameter name="AP_ADDR3_STUB" class="java.lang.String"/>
+	<parameter name="AP_PHONE_NO" class="java.lang.String"/>
 	<parameter name="LOGO_FILE" class="java.lang.String"/>
 	<parameter name="MAX_STUB_ROWS" class="java.lang.String"/>
 	<parameter name="ACH_PAYMENT" class="java.lang.String"/>
@@ -38,6 +39,7 @@
 	<field name="VEND_ADDR3" class="java.lang.String"/>
 	<field name="VEND_ADDR4" class="java.lang.String"/>
 	<field name="BNK_ACCT_CD" class="java.lang.String"/>
+	<field name="VENDOR_ACCT" class="java.lang.String"/>
 	<variable name="ORDER_OF_PARTS" class="java.lang.String">
 		<variableExpression><![CDATA[$P{TOP_PART}+$P{MIDDLE_PART}+$P{BOTTOM_PART}]]></variableExpression>
 		<initialValueExpression><![CDATA[]]></initialValueExpression>
@@ -140,6 +142,12 @@
 				</subreportParameter>
 				<subreportParameter name="BNK_ACCT_CD">
 					<subreportParameterExpression><![CDATA[$F{BNK_ACCT_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="AP_PHONE_NO">
+					<subreportParameterExpression><![CDATA[$P{AP_PHONE_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="VENDOR_ACCT">
+					<subreportParameterExpression><![CDATA[$F{VENDOR_ACCT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["APCheck-Stub.jasper"]]></subreportExpression>
@@ -292,6 +300,12 @@
 				<subreportParameter name="BNK_ACCT_CD">
 					<subreportParameterExpression><![CDATA[$F{BNK_ACCT_CD}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="AP_PHONE_NO">
+					<subreportParameterExpression><![CDATA[$P{AP_PHONE_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="VENDOR_ACCT">
+					<subreportParameterExpression><![CDATA[$F{VENDOR_ACCT}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["APCheck-Stub.jasper"]]></subreportExpression>
 			</subreport>
@@ -442,6 +456,12 @@
 				</subreportParameter>
 				<subreportParameter name="BNK_ACCT_CD">
 					<subreportParameterExpression><![CDATA[$F{BNK_ACCT_CD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="AP_PHONE_NO">
+					<subreportParameterExpression><![CDATA[$P{AP_PHONE_NO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="VENDOR_ACCT">
+					<subreportParameterExpression><![CDATA[$F{VENDOR_ACCT}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["APCheck-Stub.jasper"]]></subreportExpression>

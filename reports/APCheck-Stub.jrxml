@@ -18,6 +18,7 @@
 	<parameter name="AP_ADDRESS3" class="java.lang.String"/>
 	<parameter name="AP_ADDRESS4" class="java.lang.String"/>
 	<parameter name="AP_ADDR3_STUB" class="java.lang.String"/>
+	<parameter name="AP_PHONE_NO" class="java.lang.String"/>
 	<parameter name="LOGO_FILE" class="java.lang.String"/>
 	<parameter name="VEND_NAME" class="java.lang.String"/>
 	<parameter name="VEND_ADDR1" class="java.lang.String"/>
@@ -28,6 +29,7 @@
 	<parameter name="STUB_AMT_MASK" class="java.lang.String"/>
 	<parameter name="MAX_STUB_ROWS" class="java.lang.String"/>
 	<parameter name="BNK_ACCT_CD" class="java.lang.String"/>
+	<parameter name="VENDOR_ACCT" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[call APCHECKS_STUB($P{FIRM_ID},$P{BARISTA_WD},$P{BNK_ACCT_CD},$P{CHECK_NUM},$P{CURR_PAGE},$P{AP_TYPE},$P{VENDOR_ID},$P{STUB_TYPE},$P{AP_ADDRESS1_NAME},$P{AP_ADDRESS2},$P{AP_ADDRESS3},$P{AP_ADDRESS4},$P{AP_ADDR3_STUB},$P{LOGO_FILE},$P{VEND_NAME},$P{VEND_ADDR1},$P{VEND_ADDR2},$P{VEND_ADDR3},$P{VEND_MASK},$P{GL_ACCT_MASK},$P{STUB_AMT_MASK},$P{MAX_STUB_ROWS})]]>
 	</queryString>
@@ -267,7 +269,7 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="28" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<rectangle radius="2">
 				<reportElement positionType="FixRelativeToBottom" x="7" y="0" width="590" height="13" backcolor="#EBF0FA" uuid="81c1b86c-e5f9-4f81-bff0-7c440b2d3e00"/>
 				<graphicElement>
@@ -352,6 +354,56 @@
 					<paragraph rightIndent="6"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{AMOUNT_PAID_TOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="14" width="50" height="13" forecolor="#FFFFFF" uuid="04a0d948-2ef5-4d8c-bd21-82c0679ca111">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<printWhenExpression><![CDATA[!$P{AP_PHONE_NO}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{AON_PHONE}+": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="14" width="100" height="13" forecolor="#FFFFFF" uuid="822b1f1e-e198-42ec-b28d-7ec90188ca29">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<printWhenExpression><![CDATA[!$P{AP_PHONE_NO}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AP_PHONE_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="14" width="50" height="13" forecolor="#FFFFFF" uuid="00e23167-caaa-4947-bcc4-8366a8ec2a07">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<printWhenExpression><![CDATA[!$P{VENDOR_ACCT}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{AON_ACCOUNT}+": "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="14" width="100" height="13" forecolor="#FFFFFF" uuid="b95c0937-5eda-4a90-98db-0b83f7a8ac33">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<printWhenExpression><![CDATA[!$P{VENDOR_ACCT}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VENDOR_ACCT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

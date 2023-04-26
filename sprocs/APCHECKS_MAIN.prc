@@ -48,7 +48,7 @@ rem --- Create the memory recordset for return to jasper
 	dataTemplate$ = ""
 	dataTemplate$ = dataTemplate$ + "firm_id:C(2), ap_type:C(1*), bnk_acct_cd:C(1*), check_num:C(1*), check_date:C(10), "
 	dataTemplate$ = dataTemplate$ + "aptype_vend_pagenum:C(3), vendor_id:C(1*), vend_name:C(30), "
-	dataTemplate$ = dataTemplate$ + "vend_addr1:C(35), vend_addr2:C(35), vend_addr3:C(35), vend_addr4:C(35)  "
+	dataTemplate$ = dataTemplate$ + "vend_addr1:C(35), vend_addr2:C(35), vend_addr3:C(35), vend_addr4:C(35), vendor_acct:C(1*)  "
 
 	rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
 
@@ -154,6 +154,7 @@ rem --- Process SQL results
 			data!.setFieldValue("VEND_ADDR2", address$(36,35))
             data!.setFieldValue("VEND_ADDR3", address$(71,35))
             data!.setFieldValue("VEND_ADDR4", address$(106))
+            data!.setFieldValue("VENDOR_ACCT", apm01a.vendor_acct$)
 			
 			rs!.insert(data!)
 	wend
