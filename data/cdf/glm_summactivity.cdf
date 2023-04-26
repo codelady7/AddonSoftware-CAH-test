@@ -231,7 +231,7 @@ rem --- Run the custom query to show details about the current cell
 				endif
 			endif
 			if callpoint!.getDevObject("gl_yr_closed") <> "Y"
-				current_year=current_year+1
+				current_year=current_year-1
 			endif
 		endif
 		posting_year$=str(current_year:"0000")
