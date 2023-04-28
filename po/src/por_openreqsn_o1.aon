@@ -48,7 +48,15 @@ rem --- Init Data
 
 rem --- Headings and print positions
 
-    headings=8
+    headings=7
+    if woFrom$<>"" or woThru$<>"" then
+        headings=headings+1
+        woHeading=headings
+    endif
+    if orderFrom$<>"" or orderThru$<>"" then
+        headings=headings+1
+        orderHeading=headings
+    endif
     dim headings$[headings],o[13]
     width=132
     page=0
@@ -100,6 +108,32 @@ rem --Colum Heading
     headings$[5]=Translate!.getTranslation("AON_TO___")+datetype$+"  : "+datet$
     headings$[6]=reqpagehead$
     headings$[7]=whsepagehead$
+
+    if woFrom$<>"" or woThru$<>"" then
+        if woFrom$="" then
+            headings$[woHeading]=Translate!.getTranslation("AON_FROM_")+Translate!.getTranslation("AON_WORK_ORDER")+" "+Translate!.getTranslation("AON_FIRST")
+        else
+            headings$[woHeading]=Translate!.getTranslation("AON_FROM_")+Translate!.getTranslation("AON_WORK_ORDER")+" "+woFrom$
+        endif
+        if woThru$="" then
+            headings$[woHeading]=headings$[woHeading]+Translate!.getTranslation("AON__THROUGH_LAST")
+        else 
+            headings$[woHeading]=headings$[woHeading]+Translate!.getTranslation("AON__--_THROUGH_")+Translate!.getTranslation("AON_WORK_ORDER")+" "+woThru$
+        endif
+    endif
+
+    if orderFrom$<>"" or orderThru$<>"" then
+        if orderFrom$="" then
+            headings$[orderHeading]=Translate!.getTranslation("AON_FROM_")+Translate!.getTranslation("AON_SALES_ORDER")+" "+Translate!.getTranslation("AON_FIRST")
+        else
+            headings$[orderHeading]=Translate!.getTranslation("AON_FROM_")+Translate!.getTranslation("AON_SALES_ORDER")+" "+orderFrom$
+        endif
+        if orderThru$="" then
+            headings$[orderHeading]=headings$[orderHeading]+Translate!.getTranslation("AON__THROUGH_LAST")
+        else 
+            headings$[orderHeading]=headings$[orderHeading]+Translate!.getTranslation("AON__--_THROUGH_")+Translate!.getTranslation("AON_SALES_ORDER")+" "+orderThru$
+        endif
+    endif
 
 rem --- Position files
 
@@ -200,6 +234,13 @@ rem --- Sorts
         gosub gettestdate_header
         if cvs(datefrom$,3)<>"" and testdateh$<datefrom$ then continue
         if cvs(datethru$,3)<>"" and testdateh$>datethru$ then continue
+
+        if orderFrom$<>"" or orderThru$<>"" then
+            order_no$=cvs(poe01a.order_no$,2)
+            if order_no$="" then continue
+            if cvs(orderFrom$,3)<>"" and orderFrom$>order_no$ then continue
+            if cvs(orderThru$,3)<>"" and orderThru$<order_no$ then continue
+        endif
 
         rem --- Work Order filter
         if woFrom$<>"" or woThru$<>"" then

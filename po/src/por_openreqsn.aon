@@ -90,6 +90,8 @@ rem --- Assign form input values to local variables
     altthru$=cvs(option!.getOptionData("alt_sequence_2"),3)
     woFrom$=cvs(option!.getOptionData("wo_no_1"),3)
     woThru$=cvs(option!.getOptionData("wo_no_2"),3)
+    orderFrom$=cvs(option!.getOptionData("order_no_1"),3)
+    orderThru$=cvs(option!.getOptionData("order_no_2"),3)
 
     if whse$="" whse$="ALL"
 

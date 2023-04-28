@@ -22,11 +22,11 @@ rem --- Enable/disable Sales Order fields depending on if Order Processing is in
 	op$=info$[20]
 
 	if op$<>"Y" then
-		rem --- SF not installed, disable WO fields
+		rem --- OP not installed, disable Sales Order fields
 		callpoint!.setColumnEnabled("POR_OPENPO.ORDER_NO_1",0)
 		callpoint!.setColumnEnabled("POR_OPENPO.ORDER_NO_2",0)
 	else
-		rem --- SF installed, enable WO fields
+		rem --- OP installed, enable Sales Order fields
 		callpoint!.setColumnEnabled("POR_OPENPO.ORDER_NO_1",1)
 		callpoint!.setColumnEnabled("POR_OPENPO.ORDER_NO_2",1)
 	endif
@@ -57,10 +57,10 @@ rem --- Sales Order Lookup
 	if cvs(optInvHdr_key$,2)<>"" then 
 		ctrl_1!=callpoint!.getControl("POR_OPENPO.ORDER_NO_1")
 		ctrl_2!=callpoint!.getControl("POR_OPENPO.ORDER_NO_2")
-		if callpoint!.getControlID()=str(ctrl_1!.getID():"00000") then
+		if num(callpoint!.getControlID())=ctrl_1!.getID() then
 			callpoint!.setColumnData("POR_OPENPO.ORDER_NO_1",optInvHdr_key.order_no$,1)
 		endif
-		if callpoint!.getControlID()=str(ctrl_2!.getID():"00000") then
+		if num(callpoint!.getControlID())=ctrl_2!.getID() then
 			callpoint!.setColumnData("POR_OPENPO.ORDER_NO_2",optInvHdr_key.order_no$,1)
 		endif
 	endif
