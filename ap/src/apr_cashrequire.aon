@@ -462,14 +462,7 @@ rem --- Read next Invoice Header (apt-01) record
           if option$="I" dateused$=apt01a.invoice_date$
           if option$="A" dateused$=apt01a.accting_date$
           if option$="S" dateused$=apt01a.disc_date$
-          if option$="D" then
-             dateused$=apt01a.inv_due_date$
-
-             if apt01a.disc_date$>=agingdate$ and apt01a.disc_date$<>apt01a.invoice_date$ 
-                dateused$=apt01a.disc_date$
-                it[0]=it[0]-it[1]
-             endif
-          endif
+          if option$="D" then dateused$=apt01a.inv_due_date$
 
           rem --- Age this invoice
 
