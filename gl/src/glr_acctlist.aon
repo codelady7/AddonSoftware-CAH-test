@@ -159,7 +159,7 @@ rem --- Top Of Loop
         else
             OutVect!.addItem("")
         endif
-        OutVect!.addItem(fnmask$(glm01a.gl_account$,m0$))
+        OutVect!.addItem(fnmask$(glm01a.gl_account$(1,m0),m0$))
         OutVect!.addItem(glm01a.gl_acct_desc$)
         OutVect!.addItem(alice$(pos(glm01a.gl_acct_type$=alice$,9),9))
 

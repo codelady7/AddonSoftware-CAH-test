@@ -45,6 +45,7 @@ rem --- Get the IN parameters used by the procedure
 	firm_id$ = sp!.getParameter("FIRM_ID")
 	barista_wd$ = sp!.getParameter("BARISTA_WD")
     masks$ = sp!.getParameter("MASKS")
+    gl_acct_size = num(sp!.getParameter("GL_ACCT_SIZE"))
     props_name$ = sp!.getParameter("PROPS_NAME")
     props_path$ = sp!.getParameter("PROPS_PATH")
     user_locale$ = sp!.getParameter("USER_LOCALE")
@@ -134,7 +135,7 @@ rem --- get data
         acct_total=round(acct_total,2)
         data! = rs!.getEmptyRecordData()
         data!.setFieldValue("DUMMY"," ")
-        data!.setFieldValue("ACCOUNT",fnmask$(glm02a.gl_account$,gl_acct_mask$))
+        data!.setFieldValue("ACCOUNT",fnmask$(glm02a.gl_account$(1,gl_acct_size),gl_acct_mask$))
         data!.setFieldValue("TOTAL",str(acct_total))
                 
         rs!.insert(data!)

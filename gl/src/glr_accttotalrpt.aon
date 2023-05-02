@@ -119,7 +119,7 @@ rem --- Retrieve account description
 
 rem --- Format detail line fields
 
-        account$=fnmask$(glw04a.gl_account$,m0$)
+        account$=fnmask$(glw04a.gl_account$(1,m0),m0$)
         description$=glm01a.gl_acct_desc$
         debit$=""
         credit$=""

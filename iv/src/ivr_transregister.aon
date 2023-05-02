@@ -366,7 +366,7 @@ rem --- Print detail line
             account$=""
             lotser$=""
             prev_total=prev_total+ive11a.total_cost
-            if gl$="Y" then account$=fnmask$(ive11a.gl_account$,g0$)
+            if gl$="Y" then account$=fnmask$(ive11a.gl_account$(1,account_length),g0$)
             if ls$="Y" and ivm01a.inventoried$="Y" then lotser$=ive11a.lotser_no$
             
             OutVect!.addItem(ive11a.warehouse_id$)
