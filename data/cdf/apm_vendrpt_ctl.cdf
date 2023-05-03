@@ -19,6 +19,14 @@ rem --- Validate email address
 		break
 	endif
 
+[[APM_VENDRPT_CTL.EMAIL_CC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APM_VENDRPT_CTL.EMAIL_FROM.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
@@ -28,6 +36,14 @@ rem --- Validate email address
 	endif
 
 [[APM_VENDRPT_CTL.EMAIL_REPLYTO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[APM_VENDRPT_CTL.EMAIL_TO.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
 	if !util.validEmailAddress(email$) then

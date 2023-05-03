@@ -11,6 +11,22 @@ open_tables$[3]="ADS_COMPINFO",open_opts$[3]="OTA"
 open_tables$[4]="ADM_USER",open_opts$[4]="OTA"
 gosub open_tables
 
+[[ARM_CUSTRPT_CTL.EMAIL_BCC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTRPT_CTL.EMAIL_CC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARM_CUSTRPT_CTL.EMAIL_FROM.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
