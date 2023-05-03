@@ -3335,6 +3335,14 @@ rem --- Warn if Shipment Date isn't in an appropriate GL period
 		call stbl("+DIR_PGM")+"glc_datecheck.aon",shipmnt_date$,"Y",per$,yr$,status
 	endif
 
+[[OPE_ORDHDR.SHIPPING_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[OPE_ORDHDR.SHIPPING_ID.AVAL]]
 rem --- Enable/disable Freight Amount
 	shipping_id$=callpoint!.getUserInput()

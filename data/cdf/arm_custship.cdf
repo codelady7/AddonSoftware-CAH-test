@@ -73,6 +73,9 @@ rem -- Enable Manual Ship-to option for new records when OP is installed
 	if callpoint!.getDevObject("op_installed")="Y" then callpoint!.setOptionEnabled("MANS",1)
 
 [[ARM_CUSTSHIP.BSHO]]
+rem  Initializations
+	use ::ado_util.src::util
+
 rem --- Is Sales Order Processing installed for this firm?
 	call pgmdir$+"adc_application.aon","OP",info$[all]
 	op_installed$=info$[20]; rem ---OP installed?
@@ -91,6 +94,14 @@ rem --- Open needed files
 
 rem --- 10395 ... Disable Manual Ship-to option for existing records
 	callpoint!.setOptionEnabled("MANS",0)
+
+[[ARM_CUSTSHIP.SHIPPING_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 
 

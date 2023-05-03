@@ -47,6 +47,7 @@ rem --- Remove deleted user from Enterprise Manager
 
 [[ARC_CC_USERS.BSHO]]
 rem --- Get needed classes
+	use ::ado_util.src::util
 	use ::aro_CCUtil.aon::CCUtil
 	use ::aro_CCUserModel.aon::CCUserModel
 
@@ -58,6 +59,14 @@ num_files=1
 dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 open_tables$[1]="ARC_CC_USERS",open_opts$[1]="OTA[1]"
 gosub open_tables
+
+[[ARC_CC_USERS.CC_USERNAME.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 
 

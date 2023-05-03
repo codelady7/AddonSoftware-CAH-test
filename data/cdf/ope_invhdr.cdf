@@ -2990,6 +2990,14 @@ rem --- Warn if Shipment Date isn't in an appropriate GL period
 rem --- Enable/Disable Cash Sale button
 	gosub able_cash_sale
 
+[[OPE_INVHDR.SHIPPING_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[OPE_INVHDR.SHIPPING_ID.AVAL]]
 rem --- Enable/disable Freight Amount
 	shipping_id$=callpoint!.getUserInput()

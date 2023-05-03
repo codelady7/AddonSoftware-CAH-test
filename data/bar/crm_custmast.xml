@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.crm_custmast">B0AE4537C94866F0AF91493A5C8B7BCB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.crm_custmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.crm_custmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.crm_custmast">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.crm_custmast">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.crm_custmast">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.crm_custmast">20230503</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.crm_custmast">20230503</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.crm_custmast">133856</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.crm_custmast">ARM_CUSTMAST    </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.crm_custmast">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.crm_custmast">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.crm_custmast"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.crm_custmast"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.crm_custmast">T</DD_ATTR_FTYP>
@@ -1026,6 +1026,10 @@
 		<RECORD id="ddm_table_cpro.crm_custmastarer">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.crm_custmastarer">CRM_CUSTMAST    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.crm_custmastarer">ARER</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.crm_custmastbsho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.crm_custmastbsho">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.crm_custmastbsho">BSHO</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_dtld">
@@ -3197,7 +3201,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.crm_custmast030">20180403</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.crm_custmast030"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.crm_custmast030"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast030"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast030">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.crm_custmast030">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.crm_custmast030"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.crm_custmast030"></DD_ATTR_CTLY>
@@ -3299,7 +3303,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.crm_custmast032">20190408</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.crm_custmast032"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.crm_custmast032"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast032"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast032">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.crm_custmast032">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.crm_custmast032"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.crm_custmast032"></DD_ATTR_CTLY>
@@ -3543,6 +3547,19 @@
 			<DD_ATTR_CTLC id="ddm_table_disp.crm_custmast009">3</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.crm_custmast009"></DD_ATTR_RADG>
 			<DD_ATTR_CPGM id="ddm_table_disp.crm_custmast009"></DD_ATTR_CPGM>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.crm_custmastshipping_emailaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.crm_custmastshipping_emailaval">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.crm_custmastshipping_emailaval">SHIPPING_EMAIL  </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.crm_custmastshipping_emailaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.crm_custmastpay_auth_emailaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.crm_custmastpay_auth_emailaval">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.crm_custmastpay_auth_emailaval">PAY_AUTH_EMAIL  </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.crm_custmastpay_auth_emailaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">

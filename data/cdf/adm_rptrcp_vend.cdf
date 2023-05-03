@@ -1,4 +1,7 @@
 [[ADM_RPTRCP_VEND.BSHO]]
+rem  Initializations
+	use ::ado_util.src::util
+
 rem --- open files
 
 	num_files=1
@@ -50,6 +53,46 @@ rem --- limit query rows to those for "V" recipient types
 	endif	
 
 	callpoint!.setStatus("ACTIVATE-ABORT")
+
+[[ADM_RPTRCP_VEND.EMAIL_BCC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_VEND.EMAIL_CC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_VEND.EMAIL_FROM.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_VEND.EMAIL_REPLYTO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_VEND.EMAIL_TO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[ADM_RPTRCP_VEND.EMAIL_YN.AVAL]]
 rem --- if changing email checkbox to Y, get 'from' defaults from email account and 'to' defaults from vendor

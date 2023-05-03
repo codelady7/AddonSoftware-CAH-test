@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.adm_rptctl_rcp"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_rptctl_rcp">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_rptctl_rcp">20150203</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_rptctl_rcp">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptctl_rcp">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptctl_rcp">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_rptctl_rcp">20230503</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_rptctl_rcp">20230503</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_rptctl_rcp">124900</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_rptctl_rcp"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.adm_rptctl_rcp">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.adm_rptctl_rcp">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_rptctl_rcp"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.adm_rptctl_rcp"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.adm_rptctl_rcp">T</DD_ATTR_FTYP>
@@ -437,7 +437,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp002">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp002">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp002">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp002">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp002"></DD_ATTR_CTLY>
@@ -488,7 +488,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp003">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp003">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp003">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp003"></DD_ATTR_CTLY>
@@ -539,7 +539,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp004">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp004">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp004">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp004"></DD_ATTR_CTLY>
@@ -692,7 +692,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp007">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp007">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp007">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp007">-8</DD_ATTR_CTLY>
@@ -1100,7 +1100,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp015">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp015">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp015">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp015">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp015"></DD_ATTR_CTLY>
@@ -1151,7 +1151,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp016">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp016">ADM_RPTCTL_RCP.EMAIL_YN</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp016">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp016"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp016">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp016">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp016"></DD_ATTR_CTLY>
@@ -1202,7 +1202,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp017">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp017">ADM_RPTCTL_RCP.EMAIL_YN</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp017">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp017"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp017">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp017">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp017"></DD_ATTR_CTLY>
@@ -1253,7 +1253,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp018">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp018">ADM_RPTCTL_RCP.EMAIL_YN</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp018">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp018"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp018">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp018">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp018"></DD_ATTR_CTLY>
@@ -1304,7 +1304,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp019">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp019">ADM_RPTCTL_RCP.EMAIL_YN</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp019">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp019"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp019">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp019">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp019"></DD_ATTR_CTLY>
@@ -1355,7 +1355,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.adm_rptctl_rcp020">20150126</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.adm_rptctl_rcp020">ADM_RPTCTL_RCP.EMAIL_YN</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.adm_rptctl_rcp020">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp020"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.adm_rptctl_rcp020">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.adm_rptctl_rcp020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.adm_rptctl_rcp020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.adm_rptctl_rcp020"></DD_ATTR_CTLY>
@@ -1529,6 +1529,31 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.adm_rptctl_rcpemail_ynaval">ADM_RPTCTL_RCP  </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.adm_rptctl_rcpemail_ynaval">EMAIL_YN        </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.adm_rptctl_rcpemail_ynaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.adm_rptctl_rcpemail_fromaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.adm_rptctl_rcpemail_fromaval">ADM_RPTCTL_RCP  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.adm_rptctl_rcpemail_fromaval">EMAIL_FROM      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.adm_rptctl_rcpemail_fromaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.adm_rptctl_rcpemail_replytoaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.adm_rptctl_rcpemail_replytoaval">ADM_RPTCTL_RCP  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.adm_rptctl_rcpemail_replytoaval">EMAIL_REPLYTO   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.adm_rptctl_rcpemail_replytoaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.adm_rptctl_rcpemail_toaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.adm_rptctl_rcpemail_toaval">ADM_RPTCTL_RCP  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.adm_rptctl_rcpemail_toaval">EMAIL_TO        </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.adm_rptctl_rcpemail_toaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.adm_rptctl_rcpemail_ccaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.adm_rptctl_rcpemail_ccaval">ADM_RPTCTL_RCP  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.adm_rptctl_rcpemail_ccaval">EMAIL_CC        </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.adm_rptctl_rcpemail_ccaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.adm_rptctl_rcpemail_bccaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.adm_rptctl_rcpemail_bccaval">ADM_RPTCTL_RCP  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.adm_rptctl_rcpemail_bccaval">EMAIL_BCC       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.adm_rptctl_rcpemail_bccaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_ldat">

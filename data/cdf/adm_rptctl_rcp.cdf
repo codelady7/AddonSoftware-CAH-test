@@ -21,6 +21,9 @@ rem --- if launching as Dtl Window Table from ADM_RPTCTL, need to set recipient 
 	endif
 
 [[ADM_RPTCTL_RCP.BSHO]]
+rem  Initializations
+	use ::ado_util.src::util
+
 rem --- table opens
 
 	num_files=4
@@ -57,6 +60,46 @@ rem --- set recipient type based on ADM_RPTCTL rec
 
 	dd_table_alias$=callpoint!.getUserInput()
 	gosub set_recip_tp
+
+[[ADM_RPTCTL_RCP.EMAIL_BCC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTCTL_RCP.EMAIL_CC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTCTL_RCP.EMAIL_FROM.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTCTL_RCP.EMAIL_REPLYTO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTCTL_RCP.EMAIL_TO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[ADM_RPTCTL_RCP.EMAIL_YN.AVAL]]
 rem --- if selecting email checkbox, get 'from' defaults from email account and 'to' defaults from customer or vendor

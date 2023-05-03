@@ -286,6 +286,14 @@ rem --- Set ar_type DevObject blank so ASVA knows the following ABORT skips AVAL
 	callpoint!.setDevObject("ar_type","")
 	callpoint!.setStatus("ACTIVATE-ABORT")
 
+[[<<DISPLAY>>.SHIPPING_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[OPM_SHIPTRACK.<CUSTOM>]]
 rem ==========================================================================
 format_grid: rem --- Use Barista program to format the grid

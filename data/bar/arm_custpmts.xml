@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.arm_custpmts">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custpmts">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.arm_custpmts">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custpmts">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custpmts">104254</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custpmts">20230503</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custpmts">132832</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custpmts"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custpmts"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custpmts"></DD_ATTR_DKNM>
@@ -3267,7 +3267,7 @@
 			<FILTER_PROG id="ddm_drill_defs.ar_pymtdet"></FILTER_PROG>
 			<DD_ATTR_DINQ id="ddm_drill_defs.ar_pymtdet"></DD_ATTR_DINQ>
 			<DD_ATTR_IDEF id="ddm_drill_defs.ar_pymtdet">AR_CUSTBALDET   </DD_ATTR_IDEF>
-			<USER_MODIFIED id="ddm_drill_defs.ar_pymtdet"> </USER_MODIFIED>
+			<USER_MODIFIED id="ddm_drill_defs.ar_pymtdet"></USER_MODIFIED>
 		</RECORD>
 		<RECORD id="ddm_drill_defs.ar_mtdsales_1">
 			<DRILL_DEF_ID id="ddm_drill_defs.ar_mtdsales_1">AR_MTDSALES_1   </DRILL_DEF_ID>
@@ -3287,7 +3287,7 @@
 			<FILTER_PROG id="ddm_drill_defs.ar_mtdsales_1"></FILTER_PROG>
 			<DD_ATTR_DINQ id="ddm_drill_defs.ar_mtdsales_1"></DD_ATTR_DINQ>
 			<DD_ATTR_IDEF id="ddm_drill_defs.ar_mtdsales_1">AR_MTDSALES_1   </DD_ATTR_IDEF>
-			<USER_MODIFIED id="ddm_drill_defs.ar_mtdsales_1"> </USER_MODIFIED>
+			<USER_MODIFIED id="ddm_drill_defs.ar_mtdsales_1"></USER_MODIFIED>
 		</RECORD>
 		<RECORD id="ddm_drill_defs.ar_ytdsales_1">
 			<DRILL_DEF_ID id="ddm_drill_defs.ar_ytdsales_1">AR_YTDSALES_1   </DRILL_DEF_ID>
@@ -3307,7 +3307,7 @@
 			<FILTER_PROG id="ddm_drill_defs.ar_ytdsales_1"></FILTER_PROG>
 			<DD_ATTR_DINQ id="ddm_drill_defs.ar_ytdsales_1"></DD_ATTR_DINQ>
 			<DD_ATTR_IDEF id="ddm_drill_defs.ar_ytdsales_1">AR_YTDSALES_1   </DD_ATTR_IDEF>
-			<USER_MODIFIED id="ddm_drill_defs.ar_ytdsales_1"> </USER_MODIFIED>
+			<USER_MODIFIED id="ddm_drill_defs.ar_ytdsales_1"></USER_MODIFIED>
 		</RECORD>
 		<RECORD id="ddm_drill_defs.ar_pyrsales_1">
 			<DRILL_DEF_ID id="ddm_drill_defs.ar_pyrsales_1">AR_PYRSALES_1   </DRILL_DEF_ID>
@@ -3327,7 +3327,7 @@
 			<FILTER_PROG id="ddm_drill_defs.ar_pyrsales_1"></FILTER_PROG>
 			<DD_ATTR_DINQ id="ddm_drill_defs.ar_pyrsales_1"></DD_ATTR_DINQ>
 			<DD_ATTR_IDEF id="ddm_drill_defs.ar_pyrsales_1">AR_PYRSALES_1   </DD_ATTR_IDEF>
-			<USER_MODIFIED id="ddm_drill_defs.ar_pyrsales_1"> </USER_MODIFIED>
+			<USER_MODIFIED id="ddm_drill_defs.ar_pyrsales_1"></USER_MODIFIED>
 		</RECORD>
 		<RECORD id="ddm_drill_defs.ar_nmnsales_1">
 			<DRILL_DEF_ID id="ddm_drill_defs.ar_nmnsales_1">AR_NMNSALES_1   </DRILL_DEF_ID>
@@ -3347,7 +3347,7 @@
 			<FILTER_PROG id="ddm_drill_defs.ar_nmnsales_1"></FILTER_PROG>
 			<DD_ATTR_DINQ id="ddm_drill_defs.ar_nmnsales_1"></DD_ATTR_DINQ>
 			<DD_ATTR_IDEF id="ddm_drill_defs.ar_nmnsales_1">AR_NMNSALES_1   </DD_ATTR_IDEF>
-			<USER_MODIFIED id="ddm_drill_defs.ar_nmnsales_1"> </USER_MODIFIED>
+			<USER_MODIFIED id="ddm_drill_defs.ar_nmnsales_1"></USER_MODIFIED>
 		</RECORD>
 	</ALIAS>
 </ARM_CUSTPMTS>

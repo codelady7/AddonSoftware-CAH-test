@@ -1026,6 +1026,13 @@ rem --- restrict inquiry to cash rec codes associated with credit card payments
 gosub reset_timer
 
 [[ARE_CCPMT.EMAIL_ADDR.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 gosub reset_timer
 
 [[ARE_CCPMT.MONTH.AVAL]]

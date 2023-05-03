@@ -1,3 +1,7 @@
+[[ADM_RPTRCP_CUST.BSHO]]
+rem  Initializations
+	use ::ado_util.src::util
+
 [[ADM_RPTRCP_CUST.DD_TABLE_ALIAS.AVAL]]
 rem --- make sure selected alias is a "C" recipient type
 
@@ -44,6 +48,46 @@ rem --- limit query rows to those for "C" recipient types
 	callpoint!.setStatus("ACTIVATE-ABORT")
 
 	
+
+[[ADM_RPTRCP_CUST.EMAIL_BCC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_CUST.EMAIL_CC.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_CUST.EMAIL_FROM.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_CUST.EMAIL_REPLYTO.AINV]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ADM_RPTRCP_CUST.EMAIL_TO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[ADM_RPTRCP_CUST.EMAIL_YN.AVAL]]
 rem --- if changing email checkbox to Y, get 'from' defaults from email account and 'to' defaults from customer

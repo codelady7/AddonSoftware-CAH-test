@@ -525,6 +525,14 @@ if num(callpoint!.getColumnData("APM_VENDMAST.VENDOR_ID"),err=*endif)=0
 	callpoint!.setStatus("ABORT")
 endif
 
+[[<<DISPLAY>>.CHKSTUB_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APM_VENDMAST.PAYMENT_TYPE.AVAL]]
 rem --- Enable Payment Information fields when paying via ACH
 	payment_type$=callpoint!.getUserInput()

@@ -1211,6 +1211,13 @@ rem --- Set Alternate Sequence for new customers
 	endif
 
 [[ARM_CUSTMAST.PAY_AUTH_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Warn when pay_auth_email doesn't match ARS_CC_CUSTPMT Report Control Recipients email-to address
 	pay_auth_email$=callpoint!.getUserInput()
 	recipient_email_to$=cvs(callpoint!.getDevObject("recipient_email_to"),2)
@@ -1257,6 +1264,14 @@ rem --- Warn when pay_auth_email doesn't match ARS_CC_CUSTPMT Report Control Rec
 			callpoint!.setDevObject("match_email_to","OK")
 			callpoint!.setStatus("MODIFIED")
 		endif
+	endif
+
+[[ARM_CUSTMAST.SHIPPING_EMAIL.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email) then
+		callpoint!.setStatus("ABORT")
+		break
 	endif
 
 [[ARM_CUSTMAST.<CUSTOM>]]
