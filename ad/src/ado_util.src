@@ -1970,19 +1970,28 @@ method_error:rem --- Method error trap/handler (11Oct2017)
         rem /**
         rem  * Validate email addresses are properly formatted.
         rem  *
-        rem  * @param BBjString email$
+        rem  * @param BBjString emailAddresses$
         rem  *
         rem  * @return boolean success=1, failure=0
         rem  */
-        method public static boolean validEmailAddress(BBjString email$)
+        method public static boolean validEmailAddress(BBjString emailAddresses$)
             seterr validEmailAddress_error
+ 
+            if cvs(emailAddresses$,3)="" then methodret Boolean.valueOf("true")
 
-            if cvs(email$,3)="" then methodret Boolean.valueOf("true")
-            
-            seterr badEmailAddress
-            emailAddr!=new InternetAddress(email$)
-            emailAddr!.validate()
-            seterr validEmailAddress_error
+            emailAddresses!=emailAddresses$
+            addresses!=BBjAPI().makeVector()
+            addresses!.addAll(java.util.Arrays.asList(emailAddresses!.split(", |; ")))
+            if addresses!.size()>0 then
+                for i=0 to addresses!.size()-1
+                    thisAddress$=cvs(addresses!.getItem(i),3)
+
+                    seterr badEmailAddress
+                    emailAddr!=new InternetAddress(thisAddress$)
+                    emailAddr!.validate()
+                    seterr validEmailAddress_error
+                next i
+            endif
             
             methodret Boolean.valueOf("true")
 
@@ -1996,7 +2005,7 @@ badEmailAddress: rem --- Catch exception thrown when emailAddr!.validate() encou
             
             msg_id$="AD_BAD_EMAIL_ADDR"
             dim msg_tokens$[2]
-            msg_tokens$[1]=email$
+            msg_tokens$[1]=thisAddress$
             msg_tokens$[2]=badFormat$
             call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
 
