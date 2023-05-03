@@ -13,6 +13,9 @@ rem ==========================================================================
     use java.util.HashMap
     use java.util.Vector
     use java.io.File
+    use java.lang.Boolean
+
+    use javax.mail.internet.InternetAddress
 
     class public util
 
@@ -1950,6 +1953,56 @@ changeControlLabel_error:rem --- Method error trap/handler (11Oct2017)
             methodret 
            
 method_error:rem --- Method error trap/handler (11Oct2017)
+            rd_err_text$="", err_num=err
+            if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+            if err_num=252 then
+                E!=BBjAPI().getLastBBjException()
+                rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+                if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+            endif
+            call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$
+            if pos("ESCAPE"=rd_err_act$)<>0 seterr 0;setesc 0
+            if pos("RETRY"=rd_err_act$)<>0 retry
+            x$=stbl("+THROWN_ERR","TRUE")   
+            throw "["+pgm(-2)+"] "+str(tcb(5))+": "+rd_err_text$,err_num
+        methodend
+
+        rem /**
+        rem  * Validate email addresses are properly formatted.
+        rem  *
+        rem  * @param BBjString email$
+        rem  *
+        rem  * @return boolean success=1, failure=0
+        rem  */
+        method public static boolean validEmailAddress(BBjString email$)
+            seterr validEmailAddress_error
+
+            if cvs(email$,3)="" then methodret Boolean.valueOf("true")
+            
+            seterr badEmailAddress
+            emailAddr!=new InternetAddress(email$)
+            emailAddr!.validate()
+            seterr validEmailAddress_error
+            
+            methodret Boolean.valueOf("true")
+
+badEmailAddress: rem --- Catch exception thrown when emailAddr!.validate() encounters a bad email address
+            badFormat$=""
+            E!=BBjAPI().getLastBBjException()
+            if E!.getMessage()<>null() then 
+                badFormat$=E!.getMessage()
+                badFormat$=badFormat$(pos(": "=badFormat$)+2)
+            endif
+            
+            msg_id$="AD_BAD_EMAIL_ADDR"
+            dim msg_tokens$[2]
+            msg_tokens$[1]=email$
+            msg_tokens$[2]=badFormat$
+            call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+
+            methodret Boolean.valueOf("false")
+           
+validEmailAddress_error:rem --- Method error trap/handler (11Oct2017)
             rd_err_text$="", err_num=err
             if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
             if err_num=252 then
