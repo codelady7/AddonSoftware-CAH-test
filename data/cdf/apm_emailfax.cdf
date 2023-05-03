@@ -1,3 +1,31 @@
+[[APM_EMAILFAX.BSHO]]
+rem  Initializations
+	use ::ado_util.src::util
+
+[[APM_EMAILFAX.EMAIL_CC.AVAL]]
+	mail$=callpoint!.getUserInput()
+	gosub multi_email
+	if not_valid
+		callpoint!.setMessage("INVALID_EMAIL")
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[APM_EMAILFAX.EMAIL_TO.AVAL]]
+	mail$=callpoint!.getUserInput()
+	gosub multi_email
+	if not_valid
+		callpoint!.setMessage("INVALID_EMAIL")
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[APM_EMAILFAX.WEB_PAGE.AVAL]]
+if cvs(callpoint!.getUserInput(),2)<>""
+	if pos("."=callpoint!.getUserInput())=0
+		callpoint!.setMessage("INVALID_WEBPAGE")
+		callpoint!.setStatus("ABORT")
+	endif
+endif
+
 [[APM_EMAILFAX.<CUSTOM>]]
 multi_email: rem --- Validate format of email address(es)
 	simple_email$="[-_.A-Za-z0-9]+@[-_A-Za-z0-9\.]+"
@@ -27,25 +55,6 @@ valid_email: rem --- Validate format of one email address only
 		not_valid=1
 	endif
 return
-[[APM_EMAILFAX.EMAIL_TO.AVAL]]
-	mail$=callpoint!.getUserInput()
-	gosub multi_email
-	if not_valid
-		callpoint!.setMessage("INVALID_EMAIL")
-		callpoint!.setStatus("ABORT")
-	endif
-[[APM_EMAILFAX.EMAIL_CC.AVAL]]
-	mail$=callpoint!.getUserInput()
-	gosub multi_email
-	if not_valid
-		callpoint!.setMessage("INVALID_EMAIL")
-		callpoint!.setStatus("ABORT")
-	endif
-[[APM_EMAILFAX.WEB_PAGE.AVAL]]
-if cvs(callpoint!.getUserInput(),2)<>""
-	if pos("."=callpoint!.getUserInput())=0
-		callpoint!.setMessage("INVALID_WEBPAGE")
-		callpoint!.setStatus("ABORT")
-	endif
-endif
+
+
 

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_emailfax">3FB0D16DC945DB28D84AD02CE862898E</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_emailfax">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_emailfax">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_emailfax">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_emailfax">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_emailfax">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_emailfax">20230502</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_emailfax">20230502</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_emailfax">182356</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_emailfax"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arm_emailfax"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arm_emailfax">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_emailfax"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arm_emailfax"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arm_emailfax">T</DD_ATTR_FTYP>
@@ -56,6 +56,13 @@
 			<DD_ATTR_PADW id="ddm_tables.arm_emailfax"></DD_ATTR_PADW>
 			<DD_ATTR_PADH id="ddm_tables.arm_emailfax"></DD_ATTR_PADH>
 			<DD_ATTR_PADG id="ddm_tables.arm_emailfax"></DD_ATTR_PADG>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_cpro">
+		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.arm_emailfaxbsho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_emailfaxbsho">ARM_EMAILFAX    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_emailfaxbsho">BSHO</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -282,7 +289,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_emailfax003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_emailfax003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_emailfax003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax003">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax003">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_emailfax003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_emailfax003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_emailfax003"></DD_ATTR_CTLY>
@@ -333,7 +340,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_emailfax004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_emailfax004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_emailfax004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax004">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax004">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_emailfax004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_emailfax004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_emailfax004"></DD_ATTR_CTLY>
@@ -384,7 +391,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_emailfax005">20150116</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_emailfax005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_emailfax005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax005"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax005">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_emailfax005">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_emailfax005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_emailfax005"></DD_ATTR_CTLY>
@@ -537,7 +544,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_emailfax008">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_emailfax008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_emailfax008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax008">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_emailfax008">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_emailfax008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_emailfax008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_emailfax008"></DD_ATTR_CTLY>
@@ -635,6 +642,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_emailfaxemail_ccaval">ARM_EMAILFAX    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.arm_emailfaxemail_ccaval">EMAIL_CC        </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.arm_emailfaxemail_ccaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.arm_emailfaxemail_bccaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_emailfaxemail_bccaval">ARM_EMAILFAX    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.arm_emailfaxemail_bccaval">EMAIL_BCC       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.arm_emailfaxemail_bccaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.arm_emailfaxweb_pageaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_emailfaxweb_pageaval">ARM_EMAILFAX    </DD_TABLE_ALIAS>

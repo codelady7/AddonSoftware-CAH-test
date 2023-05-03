@@ -1977,12 +1977,11 @@ method_error:rem --- Method error trap/handler (11Oct2017)
         method public static boolean validEmailAddress(BBjString emailAddresses$)
             seterr validEmailAddress_error
  
-            if cvs(emailAddresses$,3)="" then methodret Boolean.valueOf("true")
+            if cvs(emailAddresses$,3)<>"" then
+                emailAddresses!=emailAddresses$
+                addresses!=BBjAPI().makeVector()
+                addresses!.addAll(java.util.Arrays.asList(emailAddresses!.split(", |; ")))
 
-            emailAddresses!=emailAddresses$
-            addresses!=BBjAPI().makeVector()
-            addresses!.addAll(java.util.Arrays.asList(emailAddresses!.split(", |; ")))
-            if addresses!.size()>0 then
                 for i=0 to addresses!.size()-1
                     thisAddress$=cvs(addresses!.getItem(i),3)
 
