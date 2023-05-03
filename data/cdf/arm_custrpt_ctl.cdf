@@ -1,3 +1,40 @@
+[[ARM_CUSTRPT_CTL.BSHO]]
+rem  Initializations
+	use ::ado_util.src::util
+
+rem -- open arm_emailfax  to get defaults
+num_files=4
+dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+open_tables$[1]="ARM_EMAILFAX",open_opts$[1]="OTA"
+open_tables$[2]="ARM_CUSTMAST",open_opts$[2]="OTA"
+open_tables$[3]="ADS_COMPINFO",open_opts$[3]="OTA"
+open_tables$[4]="ADM_USER",open_opts$[4]="OTA"
+gosub open_tables
+
+[[ARM_CUSTRPT_CTL.EMAIL_FROM.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTRPT_CTL.EMAIL_REPLYTO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTRPT_CTL.EMAIL_TO.AVAL]]
+rem --- Validate email address
+	email$=callpoint!.getUserInput()
+	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARM_CUSTRPT_CTL.EMAIL_YN.AVAL]]
 if callpoint!.getUserInput()="Y" 
 	arm_emailfax_dev=fnget_dev("ARM_EMAILFAX")
@@ -20,6 +57,7 @@ if callpoint!.getUserInput()="Y"
 		callpoint!.setColumnData("ARM_CUSTRPT_CTL.EMAIL_REPLYTO",pad(user.email_address$,len(custrpt.email_from$)),1)
 	endif
 endif
+
 [[ARM_CUSTRPT_CTL.FAX_YN.AVAL]]
 if callpoint!.getUserInput()="Y"
 	arm_emailfax_dev=fnget_dev("ARM_EMAILFAX")
@@ -51,12 +89,6 @@ if callpoint!.getUserInput()="Y"
 		callpoint!.setColumnData("ARM_CUSTRPT_CTL.FROM_NAME",user.name$,1)
 	endif
 endif
-[[ARM_CUSTRPT_CTL.BSHO]]
-rem -- open arm_emailfax  to get defaults
-num_files=4
-dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-open_tables$[1]="ARM_EMAILFAX",open_opts$[1]="OTA"
-open_tables$[2]="ARM_CUSTMAST",open_opts$[2]="OTA"
-open_tables$[3]="ADS_COMPINFO",open_opts$[3]="OTA"
-open_tables$[4]="ADM_USER",open_opts$[4]="OTA"
-gosub open_tables
+
+
+
