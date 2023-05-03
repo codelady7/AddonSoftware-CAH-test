@@ -220,12 +220,33 @@ rem --- Main Loop Starts
 
         if s2$<>"" and ope01a.order_date$<s2$ then continue
         if s3$<>"" and ope01a.order_date$>s3$ then continue
-        if past_ship_date$="Y" and processDate$<=ope01a.shipmnt_date$ then continue
 rem        if start_ship_date$<>"" and ope01a.shipmnt_date$<start_ship_date$ then continue
 rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then continue
         if s5$<>"" and cvs(ope01a.ord_taken_by$,3)<>s5$ then continue
         if s7$<>"" and ope01a.slspsn_code$<>s7$ then continue
         if ope01a.ordinv_flag$="I" then continue
+
+        if past_ship_date$="Y" then
+            rem --- Check Estimated Ship Date for every item on this order
+            skipRecord=1
+            ope11_trip$=ope01a_key$
+            read (ope11_dev,key=ope11_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+            while 1
+                ope11a_key$=key(ope11_dev,end=*break)
+                if pos(ope11_trip$=ope11a_key$)<>1 then break
+                read record (ope11_dev) ope11a$
+                if cvs(ope11a.est_shp_date$,2)="" then continue
+        
+                find record (opm02_dev,key=firm_id$+ope11a.line_code$,dom=*continue) opm02a$
+                if opm02a.line_type$="M" then continue
+        
+                if processDate$>ope11a.est_shp_date$ then
+                    skipRecord=0
+                    break
+                endif
+            wend
+            if skipRecord then continue
+        endif
 
         skipRecord=1
         if ope01a.invoice_type$="P" and quoted$="Y" then
@@ -753,7 +774,7 @@ print_detail: rem --- Print Detail
             xwk = fnblank(1)
         endif
     
-        if ope11a.est_shp_date$<>"   " and (ope11a.est_shp_date$<>ope01a.shipmnt_date$) and opm02a.line_type$<>"M" then
+        if cvs(ope11a.est_shp_date$,2)<>"" and (ope11a.est_shp_date$<>ope01a.shipmnt_date$) and opm02a.line_type$<>"M" then
             OutVect!.addItem("Sched: "+ fndate$(ope11a.est_shp_date$)) 
         else
             xwk = fnblank(1)
