@@ -1219,9 +1219,17 @@ class public PackagerExtractor
                         thisPath$=thisPath$(1,xpos-1)+firmsVect!.get(j)+thisPath$(xpos+10)
                     endif
 
-                    rem --- Tar the path
-                    tgzFile!.addFile(thisPath$,baseDir$)
-                    print(log_dev)"    "+"    "+thisPath$
+                    rem --- Make sure path/file actually exists before trying to add to the archive
+                    tempFile!=new File(thisPath$)
+                    if !tempfile!.exists()
+                        print(log_dev)"    "+"***"+Translate!.getTranslation("AON_SKIP","SKIP")+"*** "
+                        print(log_dev)"    "+"    "+key$+": "+thisPath$
+                        skipped=skipped+1
+                    else
+                        rem --- Tar the path
+                        tgzFile!.addFile(thisPath$,baseDir$)
+                        print(log_dev)"    "+"    "+thisPath$
+                    endif
 
                     if pos("[+FIRM_ID]"=thisPath$)=0 then break
                 next j
