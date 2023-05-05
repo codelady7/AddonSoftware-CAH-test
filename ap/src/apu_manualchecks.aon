@@ -119,7 +119,7 @@ rem --- Read next Check Header (ape-02) record
                     found_mc_inv_adj$=""
                     
                     while 1
-                    extract record (apt01_dev,key=ape22a.firm_id$+ape22a.ap_type$+ape22a.vendor_id$+ape22a.ap_inv_no$,dom=*break)apt01a$
+                        extract record (apt01_dev,key=ape22a.firm_id$+ape22a.ap_type$+ape22a.vendor_id$+ape22a.ap_inv_no$,dom=*break)apt01a$
                         found_hist=1
                         found_mc_inv_flag$=apt01a.mc_inv_flag$
                         found_mc_inv_adj$=apt01a.mc_inv_adj$
@@ -135,6 +135,7 @@ rem --- Read next Check Header (ape-02) record
                     if apt01a.mc_inv_flag$="M" and apt01a.mc_inv_adj$<>"A" and apt01a.mc_inv_rev$<>"R" then f0$="OI";rem --- per v7 apu_ca 1/2011 CAH
                     
                     gosub open_inv
+                    apt01a.ap_inv_memo$=ape22a.ap_inv_memo$
                     apt01a.invoice_bal=apt01a.invoice_bal+apt11a.trans_amt
                     apt01a$=field(apt01a$)
                     writerecord(apt01_dev)apt01a$

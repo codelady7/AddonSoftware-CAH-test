@@ -928,8 +928,12 @@ inv_detail: rem --- Invoice Detail
 	vendstub_row_has_printed=0; rem Will need to print row if doesn't print in Memo section
 	
 	rem --- Conditionally print invoice's memo on stubs
-	if aps01a.ap_chk_memo$="Y" and printMode$="Batch" and cvs(ape04a.ap_inv_memo$, 2) <> "" then 
-		stub_memo_dist$=ape04a.ap_inv_memo$(1,16)
+	if aps01a.ap_chk_memo$="Y" and ((printMode$="Batch" and cvs(ape04a.ap_inv_memo$, 2)<>"") or (printMode$="OnDemand" and cvs(ape22a.ap_inv_memo$,2)<>"")) then 
+	    if printMode$="Batch" then
+	        stub_memo_dist$=ape04a.ap_inv_memo$
+		else
+            stub_memo_dist$=ape22a.ap_inv_memo$
+		endif
 		
 		section_type$=  "A"; rem accounting stub
 		gosub check_stub_detail

@@ -17,7 +17,7 @@ rem --- Set preset val for batch_no
 	callpoint!.setTableColumnAttribute("APE_MANCHECKDET.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
 
 [[APE_MANCHECKDET.AGDR]]
-rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
+rem --- Enable/disable current INVOICE_DATE, AP_DIST_CODE and AP_INV_MEMO cells
 	apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")
 	ap_type$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.AP_TYPE")
 	vendor_id$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.VENDOR_ID")
@@ -28,8 +28,10 @@ rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
 	if invoice_found then
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",0)
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_MEMO",0)
 	else
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",1)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_MEMO",1)
 		if user_tpl.multi_dist$="Y"
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",1)
 		else
@@ -226,6 +228,7 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					ape22a.sequence_00$="00"
 					ape22a.ap_dist_code$=apt01a.ap_dist_code$
 					ape22a.invoice_date$=apt01a.invoice_date$
+					ape22a.ap_inv_memo$=apt01a.ap_inv_memo$
 					ape22a.invoice_amt=inv_amt
 					ape22a.discount_amt=disc_amt
 					ape22a.retention=ret_amt
@@ -277,6 +280,7 @@ rem -- only allow if trans_type is manual (vs reversal/void)
 					tdisc=tdisc+totalDiscAmt
 					tret=tret+totalRetAmt
 					gosub disp_tots
+
 					callpoint!.setStatus("REFGRID")
 				endif
 			else
@@ -458,18 +462,20 @@ rem --- Look for Open Invoice
 
 		callpoint!.setColumnData("APE_MANCHECKDET.INVOICE_DATE",apt01a.invoice_date$)
 		callpoint!.setColumnData("APE_MANCHECKDET.AP_DIST_CODE",apt01a.ap_dist_code$)
+		callpoint!.setColumnData("APE_MANCHECKDET.AP_INV_MEMO",apt01a.ap_inv_memo$)
 
 		if inv_amt=0
 			callpoint!.setMessage("AP_INVOICE_PAID")
 		endif
 
-	rem --- Disable inv date/dist code, leaving only inv amt/disc amt enabled for open invoice
+	rem --- Disable inv date/dist code/memo, leaving only inv amt/disc amt enabled for open invoice
 
 		w!=Form!.getChildWindow(1109)
 		c!=w!.getControl(5900)
-		c!.startEdit(c!.getSelectedRow(),4)
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",1)
+		c!.startEdit(c!.getSelectedRow(),5)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",0)
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_MEMO",0)
 
 	else
 
@@ -485,7 +491,7 @@ rem --- Look for Open Invoice
 			goto end_of_inv_aval
 		endif
 
-	rem --- Enable inv date/dist code if on invoice not in open invoice file
+	rem --- Enable inv date/dist code/memo if on invoice not in open invoice file
 	rem --- Also have user confirm that the invoice wasn't found in Open Invoice file
 
 		msg_id$="AP_EXT_INV"
@@ -495,6 +501,7 @@ rem --- Look for Open Invoice
 		c!=w!.getControl(5900)
 		c!.startEdit(c!.getSelectedRow(),1)
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",1)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_MEMO",1)
 		if user_tpl.multi_dist$="Y"
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",1)
 		else
@@ -567,7 +574,7 @@ rem --- Recalc totals for header
 	gosub calc_tots
 	gosub disp_tots
 
-rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
+rem --- Enable/disable current INVOICE_DATE, AP_DIST_CODE and AP_INV_MEMO cells
 	apt_invoicehdr_dev=fnget_dev("APT_INVOICEHDR")
 	ap_type$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.AP_TYPE")
 	vendor_id$=callpoint!.getHeaderColumnData("APE_MANCHECKHDR.VENDOR_ID")
@@ -578,8 +585,10 @@ rem --- Enable/disable current INVOICE_DATE and AP_DIST_CODE cells
 	if invoice_found then
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",0)
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",0)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_MEMO",0)
 	else
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.INVOICE_DATE",1)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_INV_MEMO",1)
 		if user_tpl.multi_dist$="Y"
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"APE_MANCHECKDET.AP_DIST_CODE",1)
 		else
