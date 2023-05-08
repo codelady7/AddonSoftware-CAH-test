@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.pot_podet_arc">CAECFA361FDD3C6AC5A607CD13BA554F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pot_podet_arc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_podet_arc">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pot_podet_arc">20230320</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_podet_arc">20230320</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_podet_arc">172912</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pot_podet_arc">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_podet_arc">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_podet_arc">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_podet_arc"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.pot_podet_arc">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.pot_podet_arc">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_podet_arc"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.pot_podet_arc"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.pot_podet_arc">G</DD_ATTR_FTYP>
@@ -1669,7 +1669,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.pot_podet_arc021">Whse</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.pot_podet_arc021"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.pot_podet_arc021"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.pot_podet_arc021">2</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.pot_podet_arc021"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.pot_podet_arc021"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.pot_podet_arc021"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.pot_podet_arc021">Warehouse ID</DD_ATTR_PROM>

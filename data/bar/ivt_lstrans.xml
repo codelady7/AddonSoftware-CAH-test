@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivt_lstrans">B1AA327C799CA9D44A1B05FDFBCEEB70</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivt_lstrans">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivt_lstrans">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivt_lstrans">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivt_lstrans">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivt_lstrans">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivt_lstrans">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivt_lstrans">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivt_lstrans">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivt_lstrans"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivt_lstrans"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivt_lstrans">AO_ITM_WH_LOT_DT</DD_ATTR_DKNM>
@@ -469,7 +469,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ivt_lstrans002"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ivt_lstrans002"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ivt_lstrans002"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ivt_lstrans002">2</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ivt_lstrans002"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ivt_lstrans002"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ivt_lstrans002"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ivt_lstrans002">Warehouse ID</DD_ATTR_PROM>

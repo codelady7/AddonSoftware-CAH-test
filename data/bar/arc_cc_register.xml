@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arc_cc_register"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arc_cc_register">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arc_cc_register">20191122</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arc_cc_register">20230503</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_tables.arc_cc_register">20230508</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.arc_cc_register">20230503</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arc_cc_register">132052</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.arc_cc_register">180230</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arc_cc_register"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arc_cc_register">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arc_cc_register">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arc_cc_register"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arc_cc_register"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arc_cc_register">T</DD_ATTR_FTYP>
@@ -628,7 +628,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_cc_register009">20200129</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_cc_register009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_cc_register009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_cc_register009">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_cc_register009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_cc_register009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_cc_register009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_cc_register009"></DD_ATTR_CTLY>

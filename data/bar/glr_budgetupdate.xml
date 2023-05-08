@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glr_budgetupdate">1F887A123B7ACD70368EDAA90A6DFDDA</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glr_budgetupdate">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glr_budgetupdate">20060526</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glr_budgetupdate">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glr_budgetupdate">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glr_budgetupdate">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glr_budgetupdate">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glr_budgetupdate">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glr_budgetupdate">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glr_budgetupdate"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glr_budgetupdate">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glr_budgetupdate">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glr_budgetupdate"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glr_budgetupdate"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glr_budgetupdate">S</DD_ATTR_FTYP>
@@ -122,7 +122,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_budgetupdate001">20071130</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_budgetupdate001"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_budgetupdate001"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_budgetupdate001">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_budgetupdate001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_budgetupdate001"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_budgetupdate001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_budgetupdate001"></DD_ATTR_CTLY>
@@ -173,7 +173,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_budgetupdate002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_budgetupdate002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_budgetupdate002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_budgetupdate002">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_budgetupdate002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_budgetupdate002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_budgetupdate002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_budgetupdate002"></DD_ATTR_CTLY>
@@ -224,7 +224,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_budgetupdate003">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_budgetupdate003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_budgetupdate003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_budgetupdate003">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_budgetupdate003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_budgetupdate003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_budgetupdate003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_budgetupdate003"></DD_ATTR_CTLY>

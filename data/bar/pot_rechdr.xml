@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.pot_rechdr">3E2FF8EDD6CE6BF3267B0E7B6E3381D7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pot_rechdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_rechdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pot_rechdr">20230410</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_rechdr">20230410</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_rechdr">093812</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pot_rechdr">20230419</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_rechdr">20230419</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_rechdr">173122</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_rechdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.pot_rechdr">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.pot_rechdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_rechdr"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.pot_rechdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.pot_rechdr">T</DD_ATTR_FTYP>

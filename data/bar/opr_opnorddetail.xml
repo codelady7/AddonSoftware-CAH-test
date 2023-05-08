@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.opr_opnorddetail"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opr_opnorddetail">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opr_opnorddetail">20080220</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opr_opnorddetail">20230425</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opr_opnorddetail">20230425</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opr_opnorddetail">115210</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opr_opnorddetail">20230426</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opr_opnorddetail">20230426</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opr_opnorddetail">160508</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opr_opnorddetail"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.opr_opnorddetail">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.opr_opnorddetail">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opr_opnorddetail"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opr_opnorddetail"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opr_opnorddetail">S</DD_ATTR_FTYP>
@@ -463,7 +463,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail007">20080505</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail007">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail007">+4</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail007">-1</DD_ATTR_CTLY>
@@ -514,7 +514,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail008">20210830</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail008">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail008">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail008">+2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail008"></DD_ATTR_CTLY>
@@ -565,7 +565,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail009">20210830</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail009">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail009">-2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail009"></DD_ATTR_CTLY>
@@ -616,7 +616,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail010">20210830</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail010">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail010">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail010"></DD_ATTR_CTLY>
@@ -718,7 +718,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail012">20080505</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail012">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail012">+4</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail012">-1</DD_ATTR_CTLY>
@@ -769,7 +769,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail013">20210830</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail013">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail013">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail013">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail013">+2</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail013"></DD_ATTR_CTLY>
@@ -820,7 +820,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opr_opnorddetail014">20210830</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opr_opnorddetail014"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opr_opnorddetail014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail014">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opr_opnorddetail014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opr_opnorddetail014">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opr_opnorddetail014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opr_opnorddetail014"></DD_ATTR_CTLY>

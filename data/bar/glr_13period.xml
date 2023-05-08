@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glr_13period">A0AF04B1F871B013DEFB17887109B141</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glr_13period">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glr_13period">20060609</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glr_13period">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glr_13period">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glr_13period">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glr_13period">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glr_13period">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glr_13period">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glr_13period"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glr_13period">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glr_13period">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glr_13period"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glr_13period"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glr_13period">S</DD_ATTR_FTYP>
@@ -138,7 +138,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_13period001">20060608</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_13period001"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_13period001"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_13period001">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_13period001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_13period001"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_13period001"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_13period001"></DD_ATTR_CTLY>
@@ -189,7 +189,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glr_13period002">20060608</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glr_13period002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glr_13period002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glr_13period002">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glr_13period002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glr_13period002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glr_13period002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glr_13period002"></DD_ATTR_CTLY>

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivx_copyitem"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivx_copyitem">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivx_copyitem">20090706</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivx_copyitem">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivx_copyitem">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivx_copyitem">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivx_copyitem">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivx_copyitem">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivx_copyitem">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivx_copyitem"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivx_copyitem">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivx_copyitem">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivx_copyitem"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivx_copyitem"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivx_copyitem">S</DD_ATTR_FTYP>
@@ -140,7 +140,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ivx_copyitem001"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ivx_copyitem001">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ivx_copyitem001"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ivx_copyitem001">2</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ivx_copyitem001"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ivx_copyitem001"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ivx_copyitem001"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ivx_copyitem001"></DD_ATTR_PROM>
@@ -191,7 +191,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ivx_copyitem002"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ivx_copyitem002">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ivx_copyitem002"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ivx_copyitem002">2</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ivx_copyitem002"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ivx_copyitem002"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ivx_copyitem002"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ivx_copyitem002"></DD_ATTR_PROM>

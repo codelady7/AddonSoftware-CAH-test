@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.glx_copychart">4A6F30CD7BDFDCB5EE9D6EDA2FE4F603</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glx_copychart">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glx_copychart">20070913</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glx_copychart">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glx_copychart">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glx_copychart">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glx_copychart">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glx_copychart">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glx_copychart">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glx_copychart"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glx_copychart">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glx_copychart">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glx_copychart"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glx_copychart"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glx_copychart">S</DD_ATTR_FTYP>
@@ -220,7 +220,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_copychart003">20070912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_copychart003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_copychart003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_copychart003">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_copychart003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_copychart003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_copychart003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_copychart003"></DD_ATTR_CTLY>
@@ -271,7 +271,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_copychart004">20070912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_copychart004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_copychart004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_copychart004">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_copychart004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_copychart004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_copychart004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_copychart004"></DD_ATTR_CTLY>

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_cashgl">396B2A9EECEBA8C36B25A33D58BD13EE</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_cashgl">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_cashgl">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_cashgl">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_cashgl">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_cashgl">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_cashgl">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_cashgl">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_cashgl">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_cashgl"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.are_cashgl">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.are_cashgl">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_cashgl"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.are_cashgl"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.are_cashgl">G</DD_ATTR_FTYP>
@@ -736,7 +736,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashgl009">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashgl009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashgl009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashgl009">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashgl009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashgl009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashgl009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashgl009"></DD_ATTR_CTLY>
@@ -889,7 +889,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.are_cashgl012">20170328</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.are_cashgl012"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.are_cashgl012"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.are_cashgl012">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.are_cashgl012">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.are_cashgl012">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.are_cashgl012"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.are_cashgl012"></DD_ATTR_CTLY>
@@ -948,7 +948,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.are_cashgl001">ine_comment</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.are_cashgl001">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.are_cashgl001"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.are_cashgl001">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.are_cashgl001">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">

@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.mpe_matdet">05F1EA93D25E35BC986863DCE6294653</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.mpe_matdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.mpe_matdet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.mpe_matdet">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.mpe_matdet">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.mpe_matdet">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.mpe_matdet">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.mpe_matdet">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.mpe_matdet">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.mpe_matdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.mpe_matdet"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.mpe_matdet"></DD_ATTR_DKNM>
@@ -359,7 +359,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.mpe_matdet003"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.mpe_matdet003"></DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.mpe_matdet003"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.mpe_matdet003">2</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.mpe_matdet003"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.mpe_matdet003"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.mpe_matdet003"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.mpe_matdet003">Warehouse ID</DD_ATTR_PROM>
@@ -396,7 +396,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.mpe_matdet004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.mpe_matdet004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.mpe_matdet004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.mpe_matdet004">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.mpe_matdet004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.mpe_matdet004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.mpe_matdet004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.mpe_matdet004"></DD_ATTR_CTLY>

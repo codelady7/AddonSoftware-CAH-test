@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ars_cc_custpmt"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ars_cc_custpmt">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ars_cc_custpmt">20190508</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ars_cc_custpmt">20230315</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ars_cc_custpmt">20230315</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ars_cc_custpmt">104254</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ars_cc_custpmt">20230329</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ars_cc_custpmt">20230328</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ars_cc_custpmt">184746</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ars_cc_custpmt"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ars_cc_custpmt">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ars_cc_custpmt">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ars_cc_custpmt"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ars_cc_custpmt"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ars_cc_custpmt">T</DD_ATTR_FTYP>
@@ -346,7 +346,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt003">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt003">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_CTLY>
@@ -360,7 +360,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt003">Accept CC</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt003">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt003">1</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt003"></DD_ATTR_PROM>
@@ -397,7 +397,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt004">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt004">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt004">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt004">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_CTLY>
@@ -411,7 +411,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt004">Interface Type</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt004">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt004">1</DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt004">1</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt004"></DD_ATTR_PROM>
@@ -448,7 +448,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt005">20180917</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt005">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt005">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt005">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_CTLY>
@@ -462,7 +462,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt005">Gateway</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt005">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt005">1</DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt005">10</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt005"></DD_ATTR_PROM>
@@ -564,7 +564,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt007">Batch Desc</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt007">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt007"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt007">30</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt007"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt007"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt007"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt007"></DD_ATTR_PROM>
@@ -652,7 +652,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt009">20181003</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt009">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt009">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt009">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_CTLY>
@@ -666,7 +666,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt009">Deposit Desc</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt009">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt009">30</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt009"></DD_ATTR_PROM>
@@ -703,7 +703,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt010">20190508</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt010">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt010">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt010">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt010"></DD_ATTR_CTLY>
@@ -754,7 +754,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ars_cc_custpmt011">20191209</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ars_cc_custpmt011">ARS_CC_CUSTPMT.ALLOW_CUST_CC</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ars_cc_custpmt011">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt011">C:/dev_addon_v23/AddonSoftware/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ars_cc_custpmt011">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ars_cc_custpmt011">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ars_cc_custpmt011"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ars_cc_custpmt011"></DD_ATTR_CTLY>
@@ -819,7 +819,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt012"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt012">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt012"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt012">10</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt012"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt012"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt012"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt012"></DD_ATTR_PROM>
@@ -870,7 +870,7 @@
 			<DD_ATTR_LABS id="ddm_table_cols.ars_cc_custpmt013"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ars_cc_custpmt013">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ars_cc_custpmt013"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt013">10</DD_ATTR_MAXL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ars_cc_custpmt013"></DD_ATTR_MAXL>
 			<DD_ATTR_MINV id="ddm_table_cols.ars_cc_custpmt013"></DD_ATTR_MINV>
 			<DD_ATTR_MAXV id="ddm_table_cols.ars_cc_custpmt013"></DD_ATTR_MAXV>
 			<DD_ATTR_PROM id="ddm_table_cols.ars_cc_custpmt013"></DD_ATTR_PROM>
