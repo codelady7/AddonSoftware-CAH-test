@@ -45,7 +45,6 @@ rem --- Terms type is Prox. Due date = same day next month
     while type$="P"
           yyyy=num(from$(1,4))
           mm=num(from$(5,2))+1
-          if days=0 days=num(from$(7,2))
           dd=days
           if mm>12 yyyy=yyyy+1,mm=1
           while baddate
@@ -57,7 +56,7 @@ rem --- Terms type is Prox. Due date = same day next month
                 rem --- Invalid day of the month (i.e. June 31st or Feb 30)
 
                 dd=dd-1
-                if dd continue
+                if dd>0 then continue
                 due$=""
                 status=999
                 break
