@@ -3,8 +3,10 @@ if callpoint!.getDevObject("multi_dist")<>"Y"
 	ap_dist_code$=callpoint!.getDevObject("ap_dist_code")
 	callpoint!.setColumnData("APC_TYPECODE.AP_DIST_CODE",ap_dist_code$)
 endif
-[[APC_TYPECODE.<CUSTOM>]]
-#include [+ADDON_LIB]std_missing_params.aon
+
+rem --- Initialize default fields
+	callpoint!.setColumnData("APC_TYPECODE.IRS1099_TYPE_BOX","X")
+
 [[APC_TYPECODE.BSHO]]
 rem --- Open/Lock files
 
@@ -54,3 +56,16 @@ if aps01a.multi_dist$="Y"
 else
 	callpoint!.setColumnEnabled("APC_TYPECODE.AP_DIST_CODE",-1)
 endif
+
+rem --- Posting to General Ledger?
+	if aps01a.post_to_gl$="Y" then
+		callpoint!.setColumnEnabled("APC_TYPECODE.GL_ACCOUNT",1)
+	else
+		callpoint!.setColumnEnabled("APC_TYPECODE.GL_ACCOUNT",0)
+	endif
+
+[[APC_TYPECODE.<CUSTOM>]]
+#include [+ADDON_LIB]std_missing_params.aon
+
+
+
