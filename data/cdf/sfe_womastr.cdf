@@ -1499,8 +1499,8 @@ rem --- Historical Invoice Detail lookup
 	filter_defs$[4,0]="OPT_INVDET.ORDER_NO"
 	filter_defs$[4,1]="='"+callpoint!.getColumnData("SFE_WOMASTR.ORDER_NO")+"'"
 	filter_defs$[4,2]="LOCK"
-	filter_defs$[5,0]="OPT_INVDET.AR_INV_NO"
-	filter_defs$[5,1]="=''"
+	filter_defs$[5,0]="OPT_INVDET.TRANS_STATUS"
+	filter_defs$[5,1]="<>'U'"
 	filter_defs$[5,2]="LOCK"
 	
 	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"OP_ORDDET_ITEMS","",table_chans$[all],optInvDet_key$,filter_defs$[all]

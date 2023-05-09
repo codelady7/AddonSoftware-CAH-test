@@ -22,12 +22,6 @@ rem status$        - Returned status: "SKIP" = Skip current record
 rem --- Initialize data
     status$=""
 
-rem --- Skip if not an open order in Entry status
-    if rec_tpl.ar_inv_no$="" or rec_tpl.trans_status$<>"E" then
-        status$="SKIP"
-        goto exit_prog
-    endif
-
 rem --- Skip order detail lines that are not for non-stock, promotional or standard items
     if pos(rec_tpl.line_type$="NPS")=0 then
         status$="SKIP"
