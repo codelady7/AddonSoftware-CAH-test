@@ -1,10 +1,263 @@
 =======================================================================================================================================
-Report Branch: AddonSoftware Development Build
+ Report Date:   2023-05-09
+ Report Branch: AddonSoftware 23.00
+ Last Release:  AddonSoftware 22.14
 =======================================================================================================================================
-Development builds are generated daily.
 
-AddonSoftware Co-op Developers can access code changes and bug fixes for the Development Builds via Git.
+22.14 released 03/13/2023
+BBjBaristaAddonDemos2214_03-13-2023_1451.jar
 
-Information about code changes and bug fixes for RELEASE builds can be found at:
+=======================================================================================================================================
+Revision: b8a063b450b84dcf56d5700017358946d376dfbc
+Author: Christine <chawkins@basis.com>
+Date: 3/10/2023 11:56:06 AM
+Message:
+Bug 10483 - AD - Addon contains several definitions where file name in ddm_table_tpls <> that in ddm_tables
+ - Called up and rebuilt template only on these table defs to correct ddm_table_tpls.
+----
+Modified: data/bar/art_invdet_arc.xml
+Modified: data/bar/art_invhdr_arc.xml
+Modified: data/bar/gls_earnings.xml
+Modified: data/bar/glw_cashtotals.xml
+Modified: data/bar/glw_disbtotals.xml
+Modified: data/bar/ivs_abcparam.xml
+Modified: data/bar/ivs_setcarry.xml
+Modified: data/bar/saw_custom12.xml
+Modified: data/bar/saw_custsh12.xml
+Modified: data/bar/saw_custsi12.xml
+Modified: data/bar/saw_custte12.xml
+Modified: data/bar/saw_custty12.xml
+Modified: data/bar/saw_item12.xml
+Modified: data/bar/saw_itemcu12.xml
+Modified: data/bar/saw_itemcust.xml
+Modified: data/bar/saw_nonsto12.xml
+Modified: data/bar/saw_salesp12.xml
+Modified: data/bar/saw_territ12.xml
+Modified: data/bar/saw_vendor12.xml
+Modified: data/bar/saw_warehs12.xml
 
-https://bugs.basis.cloud
+=======================================================================================================================================
+Revision: c4f5fc08f5bc9cbeab593afce995ec531fbcfa18
+Author: Christine <chawkins@basis.com>
+Date: 3/13/2023 3:48:21 PM
+Message:
+Bug 10507 - AD - Addon's Extractor will fail in adx_build_sproc after extracting a production package
+ - made corrections in two areas to make sure directories are read/writeable
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+=======================================================================================================================================
+Revision: c70d22a72f5012ff67b1466cd254e686f6e57f7c
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/21/2023 12:34:52 PM
+Message:
+Bug 10603: Modified PO Entry to not load a PO that is currently in QA
+Receipt Entry, or PO Receipt Entry.
+----
+Modified: data/bar/poe_pohdr.xml
+Modified: data/cdf/poe_pohdr.cdf
+
+=======================================================================================================================================
+Revision: 304d53e4295d1c9157f06fa4dc8cbe3004c4996a
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/29/2023 10:00:56 AM
+Message:
+Bug 10607: Saved ACH bank account code information in the Check Register
+so that it doesn't get cleared in the update.
+----
+Modified: ap/src/apr_chkregister.aon
+Modified: ap/src/apu_chkregister.aon
+
+=======================================================================================================================================
+Revision: fdec54c10c0294704554dcfd282fd4299e2caec8
+Author: Christine <chawkins@basis.com>
+Date: 3/30/2023 2:55:52 PM
+Message:
+Bug 10606 - GL - Budget Maintenance is not writing back to glm_acctbudget or glm_budgetplans
+ - don't bother executing the update routine for non-editable rows
+ - correct typo in update routine that was causing it to never update
+Bug 10608 - GL - Clicking in the Budget Maintenance grid after using Replicate option clears the replicated amounts
+ - corrected typo in the align_periods AVAL
+ER 10609 - GL - Budget Maintenance form clumsy to use if fine-tuning or reviewing more than on account
+ - changed to use run process instead of ok/cancel
+ - change AREC to reinitialize the grid and re-display column 0 labels, then focus on GL account
+Bug 10611 - GL - Replicate option in Budget Maintenance clobbers column 0 value
+ - removed code that was adding an extra item to the vectGLSummary! vector
+----
+Modified: data/bar/glm_budgetmaint.xml
+Modified: data/cdf/glm_budgetmaint.cdf
+
+=======================================================================================================================================
+Revision: f3117f1cbb774f397ff52d27852c172e69047f66
+Author: Christine <chawkins@basis.com>
+Date: 4/3/2023 2:50:59 PM
+Message:
+Bug 10615 - GL - Account/Report Maintenance Assign No. field has minimum value that confuses Barista
+ - Corrected by changing the min value from 1 to 01
+----
+Modified: data/bar/glm_finassign.xml
+
+=======================================================================================================================================
+Revision: 41dadee3a91a08d63e9231dc71954dd7addb2c50
+Author: Christine <chawkins@basis.com>
+Date: 4/7/2023 7:11:44 PM
+Message:
+Bug 10617 - SF - WO Entry is using (and wasting) internal sequence numbers
+Bug 10618 - SF - Schedule start/completion dates aren't saved in WO after scheduling
+Bug 10621 - SF - Code to remove/re-add schedule records when in Operations grid is using wrong run time
+ - Changed element *type* in sfe_womastr to use a seq_ref instead of internal_seq_no
+ - Make sure to use setStatus("SAVE-RECORD... upon return from either scheduling or releasing WOs to make sure changes to WO master are preserved
+ - Correct logic in Operations grid callpoint that a) removes/re-adds sched records needlessly, and b) uses the wrong run-time when it does need to remove/re-add
+----
+Modified: data/bar/sfe_releasewo.xml
+Modified: data/bar/sfe_woclose.xml
+Modified: data/bar/sfe_womastr.xml
+Modified: data/bar/sfe_wooprtn.xml
+Modified: data/cdf/sfe_releasewo.cdf
+Modified: data/cdf/sfe_womastr.cdf
+Modified: data/cdf/sfe_wooprtn.cdf
+
+=======================================================================================================================================
+Revision: 07e574fb625974e189c9f1705a7ae2f9a95fe96a
+Author: Christine <chawkins@basis.com>
+Date: 4/13/2023 1:34:27 PM
+Message:
+Bug 10624 - AP - Address/City lines in V6Hybrid are restricted to 24 characters, but can still type out to 30
+ - get control and use setLength() method to limit user keystrokes
+----
+Modified: data/bar/apm_vendaddr.xml
+Modified: data/bar/apm_vendmast.xml
+Modified: data/bar/aps_report.xml
+Modified: data/cdf/apm_vendaddr.cdf
+Modified: data/cdf/apm_vendmast.cdf
+Modified: data/cdf/aps_report.cdf
+
+=======================================================================================================================================
+Revision: e49a5771b4fd200692c6cb961bd913881ae934d5
+Author: Christine <chawkins@basis.com>
+Date: 4/19/2023 5:42:24 PM
+Message:
+Bug 10634 - SF - Item IDs on Pick List are printing with incorrect mask
+ - corrected SPROC CALL in the Jasper to use ITEM_MASK instead of CUST_MASK
+----
+Modified: reports/SFPickList.jasper
+Modified: reports/SFPickList.jrxml
+
+=======================================================================================================================================
+Revision: e4e6e9224eab9712efdbc43566291a526c6f9677
+Author: Christine <chawkins@basis.com>
+Date: 4/20/2023 1:11:09 PM
+Message:
+Bug 10635 - SF - Linking a WO to a Sales Order can cause materials grid to be empty
+ - changed SO line item query's filter code to use OTA@ instead of just OTA when opening sfe_womastr
+----
+Modified: op/src/opf_orddet_items.aon
+
+=======================================================================================================================================
+Revision: 2f725894955ce0394c429f543255929ca30374d5
+Author: Christine <chawkins@basis.com>
+Date: 4/25/2023 3:28:56 PM
+Message:
+Bug 10641 - GL - incorrect while loop boundary can cause incorrect display in GL Account Summary Activity
+ - corrected while loop boundary to not stop short when iterating through list of display codes
+----
+Modified: data/bar/glm_acctsumhdr.xml
+Modified: data/bar/glm_summactivity.xml
+Modified: data/cdf/glm_acctsumhdr.cdf
+Modified: data/cdf/glm_summactivity.cdf
+
+=======================================================================================================================================
+Revision: 52aee3bd7c857ca814d90f46fe9906226534888c
+Author: Christine <chawkins@basis.com>
+Date: 4/26/2023 4:13:25 PM
+Message:
+Bug 10643 - GL - When prior year not closed, Acct Summary Activity 'Details' query is incorrect
+ - corrected calculation to adjust current_year when prior year isn't closed
+----
+Modified: data/bar/glm_acctsumhdr.xml
+Modified: data/bar/glm_summactivity.xml
+Modified: data/cdf/glm_acctsumhdr.cdf
+Modified: data/cdf/glm_summactivity.cdf
+
+=======================================================================================================================================
+Revision: b00108ecddc1b395659133572a3651a66ccc296e
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/1/2023 12:03:22 PM
+Message:
+Bug 10321: Eliminated the code that replaced the Due Date with the
+Discount Date under some conditions when running the report bye Due
+Date. Now when running the report by Due Date, invoices are always aged
+by the Due Date.
+----
+Modified: ap/src/apr_cashrequire.aon
+
+=======================================================================================================================================
+Revision: ce5a61873bdec095767dfcef2a2820d3bacfa42a
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/2/2023 1:08:10 PM
+Message:
+Bug 10649: Added missing GL Account Number length where the fnmask$
+function is being used to display the GL Account Number
+----
+Modified: ad/src/adx_aondashboard.aon
+Modified: ad/src/adx_build_sproc.aon
+Modified: gl/src/glr_acctlist.aon
+Modified: gl/src/glr_accttotalrpt.aon
+Modified: iv/src/ivr_transregister.aon
+Modified: sprocs/GLBNKBAL_BAR.prc
+Modified: sprocs/GLBNKBAL_RNG.prc
+
+=======================================================================================================================================
+Revision: 2bf5002e73b19c1805a111b65e3d3b187d4bc048
+Author: Christine <chawkins@basis.com>
+Date: 5/3/2023 4:58:29 PM
+Message:
+Bug 10651 - AD - Packager can fail trying to archive a non-existent file
+ - added logic to make sure a file exists before calling the tgzutil!.addFile() method, otherwise skip and log it
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+=======================================================================================================================================
+Revision: f13f5c31b3ba23b27b3fec91c09d6684bf90d165
+Author: Christine <chawkins@basis.com>
+Date: 5/8/2023 1:56:29 PM
+Message:
+Bug 10652 - OP - Invoice Detail form carries dd_attr_maxl 2 for UM_SOLD which is overriding element size of 6
+ - set dd_attr_maxl to null and re-exported all forms (bar/*.xml)
+----
+Modified: data/bar/+glcontrol.xml
+Modified: data/bar/+process.xml
+Modified: data/bar/adc_bankacctcode.xml
+...
+... truncated list
+...
+Modified: data/bar/sfx_matlwo.xml
+Modified: data/bar/sfx_oprtnwo.xml
+Modified: data/bar/sfx_subcntwo.xml
+Modified: data/bar/sfx_typewo.xml
+
+=======================================================================================================================================
+Revision: 36d12eec0c4a2fcc72b8d255b1f8419bd949be24
+Author: Christine <chawkins@basis.com>
+Date: 5/8/2023 4:47:02 PM
+Message:
+Bug 10646 - AP - Prox Discount Date Calculation
+ - restored the V6 logic, so 0 in either due or discount days will set the due/discount date to the invoice date
+----
+Modified: ad/src/adc_duedate.aon
+
+=======================================================================================================================================
+Revision: f4835d85bba6a311e54c405351ef38631c2ac6aa
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/9/2023 10:25:04 AM
+Message:
+Bug 10658: Eliminated filtering open Invoices out of the Item lookup on
+the Work Order Entry form.
+----
+Modified: data/bar/sfe_womastr.xml
+Modified: data/cdf/sfe_womastr.cdf
+Modified: data/sync/adm_query_cols~[01007514OP].xml
+Modified: data/sync/adm_query~[01007514OP].xml
+Modified: op/src/opf_orddet_items.aon
+
+=======================================================================================================================================
