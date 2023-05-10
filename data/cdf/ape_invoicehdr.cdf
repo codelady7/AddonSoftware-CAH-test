@@ -369,6 +369,13 @@ rem --- Disable Load Image and View Images options as needed
 
 	
 
+[[APE_INVOICEHDR.ASIZ]]
+rem --- Resize vendor comments box (display only) to align w/ Invoice Comments (memo_1024)
+
+	cmts!=callpoint!.getControl("<<DISPLAY>>.COMMENTS")
+	memo!=callpoint!.getControl("APE_INVOICEHDR.MEMO_1024")
+	cmts!.setSize(memo!.getWidth(),cmts!.getHeight())
+
 [[APE_INVOICEHDR.AWIN]]
 rem --- setup utility
 

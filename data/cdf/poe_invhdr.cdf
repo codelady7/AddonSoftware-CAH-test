@@ -299,6 +299,13 @@ rem --- get default date
 call stbl("+DIR_SYP")+"bam_run_prog.bbj","POE_INVDATE",stbl("+USER_ID"),"MNT","",table_chans$[all]
 callpoint!.setDevObject("dflt_acct_date",stbl("DEF_ACCT_DATE"))
 
+[[POE_INVHDR.ASIZ]]
+rem --- Resize vendor  comments box (display only) to align w/ Invoice Comments (memo_1024)
+
+	cmts!=callpoint!.getControl("<<DISPLAY>>.COMMENTS")
+	memo!=callpoint!.getControl("POE_INVHDR.MEMO_1024")
+	cmts!.setSize(memo!.getWidth(),cmts!.getHeight())
+
 [[POE_INVHDR.AWRI]]
 rem --- look thru gridVect for any rows we've deleted from invsel... delete corres rows from invdet
 

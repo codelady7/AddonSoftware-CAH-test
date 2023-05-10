@@ -100,6 +100,13 @@ rem --- Clear Adjustments text
 	adjustmentText!=callpoint!.getDevObject("adjustmentText")
 	adjustmentText!.setVisible(0)
 
+[[APT_INVHDR_ARC.ASIZ]]
+rem --- Resize customer vendor box (display only) to align w/Invoice Comments (memo_1024)
+
+	cmts!=callpoint!.getControl("<<DISPLAY>>.COMMENTS")
+	memo!=callpoint!.getControl("APT_INVHDR_ARC.MEMO_1024")
+	cmts!.setSize(memo!.getWidth(),cmts!.getHeight())
+
 [[APT_INVHDR_ARC.BSHO]]
 rem --- Setup utility
 	use ::ado_util.src::util

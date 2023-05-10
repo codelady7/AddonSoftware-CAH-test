@@ -1,3 +1,165 @@
+[[APE_RECURRINGHDR.ACCTING_DATE.AVAL]]
+gl$=user_tpl.glint$
+acctgdate$=callpoint!.getUserInput()      
+if gl$="Y" 
+	call stbl("+DIR_PGM")+"glc_datecheck.aon",acctgdate$,"Y",per$,yr$,status
+	if status>99
+		callpoint!.setStatus("ABORT")
+	else
+		user_tpl.glyr$=yr$
+		user_tpl.glper$=per$
+	endif
+endif
+
+[[APE_RECURRINGHDR.ADIS]]
+rem --- get disc % assoc w/ terms in this rec, and disp distributed bal
+apm10c_dev=fnget_dev("APC_TERMSCODE")
+dim apm10c$:fnget_tpl$("APC_TERMSCODE")
+readrecord(apm10c_dev,key=firm_id$+"C"+callpoint!.getColumnData("APE_RECURRINGHDR.AP_TERMS_CODE"),dom=*next)apm10c$
+user_tpl.disc_pct$=apm10c.disc_percent$
+user_tpl.inv_amt$=callpoint!.getColumnData("APE_RECURRINGHDR.INVOICE_AMT")
+if user_tpl.glint$="N" user_tpl.tot_dist$=user_tpl.inv_amt$
+gosub calc_grid_tots
+gosub disp_dist_bal
+user_tpl.inv_in_ape03$="Y"
+user_tpl.inv_in_apt02$="N"
+Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
+tmp_vendor_id$=callpoint!.getColumnData("APE_RECURRINGHDR.VENDOR_ID")
+gosub disp_vendor_comments
+callpoint!.setStatus("REFRESH")
+
+[[APE_RECURRINGHDR.AP_DIST_CODE.AVAL]]
+if cvs(callpoint!.getUserInput(),3)=""
+	callpoint!.setUserInput("  ")
+	callpoint!.setStatus("REFRESH")
+endif
+
+[[APE_RECURRINGHDR.AP_INV_NO.AVAL]]
+ctl_name$="APE_RECURRINGHDR.AP_DIST_CODE"
+if user_tpl.multi_dist$="Y" 
+	ctl_stat$=""
+else
+	ctl_stat$="D"
+endif
+gosub disable_fields
+ctl_name$="APE_RECURRINGHDR.INVOICE_DATE"
+ctl_stat$=""
+gosub disable_fields
+ctl_name$="APE_RECURRINGHDR.NET_INV_AMT"
+ctl_stat$=""
+gosub disable_fields
+
+[[APE_RECURRINGHDR.AP_TERMS_CODE.AVAL]]
+rem re-calc due and discount dates based on terms code
+	terms_cd$=callpoint!.getUserInput()
+	if terms_cd$="" callpoint!.setUserInput("  ")		
+	invdate$=callpoint!.getColumnData("APE_RECURRINGHDR.INVOICE_DATE")
+	gosub calculate_due_and_discount
+	disc_amt=round(num(callpoint!.getColumnData("APE_RECURRINGHDR.NET_INV_AMT"))*(num(user_tpl.disc_pct$)/100),2)
+	callpoint!.setColumnData("APE_RECURRINGHDR.DISCOUNT_AMT",str(disc_amt))
+	callpoint!.setStatus("REFRESH")
+endif
+
+[[APE_RECURRINGHDR.AP_TYPE.AVAL]]
+user_tpl.dflt_ap_type$=callpoint!.getUserInput()
+if user_tpl.dflt_ap_type$=""
+	user_tpl.dflt_ap_type$="  "
+	callpoint!.setUserInput(user_tpl.dflt_ap_type$)
+	callpoint!.setStatus("REFRESH")
+endif
+
+apm10_dev=fnget_dev("APC_TYPECODE")
+dim apm10a$:fnget_tpl$("APC_TYPECODE")
+readrecord (apm10_dev,key=firm_id$+"A"+user_tpl.dflt_ap_type$,dom=*next)apm10a$
+if cvs(apm10a$,2)<>""
+	user_tpl.dflt_dist_cd$=apm10a.ap_dist_code$
+endif
+
+[[APE_RECURRINGHDR.AREC]]
+Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
+callpoint!.setColumnData("<<DISPLAY>>.comments","")
+user_tpl.inv_amt$=""
+user_tpl.tot_dist$=""
+callpoint!.setColumnData("<<DISPLAY>>.DIST_BAL","0")
+
+rem --- Re-enable disabled fields
+ctl_name$="APE_RECURRINGHDR.AP_DIST_CODE"
+if user_tpl.multi_dist$="Y" 
+	ctl_stat$=""
+else
+	ctl_stat$="D"
+endif
+gosub disable_fields
+ctl_name$="APE_RECURRINGHDR.INVOICE_DATE"
+ctl_stat$=""
+gosub disable_fields
+ctl_name$="APE_RECURRINGHDR.NET_INV_AMT"
+ctl_stat$=""
+gosub disable_fields
+
+[[APE_RECURRINGHDR.ARNF]]
+rem not in ape-03; set up defaults
+
+apm10c_dev=fnget_dev("APC_TERMSCODE")
+dim apm10c$:fnget_tpl$("APC_TERMSCODE")
+
+terms_cd$=user_tpl.dflt_terms_cd$
+invdate$=stbl("+SYSTEM_DATE")
+gosub calculate_due_and_discount
+callpoint!.setColumnData("APE_RECURRINGHDR.AP_DIST_CODE",user_tpl.dflt_dist_cd$)
+callpoint!.setColumnData("APE_RECURRINGHDR.AP_TERMS_CODE",user_tpl.dflt_terms_cd$)
+callpoint!.setColumnData("APE_RECURRINGHDR.PAYMENT_GRP",user_tpl.dflt_pymt_grp$)
+callpoint!.setColumnData("APE_RECURRINGHDR.INVOICE_DATE",stbl("+SYSTEM_DATE"))
+callpoint!.setColumnData("APE_RECURRINGHDR.HOLD_FLAG","N")
+user_tpl.inv_in_ape03$="N"
+user_tpl.inv_in_apt02$="N"
+
+callpoint!.setStatus("REFRESH")
+
+[[APE_RECURRINGHDR.ASIZ]]
+rem --- Resize vendor comments box (display only) to align w/ Invoice Comments (memo_1024)
+
+	cmts!=callpoint!.getControl("<<DISPLAY>>.COMMENTS")
+	memo!=callpoint!.getControl("APE_RECURRINGHDR.MEMO_1024")
+	cmts!.setSize(memo!.getWidth(),cmts!.getHeight())
+
+[[APE_RECURRINGHDR.BSHO]]
+rem --- add static label for displaying date/amount if pulling up open invoice
+inv_no!=fnget_control!("APE_RECURRINGHDR.AP_INV_NO")
+cmts!=fnget_control!("<<DISPLAY>>.COMMENTS")
+inv_no_x=inv_no!.getX()
+inv_no_y=inv_no!.getY()
+inv_no_height=inv_no!.getHeight()
+inv_no_width=inv_no!.getWidth()
+cmts_x=cmts!.getX()
+nxt_ctlID=num(stbl("+CUSTOM_CTL",err=std_error))
+Form!.addStaticText(nxt_ctlID,inv_no_x+inv_no_width+5,inv_no_y,cmts_x-(inv_no_x+inv_no_width+5),inv_no_height*2,"")
+user_tpl.open_inv_textID$=str(nxt_ctlID)
+rem --- add the display control holding the distribution balance to userObj!
+dist_bal!=fnget_control!("<<DISPLAY>>.DIST_BAL")
+user_tpl.dist_bal_ofst$="0"
+userObj!.addItem(dist_bal!)
+
+rem --- may need to disable some ctls based on params
+if user_tpl.multi_types$="N" 
+	ctl_name$="APE_RECURRINGHDR.AP_TYPE"
+	ctl_stat$="I"
+	gosub disable_fields
+endif
+if user_tpl.multi_dist$="N" 
+	ctl_name$="APE_RECURRINGHDR.AP_DIST_CODE"
+	ctl_stat$="I"
+	gosub disable_fields
+endif
+if user_tpl.ret_flag$="N" 
+	ctl_name$="APE_RECURRINGHDR.RETENTION"
+	ctl_stat$="I"
+	gosub disable_fields
+endif
+	ctl_name$="<<DISPLAY>>.DIST_BAL"
+	ctl_stat$="I"
+	gosub disable_fields
+
 [[APE_RECURRINGHDR.BTBL]]
 rem --- Open/Lock files
 files=8,begfile=1,endfile=files
@@ -116,41 +278,7 @@ if user_tpl.multi_types$<>"Y"
 		callpoint!.setTableColumnAttribute("APE_RECURRINGHDR.AP_DIST_CODE","PVAL",$22$+user_tpl.dflt_dist_cd$+$22$)
 	endif
 endif
-[[APE_RECURRINGHDR.AP_INV_NO.AVAL]]
-ctl_name$="APE_RECURRINGHDR.AP_DIST_CODE"
-if user_tpl.multi_dist$="Y" 
-	ctl_stat$=""
-else
-	ctl_stat$="D"
-endif
-gosub disable_fields
-ctl_name$="APE_RECURRINGHDR.INVOICE_DATE"
-ctl_stat$=""
-gosub disable_fields
-ctl_name$="APE_RECURRINGHDR.NET_INV_AMT"
-ctl_stat$=""
-gosub disable_fields
-[[APE_RECURRINGHDR.AREC]]
-Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
-callpoint!.setColumnData("<<DISPLAY>>.comments","")
-user_tpl.inv_amt$=""
-user_tpl.tot_dist$=""
-callpoint!.setColumnData("<<DISPLAY>>.DIST_BAL","0")
 
-rem --- Re-enable disabled fields
-ctl_name$="APE_RECURRINGHDR.AP_DIST_CODE"
-if user_tpl.multi_dist$="Y" 
-	ctl_stat$=""
-else
-	ctl_stat$="D"
-endif
-gosub disable_fields
-ctl_name$="APE_RECURRINGHDR.INVOICE_DATE"
-ctl_stat$=""
-gosub disable_fields
-ctl_name$="APE_RECURRINGHDR.NET_INV_AMT"
-ctl_stat$=""
-gosub disable_fields
 [[APE_RECURRINGHDR.BWRI]]
 rem --- fully distributed?
 gl$=user_tpl.glint$
@@ -179,53 +307,28 @@ if status<=99
 	endif
 endif
 	
+
+[[APE_RECURRINGHDR.INVOICE_AMT.AVAL]]
+callpoint!.setColumnData("APE_RECURRINGHDR.NET_INV_AMT",
+:	callpoint!.getUserInput())
+user_tpl.inv_amt$=callpoint!.getUserInput()
+if user_tpl.glint$="N" user_tpl.tot_dist$=user_tpl.inv_amt$
+gosub calc_grid_tots
+gosub disp_dist_bal
+callpoint!.setStatus("REFRESH")
+
 [[APE_RECURRINGHDR.NET_INV_AMT.AVAL]]
 rem re-calc discount amount based on net x disc %
 disc_amt=round(num(callpoint!.getUserInput())*(num(user_tpl.disc_pct$)/100),2)
 callpoint!.setColumnData("APE_RECURRINGHDR.DISCOUNT_AMT",str(disc_amt))
 callpoint!.setStatus("REFRESH:APE_RECURRINGHDR.DISCOUNT_AMT")
+
 [[APE_RECURRINGHDR.PAYMENT_GRP.AVAL]]
 if cvs(callpoint!.getUserInput(),3)=""
 	callpoint!.setUserInput("  ")
 	callpoint!.setStatus("REFRESH")
 endif
-[[APE_RECURRINGHDR.AP_DIST_CODE.AVAL]]
-if cvs(callpoint!.getUserInput(),3)=""
-	callpoint!.setUserInput("  ")
-	callpoint!.setStatus("REFRESH")
-endif
-[[APE_RECURRINGHDR.AP_TYPE.AVAL]]
-user_tpl.dflt_ap_type$=callpoint!.getUserInput()
-if user_tpl.dflt_ap_type$=""
-	user_tpl.dflt_ap_type$="  "
-	callpoint!.setUserInput(user_tpl.dflt_ap_type$)
-	callpoint!.setStatus("REFRESH")
-endif
 
-apm10_dev=fnget_dev("APC_TYPECODE")
-dim apm10a$:fnget_tpl$("APC_TYPECODE")
-readrecord (apm10_dev,key=firm_id$+"A"+user_tpl.dflt_ap_type$,dom=*next)apm10a$
-if cvs(apm10a$,2)<>""
-	user_tpl.dflt_dist_cd$=apm10a.ap_dist_code$
-endif
-[[APE_RECURRINGHDR.ARNF]]
-rem not in ape-03; set up defaults
-
-apm10c_dev=fnget_dev("APC_TERMSCODE")
-dim apm10c$:fnget_tpl$("APC_TERMSCODE")
-
-terms_cd$=user_tpl.dflt_terms_cd$
-invdate$=stbl("+SYSTEM_DATE")
-gosub calculate_due_and_discount
-callpoint!.setColumnData("APE_RECURRINGHDR.AP_DIST_CODE",user_tpl.dflt_dist_cd$)
-callpoint!.setColumnData("APE_RECURRINGHDR.AP_TERMS_CODE",user_tpl.dflt_terms_cd$)
-callpoint!.setColumnData("APE_RECURRINGHDR.PAYMENT_GRP",user_tpl.dflt_pymt_grp$)
-callpoint!.setColumnData("APE_RECURRINGHDR.INVOICE_DATE",stbl("+SYSTEM_DATE"))
-callpoint!.setColumnData("APE_RECURRINGHDR.HOLD_FLAG","N")
-user_tpl.inv_in_ape03$="N"
-user_tpl.inv_in_apt02$="N"
-
-callpoint!.setStatus("REFRESH")
 [[APE_RECURRINGHDR.VENDOR_ID.AVAL]]
 rem "check vend hist file to be sure this vendor/ap type ok and to set some defaults;  display vend cmts
 tmp_vendor_id$=callpoint!.getUserInput()
@@ -238,52 +341,7 @@ if vend_hist$=""
 		callpoint!.setStatus("CLEAR-NEWREC")
 	endif
 endif
-[[APE_RECURRINGHDR.ACCTING_DATE.AVAL]]
-gl$=user_tpl.glint$
-acctgdate$=callpoint!.getUserInput()      
-if gl$="Y" 
-	call stbl("+DIR_PGM")+"glc_datecheck.aon",acctgdate$,"Y",per$,yr$,status
-	if status>99
-		callpoint!.setStatus("ABORT")
-	else
-		user_tpl.glyr$=yr$
-		user_tpl.glper$=per$
-	endif
-endif
-[[APE_RECURRINGHDR.ADIS]]
-rem --- get disc % assoc w/ terms in this rec, and disp distributed bal
-apm10c_dev=fnget_dev("APC_TERMSCODE")
-dim apm10c$:fnget_tpl$("APC_TERMSCODE")
-readrecord(apm10c_dev,key=firm_id$+"C"+callpoint!.getColumnData("APE_RECURRINGHDR.AP_TERMS_CODE"),dom=*next)apm10c$
-user_tpl.disc_pct$=apm10c.disc_percent$
-user_tpl.inv_amt$=callpoint!.getColumnData("APE_RECURRINGHDR.INVOICE_AMT")
-if user_tpl.glint$="N" user_tpl.tot_dist$=user_tpl.inv_amt$
-gosub calc_grid_tots
-gosub disp_dist_bal
-user_tpl.inv_in_ape03$="Y"
-user_tpl.inv_in_apt02$="N"
-Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
-tmp_vendor_id$=callpoint!.getColumnData("APE_RECURRINGHDR.VENDOR_ID")
-gosub disp_vendor_comments
-callpoint!.setStatus("REFRESH")
-[[APE_RECURRINGHDR.AP_TERMS_CODE.AVAL]]
-rem re-calc due and discount dates based on terms code
-	terms_cd$=callpoint!.getUserInput()
-	if terms_cd$="" callpoint!.setUserInput("  ")		
-	invdate$=callpoint!.getColumnData("APE_RECURRINGHDR.INVOICE_DATE")
-	gosub calculate_due_and_discount
-	disc_amt=round(num(callpoint!.getColumnData("APE_RECURRINGHDR.NET_INV_AMT"))*(num(user_tpl.disc_pct$)/100),2)
-	callpoint!.setColumnData("APE_RECURRINGHDR.DISCOUNT_AMT",str(disc_amt))
-	callpoint!.setStatus("REFRESH")
-endif
-[[APE_RECURRINGHDR.INVOICE_AMT.AVAL]]
-callpoint!.setColumnData("APE_RECURRINGHDR.NET_INV_AMT",
-:	callpoint!.getUserInput())
-user_tpl.inv_amt$=callpoint!.getUserInput()
-if user_tpl.glint$="N" user_tpl.tot_dist$=user_tpl.inv_amt$
-gosub calc_grid_tots
-gosub disp_dist_bal
-callpoint!.setStatus("REFRESH")
+
 [[APE_RECURRINGHDR.<CUSTOM>]]
 disable_fields:
 	rem --- used to disable/enable controls depending on parameter settings
@@ -360,39 +418,6 @@ return get_control!
 fnend
 rem #endinclude fnget_control.src
 #include [+ADDON_LIB]std_missing_params.aon
-[[APE_RECURRINGHDR.BSHO]]
-rem --- add static label for displaying date/amount if pulling up open invoice
-inv_no!=fnget_control!("APE_RECURRINGHDR.AP_INV_NO")
-cmts!=fnget_control!("<<DISPLAY>>.COMMENTS")
-inv_no_x=inv_no!.getX()
-inv_no_y=inv_no!.getY()
-inv_no_height=inv_no!.getHeight()
-inv_no_width=inv_no!.getWidth()
-cmts_x=cmts!.getX()
-nxt_ctlID=num(stbl("+CUSTOM_CTL",err=std_error))
-Form!.addStaticText(nxt_ctlID,inv_no_x+inv_no_width+5,inv_no_y,cmts_x-(inv_no_x+inv_no_width+5),inv_no_height*2,"")
-user_tpl.open_inv_textID$=str(nxt_ctlID)
-rem --- add the display control holding the distribution balance to userObj!
-dist_bal!=fnget_control!("<<DISPLAY>>.DIST_BAL")
-user_tpl.dist_bal_ofst$="0"
-userObj!.addItem(dist_bal!)
 
-rem --- may need to disable some ctls based on params
-if user_tpl.multi_types$="N" 
-	ctl_name$="APE_RECURRINGHDR.AP_TYPE"
-	ctl_stat$="I"
-	gosub disable_fields
-endif
-if user_tpl.multi_dist$="N" 
-	ctl_name$="APE_RECURRINGHDR.AP_DIST_CODE"
-	ctl_stat$="I"
-	gosub disable_fields
-endif
-if user_tpl.ret_flag$="N" 
-	ctl_name$="APE_RECURRINGHDR.RETENTION"
-	ctl_stat$="I"
-	gosub disable_fields
-endif
-	ctl_name$="<<DISPLAY>>.DIST_BAL"
-	ctl_stat$="I"
-	gosub disable_fields
+
+

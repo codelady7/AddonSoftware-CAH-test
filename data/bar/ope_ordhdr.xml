@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_ordhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_ordhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_ordhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20230508</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20230503</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">180230</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20230510</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20230510</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">162914</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_ordhdr">OPT_INVHDR      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_ordhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_ordhdr">AO_STATUS</DD_ATTR_DKNM>
@@ -4918,8 +4918,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.ope_ordhdr057">Order/Invoice</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.ope_ordhdr057">Ord/Inv</DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.ope_ordhdr057">Internal Ord/Inv Comments</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.ope_ordhdr057">Internal Ord/Inv Cmt</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.ope_ordhdr057">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.ope_ordhdr057"></DD_ATTR_MAXL>
@@ -5934,7 +5934,7 @@
 			<DD_SEQUENCE id="ddm_table_disp.ope_ordhdr026">026</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_disp.ope_ordhdr026">RECORD_TEXT     </DD_DATA_NAME>
 			<DD_CTRL_NAME id="ddm_table_disp.ope_ordhdr026">COMMENTS        </DD_CTRL_NAME>
-			<DD_ATTR_LABL id="ddm_table_disp.ope_ordhdr026">Customer</DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_disp.ope_ordhdr026">Internal Customer Comments</DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_disp.ope_ordhdr026">Customer</DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.ope_ordhdr026"></DD_ATTR_CALC>
 			<DD_ATTR_CTLX id="ddm_table_disp.ope_ordhdr026"></DD_ATTR_CTLX>
