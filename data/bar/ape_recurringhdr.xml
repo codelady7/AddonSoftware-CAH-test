@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_recurringhdr">639F77497E0E67A18E299E3AC9DF3D73</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_recurringhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_recurringhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_recurringhdr">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_recurringhdr">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_recurringhdr">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_recurringhdr">20230510</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_recurringhdr">20230510</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_recurringhdr">163804</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_recurringhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_recurringhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_recurringhdr"></DD_ATTR_DKNM>
@@ -71,6 +71,10 @@
 		<RECORD id="ddm_table_cpro.ape_recurringhdrarnf">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_recurringhdrarnf">APE_RECURRINGHDR</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ape_recurringhdrarnf">ARNF</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ape_recurringhdrasiz">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_recurringhdrasiz">APE_RECURRINGHDR</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ape_recurringhdrasiz">ASIZ</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ape_recurringhdrbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ape_recurringhdrbsho">APE_RECURRINGHDR</DD_TABLE_ALIAS>

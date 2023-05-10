@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ape_mancheckhdr">A0B7B345EE56D927E09A408E6C1DFFC4</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ape_mancheckhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ape_mancheckhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ape_mancheckhdr">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ape_mancheckhdr">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ape_mancheckhdr">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ape_mancheckhdr">20230510</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ape_mancheckhdr">20230510</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ape_mancheckhdr">163636</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ape_mancheckhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ape_mancheckhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ape_mancheckhdr">BATCH_KEY</DD_ATTR_DKNM>
@@ -1307,6 +1307,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.ape_mancheckhdrcommentsi">APE_MANCHECKHDR </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.ape_mancheckhdrcommentsi">COMMENTS        </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.ape_mancheckhdrcommentsi">I</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.ape_mancheckhdrcommentsx">
+			<DD_TABLE_ALIAS id="ddm_column_opts.ape_mancheckhdrcommentsx">APE_MANCHECKHDR </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.ape_mancheckhdrcommentsx">COMMENTS        </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.ape_mancheckhdrcommentsx">X</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">

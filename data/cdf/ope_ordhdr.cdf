@@ -1586,6 +1586,12 @@ rem --- Create Empty Availability window
 	mwin!=cwin!.getControl(15999)
 	mwin!.setSize(grid!.getWidth(), mwin!.getHeight())
 
+rem --- Resize customer comments box (display only) to align w/ Order/Invoice Comments (memo_1024)
+
+	cmts!=callpoint!.getControl("<<DISPLAY>>.COMMENTS")
+	memo!=callpoint!.getControl("OPE_ORDHDR.MEMO_1024")
+	cmts!.setSize(memo!.getWidth(),cmts!.getHeight())
+
 [[OPE_ORDHDR.ASVA]]
 rem --- Check Ship-to's
 

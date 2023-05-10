@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apt_invhdr_arc">8457477C9CB78B39AE28BA75572C9682</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apt_invhdr_arc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_invhdr_arc">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apt_invhdr_arc">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_invhdr_arc">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_invhdr_arc">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apt_invhdr_arc">20230510</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_invhdr_arc">20230510</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_invhdr_arc">163932</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_invhdr_arc"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_invhdr_arc">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_invhdr_arc">PRIMARY</DD_ATTR_DKNM>
@@ -96,6 +96,10 @@
 		<RECORD id="ddm_table_cpro.apt_invhdr_arcarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.apt_invhdr_arcarec">APT_INVHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.apt_invhdr_arcarec">AREC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.apt_invhdr_arcasiz">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.apt_invhdr_arcasiz">APT_INVHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.apt_invhdr_arcasiz">ASIZ</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.apt_invhdr_arcbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.apt_invhdr_arcbsho">APT_INVHDR_ARC  </DD_TABLE_ALIAS>
