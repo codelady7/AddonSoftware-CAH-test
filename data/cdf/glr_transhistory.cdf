@@ -38,6 +38,14 @@ rem --- Check for Ending Period before Beginning Period
 		endif
 	endif
 
+rem --- If Query option was selected, launch query (otherwise report will run)
+
+	if callpoint!.getColumnData("GLR_TRANSHISTORY.PICK_LISTBUTTON")="Q"
+		gosub launch_query
+		callpoint!.setStatus("ABORT")
+	endif
+	
+
 [[GLR_TRANSHISTORY.BEG_GL_PER.AVAL]]
 rem --- Verify haven't exceeded calendar total periods for beginning fiscal year
 	period$=callpoint!.getUserInput()
@@ -277,6 +285,63 @@ rem --- Clear and disable fields when transaction date entered
 	endif
 
 [[GLR_TRANSHISTORY.<CUSTOM>]]
+rem ==============================================
+launch_query: 
+rem in: begper$ (YYYYMM), endper$ (YYYYMM)
+rem ==============================================
+
+rem --- launch query instead of report
+
+gl_adt_no$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.GL_ADT_NO"),2)
+trns_date$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.TRNS_DATE"),2)
+beg_acct$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.GL_ACCOUNT_1"),2)
+end_acct$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.GL_ACCOUNT_2"),2)
+jrnl_id$=cvs(callpoint!.getColumnData("GLR_TRANSHISTORY.PICK_JOURNAL_ID"),2)
+
+dim filter_defs$[10,2]
+filter_defs$[1,0]="GLT_TRANSDETAIL.FIRM_ID"
+filter_defs$[1,1]="='"+firm_id$+"'"
+filter_defs$[1,2]="LOCK"
+if gl_adt_no$<>""
+	filter_defs$[2,0]="GLT_TRANSDETAIL.GL_ADT_NO"
+	filter_defs$[2,1]="='"+gl_adt_no$+"'"
+endif
+if trns_date$<>""
+	filter_defs$[3,0]="GLT_TRANSDETAIL.TRNS_DATE"
+	filter_defs$[3,1]="='"+trns_date$+"'"
+endif
+if num(begper$)<>0
+	filter_defs$[4,0]="GLT_TRANSDETAIL.POSTING_PER"
+	filter_defs$[4,1]=">='"+begper$(5,2)+"'"
+	filter_defs$[5,0]="GLT_TRANSDETAIL.POSTING_YEAR"
+	filter_defs$[5,1]=">='"+begper$(1,4)+"'"
+endif
+if num(endper$)<>0
+	filter_defs$[6,0]="GLT_TRANSDETAIL.POSTING_PER"
+	filter_defs$[6,1]="<='"+endper$(5,2)+"'"
+	filter_defs$[7,0]="GLT_TRANSDETAIL.POSTING_YEAR"
+	filter_defs$[7,1]="<='"+endper$(1,4)+"'"
+endif
+if beg_acct$<>""
+	filter_defs$[8,0]="GLT_TRANSDETAIL.GL_ACCOUNT"
+	filter_defs$[8,1]=">='"+beg_acct$+"'"
+endif
+if end_acct$<>""
+	filter_defs$[9,0]="GLT_TRANSDETAIL.GL_ACCOUNT"
+	filter_defs$[9,1]="<='"+end_acct$+"'"
+endif
+if jrnl_id$<>""
+	filter_defs$[10,0]="GLT_TRANSDETAIL.JOURNAL_ID"
+	filter_defs$[10,1]="='"+jrnl_id$+"'"
+endif
+
+call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,Form!,"GL_AMOUNT_INQ","",table_chans$[all],
+:	"",filter_defs$[all],search_defs$[all]
+
+return
+
+
+
 #include [+ADDON_LIB]std_functions.aon
 
 
