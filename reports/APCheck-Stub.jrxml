@@ -269,7 +269,8 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="46" splitType="Stretch">
+		<band height="28" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle radius="2">
 				<reportElement positionType="FixRelativeToBottom" x="7" y="0" width="590" height="13" backcolor="#EBF0FA" uuid="81c1b86c-e5f9-4f81-bff0-7c440b2d3e00"/>
 				<graphicElement>
