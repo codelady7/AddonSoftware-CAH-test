@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glr_transhistory">020905D5B1A167DB3A310D24B4B843C3</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glr_transhistory">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glr_transhistory">20060602</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glr_transhistory">20230511</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glr_transhistory">20230511</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glr_transhistory">182048</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glr_transhistory">20230512</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glr_transhistory">20230512</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glr_transhistory">120952</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glr_transhistory"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glr_transhistory">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glr_transhistory"></DD_ATTR_DKNM>
@@ -889,14 +889,14 @@
 			<DD_DVAR_NAME id="ddm_column_ldat.glr_transhistorypick_listbutton01">PICK_LISTBUTTON </DD_DVAR_NAME>
 			<DD_ATTR_SEQ id="ddm_column_ldat.glr_transhistorypick_listbutton01">01</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_column_ldat.glr_transhistorypick_listbutton01">D</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorypick_listbutton01">Detail</DD_ATTR_LDAT_DS>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorypick_listbutton01">Detail Report</DD_ATTR_LDAT_DS>
 		</RECORD>
 		<RECORD id="ddm_column_ldat.glr_transhistorypick_listbutton02">
 			<DD_TABLE_ALIAS id="ddm_column_ldat.glr_transhistorypick_listbutton02">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_ldat.glr_transhistorypick_listbutton02">PICK_LISTBUTTON </DD_DVAR_NAME>
 			<DD_ATTR_SEQ id="ddm_column_ldat.glr_transhistorypick_listbutton02">02</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_column_ldat.glr_transhistorypick_listbutton02">S</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorypick_listbutton02">Summary</DD_ATTR_LDAT_DS>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.glr_transhistorypick_listbutton02">Summary Report</DD_ATTR_LDAT_DS>
 		</RECORD>
 		<RECORD id="ddm_column_ldat.glr_transhistorypick_listbutton03">
 			<DD_TABLE_ALIAS id="ddm_column_ldat.glr_transhistorypick_listbutton03">GLR_TRANSHISTORY</DD_TABLE_ALIAS>
