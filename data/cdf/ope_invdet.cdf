@@ -1757,7 +1757,10 @@ update_record_fields: rem --- Use UM_SOLD related <DISPLAY> fields to update the
 rem ==========================================================================
 
 	conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
-	if conv_factor=0 then conv_factor=1
+	if conv_factor=0 then
+		conv_factor=1
+		callpoint!.setColumnData("OPE_INVDET.CONV_FACTOR",str(conv_factor))
+	endif
 	unit_cost=num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_COST_DSP"))/conv_factor
 	callpoint!.setColumnData("OPE_INVDET.UNIT_COST",str(unit_cost))
 	qty_ordered=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))*conv_factor
