@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-05-09
+ Report Date:   2023-05-15
  Report Branch: AddonSoftware 23.00
  Last Release:  AddonSoftware 22.14
 =======================================================================================================================================
@@ -261,3 +261,14 @@ Modified: data/sync/adm_query~[01007514OP].xml
 Modified: op/src/opf_orddet_items.aon
 
 =======================================================================================================================================
+Revision: dec21ab6e12401838adf5c6d3a1f8ae2ada5b1dd
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/15/2023 9:47:53 AM
+Message:
+Bug 10659: Updated on form CONV_FACTOR field if the value is changed
+from zero to one.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
