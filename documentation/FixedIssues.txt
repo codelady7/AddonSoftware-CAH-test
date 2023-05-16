@@ -272,3 +272,18 @@ Modified: data/bar/ope_invdet.xml
 Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_invdet.cdf
 Modified: data/cdf/ope_orddet.cdf
+
+=======================================================================================================================================
+Revision: 2399358810806464b3b5429ec67a0d81d52d561f
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/15/2023 5:04:19 PM
+Message:
+Bug 10660: Prevented the printing of negative checks.
+
+----
+Modified: ap/src/apr_apchecks.aon
+Modified: data/bar/ape_mancheckhdr.xml
+Modified: data/cdf/ape_mancheckhdr.cdf
+Modified: data/sync/ads_messages~[01007514AP].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
