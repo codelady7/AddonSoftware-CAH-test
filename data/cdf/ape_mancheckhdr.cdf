@@ -620,6 +620,14 @@ if dont_write$="Y"
 	break
 endif
 
+rem --- Negative checks are not allowed.
+	if num(callpoint!.getColumnData("<<DISPLAY>>.DISP_TOT_CHECK"))<0 then
+		msg_id$="AP_NEGATIVE_CHK"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[<<DISPLAY>>.CHECK_ACCTS.AVAL]]
 rem --- Initialize CHECK_NO for the selected checking account if it has changed
 	bnk_acct_cd$=pad(callpoint!.getUserInput(),len(rec_data.bnk_acct_cd$))
