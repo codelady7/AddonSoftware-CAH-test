@@ -585,6 +585,7 @@ rem --- Init Read
             endif
         wend
     endif
+    
 
 rem --- Totals
 
@@ -1162,6 +1163,16 @@ check_face: rem --- Print Check
     if restart$="Y" and ach_payment$="Y" then return 
 
 	chk_amt=t[3]
+    if chk_amt<0 then
+        rem --- Negative checks are not allowed.
+        msg_id$="AP_NEGATIVE_CHK"
+        gosub disp_message
+        
+        msg_id$="AP_RUN_PAY_SELECTION"
+        gosub disp_message
+
+        goto all_done
+    endif
     if chk_amt <= 0 then 
         chk_exactly$=Translate!.getTranslation("AON_***VOID***VOID***VOID***VOID***")
         chk_amt_str$=Translate!.getTranslation("AON_***VOID***")
