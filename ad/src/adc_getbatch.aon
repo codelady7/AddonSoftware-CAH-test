@@ -30,10 +30,11 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=2,begfile=1,endfile=files
+    files=3,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="adm-09",ids$[1]="ADM_PROCMASTER"
     files$[2]="adm-19",ids$[2]="ADM_PROCDETAIL"
+    files$[3]="ads_recordlocks.dat",ids$[3]="ADS_RECORDLOCKS"
 
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
@@ -41,10 +42,11 @@ rem --- Open/Lock files
     
     adm09_dev=channels[1]
     adm19_dev=channels[2]
+    adsRecordLocks_dev=channels[3]
 
 rem --- Dimension string templates
 
-    dim adm09a$:templates$[1],adm19a$:templates$[2]
+    dim adm09a$:templates$[1],adm19a$:templates$[2],adsRecordLocks$:templates$[3]
 
 rem --- Setup default values
 
@@ -96,7 +98,14 @@ rem --- The +BATCH_NO stbl will be set in this form's callpoint
 		key_pfx$=""
 	endif
 
-    call stbl("+DIR_SYP")+"bam_run_prog.bbj","ADM_PROCBATCHES",stbl("+USER_ID"),"MNT",key_pfx$,table_chans$[all],"",dflt_data$[all]
+	if adm19a.new_batch$="Y" then
+	    rem --- Entry Form
+	    procBatch$="ADM_PROCBATCHES"
+    else
+        rem --- Selection Grid
+        procBatch$="ADM_PROCBATCHSEL"
+    endif
+    call stbl("+DIR_SYP")+"bam_run_prog.bbj",procBatch$,stbl("+USER_ID"),"MNT",key_pfx$,table_chans$[all],"",dflt_data$[all]
     x$=stbl("!CLEAR","+ALLOW_NEW_BATCH")
     x$=stbl("!CLEAR","+BATCH_DESC")
 
