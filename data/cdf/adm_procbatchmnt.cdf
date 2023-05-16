@@ -107,47 +107,51 @@ if process_id$<>""
 		wend
 		if dd_key_number$="" then continue
 
-		num_files=1
-		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-		open_tables$[1]=dd_table_alias$,open_opts$[1]="OTA"
-		gosub open_tables
-		file_dev=num(open_chans$[1])
-		dim file_rec$:open_tpls$[1]
+		rem --- For tables with a trans_status column, skip records where trans_status$<>"E".
+		sqlprep$="SELECT COUNT(*) FROM DDM_TABLE_COLS WHERE DD_TABLE_ALIAS='"+dd_table_alias$+"' AND DD_DATA_NAME='TRANS_STATUS'"
+		sql_chan=sqlunt
+		sqlopen(sql_chan,err=*next)stbl("+DBNAME")
+		sqlprep(sql_chan)sqlprep$
+		dim read_tpl$:sqltmpl(sql_chan)
+		sqlexec(sql_chan)
 
-		if file_dev
-			orph_batches! = BBjAPI().makeVector()
-			sv_batch$=""
-			read (file_dev,key=firm_id$,knum=num(dd_key_number$),dom=*next)
-			while 1
-				read record (file_dev,end=*break)file_rec$
-				rem --- If a table with a trans_status column, like opt_invdet, is added to a adm_proctables process, then
-				rem --- skip records where trans_status$<>"E". (Performance is going to stink reading every record in opt_invdet.)
-				if file_rec.batch_no$<>sv_batch$
-					sv_batch$=file_rec.batch_no$	
-					found=0			
-					read (adm_procbatches_dev,key=firm_id$+process_id$+sv_batch$,dom=*next); found=1
-					if !found then orph_batches!.addItem(sv_batch$)
-				endif
-			wend
-			x=orph_batches!.size()
-
-			if x
-				msg_id$="AD_BATCH_ORPH"
-				dim msg_tokens$[2]
-				batches$=""
-				msg_tokens$[1]=cvs(adm_proctables.dd_table_alias$,3)
-				for y=0 to x-1
-					batches$=batches$+orph_batches!.getItem(y)+$0A$
-				next y
-				msg_tokens$[2]=batches$
-				gosub disp_message
-			endif				
-
-			num_files=1
-			dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-			open_tables$[1]=dd_table_alias$,open_opts$[1]="C"
-			gosub open_tables
+		read_tpl$=sqlfetch(sql_chan,err=*break)
+		if num(read_tpl$)=0 then
+			where_transStatus$=""
+		else
+			where_transStatus$=" AND TRANS_STATUS='E'"
 		endif
+
+		sqlprep$="SELECT DISTINCT BATCH_NO FROM "+dd_table_alias$+" WHERE FIRM_ID='"+firm_id$+"'"+where_transStatus$
+		sql_chan=sqlunt
+		sqlopen(sql_chan,err=*next)stbl("+DBNAME")
+		sqlprep(sql_chan)sqlprep$
+		dim read_tpl$:sqltmpl(sql_chan)
+		sqlexec(sql_chan)
+
+		orph_batches! = BBjAPI().makeVector()
+		orph_grid_batches!=BBjAPI().makeVector()
+		while 1
+			read_tpl$=sqlfetch(sql_chan,err=*break) 
+			batch_no$=read_tpl.batch_no$
+
+		rem --- Is this an orphan batch?
+			found=0
+			read(adm_procbatches_dev,key=firm_id$+process_id$+batch_no$,dom=*next); found=1
+			if !found then orph_batches!.addItem(batch_no$)
+		wend
+
+		if orph_batches!.size() then
+			msg_id$="AD_BATCH_ORPH"
+			dim msg_tokens$[2]
+			batches$=""
+			msg_tokens$[1]=cvs(adm_proctables.dd_table_alias$,3)
+			for y=0 to orph_batches!.size()-1
+				batches$=batches$+orph_batches!.getItem(y)+$0A$
+			next y
+			msg_tokens$[2]=batches$
+			gosub disp_message
+		endif				
 	wend
 
 	if msg_id$=""

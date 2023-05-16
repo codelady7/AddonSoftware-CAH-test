@@ -1,3 +1,43 @@
+[[ADM_PROCBATCHES.AOPT-SELB]]
+rem --- set exit stbl to be this batch number
+
+x$=stbl("+BATCH_NO",callpoint!.getColumnData("ADM_PROCBATCHES.BATCH_NO"))
+
+lock_record$=firm_id$+callpoint!.getColumnData("ADM_PROCBATCHES.PROCESS_ID")+callpoint!.getColumnData("ADM_PROCBATCHES.BATCH_NO")
+lock_record$=lock_record$+"S"; rem --- Must add "S" at end of lock_record$ when checking for supplemental lock
+lock_type$="C"; rem --- check for lock
+lock_status$=""
+lock_disp$="M"
+call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHSEL",lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+
+if lock_status$=""
+	lock_record$=firm_id$+callpoint!.getColumnData("ADM_PROCBATCHES.PROCESS_ID")+callpoint!.getColumnData("ADM_PROCBATCHES.BATCH_NO")
+	lock_type$="S"; rem --- add supplemental lock
+	lock_status$=""
+	lock_disp$="M"
+	call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHES",lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+
+	if lock_status$="" then callpoint!.setStatus("EXIT")
+endif
+
+[[ADM_PROCBATCHES.ARNF]]
+rem --- disallow user entering non-existent batch number
+	if stbl("+ALLOW_NEW_BATCH",err=*next)<>"Y"
+		callpoint!.setStatus("CLEAR-NEWREC")
+	else
+rem --- set defaults
+
+		callpoint!.setColumnData("ADM_PROCBATCHES.DATE_OPENED",stbl("+SYSTEM_DATE"),1)
+		callpoint!.setColumnData("ADM_PROCBATCHES.LSTUSE_DATE",stbl("+SYSTEM_DATE"),1)
+		callpoint!.setColumnData("ADM_PROCBATCHES.LSTUSE_TIME",date(0:"%hz%mz"),1)
+		callpoint!.setColumnData("ADM_PROCBATCHES.PROCESS_ID",stbl("+PROCESS_ID"),1)
+		callpoint!.setColumnData("ADM_PROCBATCHES.TIME_OPENED",date(0:"%hz%mz"),1)
+		callpoint!.setColumnData("ADM_PROCBATCHES.USER_ID",sysinfo.user_id$,1)
+		callpoint!.setColumnData("ADM_PROCBATCHES.DESCRIPTION",stbl("+BATCH_DESC"),1)
+		callpoint!.setStatus("MODIFIED")
+		callpoint!.setColumnEnabled("ADM_PROCBATCHES.BATCH_NO",0)
+	endif
+
 [[ADM_PROCBATCHES.BATCH_NO.AVAL]]
 rem --- don't allow user to assign new batch# -- use Barista seq# (BATCH_NO)
 rem --- if user made null entry (to assign next seq automatically) then getRawUserInput() will be empty
@@ -16,29 +56,14 @@ if cvs(callpoint!.getRawUserInput(),3)<>""
 		callpoint!.setStatus("ABORT")
 	endif
 endif
-[[ADM_PROCBATCHES.ARNF]]
-rem --- disallow user entering non-existent batch number
-	if stbl("+ALLOW_NEW_BATCH",err=*next)<>"Y"
-		callpoint!.setStatus("CLEAR-NEWREC")
-	else
-rem --- set defaults
 
-		callpoint!.setColumnData("ADM_PROCBATCHES.DATE_OPENED",stbl("+SYSTEM_DATE"),1)
-		callpoint!.setColumnData("ADM_PROCBATCHES.LSTUSE_DATE",stbl("+SYSTEM_DATE"),1)
-		callpoint!.setColumnData("ADM_PROCBATCHES.LSTUSE_TIME",date(0:"%hz%mz"),1)
-		callpoint!.setColumnData("ADM_PROCBATCHES.PROCESS_ID",stbl("+PROCESS_ID"),1)
-		callpoint!.setColumnData("ADM_PROCBATCHES.TIME_OPENED",date(0:"%hz%mz"),1)
-		callpoint!.setColumnData("ADM_PROCBATCHES.USER_ID",sysinfo.user_id$,1)
-		callpoint!.setColumnData("ADM_PROCBATCHES.DESCRIPTION",stbl("+BATCH_DESC"),1)
-		callpoint!.setStatus("MODIFIED")
-		callpoint!.setColumnEnabled("ADM_PROCBATCHES.BATCH_NO",0)
-	endif
 [[ADM_PROCBATCHES.BEND]]
 rem --- Notify user of the process aborting and release
 
 	msg_id$="PROCESS_ABORT"
 	gosub disp_message
 	release
+
 [[ADM_PROCBATCHES.BTBL]]
 callpoint!.setTableColumnAttribute("ADM_PROCBATCHES.PROCESS_ID","PVAL",$22$+stbl("+PROCESS_ID")+$22$)
 if stbl("+ALLOW_NEW_BATCH")<>"Y"
@@ -49,19 +74,6 @@ if stbl("+ALLOW_NEW_BATCH")<>"Y"
 		callpoint!.setTableColumnAttribute("ADM_PROCBATCHES.BATCH_NO","OPTS",batch_opts$)
 	endif
 endif
-[[ADM_PROCBATCHES.AOPT-SELB]]
-rem --- set exit stbl to be this batch number
 
-x$=stbl("+BATCH_NO",callpoint!.getColumnData("ADM_PROCBATCHES.BATCH_NO"))
 
-lock_table$=callpoint!.getAlias()
-lock_record$=firm_id$+callpoint!.getColumnData("ADM_PROCBATCHES.PROCESS_ID")+callpoint!.getColumnData("ADM_PROCBATCHES.BATCH_NO")
-lock_type$="S"
-lock_status$=""
-lock_disp$="M"
 
-call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-
-if lock_status$=""
-	callpoint!.setStatus("EXIT")
-endif
