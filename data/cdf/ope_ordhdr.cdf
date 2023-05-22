@@ -3011,6 +3011,7 @@ rem --- Convert Quote?
 rem --- Enable/disable expire date based on value, and order acknowledgements
 
 	if inv_type$ = "S" then
+		callpoint!.setColumnData("OPE_ORDHDR.EXPIRE_DATE","",1)
 		callpoint!.setColumnEnabled("OPE_ORDHDR.EXPIRE_DATE", 0)
 		callpoint!.setOptionEnabled("OACK",1)
 	else

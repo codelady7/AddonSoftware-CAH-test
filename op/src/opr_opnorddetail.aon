@@ -95,6 +95,7 @@ rem --- Assign form input values to local variables
     open_shipped$=Option!.getOptionData("OPEN_SHIPPED")
     quoted$=Option!.getOptionData("QUOTED")
     quote_new$=Option!.getOptionData("QUOTE_NEW")
+    quote_expired$=Option!.getOptionData("QUOTE_EXPIRED")
     quote_hold$=Option!.getOptionData("QUOTE_HOLD")
     non_stock$=Option!.getOptionData("NON_STOCK")
     non_stock_option$  =  option!.getOptionData("NON_STOCK_OPTION")

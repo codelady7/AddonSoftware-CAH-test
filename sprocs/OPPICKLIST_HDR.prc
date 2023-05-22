@@ -36,7 +36,7 @@ chdir barista_wd$
 rem --- create the in memory recordset for return
 
 dataTemplate$ = ""
-dataTemplate$ = dataTemplate$ + "order_no:C(9),order_date:C(10),"
+dataTemplate$ = dataTemplate$ + "order_no:C(9),order_date:C(10),expire_date:C(10),"
 datatemplate$ = datatemplate$ + "bill_addr_line1:C(30),bill_addr_line2:C(30),bill_addr_line3:C(30),"
 datatemplate$ = datatemplate$ + "bill_addr_line4:C(30),bill_addr_line5:C(30),bill_addr_line6:C(30),"
 datatemplate$ = datatemplate$ + "bill_addr_line7:C(30),"
@@ -158,6 +158,7 @@ rem --- Initialize Data
 	dim c$(max_custAddr_lines * bill_custLine_len)
 	
 	order_date$ =   ""
+    expire_date$ =   ""
 	slspsn_code$ =  ""
 	slspsn_desc$ =  ""
 	cust_po_no$ =   ""
@@ -181,6 +182,7 @@ rem --- Main Read
 	
 	ar_inv_no$ =    ope01a.ar_inv_no$
 	order_date$ =   func.formatDate(ope01a.order_date$)
+    if cvs(ope01a.expire_date$,2)<>"" then expire_date$=func.formatDate(ope01a.expire_date$)
 	cust_po_no$ =   ope01a.customer_po_no$
 	ship_via$ =     ope01a.ar_ship_via$
     shipping_id$ =  ope01a.shipping_id$
@@ -309,6 +311,7 @@ rem --- Format addresses to be bottom justified
     data! = rs!.getEmptyRecordData()
     data!.setFieldValue("ORDER_NO", order_no$+" "+ope01a.backord_flag$)
     data!.setFieldValue("ORDER_DATE", order_date$)
+    data!.setFieldValue("EXPIRE_DATE", expire_date$)
 
     data!.setFieldValue("BILL_ADDR_LINE1", b$((bill_addrLine_len*0)+1,bill_addrLine_len))
     data!.setFieldValue("BILL_ADDR_LINE2", b$((bill_addrLine_len*1)+1,bill_addrLine_len))

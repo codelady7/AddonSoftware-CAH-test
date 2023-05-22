@@ -86,7 +86,7 @@ rem --- Initializations
 rem --- column heading
 
     if col_format$="Y" then
-        columns = 28
+        columns = 29
     else
         columns = 13
     endif
@@ -121,6 +121,7 @@ rem --- column heading
         columns$[26,0]="Extended Cost",columns$[26,1]="N",columns$[26,2]="10"
         columns$[27,0]="Profit",columns$[27,1]="N",columns$[27,2]="10"
         columns$[28,0]="GP%",columns$[28,1]="N",columns$[28,2]="10"
+        columns$[29,0]="Expire Date",columns$[29,1]="C",columns$[29,2]="12",columns$[29,10]="T"
     endif
 
     call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
@@ -182,12 +183,16 @@ rem    if end_ship_date$="" then headings$[5]=headings$[5]+" -- Ending Ship Date
     h9$="Quotes: "
     if quoted$="Y" then
         if quote_new$="Y" then h9$=h9$+"New"
-        if quote_hold$="Y" then
+        if quote_expired$="Y" then
             if quote_new$="Y" then h9$=h9$+" + "
+            h9$=h9$+"Expired"
+        endif
+        if quote_hold$="Y" then
+            if quote_new$="Y" or quote_expired$="Y" then h9$=h9$+" + "
             h9$=h9$+"Held"
         endif
         if non_stock$="Y" then
-            if quote_new$="Y" or quote_hold$="Y" then h9$=h9$+" + "
+            if quote_new$="Y" or quote_expired$="Y" or quote_hold$="Y" then h9$=h9$+" + "
             h9$=h9$+"Non-Stocks"
         endif
     else
@@ -252,6 +257,7 @@ rem        if end_ship_date$<>"" and ope01a.shipmnt_date$>end_ship_date$ then co
         if ope01a.invoice_type$="P" and quoted$="Y" then
             if quote_new$="Y" and ope01a.credit_flag$<>"C" then skipRecord=0
             if quote_hold$="Y" and ope01a.credit_flag$="C" then skipRecord=0
+            if quote_expired$="Y" and cvs(ope01a.expire_date$,2)<>"" and when$>ope01a.expire_date$ then skipRecord=0
         endif
         if ope01a.invoice_type$="S" and open$="Y" then
             rem --- Check Fulfillment to see if this Order has been shipped
@@ -614,12 +620,23 @@ ord_header: rem --- Print Order Header
     recs=recs+1
     u2=u2+1
 
+if ope01a.invoice_type$="P" and cvs(ope01a.expire_date$,2)<>"" then
+    xwk = fnblank(2)
+    if when$>ope01a.expire_date$ then
+    Translate!.getTranslation("AON_PRINTED")
+        OutVect!.addItem(Translate!.getTranslation("AON_EXPIRED")+": "+fndate$(ope01a.expire_date$)+$00$+"B")
+    else
+        OutVect!.addItem(Translate!.getTranslation("AON_EXPIRES")+": "+fndate$(ope01a.expire_date$))
+    endif
+    xwk = fnblank(11)
+endif
+
     if ope01a.lock_status$<>"N" then 
         xwk = fnblank(2)
         OutVect!.addItem("**Locked Flag="+ope01a.lock_status$+"**")
         xwk = fnblank(11)
     endif
-
+    
     xwk = fnblank(14)
     OutVect!.addItem("Cd   Whs"+$00$+"B")
     OutVect!.addItem("Prd"+$00$+"B")
@@ -721,6 +738,11 @@ print_detail: rem --- Print Detail
                 OutVect!.addItem(str(cost:m4$))
                 OutVect!.addItem(str(price-cost:m4$))
                 OutVect!.addItem(str(fnd(price-cost,price):m9$))
+                if cvs(ope01a.expire_date$,2)<>"" then
+                    OutVect!.addItem(fndate$(ope01a.expire_date$))
+                else
+                    OutVect!.addItem("")
+                endif
         else
             xwk = fnblank(10)
         endif

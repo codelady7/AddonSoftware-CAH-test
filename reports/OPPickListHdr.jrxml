@@ -43,6 +43,7 @@
 	<queryString language="SQL">
 		<![CDATA[call OPPICKLIST_HDR($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{SELECTED_WHSE},$P{CUST_MASK},$P{CUST_SIZE},$P{BARISTA_WD})]]>
 	</queryString>
+	<field name="EXPIRE_DATE" class="java.lang.String"/>
 	<field name="ORDER_DATE" class="java.lang.String"/>
 	<field name="BILL_ADDR_LINE1" class="java.lang.String"/>
 	<field name="BILL_ADDR_LINE2" class="java.lang.String"/>
@@ -1636,7 +1637,7 @@
 				<textFieldExpression><![CDATA[$P{PICK_OR_QUOTE}=="S" ? "PICKING LIST":"QUOTATION"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="278" y="4" width="265" height="34" uuid="949cfc5b-d883-4250-9fc7-33804f561923">
+				<reportElement x="278" y="3" width="265" height="34" uuid="949cfc5b-d883-4250-9fc7-33804f561923">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -1647,7 +1648,7 @@
 				<textFieldExpression><![CDATA[$P{PICK_OR_QUOTE}=="S" ? "PICKING LIST":"QUOTATION"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="278" y="40" width="265" height="20" uuid="f6d0c309-6f90-456b-803d-8e4ecf37f5dd">
+				<reportElement x="278" y="41" width="265" height="20" uuid="f6d0c309-6f90-456b-803d-8e4ecf37f5dd">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -1801,6 +1802,19 @@
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AON_CUSTOMER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="31" width="100" height="15" uuid="74a98950-ddb1-4ca9-b686-ce1c81c1d45a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<printWhenExpression><![CDATA[$P{PICK_OR_QUOTE}=="P" && !$F{EXPIRE_DATE}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["("+$R{AON_EXPIRES}+": "+$F{EXPIRE_DATE}+")"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
