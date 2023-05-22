@@ -248,56 +248,58 @@ rem --- Main Read
 
     rem --- Heading (bill-to address)
         
-        declare BBjTemplatedString arm01!
-        declare BBjTemplatedString arm03!
-        declare BBjTemplatedString ope31!
-        
-        arm01! = BBjAPI().makeTemplatedString(fattr(arm01a$))
-        ope31! = BBjAPI().makeTemplatedString(fattr(ope31a$))
-        arm03! = BBjAPI().makeTemplatedString(fattr(arm03a$))
+    declare BBjTemplatedString arm01!
+    declare BBjTemplatedString arm03!
+    declare BBjTemplatedString ope31!
+    
+    arm01! = BBjAPI().makeTemplatedString(fattr(arm01a$))
+    arm03! = BBjAPI().makeTemplatedString(fattr(arm03a$))
+    ope31! = BBjAPI().makeTemplatedString(fattr(ope31a$))
 
-        found = 0
-        start_block = 1
+    found = 0
+    start_block = 1
 
-        if start_block then
-            read record (arm01_dev, key=firm_id$+ope01a.customer_id$, dom=*endif) arm01!
-            read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"B", dom=*next) ope31!
+    if start_block then
+        read record (arm01_dev, key=firm_id$+ope01a.customer_id$, dom=*endif) arm01!
+        needAddress=1
+        read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"B", dom=*next) ope31!; needAddress=0
+        if !needAddress then
             b$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
             b$ = pad(arm01!.getFieldAsString("CUSTOMER_NAME"), bill_addrLine_len) + b$
-            if cvs(b$((max_billAddr_lines-1)*bill_addrLine_len),2)="" then
-                    b$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + b$
-            endif
-            found = 1
-        endif
-
-        if !found then
-            b$ = pad("Customer not found", bill_addrLine_len*max_billAddr_lines)
-        endif
-        
-    rem --- Ship-To
-    
-        c$ = b$
-        start_block = 1
-
-        if ope01a.shipto_type$ = "M" then 
-            find record (ope31_dev, key=firm_id$+"E"+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S",knum="AO_STATUS", dom=*endif) ope31!
-            c$ = func.formatAddress(table_chans$[all], ope31!, cust_addrLine_len, max_custAddr_lines)
-            if cvs(c$((max_custAddr_lines-1)*cust_addrLine_len),2)="" then
-                rem --- There is room left in the address block to include the customer_id
-                c$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + c$
-            endif
-
-            readrecord(arsParams_dev,key=firm_id$+"AR00",dom=*next)arsParams$
-            if ope01a.customer_id$=arsParams.customer_id$ then
-                c$(1,bill_addrLine_len)=func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$)+" "+arm01!.getFieldAsString("CUSTOMER_NAME")
-                b$ = c$
-            endif
         else
-            if ope01a.shipto_type$ = "S" then
-                find record (arm03_dev,key=firm_id$+ope01a.customer_id$+ope01a.shipto_no$, dom=*endif) arm03!
-                c$ = func.formatAddress(table_chans$[all], arm03!, cust_addrLine_len, max_custAddr_lines)
-            endif
+            b$ = func.formatAddress(table_chans$[all], arm01!, bill_addrLine_len, max_billAddr_lines-1)
         endif
+
+        if cvs(b$((max_billAddr_lines-1)*bill_addrLine_len),2)="" then
+                b$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + b$
+        endif
+        found = 1
+    endif
+
+    if !found then
+        b$ = pad("Customer not found", bill_addrLine_len*max_billAddr_lines)
+    endif
+        
+rem --- Ship-To
+    
+    c$ = b$
+    start_block = 1
+
+    if ope01a.shipto_type$ <> "B" then 
+        needAddress=1
+        read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S", dom=*next) ope31!; needAddress=0
+        if !needAddress or ope01a.shipto_type$="M" then
+            c$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
+        else
+            rem --- Need non-manual ship-to address
+            find record (arm03_dev,key=firm_id$+ope01a.customer_id$+ope01a.shipto_no$, dom=*next) arm03!
+            c$ = func.formatAddress(table_chans$[all], arm03!, cust_addrLine_len, max_custAddr_lines)
+        endif
+
+        if cvs(c$((max_billAddr_lines-1)*bill_addrLine_len),2)="" then
+                c$ = pad(func.alphaMask(arm01!.getFieldAsString("CUSTOMER_ID"), cust_mask$), bill_addrLine_len) + c$
+        endif
+    endif
 
     rem --- Terms
 
