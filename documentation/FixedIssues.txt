@@ -31,3 +31,16 @@ BINP code to APE_MANCHECKDIST AGRN.
 ----
 Modified: data/bar/ape_mancheckdist.xml
 Modified: data/cdf/ape_mancheckdist.cdf
+
+=======================================================================================================================================
+Revision: ea0adfb004cf6ccbf8885690e03a4b6325d597a4
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/25/2023 3:22:22 PM
+Message:
+Bug 10671: Set "vendor_1099" DevObject for new Vendors.
+----
+Modified: data/bar/apm_vendhist.xml
+Modified: data/bar/apm_vendmast.xml
+Modified: data/cdf/apm_vendhist.cdf
+Modified: data/cdf/apm_vendmast.cdf
+
