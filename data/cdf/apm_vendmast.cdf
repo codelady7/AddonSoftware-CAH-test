@@ -263,6 +263,9 @@ rem --- Disable and initialize Payment Information fields
 rem --- Set Date Opened
 	callpoint!.setColumnData("APM_VENDMAST.OPENED_DATE",sysinfo.system_date$)
 
+rem --- Hold on to vendor_1099 for apm_vendhist
+	callpoint!.setDevObject("vendor_1099",callpoint!.getColumnData("APM_VENDMAST.VENDOR_1099"))
+
 [[APM_VENDMAST.ASHO]]
 
 [[APM_VENDMAST.AWRI]]

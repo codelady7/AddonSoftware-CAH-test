@@ -182,7 +182,7 @@ rem --- initialize new record
 	callpoint!.setColumnData("APM_VENDHIST.AP_TERMS_CODE",apc_typecode.ap_terms_code$,1)
 	callpoint!.setColumnData("APM_VENDHIST.GL_ACCOUNT",apc_typecode.gl_account$,1)
 	if callpoint!.getDevObject("vendor_1099")="Y" then
-		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX",apc_typecode.irs1099_type_box,1)
+		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX",apc_typecode.irs1099_type_box$,1)
 	else
 		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","X",1)
 	endif
