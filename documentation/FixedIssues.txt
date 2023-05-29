@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-05-25
+ Report Date:   2023-05-29
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -44,3 +44,13 @@ Modified: data/bar/apm_vendmast.xml
 Modified: data/cdf/apm_vendhist.cdf
 Modified: data/cdf/apm_vendmast.cdf
 
+=======================================================================================================================================
+Revision: 0dce0b38858cc98caa6a9671e45d7bd7b51f585a
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/29/2023 4:07:56 PM
+Message:
+Bug 10671: Restored callpoint!.setStatus("MODIFIED") that was
+accidentally deleted from APM_VENDHIST ARNF.
+----
+Modified: data/bar/apm_vendhist.xml
+Modified: data/cdf/apm_vendhist.cdf
