@@ -187,6 +187,8 @@ rem --- initialize new record
 		callpoint!.setColumnData("APM_VENDHIST.IRS1099_TYPE_BOX","X",1)
 	endif
 
+	callpoint!.setStatus("MODIFIED")
+
 [[APM_VENDHIST.BDEL]]
 rem --- disallow deletion of apm-02 if any of the buckets are non-zero, or if referenced in apt-01 (open invoices)
 
