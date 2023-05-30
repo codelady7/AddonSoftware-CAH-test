@@ -171,12 +171,14 @@ new_dist=0
 dim rec$:fattr(rec_data$)
 num_recs=gridVect!.size()
 
-for wk=0 to num_recs-1
-	rec$=gridVect!.getItem(wk)
-	if cvs(rec$,3)<>""  and callpoint!.getGridRowDeleteStatus(wk)<>"Y"
-		new_dist=new_dist+num(rec.gl_post_amt$)
-	endif
-next wk
+if num_recs>0 then
+	for wk=0 to num_recs-1
+		rec$=gridVect!.getItem(wk)
+		if cvs(rec$,3)<>""  and callpoint!.getGridRowDeleteStatus(wk)<>"Y"
+			new_dist=new_dist+num(rec.gl_post_amt$)
+		endif
+	next wk
+endif
 
 callpoint!.setDevObject("dist_amt",str(new_dist))
 
