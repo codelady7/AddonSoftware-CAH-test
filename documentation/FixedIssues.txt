@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-05-29
+ Report Date:   2023-05-30
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -54,3 +54,14 @@ accidentally deleted from APM_VENDHIST ARNF.
 ----
 Modified: data/bar/apm_vendhist.xml
 Modified: data/cdf/apm_vendhist.cdf
+
+=======================================================================================================================================
+Revision: 70c8039720654dbd0677f153e1010d149d261215
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/30/2023 11:19:17 AM
+Message:
+Bug 10670: Skipped totaling GL Posting Amounts in grid when all rows in
+the grid have been deleted.
+----
+Modified: data/bar/ape_mancheckdist.xml
+Modified: data/cdf/ape_mancheckdist.cdf
