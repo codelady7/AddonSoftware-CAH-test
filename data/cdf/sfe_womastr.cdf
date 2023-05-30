@@ -602,6 +602,8 @@ rem --- Copy the Work Order
 	callpoint!.setDevObject("category",callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY"))
 	callpoint!.setDevObject("wo_loc",callpoint!.getColumnData("SFE_WOMASTR.WO_LOCATION"))
 	callpoint!.setDevObject("wo_no",callpoint!.getColumnData("SFE_WOMASTR.WO_NO"))
+	callpoint!.setDevObject("eststt_date",callpoint!.getColumnData("SFE_WOMASTR.ESTSTT_DATE"))
+	callpoint!.setDevObject("opened_date",callpoint!.getColumnData("SFE_WOMASTR.OPENED_DATE"))
 
 	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
 :		"SFE_WOCOPY",

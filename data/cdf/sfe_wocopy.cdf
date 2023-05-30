@@ -32,6 +32,9 @@ rem --- Now populate data from the old WO to the new
 	adjust_divisor=callpoint!.getDevObject("adj_div")
 	new_prod_qty=num(callpoint!.getDevObject("prod_qty"))
 	if adjust_divisor=0 adjust_divisor=new_prod_qty
+	eststt_date$=callpoint!.getDevObject("eststt_date")
+	opened_date$=callpoint!.getDevObject("opened_date")
+
 	for files=1 to 3
 		if files=1
 			woreq_dev=fnget_dev("SFE_WOOPRTN")
@@ -77,6 +80,11 @@ goto bypass_adjust; rem --- bypassing until we figure out what adjusting really 
 				endif
 			endif
 bypass_adjust:
+
+			if files=1 then
+				rem --- Set Operations require_day (per ER 7610)
+				woreq.require_date$=opened_date$
+			endif
 			if files=2 then
 				rem --- Recalculate total cost based on item's current unit price in ivm_itemwhse
 				dim itemwhse$:fnget_tpl$("@IVM_ITEMWHSE")
@@ -86,10 +94,16 @@ bypass_adjust:
 				precision 2
 				woreq.total_cost=woreq.total_units*itemwhse.unit_cost
 				precision num(callpoint!.getDevObject("iv_precision"))
+
+				rem --- Set Materials require_day (per ER 7610)
+				woreq.require_date$=eststt_date$
 			endif
 			if files=3
 				woreq.po_no$=""
 				woreq_po_line_no$=""
+
+				rem --- Set Subcontract require_day (per ER 7610)
+				woreq.require_date$=opened_date$
 			endif
 			woreq$=field(woreq$)
 			write record (woreq_devout) woreq$
@@ -99,6 +113,7 @@ bypass_adjust:
 	rem --- Capture the memo_1024 from the WO being copied
 	tmp_memo_1024$=callpoint!.getDevObject("tmp_memo_1024")
 	callpoint!.setDevObject("memo_1024",tmp_memo_1024$)
+
 [[SFE_WOCOPY.BEND]]
 rem --- Close copy channel
 
@@ -110,6 +125,7 @@ rem --- Close copy channel
 	open_tables$[4]="SFE_WOSUBCNT",open_opts$[4]="X[2_]"
 
 	gosub open_tables
+
 [[SFE_WOCOPY.BSHO]]
 rem --- Open tables for use during copy
 
@@ -132,14 +148,13 @@ rem --- Open tables for use during copy
 
 rem --- Initializations
 	callpoint!.setDevObject("memo_1024","")
+
 [[SFE_WOCOPY.WO_NO.AVAL]]
 rem --- Populate display fields
 
 	wo_dev=num(callpoint!.getDevObject("copy_chan"))
 	dim wo_mastr$:fnget_tpl$("SFE_WOMASTR")
 	wo_loc$=callpoint!.getDevObject("wo_loc")
-
-	new_wo$=callpoint!.getDevObject("wo_no")
 
 	read record (wo_dev,key=firm_id$+wo_loc$+callpoint!.getUserInput()) wo_mastr$
 
@@ -156,3 +171,6 @@ rem --- Populate display fields
 
 	rem --- Capture the memo_1024 for the WO being copied
 	callpoint!.setDevObject("tmp_memo_1024",wo_mastr.memo_1024$)
+
+
+
