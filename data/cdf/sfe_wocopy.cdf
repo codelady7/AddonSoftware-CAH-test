@@ -99,8 +99,10 @@ bypass_adjust:
 				woreq.require_date$=eststt_date$
 			endif
 			if files=3
+				rem --- Clear PO, PO Status, and PO Seq fields (per ER 7614)
 				woreq.po_no$=""
-				woreq_po_line_no$=""
+				woreq.po_status$=""
+				woreq.pur_ord_seq_ref$=""
 
 				rem --- Set Subcontract require_day (per ER 7610)
 				woreq.require_date$=opened_date$
