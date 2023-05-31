@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-05-30
+ Report Date:   2023-05-31
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -75,3 +75,13 @@ Bug 10673: Corrected the number of columns to use in the blank line
 following the Vendor Total.
 ----
 Modified: ap/src/apr_vendinv.aon
+
+=======================================================================================================================================
+Revision: a5315a5598c82901f47b8122a763bdf3d8ecd139
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/31/2023 3:41:58 PM
+Message:
+Bug 10674: Corrected the number of columns following multi-line Memos on
+the GL Transaction History Report.
+----
+Modified: gl/src/glr_transhistory.aon
