@@ -484,11 +484,16 @@ new_journal: rem --- New Sequence
     glm03a.journal_id$=glw11a.journal_id$
     glm03a.code_desc$=Translate!.getTranslation("AON_(NOT_ON_FILE)")
     glm03_key$=firm_id$+glm03a.journal_id$
+    if t1$="" then lf$="" else lf$="Y"
     t1$=glw11a.journal_id$
-    lf$=""
     find record (glm03_dev,key=glm03_key$,dom=*next)glm03a$
     jh$=Translate!.getTranslation("AON_JOURNAL_")+glm03a.journal_id$+" "+cvs(glm03a.code_desc$,2),l=l9+1
-    BrkVect!.addItem(str(OutVect!.size()/(columns+1)))
+    if lf$="" then
+        BrkVect!.addItem(str(OutVect!.size()/(columns+1)))
+    else
+        xwk=fnblank(6)
+        lf$=""
+    endif
     HdrVect!.addItem(jh$)
     
 journal_break_exit: 
