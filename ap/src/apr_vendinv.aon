@@ -317,8 +317,8 @@ vendor_total: rem --- Vendor Total
 		xwk=fnblank(4)
 		OutVect!.addItem(str(baltotal))
 		xwk=fnblank(1+(aps01a.ret_flag$="Y"))
-		
-		xwk=fnblank(9+(aps01a.ret_flag$="Y"))
+
+		xwk=fnblank(9+(aps01a.multi_types$="Y")+(aps01a.ret_flag$="Y"))
 		
 		inv_found=1
 		baltotal=0
