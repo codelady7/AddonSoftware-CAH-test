@@ -65,3 +65,13 @@ the grid have been deleted.
 ----
 Modified: data/bar/ape_mancheckdist.xml
 Modified: data/cdf/ape_mancheckdist.cdf
+
+=======================================================================================================================================
+Revision: 95941c758909c0e6fcdfea91eb266094283a7461
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/30/2023 5:56:14 PM
+Message:
+Bug 10673: Corrected the number of columns to use in the blank line
+following the Vendor Total.
+----
+Modified: ap/src/apr_vendinv.aon
