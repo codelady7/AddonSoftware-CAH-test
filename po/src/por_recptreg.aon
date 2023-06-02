@@ -408,6 +408,7 @@ rem --- Print header information
 
         gosub l5200
         read (poe14_dev,key=poe04a.firm_id$+poe04a.batch_no$+poe04a.receiver_no$,knum="DISPLAY_SEQ",dom=*next)
+        zero_receipt=1
 
 rem --- Read next detail record
         while 1
@@ -443,6 +444,7 @@ rem --- Retrieve inventory item for S lines
 rem --- Calculate line extensions
 
             qty=poe14a.qty_received
+            if qty<>0 then zero_receipt=0
             iv_extension=0
             if pom02a.line_type$="O" qty=1
             precision 2
@@ -728,7 +730,7 @@ l3800: rem --- Loop back for next detail record
 
 rem --- Loop back for next header record
 
-        if receipt[1]=0 then
+        if zero_receipt then
             if receivedZero$<>"" then receivedZero$=receivedZero$+" "+Translate!.getTranslation("AON_AND")+" "
             receivedZero$=receivedZero$+poe04a.po_no$
         endif
