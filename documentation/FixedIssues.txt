@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-05-31
+ Report Date:   2023-06-02
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -85,3 +85,15 @@ Bug 10674: Corrected the number of columns following multi-line Memos on
 the GL Transaction History Report.
 ----
 Modified: gl/src/glr_transhistory.aon
+
+=======================================================================================================================================
+Revision: a67b6926958bf6c10250a17537bf7bd30d82796d
+Author: Christine <chawkins@basis.com>
+Date: 6/2/2023 10:52:53 AM
+Message:
+Bug 10676 - PO - Can't update a receipt that nets to zero, even though quantity lines <> 0
+ - instead of checking accumulated receipt qty, check qty for each detail line and only consider it a zero receipt if all quantities are zero.
+
+(cherry picked from commit badae37a2d70b3f258abead1b0a0ca59bafae3c6)
+----
+Modified: po/src/por_recptreg.aon
