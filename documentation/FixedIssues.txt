@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-06-02
+ Report Date:   2023-06-03
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -97,3 +97,15 @@ Bug 10676 - PO - Can't update a receipt that nets to zero, even though quantity 
 (cherry picked from commit badae37a2d70b3f258abead1b0a0ca59bafae3c6)
 ----
 Modified: po/src/por_recptreg.aon
+
+=======================================================================================================================================
+Revision: 73af0ec1472cf51d2e1a6b8f2136adbfa229acc6
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/3/2023 1:01:38 PM
+Message:
+Bug 10668: When new vendor entered via Invoice/Manual Check Entry,
+initialized GL Account and IRS Form 1099 Type fields for the vendor's
+new APM_VENDHIST Vendor Codes and History record.
+----
+Modified: data/bar/apm_vendmast.xml
+Modified: data/cdf/apm_vendmast.cdf
