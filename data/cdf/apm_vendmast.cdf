@@ -288,6 +288,8 @@ rem --- from AP Types file (apc_typecode)
 		dflt_ap_dist_code$=apc_typecode.ap_dist_code$
 		dflt_payment_grp$=apc_typecode.payment_grp$
 		dflt_ap_terms_code$=apc_typecode.ap_terms_code$
+		dflt_gl_account$=apc_typecode.gl_account$
+		dflt_irs1099_type_box$=apc_typecode.irs1099_type_box$
 
 	endif
 
@@ -318,6 +320,12 @@ rem --- from AP Types file (apc_typecode)
 			apm02a.ap_dist_code$=dflt_ap_dist_code$
 			apm02a.payment_grp$=dflt_payment_grp$
 			apm02a.ap_terms_code$=dflt_ap_terms_code$
+			apm02a.gl_account$=dflt_gl_account$
+			if callpoint!.getDevObject("vendor_1099")="Y" then
+				apm02a.irs1099_type_box$=dflt_irs1099_type_box$
+			else
+				apm02a.irs1099_type_box$="X"
+			endif
 			apm02a$=field(apm02a$)
 			extract record (apm02_dev,key=apm02a.firm_id$+apm02a.vendor_id$+apm02a.ap_type$,dom=*next)dummy$;rem Advisory Locking
 			write record (apm02_dev)apm02a$
