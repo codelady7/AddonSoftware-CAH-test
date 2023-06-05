@@ -133,7 +133,12 @@ rem --- GLC_Balance required the presence GL control set
   
     readrecord(gls_suspense_dev,key=firm_id$+"GL03",dom=*next)gls_suspense$
     if gls_suspense.use_suspense$="Y"
-        readrecord(glm02_dev,key=firm_id$+GLs_suspense.gl_account$+gls01a.current_year$,dom=*endif)glm02a$
+        if gls01a.gl_yr_closed$="Y" then
+            fiscal_year$=gls01a.current_year$
+        else
+            fiscal_year$=str(num(gls01a.current_year$)-1:"0000")
+        endif
+        readrecord(glm02_dev,key=firm_id$+GLs_suspense.gl_account$+fiscal_year$,dom=*endif)glm02a$
         for i = 1 to 13
            balance=balance + num(field(glm02a$,"PERIOD_AMT_"+str(i:"00")))
         next i
