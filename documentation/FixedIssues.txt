@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-06-03
+ Report Date:   2023-06-05
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -109,3 +109,14 @@ new APM_VENDHIST Vendor Codes and History record.
 ----
 Modified: data/bar/apm_vendmast.xml
 Modified: data/cdf/apm_vendmast.cdf
+
+=======================================================================================================================================
+Revision: 8cf795fb1608872403d3e4af953d55cac259e6ce
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/5/2023 12:40:55 PM
+Message:
+Bug 10664: Check the GL Suspense account balance for the prior fiscal
+year if it has NOT been closed. Use the current fiscal year if the prior
+fiscal year has been closed.
+----
+Modified: gl/src/glr_beginbalance.aon
