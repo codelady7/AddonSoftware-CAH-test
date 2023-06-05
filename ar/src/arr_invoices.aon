@@ -471,7 +471,7 @@ OnMasterEmailToolButton:rem --- Add document to fax/email queue
 rem --- force exportToPDF first, in case it hasn't already been saved
     
     rem --- force exportToPDF in case not already saved
-    gosub exportMasterToPDF
+    rem gosub exportMasterToPDF; rem --- Already aways done
 
     if rd_doc_id$<>"" and rd_doc_ext$<>""
         call stbl("+DIR_SYP")+"bac_faxemail_jasper.bbj",rd_doc_id$,rd_doc_ext$,rd_table_chans$[all]
@@ -508,7 +508,7 @@ OnPrintEmailToolButton:rem --- Add document to fax/email queue
 rem --- force exportToPDF first, in case it hasn't already been saved
     
     rem --- force exportToPDF in case not already saved
-    gosub exportPrintToPDF
+    rem gosub exportPrintToPDF; rem --- Already aways done
 
     if rd_doc_id$<>"" and rd_doc_ext$<>""
         call stbl("+DIR_SYP")+"bac_faxemail_jasper.bbj",rd_doc_id$,rd_doc_ext$,rd_table_chans$[all]

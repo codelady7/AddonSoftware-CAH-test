@@ -202,6 +202,8 @@ rem --- Fill Report and Show
     rem --- get a pdf path from +DOC_DIR_PDF
     rem --- this will eventually be replaced with code to get output formats/types based on doc group and/or print settings
     gosub doc_path
+        
+    gosub exportToPDF; rem --- force save
     
     declare BBJasperViewerWindow viewerWindow!
     viewerWindow! = new BBJasperViewerWindow(report!,0,0,screen_width,screen_height,repTitle$,$00080093$)
@@ -299,7 +301,7 @@ OnEmailToolButton:rem --- Add document to fax/email queue
 rem --- force exportToPDF first, in case it hasn't already been saved
     
     rem --- force exportToPDF in case not already saved
-    gosub exportToPDF
+    rem gosub exportToPDF; rem --- Already aways done
 
     if rd_doc_id$<>"" and rd_doc_ext$<>""
         call stbl("+DIR_SYP")+"bac_faxemail_jasper.bbj",rd_doc_id$,rd_doc_ext$,rd_table_chans$[all]
