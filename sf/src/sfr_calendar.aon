@@ -119,6 +119,8 @@ rem --- Fill Report and Show
     rem --- get a pdf path from +DOC_DIR_PDF
     rem --- this will eventually be replaced with code to get output formats/types based on doc group and/or print settings
     gosub doc_path
+        
+    gosub exportToPDF; rem --- force save
     
     declare BBJasperViewerWindow viewerWindow!
     viewerWindow! = new BBJasperViewerWindow(report!,0,0,screen_width,screen_height,repTitle$,$00080093$)
