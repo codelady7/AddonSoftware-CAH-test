@@ -120,3 +120,14 @@ year if it has NOT been closed. Use the current fiscal year if the prior
 fiscal year has been closed.
 ----
 Modified: gl/src/glr_beginbalance.aon
+
+=======================================================================================================================================
+Revision: 2311e2cf4364abc6630aba23be3340f596ec8a27
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/5/2023 1:10:49 PM
+Message:
+Bug 10662: Use APT_CHECKHISTORY's CHECK_VENDOR_INV alternate key instead
+of AO_BNKACCT_CHECK in the AP_PAIDINVOICES Drilldown Definition until
+the proposed changes to the AO_BNKACCT_CHECK alternate key can be made.
+----
+Modified: data/sync/ddm_drill_defs~[01007514AP].xml
