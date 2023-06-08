@@ -512,11 +512,17 @@ rem --- Credit Historical Invoice
 rem --- Do Credit Action
 
 	callpoint!.setDevObject("cred_action_from_print_now","")
+	if callpoint!.getColumnData("OPE_ORDHDR.CREDIT_FLAG")<>"C" then callpoint!.setDevObject("credit_action_done", "Y")
+
 	gosub do_credit_action
 
 	if action$ <> "U" then
 		user_tpl.do_end_of_form = 0			
-		callpoint!.setStatus("NEWREC")
+		if action$="D" then
+			callpoint!.setStatus("NEWREC")
+		else
+			callpoint!.setStatus("SAVE-RECORD:[callpoint!.getRecordKey()]")
+		endif
 	end
 
 [[OPE_ORDHDR.AOPT-CRCH]]
@@ -2261,6 +2267,7 @@ rem --- get AR Params
 	callpoint!.setDevObject("warn_not_avail",ars01a.warn_not_avail$)
 	callpoint!.setDevObject("auto_ord_conf",ars01a.auto_ord_conf$)
 	callpoint!.setDevObject("hide_cost",ars01a.hide_cost$)
+	if ars01a.on_demand_aging$="Y"
 		callpoint!.setDevObject("on_demand_aging",ars01a.on_demand_aging$)
 		callpoint!.setDevObject("dflt_age_by",ars01a.dflt_age_by$)
 	endif
@@ -2500,6 +2507,7 @@ rem --- Save the indices of the controls for the Avail Window, setup in AFMC
 	callpoint!.setDevObject("disc_amt_disp","17")
 	callpoint!.setDevObject("backord_disp","18")
 	callpoint!.setDevObject("credit_disp","19")
+	callpoint!.setDevObject("man_hold",ars_credit.man_hold$)
 
 rem --- Create GL Posting Control
 	gl$="N"
@@ -4374,9 +4382,8 @@ rem --- Should we call Credit Action?
 		callpoint!.setStatus("ACTIVATE")
 		if status = 999 then goto std_exit
 
-	rem --- Delete the order
-
 		if action$ = "D" then 
+			rem --- Delete the order
 			callpoint!.setStatus("DELETE-NEWREC")
 			return
 		endif
@@ -4385,6 +4392,12 @@ rem --- Should we call Credit Action?
 			rem --- Order released
 			callpoint!.setDevObject("msg_released","Y")
 			callpoint!.setDevObject("msg_hold","")
+			call user_tpl.pgmdir$+"opc_creditmsg.aon","H",callpoint!,UserObj!
+		endif
+
+		if action$="H" then
+			rem --- Order held
+			callpoint!.setDevObject("msg_hold","Y")
 			call user_tpl.pgmdir$+"opc_creditmsg.aon","H",callpoint!,UserObj!
 		endif
 	else

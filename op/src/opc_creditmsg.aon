@@ -94,6 +94,10 @@ rem --- Now set the 2 fields in the header
 rem --- Enable/Disable Credit Action button
 
 	if hdr_det$ = "H"
+	    if callpoint!.getDevObject("man_hold")="Y" and cvs(callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO"),2)<>"" and 
+:    	callpoint!.getColumnData("PRINT_STATUS")<>"Y" and callpoint!.isEditMode() then
+            credit_action=1
+        endif
 		callpoint!.setOptionEnabled("CRAT",credit_action)
 	endif
 
