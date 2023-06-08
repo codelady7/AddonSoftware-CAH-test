@@ -140,7 +140,7 @@ rem --- Is credit ok?
     
 rem --- Use Credit Hold text control to display status since it won't show it in the CREDITACTION form
     
-    if status$ <> "" then 
+    if status$ <> "" and callpoint!.getDevObject("credit_action_done")<>"Y" then 
 rem        backorderedControl!.setText(status$)
         action$="U"
         goto final_updates 
@@ -224,9 +224,9 @@ rem --- Update Tickler File
 rem --- Update order header file
 
 	if action$<>"D"
-        callpoint!.setColumnData("TERMS_CODE",terms_code$,1)
-        callpoint!.setColumnData("LOCK_STATUS","N",1)
-        callpoint!.setColumnData("CREDIT_FLAG",credit_flag$,1)
+        callpoint!.setColumnData("OPE_ORDHDR.TERMS_CODE",terms_code$,1)
+        callpoint!.setColumnData("OPE_ORDHDR.LOCK_STATUS","N",1)
+        callpoint!.setColumnData("OPE_ORDHDR.CREDIT_FLAG",credit_flag$,1)
 	endif
     
     callpoint!.setDevObject("credit_action_done", "Y")
