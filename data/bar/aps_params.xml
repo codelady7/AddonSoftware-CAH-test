@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.aps_params">FE57BCD7C580014E15D29197353ADF2B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.aps_params">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.aps_params">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.aps_params">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.aps_params">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.aps_params">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.aps_params">20230607</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.aps_params">20230607</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.aps_params">174558</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.aps_params"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.aps_params">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.aps_params"></DD_ATTR_DKNM>
@@ -2658,34 +2658,6 @@
 			<DD_ATTR_LDAT id="ddm_column_ldat.aps_paramszip_length02">9</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_column_ldat.aps_paramszip_length02">9</DD_ATTR_LDAT_DS>
 		</RECORD>
-		<RECORD id="ddm_column_ldat.aps_paramsform_order01">
-			<DD_TABLE_ALIAS id="ddm_column_ldat.aps_paramsform_order01">APS_PARAMS      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_ldat.aps_paramsform_order01">FORM_ORDER      </DD_DVAR_NAME>
-			<DD_ATTR_SEQ id="ddm_column_ldat.aps_paramsform_order01">01</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_column_ldat.aps_paramsform_order01">VCA</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_column_ldat.aps_paramsform_order01">Vendor Stub/Check/Accting Stub</DD_ATTR_LDAT_DS>
-		</RECORD>
-		<RECORD id="ddm_column_ldat.aps_paramsform_order02">
-			<DD_TABLE_ALIAS id="ddm_column_ldat.aps_paramsform_order02">APS_PARAMS      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_ldat.aps_paramsform_order02">FORM_ORDER      </DD_DVAR_NAME>
-			<DD_ATTR_SEQ id="ddm_column_ldat.aps_paramsform_order02">02</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_column_ldat.aps_paramsform_order02">CVA</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_column_ldat.aps_paramsform_order02">Check/Vendor Stub/Accting Stub</DD_ATTR_LDAT_DS>
-		</RECORD>
-		<RECORD id="ddm_column_ldat.aps_paramsform_order03">
-			<DD_TABLE_ALIAS id="ddm_column_ldat.aps_paramsform_order03">APS_PARAMS      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_ldat.aps_paramsform_order03">FORM_ORDER      </DD_DVAR_NAME>
-			<DD_ATTR_SEQ id="ddm_column_ldat.aps_paramsform_order03">03</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_column_ldat.aps_paramsform_order03">ACV</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_column_ldat.aps_paramsform_order03">Accting Stub/Check/Vendor Stub</DD_ATTR_LDAT_DS>
-		</RECORD>
-		<RECORD id="ddm_column_ldat.aps_paramsform_order04">
-			<DD_TABLE_ALIAS id="ddm_column_ldat.aps_paramsform_order04">APS_PARAMS      </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_ldat.aps_paramsform_order04">FORM_ORDER      </DD_DVAR_NAME>
-			<DD_ATTR_SEQ id="ddm_column_ldat.aps_paramsform_order04">04</DD_ATTR_SEQ>
-			<DD_ATTR_LDAT id="ddm_column_ldat.aps_paramsform_order04">AVC</DD_ATTR_LDAT>
-			<DD_ATTR_LDAT_DS id="ddm_column_ldat.aps_paramsform_order04">Accting Stub/Vendor Stub/Check</DD_ATTR_LDAT_DS>
-		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
 		<ID id="ddm_column_opts">DDM_COLUMN_OPTS</ID>
@@ -4537,7 +4509,7 @@
 			<ASC_PROD_ID id="ddm_elements.ap_chk_formorder">AP </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.ap_chk_formorder">N</LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.ap_chk_formorder">20130214</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.ap_chk_formorder">20130214</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.ap_chk_formorder">20230607</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.ap_chk_formorder"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.ap_chk_formorder">N</DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.ap_chk_formorder"></DD_ATTR_CDAT>
@@ -4567,12 +4539,12 @@
 			<DD_ATTR_PADC id="ddm_elements.ap_chk_formorder"></DD_ATTR_PADC>
 			<DD_ATTR_PADJ id="ddm_elements.ap_chk_formorder"></DD_ATTR_PADJ>
 			<DD_ATTR_PREC id="ddm_elements.ap_chk_formorder">0</DD_ATTR_PREC>
-			<DD_ATTR_PROM id="ddm_elements.ap_chk_formorder">Select the order of 3-part check form</DD_ATTR_PROM>
+			<DD_ATTR_PROM id="ddm_elements.ap_chk_formorder">Select the order of 2 or 3-part check form</DD_ATTR_PROM>
 			<DD_ATTR_PVAL id="ddm_elements.ap_chk_formorder"></DD_ATTR_PVAL>
 			<DD_ATTR_SDLG id="ddm_elements.ap_chk_formorder"></DD_ATTR_SDLG>
 			<DD_ATTR_SLEV id="ddm_elements.ap_chk_formorder"></DD_ATTR_SLEV>
 			<DD_ATTR_STYP id="ddm_elements.ap_chk_formorder"></DD_ATTR_STYP>
-			<DD_ATTR_STEP id="ddm_elements.ap_chk_formorder"></DD_ATTR_STEP>
+			<DD_ATTR_STEP id="ddm_elements.ap_chk_formorder">0</DD_ATTR_STEP>
 			<DD_ATTR_FLPT id="ddm_elements.ap_chk_formorder"></DD_ATTR_FLPT>
 			<DD_ATTR_OEMD id="ddm_elements.ap_chk_formorder"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.ap_chk_formorder"></DD_ATTR_Y2KW>
@@ -5240,6 +5212,18 @@
 			<DD_ATTR_SEQ id="ddm_element_ldat.ap_chk_formorder04">04</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_element_ldat.ap_chk_formorder04">AVC</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_element_ldat.ap_chk_formorder04">Accting Stub/Vendor Stub/Check</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.ap_chk_formorder05">
+			<DD_DATA_NAME id="ddm_element_ldat.ap_chk_formorder05">AP_CHK_FORMORDER</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.ap_chk_formorder05">05</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.ap_chk_formorder05">CVX</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.ap_chk_formorder05">Check/Long Vendor Stub</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_element_ldat.ap_chk_formorder06">
+			<DD_DATA_NAME id="ddm_element_ldat.ap_chk_formorder06">AP_CHK_FORMORDER</DD_DATA_NAME>
+			<DD_ATTR_SEQ id="ddm_element_ldat.ap_chk_formorder06">06</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_element_ldat.ap_chk_formorder06">VCX</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_element_ldat.ap_chk_formorder06">Long Vendor Stub/Check</DD_ATTR_LDAT_DS>
 		</RECORD>
 		<RECORD id="ddm_element_ldat.scan_docs_to01">
 			<DD_DATA_NAME id="ddm_element_ldat.scan_docs_to01">SCAN_DOCS_TO    </DD_DATA_NAME>

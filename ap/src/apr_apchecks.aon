@@ -406,8 +406,11 @@ initializations: rem --- Initializations
 	acctstub_rowcnt=1; rem 1-based Accting Stub may have more rows than vend stub, so use it to determine overflow (old 'L')
 	vendstub_rowcnt=1; rem 1-based
 
-	max_stub_rows=14; rem change this to change # rows printing on stub. AND CHANGE jrxml to accomodate diff # of rows.
-	
+	if bottom_part$="X"
+        max_stub_rows=34; rem ER 10575 2-part form w/long stub instead of 3-part
+	else
+        max_stub_rows=14; rem change this to change # rows printing on stub. AND CHANGE jrxml to accomodate diff # of rows.
+    endif
 rem --- Check From Address
 
     aps01b_key$=firm_id$+"AP02"
@@ -1056,7 +1059,7 @@ check_stub_detail:
 
     rem --- Do NOT print ACH checks for ACH payments when doing a Restart.
     if restart$="Y" and ach_payment$="Y" then return 
-
+    if bottom_part$="X" and section_type$="A" then return;rem ER 10575 check w/ long stub, so no acctg stub
 	rem --- Write STUB detail row record to jasper print file
     dim apw_chkprn$:fattr(apw_chkprn$)
 
@@ -1110,7 +1113,7 @@ stub_total: rem --- Stub Total
 
     rem --- Do NOT print ACH checks for ACH payments when doing a Restart.
     if restart$="Y" and ach_payment$="Y" then return 
-
+    if bottom_part$="X" and section_type$="A" then return;rem ER 10575 check w/ long stub, so no acctg stub
 	rem --- Write STUB TOTAL record to jasper print file
     dim apw_chkprn$:fattr(apw_chkprn$)
 	

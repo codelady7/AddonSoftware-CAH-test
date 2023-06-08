@@ -384,6 +384,7 @@
 			</subreport>
 		</band>
 		<band height="263" splitType="Immediate">
+			<printWhenExpression><![CDATA[!$P{BOTTOM_PART}.equals( "X")]]></printWhenExpression>
 			<subreport runToBottom="false">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="3" width="608" height="260" uuid="1b639cd5-ac93-43fd-8dcf-b3587769d185">
 					<printWhenExpression><![CDATA[$P{BOTTOM_PART}=="V" || $P{BOTTOM_PART}=="A"]]></printWhenExpression>
