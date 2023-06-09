@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-06-05
+ Report Date:   2023-06-09
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -131,3 +131,16 @@ of AO_BNKACCT_CHECK in the AP_PAIDINVOICES Drilldown Definition until
 the proposed changes to the AO_BNKACCT_CHECK alternate key can be made.
 ----
 Modified: data/sync/ddm_drill_defs~[01007514AP].xml
+
+=======================================================================================================================================
+Revision: 24b082b60310fedab0b160394489bccc3b6ff175
+Author: Christine <chawkins@basis.com>
+Date: 6/9/2023 5:35:15 PM
+Message:
+Bug 10685 - AP - Voiding a Manual Check that is still in entry files leaves detail and distribution records behind
+ - Add code to the void routine in Manual Check update to clear ape_mancheckdist/det (ape-12/22) records
+
+(cherry picked from commit ac87f63d8ad190e506d15e9d8f2778ad0fbe662d)
+----
+Modified: ap/src/apu_manualchecks.aon
+
