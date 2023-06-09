@@ -377,6 +377,22 @@ rem --- Read next Check Header (ape-02) record
                 v0$="V"
                 if bankrec gosub bank_rec
 
+                rem --- if a manual check was voided while still in the entry file(s), need to delete ape-12/22 recs (10685)
+                read(ape22_dev,key=ape02a_key$,dom=*next)
+                while 1
+                    ape22a_key$=key(ape22_dev,end=*break)
+                    if pos(ape02a_key$=ape22a_key$)<>1 break
+                    read record (ape22_dev) ape22a$
+                    detail$=ape22a.firm_id$+ape22a.ap_type$+ape22a.bnk_acct_cd$+ape22a.check_no$+ape22a.vendor_id$+ape22a.ap_inv_no$
+                    read(ape12_dev,key=detail$,dom=*next)
+                    while 1
+                        ape12a_key$=key(ape12_dev,end=*break)
+                        if pos(detail$=ape12a_key$)<>1 break
+                        remove (ape12_dev,key=ape12a_key$)
+                    wend
+                    remove(ape22_dev,key=ape22a_key$)
+                wend
+
             break
 
             case default
