@@ -495,6 +495,7 @@ rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types 
 		if aptypes$<>"ABORT"
 			call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",ape04_dev,firm_id$,status
 
+			selectedRows=0
 			for row=0 to vectInvoicesMaster!.size()-1 step user_tpl.MasterCols
 				vend$ = vectInvoicesMaster!.getItem(row+5)
 				apt01_key$=firm_id$+vectInvoicesMaster!.getItem(row+4)+
@@ -563,12 +564,23 @@ rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types 
 						ape04a$=field(ape04a$)
 						extract record (ape04_dev, key=apt01_key$, dom=*next) dummy$; rem Advisory Locking
 						write record (ape04_dev) ape04a$
+						selectedRows=selectedRows+1
 					endif
 				endif
 
 				apt01a$ = field(apt01a$)
 				write record (apt01_dev) apt01a$
 			next row
+
+			if selectedRows=0 then
+				rem --- No invoice selected
+				msg_id$="AP_NO_PAY_SELECT"
+				gosub disp_message
+				if msg_opt$="N" then callpoint!.setStatus("ABORT")
+			else
+				msg_id$="AP_REVIEW_SELECT"
+				gosub disp_message
+			endif
 		endif
 	endif
 
