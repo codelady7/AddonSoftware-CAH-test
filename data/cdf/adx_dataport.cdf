@@ -1,12 +1,3 @@
-[[ADX_DATAPORT.ASIZ]]
-rem --- resize grid if window size changes
-
-	gridFiles!=callpoint!.getDevObject("gridFiles")
-	if gridFiles!<>null()
-		gridFiles!.setColumnWidth(0,25)
-		gridFiles!.setSize(Form!.getWidth()-(gridFiles!.getX()*2),Form!.getHeight()-(gridFiles!.getY()+40))
-		gridFiles!.setFitToGrid(1)
-	endif
 [[ADX_DATAPORT.ACUS]]
 rem process custom event -- used in this pgm to select/de-select checkboxes in grid
 rem see basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
@@ -35,6 +26,7 @@ if ctl_ID=num(callpoint!.getDevObject("grid_ctlID"))
 		break
 	swend
 endif
+
 [[ADX_DATAPORT.AOPT-SCAN]]
 scan_source:rem --- Scan Source Directory and build vectors to populate gridFiles!
 
@@ -210,35 +202,17 @@ scan_source:rem --- Scan Source Directory and build vectors to populate gridFile
 
 	close (ddm03_dev)
 	close (source_dir_dev)
-[[ADX_DATAPORT.TARGET_DIR.AVAL]]
-rem --- make sure target directory exists
 
-	gosub check_target_dir
+[[ADX_DATAPORT.ASIZ]]
+rem --- resize grid if window size changes
 
-	if !num(callpoint!.getDevObject("target_ok")) 
-		msg_id$="AD_DATAPORT_DIR"
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
+	gridFiles!=callpoint!.getDevObject("gridFiles")
+	if gridFiles!<>null()
+		gridFiles!.setColumnWidth(0,25)
+		gridFiles!.setSize(Form!.getWidth()-(gridFiles!.getX()*2),Form!.getHeight()-(gridFiles!.getY()+40))
+		gridFiles!.setFitToGrid(1)
 	endif
-[[ADX_DATAPORT.SOURCE_DIR.AVAL]]
-rem --- make sure source directory exists, and contains legacy data dictionary files
 
-	gosub check_source_dir
-
-  	if num(callpoint!.getDevObject("source_ok"))
-		callpoint!.setOptionEnabled("SCAN",1)
- 
-	else
-		gridVect!=SysGUI!.makeVector()
-		typeVect!=SysGUI!.makeVector()
-		gridFiles!=callpoint!.getDevObject("gridFiles")
-		gridFiles!.clearMainGrid()
-		gridFiles!.setNumRows(0)
-		msg_id$="AD_DATAPORT_DICT"
-		gosub disp_message
-		callpoint!.setOptionEnabled("SCAN",0)
-		callpoint!.setStatus("ABORT")
-	endif
 [[ADX_DATAPORT.ASVA]]
 rem --- confirm ready to port selected files?
 
@@ -335,6 +309,7 @@ rem --- confirm ready to port selected files?
 						wend
 					next i
 				endif
+				callpoint!.setDevObject("fileDependencies",fileDependencies!)
 
 				rem --- Auto-select files in dependency groups when any in the group is selected
 				dependencyKeys!=fileDependencies!.keySet()
@@ -385,6 +360,81 @@ rem --- confirm ready to port selected files?
 			callpoint!.setStatus("ABORT")
 		endif
 	endif
+
+[[ADX_DATAPORT.BSHO]]
+rem --- inits
+
+	use java.io.File
+	use java.io.FileReader
+	use java.util.HashMap
+	use java.util.Properties
+	use ::ado_util.src::util
+	use ::ado_file.src::FileObject
+
+rem --- disable Scan button until we have valid source dir
+
+	callpoint!.setOptionEnabled("SCAN",0)
+
+rem --- set valid/invalid background colors for source/target dir ctls
+
+	source_dir!=util.getControl(callpoint!,"ADX_DATAPORT.ADDON_VERSION")
+	callpoint!.setDevObject("valid_color",source_dir!.getBackColor())
+	call stbl("+DIR_SYP")+"bac_create_color.bbj","+ENTRY_ERROR_COLOR","255,224,224",error_color!,""
+	callpoint!.setDevObject("error_color",error_color!)
+   	callpoint!.setDevObject("indent_color",SysGUI!.makeColor(96,96,96))
+
+	
+rem --- create grid 
+
+	nxt_ctlID = util.getNextControlID()
+	callpoint!.setDevObject("grid_ctlID",str(nxt_ctlID))
+	gridFiles!=Form!.addGrid(nxt_ctlID,50,100,500,300)
+	
+	gosub format_grid
+		
+rem	gridFiles!.setColumnEditable(0,1)
+rem	gridFiles!.setTabAction(SysGUI!.GRID_NAVIGATE_LEGACY)
+	
+	util.resizeWindow(Form!, SysGui!)
+	
+	rem --- set callbacks - processed in ACUS callpoint
+	gridFiles!.setCallback(gridFiles!.ON_GRID_KEY_PRESS,"custom_event")		
+	gridFiles!.setCallback(gridFiles!.ON_GRID_MOUSE_UP,"custom_event")
+
+	callpoint!.setDevObject("gridFiles",gridFiles!)
+	callpoint!.setDevObject("logfile","")
+
+[[ADX_DATAPORT.SOURCE_DIR.AVAL]]
+rem --- make sure source directory exists, and contains legacy data dictionary files
+
+	gosub check_source_dir
+
+  	if num(callpoint!.getDevObject("source_ok"))
+		callpoint!.setOptionEnabled("SCAN",1)
+ 
+	else
+		gridVect!=SysGUI!.makeVector()
+		typeVect!=SysGUI!.makeVector()
+		gridFiles!=callpoint!.getDevObject("gridFiles")
+		gridFiles!.clearMainGrid()
+		gridFiles!.setNumRows(0)
+		msg_id$="AD_DATAPORT_DICT"
+		gosub disp_message
+		callpoint!.setOptionEnabled("SCAN",0)
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[ADX_DATAPORT.TARGET_DIR.AVAL]]
+rem --- make sure target directory exists
+
+	gosub check_target_dir
+
+	if !num(callpoint!.getDevObject("target_ok")) 
+		msg_id$="AD_DATAPORT_DIR"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+	endif
+
 [[ADX_DATAPORT.<CUSTOM>]]
 rem --- check source directory -- is it there?  Does it contain legacy dictionary files?=======
 
@@ -577,45 +627,6 @@ call stbl("+DIR_SYP")+"bam_grid_init.bbj",gui_dev,gridFiles!,"COLH-LINES-LIGHT-A
 :	attr_def_col_str$[all],attr_disp_col$,attr_col$[all]
 
 return
-[[ADX_DATAPORT.BSHO]]
-rem --- inits
 
-	use java.io.File
-	use java.io.FileReader
-	use java.util.HashMap
-	use java.util.Properties
-	use ::ado_util.src::util
-	use ::ado_file.src::FileObject
 
-rem --- disable Scan button until we have valid source dir
 
-	callpoint!.setOptionEnabled("SCAN",0)
-
-rem --- set valid/invalid background colors for source/target dir ctls
-
-	source_dir!=util.getControl(callpoint!,"ADX_DATAPORT.ADDON_VERSION")
-	callpoint!.setDevObject("valid_color",source_dir!.getBackColor())
-	call stbl("+DIR_SYP")+"bac_create_color.bbj","+ENTRY_ERROR_COLOR","255,224,224",error_color!,""
-	callpoint!.setDevObject("error_color",error_color!)
-   	callpoint!.setDevObject("indent_color",SysGUI!.makeColor(96,96,96))
-
-	
-rem --- create grid 
-
-	nxt_ctlID = util.getNextControlID()
-	callpoint!.setDevObject("grid_ctlID",str(nxt_ctlID))
-	gridFiles!=Form!.addGrid(nxt_ctlID,50,100,500,300)
-	
-	gosub format_grid
-		
-rem	gridFiles!.setColumnEditable(0,1)
-rem	gridFiles!.setTabAction(SysGUI!.GRID_NAVIGATE_LEGACY)
-	
-	util.resizeWindow(Form!, SysGui!)
-	
-	rem --- set callbacks - processed in ACUS callpoint
-	gridFiles!.setCallback(gridFiles!.ON_GRID_KEY_PRESS,"custom_event")		
-	gridFiles!.setCallback(gridFiles!.ON_GRID_MOUSE_UP,"custom_event")
-
-	callpoint!.setDevObject("gridFiles",gridFiles!)
-	callpoint!.setDevObject("logfile","")

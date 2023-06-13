@@ -420,6 +420,63 @@ if vectPort! = null() then
     wend
 endif
 
+rem --- Check for existing target files
+fileDependencies!=callpoint!.getDevObject("fileDependencies")
+selectedTables!=BBjAPI().makeVector()
+skipFiles$=""
+for i=0 to vectPort!.size()-1
+    new_table$=vectPort!.getItem(i)
+    new_file$=cvs(new_table$,8)
+
+    rem --- Must use file_xref cross reference to get disk file name
+    if file_xref!.containsKey(new_table$) then new_file$=file_xref!.get(new_table$)
+
+    fileExists=0
+    new_file=unt
+    open (new_file,err=*next)destin_folder$+"/"+new_file$; fileExists=1
+    if !fileExists then
+        rem --- Target file doesn't exist
+        selectedTables!.addItem(new_table$)
+    else
+target_exists:
+        rem --- Target file exists
+        close (new_file,err=*next)
+        a=msgbox(new_file$+" already exists in destination folder. Do you want to overwrite data?",3+32+65536,"DataPort")
+        if a=6 then
+            rem --- Overwrite existing target file
+            erase destin_folder$+"/"+new_file$
+            selectedTables!.addItem(new_table$)
+        endif
+        if a=7 then
+            rem --- Skip, do NOT overwrite existing target file
+            if fileDependencies!.containsKey(new_file$) then skipFiles$=skipFiles$+fileDependencies!.get(new_file$)+";"
+        endif
+        if a=2 then
+            rem --- Exit, cancel this DataPort
+            a=msgbox("Exit from DataPort?",4+32+256,"DataPort")
+            if a=6 then
+                release
+            endif
+            if a=7 then
+                a=msgbox("Continuing DataPort..")
+                goto target_exists
+            endif
+        endif
+    endif
+next i
+
+rem --- Un-select files/tables in dependency groups when any in the group is un-selected
+portFiles!=BBjAPI().makeVector()
+if cvs(skipFiles$,2)="" then
+    portFiles!=selectedTables!
+else
+    for j=0 to selectedTables!.size()-1
+        table$=selectedTables!.getItem(j)
+        if pos(cvs(table$,8)+";"=skipFiles$)=0 then portFiles!.addItem(table$)
+    next j
+endif
+vectPort!=portFiles!
+
 rem --- The order files are ported in can be important (see ivm-01 and ivm-09 for v18). Sort vectPort! to get consistent ordering.
 java.util.Collections.sort(vectPort!)
 
@@ -2565,21 +2622,7 @@ get_new_template:
     dim new_rec$:ddm_table_tpls.template$
     new_fields$=$0a$+fattr(new_rec$,"")
 
-    new_file=unt
-    open (new_file,err=check_for_definition)destin_folder$+"/"+new_datafile$
-    lock (new_file)
-    a=msgbox(new_datafile$+" already exists in destination folder. Do you want to overwrite data?",3+32+65536,"DataPort")
-    if a=6 then
-       close (new_file)
-       erase destin_folder$+"/"+new_datafile$
-       goto check_for_definition
-    endif
-    if a=7 then
-       goto eof; rem ' No-Skip
-    endif
-    if a=2 then
-       goto eoj; rem ' Cancel-Exit
-    endif
+    goto check_for_definition
 return; rem ' get_new_template
 
 check_for_definition:
@@ -4268,17 +4311,6 @@ disp_message:rem --- Display Message Dialog
 
     call stbl("+DIR_SYP")+"bac_message.bbj",rd_msg_id$,rd_msg_tokens$[all],rd_msg_opt$,rd_table_chans$[all]
     return
-
-eoj:
-   a=msgbox("Exit from DataPort?",4+32+256,"DataPort")
-   if a=6 then
-      release
-   endif
-   if a=7 then
-      a=msgbox("Continuing DataPort..")
-      goto eof
-   endif
-   return
 
 rem --- Convert 2-Char Year to 21st Century 2-Char Year
     def fnyy_yy21$(q$)
