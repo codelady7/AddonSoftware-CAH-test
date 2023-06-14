@@ -386,6 +386,7 @@
                 <echo message="  -loc${addon.langs}"/>
                 <echo message="  -log${log.bbj.dir}/addon_sync.log"/>
                 <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
+                <!-- <arg value="-t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
                 <!-- COMMENT OUT FOR NOW
                 <exec executable="${install.dir}/bin/bbj" failonerror="true">
                     <env key="DISPLAY" value="${display}"/>
@@ -398,7 +399,6 @@
                     <arg value="-s../apps/aon/config/addon.syn"/>
                     <arg value="-loc${addon.langs}"/>
                     <arg value="-log${log.bbj.dir}/addon_sync.log"/>
-                    <!-- <arg value="-t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
                 </exec>
                     COMMENT OUT FOR NOW -->
                 <exec executable="/usr/local/sbin/runAddonSync.sh" failonerror="true">
