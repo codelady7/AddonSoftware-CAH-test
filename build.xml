@@ -74,6 +74,16 @@
             <isset  property="addon.langs"/>
         </not>
     </condition>
+    
+    <!-- Testing on new jenkins server -->
+    <condition property="running.on.new.jenkins" value="true">
+        <isset  property="new.jenkins"/>
+    </condition>
+    <condition property="running.on.new.jenkins" value="false">
+        <not>
+            <isset  property="new.jenkins"/>
+        </not>
+    </condition>
 
     <!-- End of Properties -->
     <!-- ====================================== -->
@@ -374,8 +384,14 @@
         <if>
             <equals arg1="${use.locale}" arg2="true"/>
             <then>
-                <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
-                <!-- COMMENT OUT FOR NOW
+              <if>
+                  <equals arg1="${running.on.new.jenkins}" arg2="true"/>
+              <then>
+                <echo message="/usr/local/sbin/runAddonSync.sh"/>
+                <exec executable="/usr/local/sbin/runAddonSync.sh" failonerror="true">
+                </exec>
+              </then>    
+              <else>
                 <echo message="set DISPLAY=${display}"/>
                 <echo message="${install.dir}/bin/bbj"/>
                 <echo message="  -q"/>
@@ -387,6 +403,7 @@
                 <echo message="  -s../apps/aon/config/addon.syn"/>
                 <echo message="  -loc${addon.langs}"/>
                 <echo message="  -log${log.bbj.dir}/addon_sync.log"/>
+                <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
                 
                 <exec executable="${install.dir}/bin/bbj" failonerror="true">
                     <env key="DISPLAY" value="${display}"/>
@@ -399,12 +416,10 @@
                     <arg value="-s../apps/aon/config/addon.syn"/>
                     <arg value="-loc${addon.langs}"/>
                     <arg value="-log${log.bbj.dir}/addon_sync.log"/>
+                    <!-- <arg value="-t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
                 </exec>
-                    COMMENT OUT FOR NOW -->
-                <!-- <arg value="-t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
-                <echo message="/usr/local/sbin/runAddonSync.sh"/>
-                <exec executable="/usr/local/sbin/runAddonSync.sh" failonerror="true">
-                </exec>
+              </else>
+              </if>
             </then>
             <else>
                 <echo message="set DISPLAY=${display}"/>
