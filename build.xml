@@ -374,6 +374,8 @@
         <if>
             <equals arg1="${use.locale}" arg2="true"/>
             <then>
+                <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
+                <!-- COMMENT OUT FOR NOW
                 <echo message="set DISPLAY=${display}"/>
                 <echo message="${install.dir}/bin/bbj"/>
                 <echo message="  -q"/>
@@ -385,9 +387,7 @@
                 <echo message="  -s../apps/aon/config/addon.syn"/>
                 <echo message="  -loc${addon.langs}"/>
                 <echo message="  -log${log.bbj.dir}/addon_sync.log"/>
-                <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
-                <!-- <arg value="-t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
-                <!-- COMMENT OUT FOR NOW
+                
                 <exec executable="${install.dir}/bin/bbj" failonerror="true">
                     <env key="DISPLAY" value="${display}"/>
                     <arg value="-q"/>
@@ -401,6 +401,8 @@
                     <arg value="-log${log.bbj.dir}/addon_sync.log"/>
                 </exec>
                     COMMENT OUT FOR NOW -->
+                <!-- <arg value="-t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
+                <echo message="/usr/local/sbin/runAddonSync.sh"/>
                 <exec executable="/usr/local/sbin/runAddonSync.sh" failonerror="true">
                 </exec>
             </then>
