@@ -387,7 +387,7 @@
                 <echo message="  -log${log.bbj.dir}/addon_sync.log"/>
                 <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
                 <exec executable="${install.dir}/bin/bbj" failonerror="true">
-                    <env key="DISPLAY" value="${display}"/>
+                    <!-- <env key="DISPLAY" value="${display}"/> -->
                     <arg value="-q"/>
                     <arg value="-WD${barista.bbj.dir}"/>
                     <arg value="-c${barista.bbj.dir}/sys/config/enu/barista.cfg"/>
@@ -412,7 +412,7 @@
                 <echo message="  -log${log.bbj.dir}/addon_sync.log"/>
                 <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
                 <exec executable="${install.dir}/bin/bbj" failonerror="true">
-                    <env key="DISPLAY" value="${display}"/>
+                    <!-- <env key="DISPLAY" value="${display}"/> -->
                     <arg value="-q"/>
                     <arg value="-WD${barista.bbj.dir}"/>
                     <arg value="-c${barista.bbj.dir}/sys/config/enu/barista.cfg"/>
@@ -621,7 +621,7 @@ ulimit -n 10000]]></replacevalue>
         <echo message="  -log${log.bbj.dir}/prbabs_sync.log"/>
         <!-- <echo message="  -t"/> --> <!-- debug trace in {barista.bbj.dir}/workarea/ -->
         <exec executable="${install.dir}/bin/bbj" failonerror="true">
-            <env key="DISPLAY" value="${display}"/>
+            <!-- <env key="DISPLAY" value="${display}"/> -->
             <arg value="-q"/>
             <arg value="-WD${barista.bbj.dir}"/>
             <arg value="-c${barista.bbj.dir}/sys/config/enu/barista.cfg"/>
