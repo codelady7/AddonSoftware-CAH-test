@@ -1,75 +1,13 @@
 =======================================================================================================================================
- Report Date:   2023-02-21
- Report Branch: AddonSoftware 22.14
- Last Release:  AddonSoftware 22.13
+ Report Date:   2023-06-16
+ Report Branch: AddonSoftware 22.15
+ Last Release:  AddonSoftware 22.14
 =======================================================================================================================================
 
-22.13 released 02/06/2023
-BBjBaristaAddonDemos2213_02-02-2023_1436.jar
+22.14 released 03/13/2023
+BBjBaristaAddonDemos2214_03-13-2023_1451.jar
 
 =======================================================================================================================================
-Revision: cba56ef42dce966647af1eb7b3ea9712aaf0ea29
-Author: Christine <chawkins@basis.com>
-Date: 2/3/2023 4:56:50 PM
-Message:
--Bug 10566 - GL - When creating Fiscal Calendar from scratch, the prior and next calendars are incorrect
--Bug 10568 - GL - Creating new Fiscal Calendar based on current one is incorrect if basing FY on the ending date
-
-=======================================================================================================================================
-Revision: 3c7599c401cf6818d0d21d0e3c9828f7fbd38a14
-Author: Christine <chawkins@basis.com>
-Date: 2/3/2023 6:29:40 PM
-Message:
-Bug 10569 - GL - Create next fiscal yr calendar checkbox on Fiscal Calendar form should be display only
- - corrected as suggested
-----
-Modified: data/bar/gls_calendar.xml
-
-=======================================================================================================================================
-Revision: 4934877f6190820aa010b4fc1cd817cd61708f43
-Author: Christine <chawkins@basis.com>
-Date: 2/7/2023 11:36:27 AM
-Message:
-Fixed corrupted demo data.
-
-----
-Modified: data/apt-05
-Modified: data/apt_vendpayments
-
-=======================================================================================================================================
-Revision: 48f8eb71926ba6da9686f625ccfe1485cd6c6fd5
-Author: Christine <chawkins@basis.com>
-Date: 2/10/2023 6:33:19 PM
-Message:
-Bug 10579 - AD - In Expresso Customers > Historical Invoices grid, clicking drill down to Historical Invoice form causes error
- - took unnecessary file close out of the drill down program
- - altered History Invoice form and print to stop upward creep of open files
-
-(cherry picked from commit e0a4dabcdba06defa027cade883de208e52dfbc4)
-----
-Modified: ar/src/ard_custInvoices.aon
-Modified: data/bar/opr_hist_inv.xml
-Modified: data/cdf/opr_hist_inv.cdf
-Modified: op/src/opr_hist_inv.aon
-
-=======================================================================================================================================
-Revision: 1af03e7ebc4f89d77e4ff16d1c2aa5c99e971b2a
-Author: Christine <chawkins@basis.com>
-Date: 2/21/2023 6:07:49 PM
-Message:
-Bug 10582 - AD - The AON_REG_OOB system message isn't allowing a password override
- - corrected the system message to return UPDT_OVERRIDE
- - changed Cash Receipts register to allow the override
-
-(cherry picked from commit 5da99392979d5d4d1fede2d22f18656f8255a60c)
-
-# Conflicts:
-#	data/sync/ads_messages~[01007514AD].xml
-----
-Modified: ar/src/arr_cashreceipts.aon
-Modified: data/sync/ads_messages~[01007514AD].xml
-Deleted: data/sync/ads_messages~aon_reg_oob.xml
-
 
 
 
