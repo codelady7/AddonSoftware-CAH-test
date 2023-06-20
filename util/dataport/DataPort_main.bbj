@@ -13,8 +13,10 @@ rem --- copies to Addon 8 data files after performing date format changes.
 rem --- Normalization of data files will also be done in this program.
 rem
 
-    setesc std_error
-    seterr std_error
+    setesc modified_error
+    seterr modified_error
+    log_errors=0
+    error_logged=0
 
     use java.io.File
     use java.io.FileReader
@@ -403,6 +405,7 @@ if !convCtrlIniFile!.exists() then
     err_msg$="***** ERROR: Required file not found, "+convCtrlIniFileName$+" *****"
     print(log_dev)err_msg$
     print(err_dev)err_msg$
+    error_logged=1
     rd_meter_data$=err_msg$
     rd_meter_action$="LST"
     gosub disp_meter
@@ -485,6 +488,7 @@ rd_meter_total_recs=vectPort!.size()
 rd_meter_action$="LST"
 gosub disp_meter
 
+log_errors=1
 next_file:
    datafile$ = str(vectPort!.removeItem(0),err=end_read_loop)
 
@@ -531,6 +535,7 @@ next_file:
             print "*** ERROR ***: ",datafile$," requires ",cvs("pom-02",version_cvs)
             print (log_dev)"*** ERROR ***: ",datafile$," requires ",cvs("pom-02",version_cvs)," for non-stock line items"
             print (err_dev)"*** ERROR ***: ",datafile$," requires ",cvs("pom-02",version_cvs)," for non-stock line items"
+            error_logged=1
             goto next_file
         endif
     endif
@@ -1273,6 +1278,7 @@ rem --- Check value of new field for blanks if part of primary key
                             if pos("sam-"=cvs(new_datafile$,2))=1 and cvs(new_fieldlist.name$[field],2)="ITEM_ID" goto no_msg
                         blank_fields$=blank_fields$+new_fieldlist.name$[field]+$0a$
                         print (err_dev) "field "+new_fieldlist.name$[field]+" in file "+new_datafile$+" has a blank value and no translation specified." 
+                        error_logged=1
 no_msg:
                     endif
                 endif    
@@ -1308,6 +1314,7 @@ rem --- if this field.value is listed in flat file "field_translations" then tra
             if pos($0a$+new_fieldlist.name$[field]+$0a$=$0a$+key_temp$+$0a$)>0 or cvs(ddm_elements.dd_attr_dtab$,2)<>"" then
                 if pos($22$=value$) then
                     print (err_dev) "field "+new_fieldlist.name$[field]+" in file "+new_datafile$+" contains a quote that can cause problems." 
+                    error_logged=1
                 endif
             endif
         endif
@@ -1334,6 +1341,7 @@ rem --- date formatting
               endif
               if date(jul(num(value$(1,4)),num(value$(5,2)),num(value$(7,2)),err=*next),err=*next)>"" break
               print (err_dev)"There is an invalid date of "+value$+" in table "+new_datafile$+", old key = "+key(old_file,err=*next)
+              error_logged=1
               invalid_date$="Y"
               break
            case 2
@@ -1344,6 +1352,7 @@ rem --- date formatting
               value$=str(num(value$(1,4))+add_year)+value$(5)
               if date(jul(num(value$(1,4)),num(value$(5,2)),num(value$(7,2)),err=*next),err=*next)>"" break
               print (err_dev)"There is an invalid date of "+value$+" in table "+new_datafile$+", old key = "+key(old_file,err=*next)
+              error_logged=1
               invalid_date$="Y"
               break
            case 255
@@ -1513,6 +1522,7 @@ duplicate_record:
         dupe_key$=field(dupe_key$)
     endif    
     print (err_dev)"There are duplicate records being written to "+new_datafile$+" with a key template of"
+    error_logged=1
     if len(key_temp1$)>0
         print (err_dev)"   "+key_temp1$
         print (err_dev)"   and values of "+dupe_key$
@@ -1632,6 +1642,7 @@ rem --- Now go populate masks and sequences as needed
         print (err_dev)"Temporary vendor records found without a valid stbl("+$22$+"+DP_TEMP_VEND"+$22$+")."
         print (err_dev)"Those records were excluded from the DataPort."
         print (err_dev)"Please set this variable up in the config file and rerun the DataPort."
+        error_logged=1
     endif
 
     if len(blank_fields$)>0
@@ -1644,6 +1655,7 @@ rem --- Now go populate masks and sequences as needed
     while len(blank_fields$)>0
         print (err_dev)"Element "+blank_fields$(1,pos($0a$=blank_fields$)-1)+" has a blank value with no translation specified."
         print (err_dev)"  Consider converting to a non-blank value and re-running DataPort."
+        error_logged=1
         blank_fields$=blank_fields$(pos($0a$=blank_fields$)+1)
     wend
 
@@ -1817,10 +1829,20 @@ done: rem --- Done
     print (err_dev)$0a$+"DataPort completed"
     print (err_dev)"DataPort End Time: "+DATE(0:"%Mz/%Dz/%Y %hz:%mz:%sz")+" "
 
+    if error_logged then
+        rd_meter_data$="*** See DataPortError log for ERRORS encountered. ***"
+        rd_meter_action$="LST"
+        gosub disp_meter
+    endif
+
     rd_meter_data$="DataPort End Time: "+DATE(0:"%Mz/%Dz/%Y %hz:%mz:%sz")
     rd_meter_proc_recs=rd_meter_total_recs
     rd_meter_action$="LST-END"
     gosub disp_meter
+
+    if error_logged then
+        a=msgbox("*** ERRORS encountered. See DataPortError log for details. ***")
+    endif
 
     release
 
@@ -2467,6 +2489,7 @@ convert_po_files:
         rem --- put out log entry that the po (req, po or receipt) refers to more than one cust/order
         print (err_dev)"There appears to be more than one customer order referenced in "+po_hdr_file$+" key "+po_hdr_key$+"."
         print (err_dev)"Replacing customer "+po_hdr_rec.customer_id$+" with "+old_rec.customer_nbr$+"."
+        error_logged=1
     endif
     po_hdr_rec.dropship$="Y"
     po_hdr_rec.customer_id$=old_rec.customer_nbr$
@@ -2547,6 +2570,7 @@ return
     rd_meter_action$="LST"
     gosub disp_meter
     print (err_dev)"Processing PO detail file " + new_datafile$ + ", record: " + old_rec$+"."+$0a$+"Cannot convert dropship fields because corresponding PO header file not found."
+    error_logged=1
     
 return
 
@@ -2557,6 +2581,7 @@ return
     rd_meter_action$="LST"
     gosub disp_meter
     print (err_dev)"Processing PO detail file " + new_datafile$ + ", record: " + old_rec$+"."+$0a$+"Cannot insert dropship address in header file because file "+addr_file$+" not found."
+    error_logged=1
 
 return
 
@@ -2606,6 +2631,7 @@ get_new_template:
     if table_alias$="" then
        print "   Data File "+file_id$+" will not be ported"
        print (err_dev)"   Data File "+file_id$+" will not be ported"
+       error_logged=1
        goto eof
     endif
 
@@ -2632,6 +2658,7 @@ check_for_definition:
     if len(status$) then
        print "*** ERROR ***: Couldn't create "+new_datafile$+$0a$+status$
        print (err_dev)"*** ERROR ***: Couldn't create "+new_datafile$+$0a$+status$
+       error_logged=1
        goto eof
     endif
     print "   New file "+new_datafile$+" created in folder "+destin_folder$
@@ -2674,6 +2701,7 @@ return
 undefined_file:
     print "   Data File "+file_id$+" will not be ported"
     print (err_dev)"   Data File "+file_id$+" will not be ported"
+    error_logged=1
     goto eof
 return
 
@@ -2960,6 +2988,7 @@ reformat_address: rem --- This subroutine is also used in v6 Hybrid triggers
 
     if city$="" or state$="" then
        print(err_dev)"Error copying address fields in "+datafile$
+       error_logged=1
     endif
 
     new_rec.addr_line_1$=address$(1,24)
@@ -3127,18 +3156,22 @@ init_update_glm06: rem --- Initialize and update glm-06 and adm-09/19/39
         if !glm06_initialized then
             print "*** ERROR ***: Couldn't initialize ADM_AUDITCONTROL (glm-06)"
             print (err_dev)"*** ERROR ***: Couldn't initialize ADM_AUDITCONTROL (glm-06)"
+            error_logged=1
         endif
         if !adm09_initialized then
             print "*** ERROR ***: Couldn't initialize ADM_PROCMASTER (adm-09)"
             print (err_dev)"*** ERROR ***: Couldn't initialize ADM_PROCMASTER (adm-09)"
+            error_logged=1
         endif
         if !adm19_initialized then
             print "*** ERROR ***: Couldn't initialize ADM_PROCDETAIL (adm-19)"
             print (err_dev)"*** ERROR ***: Couldn't initialize ADM_PROCDETAIL (adm-19)"
+            error_logged=1
         endif
         if !adm39_initialized then
             print "*** ERROR ***: Couldn't initialize ADM_PROCTABLES (adm-39)"
             print (err_dev)"*** ERROR ***: Couldn't initialize ADM_PROCTABLES (adm-39)"
+            error_logged=1
         endif
     endif
 
@@ -3165,22 +3198,27 @@ init_update_glm06: rem --- Initialize and update glm-06 and adm-09/19/39
         if !port_sym04 then
             print "*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-04",version_cvs)
             print (err_dev)"*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-04",version_cvs)
+            error_logged=1
         endif
         if !port_sym06 then
             print "*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-06",version_cvs)
             print (err_dev)"*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-06",version_cvs)
+            error_logged=1
         endif
         if !port_sym09 then
             print "*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-09",version_cvs)
             print (err_dev)"*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-09",version_cvs)
+            error_logged=1
         endif
         if !port_sym19 then
             print "*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-19",version_cvs)
             print (err_dev)"*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-19",version_cvs)
+            error_logged=1
         endif
         if !port_sym39 then
             print "*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-39",version_cvs)
             print (err_dev)"*** ERROR ***: Couldn't find source file "+source_folder$+"/"+cvs("sym-39",version_cvs)
+            error_logged=1
         endif
 
         rem --- read posting_controls into hash map
@@ -3458,6 +3496,7 @@ init_update_glm06: rem --- Initialize and update glm-06 and adm-09/19/39
         else
             print "*** ERROR ***: Data not copied from "+cvs("glm-06",version_cvs)
             print (err_dev)"*** ERROR ***: Data not copied from "+cvs("glm-06",version_cvs)
+            error_logged=1
         endif
         if port_sym09 and adm09_updated then
             print "   Copied data from "+cvs("sym-09",version_cvs)
@@ -3465,6 +3504,7 @@ init_update_glm06: rem --- Initialize and update glm-06 and adm-09/19/39
         else
             print "*** ERROR ***: Data not copied from "+cvs("sym-09",version_cvs)
             print (err_dev)"*** ERROR ***: Data not copied from "+cvs("sym-09",version_cvs)
+            error_logged=1
         endif
         if port_sym19 and adm19_updated then
             print "   Copied data from "+cvs("sym-19",version_cvs)
@@ -3472,6 +3512,7 @@ init_update_glm06: rem --- Initialize and update glm-06 and adm-09/19/39
         else
             print "*** ERROR ***: Data not copied from "+cvs("sym-19",version_cvs)
             print (err_dev)"*** ERROR ***: Data not copied from "+cvs("sym-19",version_cvs)
+            error_logged=1
         endif
         if port_sym39 and adm39_updated then
             print "   Copied data from "+cvs("sym-39",version_cvs)
@@ -3479,6 +3520,7 @@ init_update_glm06: rem --- Initialize and update glm-06 and adm-09/19/39
         else
             print "*** ERROR ***: Data not copied from "+cvs("sym-39",version_cvs)
             print (err_dev)"*** ERROR ***: Data not copied from "+cvs("sym-39",version_cvs)
+            error_logged=1
         endif
     endif
     
@@ -3556,6 +3598,7 @@ init_apm01_memo1024: rem --- Build APM_VENDMAST.MEMO_1024 (apm-01) from apm-09 (
         rd_meter_action$="LST"
         gosub disp_meter
         print (err_dev)"Vendor Master file apm-01 not found in destination directory."+$0a$+"Vendor Comments ("+cvs("apm-09",version_cvs)+") could not be ported."
+        error_logged=1
     endif
 
     return
@@ -3625,6 +3668,7 @@ init_arm01_memo1024: rem --- Build ARM_CUSTMAST.MEMO_1024 (arm-01) from arm-05 (
         rd_meter_action$="LST"
         gosub disp_meter
         print (err_dev)"Customer Master file arm-01 not found in destination directory."+$0a$+"Customer Comments ("+cvs("arm-05",version_cvs)+") could not be ported."
+        error_logged=1
     endif
 
     return
@@ -3694,6 +3738,7 @@ init_bmm01_memo1024: rem --- Build BMM_BILLMAST.MEMO_1024 (bmm-01) from bmm-09 (
         rd_meter_action$="LST"
         gosub disp_meter
         print (err_dev)"BOM Master file bmm-01 not found in destination directory."+$0a$+"BOM Comments ("+cvs("bmm-09",version_cvs)+") could not be ported."
+        error_logged=1
     endif
 
     return
@@ -3763,6 +3808,7 @@ init_glm01_memo1024: rem --- Build GLM_ACCT.MEMO_1024 (glm-01) from glm-09 (GLM_
         rd_meter_action$="LST"
         gosub disp_meter
         print (err_dev)"GL Account Master file glm-01 not found in destination directory."+$0a$+"Account Comments ("+cvs("glm-09",version_cvs)+") could not be ported."
+        error_logged=1
     endif
 
     return
@@ -3832,6 +3878,7 @@ init_ivm01_memo1024: rem --- Build IVM_ITEMMAST.MEMO_1024 (ivm-01) from ivm-09 (
         rd_meter_action$="LST"
         gosub disp_meter
         print (err_dev)"Inventory Item Master file ivm-01 not found in destination directory."+$0a$+"Item Comments ("+cvs("ivm-09",version_cvs)+") could not be ported."
+        error_logged=1
     endif
 
     return
@@ -3901,6 +3948,7 @@ init_sfe01_memo1024: rem --- Build SFE_WOMASTR.MEMO_1024 (sfe-01) from woe-07 (S
         rd_meter_action$="LST"
         gosub disp_meter
         print (err_dev)"Work Order Entry file sfe-01 not found in destination directory."+$0a$+"Work Order Comments ("+cvs("woe-07",version_cvs)+") could not be ported."
+        error_logged=1
     endif
 
     return
@@ -4013,6 +4061,7 @@ verify_translation_master: rem --- Verify master file records exist for used tra
                 call stbl("+DIR_SYP")+"bac_key_template.bbj",table_id$,"PRIMARY",key_fieldlist$,rd_table_chans$[all],rd_stat$
                 if rd_stat$<>"" then
                         print (err_dev)"Primary key template for master file "+filename$+" not found for translation of "+fieldname$
+                        error_logged=1
                 endif
             else
                 rem --- Get record ID
@@ -4025,6 +4074,7 @@ verify_translation_master: rem --- Verify master file records exist for used tra
         open (master_chan,err=*next)destin_folder$+"/"+filename$;master_found=1
         if !master_found then
             print (err_dev)"Master file "+filename$+" not found for translation of "+fieldname$
+            error_logged=1
             continue
         endif
 
@@ -4046,6 +4096,7 @@ verify_translation_master: rem --- Verify master file records exist for used tra
                     readrecord(master_chan,key=firm$+record_id$+transValue$,dom=*next)record$
                     if cvs(record$,2)="" then
                         print (err_dev)"Translation for "+fieldname$+"="+transValue$+ " not found in "+filename$+" for firm "+firm$
+                        error_logged=1
                     endif
                 else
                     rem --- Use key field for this master file record
@@ -4068,6 +4119,7 @@ verify_translation_master: rem --- Verify master file records exist for used tra
                         if cvs(record$,2)="" then
                             print (err_dev)"Translation for "+fieldname$+"="+transValue$+ " not found in "+filename$+" for firm "+firm$
 :                           +" and "+key_field$+"="+key_field_value$
+                            error_logged=1
                         endif
                     wend
                 endif
@@ -4319,14 +4371,14 @@ rem --- Convert 2-Char Year to 21st Century 2-Char Year
         return q$
     fnend
 
-std_error: rem --- Standard error handler (11Oct2017)
+modified_error: rem --- Modified standard error handler (11Oct2017) to log_errors instead of displaying them
 
     if tcb(19)>0
         rem --- Escape handler
         if and(chr(tcb(19)),$08$)=$08$
             release
         else
-            setesc std_error
+            setesc modified_error
             return
         endif
     endif
@@ -4344,11 +4396,22 @@ std_error: rem --- Standard error handler (11Oct2017)
         rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
         if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
     endif
-    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
-    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
-    if pos("RETRY"=rd_err_act$) retry
-    if pgm(-1)<>pgm(-2) status=999; exit 
-    release
+    if log_errors then
+        print (err_dev)"*** ERROR Porting: ",datafile$+" ***"
+        print (err_dev)"    Program: ",pgm(-2)
+        print (err_dev)"    Program Line: ",str(tcb(5))
+        print (err_dev)"    Error Number: ",str(err_num)
+        print (err_dev)"    Error Text: ",rd_err_text$
+        error_logged=1
+        seterr modified_error
+        goto next_file
+    else
+        call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+        if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+        if pos("RETRY"=rd_err_act$) retry
+        if pgm(-1)<>pgm(-2) status=999; exit 
+        release
+    endif
 
 rem /**
 rem  * TriggerFilter Class to filter *.trigger files.
