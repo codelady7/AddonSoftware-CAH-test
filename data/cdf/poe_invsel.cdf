@@ -161,6 +161,7 @@ rem --- disable Invoice Detail button
 
 [[POE_INVSEL.PO_NO.AVAL]]
 rem --- For new detail lines, locate first un-billed receiver for this PO
+curr_receiver_no$=""
 if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" and cvs(callpoint!.getColumnData("POE_INVSEL.RECEIVER_NO"),2)="" then
 	pot_rechdr_dev=fnget_dev("POT_RECHDR")
 	dim pot_rechdr$:fnget_tpl$("POT_RECHDR")
@@ -188,6 +189,13 @@ if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" and cvs(cal
 		callpoint!.setColumnData("POE_INVSEL.RECEIVER_NO",pot_rechdr.receiver_no$,1)
 		break
 	wend
+endif
+
+if curr_receiver_no$="" then
+	msg_id$="PO_REC_INVOICED"
+	gosub disp_message
+	callpoint!.setStatus("ABORT")
+	break
 endif
 
 gosub accum_receiver_tot; rem accumulate total for po/receiver# entered
@@ -238,6 +246,26 @@ rem --- Do custom query
 	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[POE_INVSEL.RECEIVER_NO.AVAL]]
+rem --- A blank receiver means all receivers for this PO
+receiver_no$=callpoint!.getUserInput()
+if cvs(receiver_no$,2)<>"" then
+	rem --- Has this receiver been invoiced already?
+	pot_invdet_dev=fnget_dev("POT_INVDET")
+	vendor_id$=callpoint!.getHeaderColumnData("POE_INVHDR.VENDOR_ID")
+	ap_type$=callpoint!.getHeaderColumnData("POE_INVHDR.AP_TYPE")
+	po_no$=callpoint!.getColumnData("POE_INVSEL.PO_NO")
+	pot_invdet_invbypo$=firm_id$+vendor_id$+po_no$+receiver_no$+ap_type$
+	read(pot_invdet_dev,key=pot_invdet_invbypo$,knum="INVBYPO",dom=*next)
+	pot_invdet_key$=key(pot_invdet_dev,end=*next)
+	if pos(pot_invdet_invbypo$=pot_invdet_key$)=1 then
+		rem --- po_no+receiver_no already invoiced
+		msg_id$="PO_REC_INVOICED"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+endif
+
 gosub accum_receiver_tot; rem accumulate total for po/receiver# entered
 
 [[POE_INVSEL.RECEIVER_NO.AVEC]]
@@ -287,15 +315,11 @@ accum_receiver_tot:
 rem --- given a po/receiver (or po w/ no receiver), retrieve/display pot-14 info -- display part doesn't currently work due to limitation in grids
 rem --- this routine invoked from rec# AVAL and from AWRI
 
-pot_rechdr_dev=fnget_dev("POT_RECHDR")
 pot_recdet_dev=fnget_dev("POT_RECDET")
 poc_linecode_dev=fnget_dev("POC_LINECODE")
-apc_termscode_dev=fnget_dev("APC_TERMSCODE")
 
-dim pot_rechdr$:fnget_tpl$("POT_RECHDR")
 dim pot_recdet$:fnget_tpl$("POT_RECDET")
 dim poc_linecode$:fnget_tpl$("POC_LINECODE")
-dim apc_termscode$:fnget_tpl$("APC_TERMSCODE")
 
 event$=callpoint!.getCallpointEvent()
 po_no$=callpoint!.getColumnData("POE_INVSEL.PO_NO")
@@ -309,7 +333,6 @@ if pos("POE_INVSEL.PO_NO.AVAL"=event$)
 endif
 
 ky_po_rec$=firm_id$+po_no$
-foundone=0
 line_tot=0
 
 read (pot_recdet_dev,key=ky_po_rec$,dom=*next)
@@ -321,30 +344,16 @@ while 1
 	if cvs(receiver_no$,3)<>"" and pot_recdet.receiver_no$<>receiver_no$ then continue
 	find record (poc_linecode_dev,key=firm_id$+pot_recdet.po_line_code$,dom=*next)poc_linecode$
 	if pos(poc_linecode.line_type$="VM")<>0 then continue
+	if pos(".AWRI"=event$)<>0 then gosub write_poe_invdet
 	if poc_linecode.line_type$<>"O"
 		if (pot_recdet.qty_received>=0 and pot_recdet.qty_received<=pot_recdet.qty_invoiced) or
 :			(pot_recdet.qty_received<=0 and pot_recdet.qty_received>=pot_recdet.qty_invoiced) then continue
 	endif
-	foundone=1
 	line_tot=line_tot+round(pot_recdet.qty_received*pot_recdet.unit_cost,2)
-	if pos(".AWRI"=event$)<>0 then gosub write_poe_invdet
 wend
 
-
-
-if pos(".AVAL"=event$)<>0 or pos(".BINQ"=event$)<>0
-	if foundone
-		read record (pot_rechdr_dev,key=firm_id$+pot_recdet.po_no$+pot_recdet.receiver_no$,dom=*next)pot_rechdr$
-		find record (apc_termscode_dev,key=firm_id$+"C"+pot_rechdr.ap_terms_code$,dom=*next)apc_termscode$
-		disp_info$=Translate!.getTranslation("AON_ORDERED:_")+fndate$(pot_rechdr.ord_date$)+Translate!.getTranslation("AON_,_RECEIVED:_")+fndate$(pot_rechdr.recpt_date$)+Translate!.getTranslation("AON_,_TERMS:_")+pot_rechdr.ap_terms_code$+"("+cvs(apc_termscode.code_desc$,3)+")"
-		callpoint!.setColumnData("POE_INVSEL.TOTAL_AMOUNT",str(line_tot))
-rem		callpoint!.setColumnData("<<DISPLAY>>.DISP_REC_INFO",disp_info$)
-		callpoint!.setStatus("REFRESH"); rem --- tabbing to new grid row wasn't working until this was rem'd ?
-	else
-		msg_id$="PO_REC_INVOICED"
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-	endif
+if pos(".AVAL"=event$)<>0 or pos(".BINQ"=event$)<>0 then
+	callpoint!.setColumnData("POE_INVSEL.TOTAL_AMOUNT",str(line_tot),1)
 endif
 
 return

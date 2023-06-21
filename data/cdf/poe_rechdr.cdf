@@ -175,9 +175,7 @@ rem --- custom delete message
 	gosub disp_message
 	if msg_opt$="N" then
 		callpoint!.setStatus("ABORT")
-		break
 	endif
-	callpoint!.setDevObject("record_deleted","Y")
 
 [[POE_RECHDR.BDEQ]]
 rem --- suppress default Barista message
@@ -194,39 +192,6 @@ rem --- remove software lock on batch, if batching
 		lock_status$=""
 		lock_disp$=""
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
-	endif
-
-[[POE_RECHDR.BREX]]
-rem --- Make sure something was received unless receipt is being deleted
-	if cvs(callpoint!.getDevObject("record_deleted"),2)="" then
-		receiver_no$=callpoint!.getColumnData("POE_RECHDR.RECEIVER_NO")
-		po_no$=callpoint!.getColumnData("POE_RECHDR.PO_NO")
-		vendor_id$=callpoint!.getColumnData("POE_RECHDR.VENDOR_ID")
-		if cvs(receiver_no$,2)<>"" and cvs(po_no$,2)<>"" and cvs(vendor_id$,2)<>"" then
-			batch_no$=callpoint!.getColumnData("POE_RECHDR.BATCH_NO")
-			poe_recdet_dev=fnget_dev("POE_RECDET")
-			dim poe_recdet$:fnget_tpl$("POE_RECDET")
-			somethingReceived=0
-			read(poe_recdet_dev,key=firm_id$+batch_no$+receiver_no$,dom=*next)
-			while 1
-				poe_recdet_key$=key(poe_recdet_dev,end=*break)
-				if pos(firm_id$+batch_no$+receiver_no$=poe_recdet_key$)<>1 then break
-				readrecord(poe_recdet_dev)poe_recdet$
-				if poe_recdet.qty_received>0 then
-					somethingReceived=1
-					break
-				endif
-			wend
-
-			if !somethingReceived then
-				msg_id$="PO_EMPTY_RECEIPT"
-				gosub disp_message
-				rem --- Don't use ABORT in BREX callpoint until Barista Bug 10311 is fixed
-				rem ... callpoint!.setStatus("ABORT")
-			endif
-		endif
-	else
-		callpoint!.setDevObject("record_deleted","")
 	endif
 
 [[POE_RECHDR.BSHO]]
@@ -385,8 +350,6 @@ rem --- Set up Lot/Serial button properly
 	swend
 
 	callpoint!.setOptionEnabled("LENT",0)
-
-	callpoint!.setDevObject("record_deleted","")
 
 [[POE_RECHDR.BTBL]]
 rem --- Get Batch information
