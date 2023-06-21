@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-06-09
+ Report Date:   2023-06-21
  Report Branch: AddonSoftware 23.01
  Last Release:  AddonSoftware 23.00
 =======================================================================================================================================
@@ -144,3 +144,19 @@ Bug 10685 - AP - Voiding a Manual Check that is still in entry files leaves deta
 ----
 Modified: ap/src/apu_manualchecks.aon
 
+=======================================================================================================================================
+Revision: 440c7f46518242ffc0c18ee7640e344273d11887
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/21/2023 2:34:29 PM
+Message:
+Bug 10678: Modified PO Receipt Entry to allow zero receipts again.
+Modified PO Invoice Entry to not get stuck in the loop described in Bug
+10308 when the default receipt for a PO is a zero receipt.
+----
+Modified: data/bar/poe_invsel.xml
+Modified: data/bar/poe_rechdr.xml
+Modified: data/cdf/poe_invsel.cdf
+Modified: data/cdf/poe_rechdr.cdf
+Modified: data/sync/ads_messages~[01007514PO].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
