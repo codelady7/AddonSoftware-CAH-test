@@ -51,59 +51,18 @@
 	</columnHeader>
 	<detail>
 		<band height="258" splitType="Stretch">
-			<textField>
-				<reportElement x="31" y="147" width="36" height="13" uuid="b27d47c2-5c94-4dd7-8e5a-ec0ee57755e9">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="20" y="143" width="40" height="50" uuid="9f77d92e-bb4b-4c81-ab6c-0ef4fa934df6">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle" markup="none">
+				<textElement>
 					<font isItalic="true"/>
+					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.0"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$R{AON_PAY}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="32" y="164" width="33" height="13" uuid="805fbf9d-a4a0-4910-b4ed-f262cac0efbe">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{AON_TO_THE}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="32" y="180" width="41" height="13" uuid="4e9117d6-8424-4d45-b0c0-6c786cfd48be">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font isItalic="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$R{AON_ORDER_OF}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="90" y="144" width="216" height="16" uuid="bf40f852-6bc7-47d8-9b52-c6e087ebe414">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{VEND_NAME}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="90" y="157" width="216" height="16" uuid="e349179b-bba4-4810-a58b-dfe8483c5984">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{VEND_ADDR1}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="90" y="170" width="216" height="16" uuid="41f6376f-e0e9-42ba-9178-566f6024dcbf">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{VEND_ADDR2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$R{AON_PAY}+"\n"+$R{AON_TO_THE}+"\n"+$R{AON_ORDER_OF}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="4">
 				<reportElement mode="Opaque" x="10" y="10" width="265" height="44" forecolor="#000000" backcolor="#FFFFFF" uuid="0257a99e-0428-4b28-a3f8-34b4c1be9aa3"/>
@@ -236,15 +195,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$R{AON_AUTHORIZED_SIGNATURE}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="90" y="183" width="216" height="16" uuid="48f439e4-e4af-432d-ac6d-feb1e067fd1e">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="12" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{VEND_ADDR3}]]></textFieldExpression>
-			</textField>
 			<image>
 				<reportElement x="396" y="168" width="140" height="44" uuid="e351b15d-f3eb-483b-9de7-53e5ed4cd706">
 					<printWhenExpression><![CDATA[$F{ONE_SIGNATURE}!=""]]></printWhenExpression>
@@ -263,18 +213,6 @@
 				</reportElement>
 				<imageExpression><![CDATA[$F{TWO_SIGNATURE_2}]]></imageExpression>
 			</image>
-			<textField isBlankWhenNull="true">
-				<reportElement x="90" y="196" width="216" height="16" uuid="0ef53de4-6cd8-48ac-867a-f27f62b0c6cf">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Serif" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{VEND_ADDR4}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="351" y="174" width="112" height="20" uuid="2acee78d-2991-45c5-9092-b9c0e7796e59">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
@@ -310,6 +248,19 @@
 					<font fontName="MICR Encoding" size="16"/>
 				</textElement>
 				<textFieldExpression><![CDATA["C"+$P{CHECK_NUM}+"C  "+$P{AP_MICR}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="80" y="140" width="216" height="65" uuid="a071afe2-244f-4278-a289-37f139afbfd4">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Serif" size="12"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="9.0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{VEND_NAME}+"\n"+$P{VEND_ADDR1}+"\n"+$P{VEND_ADDR2}+"\n"+$P{VEND_ADDR3}+"\n"+$P{VEND_ADDR4}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
