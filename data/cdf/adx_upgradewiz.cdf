@@ -249,6 +249,10 @@ rem --- Validate Repository
 	gitAuthID$=cvs(callpoint!.getColumnData("ADX_UPGRADEWIZ.GIT_AUTH_ID"),3)
 	gosub validate_git_auth_id
 
+rem --- Validate this is an officicial (tagged) release, not an RC
+	gitAuthID$=cvs(callpoint!.getColumnData("ADX_UPGRADEWIZ.GIT_AUTH_ID"),3)
+	gosub validate_release_tag
+
 rem --- Validate base directory for installation
 
 	new_loc$ = callpoint!.getColumnData("ADX_UPGRADEWIZ.BASE_DIR")
@@ -545,6 +549,7 @@ rem --- Declare Java classes used
 	use java.util.Vector
 	use ::ado_file.src::FileObject
 	use ::adx_upgradewiz.aon::AppHeritage
+	use ::ado_GitRepoInterface.aon::GitRepoInterface
 
 rem --- Initialize location values so can tell later if they have changed
 
@@ -707,17 +712,34 @@ rem --- validate_git_auth_id
 rem --- verifies that the Git repository is a fork or clone of the official Addon repository
 rem --- gitAuthID$: the ID of the Git Authentication record in the ADX_GIT_AUTH table.
 validate_git_auth_id: 
-	use ::ado_GitRepoInterface.aon::GitRepoInterface
 	
 	git!=new GitRepoInterface(gitAuthID$)
-	isOfficial=git!.isDescendantOfOfficialRepo()
 
 	REM If the repo is not official, show a message and cancel validation 
+	isOfficial=git!.isDescendantOfOfficialRepo()
 	if !isOfficial then
 		msg_id$="ADX_INVALID_GIT_REPO"
 		gosub disp_message
-		callpoint!.setStatus("ABORT")
+		callpoint!.setStatus("EXIT")
 	endif 
+
+	return
+
+validate_release_tag:
+
+	git!=new GitRepoInterface(gitAuthID$)
+
+	rem --- if the version being installed/upgraded to isn't tagged (i.e., not an official release), show message and cancel
+	tagVersion$=callpoint!.getDevObject("minor_ver")
+	tagVersion$=tagVersion$(2)
+	isTagged=git!.isTaggedRelease(tagVersion$)
+	if !isTagged
+		msg_id$="ADX_INVALID_GIT_REL"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=str(num(tagVersion$)/100:"00.00")
+		gosub disp_message
+		callpoint!.setStatus("EXIT")
+	endif
 	return 
 
 validate_new_db_name: rem --- Validate new database name
