@@ -34,6 +34,10 @@ rem --- Validate Repository
 	gitAuthID$=cvs(callpoint!.getColumnData("ADX_INSTALLWIZ.GIT_AUTH_ID"),3)
 	gosub validate_git_auth_id
 
+    rem --- Validate this is an officicial (tagged) release, not an RC
+	gitAuthID$=cvs(callpoint!.getColumnData("ADX_INSTALLWIZ.GIT_AUTH_ID"),3)
+	gosub validate_release_tag
+
 rem --- Validate directory
 	if num(callpoint!.getColumnData("ADX_INSTALLWIZ.VERSION_NEUTRAL")) then
 		rem --- Validate base directory for installation
@@ -235,6 +239,26 @@ validate_git_auth_id:
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
 	endif 
+	return
+
+validate_release_tag:
+
+	git!=new GitRepoInterface(gitAuthID$)
+
+	rem --- if the version being installed/upgraded to isn't tagged (i.e., not an official release), show message and cancel
+	tagVersion$=callpoint!.getDevObject("minor_ver")
+	tagVersion$=tagVersion$(2)
+	isTagged=git!.isTaggedRelease(tagVersion$)
+	if !isTagged
+		msg_id$="ADX_INVALID_GIT_REL"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=str(num(tagVersion$)/100:"00.00")
+		gosub disp_message
+		bbjAPI!=bbjAPI()
+		rdFuncSpace!=bbjAPI!.getGroupNamespace()
+		rdFuncSpace!.setValue("+build_task","OFF")
+		release
+	endif
 	return 
 
 validate_new_db_name: rem --- Validate new database name

@@ -318,6 +318,33 @@ GitRepoInterface_error:rem --- Method error trap/handler (11Oct2017)
             methodret (currentResult!.getName()=#verificationBranch!) and (currentResult!.getObjectId().toString()=#verificationObjectId!)
         methodend
 
+        rem /**
+        rem  *  Look for tag for this release branch
+        rem  *  Only official/tagged releases can be used, i.e., not RCs
+        rem  *  @param BBjString version
+        rem  */
+        method public BBjNumber isTaggedRelease(BBjString version_id$) 
+            declare LsRemoteCommand lsRemoteCmd!
+            declare java.util.Collection lsResult!
+            declare Iterator resultIterator!
+            declare Ref currentResult!
+            
+            versionTag$="refs/tags/BBJ"+version_id$+"GA_Release"
+
+            lsRemoteCmd!=Git.lsRemoteRepository()
+            lsRemoteCmd!=lsRemoteCmd!.setRemote(#RepoURL!)
+            lsRemoteCmd!.setTags(true)
+            lsResult!=lsRemoteCmd!.call()
+
+            REM see if a tag exists for the version we're installing/upgrading to
+            resultIterator!=lsResult!.iterator()
+            while (resultIterator!.hasNext())
+                currentResult!=cast(Ref,resultIterator!.next())
+                if (currentResult!.getName().equals(versionTag$)) then break
+            wend
+
+            methodret currentResult!.getName().equals(versionTag$)
+        methodend
 
         rem /**
         rem  * Checkout (i.e. switch to) specified branch in repository.
