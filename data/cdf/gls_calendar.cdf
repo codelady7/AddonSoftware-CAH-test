@@ -740,43 +740,45 @@ rem --- Must be the day after the ending period of the prior year when there is 
 		if newEndDate$<>oldEndDate$ then
 			msg_id$="GL_BAD_START_DATE"
 			gosub disp_message
-			if msg_opt$="N" then
-				callpoint!.setStatus("ABORT")
-				break
-			else
-				rem --- Check for existing transactions between prior year's old end date and new end date
-				rem --- Transactions on the gapStartDate$ are okay
-				rem --- Transactions on or before the gapEndDate$ are NOT okay
-				glt_transdetail_dev=fnget_dev("GLT_TRANSDETAIL")
-				dim glt_transdetail$:fnget_tpl$("GLT_TRANSDETAIL")
-				if newEndDate$>oldEndDate$ then
-					lastJulian=jul(num(oldEndDate$(1,4)),num(oldEndDate$(5,2)),num(oldEndDate$(7,2)))
-					gapStartDate$=date(lastJulian+1:"%Yl%Mz%Dz")
-					gapEndDate$=newEndDate$
-				else
-					lastJulian=jul(num(newEndDate$(1,4)),num(newEndDate$(5,2)),num(newEndDate$(7,2)))
-					gapStartDate$=date(lastJulian+1:"%Yl%Mz%Dz")
-					gapEndDate$=oldEndDate$
-				endif
-				read(glt_transdetail_dev,key=firm_id$+gapStartDate$,knum="BY_TRANS_DATE",dom=*next)
-				readrecord(glt_transdetail_dev,end=*next)glt_transdetail$
-				if glt_transdetail.firm_id$=firm_id$ and glt_transdetail.trns_date$<=gapEndDate$ then
-					rem --- Don't allow changing START_DATE if there are transactions in the gap
-					msg_id$="GL_EXISTING_TRANS"
-					dim msg_tokens$[2]
-					msg_tokens$[1]=gapStartDate$(1,4)+"-"+gapStartDate$(5,2)+"-"+gapStartDate$(7,2)
-					msg_tokens$[2]=gapEndDate$(1,4)+"-"+gapEndDate$(5,2)+"-"+gapEndDate$(7,2)
-					gosub disp_message
+			if pos("PASSVALID"=msg_opt$)=0
+				if msg_opt$="N" then
 					callpoint!.setStatus("ABORT")
 					break
 				else
-					rem --- Auto-adjust prior year end date when there are no transactions in the gap
-					readrecord(gls_calendar_dev,key=firm_id$+prior_year$)gls_calendar$
-					field gls_calendar$,"PERIOD_END_"+gls_calendar.total_pers$=newEndDate$
-					writerecord(gls_calendar_dev)gls_calendar$
+					rem --- Check for existing transactions between prior year's old end date and new end date
+					rem --- Transactions on the gapStartDate$ are okay
+					rem --- Transactions on or before the gapEndDate$ are NOT okay
+					glt_transdetail_dev=fnget_dev("GLT_TRANSDETAIL")
+					dim glt_transdetail$:fnget_tpl$("GLT_TRANSDETAIL")
+					if newEndDate$>oldEndDate$ then
+						lastJulian=jul(num(oldEndDate$(1,4)),num(oldEndDate$(5,2)),num(oldEndDate$(7,2)))
+						gapStartDate$=date(lastJulian+1:"%Yl%Mz%Dz")
+						gapEndDate$=newEndDate$
+					else
+						lastJulian=jul(num(newEndDate$(1,4)),num(newEndDate$(5,2)),num(newEndDate$(7,2)))
+						gapStartDate$=date(lastJulian+1:"%Yl%Mz%Dz")
+						gapEndDate$=oldEndDate$
+					endif
+					read(glt_transdetail_dev,key=firm_id$+gapStartDate$,knum="BY_TRANS_DATE",dom=*next)
+					readrecord(glt_transdetail_dev,end=*next)glt_transdetail$
+					if glt_transdetail.firm_id$=firm_id$ and glt_transdetail.trns_date$<=gapEndDate$ then
+						rem --- Don't allow changing START_DATE if there are transactions in the gap
+						msg_id$="GL_EXISTING_TRANS"
+						dim msg_tokens$[2]
+						msg_tokens$[1]=gapStartDate$(1,4)+"-"+gapStartDate$(5,2)+"-"+gapStartDate$(7,2)
+						msg_tokens$[2]=gapEndDate$(1,4)+"-"+gapEndDate$(5,2)+"-"+gapEndDate$(7,2)
+						gosub disp_message
+						callpoint!.setStatus("ABORT")
+						break
+					else
+						rem --- Auto-adjust prior year end date when there are no transactions in the gap
+						readrecord(gls_calendar_dev,key=firm_id$+prior_year$)gls_calendar$
+						field gls_calendar$,"PERIOD_END_"+gls_calendar.total_pers$=newEndDate$
+						writerecord(gls_calendar_dev)gls_calendar$
 
-					rem --- Hold on to prior fiscal year end date in case START_DATE is not saved
-					callpoint!.setDevObject("priorYearEndDate",oldEndDate$)
+						rem --- Hold on to prior fiscal year end date in case START_DATE is not saved
+						callpoint!.setDevObject("priorYearEndDate",oldEndDate$)
+					endif
 				endif
 			endif
 		endif
@@ -915,42 +917,44 @@ validate_cal_end: rem --- The ending day of the last period must be the day befo
 		if newStartDate$<>oldStartDate$ then
 			msg_id$="GL_BAD_END_DATE"
 			gosub disp_message
-			if msg_opt$="N" then
-				callpoint!.setStatus("ABORT")
-				abort=1
-			else
-				rem --- Check for existing transactions between prior year's old end date and new end date
-				rem --- Transactions on the gapStartDate$ are okay
-				rem --- Transactions on or before the gapEndDate$ are NOT okay
-				glt_transdetail_dev=fnget_dev("GLT_TRANSDETAIL")
-				dim glt_transdetail$:fnget_tpl$("GLT_TRANSDETAIL")
-				if newStartDate$>oldStartDate$ then
-					gapStartDate$=oldStartDate$
-					newStartJulian=jul(num(newStartDate$(1,4)),num(newStartDate$(5,2)),num(newStartDate$(7,2)))
-					gapEndDate$=date(newStartJulian-1:"%Yl%Mz%Dz")
-				else
-					gapStartDate$=newStartDate$
-					oldStartJulian=jul(num(oldStartDate$(1,4)),num(oldStartDate$(5,2)),num(oldStartDate$(7,2)))
-					gapEndDate$=date(oldStartJulian-1:"%Yl%Mz%Dz")
-				endif
-				read(glt_transdetail_dev,key=firm_id$+gapStartDate$,knum="BY_TRANS_DATE",dom=*next)
-				readrecord(glt_transdetail_dev,end=*next)glt_transdetail$
-				if glt_transdetail.firm_id$=firm_id$ and glt_transdetail.trns_date$<=gapEndDate$ then
-					rem --- Don't allow changing fiscal calendar end date if there are transactions in the gap
-					msg_id$="GL_EXISTING_TRANS"
-					dim msg_tokens$[2]
-					msg_tokens$[1]=gapStartDate$(1,4)+"-"+gapStartDate$(5,2)+"-"+gapStartDate$(7,2)
-					msg_tokens$[2]=gapEndDate$(1,4)+"-"+gapEndDate$(5,2)+"-"+gapEndDate$(7,2)
-					gosub disp_message
+			if pos("PASSVALID"=msg_opt$)=0
+				if msg_opt$="N" then
 					callpoint!.setStatus("ABORT")
+					abort=1
 				else
-					rem --- Auto-adjust next year start date when there are no transactions in the gap
-					readrecord(gls_calendar_dev,key=firm_id$+next_year$)gls_calendar$
-					field gls_calendar$,"START_DATE"=newStartDate$
-					writerecord(gls_calendar_dev)gls_calendar$
+					rem --- Check for existing transactions between prior year's old end date and new end date
+					rem --- Transactions on the gapStartDate$ are okay
+					rem --- Transactions on or before the gapEndDate$ are NOT okay
+					glt_transdetail_dev=fnget_dev("GLT_TRANSDETAIL")
+					dim glt_transdetail$:fnget_tpl$("GLT_TRANSDETAIL")
+					if newStartDate$>oldStartDate$ then
+						gapStartDate$=oldStartDate$
+						newStartJulian=jul(num(newStartDate$(1,4)),num(newStartDate$(5,2)),num(newStartDate$(7,2)))
+						gapEndDate$=date(newStartJulian-1:"%Yl%Mz%Dz")
+					else
+						gapStartDate$=newStartDate$
+						oldStartJulian=jul(num(oldStartDate$(1,4)),num(oldStartDate$(5,2)),num(oldStartDate$(7,2)))
+						gapEndDate$=date(oldStartJulian-1:"%Yl%Mz%Dz")
+					endif
+					read(glt_transdetail_dev,key=firm_id$+gapStartDate$,knum="BY_TRANS_DATE",dom=*next)
+					readrecord(glt_transdetail_dev,end=*next)glt_transdetail$
+					if glt_transdetail.firm_id$=firm_id$ and glt_transdetail.trns_date$<=gapEndDate$ then
+						rem --- Don't allow changing fiscal calendar end date if there are transactions in the gap
+						msg_id$="GL_EXISTING_TRANS"
+						dim msg_tokens$[2]
+						msg_tokens$[1]=gapStartDate$(1,4)+"-"+gapStartDate$(5,2)+"-"+gapStartDate$(7,2)
+						msg_tokens$[2]=gapEndDate$(1,4)+"-"+gapEndDate$(5,2)+"-"+gapEndDate$(7,2)
+						gosub disp_message
+						callpoint!.setStatus("ABORT")
+					else
+						rem --- Auto-adjust next year start date when there are no transactions in the gap
+						readrecord(gls_calendar_dev,key=firm_id$+next_year$)gls_calendar$
+						field gls_calendar$,"START_DATE"=newStartDate$
+						writerecord(gls_calendar_dev)gls_calendar$
 
-					rem --- Hold on to next fiscal year start date in case last PERIOD_END_nn is not saved
-					callpoint!.setDevObject("nextYearStartDate",oldStartDate$)
+						rem --- Hold on to next fiscal year start date in case last PERIOD_END_nn is not saved
+						callpoint!.setDevObject("nextYearStartDate",oldStartDate$)
+					endif
 				endif
 			endif
 		endif
@@ -1089,8 +1093,10 @@ check_start_date: rem --- START_DATE must be <= first trns_date in glt_transdeta
 		msg_tokens$[1]=first_yyyymmdd$(5,2)+"-"+first_yyyymmdd$(7)+"-"+first_yyyymmdd$(1,4)
 		msg_tokens$[2]=first_yyyymmdd$(5,2)+"-"+first_yyyymmdd$(7)+"-"+first_yyyymmdd$(1,4)
 		gosub disp_message
-		callpoint!.setStatus("ABORT")
-		abort=1
+		if pos("PASSVALID"=msg_opt$)=0
+			callpoint!.setStatus("ABORT")
+			abort=1
+		endif
 	endif
 return
 
@@ -1111,8 +1117,10 @@ check_transdetail_period_dates: rem --- Check PERIOD_END_nn date against GLT_TRA
 		msg_tokens$[3]=period$
 		msg_tokens$[4]=before_date$(1,4)+"-"+before_date$(5,2)+"-"+before_date$(7)
 		gosub disp_message
-		callpoint!.setStatus("ABORT")
-		abort=1
+		if pos("PASSVALID"=msg_opt$)=0
+			callpoint!.setStatus("ABORT")
+			abort=1
+		endif
 	endif
 
 	rem --- Period cannot end on or after this date
@@ -1129,8 +1137,10 @@ check_transdetail_period_dates: rem --- Check PERIOD_END_nn date against GLT_TRA
 				msg_tokens$[3]=period$
 				msg_tokens$[4]=after_date$(1,4)+"-"+after_date$(5,2)+"-"+after_date$(7)
 				gosub disp_message
-				callpoint!.setStatus("ABORT")
-				abort=1
+				if pos("PASSVALID"=msg_opt$)=0
+					callpoint!.setStatus("ABORT")
+					abort=1
+				endif
 			endif
 		endif
 	endif
