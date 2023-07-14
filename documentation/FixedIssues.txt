@@ -8,4 +8,37 @@
 BBjBaristaAddonDemos2301_06-22-2023_0927.jar
 
 =======================================================================================================================================
+Revision: 4197c612391bb9e8fcdfd3c1f370e023d471dc6a
+Author: Christine <chawkins@basis.com>
+Date: 6/27/2023 11:28:35 AM
+Message:
+Bug 10689 - AD - Disallow use of RCs in Install/Upgrade wizard
+ - looks for commit ID of release tag; disallow install/upgrade if not found
 
+(cherry picked from commit 713caa5b439aa3053c8c19b3c6927e09183160aa)
+----
+Modified: ad/src/ado_AO_GitRepoInterface.aon
+Modified: data/bar/adx_installwiz.xml
+Modified: data/bar/adx_upgradewiz.xml
+Modified: data/cdf/adx_installwiz.cdf
+Modified: data/cdf/adx_upgradewiz.cdf
+Modified: data/sync/ads_messages~[01007514AD].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+
+Revision: 08cc6dd4203bf554c7fc9fb6bed4ae85380205a4
+Author: Christine <chawkins@basis.com>
+Date: 7/14/2023 5:57:05 PM
+Message:
+Bug 10695 - AD - Upgrade Wizard code to check for unresolved conflicts takes much longer in Windows than Linux
+ - replaced readString() with much faster BufferedReader
+ - added status window message "Checking for unresolved conflicts."
+
+(cherry picked from commit 7eba67b5d0c4d1f87a1709b4d633b841cb588456)
+----
+Modified: ad/src/ado_AO_GitRepoInterface.aon
+Modified: ad/src/adx_upgradewiz.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
