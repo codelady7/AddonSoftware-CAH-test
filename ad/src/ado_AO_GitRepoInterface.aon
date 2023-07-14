@@ -16,6 +16,8 @@ rem  */
 
     use java.io.ByteArrayOutputStream
     use java.io.File
+    use java.io.FileReader
+    use java.io.BufferedReader    
     use java.lang.reflect.Array
     use java.nio.charset.StandardCharsets
     use java.nio.file.Files
@@ -1604,17 +1606,19 @@ class public Grepper extends SimpleFileVisitor
     methodend
 
     method public FileVisitResult visitFile(Object path!,BasicFileAttributes attr!)
-        declare BBjString fileContents!
+        declare BufferedReader br!
+        declare FileReader fr!
         declare Matcher matcher!
-        declare Path currentPath!
-        currentPath!=cast(Path,path!)
-        fileContents!=Files.readString(currentPath!,err=*next)
-        if (fileContents!=null()) then
-            fileContents!=Files.readString(currentPath!,StandardCharsets.ISO_8859_1)
-        endif 
-        matcher!=#Pattern!.matcher(fileContents!)
-        if (matcher!.find()) then
-            #MatchingFiles!.add(currentPath!.toString())
+        
+        path$ = cast(BBjString, path!.toString())
+        if (path$ = null()) methodret FileVisitResult.CONTINUE
+        fr! = new FileReader(path$)
+        br! = new BufferedReader(fr!)
+        if (br! = null()) then
+            br! = Files.newBufferedReader(fr!,StandardCharsets.ISO_8859_1)
+        endif
+        if (br!.lines().anyMatch(#Pattern!.asPredicate(),err=*endif))
+            #MatchingFiles!.add(path$)
         endif 
         methodret FileVisitResult.CONTINUE
     methodend

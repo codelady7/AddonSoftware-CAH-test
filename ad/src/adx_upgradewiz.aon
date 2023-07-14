@@ -112,6 +112,10 @@ rem --- Is this a restart after resolving Git conflicts?
         rem --- with unmerged changes. This can cause a situation that overwrites 
         rem --- the previous installation
         repoInterface!=new GitRepoInterface(gitAuthID$,newAonDir$)
+        meter_text$=Translate!.getTranslation("AON_UPGRADE_UNRESOLVED_CONFLICTS","Checking for unresolved conflicts.",1)
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
         filesWithEmbeddedConflicts!=repoInterface!.getCommittedConflicts()
         if  filesWithEmbeddedConflicts!.size()>0 then 
             rem --- There are files with embedded conflicts in the directory (Git might have them marked as resolved.) 
@@ -123,8 +127,8 @@ rem --- Is this a restart after resolving Git conflicts?
             while (fileIterator!.hasNext()) 
                 print (log_dev) fileIterator!.next() 
             wend 
-         release
-    endif 
+            release
+        endif 
         
     
         rem --- Verify correct restart file
