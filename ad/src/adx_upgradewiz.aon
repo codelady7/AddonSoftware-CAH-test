@@ -196,6 +196,9 @@ rem --- Is this a restart after resolving Git conflicts?
                 case restartAt$="restartUpgrade3"
                     goto restartUpgrade3
                     break
+                case restartAt$="restartUpgrade4"
+                    goto restartUpgrade4
+                    break
                 case default
                     goto restartUpgrade1
                     break
@@ -237,9 +240,16 @@ rem --- Process upgrade from either a Git based installation or a non-Git based 
         oldVersion$=branch$(4,4)
         repoInterface!.closeInterface()
 
+restartUpgrade4:
         rem --- Build delta XMLs for modified bar/*.xml files that have been committed.
         gosub buildDeltaXmls
-        if status goto done
+        rem --- Need to restart if working directory is dirty
+        if restartFlag then
+            rem --- Create restart file
+            restartAt$="restartUpgrade4"
+            gosub createRestartFile
+            goto done
+        endif
 
 		rem --- Refresh Git repository to get the most current branch
 		gosub refreshGitRepo
@@ -1176,7 +1186,7 @@ buildDeltaXmls: rem --- Build delta XMLs for modified bar/*.xml files that have 
         gosub disp_message
         print(log_dev)"    ***** Uncommitted unstaged changes *****"
         print(log_dev)"    ",unstaged!
-        status=1
+        restartFlag=1
         return
     endif
     staged!=repoInterface!.getUnstagedChanges()
@@ -1187,7 +1197,7 @@ buildDeltaXmls: rem --- Build delta XMLs for modified bar/*.xml files that have 
         gosub disp_message
         print(log_dev)"    ***** Uncommitted staged changes *****"
         print(log_dev)"    ",staged!
-        status=1
+        restartFlag=1
         return
     endif
 
