@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-06-27
+ Report Date:   2023-07-18
  Report Branch: AddonSoftware 23.02
  Last Release:  AddonSoftware 23.01
 =======================================================================================================================================
@@ -27,7 +27,6 @@ Modified: prop/addon.properties
 Modified: prop/addon_en.properties
 
 =======================================================================================================================================
-
 Revision: 08cc6dd4203bf554c7fc9fb6bed4ae85380205a4
 Author: Christine <chawkins@basis.com>
 Date: 7/14/2023 5:57:05 PM
@@ -42,3 +41,16 @@ Modified: ad/src/ado_AO_GitRepoInterface.aon
 Modified: ad/src/adx_upgradewiz.aon
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: a4b72b4cc99cf5733225b9202c64f330f802a601
+Author: Christine <chawkins@basis.com>
+Date: 7/18/2023 6:45:32 PM
+Message:
+Bug 10696 - AD - Upgrade Wizard requires dirty work tree to be corrected in original clone instead of new one
+ - can now correct unstaged/uncommitted changes in new clone instead of old one
+
+(cherry picked from commit c56c74cf3d7740e98b354f67bfb2622b90b1ad53)
+----
+Modified: ad/src/adx_upgradewiz.aon
+
