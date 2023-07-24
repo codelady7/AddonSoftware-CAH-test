@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custship">777AC602BEC600EEB292BD70D4270CA7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custship">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custship">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20230508</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20230503</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">180230</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20230721</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20230721</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">093432</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custship"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arm_custship">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arm_custship">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custship"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arm_custship"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arm_custship">T</DD_ATTR_FTYP>
@@ -1568,7 +1568,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_custship026">20180403</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_custship026"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_custship026"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship026">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship026">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custship026">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custship026"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_custship026"></DD_ATTR_CTLY>

@@ -92,13 +92,13 @@ rem --- Build SQL statement
 	sql_prep$=sql_prep$+"left join apc_paymentgroup on apm_vendhist.firm_id=apc_paymentgroup.firm_id and apc_paymentgroup.record_id_d='D' and apm_vendhist.payment_grp=apc_paymentgroup.payment_grp "
 	sql_prep$=sql_prep$+"left join apc_termscode on apm_vendhist.firm_id=apc_termscode.firm_id and apc_termscode.record_id_c='C' and apm_vendhist.ap_terms_code=apc_termscode.terms_codeap "
 	sql_prep$=sql_prep$+"left join glm_acct on apm_vendhist.firm_id=glm_acct.firm_id and apm_vendhist.gl_account=glm_acct.gl_account "
-	sql_prep$=sql_prep$+"where apm_vendhist.firm_id='"+firm_id$+"' and apm_vendhist.vendor_id='"+vendor_id$+"' "
+	sql_prep$=sql_prep$+"where apm_vendhist.firm_id='"+firm_id$+"' and apm_vendhist.vendor_id=?"
 
 	sql_chan=sqlunt
 	sqlopen(sql_chan,mode="PROCEDURE",err=*next)stbl("+DBNAME")
 	sqlprep(sql_chan)sql_prep$
 	dim read_tpl$:sqltmpl(sql_chan)
-	sqlexec(sql_chan)
+	sqlexec(sql_chan)vendor_id$
 
 rem --- Trip Read
 

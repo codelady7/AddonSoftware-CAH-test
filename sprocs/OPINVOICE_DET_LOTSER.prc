@@ -108,7 +108,7 @@ rem --- Get any associated Lots/SerialNumbers
 	sqlprep$=sqlprep$+" WHERE firm_id="       +"'"+ firm_id$+"'"
     sqlprep$=sqlprep$+"   AND trans_status="  +"'"+ trans_status$+"'"
 	sqlprep$=sqlprep$+"   AND ar_type="       +"'"+ ar_type$+"'"
-	sqlprep$=sqlprep$+"   AND customer_id="   +"'"+ customer_id$+"'"
+	sqlprep$=sqlprep$+"   AND customer_id= ?"
 	sqlprep$=sqlprep$+"   AND order_no="      +"'"+ order_no$+"'"
     sqlprep$=sqlprep$+"   AND ar_inv_no="     +"'"+ ar_inv_no$+"'"
 	sqlprep$=sqlprep$+"   AND orddet_seq_ref="+"'"+ ope11_internal_seq_no$+"'"
@@ -117,7 +117,7 @@ rem --- Get any associated Lots/SerialNumbers
 	sqlopen(sql_chan,mode="PROCEDURE",err=*next)stbl("+DBNAME")
 	sqlprep(sql_chan)sqlprep$
 	dim read_tpl$:sqltmpl(sql_chan)
-	sqlexec(sql_chan)
+	sqlexec(sql_chan)customer_id$
 
 rem --- Process through SQL results 
 

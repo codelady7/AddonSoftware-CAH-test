@@ -84,13 +84,13 @@ rem --- Main Loop starting
         sql_prep$=""
         sql_prep$=sql_prep$+"SELECT firm_id, item_id, warehouse_id "
         sql_prep$=sql_prep$+"  FROM ivm_itemwhse "
-        sql_prep$=sql_prep$+" WHERE firm_id = '"+firm_id$+"' AND item_id = '"+ivm01a.item_id$+"'"        
+        sql_prep$=sql_prep$+" WHERE firm_id = '"+firm_id$+"' AND item_id = ?"        
         if begwhse$<>"" then sql_prep$=sql_prep$+" AND warehouse_id >= '"+begwhse$+"'"
         if endwhse$<>"" then sql_prep$=sql_prep$+" AND warehouse_id <= '"+endwhse$+"'"
 
         sqlprep(sql_chan1)sql_prep$
         dim whse_tpl$:sqltmpl(sql_chan1)
-        sqlexec(sql_chan1)
+        sqlexec(sql_chan1)ivm01a.item_id$
 
     rem --- Inner Loop starting
 

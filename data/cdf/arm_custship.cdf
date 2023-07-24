@@ -38,14 +38,14 @@ rem --- Manual ship-to historical address lookup
 
 		sql_prep$="SELECT slspsn_code, territory, tax_code, ar_ship_via, shipping_id, shipping_email "
 		sql_prep$=sql_prep$+"FROM opt_invhdr "
-		sql_prep$=sql_prep$+"WHERE firm_id='"+firm_id$+"' and customer_id='"+optInvHdr_key.customer_id$+
-:			"' and order_no='"+optInvHdr_key.order_no$+"' and ar_inv_no='"+optInvHdr_key.ar_inv_no$+"' "
+		sql_prep$=sql_prep$+"WHERE firm_id='"+firm_id$+"' and customer_id=?"+
+:			" and order_no='"+optInvHdr_key.order_no$+"' and ar_inv_no='"+optInvHdr_key.ar_inv_no$+"' "
 
 		sql_chan=sqlunt
 		sqlopen(sql_chan,err=*endif)stbl("+DBNAME")
 		sqlprep(sql_chan)sql_prep$
 		dim read_tpl$:sqltmpl(sql_chan)
-		sqlexec(sql_chan)
+		sqlexec(sql_chan)optInvHdr_key.customer_id$
 
 		read_tpl$ = sqlfetch(sql_chan,end=*endif)
 		callpoint!.setColumnData("ARM_CUSTSHIP.SLSPSN_CODE",read_tpl.slspsn_code$,1)
