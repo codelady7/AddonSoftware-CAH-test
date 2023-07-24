@@ -87,7 +87,7 @@ rem --- Get shipment tracking information for this order
 	sqlprep$=sqlprep$+" FROM opt_shiptrack"
 	sqlprep$=sqlprep$+" WHERE firm_id="       +"'"+ firm_id$+"'"
 	sqlprep$=sqlprep$+"   AND ar_type="       +"'"+ ar_type$+"'"
-	sqlprep$=sqlprep$+"   AND customer_id="   +"'"+ customer_id$+"'"
+	sqlprep$=sqlprep$+"   AND customer_id= ?"
 	sqlprep$=sqlprep$+"   AND order_no="      +"'"+ order_no$+"'"
     sqlprep$=sqlprep$+"   AND ship_seq_no="   +"'"+ ship_seq_no$+"'"
 
@@ -95,7 +95,7 @@ rem --- Get shipment tracking information for this order
 	sqlopen(sql_chan,mode="PROCEDURE",err=*next)stbl("+DBNAME")
 	sqlprep(sql_chan)sqlprep$
 	dim read_tpl$:sqltmpl(sql_chan)
-	sqlexec(sql_chan)
+	sqlexec(sql_chan)customer_id$
 
 rem --- Process through SQL results 
 
