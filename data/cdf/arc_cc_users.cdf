@@ -63,7 +63,7 @@ gosub open_tables
 [[ARC_CC_USERS.CC_USERNAME.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif

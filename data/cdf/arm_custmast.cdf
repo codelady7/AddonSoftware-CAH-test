@@ -1213,7 +1213,7 @@ rem --- Set Alternate Sequence for new customers
 [[ARM_CUSTMAST.PAY_AUTH_EMAIL.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -1269,7 +1269,7 @@ rem --- Warn when pay_auth_email doesn't match ARS_CC_CUSTPMT Report Control Rec
 [[ARM_CUSTMAST.SHIPPING_EMAIL.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif

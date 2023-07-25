@@ -64,7 +64,7 @@ rem --- set recipient type based on ADM_RPTCTL rec
 [[ADM_RPTCTL_RCP.EMAIL_BCC.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -72,7 +72,7 @@ rem --- Validate email address
 [[ADM_RPTCTL_RCP.EMAIL_CC.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -80,7 +80,7 @@ rem --- Validate email address
 [[ADM_RPTCTL_RCP.EMAIL_FROM.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -88,7 +88,7 @@ rem --- Validate email address
 [[ADM_RPTCTL_RCP.EMAIL_REPLYTO.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -96,7 +96,7 @@ rem --- Validate email address
 [[ADM_RPTCTL_RCP.EMAIL_TO.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
