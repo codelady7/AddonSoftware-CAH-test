@@ -1028,7 +1028,7 @@ gosub reset_timer
 [[ARE_CCPMT.EMAIL_ADDR.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif

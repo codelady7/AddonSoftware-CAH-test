@@ -98,7 +98,7 @@ rem --- 10395 ... Disable Manual Ship-to option for existing records
 [[ARM_CUSTSHIP.SHIPPING_EMAIL.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif

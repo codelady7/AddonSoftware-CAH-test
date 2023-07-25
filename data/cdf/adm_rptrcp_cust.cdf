@@ -52,7 +52,7 @@ rem --- limit query rows to those for "C" recipient types
 [[ADM_RPTRCP_CUST.EMAIL_BCC.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -60,7 +60,7 @@ rem --- Validate email address
 [[ADM_RPTRCP_CUST.EMAIL_CC.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -68,7 +68,7 @@ rem --- Validate email address
 [[ADM_RPTRCP_CUST.EMAIL_FROM.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -76,7 +76,7 @@ rem --- Validate email address
 [[ADM_RPTRCP_CUST.EMAIL_REPLYTO.AINV]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
@@ -84,7 +84,7 @@ rem --- Validate email address
 [[ADM_RPTRCP_CUST.EMAIL_TO.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif

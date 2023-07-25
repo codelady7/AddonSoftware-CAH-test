@@ -539,7 +539,7 @@ endif
 [[<<DISPLAY>>.CHKSTUB_EMAIL.AVAL]]
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
-	if !util.validEmailAddress(email) then
+	if !util.validEmailAddress(email$) then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
