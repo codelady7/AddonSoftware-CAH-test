@@ -548,7 +548,7 @@ rem --- Run Install Application Wizard for applications being installed
 :	    +" -p"+rdAdmin!.getPassword()
 :	    +" -t"+"DDM_TABLES"
 :	    +" -y"+"A"
-:       +" -a" +"baw_install_app.bbj"+$22$+" - "+" -f"+sourceSyn$+" "+aongitarg$+$22$
+:       +" -a" +"baw_install_app.bbj"+$22$+" - "+" -pu"+rdAdmin!.getPassword()+"::"+rdAdmin!.getUser()+" -f"+sourceSyn$+" "+aongitarg$+$22$
 :	    +" -w"
         scall_result=scall(run_arg$+user_arg$,err=*next)
         if !success or scall_result<>0 then
