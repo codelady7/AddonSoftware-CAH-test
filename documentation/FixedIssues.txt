@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-07-18
+ Report Date:   2023-07-25
  Report Branch: AddonSoftware 23.02
  Last Release:  AddonSoftware 23.01
 =======================================================================================================================================
@@ -54,3 +54,33 @@ Bug 10696 - AD - Upgrade Wizard requires dirty work tree to be corrected in orig
 ----
 Modified: ad/src/adx_upgradewiz.aon
 
+=======================================================================================================================================
+Revision: 0f16f9a89c73fac8ef86f5fc65ce4f31b5b8a124
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/25/2023 11:00:22 AM
+Message:
+Bug 10700: Fixed Error 252 introduced with "email$" typo from ER 10577.
+
+----
+Modified: data/bar/adm_rptctl_rcp.xml
+Modified: data/bar/adm_rptrcp_cust.xml
+Modified: data/bar/adm_rptrcp_vend.xml
+Modified: data/bar/apm_vendmast.xml
+Modified: data/bar/arc_cc_register.xml
+Modified: data/bar/arc_cc_users.xml
+Modified: data/bar/are_ccpmt.xml
+Modified: data/bar/arm_custdet.xml
+Modified: data/bar/arm_custmast.xml
+Modified: data/bar/arm_custpmts.xml
+Modified: data/bar/arm_custship.xml
+Modified: data/bar/crm_contacts.xml
+Modified: data/cdf/adm_rptctl_rcp.cdf
+Modified: data/cdf/adm_rptrcp_cust.cdf
+Modified: data/cdf/adm_rptrcp_vend.cdf
+Modified: data/cdf/apm_vendmast.cdf
+Modified: data/cdf/arc_cc_register.cdf
+Modified: data/cdf/arc_cc_users.cdf
+Modified: data/cdf/are_ccpmt.cdf
+Modified: data/cdf/arm_custmast.cdf
+Modified: data/cdf/arm_custship.cdf
+Modified: data/cdf/crm_contacts.cdf
