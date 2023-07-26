@@ -97,3 +97,12 @@ Bug 10701 - AD - JGit clone of Addon repo can report modified files if autocrlf 
 ----
 Modified: ad/src/ado_AO_GitRepoInterface.aon
 
+=======================================================================================================================================
+Revision: 1214ac1aff7b1a142c033fc188d4eeb7b39e3dbc
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/26/2023 1:23:47 PM
+Message:
+Bug 10702: Moved "gosub exportToPDF" added for ER 9460 until after the
+viewerControl! object is created.
+----
+Modified: ar/src/arr_drillDownSalesReport.aon
