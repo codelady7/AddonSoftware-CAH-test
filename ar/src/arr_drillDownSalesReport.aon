@@ -137,8 +137,6 @@ rem --- start SalesByCustType report
     rem --- get a pdf path from +DOC_DIR_PDF
     rem --- this will eventually be replaced with code to get output formats/types based on doc group and/or print settings
     gosub doc_path
-        
-    gosub exportToPDF; rem --- force save
     
     declare BBJasperViewerWindow viewerWindow!
     viewerWindow! = new BBJasperViewerWindow(BBjreport!,0,0,screen_width,screen_height,repTitle$,$00080093$)
@@ -148,6 +146,8 @@ rem --- start SalesByCustType report
     viewerControl!.setDefaultSaveFolder(rd_doc_path$)
     viewerControl!.setDefaultSaveFile(repTitle$)
     viewerControl!.setFitWidth()
+        
+    gosub exportToPDF; rem --- force save
 
     rem --- set callbacks for when user presses save or email buttons in jasper viewer
     rem --- note: saveAs or saveAsGDoc not intercepted, just regular save
