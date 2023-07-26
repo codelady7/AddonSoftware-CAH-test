@@ -18,6 +18,7 @@ rem  */
     use java.io.File
     use java.io.FileReader
     use java.io.BufferedReader    
+    use java.lang.Boolean
     use java.lang.reflect.Array
     use java.nio.charset.StandardCharsets
     use java.nio.file.Files
@@ -83,6 +84,7 @@ rem  */
     use org.eclipse.jgit.treewalk.FileTreeIterator
     use org.eclipse.jgit.treewalk.TreeWalk
     use org.eclipse.jgit.util.FS
+    use org.eclipse.jgit.util.SystemReader
 
 rem /**
 rem  * This class uses JGit to interface with Addon's Git repository to perform
@@ -157,6 +159,11 @@ rem  */
             seterr GitRepoInterface_error
             #AonDir$=aonDir$
             #LocalRepo$=#AonDir$+"/.git"
+
+            rem --- Before cloning, set the autocrlf property. in user's home/.gitconfig to FALSE
+            userCfg!=SystemReader.getInstance().getUserConfig()
+            userCfg!.setBoolean("core", null(), "autocrlf", Boolean.FALSE)
+            userCfg!.save()
 
             rem --- Get Git repository
             gitDir! = new File(#LocalRepo$)
