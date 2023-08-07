@@ -44,6 +44,13 @@ rem --- Disable Load Image and View Images options as needed
 		callpoint!.setOptionEnabled("VIDI",0)
 	endif
 
+rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id is blank.
+	if cvs(callpoint!.getColumnData("APE_INVOICEHDR.CREDITCARD_ID"),2)="" then
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",0)
+	else
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",1)
+	endif
+
 [[APE_INVOICEHDR.AOPT-LIIM]]
 rem --- Select invoice image and upload
 	files=2
@@ -317,6 +324,7 @@ gosub disable_fields
 ctl_name$="APE_INVOICEHDR.NET_INV_AMT"
 ctl_stat$=""
 gosub disable_fields
+callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",0)
 
 rem --- if not multi-type then set the defalut AP Type
 if user_tpl.multi_types$="N" then
@@ -378,7 +386,7 @@ rem --- Resize vendor comments box (display only) to align w/ Invoice Comments (
 
 [[APE_INVOICEHDR.AWIN]]
 rem --- setup utility
-
+	use ::ado_func.src::func
 	use ::ado_util.src::util
 	use ::BBUtils.bbj::BBUtils
 
@@ -483,7 +491,7 @@ rem --- remove images copied temporarily to web servier for viewing
 
 [[APE_INVOICEHDR.BSHO]]
 rem --- Open/Lock files
-files=12,begfile=1,endfile=files
+files=13,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APT_INVOICEHDR",options$[1]="OTA"
 files$[2]="APT_INVOICEDET",options$[2]="OTA"
@@ -497,6 +505,7 @@ files$[9]="APE_MANCHECKDET",options$[9]="OTA"
 files$[10]="APS_PAYAUTH",options$[10]="OTA@"
 files$[11]="APT_INVIMAGE",options$[11]="OTA"
 files$[12]="GLS_CALENDAR",options$[12]="OTA"
+files$[13]="APM_CCVEND",options$[13]="OTA"
 call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :	begfile,
 :	endfile,
@@ -647,8 +656,6 @@ rem --- Init a vector to store urls for viewed images
 	urlVect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("urlVect",urlVect!)
 
-		
-
 [[APE_INVOICEHDR.BTBL]]
 rem --- Get Batch information
 
@@ -704,6 +711,99 @@ endif
 
 
 	
+
+[[APE_INVOICEHDR.CREDITCARD_ID.AVAL]]
+rem --- Skip if CREDITCARD_ID wasn't changed
+	ccID$=callpoint!.getUserInput()
+	if cvs(ccID$,2)=cvs(callpoint!.getColumnData("APE_INVOICEHDR.CREDITCARD_ID"),2) then break
+
+rem ---  Do NOT allow the AP_INV_NO if it already exists for the CREDITCARD_ID's Credit Card Vendor.
+	if cvs(ccID$,2)<>"" then
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		readrecord(apmCcVend_dev,key=firm_id$+ccID$)apmCcVend$
+		cc_aptype$=apmCcVend.cc_aptype$
+		cc_vendor$=apmCcVend.cc_vendor$
+
+		rem --- Check APE_INVOICEHDR
+		ap_inv_no$=callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
+		apeInvoiceHdr_dev=fnget_dev("APE_INVOICEHDR")
+		foundInvoice=0
+		read(apeInvoiceHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,knum="PRIMARY",dom=*next); foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("DDM_TABLES-APE_INVOICEHDR-DD_ATTR_WINT")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+		read(apeInvoiceHdr_dev,key=firm_id$,knum="BATCH_KEY",dom=*next)
+
+		rem --- Check APE_CHECKS
+		apeChecks_dev=fnget_dev("APE_CHECKS")
+		foundInvoice=0
+		read(apeChecks_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next); foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("AON_CHECK")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Check APE_MANCHECKDET
+		apeManCheckDet_dev=fnget_dev("APE_MANCHECKDET")
+		read(apeManCheckDet_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,knum="AO_VEND_INV",dom=*next)
+		apeManCheckDet_key$=key(apeManCheckDet_dev,end=*next)
+		if pos(firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$=apeManCheckDet_key$)=1 then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("AON_MANUAL_CHECK")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Check APT_INVOICEHDR
+		aptInvoiceHdr_dev=fnget_dev("APT_INVOICEHDR")
+		dim aptInvoiceHdr$:fnget_tpl$("APT_INVOICEHDR")
+		foundInvoice=0
+		read(aptInvoiceHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next)aptInvoiceHdr$; foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			if aptInvoiceHdr.invoice_bal=0 then
+				msg_tokens$[3]=Translate!.getTranslation("AON_INVOICE_HISTORY")
+			else
+				msg_tokens$[3]=Translate!.getTranslation("AON_CHECK")
+			endif
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id is blank.
+	if cvs(ccID$,2)="" then
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",0)
+		callpoint!.setColumnData("APE_INVOICEHDR.CC_TRANS_DATE","",1)
+	else
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",1)
+		if cvs(callpoint!.getColumnData("APE_INVOICEHDR.CC_TRANS_DATE"),2)="" then
+			invoice_date$=callpoint!.getColumnData("APE_INVOICEHDR.INVOICE_DATE")
+			callpoint!.setColumnData("APE_INVOICEHDR.CC_TRANS_DATE",invoice_date$,1)
+		endif
+	endif
 
 [[APE_INVOICEHDR.INVOICE_AMT.AVAL]]
 callpoint!.setColumnData("APE_INVOICEHDR.NET_INV_AMT",

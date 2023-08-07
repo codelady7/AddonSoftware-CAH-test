@@ -228,6 +228,24 @@ if can_delete$=""
 	if pos(wky$=wk$)=1 can_delete$="N"		
 endif
 
+	if can_delete$=""
+		rem --- Do NOT allow APM_VENDHIST record to be deleted if the ap_type+vendor is in APM_CCVEND.
+		vendor_id$=callpoint!.getColumnData("APM_VENDHIST.VENDOR_ID")
+		ap_type$=callpoint!.getColumnData("APM_VENDHIST.AP_TYPE")
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		read(apmCcVend_dev,key=firm_id$+vendor_id$,knum="AO_VEND_CC",dom=*next)
+		while 1
+			apmCcVend_key$=key(apmCcVend_dev,end=*break)
+			if pos(firm_id$+vendor_id$=apmCcVend_key$)<>1 then break
+			readrecord(apmCcVend_dev)apmCcVend$
+			if apmCcVend.cc_aptype$=ap_type$ then
+				can_delete$="N"
+				break
+			endif
+		wend
+	endif
+
 if can_delete$="N"
 	msg_id$="AP_VEND_ACTIVE"
 	gosub disp_message

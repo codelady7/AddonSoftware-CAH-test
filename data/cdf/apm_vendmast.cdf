@@ -266,8 +266,6 @@ rem --- Set Date Opened
 rem --- Hold on to vendor_1099 for apm_vendhist
 	callpoint!.setDevObject("vendor_1099",callpoint!.getColumnData("APM_VENDMAST.VENDOR_1099"))
 
-[[APM_VENDMAST.ASHO]]
-
 [[APM_VENDMAST.AWRI]]
 rem --- Code input if new customer
 	cp_vendor_id$=callpoint!.getColumnData("APM_VENDMAST.VENDOR_ID")
@@ -378,6 +376,15 @@ if cvs(vendor_id$,3)<>""
 			endif
 		wend
 	endif
+
+	if can_delete$=""
+		rem --- Do NOT allow APM_VENDMAST record to be deleted if the vendor is in APM_CCVEND.
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		read(apmCcVend_dev,key=firm_id$+vendor_id$,knum="AO_VEND_CC",dom=*next)
+		apmCcVend_key$=key(apmCcVend_dev,end=*next)
+		if pos(firm_id$+vendor_id$=apmCcVend_key$) then can_delete$="N"
+	endif
+
 	if can_delete$="N"
 		msg_id$="AP_VEND_ACTIVE"
 		gosub disp_message
@@ -391,7 +398,7 @@ rem --- Open/Lock files
 	use ::ado_rptControl.src::ReportControl
 	use ::ado_util.src::util
 
-	files=11,begfile=1,endfile=files
+	files=12,begfile=1,endfile=files
 	dim files$[files],options$[files],chans$[files],templates$[files]
 	files$[1]="APE_INVOICEHDR";rem --- ape-01
 	files$[2]="APT_INVOICEHDR";rem --- apt-01
@@ -404,6 +411,7 @@ rem --- Open/Lock files
 	files$[9]="GLS_CALENDAR"
 	files$[10]="ADM_RPTCTL_RCP"
 	files$[11]="APW_CHECKINVOICE"; rem --- apw-01
+	files$[12]="APM_CCVEND"
 
 	for wkx=begfile to endfile
 		options$[wkx]="OTA"
@@ -636,6 +644,26 @@ if cvs(callpoint!.getColumnData("APM_VENDMAST.ALT_SEQUENCE"),3)=""
 	callpoint!.setColumnData("APM_VENDMAST.ALT_SEQUENCE",alt_seq$)
 	callpoint!.setStatus("REFRESH")
 endif
+
+[[APM_VENDMAST.VEND_INACTIVE.AVAL]]
+rem --- Skip if not changed
+	inactive$=callpoint!.getUserInput()
+	if inactive$=callpoint!.getColumnData("APM_VENDMAST.VEND_INACTIVE") then break
+
+rem --- If a vendor is marked inactive, mark APM_CCVEND records for that vendor as inactive.
+	if inactive$="Y" then
+		vendor_id$=callpoint!.getColumnData("APM_VENDMAST.VENDOR_ID")
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		read(apmCcVend_dev,key=firm_id$+vendor_id$,knum="AO_VEND_CC",dom=*next)
+		while 1
+			apmCcVend_key$=key(apmCcVend_dev,end=*break)
+			if pos(firm_id$+vendor_id$=apmCcVend_key$)<>1 then break
+			extractrecord(apmCcVend_dev)apmCcVend$
+			apmCcVend.code_inactive$="Y"
+			writerecord(apmCcVend_dev)apmCcVend$
+		wend
+	endif
 
 [[APM_VENDMAST.<CUSTOM>]]
 disable_fields:
