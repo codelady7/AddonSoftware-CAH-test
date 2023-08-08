@@ -58,8 +58,15 @@ rem --- Read next Invoice Header (ape-01) record
         apm01a.vendor_name$=nf$
         k$=apm01a.firm_id$+apm01a.vendor_id$ 
         find record (apm01_dev,key=k$,dom=*next) apm01a$
-
-    rem --- ****** code between here and corres. rem was missing - added 10/07.CH
+        
+    rem --- Get Credit Card info
+        redim apmCcVend$
+        readrecord(apmCcVend_dev,key=firm_id$+ape01a.creditcard_id$,dom=*next)apmCcVend$
+rem wgh ... 10513 ...
+if cvs(ape01a.creditcard_id$,2)<>"" then
+    redim apm10a$
+    findrecord(apm10_dev,key=firm_id$+"A"+apmCcVend.cc_aptype$,dom=*next)apm10a$
+endif
 
     rem --- update vendor history
         x$=ape01a.accting_date$
@@ -114,11 +121,49 @@ rem --- Read next Invoice Header (ape-01) record
             apt01a.invoice_amt=ape01a.invoice_amt
             apt01a.discount_amt=ape01a.discount_amt
             apt01a.retention=ape01a.retention
-            apt01a.invoice_bal=apt01a.invoice_amt
-            
+rem wgh ... 10513 ...
+if cvs(ape01a.creditcard_id$,2)="" then
+    apt01a.invoice_bal=apt01a.invoice_amt
+else
+    rem --- Previously paid via credit card
+    apt01a.invoice_bal=0
+endif
             apt01a$ = field(apt01a$)
-            write record (apt01_dev, dom=open_invoice) apt01a$
+            writerecord(apt01_dev)apt01a$
 
+rem wgh ... 10513 ...
+if cvs(ape01a.creditcard_id$,2)<>"" then
+    rem --- Make new invoice for Credit Card vendor
+    apt01a.ap_type$=apmCcVend.cc_aptype$
+    apt01a.vendor_id$=apmCcVend.cc_vendor$
+    if cvs(apm10a.ap_type$,2)<>"" then 
+        apt01a.ap_dist_code$=apm10a.ap_dist_code$
+        apt01a.payment_grp$=apm10a.payment_grp$
+        apt01a.ap_terms_code$=apm10a.ap_terms_code$
+    endif
+    apt01a.creditcard_id$=ape01a.creditcard_id$
+    apt01a.cc_trans_date$=ape01a.cc_trans_date$
+    apt01a.invoice_date$=""
+    apt01a.inv_due_date$=""
+    apt01a.disc_date$=""
+    apt01a.invoice_bal=apt01a.invoice_amt
+    apt01a$ = field(apt01a$)
+    writerecord(apt01_dev)apt01a$
+    
+    rem --- Capture the original vendor was paid for this invoice
+    redim aptVendPayments$
+    aptVendPayments.firm_id$=ape01a.firm_id$
+    aptVendPayments.vendor_id$=ape01a.vendor_id$
+    aptVendPayments.check_no$=ape01a.creditcard_id$
+    aptVendPayments.bnk_acct_cd$=""
+    aptVendPayments.acct_desc$=apmCcVend.cc_desc$
+    aptVendPayments.check_date$=ape01a.cc_trans_date$
+    aptVendPayments.trans_type$="X"
+    aptVendPayments.payment_amt=ape01a.invoice_amt-ape01a.discount_amt-ape01a.retention
+    aptVendPayments$ = field(aptVendPayments$)
+    writerecord(aptVendPayments_dev)aptVendPayments$
+endif
+            
         else
             rem --- Adjusting an old invoice already in apt_invoicehdr (apt-01)
 

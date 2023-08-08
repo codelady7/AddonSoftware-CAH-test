@@ -51,7 +51,7 @@ rem --- Assign form input values to local variables
 
 rem --- Open/Lock files
 
-    files=17,begfile=1,endfile=files
+    files=19,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS";rem "aps-01
     files$[2]="ape-01",ids$[2]="APE_INVOICEHDR";rem "ape-01
@@ -67,6 +67,8 @@ rem --- Open/Lock files
     files$[15]="apt_invimage",ids$[15]="APT_INVIMAGE"
     files$[16]="apt_invhdr_arc",ids$[16]="APT_INVHDR_ARC"
     files$[17]="apt_invdet_arc",ids$[17]="APT_INVDET_ARC"
+    files$[18]="apm_ccvend",ids$[18]="APM_CCVEND"
+    files$[19]="apt_vendpayments",ids$[19]="APT_VENDPAYMENTS"
 
     if num(batch_no$)=0 then options$[2]="L";rem lock if not batching.CAH
     if num(batch_no$)=0 then options$[3]="L";rem lock if not batching.CAH
@@ -87,14 +89,17 @@ rem --- Open/Lock files
     invimage_dev=channels[15]
     aptInvHdrArc_dev=channels[16]
     aptInvDetArc_dev=channels[17]
+    apmCcVend_dev=channels[18]
+    aptVendPayments_dev=channels[19]
 
 rem --- Dimension string templates
 
     dim ape01a$:templates$[2],ape11a$:templates$[3],apm01a$:templates$[4]
     dim apm02a$:templates$[5],apm10a$:templates$[7],apt01a$:templates$[8]
     dim apt02a$:templates$[9],apt11a$:templates$[11],aps01a$:templates$[1]
-    dim apm10b$:templates$[13],payauth$:templates$[14]
-    dim invimage$:templates$[15],aptInvHdrArc$:templates$[16],aptInvDetArc$:templates$[17]
+    dim apm10b$:templates$[13],payauth$:templates$[14],invimage$:templates$[15]
+    dim aptInvHdrArc$:templates$[16],aptInvDetArc$:templates$[17],apmCcVend$:templates$[18]
+    dim aptVendPayments$:templates$[19]
     
 rem --- Retrieve parameter records
 
@@ -289,6 +294,10 @@ rem --- Read next Invoice Header (ape-01) record
         name$(1)=apm01a.vendor_name$
         vendorref$(1)=vendor$
         errors=errors+(pos(nf$=name$)=1)
+        
+    rem --- Get Credit Card info
+        redim apmCcVend$
+        readrecord(apmCcVend_dev,key=firm_id$+ape01a.creditcard_id$,dom=*next)apmCcVend$
 
     rem --- Initializations for this invoice
 
@@ -320,6 +329,19 @@ rem --- Read next Invoice Header (ape-01) record
                 gosub get_total_units
                 units=-units
                 gosub glrecap
+                if cvs(ape01a.creditcard_id$,2)<>"" then
+                    rem --- Invoice previously paid via credit card.
+                    rem --- Add new Debit to invoice's distribution code GL_AP_ACCT equal to the amount of the distribution code's GL_AP_ACCT Credit.
+                    amount=-amount
+                    units=-units
+                    gosub glrecap
+                
+                    rem --- Add new Credit to APM_CCVEND.GL_AP_ACCT equal to the amount of invoice's distribution code GL_AP_ACCT Debit.
+                    account$=apmCcVend.gl_ap_acct$
+                    amount=-amount
+                    units=-units
+                    gosub glrecap
+                endif
                 if retention
                     if ape01a.retention
                         account$=apm10b.gl_ret_acct$
@@ -352,6 +374,25 @@ rem --- Read next Invoice Header (ape-01) record
         OutVect!.addItem(vendor$)
         OutVect!.addItem(name$)
         OutVect!.addItem(ape01a.ap_inv_no$)
+        if cvs(ape01a.creditcard_id$,2)<>"" then
+            rem --- Show Credit Card Vendor and Card used for this invoice
+            xwk=fnblank(11)
+        
+            redim apm01a$
+            apm01a.firm_id$=ape01a.firm_id$
+            apm01a.vendor_id$=apmCcVend.cc_vendor$
+            apm01a.vendor_name$=nf$
+            k$=apm01a.firm_id$+apm01a.vendor_id$
+            find record (apm01_dev,key=k$,dom=*next) apm01a$
+            
+            OutVect!.addItem(fnmask$(apm01a.vendor_id$(1,vendor_size),m0$))
+            OutVect!.addItem(apm01a.vendor_name$)
+            OutVect!.addItem(ape01a.ap_inv_no$)
+            OutVect!.addItem(Translate!.getTranslation("AON_PREPAID_WITH_CC")+": "+cvs(apmCcVend.creditcard_id$,2)+" "+cvs(apmCcVend.cc_desc$,2)+$00$+"B")
+            xwk=fnblank(10)
+            
+            xwk=fnblank(3)
+        endif
         OutVect!.addItem(ape01a.ap_dist_code$)
         OutVect!.addItem(ape01a.payment_grp$)
         OutVect!.addItem(ape01a.ap_terms_code$)
@@ -537,7 +578,7 @@ rem --- Destroy the progress meter and run the next overlay
 
     overlay$=update$
     if gl$="Y" and gl_recs>0 overlay$=pgmdir$+"glr_recap.aon"
-    out_action$="PRT-PDF"
+    out_action$="PRT-PDF-FORMAT"
     next_overlay$=overlay$
     if update$=""
         goto std_exit_no_update
