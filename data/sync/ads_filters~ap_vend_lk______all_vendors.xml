@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<barista_admin_record>
-	<barista_record_table>ADS_FILTERS</barista_record_table>
-	<USER_ID>                </USER_ID>
-	<DD_TABLE_ALIAS>AP_VEND_LK      </DD_TABLE_ALIAS>
-	<FILTER_ID>ALL_VENDORS                   </FILTER_ID>
-	<DD_DESCRIPTION>ALL_VENDORS</DD_DESCRIPTION>
-</barista_admin_record>

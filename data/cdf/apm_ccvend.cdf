@@ -17,17 +17,33 @@ rem --- Record cannot be deleted if the CREDITCARD_ID is in APE_INVOICEHDR
 
 [[APM_CCVEND.BSHO]]
 rem --- Open needed files
-	num_files=2
+	num_files=3
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="APE_INVOICEHDR",  open_opts$[1]="OTA"
-	open_tables$[2]="APM_VENDHIST",  open_opts$[2]="OTA"
+	open_tables$[2]="APM_VENDMAST",  open_opts$[2]="OTA"
+	open_tables$[3]="APM_VENDHIST",  open_opts$[3]="OTA"
 
 	gosub open_tables
 
 [[APM_CCVEND.CC_VENDOR.AVAL]]
-rem --- Entered CC_VENDOR must be for the entered CC_APTYPE.
+rem --- Entered CC_VENDOR cannot be inactive.
 	vendor$=callpoint!.getUserInput()
+	apmVendMast_dev=fnget_dev("APM_VENDMAST")
+	dim apmVendMast$:fnget_tpl$("APM_VENDMAST")
+	findrecord(apmVendMast_dev,key=firm_id$+vendor$,dom=*next)apmVendMast$
+	if apmVendMast.vend_inactive$="Y" then
+		call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
+		msg_id$="AP_VEND_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=fnmask$(apmVendMast.vendor_id$(1,vendor_size),m0$)
+		msg_tokens$[2]=cvs(apmVendMast.vendor_name$,2)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Entered CC_VENDOR must be for the entered CC_APTYPE.
 	cc_aptype$=callpoint!.getColumnData("APM_CCVEND.CC_APTYPE")
 	apmVendHist_dev=fnget_dev("APM_VENDHIST")
 	goodVendor=0
@@ -73,7 +89,7 @@ rem --- In lookup only show vendors of given AP Type
 		apm_vend_key$=sel_key$
 		callpoint!.setColumnData("APM_CCVEND.CC_VENDOR",apm_vend_key.vendor_id$,1)
 	endif	
-	allpoint!.setStatus("ACTIVATE-ABORT")
+	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[APM_CCVEND.CODE_INACTIVE.AVAL]]
 rem --- Record cannot be marked inactive if the CREDITCARD_ID is in APE_INVOICEHDR
@@ -102,6 +118,8 @@ rem --- Force CREDITCARD_ID entry to start with the letter "C"
 	endif
 
 [[APM_CCVEND.<CUSTOM>]]
+#include [+ADDON_LIB]std_functions.aon
+
 checkIfActive: rem --- Ceck if the CREDITCARD_ID is currently active in APE_INVOICEHDR
 	ccID_active$="N"
 	ccID$=callpoint!.getColumnData("APM_CCVEND.CREDITCARD_ID")

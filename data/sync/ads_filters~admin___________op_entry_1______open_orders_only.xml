@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<barista_admin_record>
-	<barista_record_table>ADS_FILTERS</barista_record_table>
-	<USER_ID>ADMIN           </USER_ID>
-	<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
-	<FILTER_ID>OPEN_ORDERS_ONLY              </FILTER_ID>
-	<DD_DESCRIPTION>OPEN_ORDERS_ONLY</DD_DESCRIPTION>
-</barista_admin_record>

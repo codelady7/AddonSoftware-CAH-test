@@ -715,13 +715,30 @@ endif
 [[APE_INVOICEHDR.CREDITCARD_ID.AVAL]]
 rem --- Skip if CREDITCARD_ID wasn't changed
 	ccID$=callpoint!.getUserInput()
-	if cvs(ccID$,2)=cvs(callpoint!.getColumnData("APE_INVOICEHDR.CREDITCARD_ID"),2) then break
+	if cvs(ccID$,2)=cvs(callpoint!.getDevObject("prior_CcID"),2) then break
+	callpoint!.setStatus("MODIFIED")
+
+rem --- Entered CREDITCARD_ID cannot be inactive.
+	if cvs(ccID$,2)<>"" then
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		findrecord(apmCcVend_dev,key=firm_id$+ccID$)apmCcVend$
+		if apmCcVend.code_inactive$="Y" then
+			msg_id$="AD_CODE_INACTIVE"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=cvs(ccID$,2)
+			msg_tokens$[2]=cvs(apmCcVend.cc_desc$,2)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
 
 rem ---  Do NOT allow the AP_INV_NO if it already exists for the CREDITCARD_ID's Credit Card Vendor.
 	if cvs(ccID$,2)<>"" then
 		apmCcVend_dev=fnget_dev("APM_CCVEND")
 		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
-		readrecord(apmCcVend_dev,key=firm_id$+ccID$)apmCcVend$
+		findrecord(apmCcVend_dev,key=firm_id$+ccID$)apmCcVend$
 		cc_aptype$=apmCcVend.cc_aptype$
 		cc_vendor$=apmCcVend.cc_vendor$
 
@@ -804,6 +821,35 @@ rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id i
 			callpoint!.setColumnData("APE_INVOICEHDR.CC_TRANS_DATE",invoice_date$,1)
 		endif
 	endif
+
+[[APE_INVOICEHDR.CREDITCARD_ID.BINP]]
+rem --- Capture starting/current creditcard_id
+	callpoint!.setDevObject("prior_CcID",callpoint!.getColumnData("APE_INVOICEHDR.CREDITCARD_ID"))
+
+[[APE_INVOICEHDR.CREDITCARD_ID.BINQ]]
+rem --- In lookup only show CREDITCARD_IDs that are active.
+	dim filter_defs$[1,2]
+	filter_defs$[0,0]="APE_INVOICEHDR.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+
+	call STBL("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev, 
+:		form!,
+:		"AP_CREDITCARD_LK",
+:		"DEFAULT",
+:		table_chans$[all],
+:		sel_key$,
+:		filter_defs$[all]
+
+	if sel_key$<>""
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		thisKey$=sel_key$(1,pos("^"=sel_key$)-1)
+		findrecord(apmCcVend_dev,key=thisKey$)apmCcVend$
+		callpoint!.setColumnData("APE_INVOICEHDR.CREDITCARD_ID",apmCcVend.creditcard_id$,1)
+	endif	
+	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[APE_INVOICEHDR.INVOICE_AMT.AVAL]]
 callpoint!.setColumnData("APE_INVOICEHDR.NET_INV_AMT",

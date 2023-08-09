@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<barista_admin_record>
-	<barista_record_table>ADS_FILTER_TEXT</barista_record_table>
-	<USER_ID>ADMIN           </USER_ID>
-	<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
-	<FILTER_ID>OPEN_ORDERS_ONLY              </FILTER_ID>
-	<SEQUENCE_NO>000</SEQUENCE_NO>
-	<FILTER_TEXT>OPT_INVHDR.TRANS_STATUS IN ('E','R') AND OPT_INVHDR.ORDINV_FLAG='O'</FILTER_TEXT>
-</barista_admin_record>
