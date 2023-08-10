@@ -1,108 +1,43 @@
 =======================================================================================================================================
- Report Date:   2023-07-26
- Report Branch: AddonSoftware 23.02
- Last Release:  AddonSoftware 23.01
+ Report Date:   2023-08-10
+ Report Branch: AddonSoftware 23.03
+ Last Release:  AddonSoftware 23.02
 =======================================================================================================================================
 
-23.01 released 06/26/2023
-BBjBaristaAddonDemos2301_06-22-2023_0927.jar
-
+23.02 released 07/31/2023
+BBjBaristaAddonDemos2302_07-26-2023_1709.jar
 =======================================================================================================================================
-Revision: 4197c612391bb9e8fcdfd3c1f370e023d471dc6a
+Revision: 0adb406a2035bbfe963acfa6af92068ac5a00fa9
 Author: Christine <chawkins@basis.com>
-Date: 6/27/2023 11:28:35 AM
+Date: 8/10/2023 12:40:40 PM
 Message:
-Bug 10689 - AD - Disallow use of RCs in Install/Upgrade wizard
- - looks for commit ID of release tag; disallow install/upgrade if not found
+Bug 10704 - GL - getFileInfo().getKeyName() returns null for the three GLE_13PERIOD* files
+ - rebuilt the tables and now getKeyName(n) correctly returns the key name
 
-(cherry picked from commit 713caa5b439aa3053c8c19b3c6927e09183160aa)
+(cherry picked from commit 021dff86784ea776c4aafd4e1621c071233faadf)
+----
+Modified: data/bar/gle_13periodamt.xml
+Modified: data/bar/gle_13periodrpt.xml
+Modified: data/bar/gle_13periodtot.xml
+Modified: data/gle-05
+Modified: data/gle-08
+Modified: data/gle-09
+
+=======================================================================================================================================
+Revision: bc5b1a00fcd2c169548b7331799248b7318141b3
+Author: Christine <chawkins@basis.com>
+Date: 8/10/2023 2:40:52 PM
+Message:
+Bug 10499 - AD - Install Wizard needs to recursively set permissions to 777 after cloning Addon repo
+ - permissions were only being set on directories, not files, and weren't getting set after doing other repo actions like a switch/checkout.
+ - also made sure UpgradeCdfDiff directory has correct permissions
+ - added close() methods for BufferedReader/FileReader to avoid Java exception "too many open files."
+
+(cherry picked from commit 3eb73d2c0b06207665e0ac0b5df2d20a5da2df3e)
 ----
 Modified: ad/src/ado_AO_GitRepoInterface.aon
-Modified: data/bar/adx_installwiz.xml
-Modified: data/bar/adx_upgradewiz.xml
-Modified: data/cdf/adx_installwiz.cdf
-Modified: data/cdf/adx_upgradewiz.cdf
-Modified: data/sync/ads_messages~[01007514AD].xml
-Modified: prop/addon.properties
-Modified: prop/addon_en.properties
-
-=======================================================================================================================================
-Revision: 08cc6dd4203bf554c7fc9fb6bed4ae85380205a4
-Author: Christine <chawkins@basis.com>
-Date: 7/14/2023 5:57:05 PM
-Message:
-Bug 10695 - AD - Upgrade Wizard code to check for unresolved conflicts takes much longer in Windows than Linux
- - replaced readString() with much faster BufferedReader
- - added status window message "Checking for unresolved conflicts."
-
-(cherry picked from commit 7eba67b5d0c4d1f87a1709b4d633b841cb588456)
-----
-Modified: ad/src/ado_AO_GitRepoInterface.aon
-Modified: ad/src/adx_upgradewiz.aon
-Modified: prop/addon.properties
-Modified: prop/addon_en.properties
-
-=======================================================================================================================================
-Revision: a4b72b4cc99cf5733225b9202c64f330f802a601
-Author: Christine <chawkins@basis.com>
-Date: 7/18/2023 6:45:32 PM
-Message:
-Bug 10696 - AD - Upgrade Wizard requires dirty work tree to be corrected in original clone instead of new one
- - can now correct unstaged/uncommitted changes in new clone instead of old one
-
-(cherry picked from commit c56c74cf3d7740e98b354f67bfb2622b90b1ad53)
-----
+Modified: ad/src/adx_installwiz.aon
 Modified: ad/src/adx_upgradewiz.aon
 
 =======================================================================================================================================
-Revision: 0f16f9a89c73fac8ef86f5fc65ce4f31b5b8a124
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/25/2023 11:00:22 AM
-Message:
-Bug 10700: Fixed Error 252 introduced with "email$" typo from ER 10577.
 
-----
-Modified: data/bar/adm_rptctl_rcp.xml
-Modified: data/bar/adm_rptrcp_cust.xml
-Modified: data/bar/adm_rptrcp_vend.xml
-Modified: data/bar/apm_vendmast.xml
-Modified: data/bar/arc_cc_register.xml
-Modified: data/bar/arc_cc_users.xml
-Modified: data/bar/are_ccpmt.xml
-Modified: data/bar/arm_custdet.xml
-Modified: data/bar/arm_custmast.xml
-Modified: data/bar/arm_custpmts.xml
-Modified: data/bar/arm_custship.xml
-Modified: data/bar/crm_contacts.xml
-Modified: data/cdf/adm_rptctl_rcp.cdf
-Modified: data/cdf/adm_rptrcp_cust.cdf
-Modified: data/cdf/adm_rptrcp_vend.cdf
-Modified: data/cdf/apm_vendmast.cdf
-Modified: data/cdf/arc_cc_register.cdf
-Modified: data/cdf/arc_cc_users.cdf
-Modified: data/cdf/are_ccpmt.cdf
-Modified: data/cdf/arm_custmast.cdf
-Modified: data/cdf/arm_custship.cdf
-Modified: data/cdf/crm_contacts.cdf
-
-=======================================================================================================================================
-Revision: 253f8f7c4fc7d3ff67a3611e07e71ce2157741c8
-Author: Christine <chawkins@basis.com>
-Date: 7/26/2023 2:17:45 PM
-Message:
-Bug 10701 - AD - JGit clone of Addon repo can report modified files if autocrlf <> false
- - added code to the repoInterface class constructor to have JGit set the global (user) .gitconfig autocrlf to false
-
-(cherry picked from commit 485d840e83b88cf528da8c6a7fa8015c0c3522e7)
-----
-Modified: ad/src/ado_AO_GitRepoInterface.aon
-
-=======================================================================================================================================
-Revision: 1214ac1aff7b1a142c033fc188d4eeb7b39e3dbc
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 7/26/2023 1:23:47 PM
-Message:
-Bug 10702: Moved "gosub exportToPDF" added for ER 9460 until after the
-viewerControl! object is created.
-----
-Modified: ar/src/arr_drillDownSalesReport.aon
