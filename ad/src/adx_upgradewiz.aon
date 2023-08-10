@@ -891,6 +891,8 @@ mergeCallpoints: rem --- Merge mods before/after callpoints into standard Addon 
         else
             rem --- Make new directory
             cdfDiffsDir!.mkdirs()
+            cdfDiffsDir!.setReadable(1,0)
+            cdfDiffsDir!.setWritable(1,0)
         endif
 
         rem --- Copy merged cdf files into UpgradeCdfDiffs directory where they can be alphabetized for diff'ing with standard Addon cdfs
@@ -1068,26 +1070,6 @@ cloneGitRepo: rem --- Clone Git repository and switch/checkout to old branch/tag
     endif
     print (log_dev)"    Git Repo URL: ",repoInterface!.getRepoURL()
 
-    rem --- Set permissions on all directories under cloneDir! for non-Windows OS
-    if (! osIsWindows!) then 
-        permissions!=PosixFilePermissions.fromString("rwxrwxrwx")
-        userPrincipal!=FileSystems.getDefault().getUserPrincipalLookupService().lookupPrincipalByName(java.lang.System.getProperty("user.name"))
-        path! = Paths.get(cloneDir$)
-        stream! = Files.walk(path!)
-        pathList! = stream!.collect(Collectors.toList())
-        
-        dirVector! = new Vector(pathList!)
-        dirIter! = dirVector!.iterator()
-        while dirIter!.hasNext()
-            path! = dirIter!.next()
-            file! = path!.toFile()
-            if(file!.isDirectory()) then
-                Files.setPosixFilePermissions(path!,permissions!)
-                Files.setOwner(path!,userPrincipal!)
-            endif
-        wend
-    endif
-
     rem --- Switch/checkout to old branch/tag
     if !status then
         success=repoInterface!.determineAndSwitchToVersion(oldAonDir$)
@@ -1099,6 +1081,11 @@ cloneGitRepo: rem --- Clone Git repository and switch/checkout to old branch/tag
             print(log_dev)"    ***** OLD BRANCH/TAG CHECKOUT FAILED *****"
             status=1
         endif
+    endif
+
+    rem --- Set permissions on all directories under cloneDir! for non-Windows OS
+    if (! osIsWindows!) then 
+        repoInterface!.setPermsRecursive(cloneDir$)
     endif
 
     rem --- Remove busy/working image from progress meter
@@ -1134,6 +1121,11 @@ checkoutGitBranch: rem --- Switch/checkout branch
         gosub disp_message
         print(log_dev)"    ***** "+branchName$+" CHECKOUT FAILED ("+checkoutStatus$+") *****"
         status=1
+    endif
+
+    rem --- Set permissions on all directories under cloneDir! for non-Windows OS
+    if (! osIsWindows!) then 
+        repoInterface!.setPermsRecursive(cloneDir$)
     endif
 
     rem --- Remove busy/working image from progress meter
@@ -1573,6 +1565,11 @@ checkLineEndings: rem --- Check for, and resolve, line ending issues
     repoInterface!=new GitRepoInterface(gitAuthID$,newAonDir$)
     repoInterface!.checkoutFilesWithDifferentLineEndings()
     repoInterface!.closeInterface()
+
+    rem --- Set permissions on all directories under cloneDir! for non-Windows OS
+    if (! osIsWindows!) then 
+        repoInterface!.setPermsRecursive(newAonDir$)
+    endif
 
     rem --- Remove busy/working image from progress meter
     busyImage!.destroy(err=*next)
