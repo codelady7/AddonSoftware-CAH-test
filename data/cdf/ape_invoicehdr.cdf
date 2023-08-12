@@ -527,6 +527,7 @@ aps01_dev=num(chans$[6])
 gls01_dev=num(chans$[7])
 gls_calendar_dev=num(chans$[12])
 dim aps01a$:templates$[6],gls01a$:templates$[7],gls_calendar$:templates$[12]
+
 user_tpl_str$="glint:c(1),glyr:c(4),glper:c(2),gl_tot_pers:c(2),"
 user_tpl_str$=user_tpl_str$+"amt_msk:c(15),multi_types:c(1),multi_dist:c(1),ret_flag:c(1),units_flag:c(1),"
 user_tpl_str$=user_tpl_str$+"misc_entry:c(1),inv_in_ape01:c(1),"
@@ -655,6 +656,18 @@ rem --- Init a vector to store urls for viewed images
 
 	urlVect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("urlVect",urlVect!)
+
+rem --- Open poe_invhdr if PO is installed
+	call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
+	po$=info$[20];rem --- po installed?
+	if po$="Y"
+		num_files=1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="POE_INVHDR",open_opts$[1]="OTA"
+
+		gosub open_tables
+	endif
+	callpoint!.setDevObject("po_installed",po$)
 
 [[APE_INVOICEHDR.BTBL]]
 rem --- Get Batch information
@@ -807,6 +820,23 @@ rem ---  Do NOT allow the AP_INV_NO if it already exists for the CREDITCARD_ID's
 			gosub disp_message
 			callpoint!.setStatus("ABORT")
 			break
+		endif
+
+		rem --- Check POE_INVHDR if PO installed
+		if callpoint!.getDevObject("po_installed")="Y" then
+			poeInvHdr_dev=fnget_dev("POE_INVHDR")
+			foundInvoice=0
+			read(poeInvHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next); foundInvoice=1
+			if foundInvoice then
+				msg_id$="AP_CC_INV_USED"
+				dim msg_tokens$[3]
+				msg_tokens$[1]=cvs(ap_inv_no$,2)
+				msg_tokens$[2]=cvs(cc_vendor$,2)
+				msg_tokens$[3]=Translate!.getTranslation("DDM_TABLES-POE_INVHDR-DD_ATTR_WINT")
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+				break
+			endif
 		endif
 	endif
 

@@ -71,6 +71,15 @@ rem --- Additional reads
     gldate$=poe05a.acct_date$
     vendor$=apm01a.vendor_id$(1,p[0])
     name$=apm01a.vendor_name$
+        
+rem --- Get Credit Card info
+    redim apmCcVend$
+    readrecord(apmCcVend_dev,key=firm_id$+poe05a.creditcard_id$,dom=*next)apmCcVend$
+    if cvs(poe05a.creditcard_id$,2)<>"" then
+        redim apm10a$
+        findrecord(apm10a_dev,key=firm_id$+"A"+apmCcVend.cc_aptype$,dom=*next)apm10a$
+    endif
+
 
 rem --- Create apt-01 record
 
@@ -94,8 +103,47 @@ rem --- Create apt-01 record
     apt01a.invoice_amt=poe05a.invoice_amt
     apt01a.discount_amt=poe05a.discount_amt
     apt01a.retention=poe05a.retention
-    apt01a.invoice_bal=apt01a.invoice_amt
+    if cvs(poe05a.creditcard_id$,2)="" then
+        apt01a.invoice_bal=apt01a.invoice_amt
+    else
+        rem --- Previously paid via credit card
+        apt01a.invoice_bal=0
+    endif
+    apt01a$ = field(apt01a$)
     write record (apt01_dev,dom=l1400) apt01a$
+
+    if cvs(poe05a.creditcard_id$,2)<>"" then
+        rem --- Make new invoice for Credit Card vendor
+        apt01a.ap_type$=apmCcVend.cc_aptype$
+        apt01a.vendor_id$=apmCcVend.cc_vendor$
+        if cvs(apm10a.ap_type$,2)<>"" then 
+            apt01a.ap_dist_code$=apm10a.ap_dist_code$
+            apt01a.payment_grp$=apm10a.payment_grp$
+            apt01a.ap_terms_code$=apm10a.ap_terms_code$
+        endif
+        apt01a.creditcard_id$=poe05a.creditcard_id$
+        apt01a.cc_trans_date$=poe05a.cc_trans_date$
+        apt01a.invoice_date$=""
+        apt01a.inv_due_date$=""
+        apt01a.disc_date$=""
+        apt01a.invoice_bal=apt01a.invoice_amt
+        apt01a$ = field(apt01a$)
+        writerecord(apt01_dev)apt01a$
+        
+        rem --- Capture the original vendor was paid for this invoice
+        redim aptVendPayments$
+        aptVendPayments.firm_id$=poe05a.firm_id$
+        aptVendPayments.vendor_id$=poe05a.vendor_id$
+        aptVendPayments.check_no$=poe05a.creditcard_id$
+        aptVendPayments.bnk_acct_cd$=""
+        aptVendPayments.acct_desc$=apmCcVend.cc_desc$
+        aptVendPayments.check_date$=poe05a.cc_trans_date$
+        aptVendPayments.trans_type$="X"
+        aptVendPayments.payment_amt=poe05a.invoice_amt-poe05a.discount_amt-poe05a.retention
+        aptVendPayments$ = field(aptVendPayments$)
+        writerecord(aptVendPayments_dev)aptVendPayments$
+    endif
+            
     goto l1500
 
 l1400: rem --- Adjustment to current invoice
@@ -260,6 +308,25 @@ l2700: rem --- Generate GL Recap
     y$[1]="";rem not used anymore (sending entire pom02a$ rec)
     y$[2]="";rem not used anymore (sending entire pom02a$ rec)
     gosub l6900
+    if cvs(poe05a.creditcard_id$,2)<>"" then
+        rem --- Invoice previously paid via credit card.
+        rem --- Add new Debit to invoice's distribution code GL_AP_ACCT equal to the amount of the distribution code's GL_AP_ACCT Credit.
+        account$=glaccounts$[0]
+        gldate$=glparams$[4]
+        ref1$=apm01a.vendor_name$
+        ref2$=poe05a.ap_inv_no$
+        ref3$=""
+        memo$=apm01a.vendor_name$
+        amount=values[0]
+        units=values[2]
+        call pgmdir$+"glc_glpost.aon",glm01_dev,glt04_dev,notused,account$,gldate$,ref1$,ref2$,ref3$,memo$,amount,units,status
+                    
+        rem --- Add new Credit to APM_CCVEND.GL_AP_ACCT equal to the amount of invoice's distribution code GL_AP_ACCT Debit.
+        account$=apmCcVend.gl_ap_acct$
+        amount=-amount
+        units=-units
+        call pgmdir$+"glc_glpost.aon",glm01_dev,glt04_dev,notused,account$,gldate$,ref1$,ref2$,ref3$,memo$,amount,units,status
+    endif
 
 rem --- Get WIP account for Non-Stocks
 

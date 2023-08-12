@@ -47,7 +47,7 @@ rem --- Assign form input values to local variables
 
 rem --- Open/Lock Files
 
-    files=37,begfile=1,endfile=files
+    files=39,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
 
     files$[1]="aps_params",ids$[1]="APS_PARAMS"
@@ -80,6 +80,8 @@ rem --- Open/Lock Files
     files$[29]="ivm-02",ids$[29]="IVM_ITEMWHSE"
     files$[36]="gls_calendar",ids$[36]="GLS_CALENDAR"
     files$[37]="pot_reclsdet",ids$[37]="POT_RECLSDET"
+    files$[38]="apm_ccvend",ids$[38]="APM_CCVEND"
+    files$[39]="apt_vendpayments",ids$[39]="APT_VENDPAYMENTS"
 
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
@@ -115,6 +117,8 @@ rem --- Open/Lock Files
     ivm02_dev=channels[29]
     gls_calendar_dev=channels[36]
     potRecLsDet_dev=channels[37]
+    apmCcVend_dev=channels[38]
+    aptVendPayments_dev=channels[39]
 
 rem --- Dimension string templates
 
@@ -130,7 +134,7 @@ rem --- Dimension string templates
 :       apt01a$:templates$[25],apt02a$:templates$[26],
 :       apt11a$:templates$[27],      
 :       ivm01a$:templates$[28],ivm02a$:templates$[29],gls_calendar$:templates$[36],
-:       potRecLsDet$:templates$[37]
+:       potRecLsDet$:templates$[37],apmCcVend$:templates$[38],aptVendPayments$:templates$[39]
 
 rem --- Retrieve parameter records
 
@@ -407,6 +411,10 @@ rem --- Additional reads
     find record (apm10b_dev,key=firm_id$+"B"+poe05a.ap_dist_code$,dom=*next) apm10b$
     apacct$=apm10b.gl_ap_acct$(1,g[4])
     retacct$=apm10b.gl_ret_acct$(1,g[4])
+        
+rem --- Get Credit Card info
+    redim apmCcVend$
+    readrecord(apmCcVend_dev,key=firm_id$+poe05a.creditcard_id$,dom=*next)apmCcVend$
 
 rem --- Format invoice fields
 
@@ -423,6 +431,27 @@ rem --- Print invoice header
 	outVect!.addItem(fnmask$(apm01a.vendor_id$(1,p[0]),m0$))
 	outVect!.addItem(apm01a.vendor_name$)
 	outVect!.addItem(poe05a.ap_inv_no$)
+    if cvs(poe05a.creditcard_id$,2)<>"" then
+        rem --- Show Credit Card Vendor and Card used for this invoice
+        xwk=fnblank(9)
+
+        originalVendor$=apm01a$
+        redim apm01a$
+        apm01a.firm_id$=poe05a.firm_id$
+        apm01a.vendor_id$=apmCcVend.cc_vendor$
+        apm01a.vendor_name$=nf$
+        k$=apm01a.firm_id$+apm01a.vendor_id$
+        find record (apm01_dev,key=k$,dom=*next) apm01a$
+        
+        OutVect!.addItem(fnmask$(apm01a.vendor_id$(1,p[0]),m0$))
+        OutVect!.addItem(apm01a.vendor_name$)
+        OutVect!.addItem(poe05a.ap_inv_no$)
+        OutVect!.addItem(Translate!.getTranslation("AON_PREPAID_WITH_CC")+": "+cvs(apmCcVend.creditcard_id$,2)+" "+cvs(apmCcVend.cc_desc$,2)+$00$+"B")
+        xwk=fnblank(8)
+        apm01a$=originalVendor$; rem --- GL Posting Routine uses apm01a$ for the original vendor info
+        
+        xwk=fnblank(3)
+    endif
 	outVect!.addItem(ap_dist_code$)
 	outVect!.addItem(poe05a.payment_grp$)
 	outVect!.addItem(poe05a.ap_terms_code$)
@@ -602,6 +631,25 @@ l2800: rem --- Generate GL Recap
         y$[2]=y2$;rem not used anymore
         total=total+extension
         gosub l6900
+        if cvs(poe05a.creditcard_id$,2)<>"" then
+            rem --- Invoice previously paid via credit card.
+            rem --- Add new Debit to invoice's distribution code GL_AP_ACCT equal to the amount of the distribution code's GL_AP_ACCT Credit.
+            account$=glaccounts$[0]
+            gldate$=glparams$[4]
+            ref1$=apm01a.vendor_name$
+            ref2$=poe05a.ap_inv_no$
+            ref3$=""
+            memo$=apm01a.vendor_name$
+            amount=values[0]
+            units=values[2]
+            call pgmdir$+"glc_glpost.aon",glm01_dev,glw11_dev,notused,account$,gldate$,ref1$,ref2$,ref3$,memo$,amount,units,status
+                        
+            rem --- Add new Credit to APM_CCVEND.GL_AP_ACCT equal to the amount of invoice's distribution code GL_AP_ACCT Debit.
+            account$=apmCcVend.gl_ap_acct$
+            amount=-amount
+            units=-units
+            call pgmdir$+"glc_glpost.aon",glm01_dev,glw11_dev,notused,account$,gldate$,ref1$,ref2$,ref3$,memo$,amount,units,status
+        endif
     
 l2900: rem --- Loop back for next line item
    
