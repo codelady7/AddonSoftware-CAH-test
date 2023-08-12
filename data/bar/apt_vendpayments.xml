@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apt_vendpayments"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apt_vendpayments">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_vendpayments">20220727</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apt_vendpayments">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_vendpayments">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_vendpayments">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apt_vendpayments">20230811</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_vendpayments">20230811</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_vendpayments">180354</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_vendpayments"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_vendpayments"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_vendpayments"></DD_ATTR_DKNM>
@@ -652,6 +652,13 @@
 			<DD_ATTR_SEQ id="ddm_column_ldat.apt_vendpaymentstrans_type04">04</DD_ATTR_SEQ>
 			<DD_ATTR_LDAT id="ddm_column_ldat.apt_vendpaymentstrans_type04">R</DD_ATTR_LDAT>
 			<DD_ATTR_LDAT_DS id="ddm_column_ldat.apt_vendpaymentstrans_type04">Reversal</DD_ATTR_LDAT_DS>
+		</RECORD>
+		<RECORD id="ddm_column_ldat.apt_vendpaymentstrans_type05">
+			<DD_TABLE_ALIAS id="ddm_column_ldat.apt_vendpaymentstrans_type05">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_ldat.apt_vendpaymentstrans_type05">TRANS_TYPE      </DD_DVAR_NAME>
+			<DD_ATTR_SEQ id="ddm_column_ldat.apt_vendpaymentstrans_type05">05</DD_ATTR_SEQ>
+			<DD_ATTR_LDAT id="ddm_column_ldat.apt_vendpaymentstrans_type05">X</DD_ATTR_LDAT>
+			<DD_ATTR_LDAT_DS id="ddm_column_ldat.apt_vendpaymentstrans_type05">Credit Card</DD_ATTR_LDAT_DS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
