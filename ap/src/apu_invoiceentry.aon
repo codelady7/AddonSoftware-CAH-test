@@ -307,6 +307,8 @@ rem --- Read next Invoice Header (ape-01) record
             aptInvHdrArc.accting_date$=ape01a.accting_date$
             aptInvHdrArc.inv_due_date$=ape01a.inv_due_date$
             aptInvHdrArc.disc_date$=ape01a.disc_date$
+            aptInvHdrArc.creditcard_id$=ape01a.creditcard_id$
+            aptInvHdrArc.cc_trans_date$=ape01a.cc_trans_date$
             aptInvHdrArc.invoice_amt=ape01a.invoice_amt
             aptInvHdrArc.discount_amt=ape01a.discount_amt
             aptInvHdrArc.retention=ape01a.retention

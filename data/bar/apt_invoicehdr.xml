@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.apt_invoicehdr">F135C36B75725CEAB82926D6CFC9E211</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apt_invoicehdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_invoicehdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apt_invoicehdr">20230807</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_invoicehdr">20230807</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_invoicehdr">184520</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apt_invoicehdr">20230814</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_invoicehdr">20230814</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_invoicehdr">161446</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_invoicehdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_invoicehdr">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_invoicehdr">PRIMARY</DD_ATTR_DKNM>
@@ -157,6 +157,18 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
 		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apt_invoicehdrcreditcard_idapm_ccvend">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apt_invoicehdrcreditcard_idapm_ccvend">APT_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apt_invoicehdrcreditcard_idapm_ccvend">CREDITCARD_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apt_invoicehdrcreditcard_idapm_ccvend">APM_CCVEND      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apt_invoicehdrcreditcard_idapm_ccvend">FK_APT_INVOICEHDR_CREDITCARD_ID_APM_CCVEND                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.apt_invoicehdrorig_vendorapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apt_invoicehdrorig_vendorapm_vendmast">APT_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apt_invoicehdrorig_vendorapm_vendmast">ORIG_VENDOR     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apt_invoicehdrorig_vendorapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apt_invoicehdrorig_vendorapm_vendmast">FK_APT_INVOICEHDR_ORIG_VENDOR_APM_VENDMAST                                                                                                                                                                                                                     </TABLE_REF_NAME>
+		</RECORD>
 		<RECORD id="ddm_table_ref.apt_invoicehdrvendor_idapm_vendmast">
 			<DD_TABLE_ALIAS id="ddm_table_ref.apt_invoicehdrvendor_idapm_vendmast">APT_INVOICEHDR  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.apt_invoicehdrvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
@@ -166,6 +178,42 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_refcol">
 		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">APT_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">CREDITCARD_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">APM_CCVEND      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">APT_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">CREDITCARD_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">APM_CCVEND      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">CREDITCARD_ID   </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_invoicehdrcreditcard_idapm_ccvend0002">CREDITCARD_ID   </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">APT_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">ORIG_VENDOR     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">APT_INVOICEHDR  </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">ORIG_VENDOR     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apt_invoicehdrorig_vendorapm_vendmast0002">ORIG_VENDOR     </FK_TABLE_COL>
+		</RECORD>
 		<RECORD id="ddm_table_refcol.apt_invoicehdrvendor_idapm_vendmast0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.apt_invoicehdrvendor_idapm_vendmast0001">APT_INVOICEHDR  </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_refcol.apt_invoicehdrvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
@@ -1520,8 +1568,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_invoicehdr021"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.apt_invoicehdr021"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.apt_invoicehdr021"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr021">20230807</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr021">20230807</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr021">20230814</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr021">20230814</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apt_invoicehdr021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apt_invoicehdr021"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apt_invoicehdr021"></DD_ATTR_CPGM>
@@ -1571,8 +1619,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_invoicehdr022"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.apt_invoicehdr022"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.apt_invoicehdr022"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr022">20230807</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr022">20230807</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr022">20230814</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr022">20230814</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apt_invoicehdr022"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apt_invoicehdr022"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apt_invoicehdr022"></DD_ATTR_CPGM>
@@ -1622,8 +1670,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_invoicehdr023"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.apt_invoicehdr023"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.apt_invoicehdr023"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr023">20230807</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr023">20230807</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr023">20230814</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr023">20230814</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apt_invoicehdr023"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apt_invoicehdr023"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apt_invoicehdr023"></DD_ATTR_CPGM>
@@ -1673,8 +1721,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.apt_invoicehdr024"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.apt_invoicehdr024"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.apt_invoicehdr024"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr024">20230807</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr024">20230807</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.apt_invoicehdr024">20230814</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.apt_invoicehdr024">20230814</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apt_invoicehdr024"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apt_invoicehdr024"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.apt_invoicehdr024"></DD_ATTR_CPGM>
