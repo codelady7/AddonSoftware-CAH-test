@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.pot_invhdr">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pot_invhdr">20230814</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.pot_invhdr">20230814</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_invhdr">121756</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_invhdr">171406</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_invhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pot_invhdr">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_invhdr">PRIMARY</DD_ATTR_DKNM>
