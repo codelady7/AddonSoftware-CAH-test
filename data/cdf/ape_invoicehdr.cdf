@@ -806,7 +806,7 @@ rem ---  Do NOT allow the AP_INV_NO if it already exists for the CREDITCARD_ID's
 		aptInvoiceHdr_dev=fnget_dev("APT_INVOICEHDR")
 		dim aptInvoiceHdr$:fnget_tpl$("APT_INVOICEHDR")
 		foundInvoice=0
-		read(aptInvoiceHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next)aptInvoiceHdr$; foundInvoice=1
+		readrecord(aptInvoiceHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next)aptInvoiceHdr$; foundInvoice=1
 		if foundInvoice then
 			msg_id$="AP_CC_INV_USED"
 			dim msg_tokens$[3]
