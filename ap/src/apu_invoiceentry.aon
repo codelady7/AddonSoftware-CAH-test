@@ -140,6 +140,8 @@ rem --- Read next Invoice Header (ape-01) record
                 endif
                 apt01a.creditcard_id$=ape01a.creditcard_id$
                 apt01a.cc_trans_date$=ape01a.cc_trans_date$
+                apt01a.orig_aptype$=ape01a.ap_type$
+                apt01a.orig_vendor$=ape01a.vendor_id$
                 apt01a.invoice_date$=""
                 apt01a.inv_due_date$=""
                 apt01a.disc_date$=""
