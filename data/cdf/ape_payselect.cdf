@@ -143,8 +143,13 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 :							    )
 
                                 vectInvoices!.setItem(curr_row * numcols, "0")
-                                gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
-                                gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("plain_font"))
+				if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+                                		gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
+				else
+					gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
+				endif
+rem wgh ... 10513 ... plain font
+                gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("plain_font"))
 						endif
 					endif
 
@@ -302,6 +307,12 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 
 							vectInvoices!.setItem(curr_row * numcols, "0")
 							gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
+							if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+                                					gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
+							else
+								gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
+							endif
+rem wgh ... 10513 ... plain font
 							gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("plain_font"))
 						else
 							dummy = fn_setmast_flag(
@@ -768,7 +779,7 @@ rem --- Add grid to store invoices
 	user_tpl.gridInvoicesCtlID$ = str(nxt_ctlID)
 	user_tpl.gridInvoicesCols$ = "15"
 	user_tpl.gridInvoicesRows$ = "10"
-	user_tpl.MasterCols = 20
+	user_tpl.MasterCols = 21
 	user_tpl.retention_col = 15
 	user_tpl.ap_check_seq$=aps_params.ap_check_seq$
 
@@ -807,6 +818,7 @@ rem --- Misc other init
     statusVect!.addItem(Translate!.getTranslation("AON_REVIEWED"))
     statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"))
     statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"));rem text is the same, but the offset in the vector indicates first approval (3) or final approval (4)
+    statusVect!.addItem(Translate!.getTranslation("AON_CC_PAID"))
     callpoint!.setDevObject("status_vect",statusVect!)
 
 	if callpoint!.getDevObject("use_pay_auth")
@@ -1109,7 +1121,7 @@ rem ==========================================================================
 
 	rem --- Update invoice selections, and grid row background color
 	numrows = gridInvoices!.getNumRows()
-    numcols=gridInvoices!.getNumColumns()
+	numcols=gridInvoices!.getNumColumns()
 	if numrows > 0 then
 		for row = 0 to numrows-1
 			vendor_id$ = gridInvoices!.getCellText(row,4)
@@ -1122,7 +1134,13 @@ rem ==========================================================================
 			rem --- Update grid row backgound color
 			gridInvoices!.setSelectedRow(row)
 			gridInvoices!.setRowBackColor(row, defaultColor!)
-			gridInvoices!.setCellText(row,0,statusVect!.get(0))
+			if vectInvoicesMaster!.getItem((row*user_tpl.MasterCols)+20)="" then
+				gridInvoices!.setCellText(row,0,statusVect!.get(0))
+			else
+				gridInvoices!.setCellText(row,0,statusVect!.get(5))
+			endif
+
+rem wgh ... 10513 ... plain font
             gridInvoices!.setRowFont(row,callpoint!.getDevObject("plain_font"))
 
 			if reviewed =1 then
@@ -1152,6 +1170,7 @@ rem ==========================================================================
 :				        )
 						gridInvoices!.setRowBackColor(row, partiallyApproved!)
 						gridInvoices!.setCellText(row,0,statusVect!.get(3))
+rem wgh ... 10513 ... plain font
 						gridInvoices!.setRowFont(row,callpoint!.getDevObject("plain_font"))
 					else
 						rem --- Fully approved
@@ -2144,6 +2163,7 @@ rem --- called from AWIN and filter_recs
 			if vectInvoices!.getItem(wk) = "1"
 				gridInvoices!.setRowFont(wk/gridInvoices!.getNumColumns(),callpoint!.getDevObject("bold_font"))
 			else
+rem wgh ... 10513 ... plain font
 				gridInvoices!.setRowFont(wk/gridInvoices!.getNumColumns(),callpoint!.getDevObject("plain_font"))
 			endif
 			if vectInvoices!.getItem(wk+2) = "Y"
@@ -2256,7 +2276,15 @@ rem ==========================================================================
 			endif
 
 			tmpVect!=new BBjVector()
-			tmpVect!.addItem(iff(apt01a.selected_for_pay$="Y","1","0")); rem 0, initial value 1 if selected, 0 otherwise; if using pay auth, will be adjusted in load_invoice_approval_status routine
+			if apt01a.selected_for_pay$="Y" then
+				tmpVect!.addItem("1"); rem 0
+			else
+				if cvs( apt01a.creditcard_id$,2)="" then
+					tmpVect!.addItem("0"); rem 0
+				else
+					tmpVect!.addItem("5"); rem 0
+				endif
+			endif
 			tmpVect!.addItem(apt01a.payment_grp$); rem 1
 			tmpVect!.addItem(ach_payment$); rem 2
 			tmpVect!.addItem(apt01a.ap_type$); rem 3
@@ -2275,6 +2303,7 @@ rem ==========================================================================
 			tmpVect!.addItem(apt01a.vendor_id$); rem 16
 			tmpVect!.addItem(apt01a.disc_date$); rem 17
 			tmpVect!.addItem(apt01a.invoice_amt$); rem 18
+			tmpVect!.addItem(cvs( apt01a.creditcard_id$,2)); rem 19
 
 			mapkey$=apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$
 			invoiceMap!.put(mapkey$,tmpVect!)
@@ -2317,7 +2346,7 @@ rem ==========================================================================
 selected_or_fully_approved: rem --- Set or unset selected (no pay auth) or final approval (pay auth)
 rem ==========================================================================
 rem --- in: gridInvoices!
-rem --- in: selected flag; if 1, bolds font and sets pay/disc amts; if 0, set back to plain font and zero out amts
+rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set back to plain font and zero out amts
 
 	apm01_dev = fnget_dev("APM_VENDMAST")
 	dim apm01a$:fnget_tpl$("APM_VENDMAST")
@@ -2343,7 +2372,7 @@ rem --- in: selected flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 			row_no = num(TempRows!.getItem(temp_row-1))
             
 			if !callpoint!.getDevObject("use_pay_auth")
-				selected=iff(vectInvoices!.get(row_no*numcols)="0",1,0);rem when no pay auth, toggles selected to new and vice versa
+				selected=iff(pos(vectInvoices!.get(row_no*numcols)="05"),1,0);rem when no pay auth, toggles selected to new and vice versa
 				if !selected then selected_flag$="0"
 				callpoint!.setDevObject("selections_made","Y")
 			endif
@@ -2366,18 +2395,18 @@ rem --- in: selected flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 					if apt01a.hold_flag$="Y"
 						if TempRows!.size()>1 then
 							if !hold_warn
-							msg_id$="AP_INV_SEL_HOLD"
+								msg_id$="AP_INV_SEL_HOLD"
+								gosub disp_message
+								hold_warn=1
+							endif
+							continue
+						else
+							msg_id$="AP_INV_RMVHOLD"
 							gosub disp_message
-							hold_warn=1
+							if msg_opt$<>"Y" then break
 						endif
-						continue
-					else
-						msg_id$="AP_INV_RMVHOLD"
-						gosub disp_message
-						if msg_opt$<>"Y" then break
 					endif
 				endif
-			endif
 				
 				read record(apt11_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
 				while 1
@@ -2482,6 +2511,8 @@ rem --- in: selected flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 :					"0"
 :				)
 
+				if vectInvoicesMaster!.getItem((row_no*user_tpl.MasterCols)+20)<>"" then selected_flag$="5"
+rem wgh ... 10513 ...  plain font
 				gridInvoices!.setRowFont(row_no,callpoint!.getDevObject("plain_font"))
 				gridInvoices!.setCellText(row_no,0,statusVect!.get(num(selected_flag$)))
 
@@ -2840,7 +2871,12 @@ undo_review:
 rem ==========================================================================
 rem --- when undoing a reviewed invoice (back to New), updates the grid/vectors
 
-    gridInvoices!.setCellText(curr_row,0,statusVect!.get(0));rem 'New'
+    vectInvoicesMaster! = UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
+    if vectInvoicesMaster!.getItem((curr_row*user_tpl.MasterCols)+20)="" then
+        gridInvoices!.setCellText(curr_row,0,statusVect!.get(0));rem 'New'
+    else
+        gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
+    endif
     gridInvoices!.setRowBackColor(curr_row, defaultColor!)
     vectInvoices!.setItem(curr_row*numcols,"0")
     dummy = fn_setmast_flag(
