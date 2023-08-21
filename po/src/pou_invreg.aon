@@ -121,8 +121,10 @@ rem --- Create apt-01 record
             apt01a.payment_grp$=apm10a.payment_grp$
             apt01a.ap_terms_code$=apm10a.ap_terms_code$
         endif
-        apt01a.creditcard_id$=poe05a.creditcard_id$
         apt01a.cc_trans_date$=poe05a.cc_trans_date$
+        apt01a.creditcard_id$=poe05a.creditcard_id$
+        apt01a.orig_aptype$=poe05a.ap_inv_no$
+        apt01a.orig_vendor$=poe05a.vendor_id$
         apt01a.invoice_date$=""
         apt01a.inv_due_date$=""
         apt01a.disc_date$=""

@@ -24,15 +24,15 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 	if gui_event.code$="P"
 		popUpMenu!=gridInvoices!.getPopupMenu()
 		menuItem!=popUpMenu!.getMenuItem(gui_event.y)
-        if gui_event.y=400
-            gosub undo_pay_auth
-        else
-            if gui_event.y=300
-                gosub view_images
-            else
-                new_popup_index=gui_event.y-200
-                gosub change_invoice_status
-            endif
+		if gui_event.y=400
+			gosub undo_pay_auth
+		else
+			if gui_event.y=300
+				gosub view_images
+			else
+				new_popup_index=gui_event.y-200
+				gosub change_invoice_status
+			endif
 		endif
 	endif
 
@@ -45,23 +45,23 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 
 		switch notice.code
 			case 18; rem --- right_mouse_down
-                     rem --- see to it that a right click to get popup menu also selects the clicked row when there are no other rows selected
-                     rem --- also disable the 'undo' menu option unless using pay auth and only one row is selected
+				rem --- see to it that a right click to get popup menu also selects the clicked row when there are no other rows selected
+				rem --- also disable the 'undo' menu option unless using pay auth and only one row is selected
                 
-                menuItem_undo!=callpoint!.getDevObject("menu_undo")                     
+				menuItem_undo!=callpoint!.getDevObject("menu_undo")                     
                      
 				if !rowsSelected!.size()
 					gridInvoices!.setSelectedRow(curr_row)
-                    if menuItem_undo!<>null() then menuItem_undo!.setEnabled(1)
+					if menuItem_undo!<>null() then menuItem_undo!.setEnabled(1)
 				endif
                 
-                if menuItem_undo!<>null()
-                    if rowsSelected!.size()>1
-                        menuItem_undo!.setEnabled(0)
-                    else
-                        menuItem_undo!.setEnabled(1)
-                    endif
-                endif
+				if menuItem_undo!<>null()
+					if rowsSelected!.size()>1
+						menuItem_undo!.setEnabled(0)
+					else
+						menuItem_undo!.setEnabled(1)
+					endif
+				endif
 
 			break
 
@@ -118,38 +118,38 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 						gridInvoices!.setCellText(curr_row,11,str(inv_amt))
 					endif
                   
-                    rem --- if not using pay auth, changing disc/pay amounts does auto-select
-                    if !callpoint!.getDevObject("use_pay_auth")                    
-                        if disc_amt<>0 or inv_amt<>0 then
-                            dummy = fn_setmast_flag(
+					rem --- if not using pay auth, changing disc/pay amounts does auto-select
+					if !callpoint!.getDevObject("use_pay_auth")                    
+						if disc_amt<>0 or inv_amt<>0 then
+							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
 :								vectInvoices!.getItem(curr_row*numcols+6),
 :								"1",
-:								str(pmt_amt)
-:							    )
+:								str(pmt_amt))
 
-                                vectInvoices!.setItem(curr_row * numcols, "1")
-                                gridInvoices!.setCellText(curr_row,0,statusVect!.get(1))
-                                gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("bold_font"))
+							vectInvoices!.setItem(curr_row * numcols, "1")
+							gridInvoices!.setCellText(curr_row,0,statusVect!.get(1))
+							gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("bold_font"))
+							gridRow=curr_row
+							gosub showCCPaidCells
 
-                        else 
-                            dummy = fn_setmast_flag(
+						else 
+							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
 :								vectInvoices!.getItem(curr_row*numcols+6),
 :								"0",
-:								"0"
-:							    )
+:								"0")
 
-                                vectInvoices!.setItem(curr_row * numcols, "0")
-				if vectInvoicesMaster!.getItem(mast_offset+20)="" then
-                                		gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
-				else
-					gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
-				endif
-rem wgh ... 10513 ... plain font
-                gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("plain_font"))
+							vectInvoices!.setItem(curr_row * numcols, "0")
+							if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+								gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
+							else
+								gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
+							gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("plain_font"))
+							gridRow=curr_row
+							gosub showCCPaidCells
 						endif
 					endif
 
@@ -160,29 +160,29 @@ rem wgh ... 10513 ... plain font
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+4),
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+6),
 :						str(disc_amt),
-:						str(pmt_amt)
-:					    )
+:						str(pmt_amt))
 
-                    if !callpoint!.getDevObject("use_pay_auth")
-                        if pmt_amt=0 then
-                            rem --- de-select payment
-                            x=curr_row
-                            selected_flag$="0"
-                            selected=0
-                            gosub selected_or_fully_approved
-                            curr_row=x
-                        else
-                            dummy = fn_setmast_flag(
+					if !callpoint!.getDevObject("use_pay_auth")
+						if pmt_amt=0 then
+							rem --- de-select payment
+							x=curr_row
+							selected_flag$="0"
+							selected=0
+							gosub selected_or_fully_approved
+							curr_row=x
+						else
+							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
 :								vectInvoices!.getItem(curr_row*numcols+6),
 :								"1",
-:								str(pmt_amt)
-:							    )
+:								str(pmt_amt))
 
-                                vectInvoices!.setItem(curr_row * numcols, "1")
-                                gridInvoices!.setCellText(curr_row,0,statusVect!.get(1))
-                                gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("bold_font"))
+							vectInvoices!.setItem(curr_row * numcols, "1")
+							gridInvoices!.setCellText(curr_row,0,statusVect!.get(1))
+							gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("bold_font"))
+							gridRow=curr_row
+							gosub showCCPaidCells
 						endif
 					endif
 
@@ -195,8 +195,7 @@ rem wgh ... 10513 ... plain font
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+4),
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+6),
 :						str(disc_amt),
-:						str(pmt_amt)
-:					)
+:						str(pmt_amt))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 						ach_payments=ach_payments+num(vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+13))
 					else
@@ -236,7 +235,7 @@ rem wgh ... 10513 ... plain font
 						apt01a.discount_amt = apt01a.discount_amt + apt11a.trans_disc
 					wend
 
-	                if apt01a.discount_amt<0 and apt01a.invoice_amt>0 then apt01a.discount_amt=0
+					if apt01a.discount_amt<0 and apt01a.invoice_amt>0 then apt01a.discount_amt=0
 					gridInvoices!.setCellText(curr_row, 11, str(str(apt01a.invoice_amt - apt01a.retention - apt01a.discount_amt)))
 
 					if callpoint!.getColumnData("APE_PAYSELECT.INCLUDE_DISC")="Y" or
@@ -302,30 +301,31 @@ rem wgh ... 10513 ... plain font
 :								vectInvoices!.getItem(curr_row*numcols+4),
 :								vectInvoices!.getItem(curr_row*numcols+6),
 :								"0",
-:								"0"
-:							)
+:								"0")
 
 							vectInvoices!.setItem(curr_row * numcols, "0")
 							gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
 							if vectInvoicesMaster!.getItem(mast_offset+20)="" then
-                                					gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
+								gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
 							else
 								gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
 							endif
-rem wgh ... 10513 ... plain font
 							gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("plain_font"))
+							gridRow=curr_row
+							gosub showCCPaidCells
 						else
 							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
 :								vectInvoices!.getItem(curr_row*numcols+6),
 :								"1",
-:								str(pmt_amt)
-:							)
+:								str(pmt_amt))
 
 							vectInvoices!.setItem(curr_row * numcols, "1")
 							gridInvoices!.setCellText(curr_row,0,statusVect!.get(1))
 							gridInvoices!.setRowFont(curr_row,callpoint!.getDevObject("bold_font"))
+							gridRow=curr_row
+							gosub showCCPaidCells
 						endif
 					endif
 
@@ -338,8 +338,7 @@ rem wgh ... 10513 ... plain font
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+4),
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+6),
 :						str(disc_amt),
-:						str(pmt_amt)
-:					)
+:						str(pmt_amt))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 						ach_payments=ach_payments+num(vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+13))
 					else
@@ -486,7 +485,7 @@ rem --- Update apt-01 (remove/write) based on what's checked in the grid
 	vectInvoicesMaster! = UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
 
 	if vectInvoicesMaster!.size()
-rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types are selected
+		rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types are selected
 		aptypes$=""
 		if user_tpl.ap_check_seq$="Y"
 			for row=0 to vectInvoicesMaster!.size()-1 step user_tpl.MasterCols
@@ -528,7 +527,7 @@ rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types 
 					retention=retention+apt11a.trans_ret
 				wend
 
-                rem --- '1' is selected when no pay auth, 4 is final approval when using pay auth
+				rem --- '1' is selected when no pay auth, 4 is final approval when using pay auth
 				if pos(vectInvoicesMaster!.getItem(row+1)="14")=0
 					apt01a.selected_for_pay$="N"
 					remove (ape04_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
@@ -563,7 +562,11 @@ rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types 
 						ape04a.ap_inv_no$    = apt01a.ap_inv_no$
 						ape04a.reference$    = apt01a.reference$
 						ape04a.ap_inv_memo$  = apt01a.ap_inv_memo$
-						ape04a.invoice_date$ = apt01a.invoice_date$
+						if cvs( apt01a.creditcard_id$,2)="" then
+							ape04a.invoice_date$ = apt01a.invoice_date$
+						else
+							ape04a.invoice_date$ = apt01a.cc_trans_date$
+						endif
 						ape04a.inv_due_date$ = apt01a.inv_due_date$
 						ape04a.disc_date$    = apt01a.disc_date$
 						ape04a.invoice_amt   = inv_amt
@@ -598,7 +601,7 @@ rem --- First check to see if user_tpl.ap_check_seq$ is Y and multiple AP Types 
 rem --- Payment Authorization needs to write approvals to file and send emails
 
 	if callpoint!.getDevObject("use_pay_auth") then
-    	apt_invapproval=fnget_dev("@APT_INVAPPROVAL")
+    		apt_invapproval=fnget_dev("@APT_INVAPPROVAL")
 		dim apt_invapproval$:fnget_tpl$("@APT_INVAPPROVAL")
 		rem --- Write approvals to file
 		approvalsEntered! = callpoint!.getDevObject("approvalsEntered")
@@ -612,22 +615,22 @@ rem --- Payment Authorization needs to write approvals to file and send emails
 		endif
 		rem --- Remove undone/reverted approvals from file
 		approvalsUndone! = callpoint!.getDevObject("approvalsUndone")
-        approvalsUndoneIter!=approvalsUndone!.keySet().iterator()
-        while approvalsUndoneIter!.hasNext()
-            undoneKey$=approvalsUndoneIter!.next()
+		approvalsUndoneIter!=approvalsUndone!.keySet().iterator()
+		while approvalsUndoneIter!.hasNext()
+			undoneKey$=approvalsUndoneIter!.next()
 			remove(apt_invapproval,key=undoneKey$,err=*next)
 		wend
 
 		rem --- Send notification emails
-        if approvalsEntered!.size()>0 or callpoint!.getDevObject("undo_flag")="Y" then gosub send_payauth_email
-    endif
+		if approvalsEntered!.size()>0 or callpoint!.getDevObject("undo_flag")="Y" then gosub send_payauth_email
+	endif
 
 [[APE_PAYSELECT.AWIN]]
 rem --- Open/Lock files
 
-    use ::BBUtils.bbj::BBUtils
+	use ::BBUtils.bbj::BBUtils
 	use ::ado_util.src::util
-    use java.util.Iterator
+	use java.util.Iterator
 
 	num_files=14
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -768,10 +771,10 @@ rem --- Add grid to store invoices
 
     	if !callpoint!.getDevObject("use_pay_auth")
        		option_text$=Translate!.getTranslation("AON_SELECT_DESELECT")
-   	 else
-       		 option_text$="&"+Translate!.getTranslation("AON_REVIEW_APPROVE")
-		 callpoint!.setOptionText("PROC",option_text$)
-   	 endif
+        else
+            option_text$="&"+Translate!.getTranslation("AON_REVIEW_APPROVE")
+            callpoint!.setOptionText("PROC",option_text$)
+        endif
     
 	 menuItem_proc!=popUpMenu!.addMenuItem(-(200),option_text$)
 	 menuItem_proc!.setCallback(menuItem_proc!.ON_POPUP_ITEM_SELECT,"custom_event")
@@ -785,6 +788,14 @@ rem --- Add grid to store invoices
 
 	call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","A","",ap_a_mask$,0,0
 	callpoint!.setDevObject("ap_a_mask",ap_a_mask$)
+
+	rem --- get font for grid, and create a bold font to use for selected/finalized invoices
+	plainFont!=gridInvoices!.getRowFont(0)
+	boldFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),BBjFont.FONT_BOLD)
+	callpoint!.setDevObject("bold_font",boldFont!)
+	callpoint!.setDevObject("plain_font",plainFont!)
+	callpoint!.setDevObject("ccPaidFont",SysGUI!.makeFont(boldFont!.getName(),boldFont!.getSize(),BBjFont.BOLD+BBjFont.ITALIC)); rem --- Make bold italic font
+	callpoint!.setDevObject("ccColor",SysGUI!.makeColor(0,200,0))
 
 	gosub format_grid
 	util.resizeWindow(Form!, SysGui!)
@@ -811,15 +822,16 @@ rem --- Misc other init
 	gridInvoices!.setTabAction(SysGUI!.GRID_NAVIGATE_LEGACY)
 	gridInvoices!.setTabAction(gridInvoices!.GRID_NAVIGATE_GRID)
 	gridInvoices!.setTabActionSkipsNonEditableCells(1)
+	gridInvoices!.setSortByMultipleColumns(1)
     
-    statusVect!=BBjAPI().makeVector()
-    statusVect!.addItem(Translate!.getTranslation("AON_NEW"))
-    statusVect!.addItem(Translate!.getTranslation("AON_SELECTED"))
-    statusVect!.addItem(Translate!.getTranslation("AON_REVIEWED"))
-    statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"))
-    statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"));rem text is the same, but the offset in the vector indicates first approval (3) or final approval (4)
-    statusVect!.addItem(Translate!.getTranslation("AON_CC_PAID"))
-    callpoint!.setDevObject("status_vect",statusVect!)
+	statusVect!=BBjAPI().makeVector()
+	statusVect!.addItem(Translate!.getTranslation("AON_NEW"))
+	statusVect!.addItem(Translate!.getTranslation("AON_SELECTED"))
+	statusVect!.addItem(Translate!.getTranslation("AON_REVIEWED"))
+	statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"))
+	statusVect!.addItem(Translate!.getTranslation("AON_APPROVED"));rem text is the same, but the offset in the vector indicates first approval (3) or final approval (4)
+	statusVect!.addItem(Translate!.getTranslation("AON_CC_PAID"))
+	callpoint!.setDevObject("status_vect",statusVect!)
 
 	if callpoint!.getDevObject("use_pay_auth")
 
@@ -841,10 +853,10 @@ rem --- Misc other init
 			gridInvoices!.setColumnEditable(13,0)
 		else
 			if apm_approvers.prelim_approval and !apm_approvers.check_signer                  
-               			rem --- reviewer cannot change pay/disc
-                			gridInvoices!.setColumnEditable(12,0)
-               			 gridInvoices!.setColumnEditable(13,0)               
-            		endif
+				rem --- reviewer cannot change pay/disc
+				gridInvoices!.setColumnEditable(12,0)
+				gridInvoices!.setColumnEditable(13,0)               
+			endif
 		endif; rem not apm approvers
 
 		rem --- Make a vector to hold Payment Authorization approvals done in the session
@@ -869,46 +881,38 @@ rem --- Misc other init
 		menuItem_view!.setCallback(menuItem_view!.ON_POPUP_ITEM_SELECT,"custom_event")
 		if callpoint!.getDevObject("scan_docs_to")="NOT" 
 			menuItem_view!.setEnabled(0)
-        		endif
+		endif
 
-        if apm_approvers.prelim_approval or apm_approvers.check_signer
-            popUpMenu!.addSeparator()
-            menuItem_undo!=popUpMenu!.addMenuItem(-400,Translate!.getTranslation("AON_UNDO","Undo"))
-            menuItem_undo!.setCallback(menuItem_undo!.ON_POPUP_ITEM_SELECT,"custom_event")
-            callpoint!.setDevObject("menu_undo",menuItem_undo!)
-        else
-            callpoint!.setOptionEnabled("UNDO",0)
-        endif; rem apm approvers
+		if apm_approvers.prelim_approval or apm_approvers.check_signer
+			popUpMenu!.addSeparator()
+			menuItem_undo!=popUpMenu!.addMenuItem(-400,Translate!.getTranslation("AON_UNDO","Undo"))
+			menuItem_undo!.setCallback(menuItem_undo!.ON_POPUP_ITEM_SELECT,"custom_event")
+			callpoint!.setDevObject("menu_undo",menuItem_undo!)
+		else
+			callpoint!.setOptionEnabled("UNDO",0)
+ 		endif; rem apm approvers
 
-    else 
-	rem --- Else for not using payauth
+	else 
+		rem --- Else for not using payauth
 
-	popUpMenu!.addSeparator()
-	menuItem_view!=popUpMenu!.addMenuItem(-300,Translate!.getTranslation("AON_VIEW_IMAGES"))
-	menuItem_view!.setCallback(menuItem_view!.ON_POPUP_ITEM_SELECT,"custom_event")
-	if callpoint!.getDevObject("scan_docs_to")="NOT" 
-		menuItem_view!.setEnabled(0)
-        	endif
-        
-	callpoint!.setOptionEnabled("UNDO",0)
+		popUpMenu!.addSeparator()
+		menuItem_view!=popUpMenu!.addMenuItem(-300,Translate!.getTranslation("AON_VIEW_IMAGES"))
+		menuItem_view!.setCallback(menuItem_view!.ON_POPUP_ITEM_SELECT,"custom_event")
+		if callpoint!.getDevObject("scan_docs_to")="NOT" 
+			menuItem_view!.setEnabled(0)
+		endif
+            
+		callpoint!.setOptionEnabled("UNDO",0)
 
-        if callpoint!.getDevObject("scan_docs_to")="NOT"
-       	 	callpoint!.setOptionEnabled("VIEW",0)
-	endif
+		if callpoint!.getDevObject("scan_docs_to")="NOT"
+			callpoint!.setOptionEnabled("VIEW",0)
+		endif
 
-    endif; rem using payauth
+	endif; rem using payauth
 
 rem --- Now add the popup menu to the grid
 
 	gridInvoices!.setPopupMenu(popUpMenu!)
-
-
-rem --- get font for grid, and create a bold font to use for selected/finalized invoices
-
-	plainFont!=gridInvoices!.getRowFont(0)
-	boldFont!=sysGUI!.makeFont(plainFont!.getName(),plainFont!.getSize(),BBjFont.FONT_BOLD)
-	callpoint!.setDevObject("bold_font",boldFont!)
-	callpoint!.setDevObject("plain_font",plainFont!)
 
 	gosub create_invoices_vector
 	gosub fill_grid
@@ -1008,23 +1012,23 @@ rem --- Capture current value so will know in AVAL if it's changed
 	callpoint!.setDevObject("prev_payment_method",callpoint!.getColumnData("APE_PAYSELECT.PAYMENT_METHOD"))
 
 [[APE_PAYSELECT.VENDOR_ID.AVAL]]
-rem "VENDOR INACTIVE - FEATURE"
-vendor_id$ = callpoint!.getUserInput()
-apm01_dev=fnget_dev("APM_VENDMAST")
-apm01_tpl$=fnget_tpl$("APM_VENDMAST")
-dim apm01a$:apm01_tpl$
-apm01a_key$=firm_id$+vendor_id$
-find record (apm01_dev,key=apm01a_key$,dom=*next) apm01a$
-if apm01a.vend_inactive$="Y" then
-   call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
-   msg_id$="AP_VEND_INACTIVE"
-   dim msg_tokens$[2]
-   msg_tokens$[1]=fnmask$(apm01a.vendor_id$(1,vendor_size),m0$)
-   msg_tokens$[2]=cvs(apm01a.vendor_name$,2)
-   gosub disp_message
-   callpoint!.setStatus("ACTIVATE")
-   goto std_exit
-endif
+rem --- "VENDOR INACTIVE - FEATURE"
+    vendor_id$ = callpoint!.getUserInput()
+    apm01_dev=fnget_dev("APM_VENDMAST")
+    apm01_tpl$=fnget_tpl$("APM_VENDMAST")
+    dim apm01a$:apm01_tpl$
+    apm01a_key$=firm_id$+vendor_id$
+    find record (apm01_dev,key=apm01a_key$,dom=*next) apm01a$
+    if apm01a.vend_inactive$="Y" then
+        call stbl("+DIR_PGM")+"adc_getmask.aon","VENDOR_ID","","","",m0$,0,vendor_size
+        msg_id$="AP_VEND_INACTIVE"
+        dim msg_tokens$[2]
+        msg_tokens$[1]=fnmask$(apm01a.vendor_id$(1,vendor_size),m0$)
+        msg_tokens$[2]=cvs(apm01a.vendor_name$,2)
+        gosub disp_message
+        callpoint!.setStatus("ACTIVATE")
+        goto std_exit
+    endif
 
 rem --- Set filters on grid if value was changed
 	if callpoint!.getUserInput()<>callpoint!.getDevObject("prev_vendor_id") then
@@ -1087,37 +1091,37 @@ rem ==========================================================================
 	gosub get_grid_back_colors
 
 	rem --- HashMap to hold approved invoice totals for each vendor
-    if callpoint!.getDevObject("vendorTotalsMap")=null()
-        vendorTotalsMap!=new java.util.HashMap()
-        callpoint!.setDevObject("vendorTotalsMap",vendorTotalsMap!)
+	if callpoint!.getDevObject("vendorTotalsMap")=null()
+		vendorTotalsMap!=new java.util.HashMap()
+		callpoint!.setDevObject("vendorTotalsMap",vendorTotalsMap!)
 
-        rem --- Pre-pass to get total of reviewed/approved invoices on grid by vendor
-        numrows = gridInvoices!.getNumRows()
-        if numrows > 0 then
-            for row = 0 to numrows-1
-                vendor_id$ = gridInvoices!.getCellText(row,4)
-                pmt_amt  = num(gridInvoices!.getCellText(row,13))
-                inv_amt=num(gridInvoices!.getCellText(row,11))
-                approval_amt=iff(pmt_amt=0,inv_amt,pmt_amt)
-                ap_inv_no$ = gridInvoices!.getCellText(row,6)
+		rem --- Pre-pass to get total of reviewed/approved invoices on grid by vendor
+		numrows = gridInvoices!.getNumRows()
+		if numrows > 0 then
+			for row = 0 to numrows-1
+				vendor_id$ = gridInvoices!.getCellText(row,4)
+				pmt_amt  = num(gridInvoices!.getCellText(row,13))
+				inv_amt=num(gridInvoices!.getCellText(row,11))
+				approval_amt=iff(pmt_amt=0,inv_amt,pmt_amt)
+				ap_inv_no$ = gridInvoices!.getCellText(row,6)
 
-                if !vendorTotalsMap!.containsKey(vendor_id$) then vendorTotalsMap!.put(vendor_id$, 0)
-                rem --- Check approvals table; if approved, accumulate to compare against 2-signature threshold
-                rem --- Accumulates inv_amt if prelim approval, or pmt_amt (from ape_checks/ape-04) if final
-                read(apt_invapproval, key=firm_id$ + vendor_id$ + ap_inv_no$,dom=*next)
-                while 1
-                    readrecord(apt_invapproval,end=*break)apt_invapproval$
-                    if pos(firm_id$ + vendor_id$ + ap_inv_no$ = apt_invapproval$)<>1 then break
-                    if apt_invapproval.approval_type$="S"
-                        vendorTotalsMap!.put(vendor_id$, approval_amt+cast(BBjNumber, vendorTotalsMap!.get(vendor_id$)))
-                        break
-                    endif
-                wend
-            next row
-        endif
-    else
-        vendorTotalsMap!=callpoint!.getDevObject("vendorTotalsMap")
-    endif
+				if !vendorTotalsMap!.containsKey(vendor_id$) then vendorTotalsMap!.put(vendor_id$, 0)
+				rem --- Check approvals table; if approved, accumulate to compare against 2-signature threshold
+				rem --- Accumulates inv_amt if prelim approval, or pmt_amt (from ape_checks/ape-04) if final
+				read(apt_invapproval, key=firm_id$ + vendor_id$ + ap_inv_no$,dom=*next)
+				while 1
+					readrecord(apt_invapproval,end=*break)apt_invapproval$
+					if pos(firm_id$ + vendor_id$ + ap_inv_no$ = apt_invapproval$)<>1 then break
+					if apt_invapproval.approval_type$="S"
+						vendorTotalsMap!.put(vendor_id$, approval_amt+cast(BBjNumber, vendorTotalsMap!.get(vendor_id$)))
+						break
+					endif
+				wend
+			next row
+		endif
+	else
+		vendorTotalsMap!=callpoint!.getDevObject("vendorTotalsMap")
+	endif
 
 	rem --- Update invoice selections, and grid row background color
 	numrows = gridInvoices!.getNumRows()
@@ -1134,57 +1138,61 @@ rem ==========================================================================
 			rem --- Update grid row backgound color
 			gridInvoices!.setSelectedRow(row)
 			gridInvoices!.setRowBackColor(row, defaultColor!)
-			if vectInvoicesMaster!.getItem((row*user_tpl.MasterCols)+20)="" then
+			ap_type$=gridInvoices!.getCellText(row,3)
+			vend_id$=gridInvoices!.getCellText(row,4)
+			inv_no$=gridInvoices!.getCellText(row,6)
+			gosub get_master_offset
+			if vectInvoicesMaster!.getItem(mast_offset+20)="" then
 				gridInvoices!.setCellText(row,0,statusVect!.get(0))
 			else
 				gridInvoices!.setCellText(row,0,statusVect!.get(5))
 			endif
 
-rem wgh ... 10513 ... plain font
-            gridInvoices!.setRowFont(row,callpoint!.getDevObject("plain_font"))
-
+			gridInvoices!.setRowFont(row,callpoint!.getDevObject("plain_font"))
+			gridRow=row
+			gosub showCCPaidCells
 			if reviewed =1 then
 				if approved = 0 then
 					rem --- Reviewed and no approvals
-                    vectInvoices!.set(row*numcols,"2");rem Reviewed
-                    dummy = fn_setmast_flag(
-:					    vectInvoices!.getItem(row*numcols+3),
-:					    vectInvoices!.getItem(row*numcols+4),
-:					    vectInvoices!.getItem(row*numcols+6),
-:					    "2",
-:					    "0"
-:				    )                    
+					vectInvoices!.set(row*numcols,"2");rem Reviewed
+					dummy = fn_setmast_flag(
+:						vectInvoices!.getItem(row*numcols+3),
+:						vectInvoices!.getItem(row*numcols+4),
+:						vectInvoices!.getItem(row*numcols+6),
+:						"2",
+:						"0")                    
 					gridInvoices!.setRowBackColor(row, reviewedColor!)
 					gridInvoices!.setCellText(row,0,statusVect!.get(2))
 				else
 					rem --- Reviewed and at least one approval
 					if approved = 1 and callpoint!.getDevObject("two_sig_req") and thisVendor_total > callpoint!.getDevObject("two_sig_amt") then
 						rem --- Second approval needed
-                        vectInvoices!.set(row*numcols,"3");rem Approved
-                        dummy = fn_setmast_flag(
-:					        vectInvoices!.getItem(row*numcols+3),
-:					        vectInvoices!.getItem(row*numcols+4),
-:					        vectInvoices!.getItem(row*numcols+6),
-:					        "3",
-:					        "0"
-:				        )
+						vectInvoices!.set(row*numcols,"3");rem Approved
+						dummy = fn_setmast_flag(
+:							vectInvoices!.getItem(row*numcols+3),
+:							vectInvoices!.getItem(row*numcols+4),
+:							vectInvoices!.getItem(row*numcols+6),
+:							"3",
+:							"0")
 						gridInvoices!.setRowBackColor(row, partiallyApproved!)
 						gridInvoices!.setCellText(row,0,statusVect!.get(3))
-rem wgh ... 10513 ... plain font
 						gridInvoices!.setRowFont(row,callpoint!.getDevObject("plain_font"))
+						gridRow=row
+						gosub showCCPaidCells
 					else
 						rem --- Fully approved
-                        vectInvoices!.set(row*numcols,"4");rem Approved
-                        dummy = fn_setmast_flag(
-:					        vectInvoices!.getItem(row*numcols+3),
-:					        vectInvoices!.getItem(row*numcols+4),
-:					        vectInvoices!.getItem(row*numcols+6),
-:					        "4",
-:					        str(inv_amt)
-:				        )
+						vectInvoices!.set(row*numcols,"4");rem Approved
+						dummy = fn_setmast_flag(
+:							vectInvoices!.getItem(row*numcols+3),
+:							vectInvoices!.getItem(row*numcols+4),
+:							vectInvoices!.getItem(row*numcols+6),
+:							"4",
+:							str(inv_amt))
 						gridInvoices!.setRowBackColor(row, fullyApproved!)
 						gridInvoices!.setCellText(row,0,statusVect!.get(4))
 						gridInvoices!.setRowFont(row,callpoint!.getDevObject("bold_font"))
+						gridRow=row
+						gosub showCCPaidCells
 					endif
 					if apm_approvers.prelim_approval then gridInvoices!.setRowEditable(row,0)
 				endif
@@ -1403,8 +1411,7 @@ rem --- in: rowsSelected!
 :					vectInvoices!.getItem(curr_row*numcols+4),
 :					vectInvoices!.getItem(curr_row*numcols+6),
 :					"2",
-:					str(pmt_amt)
-:					)
+:					str(pmt_amt))
 				continue
 			endif	
 
@@ -1526,8 +1533,7 @@ rem --- updates grid and vectors accordingly
 :			    vectInvoices!.getItem(curr_row*numcols+4),
 :				vectInvoices!.getItem(curr_row*numcols+6),
 :				"3",
-:				"0"
-:			)
+:				"0")
 			rem --- Look for other invoices this vendor that may have been previously approved, and demote to partially approved since we're now over threshold
             if thisVendor_total-inv_amt < callpoint!.getDevObject("two_sig_amt")
                 for demote_row=0 to vectInvoicesMaster!.size()-1 step num(user_tpl.MasterCols)
@@ -1718,7 +1724,7 @@ rem ==========================================================================
 	apt_invapproval=fnget_dev("@APT_INVAPPROVAL")
 	dim apt_invapproval$:fnget_tpl$("@APT_INVAPPROVAL")
 
-        seq_no_mask$=callpoint!.getDevObject("seq_no_mask")
+    seq_no_mask$=callpoint!.getDevObject("seq_no_mask")
 
 	rem --- Verify current user is a reviewer or approver
 	found=0
@@ -1849,25 +1855,25 @@ rem ==========================================================================
 				reviewed_but_not_approved = reviewed_but_not_approved + 1
 				reviewed_but_not_approved$ = reviewed_but_not_approved$ + line$
 			else
-                			if reviewed = 1 and approved = 1 and !callpoint!.getDevObject("two_sig_req") then
-                    			approved_invoices = approved_invoices +1
-                   			approved_invoices$ = approved_invoices$ + line$
-                			else
-                    			if reviewed =1 and approved = 1 and callpoint!.getDevObject("two_sig_req") and thisVendor_total <= callpoint!.getDevObject("two_sig_amt") then
-	                    			approved_invoices = approved_invoices +1
-        		           			approved_invoices$ = approved_invoices$ + line$
-					else
-                    				if reviewed =1 and approved = 1 and callpoint!.getDevObject("two_sig_req") and thisVendor_total > callpoint!.getDevObject("two_sig_amt") then
-                        					partially_approved = partially_approved + 1
-                        					partially_approved$ = partially_approved$ + line$
-                    				else
-                        					if reviewed = 1 and approved > 1 then
-                            					approved_invoices = approved_invoices + 1
-                            					approved_invoices$ = approved_invoices$ + line$
-							endif
-                    				endif
-					endif
-                			endif
+                if reviewed = 1 and approved = 1 and !callpoint!.getDevObject("two_sig_req") then
+                    approved_invoices = approved_invoices +1
+                    approved_invoices$ = approved_invoices$ + line$
+                else
+                    if reviewed =1 and approved = 1 and callpoint!.getDevObject("two_sig_req") and thisVendor_total <= callpoint!.getDevObject("two_sig_amt") then
+                        approved_invoices = approved_invoices +1
+                        approved_invoices$ = approved_invoices$ + line$
+                    else
+                        if reviewed =1 and approved = 1 and callpoint!.getDevObject("two_sig_req") and thisVendor_total > callpoint!.getDevObject("two_sig_amt") then
+                                partially_approved = partially_approved + 1
+                                partially_approved$ = partially_approved$ + line$
+                        else
+                                if reviewed = 1 and approved > 1 then
+                                    approved_invoices = approved_invoices + 1
+                                    approved_invoices$ = approved_invoices$ + line$
+                                endif
+                        endif
+                    endif
+                endif
 			endif
 		endif
 	next row
@@ -2159,21 +2165,23 @@ rem --- called from AWIN and filter_recs
 		gridInvoices!.setCellText(0,0,vectInvoices!)
 
 		for wk=0 to vectInvoices!.size()-1 step gridInvoices!.getNumColumns()
-			gridInvoices!.setCellText(wk/gridInvoices!.getNumColumns(),0,statusVect!.getItem(num(vectInvoices!.getItem(wk))))
+			gridRow=wk/gridInvoices!.getNumColumns()
+			gridInvoices!.setCellText(gridRow,0,statusVect!.getItem(num(vectInvoices!.getItem(wk))))
 			if vectInvoices!.getItem(wk) = "1"
-				gridInvoices!.setRowFont(wk/gridInvoices!.getNumColumns(),callpoint!.getDevObject("bold_font"))
+				gridInvoices!.setRowFont(gridRow,callpoint!.getDevObject("bold_font"))
+				gosub showCCPaidCells
 			else
-rem wgh ... 10513 ... plain font
-				gridInvoices!.setRowFont(wk/gridInvoices!.getNumColumns(),callpoint!.getDevObject("plain_font"))
+				gridInvoices!.setRowFont(gridRow,callpoint!.getDevObject("plain_font"))
+				gosub showCCPaidCells
 			endif
 			if vectInvoices!.getItem(wk+2) = "Y"
-				gridInvoices!.setCellStyle(wk / gridInvoices!.getNumColumns(), 2, SysGUI!.GRID_STYLE_CHECKED)
+				gridInvoices!.setCellStyle(gridRow, 2, SysGUI!.GRID_STYLE_CHECKED)
 			endif
-			gridInvoices!.setCellText(wk / gridInvoices!.getNumColumns(), 2, "")
+			gridInvoices!.setCellText(gridRow, 2, "")
 			if vectInvoices!.getItem(wk+7) = "Y"
-				gridInvoices!.setCellStyle(wk / gridInvoices!.getNumColumns(), 7, SysGUI!.GRID_STYLE_CHECKED)
+				gridInvoices!.setCellStyle(gridRow, 7, SysGUI!.GRID_STYLE_CHECKED)
 			endif
-			gridInvoices!.setCellText(wk / gridInvoices!.getNumColumns(), 7, "")
+			gridInvoices!.setCellText(gridRow, 7, "")
 		next wk
 
 		gridInvoices!.resort()
@@ -2277,33 +2285,44 @@ rem ==========================================================================
 
 			tmpVect!=new BBjVector()
 			if apt01a.selected_for_pay$="Y" then
-				tmpVect!.addItem("1"); rem 0
+				tmpVect!.addItem("1"); rem 0 + 1 for master
 			else
 				if cvs( apt01a.creditcard_id$,2)="" then
-					tmpVect!.addItem("0"); rem 0
+					tmpVect!.addItem("0"); rem 0 + 1 for master
 				else
-					tmpVect!.addItem("5"); rem 0
+					tmpVect!.addItem("5"); rem 0 + 1 for master
 				endif
 			endif
-			tmpVect!.addItem(apt01a.payment_grp$); rem 1
-			tmpVect!.addItem(ach_payment$); rem 2
-			tmpVect!.addItem(apt01a.ap_type$); rem 3
-			tmpVect!.addItem(apt01a.vendor_id$); rem 4
-			tmpVect!.addItem(apm01a.vendor_name$); rem 5
-			tmpVect!.addItem(apt01a.ap_inv_no$); rem 6
-			tmpVect!.addItem(apt01a.hold_flag$);rem 7
-			tmpVect!.addItem(date(jul(apt01a.inv_due_date$,"%Yd%Mz%Dz"):stbl("+DATE_GRID"))); rem 8
-			tmpVect!.addItem(date(jul(apt01a.disc_date$,"%Yd%Mz%Dz"):stbl("+DATE_GRID"))); rem 9
-			tmpVect!.addItem(str(inv_amt)); rem 10
-			tmpVect!.addItem(str(amt_due)); rem 11
-			tmpVect!.addItem(str(disc_amt)); rem 12
-			tmpVect!.addItem(str(pymnt_amt)); rem 13
-			tmpVect!.addItem(str(ret_amt)); rem 14
-			tmpVect!.addItem(apt01a.inv_due_date$); rem 15
-			tmpVect!.addItem(apt01a.vendor_id$); rem 16
-			tmpVect!.addItem(apt01a.disc_date$); rem 17
-			tmpVect!.addItem(apt01a.invoice_amt$); rem 18
-			tmpVect!.addItem(cvs( apt01a.creditcard_id$,2)); rem 19
+			tmpVect!.addItem(apt01a.payment_grp$); rem 1 + 1 for master
+			tmpVect!.addItem(ach_payment$); rem 2 + 1 for master
+			tmpVect!.addItem(apt01a.ap_type$); rem 3 + 1 for master
+			tmpVect!.addItem(apt01a.vendor_id$); rem 4 + 1 for master
+			if cvs( apt01a.creditcard_id$,2)="" then
+				tmpVect!.addItem(apm01a.vendor_name$); rem 5 + 1 for master
+				tmpVect!.addItem(apt01a.ap_inv_no$); rem 6 + 1 for master
+			else
+				dim origVendMaster$:fattr(apm01a$)
+				read record(apm01_dev, key=firm_id$+apt01a.orig_vendor$, dom=*next)origVendMaster$
+				tmpVect!.addItem(origVendMaster.vendor_name$); rem 5 + 1 for master
+				tmpVect!.addItem(apt01a.creditcard_id$); rem 6 + 1 for master
+			endif
+			tmpVect!.addItem(apt01a.hold_flag$);rem 7 + 1 for master
+			if cvs( apt01a.creditcard_id$,2)="" then
+				tmpVect!.addItem(date(jul(apt01a.inv_due_date$,"%Yd%Mz%Dz"):stbl("+DATE_GRID"))); rem 8 + 1 for master
+			else
+				tmpVect!.addItem(date(jul(apt01a.cc_trans_date$,"%Yd%Mz%Dz"):stbl("+DATE_GRID"))); rem 8 + 1 for master
+			endif
+			tmpVect!.addItem(date(jul(apt01a.disc_date$,"%Yd%Mz%Dz"):stbl("+DATE_GRID"))); rem 9 + 1 for master
+			tmpVect!.addItem(str(inv_amt)); rem 10 + 1 for master
+			tmpVect!.addItem(str(amt_due)); rem 11 + 1 for master
+			tmpVect!.addItem(str(disc_amt)); rem 12 + 1 for master
+			tmpVect!.addItem(str(pymnt_amt)); rem 13 + 1 for master
+			tmpVect!.addItem(str(ret_amt)); rem 14 + 1 for master
+			tmpVect!.addItem(apt01a.inv_due_date$); rem 15 + 1 for master
+			tmpVect!.addItem(apt01a.vendor_id$); rem 16 + 1 for master
+			tmpVect!.addItem(apt01a.disc_date$); rem 17 + 1 for master
+			tmpVect!.addItem(apt01a.invoice_amt$); rem 18 + 1 for master
+			tmpVect!.addItem(cvs( apt01a.creditcard_id$,2)); rem 19 + 1 for master
 
 			mapkey$=apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$
 			invoiceMap!.put(mapkey$,tmpVect!)
@@ -2328,7 +2347,7 @@ rem ==========================================================================
 
 		vectInvoices!.addAll(tmpVect!.subList(0, 15))
 
-		vectInvoicesMaster!.addItem("Y")
+		vectInvoicesMaster!.addItem("Y"); rem 0 for master
 		vectInvoicesMaster!.addAll(tmpVect!)
 	wend
 
@@ -2441,15 +2460,13 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 :					vectInvoices!.getItem(row_no*numcols+4),
 :					vectInvoices!.getItem(row_no*numcols+6),
 :					selected_flag$,
-:					gridInvoices!.getCellText(row_no,11)
-:				)
+:					gridInvoices!.getCellText(row_no,11))
 				dummy = fn_setmast_amts(
 :					vectInvoices!.getItem(row_no*numcols+3),
 :					vectInvoices!.getItem(row_no*numcols+4),
 :					vectInvoices!.getItem(row_no*numcols+6),
 :					gridInvoices!.getCellText(row_no, 12),
-:					str(payment_amt)
-:				)
+:					str(payment_amt))
 				if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 					ach_payments=ach_payments+payment_amt
 				else
@@ -2459,6 +2476,8 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 
 				gridInvoices!.setRowFont(row_no,callpoint!.getDevObject("bold_font"))
 				gridInvoices!.setCellText(row_no,0,statusVect!.get(num(selected_flag$)))
+				gridRow=row_no
+				gosub showCCPaidCells
 
 			else
 			rem --- selected=0 means going back to 'new' when no pay auth; if using pay auth, going back to either 2 (reviewed) or 3 (prelim approval)
@@ -2501,21 +2520,23 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 :					vectInvoices!.getItem(row_no*numcols+4),
 :					vectInvoices!.getItem(row_no*numcols+6),
 :					selected_flag$,
-:					"0"
-:				)
+:					"0")
 				dummy = fn_setmast_amts(
 :					vectInvoices!.getItem(row_no*numcols+3),
 :					vectInvoices!.getItem(row_no*numcols+4),
 :					vectInvoices!.getItem(row_no*numcols+6),
 :					str(apt01a.discount_amt),
-:					"0"
-:				)
+:					"0")
 
-				if vectInvoicesMaster!.getItem((row_no*user_tpl.MasterCols)+20)<>"" then selected_flag$="5"
-rem wgh ... 10513 ...  plain font
+				ap_type$=vectInvoices!.getItem(row_no*numcols+3)
+				vend_id$=vectInvoices!.getItem(row_no*numcols+4)
+				inv_no$=vectInvoices!.getItem(row_no*numcols+6)
+				gosub get_master_offset
+				if vectInvoicesMaster!.getItem(mast_offset+20)<>"" then selected_flag$="5"
 				gridInvoices!.setRowFont(row_no,callpoint!.getDevObject("plain_font"))
 				gridInvoices!.setCellText(row_no,0,statusVect!.get(num(selected_flag$)))
-
+				gridRow=row_no
+				gosub showCCPaidCells
 			endif
 		next temp_row
 		callpoint!.setDevObject("chk_payments",str(chk_payments))
@@ -2736,6 +2757,7 @@ rem ==========================================================================
 
     rem --- Get needed data for this row
     curr_row = num(rowsSelected!.getItem(0))
+    ap_type$ = gridInvoices!.getCellText(curr_row,3)
     vendor_id$ = gridInvoices!.getCellText(curr_row,4)
     vendor_name$ = gridInvoices!.getCellText(curr_row,5)
     ap_inv_no$ = gridInvoices!.getCellText(curr_row,6)
@@ -2871,25 +2893,28 @@ undo_review:
 rem ==========================================================================
 rem --- when undoing a reviewed invoice (back to New), updates the grid/vectors
 
-    vectInvoicesMaster! = UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
-    if vectInvoicesMaster!.getItem((curr_row*user_tpl.MasterCols)+20)="" then
-        gridInvoices!.setCellText(curr_row,0,statusVect!.get(0));rem 'New'
-    else
-        gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
-    endif
-    gridInvoices!.setRowBackColor(curr_row, defaultColor!)
-    vectInvoices!.setItem(curr_row*numcols,"0")
-    dummy = fn_setmast_flag(
-:	    vectInvoices!.getItem(curr_row*numcols+3),
+	vectInvoicesMaster! = UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
+	ap_type$=ap_type$
+	vend_id$=vendor_id$
+	inv_no$=ap_inv_no$
+	gosub get_master_offset
+	if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+		gridInvoices!.setCellText(curr_row,0,statusVect!.get(0));rem 'New'
+	else
+		gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
+	endif
+	gridInvoices!.setRowBackColor(curr_row, defaultColor!)
+	vectInvoices!.setItem(curr_row*numcols,"0")
+	dummy = fn_setmast_flag(
+:		vectInvoices!.getItem(curr_row*numcols+3),
 :		vectInvoices!.getItem(curr_row*numcols+4),
 :		vectInvoices!.getItem(curr_row*numcols+6),
 :		"0",
-:		"0"
-:	)
+:		"0")
 
-    callpoint!.setDevObject("undo_flag","Y")
+	callpoint!.setDevObject("undo_flag","Y")
 
-    return
+	return
 
 rem ==========================================================================
 undo_prelim_approval:
@@ -2907,8 +2932,7 @@ rem --- also promotes remaining invoice(s) for same vendor if the undo has put u
 :		vectInvoices!.getItem(curr_row*numcols+4),
 :		vectInvoices!.getItem(curr_row*numcols+6),
 :		"2",
-:		"0"
-:	)
+:		"0")
     if callpoint!.getDevObject("two_sig_req") and thisVendor_total< num(callpoint!.getDevObject("two_sig_amt"))
         rem --- iterate through other invoices this vendor and promote to final approval, since we are now under 2 sig threshold
         for promote_row=0 to vectInvoicesMaster!.size()-1 step num(user_tpl.MasterCols)
@@ -2959,8 +2983,7 @@ rem :		    vectInvoices!.getItem(curr_row*numcols+3),
 rem :			vectInvoices!.getItem(curr_row*numcols+4),
 rem :			vectInvoices!.getItem(curr_row*numcols+6),
 rem :			"3",
-rem :			"0"
-rem :		)
+rem :			"0")
     else
         rem --- 2 sig not required, or we were below threshold, i.e., 2 sig not needed; set back to reviewed
         thisVendor_total=thisVendor_total-inv_amt
@@ -2979,8 +3002,7 @@ rem :		    vectInvoices!.getItem(curr_row*numcols+3),
 rem :			vectInvoices!.getItem(curr_row*numcols+4),
 rem :			vectInvoices!.getItem(curr_row*numcols+6),
 rem :			"2",
-rem :			"0"
-rem :       )                            
+rem :			"0")                            
     endif
 
     callpoint!.setDevObject("undo_flag","Y")
@@ -3066,6 +3088,45 @@ rem =========================================================
 	R=num(RGB$(1,comma1-1))
 	G=num(RGB$(comma1+1,comma2-comma1-1))
 	B=num(RGB$(comma2+1))
+
+	return
+
+rem =========================================================
+showCCPaidCells: rem --- Set color and font of Status, Name, Invoice and Due Date cell text
+	rem --- input: gridRow
+	rem --- input: gridInvoices!
+rem =========================================================
+	ap_type$=gridInvoices!.getCellText(gridRow,3)
+	vend_id$=gridInvoices!.getCellText(gridRow,4)
+	inv_no$=gridInvoices!.getCellText(gridRow,6)
+	if vectInvoicesMaster!=null() then vectInvoicesMaster!=UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
+	gosub get_master_offset
+	if vectInvoicesMaster!.getItem(mast_offset+20)<>"" then
+		rem --- Set Status cell to bold green italic font
+		gridInvoices!.setCellForeColor(gridRow,0,callpoint!.getDevObject("ccColor"))
+		gridInvoices!.setCellFont(gridRow,0,callpoint!.getDevObject("ccPaidFont"))
+
+		rem --- Set Name cell to bold green italic font
+		gridInvoices!.setCellForeColor(gridRow,5,callpoint!.getDevObject("ccColor"))
+		gridInvoices!.setCellFont(gridRow,5,callpoint!.getDevObject("ccPaidFont"))
+
+		rem --- Set Invoice cell to bold green italic font
+		gridInvoices!.setCellForeColor(gridRow,6,callpoint!.getDevObject("ccColor"))
+		gridInvoices!.setCellFont(gridRow,6,callpoint!.getDevObject("ccPaidFont"))
+
+		rem --- Set Due Date Status cell to bold green italic font
+		gridInvoices!.setCellForeColor(gridRow,8,callpoint!.getDevObject("ccColor"))
+		gridInvoices!.setCellFont(gridRow,8,callpoint!.getDevObject("ccPaidFont"))
+
+		rem --- Disable Disc Amt and Payment cells
+		gridInvoices!.setCellEditable(gridRow,12,0)
+		gridInvoices!.setCellEditable(gridRow,13,0)
+	else
+		rem --- Enable Disc Amt and Payment cells
+		gridInvoices!.setCellEditable(gridRow,12,1)
+		gridInvoices!.setCellEditable(gridRow,13,1)
+	endif
+
 	return
 
 rem ==========================================================================
