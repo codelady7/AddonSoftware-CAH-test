@@ -91,11 +91,12 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					ap_type$ = gridInvoices!.getCellText(curr_row,3)
 					vend_id$ = gridInvoices!.getCellText(curr_row,4)
 					inv_no$ = gridInvoices!.getCellText(curr_row,6)
+					gosub get_master_offset
+					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
 					inv_amt  = num(gridInvoices!.getCellText(curr_row,11))
 					disc_amt = num(gridInvoices!.getCellText(curr_row,12))
 					pmt_amt  = num(gridInvoices!.getCellText(curr_row,13))
 					retent_amt = num(gridInvoices!.getCellText(curr_row,14))
-					gosub get_master_offset
 					orig_inv_amt = num(vectInvoicesMaster!.getItem((mast_offset)+19))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 						ach_payments=ach_payments-pmt_amt
@@ -215,12 +216,13 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
 					apt11_dev = fnget_dev("APT_INVOICEDET")
 					dim apt11a$:fnget_tpl$("APT_INVOICEDET")
-					vend$ = gridInvoices!.getCellText(curr_row,4)
+					ap_type$=gridInvoices!.getCellText(curr_row,3)
+					vend_id$ = gridInvoices!.getCellText(curr_row,4)
+					inv_no$=gridInvoices!.getCellText(curr_row,6)
+					gosub get_master_offset
+					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
 
-					read record (apt01_dev, key=firm_id$+
-:						gridInvoices!.getCellText(curr_row,3)+
-:						vend$+
-:						gridInvoices!.getCellText(curr_row,6), dom=*next) apt01a$
+					read record (apt01_dev, key=firm_id$+ap_type$+vend_id$+inv_no$, dom=*next) apt01a$
 					
 					read record(apt11_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
 					while 1
@@ -251,11 +253,12 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					ap_type$ = gridInvoices!.getCellText(curr_row,3)
 					vend_id$ = gridInvoices!.getCellText(curr_row,4)
 					inv_no$ = gridInvoices!.getCellText(curr_row,6)
+					gosub get_master_offset
+					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
 					inv_amt  = num(gridInvoices!.getCellText(curr_row,11))
 					disc_amt = num(gridInvoices!.getCellText(curr_row,12))
 					pmt_amt  = num(gridInvoices!.getCellText(curr_row,13))
 					retent_amt = num(gridInvoices!.getCellText(curr_row,14))
-					gosub get_master_offset
 					orig_inv_amt = num(vectInvoicesMaster!.getItem((mast_offset)+19))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 						ach_payments=ach_payments-num(vectInvoicesMaster!.getItem((mast_offset)+14))
@@ -507,10 +510,10 @@ rem --- Update apt-01 (remove/write) based on what's checked in the grid
 
 			selectedRows=0
 			for row=0 to vectInvoicesMaster!.size()-1 step user_tpl.MasterCols
-				vend$ = vectInvoicesMaster!.getItem(row+5)
-				apt01_key$=firm_id$+vectInvoicesMaster!.getItem(row+4)+
-:								   vend$+
-:								   vectInvoicesMaster!.getItem(row+7)
+				ap_type$=vectInvoicesMaster!.getItem(row+4)
+				vend_id$ = vectInvoicesMaster!.getItem(row+5)
+				inv_no$=vectInvoicesMaster!.getItem(row+21)
+				apt01_key$=firm_id$+ap_type$+vend_id$+inv_no$
 				extract record (apt01_dev, key=apt01_key$) apt01a$; rem Advisory Locking
 				orig_inv_amt   = num(vectInvoicesMaster!.getItem(row+19))
 				inv_amt = num(vectInvoicesMaster!.getItem(row+11))
@@ -782,7 +785,7 @@ rem --- Add grid to store invoices
 	user_tpl.gridInvoicesCtlID$ = str(nxt_ctlID)
 	user_tpl.gridInvoicesCols$ = "15"
 	user_tpl.gridInvoicesRows$ = "10"
-	user_tpl.MasterCols = 21
+	user_tpl.MasterCols = 22
 	user_tpl.retention_col = 15
 	user_tpl.ap_check_seq$=aps_params.ap_check_seq$
 
@@ -1099,21 +1102,23 @@ rem ==========================================================================
 		numrows = gridInvoices!.getNumRows()
 		if numrows > 0 then
 			for row = 0 to numrows-1
-				vendor_id$ = gridInvoices!.getCellText(row,4)
+				ap_type=gridInvoices!.getCellText(row,3)
+				vend_id$ = gridInvoices!.getCellText(row,4)
+				inv_no$ = gridInvoices!.getCellText(row,6)
+				gosub get_master_offset
+				ap_inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
 				pmt_amt  = num(gridInvoices!.getCellText(row,13))
 				inv_amt=num(gridInvoices!.getCellText(row,11))
 				approval_amt=iff(pmt_amt=0,inv_amt,pmt_amt)
-				ap_inv_no$ = gridInvoices!.getCellText(row,6)
-
-				if !vendorTotalsMap!.containsKey(vendor_id$) then vendorTotalsMap!.put(vendor_id$, 0)
+				if !vendorTotalsMap!.containsKey(vend_id$) then vendorTotalsMap!.put(vend_id$, 0)
 				rem --- Check approvals table; if approved, accumulate to compare against 2-signature threshold
 				rem --- Accumulates inv_amt if prelim approval, or pmt_amt (from ape_checks/ape-04) if final
-				read(apt_invapproval, key=firm_id$ + vendor_id$ + ap_inv_no$,dom=*next)
+				read(apt_invapproval, key=firm_id$ + vend_id$ + ap_inv_no$,dom=*next)
 				while 1
 					readrecord(apt_invapproval,end=*break)apt_invapproval$
-					if pos(firm_id$ + vendor_id$ + ap_inv_no$ = apt_invapproval$)<>1 then break
+					if pos(firm_id$ + vend_id$ + ap_inv_no$ = apt_invapproval$)<>1 then break
 					if apt_invapproval.approval_type$="S"
-						vendorTotalsMap!.put(vendor_id$, approval_amt+cast(BBjNumber, vendorTotalsMap!.get(vendor_id$)))
+						vendorTotalsMap!.put(vend_id$, approval_amt+cast(BBjNumber, vendorTotalsMap!.get(vend_id$)))
 						break
 					endif
 				wend
@@ -1128,20 +1133,19 @@ rem ==========================================================================
 	numcols=gridInvoices!.getNumColumns()
 	if numrows > 0 then
 		for row = 0 to numrows-1
-			vendor_id$ = gridInvoices!.getCellText(row,4)
+			ap_type$=gridInvoices!.getCellText(row,3)
+			vend_id$=gridInvoices!.getCellText(row,4)
+			inv_no$=gridInvoices!.getCellText(row,6)
+			gosub get_master_offset
+			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
 			vendor_name$ = gridInvoices!.getCellText(row,5)
-			ap_inv_no$ = gridInvoices!.getCellText(row,6)
 			inv_amt  = num(gridInvoices!.getCellText(row,10))
-			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vendor_id$))
+			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
 			gosub get_pay_auth_invoice_status	
 
 			rem --- Update grid row backgound color
 			gridInvoices!.setSelectedRow(row)
 			gridInvoices!.setRowBackColor(row, defaultColor!)
-			ap_type$=gridInvoices!.getCellText(row,3)
-			vend_id$=gridInvoices!.getCellText(row,4)
-			inv_no$=gridInvoices!.getCellText(row,6)
-			gosub get_master_offset
 			if vectInvoicesMaster!.getItem(mast_offset+20)="" then
 				gridInvoices!.setCellText(row,0,statusVect!.get(0))
 			else
@@ -1229,10 +1233,10 @@ rem --- returns reviewed=0/1, approved=0/1/2, user id for reviewer$ and/or appro
 
 	rem --- Check the table first
     approvalsUndone!=callpoint!.getDevObject("approvalsUndone")
-	read record(apt_invapproval, key=firm_id$ + vendor_id$ + ap_inv_no$,dom=*next)apt_invapproval$
+	read record(apt_invapproval, key=firm_id$ + vend_id$ + ap_inv_no$,dom=*next)apt_invapproval$
 	while 1
 		invapproval_key$=key(apt_invapproval,end=*break)
-		if pos(firm_id$ + vendor_id$ + ap_inv_no$ = invapproval_key$)<>1 then break
+		if pos(firm_id$ + vend_id$ + ap_inv_no$ = invapproval_key$)<>1 then break
         if approvalsUndone!.get(invapproval_key$)<>null() then read(apt_invapproval);continue;rem --- skip if this is a record that has been 'undone'
 		read record(apt_invapproval)apt_invapproval$
         sequence_num=num(apt_invapproval.sequence_num$)
@@ -1253,7 +1257,7 @@ rem --- returns reviewed=0/1, approved=0/1/2, user id for reviewer$ and/or appro
 		for ouritem = 0 to approvalsEntered!.size() - 1
 			apt_invapproval! = approvalsEntered!.getItem(ouritem)
 			apt_invapproval$ = apt_invapproval!.getString()
-			if firm_id$ + vendor_id$ + ap_inv_no$ <> apt_invapproval.firm_id$ + apt_invapproval.vendor_id$ + apt_invapproval.ap_inv_no$ then 
+			if firm_id$ + vend_id$ + ap_inv_no$ <> apt_invapproval.firm_id$ + apt_invapproval.vendor_id$ + apt_invapproval.ap_inv_no$ then 
 				continue
 			endif
 			if apt_invapproval.approval_type$ = "R" then
@@ -1261,7 +1265,7 @@ rem --- returns reviewed=0/1, approved=0/1/2, user id for reviewer$ and/or appro
 			else
 				if apt_invapproval.approval_type$ = "S" then
 					already_approved=0
-					findrecord(apt_invapproval,key=firm_id$+vendor_id$+ap_inv_no$+apt_invapproval.sequence_num$,dom=*next); already_approved=1
+					findrecord(apt_invapproval,key=firm_id$+vend_id$+ap_inv_no$+apt_invapproval.sequence_num$,dom=*next); already_approved=1
 					if already_approved then
 						rem --- Don't count if record is in apt_invapproval, it's already been counted once
 						continue
@@ -1346,19 +1350,22 @@ rem --- in: rowsSelected!
 		for item = 0 to rowsSelected!.size() - 1
 			rem --- Get needed data for this row
 			curr_row = num(rowsSelected!.getItem(item))
-			vendor_id$ = gridInvoices!.getCellText(curr_row,4)
+			ap_type$=gridInvoices!.getCellText(curr_row,3)
+			vend_id$=gridInvoices!.getCellText(curr_row,4)
+			inv_no$=gridInvoices!.getCellText(curr_row,6)
+			gosub get_master_offset
+			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
 			vendor_name$ = gridInvoices!.getCellText(curr_row,5)
-			ap_inv_no$ = gridInvoices!.getCellText(curr_row,6)
 			hold=gridInvoices!.getCellState(curr_row,7)
 			inv_amt  = num(gridInvoices!.getCellText(curr_row,10))
 			pmt_amt=num(gridInvoices!.getCellText(curr_row,13))
-			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vendor_id$))
+			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
 			gosub get_pay_auth_invoice_status	
 
 			rem --- Record approval
 			dim apt_invapproval$:fattr(apt_invapproval$)
 			apt_invapproval.firm_id$ = firm_id$
-			apt_invapproval.vendor_id$ = vendor_id$
+			apt_invapproval.vendor_id$ = vend_id$
 			apt_invapproval.ap_inv_no$ = ap_inv_no$
 			apt_invapproval.sequence_num$ = str(sequence_num + 1:callpoint!.getDevObject("seq_no_mask"))
 			apt_invapproval.approval_type$ = ""
@@ -1453,8 +1460,8 @@ rem --- in: rowsSelected!
                 endif
 
 				approved = approved + 1
-				vendorTotalsMap!.put(vendor_id$,num(vendorTotalsMap!.get(vendor_id$))+inv_amt)
-				thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vendor_id$))
+				vendorTotalsMap!.put(vend_id$,num(vendorTotalsMap!.get(vend_id$))+inv_amt)
+				thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
 				gosub set_invoice_row_approval_status
 				continue
 			endif	
@@ -1541,7 +1548,7 @@ rem --- updates grid and vectors accordingly
                         vectInvoicesMaster!.set(demote_row+1,"3")
                         vend_id$=vectInvoicesMaster!.get(demote_row+5)
                         ap_type$=vectInvoicesMaster!.get(demote_row+4)
-                        inv_no$=vectInvoicesMaster!.get(demote_row+7)
+                        inv_no$=vectInvoicesMaster!.get(demote_row+21)
                         if vectInvoicesMaster!.get(demote_row)="Y"
                             gosub get_vectInvoices_offset
                             if vect_offset>=0
@@ -1655,11 +1662,14 @@ rem --- note: if user is both a reviewer and approver, does not currently allow 
 		newRowsSelected! = BBjAPI().makeVector()
 		for item = 0 to rowsSelected!.size() - 1
 			row = num(rowsSelected!.getItem(item))
-			vendor_id$ = gridInvoices!.getCellText(row,4)
-			ap_inv_no$ = gridInvoices!.getCellText(row,6)
+			ap_type$=gridInvoices!.getCellText(row,3)
+			vend_id$=gridInvoices!.getCellText(row,4)
+			inv_no$=gridInvoices!.getCellText(row,6)
+			gosub get_master_offset
+			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
 			inv_amt  = num(gridInvoices!.getCellText(row,10))
 			vendorTotalsMap!=callpoint!.getDevObject("vendorTotalsMap")
-			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vendor_id$))
+			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
 			gosub get_pay_auth_invoice_status
 
 			if !reviewed and pos("R"=usertype$) then
@@ -1833,18 +1843,21 @@ rem ==========================================================================
 
 	for row = 0 to numrows-1
 		rem --- Get needed data for this row
-		vendor_id$ = gridInvoices!.getCellText(row,4)
+		ap_type$=gridInvoices!.getCellText(row,3)
+		vend_id$=gridInvoices!.getCellText(row,4)
+		inv_no$=gridInvoices!.getCellText(row,6)
+		gosub get_master_offset
 		vendor_name$ = gridInvoices!.getCellText(row,5)
-		ap_inv_no$ = gridInvoices!.getCellText(row,6)
+		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
 		hold_indicator$=iff(gridInvoices!.getCellState(row,7),"**","")
 		inv_amt  = num(gridInvoices!.getCellText(row,10))
 		vendorTotalsMap!=callpoint!.getDevObject("vendorTotalsMap")
-		thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vendor_id$))
+		thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
 
 		gosub get_pay_auth_invoice_status
 
 		line$ = "<tr><td>" + hold_indicator$+ap_inv_no$ + "</td>" + $0A$
-		line$ = line$ + "<td>" + vendor_id$ + "</td>" + $0A$
+		line$ = line$ + "<td>" + vend_id$ + "</td>" + $0A$
 		line$ = line$ + "<td>" + vendor_name$ + "</td>" + $0A$
 		line$ = line$ + "<td align=right>" + cvs(str(inv_amt:m1$),3) + "</td></tr>" + $0A$
 		if reviewed = 0 and approved = 0 then
@@ -2323,6 +2336,7 @@ rem ==========================================================================
 			tmpVect!.addItem(apt01a.disc_date$); rem 17 + 1 for master
 			tmpVect!.addItem(apt01a.invoice_amt$); rem 18 + 1 for master
 			tmpVect!.addItem(cvs( apt01a.creditcard_id$,2)); rem 19 + 1 for master
+			tmpVect!.addItem(apt01a.ap_inv_no$); rem 20 + 1 for master
 
 			mapkey$=apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$
 			invoiceMap!.put(mapkey$,tmpVect!)
@@ -2398,16 +2412,16 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 
 			if selected
 				rem --- setting to 'selected' (no pay auth), or 'approved' (final approval for pay auth)
-
 				selected_flag$=iff(callpoint!.getDevObject("use_pay_auth"),"4","1");rem 4 for final approval when using pay auth, 1 for selected when no pay auth
-				vend$ = gridInvoices!.getCellText(row_no,4)
-				read record (apm01_dev, key=firm_id$+
-:					vend$, dom=*next) apm01a$
 
-				read record (apt01_dev, key=firm_id$+
-:					gridInvoices!.getCellText(row_no,3)+
-:					vend$+
-:					gridInvoices!.getCellText(row_no,6), dom=*next) apt01a$
+				ap_type$=gridInvoices!.getCellText(row_no,3)
+				vend_id$=gridInvoices!.getCellText(row_no,4)
+				inv_no$=gridInvoices!.getCellText(row_no,6)
+				gosub get_master_offset
+				ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+				read record (apm01_dev, key=firm_id$+vend_id$, dom=*next) apm01a$
+
+				read record (apt01_dev, key=firm_id$+ap_type$+vend_id$+ap_inv_no$, dom=*next) apt01a$
 
 				if !callpoint!.getDevObject("use_pay_auth")
 					rem --- only warn here when not using pay auth; already warned via change_invoice_status routine when pay auth is used
@@ -2480,13 +2494,13 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 				gosub showCCPaidCells
 
 			else
-			rem --- selected=0 means going back to 'new' when no pay auth; if using pay auth, going back to either 2 (reviewed) or 3 (prelim approval)
-
-				vend$ = gridInvoices!.getCellText(row_no,4)
-				read record (apt01_dev, key=firm_id$+
-:					gridInvoices!.getCellText(row_no,3)+
-:					vend$+
-:					gridInvoices!.getCellText(row_no,6), dom=*next) apt01a$
+				rem --- selected=0 means going back to 'new' when no pay auth; if using pay auth, going back to either 2 (reviewed) or 3 (prelim approval)
+				ap_type$=gridInvoices!.getCellText(row_no,3)
+				vend_id$=gridInvoices!.getCellText(row_no,4)
+				inv_no$=gridInvoices!.getCellText(row_no,6)
+				gosub get_master_offset
+				ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+				read record (apt01_dev, key=firm_id$+ap_type$+vend_id$+ap_inv_no$, dom=*next) apt01a$
 				
 				read record(apt11_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
 				while 1
@@ -2685,10 +2699,12 @@ rem ==========================================================================
 		rem --- get the row data needed
 		curr_row = num(rowsSelected!.getItem(rowCount))
 		ap_type$ = gridInvoices!.getCellText(curr_row,3)
-		vendor_id$ = gridInvoices!.getCellText(curr_row,4)
-		ap_inv_no$ = gridInvoices!.getCellText(curr_row,6)
+		vend_id$=gridInvoices!.getCellText(curr_row,4)
+		inv_no$=gridInvoices!.getCellText(curr_row,6)
+		gosub get_master_offset
+		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
 
-		call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vendor_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
+		call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vend_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
 		image_count=num(imageCount$)
 
 		callpoint!.setDevObject("imageCount",imageCount!)
@@ -2758,12 +2774,14 @@ rem ==========================================================================
     rem --- Get needed data for this row
     curr_row = num(rowsSelected!.getItem(0))
     ap_type$ = gridInvoices!.getCellText(curr_row,3)
-    vendor_id$ = gridInvoices!.getCellText(curr_row,4)
+    vend_id$=gridInvoices!.getCellText(curr_row,4)
+    inv_no$=gridInvoices!.getCellText(curr_row,6)
+    gosub get_master_offset
     vendor_name$ = gridInvoices!.getCellText(curr_row,5)
-    ap_inv_no$ = gridInvoices!.getCellText(curr_row,6)
+    ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
     inv_amt  = num(gridInvoices!.getCellText(curr_row,10))
     pmt_amt=num(gridInvoices!.getCellText(curr_row,13))
-    thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vendor_id$))
+    thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
 
     gosub get_pay_auth_invoice_status
 
@@ -2789,7 +2807,7 @@ rem ==========================================================================
             for undo_tmp = 0 to approvalsEntered!.size() - 1
                 apt_invapproval! = approvalsEntered!.getItem(undo_tmp)
                 apt_invapproval$ = apt_invapproval!.getString()
-                if pos(firm_id$+vendor_id$+ap_inv_no$+"00"=apt_invapproval$)=1
+                if pos(firm_id$+vend_id$+ap_inv_no$+"00"=apt_invapproval$)=1
                     approvalsEntered!.removeItem(undo_tmp)
                     gosub undo_review
                     found_in_vector=1
@@ -2801,10 +2819,10 @@ rem ==========================================================================
         if !found_in_vector
             rem --- check table
             dim apt_invapproval$:fattr(apt_invapproval$)
-            readrecord(apt_invapproval,key=firm_id$+vendor_id$+ap_inv_no$+"00",dom=*endif)apt_invapproval$
+            readrecord(apt_invapproval,key=firm_id$+vend_id$+ap_inv_no$+"00",dom=*endif)apt_invapproval$
 			apt_invapproval! = BBjAPI().makeTemplatedString(fattr(apt_invapproval$))
 			apt_invapproval!.setString(apt_invapproval$)
-			approvalsUndone!.put(firm_id$+vendor_id$+ap_inv_no$+"00",apt_invapproval!)
+			approvalsUndone!.put(firm_id$+vend_id$+ap_inv_no$+"00",apt_invapproval!)
             gosub undo_review
         endif
     endif
@@ -2840,7 +2858,7 @@ rem ==========================================================================
                 for undo_tmp = 0 to approvalsEntered!.size() - 1
                     apt_invapproval! = approvalsEntered!.getItem(undo_tmp)
                     apt_invapproval$ = apt_invapproval!.getString()
-                    if pos(firm_id$+vendor_id$+ap_inv_no$=apt_invapproval$)=1 
+                    if pos(firm_id$+vend_id$+ap_inv_no$=apt_invapproval$)=1 
                         if vectInvoices!.get(curr_row*numcols)="3"
                             approvalsEntered!.removeItem(undo_tmp)
                             gosub undo_prelim_approval
@@ -2860,24 +2878,24 @@ rem ==========================================================================
                 rem --- check table
                 dim apt_invapproval$:fattr(apt_invapproval$)
                 if vectInvoices!.get(curr_row*numcols)="3" 
-                    readrecord(apt_invapproval,key=firm_id$+vendor_id$+ap_inv_no$+"01",dom=*endif)apt_invapproval$
+                    readrecord(apt_invapproval,key=firm_id$+vend_id$+ap_inv_no$+"01",dom=*endif)apt_invapproval$
                     apt_invapproval! = BBjAPI().makeTemplatedString(fattr(apt_invapproval$))
                     apt_invapproval!.setString(apt_invapproval$)
-                    approvalsUndone!.put(firm_id$+vendor_id$+ap_inv_no$+"01",apt_invapproval!)
+                    approvalsUndone!.put(firm_id$+vend_id$+ap_inv_no$+"01",apt_invapproval!)
                     gosub undo_prelim_approval
                 endif
                 if vectInvoices!.get(curr_row*numcols)="4"
                     if callpoint!.getDevObject("two_sig_req") and thisVendor_total >= num(callpoint!.getDevObject("two_sig_amt"))
-                        readrecord(apt_invapproval,key=firm_id$+vendor_id$+ap_inv_no$+"02",dom=*endif)apt_invapproval$
+                        readrecord(apt_invapproval,key=firm_id$+vend_id$+ap_inv_no$+"02",dom=*endif)apt_invapproval$
                         apt_invapproval! = BBjAPI().makeTemplatedString(fattr(apt_invapproval$))
                         apt_invapproval!.setString(apt_invapproval$)
-                        approvalsUndone!.put(firm_id$+vendor_id$+ap_inv_no$+"02",apt_invapproval!)
+                        approvalsUndone!.put(firm_id$+vend_id$+ap_inv_no$+"02",apt_invapproval!)
                         gosub undo_final_approval
                     else
-                        readrecord(apt_invapproval,key=firm_id$+vendor_id$+ap_inv_no$+"01",dom=*endif)apt_invapproval$
+                        readrecord(apt_invapproval,key=firm_id$+vend_id$+ap_inv_no$+"01",dom=*endif)apt_invapproval$
                         apt_invapproval! = BBjAPI().makeTemplatedString(fattr(apt_invapproval$))
                         apt_invapproval!.setString(apt_invapproval$)
-                        approvalsUndone!.put(firm_id$+vendor_id$+ap_inv_no$+"01",apt_invapproval!)
+                        approvalsUndone!.put(firm_id$+vend_id$+ap_inv_no$+"01",apt_invapproval!)
                         gosub undo_final_approval
                     endif
                 endif
@@ -2893,11 +2911,6 @@ undo_review:
 rem ==========================================================================
 rem --- when undoing a reviewed invoice (back to New), updates the grid/vectors
 
-	vectInvoicesMaster! = UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
-	ap_type$=ap_type$
-	vend_id$=vendor_id$
-	inv_no$=ap_inv_no$
-	gosub get_master_offset
 	if vectInvoicesMaster!.getItem(mast_offset+20)="" then
 		gridInvoices!.setCellText(curr_row,0,statusVect!.get(0));rem 'New'
 	else
@@ -3028,7 +3041,7 @@ vectInvoices_offset_return:
 rem ==========================================================================
 get_master_offset:
 rem ==========================================================================
-
+	if vectInvoicesMaster!=null() then vectInvoicesMaster!=UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
 	for mast_x=0 to vectInvoicesMaster!.size() step num(user_tpl.MasterCols)
 		if vectInvoicesMaster!.getItem(mast_x+5)=vend_id$ and
 :			vectInvoicesMaster!.getItem(mast_x+4)=ap_type$ and
@@ -3097,9 +3110,10 @@ showCCPaidCells: rem --- Set color and font of Status, Name, Invoice and Due Dat
 	rem --- input: gridInvoices!
 rem =========================================================
 	ap_type$=gridInvoices!.getCellText(gridRow,3)
+	if vectInvoicesMaster!=null() then vectInvoicesMaster!=UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
+	ap_type$ = gridInvoices!.getCellText(gridRow,3)
 	vend_id$=gridInvoices!.getCellText(gridRow,4)
 	inv_no$=gridInvoices!.getCellText(gridRow,6)
-	if vectInvoicesMaster!=null() then vectInvoicesMaster!=UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
 	gosub get_master_offset
 	if vectInvoicesMaster!.getItem(mast_offset+20)<>"" then
 		rem --- Set Status cell to bold green italic font
