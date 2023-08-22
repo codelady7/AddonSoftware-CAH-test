@@ -56,7 +56,7 @@ rem --- Close Physcode file, it's locked by the Options Entry code
 
 rem --- Open all files
 
-    num_files = 5
+    num_files = 6
     open_beg  = 1
     open_end  = num_files
 
@@ -67,6 +67,7 @@ rem --- Open all files
     open_tables$[3]="IVC_PHYSCODE", open_opts$[3]="OTAL"
     open_tables$[4]="IVM_ITEMWHSE", open_opts$[4]="OTA"
     open_tables$[5]="IVM_ITEMMAST", open_opts$[5]="OTA"
+    open_tables$[6]="IVM_LSMASTER", open_opts$[6]="OTA"
 
     gosub open_tables
 
@@ -75,28 +76,18 @@ rem --- Open all files
     physcode_dev = num(open_chans$[3])
     itemwhse_dev = num(open_chans$[4])
     itemmast_dev = num(open_chans$[5])
+    lsmaster_dev = num(open_chans$[6])
 
     dim params_rec$:open_tpls$[1]
     dim physical_rec$:open_tpls$[2]
     dim physcode_rec$:open_tpls$[3]
     dim itemwhse_rec$:open_tpls$[4]
     dim itemmast_rec$:open_tpls$[5]
+    dim lsmaster_rec$:open_tpls$[6]
 
 rem --- Parameters
 
-    find record (params_dev, key=firm_id$+"IV00", dom=std_missing_params) params_rec$	
-    if pos(params_rec.lotser_flag$ = "LS") then ls$="Y" else ls$ = "N"
-
-rem --- Open Lot/serial file if necessary
-
-    if ls$ = "Y" then 
-        open_beg = 1
-        open_end = 1
-        open_tables$[1]="IVM_LSMASTER", open_opts$[1]="OTA"
-        gosub open_tables
-        lsmaster_dev = num(open_chans$[1])
-        dim lsmaster_rec$:open_tpls$[1]
-    endif
+    find record (params_dev, key=firm_id$+"IV00", dom=std_missing_params) params_rec$
 
 rem --- Initializations
 
@@ -189,7 +180,7 @@ rem --- Update warehouse record
 rem --- Master file
 
 		find record (itemmast_dev, key=firm_id$+item_id$) itemmast_rec$
-		this_item_is_lot_ser = (ls$ = "Y" and itemmast_rec.lotser_item$ = "Y" and itemmast_rec.inventoried$ = "Y")
+		this_item_is_lot_ser = (pos(itemmast_rec.lotser_flag$="LS") and itemmast_rec.inventoried$ = "Y")
 		
 rem --- Count Lot/serial, if necessary
 
@@ -219,7 +210,7 @@ rem --- Write Physical Entry record for lot/serial
                 extract record (physical_dev,key=ive03_key$,dom=*next)x$; rem Advisory Locking
 				physical_rec.cutoff_date$  = cutoff$
 				physical_rec.entered_flag$ = "N"
-				physical_rec.lotser_item$  = "Y"
+				physical_rec.lotser_flag$  = itemmast_rec.lotser_flag$
 				physical_rec.freeze_qty    = lsmaster_rec.qty_on_hand
 				total = total + lsmaster_rec.qty_on_hand
 
@@ -239,7 +230,7 @@ rem --- Missing Lot/Serial Numbers?
 				physical_rec.lotser_no$    = fill(20)
 				physical_rec.cutoff_date$  = cutoff$
 				physical_rec.entered_flag$ = "N"
-				physical_rec.lotser_item$  = "Y"
+				physical_rec.lotser_flag$  = itemmast_rec.lotser_flag$
 				physical_rec.freeze_qty    = onhand - total
 			endif
 
@@ -258,7 +249,7 @@ rem --- Write non-lot/serial Physical Inventory record
             extract record (physical_dev,key=ive03_key$,dom=*next)x$; rem Advisory Locking
             physical_rec.cutoff_date$  = cutoff$
             physical_rec.entered_flag$ = "N"
-            physical_rec.lotser_item$  = "N"
+            physical_rec.lotser_flag$  = "N"
             physical_rec.freeze_qty    = onhand
 
             write record (physical_dev) physical_rec$

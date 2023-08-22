@@ -154,31 +154,30 @@ rem --- Delete inventory issues and commitments. Must do this before sfe_womatis
 		if pos(sfe_womatish_key$=sfe_womatisd_key$)<>1 then break
 		readrecord(sfe_womatisd_dev)sfe_womatisd$
 
-		rem --- Delete lot/serial commitments, but keep inventory commitments (for now)
-		if pos(callpoint!.getDevObject("lotser")="LS") then
-			sfe_wolsissu_dev=fnget_dev("SFE_WOLSISSU")
-			dim sfe_wolsissu$:fnget_tpl$("SFE_WOLSISSU")
-			read(sfe_wolsissu_dev,key=firm_loc_wo$+sfe_womatisd.internal_seq_no$,dom=*next)
-			while 1
-				sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
-				if pos(firm_loc_wo$+sfe_womatisd.internal_seq_no$=sfe_wolsissu_key$)<>1 then break
-				extractrecord(sfe_wolsissu_dev)sfe_wolsissu$; rem --- Advisory locking
+		rem --- Delete any lot/serial commitments, but keep inventory commitments (for now)
+		sfe_wolsissu_dev=fnget_dev("SFE_WOLSISSU")
+		dim sfe_wolsissu$:fnget_tpl$("SFE_WOLSISSU")
+		read(sfe_wolsissu_dev,key=firm_loc_wo$+sfe_womatisd.internal_seq_no$,dom=*next)
+		while 1
+			sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
+			if pos(firm_loc_wo$+sfe_womatisd.internal_seq_no$=sfe_wolsissu_key$)<>1 then break
+			extractrecord(sfe_wolsissu_dev)sfe_wolsissu$; rem --- Advisory locking
 
-				rem --- Delete lot/serial commitments
-				items$[1]=sfe_womatisd.warehouse_id$
-				items$[2]=sfe_womatisd.item_id$
-				items$[3]=sfe_wolsissu.lotser_no$
-				refs[0]=sfe_wolsissu.qty_issued
-				call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			rem --- Delete lot/serial commitments
+			items$[1]=sfe_womatisd.warehouse_id$
+			items$[2]=sfe_womatisd.item_id$
+			items$[3]=sfe_wolsissu.lotser_no$
+			refs[0]=sfe_wolsissu.qty_issued
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
-				rem --- Keep inventory commitments (for now)
-				items$[3]=" "
-				call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			rem --- Keep inventory commitments (for now)
+			items$[3]=" "
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
-				rem --- Barista currently cascades deletes only one level, re Bug 3963
-				remove(sfe_wolsissu_dev,key=sfe_wolsissu_key$)
-			wend
-		endif
+			rem --- Barista currently cascades deletes only one level, re Bug 3963
+			remove(sfe_wolsissu_dev,key=sfe_wolsissu_key$)
+		wend
+
 
         rem --- Delete inventory commitments
 		items$[1]=sfe_womatisd.warehouse_id$
@@ -289,8 +288,6 @@ rem --- Get SF parameters
 rem --- Get IV parameters
 	dim ivs_params$:ivs_params_tpl$
 	read record (ivs_params_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs_params$
-	lotser$=ivs_params.lotser_flag$
-	callpoint!.setDevObject("lotser",lotser$)
 	precision$=ivs_params.precision$
 	callpoint!.setDevObject("precision",precision$)
 	precision num(precision$)
@@ -303,22 +300,15 @@ rem --- Additional file opens
 	else
 		open_tables$[1]="SFC_OPRTNCOD",open_opts$[1]="OTA"
 	endif
-	if pos(lotser$="LS") then
-		open_tables$[2]="SFE_WOLSISSU",open_opts$[2]="OTA"
-		open_tables$[3]="IVM_LSMASTER",open_opts$[3]="OTA"
-		open_tables$[4]="IVM_LSACT",open_opts$[4]="OTA"
-	endif
+	open_tables$[2]="SFE_WOLSISSU",open_opts$[2]="OTA"
+	open_tables$[3]="IVM_LSMASTER",open_opts$[3]="OTA"
+	open_tables$[4]="IVM_LSACT",open_opts$[4]="OTA"
 
 	gosub open_tables
 
 	if bm$="Y" then
 		callpoint!.setDevObject("opcode_dev",num(open_chans$[1]))
 		callpoint!.setDevObject("opcode_tpl",open_tpls$[1])
-	endif
-	if pos(lotser$="LS") then
-		sfe_wolsissu_dev=num(open_chans$[2]),sfe_wolsissu_tpl$=open_tpls$[2]
-		ivm_lsmaster_dev=num(open_chans$[3]),ivm_lsmaster_tpl$=open_tpls$[3]
-		ivm_lsact_dev=num(open_chans$[4]),ivm_lsact_tpl$=open_tpls$[4]
 	endif
 
 rem --- Other inits for sfe_womatisd

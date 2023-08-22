@@ -113,7 +113,7 @@ rem --- Disable Options (buttons) for a Closed Work Order
 
 rem -- Disable Lot/Serial button if no LS
 
-	if callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY")="I" and callpoint!.getColumnData("SFE_WOMASTR.LOTSER_ITEM")="Y" and callpoint!.getDevObject("lotser")<>"N"
+	if callpoint!.getColumnData("SFE_WOMASTR.WO_CATEGORY")="I" and pos(callpoint!.getColumnData("SFE_WOMASTR.LOTSER_FLAG")="LS")
 		callpoint!.setOptionEnabled("LSNO",1)
 	else
 		callpoint!.setOptionEnabled("LSNO",0)
@@ -339,7 +339,7 @@ rem --- Set new record flag
 
 rem --- Open tables
 
-	num_files=26
+	num_files=27
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="SFS_PARAMS",open_opts$[2]="OTA"
@@ -367,6 +367,7 @@ rem --- Open tables
 	open_tables$[24]="SFE_WOLSISSU",open_opts$[24]="OTA"
 	open_tables$[25]="SFE_WOLOTSER",open_opts$[25]="OTA"
 	open_tables$[26]="SFE_WOMASTR",open_opts$[26]="OTA@"
+	open_tables$[27]="IVM_LSMASTER",open_opts$[27]="OTA@"
 
 	gosub open_tables
 
@@ -391,22 +392,12 @@ rem --- Open tables
 	dim ivs_params$:open_tpls$[1]
 	read record (ivs_params,key=firm_id$+"IV00",dom=std_missing_params) ivs_params$
 	callpoint!.setDevObject("default_wh",ivs_params.warehouse_id$)
-	callpoint!.setDevObject("lotser",ivs_params.lotser_flag$)
 	callpoint!.setDevObject("iv_precision",ivs_params.precision$)
 
 	bm$=sfs_params.bm_interface$
 	op$=sfs_params.ar_interface$
 	po$=sfs_params.po_interface$
 	pr$=sfs_params.pr_interface$
-
-	if pos(ivs_params.lotser_flag$="LS") then
-		num_files=1
-		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-
-		open_tables$[1]="IVM_LSMASTER",open_opts$[1]="OTA@"
-
-		gosub open_tables
-	endif
 
 	num_files=6
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -1426,11 +1417,11 @@ rem --- Set default values if item_id changed
 
 	read record (ivm_itemmast,key=firm_id$+callpoint!.getUserInput(),dom=*break)ivm_itemmast$
 	callpoint!.setColumnData("SFE_WOMASTR.UNIT_MEASURE",ivm_itemmast.unit_of_sale$,1)
-	if callpoint!.getDevObject("lotser")<>"N" and ivm_itemmast.lotser_item$+ivm_itemmast.inventoried$="YY"
-		callpoint!.setColumnData("SFE_WOMASTR.LOTSER_ITEM","Y")
+	if pos(ivm_itemmast.lotser_flag$="LS") and ivm_itemmast.inventoried$="Y"
+		callpoint!.setColumnData("SFE_WOMASTR.LOTSER_FLAG",ivm_itemmast.lotser_flag$)
 		callpoint!.setOptionEnabled("LSNO",1)
 	else
-		callpoint!.setColumnData("SFE_WOMASTR.LOTSER_ITEM","N")
+		callpoint!.setColumnData("SFE_WOMASTR.LOTSER_FLAG","N")
 		callpoint!.setOptionEnabled("LSNO",0)
 	endif
 
@@ -1778,7 +1769,7 @@ rem --- If new order, check for type of Work Order and disable Item or Descripti
 	if typecode.wo_category$<>"I"
 		callpoint!.setColumnData("SFE_WOMASTR.ITEM_ID","",1)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.ITEM_ID",0)
-		callpoint!.setColumnData("SFE_WOMASTR.LOTSER_ITEM","N",1)
+		callpoint!.setColumnData("SFE_WOMASTR.LOTSER_FLAG","N",1)
 		callpoint!.setOptionEnabled("LSNO",0)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.DESCRIPTION_01",1)
 		callpoint!.setColumnEnabled("SFE_WOMASTR.DESCRIPTION_02",1)

@@ -11,8 +11,7 @@ rem --- Enable/disable fields
 rem --- Set/display item data
 	item_id$=callpoint!.getColumnData("IVE_TRANSFERDET.ITEM_ID")
 	gosub get_item
-	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("lotser_item")="Y" and
-:	callpoint!.getDevObject("inventoried")="Y" then
+	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("inventoried")="Y" then
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",0)
 	endif
 
@@ -300,7 +299,7 @@ rem --- Initialize row fields
 
 rem --- Enable/Disable Lot/Serial Number and Transfer Qty
 	callpoint!.setColumnData("IVE_TRANSFERDET.ITEM_ID",item_id$)
-	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("lotser_item")="Y" then
+	if pos(callpoint!.getDevObject("lotser_flag")="LS") then
 		trans_qty=1
 		callpoint!.setColumnData("IVE_TRANSFERDET.TRANS_QTY",str(trans_qty),1)
 		callpoint!.setColumnData("IVE_TRANSFERDET.EXT_COST", str(ivm02a.unit_cost * trans_qty),1)
@@ -430,7 +429,7 @@ rem ===========================================================================
 	findrecord (ivm01_dev, key=firm_id$+item_id$) ivm01a$
 	callpoint!.setColumnData("<<DISPLAY>>.UNIT_OF_SALE",ivm01a.unit_of_sale$,1)
 
-	callpoint!.setDevObject("lotser_item",ivm01a.lotser_item$)
+	callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
 	callpoint!.setDevObject("inventoried",ivm01a.inventoried$)
 
 	return
@@ -498,8 +497,7 @@ rem ===========================================================================
 
 	rem --- Quantity can only be 1 for serial#'s
 	if !failed then
-		if trans_qty<>1 and  callpoint!.getDevObject("lotser_flag")="S" and callpoint!.getDevObject("lotser_item")="Y" and
-:		callpoint!.getDevObject("inventoried")="Y" then
+		if trans_qty<>1 and  callpoint!.getDevObject("lotser_flag")="S" and callpoint!.getDevObject("inventoried")="Y" then
 			callpoint!.setMessage("IV_SER_JUST_ONE")
 			failed = 1
 		endif

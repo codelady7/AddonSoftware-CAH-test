@@ -78,56 +78,52 @@ rem --- Do initial commit if nothing previously ordered or issued
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 	endif
 
-	rem --- Lot/serial entry needed?
-	if pos(callpoint!.getDevObject("lotser")="LS") then
+	rem --- Item lotted/serialized and inventoried?
+	ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+	warehouse_id$=callpoint!.getDevObject("warehouse_id")
+	item_id$=callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID")
+	findrecord(ivm_itemmast_dev,key=firm_id$+item_id$,dom=*next)ivm_itemmast$
+	if pos(ivm_itemmast.lotser_flag$="LS") and ivm_itemmast.inventoried$="Y" then
 
-		rem --- Item lotted/serialized and inventoried?
-		ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
-		dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
-		warehouse_id$=callpoint!.getDevObject("warehouse_id")
-		item_id$=callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID")
-		findrecord(ivm_itemmast_dev,key=firm_id$+item_id$,dom=*next)ivm_itemmast$
-		if ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y" then
+		rem --- All lot/serial items issued already?
+		sfe_wolsissu_dev=fnget_dev("SFE_WOLSISSU")
+		dim sfe_wolsissu$:fnget_tpl$("SFE_WOLSISSU")
+		tot_ls_qty_issued=0
+		firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
+		firm_loc_wo_isn$=firm_loc_wo$+callpoint!.getColumnData("SFE_WOMATISD.INTERNAL_SEQ_NO")
+		read(sfe_wolsissu_dev,key=firm_loc_wo_isn$,dom=*next)
+		while 1
+			sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
+			if pos(firm_loc_wo_isn$=sfe_wolsissu_key$)<>1 then break
+			readrecord(sfe_wolsissu_dev)sfe_wolsissu$
+			tot_ls_qty_issued=tot_ls_qty_issued+sfe_wolsissu.qty_issued
+		wend
 
-			rem --- All lot/serial items issued already?
-			sfe_wolsissu_dev=fnget_dev("SFE_WOLSISSU")
-			dim sfe_wolsissu$:fnget_tpl$("SFE_WOLSISSU")
-			tot_ls_qty_issued=0
+		if tot_ls_qty_issued<>qty_issued+num(callpoint!.getColumnData("SFE_WOMATISD.TOT_QTY_ISS")) then
 			firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
 			firm_loc_wo_isn$=firm_loc_wo$+callpoint!.getColumnData("SFE_WOMATISD.INTERNAL_SEQ_NO")
-			read(sfe_wolsissu_dev,key=firm_loc_wo_isn$,dom=*next)
-			while 1
-				sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
-				if pos(firm_loc_wo_isn$=sfe_wolsissu_key$)<>1 then break
-				readrecord(sfe_wolsissu_dev)sfe_wolsissu$
-				tot_ls_qty_issued=tot_ls_qty_issued+sfe_wolsissu.qty_issued
-			wend
+			callpoint!.setDevObject("firm_loc_wo_isn",firm_loc_wo_isn$)
+			callpoint!.setDevObject("item_id",callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID"))
+			callpoint!.setDevObject("womatisd_qty_issued",qty_issued)
 
-			if tot_ls_qty_issued<>qty_issued+num(callpoint!.getColumnData("SFE_WOMATISD.TOT_QTY_ISS")) then
-				firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
-				firm_loc_wo_isn$=firm_loc_wo$+callpoint!.getColumnData("SFE_WOMATISD.INTERNAL_SEQ_NO")
-				callpoint!.setDevObject("firm_loc_wo_isn",firm_loc_wo_isn$)
-				callpoint!.setDevObject("item_id",callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID"))
-				callpoint!.setDevObject("womatisd_qty_issued",qty_issued)
+			dim dflt_data$[3,1]
+			dflt_data$[1,0] = "WO_LOCATION"
+			dflt_data$[1,1] = callpoint!.getDevObject("wo_location")
+			dflt_data$[2,0] = "WO_NO"
+			dflt_data$[2,1] = callpoint!.getDevObject("wo_no")
+			dflt_data$[3,0] = "WOMATISD_SEQ_REF"
+			dflt_data$[3,1] = callpoint!.getColumnData("SFE_WOMATISD.INTERNAL_SEQ_NO")
 
-				dim dflt_data$[3,1]
-				dflt_data$[1,0] = "WO_LOCATION"
-				dflt_data$[1,1] = callpoint!.getDevObject("wo_location")
-				dflt_data$[2,0] = "WO_NO"
-				dflt_data$[2,1] = callpoint!.getDevObject("wo_no")
-				dflt_data$[3,0] = "WOMATISD_SEQ_REF"
-				dflt_data$[3,1] = callpoint!.getColumnData("SFE_WOMATISD.INTERNAL_SEQ_NO")
+			call stbl("+DIR_SYP")+"bam_run_prog.bbj","SFE_WOLSISSU",stbl("+USER_ID"),"MNT",firm_loc_wo_isn$,table_chans$[all],"",dflt_data$[all]
 
-				call stbl("+DIR_SYP")+"bam_run_prog.bbj","SFE_WOLSISSU",stbl("+USER_ID"),"MNT",firm_loc_wo_isn$,table_chans$[all],"",dflt_data$[all]
-
-				qty_issued=num(callpoint!.getDevObject("tot_ls_qty_issued"))
-				callpoint!.setColumnData("SFE_WOMATISD.QTY_ISSUED",str(qty_issued),1)
-				if qty_issued<>0 then
-					issue_cost=num(callpoint!.getDevObject("tot_ls_issue_cost"))/qty_issued
-					unit_cost=issue_cost
-					callpoint!.setColumnData("SFE_WOMATISD.UNIT_COST",str(unit_cost),0)
-					callpoint!.setColumnData("SFE_WOMATISD.ISSUE_COST",str(issue_cost),1)
-				endif
+			qty_issued=num(callpoint!.getDevObject("tot_ls_qty_issued"))
+			callpoint!.setColumnData("SFE_WOMATISD.QTY_ISSUED",str(qty_issued),1)
+			if qty_issued<>0 then
+				issue_cost=num(callpoint!.getDevObject("tot_ls_issue_cost"))/qty_issued
+				unit_cost=issue_cost
+				callpoint!.setColumnData("SFE_WOMATISD.UNIT_COST",str(unit_cost),0)
+				callpoint!.setColumnData("SFE_WOMATISD.ISSUE_COST",str(issue_cost),1)
 			endif
 		endif
 	endif
@@ -281,30 +277,29 @@ rem --- Delete lot/serial and inventory commitments. Must do this before sfe_wom
 
 	rem --- Delete lot/serial commitments, but keep inventory commitments (for now)
 	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
-	if pos(callpoint!.getDevObject("lotser")="LS") then
-		sfe_wolsissu_dev=fnget_dev("SFE_WOLSISSU")
-		dim sfe_wolsissu$:fnget_tpl$("SFE_WOLSISSU")
-		read(sfe_wolsissu_dev,key=firm_loc_wo$+sfe_womatisd.internal_seq_no$,dom=*next)
-		while 1
-			sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
-			if pos(firm_loc_wo$+sfe_womatisd.internal_seq_no$=sfe_wolsissu_key$)<>1 then break
-			extractrecord(sfe_wolsissu_dev)sfe_wolsissu$; rem --- Advisory locking
 
-			rem --- Delete lot/serial commitments
-			items$[1]=sfe_womatisd.warehouse_id$
-			items$[2]=sfe_womatisd.item_id$
-			items$[3]=sfe_wolsissu.lotser_no$
-			refs[0]=sfe_wolsissu.qty_issued
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+	sfe_wolsissu_dev=fnget_dev("SFE_WOLSISSU")
+	dim sfe_wolsissu$:fnget_tpl$("SFE_WOLSISSU")
+	read(sfe_wolsissu_dev,key=firm_loc_wo$+sfe_womatisd.internal_seq_no$,dom=*next)
+	while 1
+		sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
+		if pos(firm_loc_wo$+sfe_womatisd.internal_seq_no$=sfe_wolsissu_key$)<>1 then break
+		extractrecord(sfe_wolsissu_dev)sfe_wolsissu$; rem --- Advisory locking
 
-			rem --- Keep inventory commitments (for now)
-			items$[3]=" "
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+		rem --- Delete lot/serial commitments
+		items$[1]=sfe_womatisd.warehouse_id$
+		items$[2]=sfe_womatisd.item_id$
+		items$[3]=sfe_wolsissu.lotser_no$
+		refs[0]=sfe_wolsissu.qty_issued
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
-			rem --- Barista isn't currently cascading this delete, re Barista bug 5979
-			remove(sfe_wolsissu_dev,key=sfe_wolsissu_key$)
-		wend
-	endif
+		rem --- Keep inventory commitments (for now)
+		items$[3]=" "
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+		rem --- Barista isn't currently cascading this delete, re Barista bug 5979
+		remove(sfe_wolsissu_dev,key=sfe_wolsissu_key$)
+	wend
 
 	rem --- Delete inventory commitments
 	items$[1]=sfe_womatisd.warehouse_id$
@@ -354,19 +349,6 @@ rem --- Init Java classes
 	use ::sfo_SfUtils.aon::SfUtils
 	use ::ado_util.src::util
 
-rem --- Init lot/serial additional option
-	switch pos(callpoint!.getDevObject("lotser")="LS")
-		case 1
-			callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY"))
-			break
-		case 2
-			callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY"))
-			break
-		case default
-			callpoint!.setOptionEnabled("LENT",0)
-			break
-	swend
-
 [[SFE_WOMATISD.ITEM_ID.AINV]]
 rem --- Item synonym processing
 	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::grid_entry"
@@ -406,6 +388,7 @@ rem --- Item ID is disabled except for a new row, so can init entire new row her
 	dim ivm_itemwhse$:fnget_tpl$("IVM_ITEMWHSE")
 	findrecord(ivm_itemmast_dev,key=firm_id$+item_id$,dom=*next)ivm_itemmast$
 	unit_measure$=ivm_itemmast.unit_of_sale$
+	callpoint!.setDevObject("lotser",ivm_itemmast.lotser_flag$)
 	findrecord(ivm_itemwhse_dev,key=firm_id$+warehouse_id$+item_id$,dom=*next)ivm_itemwhse$
 	unit_cost=ivm_itemwhse.unit_cost
 	issue_cost=ivm_itemwhse.unit_cost
@@ -500,16 +483,15 @@ init_display_cols: rem --- Init DISPLAY columns
 	return
 
 able_lot_button: rem --- Enable/disable Lot/Serial button
-	if pos(callpoint!.getDevObject("lotser")="LS") then
-		ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
-		dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
-		item_id$=callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID")
-		findrecord(ivm_itemmast_dev,key=firm_id$+item_id$,dom=*next)ivm_itemmast$
-		if ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y" then 
-			callpoint!.setOptionEnabled("LENT",1)
-		else
-			callpoint!.setOptionEnabled("LENT",0)
-		endif
+	ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+	item_id$=callpoint!.getColumnData("SFE_WOMATISD.ITEM_ID")
+	findrecord(ivm_itemmast_dev,key=firm_id$+item_id$,dom=*next)ivm_itemmast$
+	callpoint!.setDevObject("lotser",ivm_itemmast.lotser_flag$)
+	if pos(ivm_itemmast.lotser_flag$="LS") and ivm_itemmast.inventoried$="Y" then 
+		callpoint!.setOptionEnabled("LENT",1)
+	else
+		callpoint!.setOptionEnabled("LENT",0)
 	endif
 	return
 

@@ -52,7 +52,6 @@ rem --- Retrieve parameter records
     ivs01a_key$=firm_id$+"IV00"
     find record (ivs01a_dev,key=ivs01a_key$,err=std_missing_params) ivs01a$
 
-    if pos(ivs01a.lotser_flag$="LS") then ls$="Y" else ls$="N"
     if pos(ivs01a.lifofifo$="LF") then lf$="Y" else lf$="N"
     
     rem --- Is the GL module installed?
@@ -81,23 +80,22 @@ rem --- Additional File Opens
     endif
 
     rem --- Lot / Serial number?
-    if ls$="Y" then
-        begfile=23,endfile=27
-        files$[23]="ivm-07",ids$[23]="IVM_LSMASTER"
-        files$[24]="ivm-17",ids$[24]="IVM_LSACT"
-        files$[25]="ivt-01",ids$[25]="IVT_LSTRANS"
-        files$[26]="ivt-02",ids$[26]="IVX_LSCUST"
-        files$[27]="ivt-03",ids$[27]="IVX_LSVEND"
 
-        call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
-        if status then goto std_exit_no_update
-        
-        ivm07_dev=channels[23]
-        ivm17_dev=channels[24]
-        ivt01_dev=channels[25]
-        ivt02_dev=channels[26]
-        ivt03_dev=channels[27]
-    endif
+    begfile=23,endfile=27
+    files$[23]="ivm-07",ids$[23]="IVM_LSMASTER"
+    files$[24]="ivm-17",ids$[24]="IVM_LSACT"
+    files$[25]="ivt-01",ids$[25]="IVT_LSTRANS"
+    files$[26]="ivt-02",ids$[26]="IVX_LSCUST"
+    files$[27]="ivt-03",ids$[27]="IVX_LSVEND"
+
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
+    if status then goto std_exit_no_update
+    
+    ivm07_dev=channels[23]
+    ivm17_dev=channels[24]
+    ivt01_dev=channels[25]
+    ivt02_dev=channels[26]
+    ivt03_dev=channels[27]
     
     rem --- LIFO/FIFO?
     if lf$="Y" then
@@ -179,7 +177,7 @@ rem --- Item Number
                 refs$[8]=ive01a.trans_cmt$
                 refs$[13]=ive01a.memo_1024$
 
-                if ls$="Y" then let refs$[10]=ive11a.ls_location$,refs$[11]=ive11a.ls_comments$
+                if pos(ivm01a.lotser_flag$="LS") then let refs$[10]=ive11a.ls_location$,refs$[11]=ive11a.ls_comments$
                 if ivm10b.trans_type$="I" then let refs[0]=-refs[0]
 
 rem --- Inventory updates

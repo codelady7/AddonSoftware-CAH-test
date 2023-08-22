@@ -144,32 +144,30 @@ rem --- Delete inventory issues.
 			remove(sfe_womatisd_dev,key=sfe_womatisd_key$)
 
 			rem --- Delete lot/serial commitments if any
-			if pos(callpoint!.getDevObject("lotser")="LS") then
-				read(sfe_wolsissu_dev,key=firm_loc_wo$+sfe_womatisd.internal_seq_no$,dom=*next)
-				while 1
-					sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
-					if pos(firm_loc_wo$+sfe_womatisd.internal_seq_no$=sfe_wolsissu_key$)<>1 then break
-					extractrecord(sfe_wolsissu_dev)sfe_wolsissu$; rem --- Advisory locking
-					remove(sfe_wolsissu_dev,key=sfe_wolsissu_key$)
+			read(sfe_wolsissu_dev,key=firm_loc_wo$+sfe_womatisd.internal_seq_no$,dom=*next)
+			while 1
+				sfe_wolsissu_key$=key(sfe_wolsissu_dev,end=*break)
+				if pos(firm_loc_wo$+sfe_womatisd.internal_seq_no$=sfe_wolsissu_key$)<>1 then break
+				extractrecord(sfe_wolsissu_dev)sfe_wolsissu$; rem --- Advisory locking
+				remove(sfe_wolsissu_dev,key=sfe_wolsissu_key$)
 
-					rem --- Delete lot/serial commitments
-					items$[1]=sfe_womatisd.warehouse_id$
-					items$[2]=sfe_womatisd.item_id$
-					items$[3]=sfe_wolsissu.lotser_no$
-					refs[0]=sfe_wolsissu.qty_issued
-					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				rem --- Delete lot/serial commitments
+				items$[1]=sfe_womatisd.warehouse_id$
+				items$[2]=sfe_womatisd.item_id$
+				items$[3]=sfe_wolsissu.lotser_no$
+				refs[0]=sfe_wolsissu.qty_issued
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
-					rem --- Add inventory commitments back since were deleted a second time with lot/serial commitments were deleted.
-					items$[3]=" "
-					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-				wend
-			endif
+				rem --- Add inventory commitments back since were deleted a second time with lot/serial commitments were deleted.
+				items$[3]=" "
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			wend
 		wend
 	endif
 
 [[SFE_WOMATHDR.BSHO]]
 rem --- Open Files
-	num_files=13
+	num_files=14
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="SFS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -184,6 +182,7 @@ rem --- Open Files
 	open_tables$[11]="IVM_ITEMWHSE",open_opts$[11]="OTA"
 	open_tables$[12]="IVC_WHSECODE",open_opts$[12]="OTA"
 	open_tables$[13]="SFE_WOLSISSU",open_opts$[13]="OTA"
+	open_tables$[14]="IVM_LSMASTER",open_opts$[14]="OTA"
 
 	gosub open_tables
 
@@ -198,22 +197,9 @@ rem --- Get SF parameters
 rem --- Get IV parameters
 	dim ivs_params$:ivs_params_tpl$
 	read record (ivs_params_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs_params$
-	lotser$=ivs_params.lotser_flag$
-	callpoint!.setDevObject("lotser",lotser$)
 	precision$=ivs_params.precision$
 	callpoint!.setDevObject("precision",precision$)
 	precision num(precision$)
-
-rem --- Additional file opens
-	num_files=1
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	if pos(lotser$="LS") then
-		open_tables$[1]="IVM_LSMASTER",open_opts$[1]="OTA"
-
-		gosub open_tables
-
-		ivm_lsmaster_dev=num(open_chans$[1]),ivm_lsmaster_tpl$=open_tpls$[1]
-	endif
 
 rem -- Provide initial empty starting rowQtyMap!
 	callpoint!.setDevObject("start_rowQtyMap", new java.util.HashMap())

@@ -147,7 +147,6 @@ rem --- Parameters
     p[0]=ivs01a.item_id_len
     p[1]=num(ivs01a.precision$)
     p[2]=ivs01a.ls_no_len
-    ls_flag=pos(ivs01a.lotser_flag$="LS")
     lf=pos(ivs01a.lifofifo$="LF")
     current_per$=ivs01a.current_per$
     current_year$=ivs01a.current_year$
@@ -219,7 +218,7 @@ rem --- Retrieve ivm-01 Item Master
         rem --- modified by another user.
         read record (ivm01_dev,key=ivm01k0$,dom=missing_record_error) ivm01a$
     endif
-    if ls_flag then ls = (ivm01a.lotser_item$ = "Y")
+    ls = pos(ivm01a.lotser_flag$ = "LS")
 
 rem --- ivm-01 Item Master
 

@@ -40,8 +40,7 @@ rem --- Work order scheduled to be closed?
 			callpoint!.setDevObject("set_status_save",1)
 
 			rem --- Clear close entries for serial/lot numbers for this work order
-			lotser$=callpoint!.getDevObject("lotser")
-			if pos(lotser$="LS") then
+			if pos(callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_FLAG")="LS") then
 				wolotser_dev=fnget_dev("1SFE_WOLOTSER")
 				dim wolotser$:fnget_tpl$("1SFE_WOLOTSER")
 				read(wolotser_dev,key=firm_id$+wo_location$+wo_no$,dom=*next)closedwo$
@@ -188,8 +187,7 @@ rem --- Calculate and display new amounts
 
 rem -- Disable lot/serial option if not lotted/serialized, and scheduled for close
 	if callpoint!.getColumnData("SFE_WOCLOSE.WO_CATEGORY")="I" and 
-:	callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_ITEM")="Y" and 
-:	pos(callpoint!.getDevObject("lotser")="LS") then
+:	pos(callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_FLAG")="LS") then
 		rem --- Work order scheduled for close?
 		closedwo_dev=fnget_dev("1SFE_CLOSEDWO")
 		wo_location$=callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")
@@ -425,8 +423,7 @@ rem --- Recalculate standards
 
 rem --- Lot/serial processing if needed
 	if callpoint!.getColumnData("SFE_WOCLOSE.WO_CATEGORY")="I" and 
-:	callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_ITEM")="Y" and 
-:	pos(callpoint!.getDevObject("lotser")="LS") then
+:	pos(callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_FLAG")="LS") then
 		gosub do_wolotser
 	endif
 
@@ -470,7 +467,7 @@ rem --- Initializations
 	use ::sfo_SfUtils.aon::SfUtils
 
 rem --- Open Files
-	num_files=15
+	num_files=16
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="SFS_PARAMS",open_opts$[1]="OTA@"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA@"
@@ -487,6 +484,7 @@ rem --- Open Files
 	open_tables$[13]="IVC_WHSECODE",open_opts$[13]="OTA@"
 	open_tables$[14]="SFE_WOMASTR",open_opts$[14]="OTA"
 	open_tables$[15]="SFE_WOLOTSER",open_opts$[15]="OTA[1]"
+	open_tables$[16]="IVM_LSMASTER",open_opts$[16]="OTA@"
 
 	gosub open_tables
 
@@ -517,8 +515,6 @@ rem --- Get SF parameters
 rem --- Get IV parameters
 	dim ivs_params$:ivs_params_tpl$
 	read record (ivs_params_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs_params$
-	lotser$=ivs_params.lotser_flag$
-	callpoint!.setDevObject("lotser",lotser$)
 	precision$=ivs_params.precision$
 	callpoint!.setDevObject("precision",precision$)
 	precision num(precision$)
@@ -531,9 +527,6 @@ rem --- Additional file opens
 	if po$="Y" then
 		open_tables$[1]="POE_REQDET",open_opts$[1]="OTA@"
 		open_tables$[2]="POE_PODET",open_opts$[2]="OTA@"
-	endif
-	if pos(lotser$="LS") then
-		open_tables$[3]="IVM_LSMASTER",open_opts$[3]="OTA@"
 	endif
 
 	gosub open_tables
@@ -769,6 +762,7 @@ rem ==========================================================================
 	callpoint!.setDevObject("qty_cls_todt",callpoint!.getColumnData("SFE_WOCLOSE.QTY_CLS_TODT"))
 	callpoint!.setDevObject("closed_cost",callpoint!.getColumnData("SFE_WOCLOSE.CLOSED_COST"))
 	callpoint!.setDevObject("wolotser_action","close")
+	callpoint!.setDevObject("lotser",callpoint!.getColumnData("SFE_WOCLOSE.LOTSER_FLAG"))
 
 	key_pfx$=firm_id$+callpoint!.getColumnData("SFE_WOCLOSE.WO_LOCATION")+callpoint!.getColumnData("SFE_WOCLOSE.WO_NO")
 

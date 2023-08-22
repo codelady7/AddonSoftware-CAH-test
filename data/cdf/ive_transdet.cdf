@@ -753,7 +753,8 @@ rem ==========================================================================
 		file_name$ = "IVM_ITEMMAST"
 		dim ivm01a$:fnget_tpl$(file_name$)
 		find record (fnget_dev(file_name$), key=firm_id$+item$) ivm01a$
-		callpoint!.setDevObject("lot_ser",ivm01a.lotser_item$)
+		callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
+		user_tpl.serialized=(ivm01a.lotser_flag$="S")
 
 		file_name$ = "IVM_ITEMWHSE"
 		dim ivm02a$:fnget_tpl$(file_name$)
@@ -781,7 +782,7 @@ rem ==========================================================================
 
 		rem --- Disable/Enable Lot/Serial if needed
 
-		user_tpl.this_item_lot_or_ser = ( user_tpl.ls$="Y" and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" )
+		user_tpl.this_item_lot_or_ser = (pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" )
 		cols! = BBjAPI().makeVector()
 		cols!.addItem(7); rem --- lot
 		cols!.addItem(8); rem --- location

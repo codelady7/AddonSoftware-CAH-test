@@ -1,40 +1,69 @@
-[[IVC_LOTLOOKUP.ITEM_ID.AVAL]]
-rem "Inventory Inactive Feature"
-item_id$=callpoint!.getUserInput()
-ivm01_dev=fnget_dev("IVM_ITEMMAST")
-ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
-dim ivm01a$:ivm01_tpl$
-ivm01a_key$=firm_id$+item_id$
-find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
-if ivm01a.item_inactive$="Y" then
-   msg_id$="IV_ITEM_INACTIVE"
-   dim msg_tokens$[2]
-   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
-   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
-   gosub disp_message
-   callpoint!.setStatus("ACTIVATE")
-   goto std_exit
-endif
+[[IVC_LOTLOOKUP.ACUS]]
+rem --- Process custom event -- used in this pgm to select lot and display info.
+rem
+rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
+rem
+rem --- This routine is executed when callbacks have been set to run a "custom event".
+rem
+rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
+rem --- of event it is... in this case, we're toggling checkboxes on/off in form grid control.
 
-[[IVC_LOTLOOKUP.BEND]]
-rem --- Clear selection if Cancel button clicked
-	if callpoint!.getDevObject("cancel_selection")="Y" then
-		callpoint!.setDevObject("selected_lot",null())
-		callpoint!.setDevObject("selected_lot_avail","0")
-		callpoint!.setDevObject("selected_lot_cost","0")
+rem --- Get the control ID of the event
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ctl_ID=dec(gui_event.ID$)
+
+	rem --- Get Grid's ID
+
+	gridLots!=callpoint!.getDevObject("gridLots")
+	wctl=gridLots!.getID()
+	
+	rem --- This is a grid event
+
+	if ctl_ID=wctl
+	
+		if gui_event.code$="N"
+			notify_base$=notice(gui_dev,gui_event.x%)
+			dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
+			notice$=notify_base$
+		endif
+		
+		numcols=gridLots!.getNumColumns()
+		vectLots!=callpoint!.getDevObject("vectLots")
+		curr_row=dec(notice.row$)
+		curr_col=dec(notice.col$)
+		
+		switch notice.code
+			case 19; rem grid_key_press
+			case 14; rem grid_mouse_up
+				callpoint!.setDevObject("selected_lot",gridLots!.getCellText(curr_row,0))				
+				gosub get_lot_info
+				break
+		swend
 	endif
 
-rem --- Make sure the default knum for IVM_LSMASTER (ivm-07) gets re-set back to PRIMARY
-rem --- since Barista's validation logic for serial/lot uses knum="AO_ITEM_WH_LOT".
-	ivm_lsmaster_dev=fnget_dev("IVM_LSMASTER")
-	read record(ivm_lsmaster_dev,key=firm_id$,knum="PRIMARY",dom=*next)
+[[IVC_LOTLOOKUP.AREC]]
+rem --- Item_id, warehouse_id, and type of lot (open,closed, etc.) coming from calling program
+
+	lots_to_disp$ = callpoint!.getColumnData("IVC_LOTLOOKUP.LOTS_TO_DISP")
+	gosub read_and_display_lot_grid
+
+rem --- Initialize flag to clear selection if Cancel button clicked
+	callpoint!.setDevObject("cancel_selection","Y")
+
+[[IVC_LOTLOOKUP.ASIZ]]
+rem gridLots!=callpoint!.getDevObject("gridLots")
+rem if gridLots!<>Null()
+rem	gridLots!.setSize(300,Form!.getHeight()-(gridLots!.getY()+40))
+rem	gridLots!.setFitToGrid(1)
+rem endif
+
 [[IVC_LOTLOOKUP.ASVA]]
 rem --- ASVA is fired for Okay button, but not Cancel button, so turn off flag to clear selection if Cancel button clicked
 	callpoint!.setDevObject("cancel_selection","N")
-[[IVC_LOTLOOKUP.ITEM_ID.AINV]]
-rem --- Item synonym processing
 
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
 [[IVC_LOTLOOKUP.AWIN]]
 rem --- open files
 
@@ -59,7 +88,6 @@ rem --- Retrieve parameter records
 
 rem --- Parameters
 
-	if pos(ivs_params.lotser_flag$="SL")=0 goto std_exit
 	call stbl("+DIR_PGM")+"adc_application.aon","AP",info$[all]
 	callpoint!.setDevObject("ap_installed",info$[20])
 	callpoint!.setDevObject("selected_lot",null())
@@ -174,70 +202,49 @@ rem --- Create Lot Information window
 		util.resizeWindow(Form!, SysGui!)
 	endif
 	
+
+[[IVC_LOTLOOKUP.BEND]]
+rem --- Clear selection if Cancel button clicked
+	if callpoint!.getDevObject("cancel_selection")="Y" then
+		callpoint!.setDevObject("selected_lot",null())
+		callpoint!.setDevObject("selected_lot_avail","0")
+		callpoint!.setDevObject("selected_lot_cost","0")
+	endif
+
+rem --- Make sure the default knum for IVM_LSMASTER (ivm-07) gets re-set back to PRIMARY
+rem --- since Barista's validation logic for serial/lot uses knum="AO_ITEM_WH_LOT".
+	ivm_lsmaster_dev=fnget_dev("IVM_LSMASTER")
+	read record(ivm_lsmaster_dev,key=firm_id$,knum="PRIMARY",dom=*next)
+
+[[IVC_LOTLOOKUP.ITEM_ID.AINV]]
+rem --- Item synonym processing
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
+[[IVC_LOTLOOKUP.ITEM_ID.AVAL]]
+rem "Inventory Inactive Feature"
+item_id$=callpoint!.getUserInput()
+ivm01_dev=fnget_dev("IVM_ITEMMAST")
+ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+dim ivm01a$:ivm01_tpl$
+ivm01a_key$=firm_id$+item_id$
+find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
+if ivm01a.item_inactive$="Y" then
+   msg_id$="IV_ITEM_INACTIVE"
+   dim msg_tokens$[2]
+   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+   gosub disp_message
+   callpoint!.setStatus("ACTIVATE")
+   goto std_exit
+endif
+
 [[IVC_LOTLOOKUP.LOTS_TO_DISP.AVAL]]
 rem -- User changed lot type -- re-read/display selected lot type
 
 	lots_to_disp$ = callpoint!.getUserInput()
 	gosub read_and_display_lot_grid
-[[IVC_LOTLOOKUP.AREC]]
-rem --- Item_id, warehouse_id, and type of lot (open,closed, etc.) coming from calling program
 
-	lots_to_disp$ = callpoint!.getColumnData("IVC_LOTLOOKUP.LOTS_TO_DISP")
-	gosub read_and_display_lot_grid
-
-rem --- Initialize flag to clear selection if Cancel button clicked
-	callpoint!.setDevObject("cancel_selection","Y")
-[[IVC_LOTLOOKUP.ACUS]]
-rem --- Process custom event -- used in this pgm to select lot and display info.
-rem
-rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
-rem
-rem --- This routine is executed when callbacks have been set to run a "custom event".
-rem
-rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
-rem --- of event it is... in this case, we're toggling checkboxes on/off in form grid control.
-
-rem --- Get the control ID of the event
-
-	dim gui_event$:tmpl(gui_dev)
-	dim notify_base$:noticetpl(0,0)
-	gui_event$=SysGUI!.getLastEventString()
-	ctl_ID=dec(gui_event.ID$)
-
-	rem --- Get Grid's ID
-
-	gridLots!=callpoint!.getDevObject("gridLots")
-	wctl=gridLots!.getID()
-	
-	rem --- This is a grid event
-
-	if ctl_ID=wctl
-	
-		if gui_event.code$="N"
-			notify_base$=notice(gui_dev,gui_event.x%)
-			dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
-			notice$=notify_base$
-		endif
-		
-		numcols=gridLots!.getNumColumns()
-		vectLots!=callpoint!.getDevObject("vectLots")
-		curr_row=dec(notice.row$)
-		curr_col=dec(notice.col$)
-		
-		switch notice.code
-			case 19; rem grid_key_press
-			case 14; rem grid_mouse_up
-				callpoint!.setDevObject("selected_lot",gridLots!.getCellText(curr_row,0))				
-				gosub get_lot_info
-				break
-		swend
-	endif
-[[IVC_LOTLOOKUP.ASIZ]]
-rem gridLots!=callpoint!.getDevObject("gridLots")
-rem if gridLots!<>Null()
-rem	gridLots!.setSize(300,Form!.getHeight()-(gridLots!.getY()+40))
-rem	gridLots!.setFitToGrid(1)
-rem endif
 [[IVC_LOTLOOKUP.<CUSTOM>]]
 rem ==========================================================================
 read_and_display_lot_grid:
@@ -375,3 +382,6 @@ return
 rem ==========================================================================
 #include [+ADDON_LIB]std_missing_params.aon
 rem ==========================================================================
+
+
+

@@ -14,7 +14,7 @@ rem --- Save old Bar Code and UPC Code for Synonym Maintenance
 
 rem --- store lot/serialized flag in devObject for use later
 
-	callpoint!.setDevObject("lot_serial_item",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM"))
+	callpoint!.setDevObject("lot_serial_flag",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG"))
 
 rem --- set flag in devObject to say we're not on a new record
 
@@ -24,7 +24,7 @@ rem --- Store starting product_type so we'll know later if it was changed.
 	callpoint!.setDevObject("start_product_type",callpoint!.getColumnData("IVM_ITEMMAST.PRODUCT_TYPE"))
 
 rem --- Disable inventoried if not lotted/serialized
-	if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM")<>"Y" then
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 then
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
 	else
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",1)
@@ -32,13 +32,13 @@ rem --- Disable inventoried if not lotted/serialized
 
 rem --- Disable lotted/serialized flag if inventoried=Y
 	if callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")="Y" then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",0)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
 	else
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
 	endif
 
 rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
-	if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM")="Y" or callpoint!.getDevObject("allow_SellPurchUM")="N" then
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS") or callpoint!.getDevObject("allow_SellPurchUM")="N" then
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
 	else
 		rem --- Always disable if BOM and creating WOs from Sales Orders
@@ -87,6 +87,9 @@ rem --- Show TAX_SVC_CD description
 			tax_svc_cd_desc!.setText("")
 		endif
 	endif
+
+rem --- disable lot/ser trans hist if item isn't lot/serial
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 callpoint!.setOptionEnabled("LTRN",0)
 
 [[IVM_ITEMMAST.AENA]]
 rem --- Disable Barista menu items
@@ -353,7 +356,7 @@ rem -- Get default values for new record from ivs-10D, IVS_DEFAULTS
 	callpoint!.setColumnData("IVM_ITEMMAST.PURCHASE_UM",ivs10d.purchase_um$)
 	callpoint!.setColumnData("IVM_ITEMMAST.TAXABLE_FLAG",ivs10d.taxable_flag$)
 	callpoint!.setColumnData("IVM_ITEMMAST.BUYER_CODE",ivs10d.buyer_code$)
-	callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_ITEM",ivs10d.lotser_item$)
+	callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG",ivs10d.lotser_flag$)
 	callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED",ivs10d.inventoried$)
 	callpoint!.setColumnData("IVM_ITEMMAST.ITEM_CLASS",ivs10d.item_class$)
 	callpoint!.setColumnData("IVM_ITEMMAST.STOCK_LEVEL","W")
@@ -481,7 +484,7 @@ rem --- Add new UPC Code and Bar Code
 
 rem --- store lot/serialized flag in devObject for use later
 
-	callpoint!.setDevObject("lot_serial_item",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM"))
+	callpoint!.setDevObject("lot_serial_flag",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG"))
 
 rem --- if this is a newly added record, launch warehouse/stocking, vendors, and synonymns forms
 
@@ -580,8 +583,8 @@ rem --- Is Sales Order Processing installed?
 
 rem --- Open/Lock files
 
-	num_files=8
-	if op$="Y" then num_files=9
+	num_files=11
+	if op$="Y" then num_files=12
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_DEFAULTS",open_opts$[2]="OTA"
@@ -590,6 +593,9 @@ rem --- Open/Lock files
 	open_tables$[5]="IVM_ITEMWHSE",open_opts$[5]="OTA"
 	open_tables$[7]="IVM_ITEMSYN",open_opts$[7]="OTA"
 	open_tables$[8]="IVT_ITEMTRAN",open_opts$[8]="OTA"
+	open_tables$[9]="IVM_LSMASTER",open_opts$[9]="OTA"
+	open_tables$[10]="IVM_LSACT",open_opts$[10]="OTA"
+	open_tables$[11]="IVT_LSTRANS",open_opts$[11]="OTA"
 	if op$="Y" then open_tables$[9]="OPS_PARAMS",open_opts$[9]="OTA"
 
 	gosub open_tables
@@ -703,7 +709,6 @@ rem --- Disable option menu items
 	callpoint!.setOptionEnabled("STOK",0); rem --- per bug 5774, disabled for now
 	if ap$<>"Y" then callpoint!.setOptionEnabled("IVM_ITEMVEND",0)
 	if pos(ivs01a.lifofifo$="LF")=0 callpoint!.setOptionEnabled("LIFO",0)
-	if pos(ivs01a.lotser_flag$="LS")=0 callpoint!.setOptionEnabled("LTRN",0)
 	if op$<>"Y" callpoint!.setOptionEnabled("SORD",0)
 	if po$<>"Y" callpoint!.setOptionEnabled("PORD",0)
 	if bm$<>"Y" callpoint!.setOptionEnabled("BOMU",0)
@@ -716,11 +721,6 @@ rem --- additional file opens, depending on which apps are installed, param valu
 	if pos(ivs01a.lifofifo$="LF")<>0 then 
 		more_files$=more_files$+"IVM_ITEMTIER;"
 		files=files+1
-	endif
-
-	if pos(ivs01a.lotser_flag$="LS")<>0 then 
-		more_files$=more_files$+"IVM_LSMASTER;IVM_LSACT;IVT_LSTRANS;"
-		files=files+3
 	endif
 
 	if ar$="Y" then 
@@ -805,10 +805,6 @@ rem --- Disable fields based on parameters
 
 	able_map = 0
 	wmap$=callpoint!.getAbleMap()
-
-rem --- if you aren't doing lotted/serialized
-
-	if pos(ivs01a.lotser_flag$="LS")=0 then callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",-1)
 
 rem --- Don't allow SELL_PURCH_UM if not allowed in IVS_PARAMS or not using lotted/serialized inventory.
 	allow_SellPurchUM$="Y"
@@ -899,7 +895,7 @@ gosub gl_active
 gosub gl_active
 
 [[IVM_ITEMMAST.INVENTORIED.AVAL]]
-rem --- Can't change Inventoried flag if there is QOH, and disable lotted/serialized flag if inventoried=Y
+rem --- Can't change Inventoried flag if there is QOH
 
 	prev_inv_flag$=callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")
 	this_inv_flag$ = callpoint!.getUserInput()
@@ -912,9 +908,9 @@ rem --- Can't change Inventoried flag if there is QOH, and disable lotted/serial
 			callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED",prev_inv_flag$,1)
 		else
 			if this_inv_flag$="Y" then
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",0)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
 			else
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",1)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
 			endif
 		endif
 	endif
@@ -1021,10 +1017,10 @@ rem --- See if Auto Numbering in effect
 [[IVM_ITEMMAST.LEAD_TIME.AVAL]]
 if num(callpoint!.getUserInput())<0 or fpt(num(callpoint!.getUserInput())) then callpoint!.setStatus("ABORT")
 
-[[IVM_ITEMMAST.LOTSER_ITEM.AVAL]]
+[[IVM_ITEMMAST.LOTSER_FLAG.AVAL]]
 rem --- Disable inventoried if not lotted/serialized
-	inventoried$=callpoint!.getUserInput()
-	if inventoried$<>"Y" then
+	lotser_flag$=callpoint!.getUserInput()
+	if !pos(lotser_flag$="LS") then
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
 	else
@@ -1032,7 +1028,7 @@ rem --- Disable inventoried if not lotted/serialized
 	endif
 
 rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
-	if inventoried$="Y" or callpoint!.getDevObject("allow_SellPurchUM")="N" then
+	if pos(lotser_flag$="LS") or callpoint!.getDevObject("allow_SellPurchUM")="N" then
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.SELL_PURCH_UM","N",1)
 	else

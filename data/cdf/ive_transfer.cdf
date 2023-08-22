@@ -113,13 +113,6 @@ rem	util.disableField(callpoint!, "IVE_TRANSFER.LOTSER_NO")
 
 	callpoint!.setDevObject("qty_ok","")
 
-rem --- Initialize Lot/Serial Lookup button
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("LOTS",Translate!.getTranslation("AON_LOT_LOOKUP")); break
-		case 2; callpoint!.setOptionText("LOTS",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
-	swend
-	callpoint!.setOptionEnabled("LLOK", 0)
-
 [[IVE_TRANSFER.ARNF]]
 if num(stbl("+BATCH_NO"),err=*next)<>0
 	rem --- Check if this record exists in a different batch
@@ -219,7 +212,6 @@ rem --- Open files
 rem --- Get parameter records
 
 	find record(ivs01_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs01a$
-	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
 
 rem --- Exit if not multi-warehouse
 
@@ -254,10 +246,7 @@ rem --- Setup user template
 
 rem --- Set IV flags
 
-	user_tpl.ls$ = iff( pos(ivs01a.lotser_flag$ = "LS"), "Y", "N" )
 	user_tpl.lf$ = iff( pos(ivs01a.lifofifo$    = "LF"), "Y", "N" )
-
-	if ivs01a.lotser_flag$ = "S" then user_tpl.serialized% = 1
 
 rem --- Is the GL module installed?
 
@@ -642,7 +631,7 @@ rem ===========================================================================
 	items$[2] = callpoint!.getColumnData("IVE_TRANSFER.ITEM_ID")
 	refs[0]   = qty
 
-	if user_tpl.ls$ = "Y" then
+	if  user_tpl.this_item_is_lot_ser% then
 		items$[3] = callpoint!.getColumnData("IVE_TRANSFER.LOTSER_NO")
 	endif
 
@@ -674,13 +663,11 @@ set_ls_flags: rem --- Set Lot/Serial# flags
 rem ===========================================================================
 
 	user_tpl.this_item_is_lot_ser% = (
-:		user_tpl.ls$ = "Y"        and 
-:		ivm01a.lotser_item$ = "Y" and 
+:		pos(ivm01a.lotser_flag$ = "LS") and 
 :		ivm01a.inventoried$ = "Y" )
 
 	user_tpl.item_is_serial% = (
-:		user_tpl.serialized%      and 
-:		ivm01a.lotser_item$ = "Y" and 
+:		ivm01a.lotser_flag$ = "S" and 
 :		ivm01a.inventoried$ = "Y" )
 
 return
