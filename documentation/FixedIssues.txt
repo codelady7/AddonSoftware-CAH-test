@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-08-10
+ Report Date:   2023-08-23
  Report Branch: AddonSoftware 23.03
  Last Release:  AddonSoftware 23.02
 =======================================================================================================================================
@@ -40,4 +40,15 @@ Modified: ad/src/adx_installwiz.aon
 Modified: ad/src/adx_upgradewiz.aon
 
 =======================================================================================================================================
+Revision: 39a3ce761ea692f21b657eca7c3843975e27c8fe
+Author: Christine <chawkins@basis.com>
+Date: 8/23/2023 2:38:27 PM
+Message:
+Bug 10712 - AR - Customer Detail Listing can throw licensing nag if OP isn't installed
+ - changed branding from OP to AD since this table is accessed from >1 module
+
+(cherry picked from commit f4c275142759ec0a05e23b5bfd44f1947b8dcd17)
+----
+Modified: data/bar/opm_custjobs.xml
+
 
