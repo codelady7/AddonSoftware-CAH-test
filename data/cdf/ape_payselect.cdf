@@ -90,14 +90,14 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 				if curr_col = 12 then
 					ap_type$ = gridInvoices!.getCellText(curr_row,3)
 					vend_id$ = gridInvoices!.getCellText(curr_row,4)
-					inv_no$ = gridInvoices!.getCellText(curr_row,6)
+					inv_no$ = gridInvoices!.getCellText(curr_row,15)
 					gosub get_master_offset
-					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
+					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+16)
 					inv_amt  = num(gridInvoices!.getCellText(curr_row,11))
 					disc_amt = num(gridInvoices!.getCellText(curr_row,12))
 					pmt_amt  = num(gridInvoices!.getCellText(curr_row,13))
 					retent_amt = num(gridInvoices!.getCellText(curr_row,14))
-					orig_inv_amt = num(vectInvoicesMaster!.getItem((mast_offset)+19))
+					orig_inv_amt = num(vectInvoicesMaster!.getItem((mast_offset)+20))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 						ach_payments=ach_payments-pmt_amt
 					else
@@ -125,7 +125,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
-:								vectInvoices!.getItem(curr_row*numcols+6),
+:								vectInvoices!.getItem(curr_row*numcols+15),
 :								"1",
 :								str(pmt_amt))
 
@@ -139,12 +139,12 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
-:								vectInvoices!.getItem(curr_row*numcols+6),
+:								vectInvoices!.getItem(curr_row*numcols+15),
 :								"0",
 :								"0")
 
 							vectInvoices!.setItem(curr_row * numcols, "0")
-							if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+							if vectInvoicesMaster!.getItem(mast_offset+21)="" then
 								gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
 							else
 								gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
@@ -159,7 +159,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					dummy = fn_setmast_amts(
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+3),
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+4),
-:						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+6),
+:						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+15),
 :						str(disc_amt),
 :						str(pmt_amt))
 
@@ -175,7 +175,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
-:								vectInvoices!.getItem(curr_row*numcols+6),
+:								vectInvoices!.getItem(curr_row*numcols+15),
 :								"1",
 :								str(pmt_amt))
 
@@ -194,7 +194,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					dummy = fn_setmast_amts(
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+3),
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+4),
-:						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+6),
+:						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+15),
 :						str(disc_amt),
 :						str(pmt_amt))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
@@ -218,9 +218,9 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					dim apt11a$:fnget_tpl$("APT_INVOICEDET")
 					ap_type$=gridInvoices!.getCellText(curr_row,3)
 					vend_id$ = gridInvoices!.getCellText(curr_row,4)
-					inv_no$=gridInvoices!.getCellText(curr_row,6)
+					inv_no$=gridInvoices!.getCellText(curr_row,15)
 					gosub get_master_offset
-					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
+					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+16)
 
 					read record (apt01_dev, key=firm_id$+ap_type$+vend_id$+inv_no$, dom=*next) apt01a$
 					
@@ -252,14 +252,14 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 
 					ap_type$ = gridInvoices!.getCellText(curr_row,3)
 					vend_id$ = gridInvoices!.getCellText(curr_row,4)
-					inv_no$ = gridInvoices!.getCellText(curr_row,6)
+					inv_no$ = gridInvoices!.getCellText(curr_row,15)
 					gosub get_master_offset
-					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
+					inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+16)
 					inv_amt  = num(gridInvoices!.getCellText(curr_row,11))
 					disc_amt = num(gridInvoices!.getCellText(curr_row,12))
 					pmt_amt  = num(gridInvoices!.getCellText(curr_row,13))
 					retent_amt = num(gridInvoices!.getCellText(curr_row,14))
-					orig_inv_amt = num(vectInvoicesMaster!.getItem((mast_offset)+19))
+					orig_inv_amt = num(vectInvoicesMaster!.getItem((mast_offset)+20))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
 						ach_payments=ach_payments-num(vectInvoicesMaster!.getItem((mast_offset)+14))
 					else
@@ -302,13 +302,13 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
-:								vectInvoices!.getItem(curr_row*numcols+6),
+:								vectInvoices!.getItem(curr_row*numcols+15),
 :								"0",
 :								"0")
 
 							vectInvoices!.setItem(curr_row * numcols, "0")
 							gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
-							if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+							if vectInvoicesMaster!.getItem(mast_offset+21)="" then
 								gridInvoices!.setCellText(curr_row,0,statusVect!.get(0))
 							else
 								gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
@@ -320,7 +320,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 							dummy = fn_setmast_flag(
 :								vectInvoices!.getItem(curr_row*numcols+3),
 :								vectInvoices!.getItem(curr_row*numcols+4),
-:								vectInvoices!.getItem(curr_row*numcols+6),
+:								vectInvoices!.getItem(curr_row*numcols+15),
 :								"1",
 :								str(pmt_amt))
 
@@ -339,7 +339,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					dummy = fn_setmast_amts(
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+3),
 :						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+4),
-:						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+6),
+:						vectInvoices!.getItem(curr_row*num(user_tpl.gridInvoicesCols$)+15),
 :						str(disc_amt),
 :						str(pmt_amt))
 					if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
@@ -512,10 +512,10 @@ rem --- Update apt-01 (remove/write) based on what's checked in the grid
 			for row=0 to vectInvoicesMaster!.size()-1 step user_tpl.MasterCols
 				ap_type$=vectInvoicesMaster!.getItem(row+4)
 				vend_id$ = vectInvoicesMaster!.getItem(row+5)
-				inv_no$=vectInvoicesMaster!.getItem(row+21)
+				inv_no$=vectInvoicesMaster!.getItem(row+16)
 				apt01_key$=firm_id$+ap_type$+vend_id$+inv_no$
 				extract record (apt01_dev, key=apt01_key$) apt01a$; rem Advisory Locking
-				orig_inv_amt   = num(vectInvoicesMaster!.getItem(row+19))
+				orig_inv_amt   = num(vectInvoicesMaster!.getItem(row+20))
 				inv_amt = num(vectInvoicesMaster!.getItem(row+11))
 				disc_to_take = num(vectInvoicesMaster!.getItem(row+13))
 				amt_to_pay   = num(vectInvoicesMaster!.getItem(row+14))
@@ -531,6 +531,7 @@ rem --- Update apt-01 (remove/write) based on what's checked in the grid
 				wend
 
 				rem --- '1' is selected when no pay auth, 4 is final approval when using pay auth
+
 				if pos(vectInvoicesMaster!.getItem(row+1)="14")=0
 					apt01a.selected_for_pay$="N"
 					remove (ape04_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
@@ -783,7 +784,7 @@ rem --- Add grid to store invoices
 	 menuItem_proc!.setCallback(menuItem_proc!.ON_POPUP_ITEM_SELECT,"custom_event")
 
 	user_tpl.gridInvoicesCtlID$ = str(nxt_ctlID)
-	user_tpl.gridInvoicesCols$ = "15"
+	user_tpl.gridInvoicesCols$ = "16"
 	user_tpl.gridInvoicesRows$ = "10"
 	user_tpl.MasterCols = 22
 	user_tpl.retention_col = 15
@@ -826,6 +827,7 @@ rem --- Misc other init
 	gridInvoices!.setTabAction(gridInvoices!.GRID_NAVIGATE_GRID)
 	gridInvoices!.setTabActionSkipsNonEditableCells(1)
 	gridInvoices!.setSortByMultipleColumns(1)
+	gridInvoices!.setColumnWidth(15,0); rem --- Hide the AP_INV_NO column
     
 	statusVect!=BBjAPI().makeVector()
 	statusVect!.addItem(Translate!.getTranslation("AON_NEW"))
@@ -1102,11 +1104,11 @@ rem ==========================================================================
 		numrows = gridInvoices!.getNumRows()
 		if numrows > 0 then
 			for row = 0 to numrows-1
-				ap_type=gridInvoices!.getCellText(row,3)
+				ap_type$=gridInvoices!.getCellText(row,3)
 				vend_id$ = gridInvoices!.getCellText(row,4)
-				inv_no$ = gridInvoices!.getCellText(row,6)
+				inv_no$ = gridInvoices!.getCellText(row,15)
 				gosub get_master_offset
-				ap_inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+21)
+				ap_inv_no$ = vectInvoicesMaster!.getItem((mast_offset)+16)
 				pmt_amt  = num(gridInvoices!.getCellText(row,13))
 				inv_amt=num(gridInvoices!.getCellText(row,11))
 				approval_amt=iff(pmt_amt=0,inv_amt,pmt_amt)
@@ -1135,9 +1137,9 @@ rem ==========================================================================
 		for row = 0 to numrows-1
 			ap_type$=gridInvoices!.getCellText(row,3)
 			vend_id$=gridInvoices!.getCellText(row,4)
-			inv_no$=gridInvoices!.getCellText(row,6)
+			inv_no$=gridInvoices!.getCellText(row,15)
 			gosub get_master_offset
-			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 			vendor_name$ = gridInvoices!.getCellText(row,5)
 			inv_amt  = num(gridInvoices!.getCellText(row,10))
 			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
@@ -1146,7 +1148,7 @@ rem ==========================================================================
 			rem --- Update grid row backgound color
 			gridInvoices!.setSelectedRow(row)
 			gridInvoices!.setRowBackColor(row, defaultColor!)
-			if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+			if vectInvoicesMaster!.getItem(mast_offset+21)="" then
 				gridInvoices!.setCellText(row,0,statusVect!.get(0))
 			else
 				gridInvoices!.setCellText(row,0,statusVect!.get(5))
@@ -1162,7 +1164,7 @@ rem ==========================================================================
 					dummy = fn_setmast_flag(
 :						vectInvoices!.getItem(row*numcols+3),
 :						vectInvoices!.getItem(row*numcols+4),
-:						vectInvoices!.getItem(row*numcols+6),
+:						vectInvoices!.getItem(row*numcols+15),
 :						"2",
 :						"0")                    
 					gridInvoices!.setRowBackColor(row, reviewedColor!)
@@ -1175,7 +1177,7 @@ rem ==========================================================================
 						dummy = fn_setmast_flag(
 :							vectInvoices!.getItem(row*numcols+3),
 :							vectInvoices!.getItem(row*numcols+4),
-:							vectInvoices!.getItem(row*numcols+6),
+:							vectInvoices!.getItem(row*numcols+15),
 :							"3",
 :							"0")
 						gridInvoices!.setRowBackColor(row, partiallyApproved!)
@@ -1189,7 +1191,7 @@ rem ==========================================================================
 						dummy = fn_setmast_flag(
 :							vectInvoices!.getItem(row*numcols+3),
 :							vectInvoices!.getItem(row*numcols+4),
-:							vectInvoices!.getItem(row*numcols+6),
+:							vectInvoices!.getItem(row*numcols+15),
 :							"4",
 :							str(inv_amt))
 						gridInvoices!.setRowBackColor(row, fullyApproved!)
@@ -1352,9 +1354,9 @@ rem --- in: rowsSelected!
 			curr_row = num(rowsSelected!.getItem(item))
 			ap_type$=gridInvoices!.getCellText(curr_row,3)
 			vend_id$=gridInvoices!.getCellText(curr_row,4)
-			inv_no$=gridInvoices!.getCellText(curr_row,6)
+			inv_no$=gridInvoices!.getCellText(curr_row,15)
 			gosub get_master_offset
-			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 			vendor_name$ = gridInvoices!.getCellText(curr_row,5)
 			hold=gridInvoices!.getCellState(curr_row,7)
 			inv_amt  = num(gridInvoices!.getCellText(curr_row,10))
@@ -1416,7 +1418,7 @@ rem --- in: rowsSelected!
                 dummy = fn_setmast_flag(
 :				    vectInvoices!.getItem(curr_row*numcols+3),
 :					vectInvoices!.getItem(curr_row*numcols+4),
-:					vectInvoices!.getItem(curr_row*numcols+6),
+:					vectInvoices!.getItem(curr_row*numcols+15),
 :					"2",
 :					str(pmt_amt))
 				continue
@@ -1538,7 +1540,7 @@ rem --- updates grid and vectors accordingly
             dummy = fn_setmast_flag(
 :				vectInvoices!.getItem(curr_row*numcols+3),
 :			    vectInvoices!.getItem(curr_row*numcols+4),
-:				vectInvoices!.getItem(curr_row*numcols+6),
+:				vectInvoices!.getItem(curr_row*numcols+15),
 :				"3",
 :				"0")
 			rem --- Look for other invoices this vendor that may have been previously approved, and demote to partially approved since we're now over threshold
@@ -1548,7 +1550,7 @@ rem --- updates grid and vectors accordingly
                         vectInvoicesMaster!.set(demote_row+1,"3")
                         vend_id$=vectInvoicesMaster!.get(demote_row+5)
                         ap_type$=vectInvoicesMaster!.get(demote_row+4)
-                        inv_no$=vectInvoicesMaster!.get(demote_row+21)
+                        inv_no$=vectInvoicesMaster!.get(demote_row+16)
                         if vectInvoicesMaster!.get(demote_row)="Y"
                             gosub get_vectInvoices_offset
                             if vect_offset>=0
@@ -1664,9 +1666,9 @@ rem --- note: if user is both a reviewer and approver, does not currently allow 
 			row = num(rowsSelected!.getItem(item))
 			ap_type$=gridInvoices!.getCellText(row,3)
 			vend_id$=gridInvoices!.getCellText(row,4)
-			inv_no$=gridInvoices!.getCellText(row,6)
+			inv_no$=gridInvoices!.getCellText(row,15)
 			gosub get_master_offset
-			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+			ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 			inv_amt  = num(gridInvoices!.getCellText(row,10))
 			vendorTotalsMap!=callpoint!.getDevObject("vendorTotalsMap")
 			thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
@@ -1845,10 +1847,10 @@ rem ==========================================================================
 		rem --- Get needed data for this row
 		ap_type$=gridInvoices!.getCellText(row,3)
 		vend_id$=gridInvoices!.getCellText(row,4)
-		inv_no$=gridInvoices!.getCellText(row,6)
+		inv_no$=gridInvoices!.getCellText(row,15)
 		gosub get_master_offset
 		vendor_name$ = gridInvoices!.getCellText(row,5)
-		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 		hold_indicator$=iff(gridInvoices!.getCellState(row,7),"**","")
 		inv_amt  = num(gridInvoices!.getCellText(row,10))
 		vendorTotalsMap!=callpoint!.getDevObject("vendorTotalsMap")
@@ -2147,6 +2149,11 @@ rem ==========================================================================
 	attr_inv_col$[column_no,fnstr_pos("MSKO",attr_def_col_str$[0,0],5)]=m1$
 	column_no = column_no +1
 
+	attr_inv_col$[column_no,fnstr_pos("DVAR",attr_def_col_str$[0,0],5)]="AP_INV_NO"
+	attr_inv_col$[column_no,fnstr_pos("LABS",attr_def_col_str$[0,0],5)]="AP_INV_NO"
+	attr_inv_col$[column_no,fnstr_pos("CTLW",attr_def_col_str$[0,0],5)]="60"
+	column_no = column_no +1
+
 	for curr_attr=1 to def_inv_cols
 		attr_inv_col$[0,1] = attr_inv_col$[0,1] + 
 :			pad("APT_PAY." + attr_inv_col$[curr_attr, fnstr_pos("DVAR", attr_def_col_str$[0,0], 5)], 40)
@@ -2331,12 +2338,12 @@ rem ==========================================================================
 			tmpVect!.addItem(str(disc_amt)); rem 12 + 1 for master
 			tmpVect!.addItem(str(pymnt_amt)); rem 13 + 1 for master
 			tmpVect!.addItem(str(ret_amt)); rem 14 + 1 for master
-			tmpVect!.addItem(apt01a.inv_due_date$); rem 15 + 1 for master
-			tmpVect!.addItem(apt01a.vendor_id$); rem 16 + 1 for master
-			tmpVect!.addItem(apt01a.disc_date$); rem 17 + 1 for master
-			tmpVect!.addItem(apt01a.invoice_amt$); rem 18 + 1 for master
-			tmpVect!.addItem(cvs( apt01a.creditcard_id$,2)); rem 19 + 1 for master
-			tmpVect!.addItem(apt01a.ap_inv_no$); rem 20 + 1 for master
+			tmpVect!.addItem(apt01a.ap_inv_no$); rem 15 + 1 for master
+			tmpVect!.addItem(apt01a.inv_due_date$); rem 16 + 1 for master
+			tmpVect!.addItem(apt01a.vendor_id$); rem 17 + 1 for master
+			tmpVect!.addItem(apt01a.disc_date$); rem 18 + 1 for master
+			tmpVect!.addItem(apt01a.invoice_amt$); rem 19 + 1 for master
+			tmpVect!.addItem(cvs( apt01a.creditcard_id$,2)); rem 20 + 1 for master
 
 			mapkey$=apt01a.firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$
 			invoiceMap!.put(mapkey$,tmpVect!)
@@ -2359,7 +2366,7 @@ rem ==========================================================================
 		mapkey$=iter!.next()
 		tmpVect!=cast(BBjVector, invoiceMap!.get(mapkey$))
 
-		vectInvoices!.addAll(tmpVect!.subList(0, 15))
+		vectInvoices!.addAll(tmpVect!.subList(0, 16))
 
 		vectInvoicesMaster!.addItem("Y"); rem 0 for master
 		vectInvoicesMaster!.addAll(tmpVect!)
@@ -2416,9 +2423,9 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 
 				ap_type$=gridInvoices!.getCellText(row_no,3)
 				vend_id$=gridInvoices!.getCellText(row_no,4)
-				inv_no$=gridInvoices!.getCellText(row_no,6)
+				inv_no$=gridInvoices!.getCellText(row_no,15)
 				gosub get_master_offset
-				ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+				ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 				read record (apm01_dev, key=firm_id$+vend_id$, dom=*next) apm01a$
 
 				read record (apt01_dev, key=firm_id$+ap_type$+vend_id$+ap_inv_no$, dom=*next) apt01a$
@@ -2472,13 +2479,13 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 				dummy = fn_setmast_flag(
 :					vectInvoices!.getItem(row_no*numcols+3),
 :					vectInvoices!.getItem(row_no*numcols+4),
-:					vectInvoices!.getItem(row_no*numcols+6),
+:					vectInvoices!.getItem(row_no*numcols+15),
 :					selected_flag$,
 :					gridInvoices!.getCellText(row_no,11))
 				dummy = fn_setmast_amts(
 :					vectInvoices!.getItem(row_no*numcols+3),
 :					vectInvoices!.getItem(row_no*numcols+4),
-:					vectInvoices!.getItem(row_no*numcols+6),
+:					vectInvoices!.getItem(row_no*numcols+15),
 :					gridInvoices!.getCellText(row_no, 12),
 :					str(payment_amt))
 				if gridInvoices!.getCellStyle(row_no,2)=SysGUI!.GRID_STYLE_CHECKED then
@@ -2497,9 +2504,9 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 				rem --- selected=0 means going back to 'new' when no pay auth; if using pay auth, going back to either 2 (reviewed) or 3 (prelim approval)
 				ap_type$=gridInvoices!.getCellText(row_no,3)
 				vend_id$=gridInvoices!.getCellText(row_no,4)
-				inv_no$=gridInvoices!.getCellText(row_no,6)
+				inv_no$=gridInvoices!.getCellText(row_no,15)
 				gosub get_master_offset
-				ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+				ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 				read record (apt01_dev, key=firm_id$+ap_type$+vend_id$+ap_inv_no$, dom=*next) apt01a$
 				
 				read record(apt11_dev, key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$, dom=*next)
@@ -2532,21 +2539,21 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 				dummy = fn_setmast_flag(
 :					vectInvoices!.getItem(row_no*numcols+3),
 :					vectInvoices!.getItem(row_no*numcols+4),
-:					vectInvoices!.getItem(row_no*numcols+6),
+:					vectInvoices!.getItem(row_no*numcols+15),
 :					selected_flag$,
 :					"0")
 				dummy = fn_setmast_amts(
 :					vectInvoices!.getItem(row_no*numcols+3),
 :					vectInvoices!.getItem(row_no*numcols+4),
-:					vectInvoices!.getItem(row_no*numcols+6),
+:					vectInvoices!.getItem(row_no*numcols+15),
 :					str(apt01a.discount_amt),
 :					"0")
 
 				ap_type$=vectInvoices!.getItem(row_no*numcols+3)
 				vend_id$=vectInvoices!.getItem(row_no*numcols+4)
-				inv_no$=vectInvoices!.getItem(row_no*numcols+6)
+				inv_no$=vectInvoices!.getItem(row_no*numcols+15)
 				gosub get_master_offset
-				if vectInvoicesMaster!.getItem(mast_offset+20)<>"" then selected_flag$="5"
+				if vectInvoicesMaster!.getItem(mast_offset+21)<>"" then selected_flag$="5"
 				gridInvoices!.setRowFont(row_no,callpoint!.getDevObject("plain_font"))
 				gridInvoices!.setCellText(row_no,0,statusVect!.get(num(selected_flag$)))
 				gridRow=row_no
@@ -2643,7 +2650,7 @@ rem ==========================================================================
 			endif
 
 			if filter_disc_op$<>"0" and filter_disc_date$<>""
-				if fn_filter_txt(filter_disc_op$,vectInvoicesMaster!.getItem(x-1+18),filter_disc_date$)=0
+				if fn_filter_txt(filter_disc_op$,vectInvoicesMaster!.getItem(x-1+19),filter_disc_date$)=0
 					select_rec$="N"
 				endif
 			endif
@@ -2700,9 +2707,9 @@ rem ==========================================================================
 		curr_row = num(rowsSelected!.getItem(rowCount))
 		ap_type$ = gridInvoices!.getCellText(curr_row,3)
 		vend_id$=gridInvoices!.getCellText(curr_row,4)
-		inv_no$=gridInvoices!.getCellText(curr_row,6)
+		inv_no$=gridInvoices!.getCellText(curr_row,15)
 		gosub get_master_offset
-		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 
 		call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vend_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
 		image_count=num(imageCount$)
@@ -2775,10 +2782,10 @@ rem ==========================================================================
     curr_row = num(rowsSelected!.getItem(0))
     ap_type$ = gridInvoices!.getCellText(curr_row,3)
     vend_id$=gridInvoices!.getCellText(curr_row,4)
-    inv_no$=gridInvoices!.getCellText(curr_row,6)
+    inv_no$=gridInvoices!.getCellText(curr_row,15)
     gosub get_master_offset
     vendor_name$ = gridInvoices!.getCellText(curr_row,5)
-    ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+21)
+    ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
     inv_amt  = num(gridInvoices!.getCellText(curr_row,10))
     pmt_amt=num(gridInvoices!.getCellText(curr_row,13))
     thisVendor_total = cast(BBjNumber, vendorTotalsMap!.get(vend_id$))
@@ -2911,7 +2918,7 @@ undo_review:
 rem ==========================================================================
 rem --- when undoing a reviewed invoice (back to New), updates the grid/vectors
 
-	if vectInvoicesMaster!.getItem(mast_offset+20)="" then
+	if vectInvoicesMaster!.getItem(mast_offset+21)="" then
 		gridInvoices!.setCellText(curr_row,0,statusVect!.get(0));rem 'New'
 	else
 		gridInvoices!.setCellText(curr_row,0,statusVect!.get(5))
@@ -2921,7 +2928,7 @@ rem --- when undoing a reviewed invoice (back to New), updates the grid/vectors
 	dummy = fn_setmast_flag(
 :		vectInvoices!.getItem(curr_row*numcols+3),
 :		vectInvoices!.getItem(curr_row*numcols+4),
-:		vectInvoices!.getItem(curr_row*numcols+6),
+:		vectInvoices!.getItem(curr_row*numcols+15),
 :		"0",
 :		"0")
 
@@ -2943,7 +2950,7 @@ rem --- also promotes remaining invoice(s) for same vendor if the undo has put u
     dummy = fn_setmast_flag(
 :	    vectInvoices!.getItem(curr_row*numcols+3),
 :		vectInvoices!.getItem(curr_row*numcols+4),
-:		vectInvoices!.getItem(curr_row*numcols+6),
+:		vectInvoices!.getItem(curr_row*numcols+15),
 :		"2",
 :		"0")
     if callpoint!.getDevObject("two_sig_req") and thisVendor_total< num(callpoint!.getDevObject("two_sig_amt"))
@@ -2955,7 +2962,7 @@ rem --- also promotes remaining invoice(s) for same vendor if the undo has put u
                 if vectInvoicesMaster!.get(promote_row)="Y"
                     vend_id$=vectInvoicesMaster!.get(promote_row+5)
                     ap_type$=vectInvoicesMaster!.get(promote_row+4)
-                    inv_no$=vectInvoicesMaster!.get(promote_row+7)
+                    inv_no$=vectInvoicesMaster!.get(promote_row+16)
                     gosub get_vectInvoices_offset
                     if vect_offset>=0
                     rem -- if newly-promoted invoice is showing in the grid, set vectInvoices and grid, too
@@ -2994,7 +3001,7 @@ rem        vectInvoices!.setItem(curr_row*numcols,"3")
 rem        dummy = fn_setmast_flag(
 rem :		    vectInvoices!.getItem(curr_row*numcols+3),
 rem :			vectInvoices!.getItem(curr_row*numcols+4),
-rem :			vectInvoices!.getItem(curr_row*numcols+6),
+rem :			vectInvoices!.getItem(curr_row*numcols+15),
 rem :			"3",
 rem :			"0")
     else
@@ -3013,7 +3020,7 @@ rem        vectInvoices!.setItem(curr_row*numcols,"2")
 rem        dummy = fn_setmast_flag(
 rem :		    vectInvoices!.getItem(curr_row*numcols+3),
 rem :			vectInvoices!.getItem(curr_row*numcols+4),
-rem :			vectInvoices!.getItem(curr_row*numcols+6),
+rem :			vectInvoices!.getItem(curr_row*numcols+15),
 rem :			"2",
 rem :			"0")                            
     endif
@@ -3027,10 +3034,10 @@ get_vectInvoices_offset:
 rem ==========================================================================
 
 	vect_offset=-1
-	for vect_x=0 to vectInvoices!.size() step num(user_tpl.gridInvoicesCols$)
+	for vect_x=0 to vectInvoices!.size()-1 step num(user_tpl.gridInvoicesCols$)
 		if vectInvoices!.getItem(vect_x+4)=vend_id$ and
 :			vectInvoices!.getItem(vect_x+3)=ap_type$ and
-:			vectInvoices!.getItem(vect_x+6)=inv_no$
+:			vectInvoices!.getItem(vect_x+15)=inv_no$
 			vect_offset=vect_x
 			exitto vectInvoices_offset_return
 		endif
@@ -3042,10 +3049,10 @@ rem ==========================================================================
 get_master_offset:
 rem ==========================================================================
 	if vectInvoicesMaster!=null() then vectInvoicesMaster!=UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
-	for mast_x=0 to vectInvoicesMaster!.size() step num(user_tpl.MasterCols)
+	for mast_x=0 to vectInvoicesMaster!.size()-1 step num(user_tpl.MasterCols)
 		if vectInvoicesMaster!.getItem(mast_x+5)=vend_id$ and
 :			vectInvoicesMaster!.getItem(mast_x+4)=ap_type$ and
-:			vectInvoicesMaster!.getItem(mast_x+7)=inv_no$
+:			vectInvoicesMaster!.getItem(mast_x+16)=inv_no$
 			mast_offset=mast_x
 			exitto offset_return
 		endif
@@ -3113,9 +3120,9 @@ rem =========================================================
 	if vectInvoicesMaster!=null() then vectInvoicesMaster!=UserObj!.getItem(num(user_tpl.vectInvoicesMasterOfst$))
 	ap_type$ = gridInvoices!.getCellText(gridRow,3)
 	vend_id$=gridInvoices!.getCellText(gridRow,4)
-	inv_no$=gridInvoices!.getCellText(gridRow,6)
+	inv_no$=gridInvoices!.getCellText(gridRow,15)
 	gosub get_master_offset
-	if vectInvoicesMaster!.getItem(mast_offset+20)<>"" then
+	if vectInvoicesMaster!.getItem(mast_offset+21)<>"" then
 		rem --- Set Status cell to bold green italic font
 		gridInvoices!.setCellForeColor(gridRow,0,callpoint!.getDevObject("ccColor"))
 		gridInvoices!.setCellFont(gridRow,0,callpoint!.getDevObject("ccPaidFont"))
@@ -3168,7 +3175,7 @@ rem --- Set Selected Flag and Invoice Amount in InvoiceMaster vector
 		for q=0 to vectInvoicesMaster!.size()-1 step user_tpl.MasterCols
 			if vectInvoicesMaster!.getItem(q+4) = q1$ and
 :				vectInvoicesMaster!.getItem(q+5) = q2$ and
-:				vectInvoicesMaster!.getItem(q+7) = q3$
+:				vectInvoicesMaster!.getItem(q+16) = q3$
 :			then
 				vectInvoicesMaster!.setItem(q+1,flag$)
 				vectInvoicesMaster!.setItem(q+14,f_invamt$)
@@ -3185,7 +3192,7 @@ rem --- Set Discount and Payment Amount in InvoiceMaster vector
 		for q=0 to vectInvoicesMaster!.size()-1 step user_tpl.MasterCols
 			if vectInvoicesMaster!.getItem(q+4) = q1$ and
 :				vectInvoicesMaster!.getItem(q+5) = q2$ and
-:				vectInvoicesMaster!.getItem(q+7) = q3$
+:				vectInvoicesMaster!.getItem(q+16) = q3$
 :			then
 				vectInvoicesMaster!.setItem(q+13,f_disc_amt$)
 				vectInvoicesMaster!.setItem(q+14,f_pmt_amt$)
