@@ -16,14 +16,14 @@
 			<RESTRICT_REBUILD id="ddm_tables.opm_custjobs"></RESTRICT_REBUILD>
 			<RESTRICT_AUTOADD id="ddm_tables.opm_custjobs"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.opm_custjobs">01007514</ASC_COMP_ID>
-			<ASC_PROD_ID id="ddm_tables.opm_custjobs">OP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.opm_custjobs">23.0      </ASC_VERSION_ID>
+			<ASC_PROD_ID id="ddm_tables.opm_custjobs">AD </ASC_PROD_ID>
+			<ASC_VERSION_ID id="ddm_tables.opm_custjobs">23.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.opm_custjobs">D7C465B1EE4C0422955DCA44CD98CD34</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opm_custjobs">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opm_custjobs">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opm_custjobs">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opm_custjobs">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opm_custjobs">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opm_custjobs">20230823</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opm_custjobs">20230508</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opm_custjobs">132530</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opm_custjobs"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opm_custjobs">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opm_custjobs"></DD_ATTR_DKNM>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.opm_custjobs"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.opm_custjobs"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.opm_custjobs"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.opm_custjobs"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.opm_custjobs"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.opm_custjobs"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.opm_custjobs"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.opm_custjobs"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.opm_custjobs"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.opm_custjobs"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.opm_custjobs">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.opm_custjobs">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.opm_custjobs">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.opm_custjobs">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.opm_custjobs">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.opm_custjobs">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.opm_custjobs">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
