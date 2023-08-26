@@ -54,6 +54,7 @@ rem --- Open/Lock files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS"; rem aps-01
     files$[2]="ape-04",ids$[2]="APE_CHECKS",options$[2]="L"
+    files$[3]="apm_ccvend",ids$[3]="apm_ccvend"
     files$[5]="apm-01",ids$[5]="APM_VENDMAST"
     files$[6]="apm-02",ids$[6]="APM_VENDHIST"
     files$[9]="apt-01",ids$[9]="APT_INVOICEHDR"
@@ -74,6 +75,7 @@ call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all]
     if status goto std_exit_no_report
     aps01_dev=channels[1]
     ape04_dev=channels[2]
+    apmCcVend_dev=channels[3]
     apm01_dev=channels[5]
     apm02_dev=channels[6]
     apt01_dev=channels[9]
@@ -91,7 +93,7 @@ call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all]
 
 rem --- Dimension string templates
 
-    dim aps01a$:templates$[1],ape04a$:templates$[2],
+    dim aps01a$:templates$[1],ape04a$:templates$[2],apmCcVend$:templates$[3],
 :       apm01a$:templates$[5],apm02a$:templates$[6],
 :       apt01a$:templates$[9],apt02a$:templates$[10],
 :       apt05a$:templates$[11],apt11a$:templates$[12],apw01a$:templates$[13],       
@@ -536,7 +538,12 @@ rem --- Process apw_checkinvoice (apw01_dev) twice. First for normal printed che
                     rem --- Payables account
     
                     if cashbasis=0
-                       account$=apm10b.gl_ap_acct$
+                       if cvs(apt01a.creditcard_id$,2)="" then
+                           account$=apm10b.gl_ap_acct$
+                       else
+                           findrecord(apmCcVend_dev,key=apt01a.firm_id$+apt01a.creditcard_id$)apmCcVend$
+                           account$=apmCcVend.gl_ap_acct$
+                       endif
                        amount=ape04a.payment_amt+ape04a.discount_amt
                        units=0
                        gosub glrecap
