@@ -1,54 +1,20 @@
 =======================================================================================================================================
- Report Date:   2023-08-23
- Report Branch: AddonSoftware 23.03
- Last Release:  AddonSoftware 23.02
+ Report Date:   2023-08-30
+ Report Branch: AddonSoftware 23.04
+ Last Release:  AddonSoftware 23.03
 =======================================================================================================================================
 
-23.02 released 07/31/2023
-BBjBaristaAddonDemos2302_07-26-2023_1709.jar
+23.03 released 08/28/2023
+BBjBaristaAddonDemos2303_08-23-2023_1521.jar
+
 =======================================================================================================================================
-Revision: 0adb406a2035bbfe963acfa6af92068ac5a00fa9
-Author: Christine <chawkins@basis.com>
-Date: 8/10/2023 12:40:40 PM
+Revision: 802af3c914918558265e35afd04962c6bb1d2aa0
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 8/30/2023 10:28:23 AM
 Message:
-Bug 10704 - GL - getFileInfo().getKeyName() returns null for the three GLE_13PERIOD* files
- - rebuilt the tables and now getKeyName(n) correctly returns the key name
-
-(cherry picked from commit 021dff86784ea776c4aafd4e1621c071233faadf)
+Bug 10713: Moved PO_REC_INVOICED message to the accum_receiver_tot
+subroutine.
 ----
-Modified: data/bar/gle_13periodamt.xml
-Modified: data/bar/gle_13periodrpt.xml
-Modified: data/bar/gle_13periodtot.xml
-Modified: data/gle-05
-Modified: data/gle-08
-Modified: data/gle-09
-
-=======================================================================================================================================
-Revision: bc5b1a00fcd2c169548b7331799248b7318141b3
-Author: Christine <chawkins@basis.com>
-Date: 8/10/2023 2:40:52 PM
-Message:
-Bug 10499 - AD - Install Wizard needs to recursively set permissions to 777 after cloning Addon repo
- - permissions were only being set on directories, not files, and weren't getting set after doing other repo actions like a switch/checkout.
- - also made sure UpgradeCdfDiff directory has correct permissions
- - added close() methods for BufferedReader/FileReader to avoid Java exception "too many open files."
-
-(cherry picked from commit 3eb73d2c0b06207665e0ac0b5df2d20a5da2df3e)
-----
-Modified: ad/src/ado_AO_GitRepoInterface.aon
-Modified: ad/src/adx_installwiz.aon
-Modified: ad/src/adx_upgradewiz.aon
-
-=======================================================================================================================================
-Revision: 39a3ce761ea692f21b657eca7c3843975e27c8fe
-Author: Christine <chawkins@basis.com>
-Date: 8/23/2023 2:38:27 PM
-Message:
-Bug 10712 - AR - Customer Detail Listing can throw licensing nag if OP isn't installed
- - changed branding from OP to AD since this table is accessed from >1 module
-
-(cherry picked from commit f4c275142759ec0a05e23b5bfd44f1947b8dcd17)
-----
-Modified: data/bar/opm_custjobs.xml
-
+Modified: data/bar/poe_invsel.xml
+Modified: data/cdf/poe_invsel.cdf
 
