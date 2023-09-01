@@ -82,7 +82,6 @@ rem --- Parameters
     p[3]=num(ivs01a.desc_len_01$)
     p[4]=num(ivs01a.desc_len_02$)
     p[5]=num(ivs01a.desc_len_03$)
-    if pos(ivs01a.lotser_flag$="SL")>0 ls$="Y"
 
 rem --- Initializations
 
@@ -98,7 +97,7 @@ rem --- Update initializations
     year=num(year$)
     call pgmdir$+"adc_perioddates.aon",period,year,when$,x$,table_chans$[all],status
     if status goto std_exit_no_update
-    if rebuildlot$="N" ls$="N"
+    if rebuildlot$="N"
     call pgmdir$+"adc_progress.aon","N","IVM_ITEMWHSE","","","",7+p[0],0,1,meter_num,status
     
 rem --- Setup SQL to search by item/prod/warehouse within report parameters (i.e. old ivm-03C)    
@@ -154,7 +153,7 @@ rem --- Update ivt-04 beginning balance
         qty=ivm12a.beg_balance
         cost=ivm02a.unit_cost
         gosub init_ivt04
-        if ls$="N" continue
+        if !pos(ivm01a.lotser_flag$="LS") then continue
         if rebuildlot$="N" continue
         read (ivm07_dev,key=ivm02a.firm_id$+ivm02a.warehouse_id$+ivm02a.item_id$+beglot$,dir=0,dom=*next)
         while more

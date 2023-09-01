@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ive_transferdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_transferdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_transferdet">2459977</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_transferdet">20230818</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ive_transferdet">20230818</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ive_transferdet">180528</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ive_transferdet">20230825</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ive_transferdet">20230825</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ive_transferdet">173916</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_transferdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ive_transferdet">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ive_transferdet">BATCH_KEY</DD_ATTR_DKNM>

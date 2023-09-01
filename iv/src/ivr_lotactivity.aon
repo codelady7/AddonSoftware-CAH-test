@@ -85,8 +85,6 @@ rem --- Retrieve parameter records
  
 rem --- Parameters
 
-    if pos(ivs01a.lotser_flag$="LS")=0 then goto std_exit
-
     dim p[5],i[1],info$[20]
     vh$="",m0=0,m0$=""
     p[0]=ivs01a.item_id_len

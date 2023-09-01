@@ -50,7 +50,7 @@ rem --- Open all files
 
     num_files = 7
     open_beg  = 1
-    open_end  = 6
+    open_end  = num_files
     
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
     
@@ -60,6 +60,7 @@ rem --- Open all files
     open_tables$[4]="IVM_ITEMWHSE", open_opts$[4]="OTA"
     open_tables$[5]="IVC_PRODCODE", open_opts$[5]="OTA"
     open_tables$[6]="IVC_WHSECODE", open_opts$[6]="OTA"
+    open_tables$[7]="IVM_LSMASTER", open_opts$[7]="OTA";rem used in the overlay
     
     if num(batch_no$)=0 then let open_opts$[2]=open_opts$[2]+"L"; rem lock only if not batching
 
@@ -71,13 +72,15 @@ rem --- Open all files
     itemwhse_dev   = num( open_chans$[4] )
     prodcode_dev   = num( open_chans$[5] )
     whsecode_dev   = num( open_chans$[6] )
+    lsmaster_dev   = num( open_chans$[7] )
     
     dim ivs_params_rec$:open_tpls$[1]
     dim costchg_rec$:open_tpls$[2]
     dim itemmast_rec$:open_tpls$[3]
     dim itemwhse_rec$:open_tpls$[4]
     dim prodcode_rec$:open_tpls$[5]
-    dim whsecode_rec$:open_tpls$[6] 
+    dim whsecode_rec$:open_tpls$[6]
+    dim lsmaster_rec$:open_tpls$[7] 
     
 rem --- Parameters
 
@@ -91,18 +94,7 @@ rem --- Parameters
     p[4]=num(ivs_params_rec.desc_len_02$)
     p[5]=num(ivs_params_rec.desc_len_03$)
     
-    if pos(ivs_params_rec.lotser_flag$="LS") then ls$="Y" else ls$="N"
-    
-rem --- Additional opens
-rem --- This is used in the overlay, not here
 
-    if ls$="Y" then 
-        open_beg = 7, open_end = 7
-        open_tables$[7]="IVM_LSMASTER", open_opts$[7]="OTA"
-        gosub open_tables
-        lsmaster_dev = num( open_chans$[7] )
-        dim lsmaster_rec$:open_tpls$[7] 
-    endif
 
 rem --- Initializations
 

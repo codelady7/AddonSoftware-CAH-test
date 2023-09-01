@@ -99,7 +99,6 @@ rem --- Retrieve parameter records
     p[4]=num(params_rec.desc_len_02$)
     p[5]=num(params_rec.desc_len_03$)
 	
-	if pos(params_rec.lotser_flag$ = "LS") then ls$ = "Y" else ls$ = "N"
 	lf$ = params_rec.lifofifo$
 
 rem --- Initializations
@@ -228,7 +227,7 @@ rem --- Read next ivm-01 record
 		item_id$ = itemmast_rec.item_id$
 		
 rem     Lot/Serial?
-	    if ls$ = "Y" and itemmast_rec.lotser_item$ = "Y" and itemmast_rec.inventoried$ = "Y" then continue
+	    if pos(itemmast_rec.lotser_flag$ = "LS") and itemmast_rec.inventoried$ = "Y" then continue
 		
 	    first$ = firm_id$ + whse_id$ + item_id$
 	    rem d0$(1)=first$

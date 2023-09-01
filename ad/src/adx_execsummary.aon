@@ -757,7 +757,6 @@ rem --- than using the the common subroutines that the other applications use.
         rem --- If inventory is installed and any firm is either using lotted/serialized
         rem --- inventory or LIFO/FIFO costing then additional files need to be opened.
 
-        ls=0
         lf=0
 
         rem --- Check inventory parameters for each firm
@@ -767,24 +766,26 @@ rem --- than using the the common subroutines that the other applications use.
             find record (adm06_dev,key=firm_id$,dom=*continue) adm06a$
             find record (ivs_params_dev,key=firm_id$+"IV00",dom=*continue) ivs_params$
             if pos(ivs_params.lifofifo$="LF") lf=1
-            if pos(ivs_params.lotser_flag$="LS") ls=1
         next firm
 
         rem --- Open lot/serial and/or LIFO/FIFO files if necessary
 
         files=2,begfile=1,endfile=files
         dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
-        if lf files$[1]="ivm-04",ids$[1]="IVM_ITEMTIER"
-        if ls files$[2]="ivm-07",ids$[2]="IVM_LSMASTER"
-        if ls or lf call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
+        files$[1]="ivm-07",ids$[1]="IVM_LSMASTER"        
+        if lf files$[2]="ivm-04",ids$[2]="IVM_ITEMTIER"
+
+        call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
         if status goto std_exit
-        ivm04_dev=channels[1]
-        ivm07_dev=channels[2]
+        ivm07_dev=channels[1]
+        ivm04_dev=channels[2]
+
 
         rem --- Dimension string templates
 
-        if lf dim ivm04a$:templates$[1]
-        if ls dim ivm07a$:templates$[2]
+        dim ivm07a$:templates$[1]
+        if lf dim ivm04a$:templates$[2]
+
 
         rem --- For each valid firm
 
@@ -799,7 +800,6 @@ rem --- than using the the common subroutines that the other applications use.
             rem --- Initializations for the current firm
 
             dim change[days]
-            ls=0
             lf=0
             onhand=0
             committed=0
@@ -811,7 +811,6 @@ rem --- than using the the common subroutines that the other applications use.
 
             find record (ivs_params_dev,key=firm_id$+"IV00",dom=*continue) ivs_params$
             if pos(ivs_params.lifofifo$="LF") lf=1
-            if pos(ivs_params.lotser_flag$="LS") ls=1
 
             rem --- Position Inventory Master (ivm-01) file
 
@@ -864,9 +863,7 @@ rem --- than using the the common subroutines that the other applications use.
                     rem --- lotted or serialized inventory in order to calculate the
                     rem --- average cost 
 
-                    while ls
-                        if ivm01a.lotser_item$<>"Y" break
-                        if ivm01a.inventoried$<>"Y" break
+                    if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" 
                         read (ivm07_dev,key=warehouse$,dom=*next)
                         while 1
                             k$=key(ivm07_dev,end=*break)
@@ -878,8 +875,7 @@ rem --- than using the the common subroutines that the other applications use.
                             endif
                         wend
                         cost=fnavgcost(quantity,total,qty_onhand,cost)
-                        break
-                    wend
+                    endif
 
                     rem --- Accumulate committed and on hand amounts
 

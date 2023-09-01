@@ -55,7 +55,7 @@ rem --- Close Physcode file, it's locked by the Options Entry code
 
 rem --- Open all files
 
-    num_files = 6
+    num_files = 7
     open_beg  = 1
     open_end  = num_files
 
@@ -66,6 +66,7 @@ rem --- Open all files
     open_tables$[3]="IVC_PHYSCODE", open_opts$[3]="OTAL"
     open_tables$[5]="IVM_ITEMMAST", open_opts$[5]="OTA"
 	open_tables$[6]="IVC_WHSECODE", open_opts$[6]="OTA"
+    open_tables$[7]="IVM_LSMASTER", open_opts$[7]="OTA"
 
     gosub open_tables
 
@@ -74,28 +75,18 @@ rem --- Open all files
     physcode_dev = num(open_chans$[3])
     itemmast_dev = num(open_chans$[5])
 	whsecode_dev = num(open_chans$[6])
+    lsmaster_dev = num(open_chans$[7])
 
     dim params_rec$:open_tpls$[1]
     dim physical_rec$:open_tpls$[2]
     dim physcode_rec$:open_tpls$[3]
     dim itemmast_rec$:open_tpls$[5]
 	dim whsecode_rec$:open_tpls$[6]
+    dim lsmaster_rec$:open_tpls$[7]
 
 rem --- Parameters
 
-    find record (params_dev, key=firm_id$+"IV00", dom=std_missing_params) params_rec$	
-    if pos(params_rec.lotser_flag$ = "LS") then ls$="Y" else ls$ = "N"
-
-rem --- Open Lot/serial file if necessary
-
-    if ls$ = "Y" then 
-        open_beg = 1
-        open_end = 1
-        open_tables$[1]="IVM_LSMASTER", open_opts$[1]="OTA"
-        gosub open_tables
-        lsmaster_dev = num(open_chans$[1])
-        dim lsmaster_rec$:open_tpls$[1]
-    endif
+    find record (params_dev, key=firm_id$+"IV00", dom=std_missing_params) params_rec$
 
 rem --- Parameters
 
@@ -112,7 +103,7 @@ rem --- Initializations
 
     precision p[1]
 	
-    if ls$="Y" then lsh$=Translate!.getTranslation("AON_LOT/SERIAL_NUMBER") else lsh$=""
+    lsh$=Translate!.getTranslation("AON_LOT/SERIAL_NUMBER")
 	if quantity$="Y" then sqh$=Translate!.getTranslation("AON_QUANTITY") else sqh$=" "
 	
 rem --- Resize masks
@@ -155,10 +146,6 @@ rem --- Print positions
     endif
 	
     dim j9$(width-o[6],"_")
-
-    if ls$="Y" then 
-		o[2] = o[3] - max(p[2], len(lsh$)) - 1
-	endif
 	
 rem --- Document initializations
 
@@ -243,11 +230,7 @@ rem --- Retrieve item master
 			find record (itemmast_dev, key=firm_id$+item_id$, dom=*next) itemmast_rec$
 			description$=fnitem$(itemmast_rec.item_desc$,p[3],p[4],p[5])
 			number=number+1
-                        this_item_not_lotser = 1
-                        if ls$="N" or itemmast_rec.lotser_item$ <> "Y" or itemmast_rec.inventoried$ <> "Y" then
-                            this_item_not_lotser = 0
-                        endif
-                        this_item_not_lotser = (ls$ = "N" or itemmast_rec.lotser_item$ <> "Y" or itemmast_rec.inventoried$ <> "Y")
+            this_item_not_lotser = (!pos(itemmast_rec.lotser_flag$="LS") or itemmast_rec.inventoried$ <> "Y")
 			
 rem --- Print detail line (non-lotted/serialized)
 
@@ -286,7 +269,7 @@ rem     The only reason a lot/serial# should be blank is if it is missing.
 				print_loc$ = fill(10, ".")
 
 rem 			Lotted				
-				if params_rec.lotser_flag$ = "L" then
+				if itemmast_rec.lotser_flag$ = "L" then
 					qty = physical_rec.act_phys_cnt
 					gosub print_detail
 				else
@@ -306,7 +289,7 @@ rem --- Retrieve and print lot/serial record, determine source of location
 				print_loc$ = lsmaster_rec.ls_location$
 				
 rem 			Lotted				
-				if params_rec.lotser_flag$ = "L" then
+				if itemmast_rec.lotser_flag$ = "L" then
 					qty = lsmaster_rec.qty_on_hand
 					gosub print_detail
 				else

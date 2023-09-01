@@ -667,6 +667,7 @@ rem --- should only be enabled if on an inventory type WO, if item is lotted/ser
 	callpoint!.setDevObject("qty_cls_todt",callpoint!.getColumnData("SFE_WOMASTR.QTY_CLS_TODT"))
 	callpoint!.setDevObject("closed_cost",callpoint!.getColumnData("SFE_WOMASTR.CLOSED_COST"))
 	callpoint!.setDevObject("wolotser_action","schedule")
+	callpoint!.setDevObject("lotser",callpoint!.getColumnData("SFE_WOMASTR.LOTSER_FLAG"))
 
 	key_pfx$=firm_id$+callpoint!.getColumnData("SFE_WOMASTR.WO_LOCATION")+callpoint!.getColumnData("SFE_WOMASTR.WO_NO")
 

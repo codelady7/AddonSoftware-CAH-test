@@ -93,8 +93,6 @@ rem --- Retrieve parameter records
     ivs01a_key$=firm_id$+"IV00"
     find record (ivs01_dev,key=ivs01a_key$,err=std_missing_params) ivs01a$ 
     iv_firm_id$="Y"
-    if pos(ivs01a.lotser_flag$="LS")>0 ls_firm_id$="Y" else ls_firm_id$="N"
-    i0=num(ivs01a.item_id_len$)
     precision num(ivs01a.precision$)
     
     find (ars01_dev,key=firm_id$+"AR00",dom=*next); op_firm_id$="Y"
@@ -377,10 +375,8 @@ Entry_File: rem --- Entry file contains records
         case 3; rem materials
             find (sfs01_dev,key=firm_id$+"SF00",dom=*break); rem "Verify WO installedfor this Firm
             find record (ivs01_dev,key=firm_id$+"IV00",dom=*break) ivs01a$; rem "Verify IVinstalled for this Firm
-            if pos(ivs01a.lotser_flag$="LS")<>0 then
-                msg_tokens$[1]=msg_tokens$[1]+Translate!.getTranslation("AON_MATERIALS_ISSUES_REGISTER_AND_UPDATE_MUST_BE_RUN.")+$0A$
-                index=index+1
-            endif
+            msg_tokens$[1]=msg_tokens$[1]+Translate!.getTranslation("AON_MATERIALS_ISSUES_REGISTER_AND_UPDATE_MUST_BE_RUN.")+$0A$
+            index=index+1
         break
         case default
         break

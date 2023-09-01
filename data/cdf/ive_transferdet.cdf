@@ -12,7 +12,7 @@ rem --- Set/display item data
 	item_id$=callpoint!.getColumnData("IVE_TRANSFERDET.ITEM_ID")
 	gosub get_item
 	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("inventoried")="Y" then
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",0)
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",1)
 	endif
 
 [[IVE_TRANSFERDET.AGRN]]
@@ -83,7 +83,7 @@ rem --- Initializations for new row
 	callpoint!.setDevObject("prev_qty",0)
 	callpoint!.setDevObject("qty_ok","")
 
-	callpoint!.setColumnEnabled("IVE_TRANSFERDET.LOTSER_NO",0)
+	callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",0)
 
 [[IVE_TRANSFERDET.AWRI]]
 rem --- Commit inventory
@@ -300,14 +300,13 @@ rem --- Initialize row fields
 rem --- Enable/Disable Lot/Serial Number and Transfer Qty
 	callpoint!.setColumnData("IVE_TRANSFERDET.ITEM_ID",item_id$)
 	if pos(callpoint!.getDevObject("lotser_flag")="LS") then
-		trans_qty=1
-		callpoint!.setColumnData("IVE_TRANSFERDET.TRANS_QTY",str(trans_qty),1)
-		callpoint!.setColumnData("IVE_TRANSFERDET.EXT_COST", str(ivm02a.unit_cost * trans_qty),1)
-
+		if callpoint!.getDevObject("lotser_flag")="S"
+			trans_qty=1
+			callpoint!.setColumnData("IVE_TRANSFERDET.TRANS_QTY",str(trans_qty),1)
+		endif
 		if callpoint!.getDevObject("inventoried")="Y" then
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",1)
 			callpoint!.setFocus(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",1)
-			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",0)
 		else
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",0)
 			callpoint!.setFocus(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",1)

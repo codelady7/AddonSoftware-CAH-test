@@ -42,7 +42,7 @@ rem --- Assign form input values to local variables
 
 rem --- Open all files
 
-    num_files = 6
+    num_files = 7
     open_beg  = 1
     open_end  = num_files
 
@@ -54,6 +54,7 @@ rem --- Open all files
     open_tables$[4]="IVM_ITEMWHSE", open_opts$[4]="OTA"
     open_tables$[5]="IVM_ITEMMAST", open_opts$[5]="OTA"
     open_tables$[6]="IVC_WHSECODE", open_opts$[6]="OTA"
+    open_tables$[7]="IVM_LSMASTER", open_opts$[7]="OTA"
 
     gosub open_tables
 
@@ -63,6 +64,7 @@ rem --- Open all files
     itemwhse_dev   = num(open_chans$[4])
     itemmast_dev   = num(open_chans$[5])
     whsecode_dev   = num(open_chans$[6])
+    lsmaster_dev   = num(open_chans$[7])
 
     dim ivs_params_rec$:open_tpls$[1]
     dim physical_rec$:open_tpls$[2]
@@ -70,23 +72,13 @@ rem --- Open all files
     dim itemwhse_rec$:open_tpls$[4]
     dim itemmast_rec$:open_tpls$[5]
     dim whsecode_rec$:open_tpls$[6]
-
+    dim lsmaster_rec$:open_tpls$[7]
 rem --- Parameter record
 
     find record (ivs_params_dev, key=firm_id$+"IV00", dom=std_missing_params) ivs_params_rec$	
-    if pos(ivs_params_rec.lotser_flag$ = "LS") then ls$="Y" else ls$ = "N"
     lf$=ivs_params_rec.lifofifo$
 
 rem --- Additional/optional opens
-
-    if ls$ = "Y" then 
-        open_beg = 1
-        open_end = 1
-        open_tables$[1]="IVM_LSMASTER", open_opts$[1]="OTA"
-        gosub open_tables
-        lsmaster_dev = num(open_chans$[1])
-        dim lsmaster_rec$:open_tpls$[1]
-    endif
 
     if pos(lf$="LF") then
         open_beg = 1
@@ -134,7 +126,7 @@ rem --- Initializations
     dim o[10],item[6],cycle[6],report[6]
     width=132
     done=0
-    if ls$="Y" then lsh$=Translate!.getTranslation("AON_LOT/SERIAL_NUMBER") else lsh$=""
+    lsh$=Translate!.getTranslation("AON_LOT/SERIAL_NUMBER")
     more=1
     detail_printed = 0
     item_printed = 0
@@ -242,7 +234,7 @@ rem --- Get next cycle
 
         rem --- Retrieve lot/serial master
 
-            this_item_lot_ser = (ls$ = "Y" and itemmast_rec.lotser_item$ = "Y" and itemmast_rec.inventoried$ = "Y")
+            this_item_lot_ser = (pos(itemmast_rec.lotser_flag$ = "LS") and itemmast_rec.inventoried$ = "Y")
 
             if this_item_lot_ser then
                 lsmaster_key$ = firm_id$ + whse_id$ + item_id$
@@ -250,7 +242,7 @@ rem --- Get next cycle
                 lsmaster_rec.unit_cost = cost
 
                 if cvs(physical_rec.lotser_no$,2)="" then
-                    if physical_rec.freeze_qty <> 0 then physical_rec.lotser_item$ = "Y"; rem --- Count always entered for Missing (why?)
+                    if physical_rec.freeze_qty <> 0 then physical_rec.lotser_flag$ = itemmast_rec.lotser_flag$; rem --- Count always entered for Missing (why?)
                     physical_rec.lotser_no$   = Translate!.getTranslation("AON_MISSING")
                     lsmaster_rec.ls_location$ = ".........."
                 endif
@@ -277,7 +269,7 @@ rem --- Get next cycle
             t[5] = t[1]-t[3]
             mark$=""
 
-            if ls$<>"Y" and cvs(physical_rec.lotser_no$,2)<>Translate!.getTranslation("AON_NONE") and physical_rec.lotser_item$<>"Y" then 
+            if cvs(physical_rec.lotser_no$,2)<>"" and !pos(physical_rec.lotser_flag$="LS") then 
             rem t[6]=1
                 mark$="*"
             endif

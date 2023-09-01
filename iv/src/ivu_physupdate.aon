@@ -76,11 +76,11 @@ rem --- Get next cycle
 
         rem --- Lotted/Serialized Item Break?
 
-            if ls$ = "Y" and pos(lastitem$=physical_key$) <> 1 then 
+            if pos(physical_rec.lotser_flag$="LS") and pos(lastitem$=physical_key$) <> 1 then 
                 gosub lot_ser_item_break
             endif
 
-            if ls$ <> "Y" or pos(lastitem$=physical_key$) <> 1 then 
+            if !pos(physical_rec.lotser_flag$="LS") or pos(lastitem$=physical_key$) <> 1 then 
 
             rem --- Selected for Phys Inventory?
 
@@ -238,10 +238,10 @@ rem --- Is Next Item Lotted/Serialized?
 
     lsitem$ = "N"
 
-    if physical_rec.lotser_item$ = "Y" then 
+    if pos(physical_rec.lotser_flag$ = "LS") then 
         find record (itemmast_dev,key=firm_id$+item_id$, dom=*endif) itemmast_rec$
 
-        if itemmast_rec.lotser_item$ = "Y" and itemmast_rec.inventoried$ = "Y" then
+        if pos(itemmast_rec.lotser_flag$ = "LS") and itemmast_rec.inventoried$ = "Y" then
             lsitem$="Y"
         endif
 
