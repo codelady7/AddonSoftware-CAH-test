@@ -131,18 +131,42 @@ rem --- Create apt-01 record
         apt01a.invoice_bal=apt01a.invoice_amt
         apt01a$ = field(apt01a$)
         writerecord(apt01_dev)apt01a$
+
+        rem --- Capture payment history for this credit card purchase
+        redim aptCheckHistory$
+        aptCheckHistory.firm_id$=poe05a.firm_id$
+        aptCheckHistory.ap_type$=poe05a.ap_type$
+        aptCheckHistory.bnk_acct_cd$=""
+        aptCheckHistory.check_no$=poe05a.creditcard_id$
+        aptCheckHistory.vendor_id$=poe05a.vendor_id$
+        aptCheckHistory.ap_inv_no$=poe05a.ap_inv_no$
+        aptCheckHistory.trans_type$="X"
+        aptCheckHistory.ap_dist_code$=poe05a.ap_dist_code$
+        aptCheckHistory.check_date$=poe05a.cc_trans_date$
+        aptCheckHistory.vendor_name$=apm01a.vendor_name$
+        aptCheckHistory.invoice_amt=poe05a.invoice_amt
+        aptCheckHistory.discount_amt=poe05a.discount_amt
+        aptCheckHistory.retention=poe05a.retention
+        writerecord(aptCheckHistory_dev)aptCheckHistory$
         
         rem --- Capture the original vendor was paid for this invoice
-        redim aptVendPayments$
-        aptVendPayments.firm_id$=poe05a.firm_id$
-        aptVendPayments.vendor_id$=poe05a.vendor_id$
-        aptVendPayments.check_no$=poe05a.creditcard_id$
-        aptVendPayments.bnk_acct_cd$=""
-        aptVendPayments.acct_desc$=apmCcVend.cc_desc$
-        aptVendPayments.check_date$=poe05a.cc_trans_date$
-        aptVendPayments.trans_type$="X"
-        aptVendPayments.payment_amt=poe05a.invoice_amt-poe05a.discount_amt-poe05a.retention
-        aptVendPayments$ = field(aptVendPayments$)
+        foundRec=0      
+        aptVendPayments_key$=aptCheckHistory.firm_id$+aptCheckHistory.vendor_id$+aptCheckHistory.check_no$+aptCheckHistory.bnk_acct_cd$+aptCheckHistory.check_date$
+        readrecord(aptVendPayments_dev,key=aptVendPayments_key$,dom=*next)aptVendPayments$; foundRec=1
+        if !foundRec then
+            redim aptVendPayments$
+            aptVendPayments.firm_id$=aptCheckHistory.firm_id$
+            aptVendPayments.vendor_id$=aptCheckHistory.vendor_id$
+            aptVendPayments.check_no$=aptCheckHistory.check_no$
+            aptVendPayments.bnk_acct_cd$=""
+            aptVendPayments.acct_desc$=apmCcVend.cc_desc$
+            aptVendPayments.check_date$=aptCheckHistory.check_date$
+            aptVendPayments.trans_type$="X"
+            aptVendPayments.payment_amt=aptCheckHistory.invoice_amt-aptCheckHistory.discount_amt-aptCheckHistory.retention
+            aptVendPayments$ = field(aptVendPayments$)
+        else
+            aptVendPayments.payment_amt=aptVendPayments.payment_amt+aptCheckHistory.invoice_amt-aptCheckHistory.discount_amt-aptCheckHistory.retention
+        endif
         writerecord(aptVendPayments_dev)aptVendPayments$
     endif
             

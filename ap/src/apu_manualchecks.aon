@@ -420,7 +420,7 @@ rem --- All done
 
 updateAptVendPayments: rem --- Update APT_VENDPAYMENTS with new data from APT_CHECKHISTORY
     foundRec=0      
-    aptVendPayments_key$=apt05a1.firm_id$+apt05a1.vendor_id$+apt05a1.check_no$+apt05a1.bnk_acct_cd$
+    aptVendPayments_key$=apt05a1.firm_id$+apt05a1.vendor_id$+apt05a1.check_no$+apt05a1.bnk_acct_cd$+apt05a1.check_date$
     readrecord(aptVendPayments_dev,key=aptVendPayments_key$,dom=*next)aptVendPayments$; foundRec=1
     if !foundRec then
         redim aptVendPayments$

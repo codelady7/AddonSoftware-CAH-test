@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_invhdr">BB6FBA75B62EE6C302E4F329B4A6671F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_invhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_invhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_invhdr">20230809</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_invhdr">20230809</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_invhdr">103644</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_invhdr">20230906</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_invhdr">20230906</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_invhdr">112728</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_invhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.poe_invhdr">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_invhdr"></DD_ATTR_DKNM>
@@ -227,6 +227,12 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
 		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.poe_invhdrcreditcard_idapm_ccvend">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_invhdrcreditcard_idapm_ccvend">POE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_invhdrcreditcard_idapm_ccvend">CREDITCARD_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_invhdrcreditcard_idapm_ccvend">APM_CCVEND      </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_invhdrcreditcard_idapm_ccvend">FK_POE_INVHDR_CREDITCARD_ID_APM_CCVEND                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
 		<RECORD id="ddm_table_ref.poe_invhdrvendor_idapm_vendmast">
 			<DD_TABLE_ALIAS id="ddm_table_ref.poe_invhdrvendor_idapm_vendmast">POE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.poe_invhdrvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
@@ -236,6 +242,24 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_refcol">
 		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">POE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">CREDITCARD_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">APM_CCVEND      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">POE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">CREDITCARD_ID   </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">APM_CCVEND      </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">CREDITCARD_ID   </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_invhdrcreditcard_idapm_ccvend0002">CREDITCARD_ID   </FK_TABLE_COL>
+		</RECORD>
 		<RECORD id="ddm_table_refcol.poe_invhdrvendor_idapm_vendmast0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_invhdrvendor_idapm_vendmast0001">POE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_refcol.poe_invhdrvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
@@ -1744,6 +1768,16 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.poe_invhdrpayment_grpu">POE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.poe_invhdrpayment_grpu">PAYMENT_GRP     </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.poe_invhdrpayment_grpu">u</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.poe_invhdrcreditcard_idr">
+			<DD_TABLE_ALIAS id="ddm_column_opts.poe_invhdrcreditcard_idr">POE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.poe_invhdrcreditcard_idr">CREDITCARD_ID   </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.poe_invhdrcreditcard_idr">r</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.poe_invhdrcreditcard_idv">
+			<DD_TABLE_ALIAS id="ddm_column_opts.poe_invhdrcreditcard_idv">POE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.poe_invhdrcreditcard_idv">CREDITCARD_ID   </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.poe_invhdrcreditcard_idv">v</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.poe_invhdrentered_byg">
 			<DD_TABLE_ALIAS id="ddm_column_opts.poe_invhdrentered_byg">POE_INVHDR      </DD_TABLE_ALIAS>

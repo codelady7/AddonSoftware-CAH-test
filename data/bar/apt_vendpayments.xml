@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.apt_vendpayments">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apt_vendpayments">20220727</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.apt_vendpayments">20230811</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apt_vendpayments">20230811</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apt_vendpayments">180354</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.apt_vendpayments">20230905</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apt_vendpayments">165032</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apt_vendpayments"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apt_vendpayments"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apt_vendpayments"></DD_ATTR_DKNM>
@@ -210,6 +210,19 @@
 			<DD_SEGMENT_UNIQ id="ddm_key_segs.apt_vendpayments0004">N</DD_SEGMENT_UNIQ>
 			<DD_SEGMENT_MATH id="ddm_key_segs.apt_vendpayments0004">N</DD_SEGMENT_MATH>
 			<DD_SEGMENT_NUM id="ddm_key_segs.apt_vendpayments0004">N</DD_SEGMENT_NUM>
+		</RECORD>
+		<RECORD id="ddm_key_segs.apt_vendpayments0005">
+			<DD_TABLE_ALIAS id="ddm_key_segs.apt_vendpayments0005">APT_VENDPAYMENTS</DD_TABLE_ALIAS>
+			<DD_KEY_NUMBER id="ddm_key_segs.apt_vendpayments0005">00</DD_KEY_NUMBER>
+			<DD_SEGMENT_SEQ id="ddm_key_segs.apt_vendpayments0005">05</DD_SEGMENT_SEQ>
+			<DD_SEGMENT_COL id="ddm_key_segs.apt_vendpayments0005">CHECK_DATE</DD_SEGMENT_COL>
+			<DD_SEGMENT_POS id="ddm_key_segs.apt_vendpayments0005"></DD_SEGMENT_POS>
+			<DD_SEGMENT_OFF id="ddm_key_segs.apt_vendpayments0005"></DD_SEGMENT_OFF>
+			<DD_SEGMENT_LEN id="ddm_key_segs.apt_vendpayments0005"></DD_SEGMENT_LEN>
+			<DD_SEGMENT_SORT id="ddm_key_segs.apt_vendpayments0005">N</DD_SEGMENT_SORT>
+			<DD_SEGMENT_UNIQ id="ddm_key_segs.apt_vendpayments0005">N</DD_SEGMENT_UNIQ>
+			<DD_SEGMENT_MATH id="ddm_key_segs.apt_vendpayments0005">N</DD_SEGMENT_MATH>
+			<DD_SEGMENT_NUM id="ddm_key_segs.apt_vendpayments0005">N</DD_SEGMENT_NUM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
