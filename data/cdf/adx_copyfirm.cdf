@@ -566,7 +566,9 @@ rem ==========================================================================
 			if ddm_tables.asc_prod_id$ <> "ADB" or
 :				(ddm_tables.asc_prod_id$="ADB" and
 :				 (cvs(ddm_tables.dd_table_alias$,2)="ADS_MASKS" or
-:				 cvs(ddm_tables.dd_table_alias$,2)="ADS_SEQUENCES"))
+:				 cvs(ddm_tables.dd_table_alias$,2)="ADS_SEQUENCES" or
+:				 cvs(ddm_tables.dd_table_alias$,2)="ADM_FIRMS" or
+:				 cvs(ddm_tables.dd_table_alias$,2)="ADQ_FAXEMAIL"))
 
 				rem --- Skip files that haven't been created yet
 				tablePath$=cvs(ddm_tables.dd_table_path$,3)
@@ -624,21 +626,16 @@ rem ==========================================================================
 
 	while 1
 		read record(adm_modules_dev,end=*break) adm_modules_tpl$
-
 		feature$=cvs(adm_modules_tpl.asc_comp_id$,2)+cvs(adm_modules_tpl.asc_prod_id$,2)
 		version$=cvs(adm_modules_tpl.version_id$,3)
-
-		call stbl("+DIR_SYP")+"bax_lcheckout.bbj",feature$,version$,rd_check_handle,rd_license_type$,rd_license_status$,table_chans$[all]
-
-		if checkout<>-1 or err=0 or err=100
-			lcheckin(checkout,err=*next)
-			if rd_license_status$<>"INVALID" and
-:			   pos(adm_modules_tpl.asc_comp_id$+adm_modules_tpl.asc_prod_id$="01007514DDB01007514SQB",11)=0
-				modules$=modules$+pad(adm_modules_tpl.asc_prod_id$,3)
-			endif
+		lic_handle=lcheckout(feature$,version$,0,err=*continue)
+		if pos(feature$="01007514DDB01007514SQB",11)=0
+			modules$=modules$+pad(adm_modules_tpl.asc_prod_id$,3)
 		endif
+		lcheckin(lic_handle,err=*next)
 	wend
 
+	if !pos("ADB"=modules$,3) then modules$=modules$+"ADB"
 	callpoint!.setDevObject("modules",modules$)
 
 	return
