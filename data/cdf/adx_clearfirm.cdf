@@ -565,7 +565,6 @@ rem ==========================================================================
 checkout_licenses: rem --- checkout licenses each module
 rem ==========================================================================
 
-
 	rem --- Checkout the licenses for each module to make sure we can open the tables.
 
 	adm_modules_dev=fnget_dev("ADM_MODULES")
@@ -578,19 +577,14 @@ rem ==========================================================================
 		read record(adm_modules_dev,end=*break) adm_modules_tpl$
 		feature$=cvs(adm_modules_tpl.asc_comp_id$,2)+cvs(adm_modules_tpl.asc_prod_id$,2)
 		version$=cvs(adm_modules_tpl.version_id$,3)
-
-		if adm_modules_tpl.sys_install$="Y" and pos(adm_modules_tpl.asc_comp_id$+adm_modules_tpl.asc_prod_id$="01007514ADB01007514DDB01007514SQB",11)=0
-			checkout=-1
-			call stbl("+DIR_SYP")+"bax_lcheckout.bbj",feature$,version$,checkout,rd_license_type$,rd_license_status$,table_chans$[all]
-			if checkout<>-1 or err=0 or err=100
-				lcheckin(checkout,err=*next)
-				if rd_license_status$<>"INVALID"   
-					modules$=modules$+pad(adm_modules_tpl.asc_prod_id$,3)
-				endif
-			endif
+		lic_handle=lcheckout(feature$,version$,0,err=*continue)
+		if pos(feature$="01007514DDB01007514SQB",11)=0
+			modules$=modules$+pad(adm_modules_tpl.asc_prod_id$,3)
 		endif
+		lcheckin(lic_handle,err=*next)
 	wend
 
+	if !pos("ADB"=modules$,3) then modules$=modules$+"ADB"
 	callpoint!.setDevObject("modules",modules$)
 
 	return
@@ -835,4 +829,6 @@ rem --- fn_filter_txt: Check Operator data for text fields
 rem ==========================================================================
 #include [+ADDON_LIB]std_missing_params.aon
 rem ==========================================================================
+
+
 
