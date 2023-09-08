@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-09-07
+ Report Date:   2023-09-08
  Report Branch: AddonSoftware 23.04
  Last Release:  AddonSoftware 23.03
 =======================================================================================================================================
@@ -30,5 +30,21 @@ Bug 10412 - IV - Use header-detail grid format for Inventory Transfer Entry form
 ----
 Modified: data/sync/adm_mnu_item~[01007514IV].xml
 Modified: data/sync/adm_mnu_trans~[01007514IV].xml
+
+=======================================================================================================================================
+Revision: d050edc67528fc48ce396154e259bb2e76519866
+Author: Christine <chawkins@basis.com>
+Date: 9/8/2023 5:23:28 PM
+Message:
+Bug 10718 - AD - Utilities to clear firm or copy from firm to firm can give bogus license nags
+ - use lcheckout directly rather than calling bax_lcheckout so we can set the option not to nag; instead, if no license, skip adding to the modules$ string.
+
+(cherry picked from commit 9d2204f8ffeb2fcaf6d223f407534474ec580d20)
+----
+Modified: data/bar/adx_clearfirm.xml
+Modified: data/bar/adx_copyfirm.xml
+Modified: data/cdf/adx_clearfirm.cdf
+Modified: data/cdf/adx_copyfirm.cdf
+
 
 
