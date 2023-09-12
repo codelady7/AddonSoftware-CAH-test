@@ -86,7 +86,7 @@ rem --- Get any associated Lots/SerialNumbers
 	sqlprep$=sqlprep$+" WHERE firm_id="       +"'"+ firm_id$+"'"
     sqlprep$=sqlprep$+"   AND trans_status="  +"'E'"
 	sqlprep$=sqlprep$+"   AND ar_type="       +"'"+ ar_type$+"'"
-	sqlprep$=sqlprep$+"   AND customer_id= ?"   +"'"+ customer_id$+"'"
+    sqlprep$=sqlprep$+"   AND customer_id= ?"
 	sqlprep$=sqlprep$+"   AND order_no="      +"'"+ order_no$+"'"
     sqlprep$=sqlprep$+"   AND ar_inv_no="     +"'"+ ar_inv_no$+"'"
 	sqlprep$=sqlprep$+"   AND orddet_seq_ref="+"'"+ ope11_internal_seq_no$+"'"
