@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-09-08
+ Report Date:   2023-09-12
  Report Branch: AddonSoftware 23.04
  Last Release:  AddonSoftware 23.03
 =======================================================================================================================================
@@ -46,5 +46,15 @@ Modified: data/bar/adx_copyfirm.xml
 Modified: data/cdf/adx_clearfirm.cdf
 Modified: data/cdf/adx_copyfirm.cdf
 
+=======================================================================================================================================
+Revision: 13e07f07750f075ec167cdfee8b227207b240124
+Author: Christine <chawkins@basis.com>
+Date: 9/12/2023 5:34:58 PM
+Message:
+Bug 10223 - AD - SQL in code stumbles over invalid characters
+ - Fixed a typo in the Pick List SPROC that was part of original commit
 
+(cherry picked from commit dc043e8e49496fd586ccfc51277eebcf556492ef)
+----
+Modified: sprocs/OPPICKLIST_DET_LOTSER.prc
 
