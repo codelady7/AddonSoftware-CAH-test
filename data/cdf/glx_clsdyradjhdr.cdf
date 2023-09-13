@@ -1,11 +1,14 @@
-[[GLX_CLSDFISCALYR.AFMC]]
+[[GLX_CLSDYRADJHDR.ADIS]]
+rem --- Calc and display totals (debits/credits, etc.)
+	gosub update_grid_tots
+
+[[GLX_CLSDYRADJHDR.AFMC]]
 rem --- Inits
 	use java.io.File
-
 	use ::ado_util.src::util
 
 rem --- Add static label to display fiscal period description
-	period!=fnget_control!("GLX_CLSDFISCALYR.PERIOD")
+	period!=callpoint!.getControl("<<DISPLAY>>.GL_PERIOD")
 	period_x=period!.getX()
 	period_y=period!.getY()
 	period_height=period!.getHeight()
@@ -19,25 +22,34 @@ rem --- Add static label to display fiscal period description
 	period_desc!.setForeColor(labelColor!)
 	callpoint!.setDevObject("period_desc",period_desc!)
 
-[[GLX_CLSDFISCALYR.AREC]]
-rem --- Initialize amount and units display only fields
-	callpoint!.setColumnData("GLX_CLSDFISCALYR.DEBIT_AMT",str(0))
-	callpoint!.setColumnData("GLX_CLSDFISCALYR.CREDIT_AMT",str(0))
-	callpoint!.setColumnData("GLX_CLSDFISCALYR.TOTAL_AMOUNT",str(0))
-	callpoint!.setColumnData("GLX_CLSDFISCALYR.UNITS",str(0))
+rem --- Capture totals controls for use in detail grid
+	callpoint!.setDevObject("debitCtrl",callpoint!.getControl("<<DISPLAY>>.DEBIT_AMT"))
+	callpoint!.setDevObject("creditCtrl",callpoint!.getControl("<<DISPLAY>>.CREDIT_AMT"))
+	callpoint!.setDevObject("totalCtrl",callpoint!.getControl("<<DISPLAY>>.TOTAL_AMOUNT"))
+	callpoint!.setDevObject("unitsCtrl",callpoint!.getControl("<<DISPLAY>>.UNITS"))
 
+[[GLX_CLSDYRADJHDR.AREC]]
 rem --- Clear static label for fiscal period description
 	period_desc!=callpoint!.getDevObject("period_desc")
 	period_desc!.setText("")
 
-[[GLX_CLSDFISCALYR.BSHO]]
+[[GLX_CLSDYRADJHDR.BSHO]]
 rem --- Open files
-	num_files=2
+	num_files=4
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="GLS_PARAMS",open_opts$[1]="OTA"
-	open_tables$[2]="GLS_CALENDAR",open_opts$[2]="OTA"
+	open_tables$[2]="GLC_JOURNALCODE",open_opts$[2]="OTA"
+	open_tables$[3]="GLS_CALENDAR",open_opts$[3]="OTA"
+	open_tables$[4]="GLM_ACCT",open_opts$[4]="OTA"
 
 	gosub open_tables
+
+	glsParams_dev=num(open_chans$[1]),apt01_tpl$=open_tpls$[1]
+	dim glsParams$:apt01_tpl$
+
+rem --- GL using units?
+	readrecord(glsParams_dev,key=firm_id$+"GL00", dom=std_missing_params)glsParams$
+	callpoint!.setDevObject("units_flag",glsParams.units_flag$)
 
 rem --- Files to be backed up
 	backupFiles! = BBjAPI().makeVector()
@@ -48,7 +60,7 @@ rem --- Files to be backed up
 	backupFiles!.addItem("glt-15")
 	callpoint!.setDevObject("backupFiles",backupFiles!)
 
-[[GLX_CLSDFISCALYR.DIR_BROWSE.AVAL]]
+[[GLX_CLSDYRADJHDR.DIR_BROWSE.AVAL]]
 rem --- Backup directory must already exists
 	backupDir$=callpoint!.getUserInput()
 	backupDir!=new File(backupDir$)
@@ -89,7 +101,20 @@ rem --- Backup directory can NOT already contain GL data files that will be upda
 rem --- Use the backup directory's canonical path
 	callpoint!.setUserInput(backupDir$)
 
-[[GLX_CLSDFISCALYR.TRANS_DATE.AVAL]]
+[[GLX_CLSDYRADJHDR.JOURNAL_ID.AVAL]]
+rem --- Verify this Journal ID is allowed for Journal Entries.
+	journal_id$=callpoint!.getUserInput()
+	glcJournalCode_dev=fnget_dev("GLC_JOURNALCODE")
+	dim glcJournalCode$:fnget_tpl$("GLC_JOURNALCODE")
+	findrecord(glcJournalCode_dev,key=firm_id$+callpoint!.getUserInput(),dom=*next)glcJournalCode$
+	if glcJournalCode.permit_je$<>"Y"
+		msg_id$="GL_JID"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[GLX_CLSDYRADJHDR.TRANS_DATE.AVAL]]
 rem --- Must be in an existing fiscal year.
 	trans_date$=callpoint!.getUserInput()
 	call pgmdir$+"adc_fiscalperyr.aon",firm_id$,trans_date$,period$,year$,table_chans$[all],status
@@ -121,8 +146,8 @@ rem --- Prior fiscal year must be closed fiscal.
 	endif
 
 rem --- Show the fiscal year and period
-	callpoint!.setColumnData("GLX_CLSDFISCALYR.YEAR",year$,1)
-	callpoint!.setColumnData("GLX_CLSDFISCALYR.PERIOD",period$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.GL_YEAR",year$,1)
+	callpoint!.setColumnData("<<DISPLAY>>.GL_PERIOD",period$,1)
 
 rem --- Show description for fiscal period
 	glsCalendar_dev=fnget_dev("GLS_CALENDAR")
@@ -132,7 +157,28 @@ rem --- Show description for fiscal period
 	period_desc!=callpoint!.getDevObject("period_desc")
 	period_desc!.setText(periodName$)
 
-[[GLX_CLSDFISCALYR.<CUSTOM>]]
+[[GLX_CLSDYRADJHDR.<CUSTOM>]]
+update_grid_tots: rem --- Calculate total debits/credits/units and display in form header
+	recVect!=GridVect!.getItem(0)
+	dim gridrec$:dtlg_param$[1,3]
+	numrecs=recVect!.size()
+        if numrecs>0
+		for reccnt=0 to numrecs-1
+			gridrec$=recVect!.getItem(reccnt)
+			tdb=tdb+num(gridrec.debit_amt$)
+			tcr=tcr+num(gridrec.credit_amt$)
+			tunits=tunits+num(gridrec.units$)
+		next reccnt
+		tbal=tdb-tcr
+
+		callpoint!.setColumnData("<<DISPLAY>>.DEBIT_AMT",str(tdb),1)
+		callpoint!.setColumnData("<<DISPLAY>>.CREDIT_AMT",str(tcr),1)
+		callpoint!.setColumnData("<<DISPLAY>>.TOTAL_AMOUNT",str(tbal),1)
+		callpoint!.setColumnData("<<DISPLAY>>.UNITS",str(tunits),1)
+	endif
+
+	return
+
 rem ==========================================================================
 get_RGB: rem --- Parse Red, Green and Blue segments from RGB$ string
 	rem --- input: RGB$
@@ -148,16 +194,10 @@ rem ==========================================================================
 
 	return
 
+rem ==========================================================================
+#include [+ADDON_LIB]std_missing_params.aon
 #include [+ADDON_LIB]std_functions.aon
-
-rem #include fnget_control.src
-	def fnget_control!(ctl_name$)
-	ctlContext=num(callpoint!.getTableColumnAttribute(ctl_name$,"CTLC"))
-	ctlID=num(callpoint!.getTableColumnAttribute(ctl_name$,"CTLI"))
-	get_control!=SysGUI!.getWindow(ctlContext).getControl(ctlID)
-	return get_control!
-	fnend
-rem #endinclude fnget_control.src
+rem ==========================================================================
 
 
 
