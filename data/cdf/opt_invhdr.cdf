@@ -131,8 +131,6 @@ rem --- Launch Order Fulfillment's Historical Carton Packing grid
 	ar_inv_no$=callpoint!.getColumnData("OPT_INVHDR.AR_INV_NO")
 	key_pfx$=firm_id$+ar_type$+customer_id$+order_no$+ar_inv_no$
 
-	callpoint!.setDevObject("lotser_flag",user_tpl.lotser_flag$)
-
 	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
 :	"OPT_CARTDETHIST",
 :       stbl("+USER_ID"),
@@ -413,7 +411,6 @@ rem --- Setup user_tpl$
 :		"item_price:n(15), " +
 :		"line_dropship:c(1), " +
 :		"dropship_cost:c(1), " +
-:		"lotser_flag:c(1), " +
 :		"new_detail:u(1), " +
 :		"prev_line_code:c(1*), " +
 :		"prev_item:c(1*), " +
@@ -450,7 +447,6 @@ rem --- Setup user_tpl$
 	user_tpl.min_ord_amt       = num(ars01a.min_ord_amt$)
 	user_tpl.min_line_amt      = num(ars01a.min_line_amt$)
 	user_tpl.def_whse$         = ivs01a.warehouse_id$
-	user_tpl.lotser_flag$      = ivs01a.lotser_flag$
 	user_tpl.pgmdir$           = stbl("+DIR_PGM",err=*next)
 	user_tpl.cur_row           = -1
 	user_tpl.detail_modified   = 0
@@ -508,14 +504,6 @@ rem --- Save the indices of the controls for the Avail Window, setup in AFMC
 	user_tpl.dropship_flag = 8
 	user_tpl.manual_price  = 9
 	user_tpl.ord_tot_obj   = 10; rem set here in BSHO
-
-rem --- Set up Lot/Serial button (and others) properly
-
-	switch pos(ivs01a.lotser_flag$="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
-		case default; break
-	swend
 
 rem --- Parse table_chans$[all] into an object
 

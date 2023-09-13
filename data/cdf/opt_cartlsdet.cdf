@@ -130,12 +130,6 @@ rem --- Update total qty_packed in the Packing Carton detail grid with the total
 	callpoint!.setDevObject("total_packed",totalPacked)
 
 [[OPT_CARTLSDET.BSHO]]
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_LOT_LOOKUP")); break
-		case 2; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
-	swend
-
 rem --- Enable serial/lot lookup
 	callpoint!.setOptionEnabled("LLOK", 1)
 

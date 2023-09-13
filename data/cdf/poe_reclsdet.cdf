@@ -1,16 +1,11 @@
-[[POE_RECLSDET.LOTSER_NO.AVAL]]
-rem --- Initialize qty_received for new rows
-	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
-		if callpoint!.getDevObject("lot_or_serial")="S" then 
-			callpoint!.setColumnData("POE_RECLSDET.QTY_RECEIVED","1",1)
-		else
-			gosub get_lotser_tot
-			callpoint!.setColumnData("POE_RECLSDET.QTY_RECEIVED",str(num(callpoint!.getDevObject("ls_qty_received"))-total_lotser),1)
-		endif
-	endif
-
+[[POE_RECLSDET.ADEL]]
 rem --- Enable/disable additional options
 	gosub enable_options
+
+[[POE_RECLSDET.AGRN]]
+rem --- Enable/disable additional options
+	gosub enable_options
+
 [[POE_RECLSDET.AOPT-AUTO]]
 rem --- Generate new serial numbers
 	gosub get_lotser_tot
@@ -50,23 +45,53 @@ rem --- Update grid with changes
 
 rem --- Enable/disable additional options
 	gosub enable_options
-[[POE_RECLSDET.AGRN]]
-rem --- Enable/disable additional options
-	gosub enable_options
-[[POE_RECLSDET.AUDE]]
-rem --- Enable/disable additional options
-	gosub enable_options
+
 [[POE_RECLSDET.AREC]]
 rem --- Enable/disable additional options
 	gosub enable_options
+
+[[POE_RECLSDET.AUDE]]
+rem --- Enable/disable additional options
+	gosub enable_options
+
 [[POE_RECLSDET.AWRI]]
 rem --- Enable/disable additional options
 	gosub enable_options
-[[POE_RECLSDET.ADEL]]
-rem --- Enable/disable additional options
-	gosub enable_options
+
 [[POE_RECLSDET.BEND]]
 gosub check_lotser_tot
+
+[[POE_RECLSDET.BSHO]]
+rem --- Initialize PO_NO and UNIT_COST
+	callpoint!.setTableColumnAttribute("POE_RECLSDET.PO_NO","DFLT",str(callpoint!.getDevObject("ls_po_no")))
+	callpoint!.setTableColumnAttribute("POE_RECLSDET.UNIT_COST","DFLT",str(callpoint!.getDevObject("ls_unit_cost")))
+
+[[POE_RECLSDET.LOTSER_NO.AVAL]]
+rem --- Initialize qty_received for new rows
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
+		if callpoint!.getDevObject("lotser_flag")="S" then 
+			callpoint!.setColumnData("POE_RECLSDET.QTY_RECEIVED","1",1)
+		else
+			gosub get_lotser_tot
+			callpoint!.setColumnData("POE_RECLSDET.QTY_RECEIVED",str(num(callpoint!.getDevObject("ls_qty_received"))-total_lotser),1)
+		endif
+	endif
+
+rem --- Enable/disable additional options
+	gosub enable_options
+
+[[POE_RECLSDET.QTY_RECEIVED.AVAL]]
+rem --- Serialized QTY_RECEIVED must be an integer not more than 1 or less than -1
+	if callpoint!.getDevObject("lotser_flag")="S" then
+		serialQty=int(num(callpoint!.getUserInput()))
+		if serialQty>1 then serialQty=1
+		if serialQty<-1 then serialQty=-1
+		callpoint!.setUserInput(str(serialQty))
+	endif
+
+rem --- Enable/disable additional options
+	gosub enable_options
+
 [[POE_RECLSDET.<CUSTOM>]]
 rem ==========================================================================
 get_lotser_tot: rem --- Sum up number of lotted/serialized items already entered
@@ -111,7 +136,7 @@ rem ==========================================================================
 		endif
 	next row
 
-	if callpoint!.getDevObject("lot_or_serial")<>"S" or grid_modified then
+	if callpoint!.getDevObject("lotser_flag")<>"S" or grid_modified then
 		rem --- Disable auto-assign option when not serialized, or grid is in modified state
 		callpoint!.setOptionEnabled("AUTO",0)
 	else
@@ -124,18 +149,6 @@ rem ==========================================================================
 		endif
 	endif
 	return
-[[POE_RECLSDET.QTY_RECEIVED.AVAL]]
-rem --- Serialized QTY_RECEIVED must be an integer not more than 1 or less than -1
-	if callpoint!.getDevObject("lot_or_serial")="S" then
-		serialQty=int(num(callpoint!.getUserInput()))
-		if serialQty>1 then serialQty=1
-		if serialQty<-1 then serialQty=-1
-		callpoint!.setUserInput(str(serialQty))
-	endif
 
-rem --- Enable/disable additional options
-	gosub enable_options
-[[POE_RECLSDET.BSHO]]
-rem --- Initialize PO_NO and UNIT_COST
-	callpoint!.setTableColumnAttribute("POE_RECLSDET.PO_NO","DFLT",str(callpoint!.getDevObject("ls_po_no")))
-	callpoint!.setTableColumnAttribute("POE_RECLSDET.UNIT_COST","DFLT",str(callpoint!.getDevObject("ls_unit_cost")))
+
+

@@ -22,14 +22,6 @@ rem --- Launch Order Fulfillment's Historical Carton Lot/Serial Packing grid
 :       key_pfx$,
 :       table_chans$[all]
 
-[[OPT_CARTDETHIST.ASHO]]
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACKED","Packed")+" "+Translate!.getTranslation("AON_LOT","Lot")); break
-		case 2; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACKED","Packed")+" "+Translate!.getTranslation("AON_SERIAL","Serial")); break
-		case default; callpoint!.setOptionEnabled("PKLS",0); break
-	swend
-
 [[OPT_CARTDETHIST.BSHO]]
 rem --- Open files
 	num_files = 1
@@ -46,8 +38,6 @@ lot_ser_check: rem --- Check for lotted/serialized item
                rem   OUT: lotser_item$
 rem ==========================================================================
 	lotser_item$="N"
-	lotser_flag$=callpoint!.getDevObject("lotser_flag")
-	if pos(lotser_flag$="LS")=0 then return
 
 	packedItems$=""
 	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
@@ -71,8 +61,9 @@ rem ==========================================================================
 		packedItems$=packedItems$+item_id$+":"
 
 		readrecord(ivmItemMast_dev,key=firm_id$+item_id$,dom=*continue)ivmItemMast$
-		if ivmItemMast.lotser_item$="Y" then
+		if pos(ivmItemMast.lotser_flag$="LS") then
 			lotser_item$="Y"
+			callpoint!.setDevObject("lotser_flag",ivmItemMast.lotser_flag$)
 			break
 		endif
 	wend

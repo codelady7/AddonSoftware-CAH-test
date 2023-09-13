@@ -206,13 +206,6 @@ rem --- Buttons start disabled
 	callpoint!.setOptionEnabled("PKLS",0)
 
 [[OPT_CARTDET2.ASHO]]
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_LOT")); break
-		case 2; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_SERIAL")); break
-		case default; callpoint!.setOptionEnabled("PKLS",0); break
-	swend
-
 rem --- Get and hold on to column for qty_packed
 	packCartonGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
 	callpoint!.setDevObject("packCartonGrid",packCartonGrid!)
@@ -534,7 +527,7 @@ rem --- For lot/serial items, item qty_packed must equal sum of lot/serial numbe
 	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
 	item$=callpoint!.getColumnData("OPT_CARTDET2.ITEM_ID")
 	findrecord (ivmItemMast_dev,key=firm_id$+item$,dom=*next)ivmItemMast$
-	if ivmItemMast.lotser_item$="Y" then
+	if pos(ivmItemMast.lotser_flag$="LS") then
 		lotser_packed=0
 		optCartLsDet2_dev=fnget_dev("OPT_CARTLSDET2")
 		dim optCartLsDet2$:fnget_tpl$("OPT_CARTLSDET2")

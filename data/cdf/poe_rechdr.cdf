@@ -320,7 +320,6 @@ rem --- get IV param info
 	read record (ivs_params_dev,key=firm_id$+"IV00")ivs_params$
 	callpoint!.setDevObject("iv_prec",ivs_params.precision$)
 	callpoint!.setDevObject("ivs_params_rec",ivs_params$)	
-	callpoint!.setDevObject("lot_or_serial",ivs_params.lotser_flag$)
 
 rem --- store dtlGrid! and column for sales order line# reference listbutton (within grid) in devObject
 
@@ -338,17 +337,6 @@ rem --- call glc_ctlcreate
 	if status<>0 then release
 
 	callpoint!.setDevObject("gl_installed",gl$)
-
-rem --- Set up Lot/Serial button properly
-
-	dim ivs01a$:ivs01a_tpl$
-	readrecord(ivs01_dev,key=firm_id$+"IV00")ivs01a$
-	switch pos(ivs01a.lotser_flag$="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
-		case default; break
-	swend
-
 	callpoint!.setOptionEnabled("LENT",0)
 
 [[POE_RECHDR.BTBL]]
@@ -472,7 +460,7 @@ if cvs(callpoint!.getUserInput(),3)<>""
 				ivm_itemmast.item_id$=poe_podet.item_id$
 				while 1
 					read record (ivm_itemmast_dev,key=firm_id$+poe_podet.item_id$,dom=*break)ivm_itemmast$
-					if pos(str(callpoint!.getDevObject("lot_or_serial"))="LS")<>0 and msg_printed=0 and ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y"
+					if pos(ivm_itemmast.lotser_flag$="LS")<>0 and msg_printed=0 and ivm_itemmast.inventoried$="Y"
 						msg_id$="PO_NEED_LOTS"
 						msg_printed=1
 						gosub disp_message

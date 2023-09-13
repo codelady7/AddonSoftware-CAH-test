@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_cartlsdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_cartlsdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_cartlsdet">2459801</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_cartlsdet">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartlsdet">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartlsdet">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_cartlsdet">20230912</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_cartlsdet">20230912</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_cartlsdet">163652</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_cartlsdet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.opt_cartlsdet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.opt_cartlsdet">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_cartlsdet">AO_STATUS</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opt_cartlsdet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opt_cartlsdet">G</DD_ATTR_FTYP>
@@ -63,7 +63,7 @@
 		<RECORD id="ddm_table_aopt.opt_cartlsdet01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.opt_cartlsdet01">OPT_CARTLSDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.opt_cartlsdet01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.opt_cartlsdet01">Serial Lookup</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT id="ddm_table_aopt.opt_cartlsdet01">&Lot/Serial Lookup</DD_ATTR_AOPT>
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.opt_cartlsdet01">LLOK</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.opt_cartlsdet01">F</DD_ATTR_AOPT_FM>
 		</RECORD>
@@ -1813,7 +1813,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartlsdet009">20220809</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartlsdet009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartlsdet009">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_cartlsdet009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_cartlsdet009"></DD_ATTR_CTLY>
@@ -2425,7 +2425,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_cartlsdet021">20220809</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_cartlsdet021"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_cartlsdet021"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartlsdet021">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_cartlsdet021">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_cartlsdet021">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_cartlsdet021"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_cartlsdet021"></DD_ATTR_CTLY>

@@ -504,7 +504,6 @@ rem --- Is this item lot/serial?
 		rem --- Run the Lot/Serial# detail entry form
 		rem      IN: call/enter list
 		rem          the DevObjects set below
-		rem          DevObject("lotser_flag"): set in OPE_ORDHDR
 
 			callpoint!.setDevObject("from",          "order_entry")
 			callpoint!.setDevObject("wh",            callpoint!.getColumnData("OPE_ORDDET.WAREHOUSE_ID"))
@@ -793,7 +792,7 @@ rem --- Items or warehouses are different: uncommit previous
 				items$[2] = prior_item$
 				refs[0]   = prior_qty
 
-				if prior_itemmast.lotser_item$<>"Y" or prior_itemmast.inventoried$<>"Y" then
+				if !pos(prior_itemmast.lotser_flag$="LS") or prior_itemmast.inventoried$<>"Y" then
 					if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 						call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 						if status then goto awri_update_hdr
@@ -862,7 +861,7 @@ rem --- New record or item and warehouse haven't changed: commit difference
 				else
 					rem --- Uncommit
 					refs[0]=abs(refs[0])
-					if curr_itemmast.lotser_item$<>"Y" or curr_itemmast.inventoried$<>"Y" then
+					if !pos(curr_itemmast.lotser_flag$="LS") or curr_itemmast.inventoried$<>"Y" then
 						if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 							call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 							if status then goto awri_update_hdr
@@ -938,7 +937,7 @@ rem --- and that's when this code should be hit.
 			dim curr_itemmast$:fnget_tpl$("IVM_ITEMMAST")
 			read record (ivm_itemmast_dev, key=firm_id$+curr_item$, dom=awri_update_hdr) curr_itemmast$
 
-		        if action$="CO" or curr_itemmast.lotser_item$<>"Y" or curr_itemmast.inventoried$<>"Y" then
+		        if action$="CO" or !pos(curr_itemmast.lotser_flag$="LS") or curr_itemmast.inventoried$<>"Y" then
 				call user_tpl.pgmdir$+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 				if status then goto awri_update_hdr
 			else
@@ -2398,7 +2397,7 @@ rem ==========================================================================
 		items$[2]=item$
 		refs[0]=ord_qty*conv_factor
 
-		if ivm_itemmast.lotser_item$<>"Y" or ivm_itemmast.inventoried$<>"Y" then
+		if !pos(ivm_itemmast.lotser_flag$="LS") or ivm_itemmast.inventoried$<>"Y" then
 			if (action$="CO" and line_ship_date$<=user_tpl.def_commit$) or
 :			(callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y") then
 				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
@@ -2668,7 +2667,7 @@ rem ==========================================================================
 
 	lotted$="N"
 
-	if cvs(item_id$, 2)<>"" and pos(user_tpl.lotser_flag$ = "LS") then 
+	if cvs(item_id$, 2)<>""
 		ivm01_dev=fnget_dev("IVM_ITEMMAST")
 		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 		start_block = 1
@@ -2679,8 +2678,9 @@ rem ==========================================================================
 
 		rem --- In Invoice Entry, non-inventoried lotted/serial can enter lots
 
-			if ivm01a.lotser_item$="Y" then
+			if pos(ivm01a.lotser_flag$="LS") then
 				lotted$="Y"
+ 				callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
 			endif
 		endif
 	endif

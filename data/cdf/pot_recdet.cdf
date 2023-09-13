@@ -31,7 +31,7 @@ rem --- Enable/disable Lot/Serial button
 	ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
 	readrecord(ivmItemMast_dev, key=firm_id$+item_id$, dom=*endif) ivmItemMast$
-	if ivmItemMast.lotser_item$="Y" and ivmItemMast.inventoried$="Y" then
+	if pos(ivmItemMast.lotser_flag$="LS") and ivmItemMast.inventoried$="Y" then
 		callpoint!.setOptionEnabled("LENT",1)
 	else
 		callpoint!.setOptionEnabled("LENT",0)

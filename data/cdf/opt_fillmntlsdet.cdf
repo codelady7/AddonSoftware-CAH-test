@@ -307,13 +307,6 @@ rem --- Create a HashMap so that we know what's been committed during this sessi
 	committedNow! = new java.util.HashMap()
 	callpoint!.setDevObject("committed_now", committedNow!)
 
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_LOT_LOOKUP")); break
-		case 2; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
-		case default; callpoint!.setOptionEnabled("LLOK",0); break
-	swend
-
 rem --- No Serial/lot lookup for non-inventory items
 	if callpoint!.getDevObject("non_inventory") then callpoint!.setOptionEnabled("LLOK", 0)
 

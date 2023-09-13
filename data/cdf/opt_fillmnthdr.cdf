@@ -177,12 +177,11 @@ rem --- Validate fulfillment if marked all_packed
 
 			rem --- Is this a lot/serial item?
 			lotser_item$="N"
-			lotser_flag$=callpoint!.getDevObject("lotser_flag")
-			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+			if cvs(optFillmntDet.item_id$, 2)<>""
 				ivm01_dev=fnget_dev("IVM_ITEMMAST")
 				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
-				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+				if pos(ivm01a.lotser_flag$="LS") then lotser_item$="Y"
 			endif
 			if lotser_item$<>"Y" then continue
 
@@ -281,12 +280,11 @@ rem --- Validate fulfillment if marked all_packed
 
 			rem --- Is this a lot/serial item?
 			lotser_item$="N"
-			lotser_flag$=callpoint!.getDevObject("lotser_flag")
-			if cvs(optFillmntDet.item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+			if cvs(optFillmntDet.item_id$, 2)<>"" 
 				ivm01_dev=fnget_dev("IVM_ITEMMAST")
 				dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 				read record (ivm01_dev, key=firm_id$+optFillmntDet.item_id$, dom=*endif) ivm01a$
-				if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+				if pos(ivm01a.lotser_flag$="LS") then lotser_item$="Y"
 			endif
 			if lotser_item$<>"Y" then continue
 
@@ -989,17 +987,6 @@ rem --- Open needed files
 	open_tables$[16]="ARC_SHIPVIACODE",   open_opts$[16]="OTA"
 
 	gosub open_tables
-
-rem --- Set up Lot/Serial button
-	ivsParams_dev=fnget_dev("IVS_PARAMS")
-	dim ivsParams$:fnget_tpl$("IVS_PARAMS")
-	findrecord(ivsParams_dev, key=firm_id$+"IV00")ivsParams$
-	switch pos(ivsParams.lotser_flag$="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
-		case default; break
-	swend
-	callpoint!.setDevObject("lotser_flag",ivsParams.lotser_flag$)
 
 rem --- Disable all detail grid buttons
 	callpoint!.setOptionEnabled("PRNT",0)

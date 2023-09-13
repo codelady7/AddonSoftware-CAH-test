@@ -373,7 +373,7 @@ rem --- Is this item lot/serial?
 
 	read record (ivm_itemmast,key=firm_id$+item_id$,dom=*break)ivm_itemmast$
 
-	if ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y"
+	if pos(ivm_itemmast.lotser_flag$="LS") and ivm_itemmast.inventoried$="Y"
 	
 		receiver_no$   = callpoint!.getColumnData("POE_RECDET.RECEIVER_NO")
 		po_int_seq_ref$ = callpoint!.getColumnData("POE_RECDET.INTERNAL_SEQ_NO")
@@ -405,7 +405,7 @@ rem --- Is this item lot/serial?
 :			table_chans$[all], 
 :			dflt_data$[all]
 
-		if callpoint!.getDevObject("lot_or_serial")="S"
+		if ivm_itemmast.lotser_flag$="S"
 			ivm_lsmaster_dev=fnget_dev("IVM_LSMASTER")
 			dim ivm_lsmaster$:fnget_tpl$("IVM_LSMASTER")
 			poe_reclsdet_dev=fnget_dev("POE_RECLSDET")
@@ -643,7 +643,7 @@ return_to_col = grid!.getSelectedColumn()
 
 read record (ivm_itemmast_dev,key=firm_id$+item_id$,dom=*break)ivm_itemmast$
 
-if ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y"
+if pos(ivm_itemmast.lotser_flag$="LS") and ivm_itemmast.inventoried$="Y"
 
 	dim dflt_data$[3,1]
 	dflt_data$[1,0] = "RECEIVER_NO"
@@ -666,7 +666,7 @@ if ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y"
 :		lot_pfx$, 
 :		table_chans$[all], 
 :		dflt_data$[all]
-	if callpoint!.getDevObject("lot_or_serial")="S"
+	if ivm_itemmast.lotser_flag$="S"
 		ivm_lsmaster_dev=fnget_dev("IVM_LSMASTER")
 		dim ivm_lsmaster$:fnget_tpl$("IVM_LSMASTER")
 		poe_reclsdet_dev=fnget_dev("POE_RECLSDET")
@@ -1228,9 +1228,10 @@ rem "IN: item_id$
 	callpoint!.setOptionEnabled("LENT",0)
 	read record (ivm_itemmast,key=firm_id$+item_id$,dom=*return)ivm_itemmast$
 
-	if ivm_itemmast.lotser_item$="Y" and ivm_itemmast.inventoried$="Y"
+	if pos(ivm_itemmast.lotser_flag$="LS") and ivm_itemmast.inventoried$="Y"
 		callpoint!.setOptionEnabled("LENT",1)
 	endif
+	callpoint!.setDevObject("lotser_flag",ivm_itemmast.lotser_flag$)
 
 	return
 

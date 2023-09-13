@@ -1722,10 +1722,8 @@ rem --- Remove committments for detail records by calling ATAMO
 			endif
 		endif
 
-		if pos(user_tpl.lotser_flag$="LS") then 
-			ord_seq$ = ope11a.internal_seq_no$
-			gosub remove_lot_ser_det
-		endif
+		ord_seq$ = ope11a.internal_seq_no$
+		gosub remove_lot_ser_det
 
 	wend
 
@@ -2414,7 +2412,6 @@ rem --- Setup user_tpl$
 :		"item_price:n(7*), " +
 :		"line_dropship:c(1), " +
 :		"dropship_cost:c(1), " +
-:		"lotser_flag:c(1), " +
 :		"new_detail:u(1), " +
 :		"prev_line_code:c(1*), " +
 :		"prev_item:c(1*), " +
@@ -2458,7 +2455,6 @@ rem --- Setup user_tpl$
 	user_tpl.min_ord_amt       = num(ars01a.min_ord_amt$)
 	user_tpl.min_line_amt      = num(ars01a.min_line_amt$)
 	user_tpl.def_whse$         = ivs01a.warehouse_id$
-	user_tpl.lotser_flag$      = ivs01a.lotser_flag$
 	user_tpl.pgmdir$           = stbl("+DIR_PGM",err=*next)
 	user_tpl.cur_row           = -1
 	user_tpl.detail_modified   = 0
@@ -2514,18 +2510,6 @@ rem --- Create GL Posting Control
 	call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,pgm(-2),"OP",glw11$,gl$,status
 	user_tpl.glint$=gl$
 	callpoint!.setDevObject("glint",gl$)
-
-rem --- Set variables for called forms (OPE_ORDLSDET)
-
-	callpoint!.setDevObject("lotser_flag", ivs01a.lotser_flag$)
-
-rem --- Set up Lot/Serial button (and others) properly
-
-	switch pos(ivs01a.lotser_flag$="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
-		case default; break
-	swend
 
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setOptionEnabled("RCPR",0)
@@ -4147,18 +4131,16 @@ rem ==========================================================================
 					qty=ope11a.qty_ordered
 					gosub update_totals; rem --- do ATAMO for item
 
-					if pos(user_tpl.lotser_flag$="LS") then 
-						rem --- Process lotted/serialized items
-						read(ope21_dev,key=ope11_key$,dom=*next)
-						while 1
-							ope21_key$=key(ope21_dev,end=*break)
-							if pos(ope11_key$=ope21_key$)<>1 then break
-							readrecord(ope21_dev)ope21a$
+					rem --- Process lotted/serialized items
+					read(ope21_dev,key=ope11_key$,dom=*next)
+					while 1
+						ope21_key$=key(ope21_dev,end=*break)
+						if pos(ope11_key$=ope21_key$)<>1 then break
+						readrecord(ope21_dev)ope21a$
 
-							ls_id$=ope21a.lotser_no$
-							gosub update_totals; rem --- do ATAMO for lot/serial
-						wend
-					endif
+						ls_id$=ope21a.lotser_no$
+						gosub update_totals; rem --- do ATAMO for lot/serial
+					wend
 				endif
 			wend
 			read(ope11_dev,knum="AO_STAT_CUST_ORD",dom=*next); rem --- reset key to OPE_ORDDET form's key

@@ -305,13 +305,6 @@ rem --- Initialize needed devObjects
 	callpoint!.setDevObject("qty_picked",0)
 
 [[OPT_CARTDET.ASHO]]
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_LOT")); break
-		case 2; callpoint!.setOptionText("PKLS",Translate!.getTranslation("AON_PACK")+" "+Translate!.getTranslation("AON_SERIAL")); break
-		case default; callpoint!.setOptionEnabled("PKLS",0); break
-	swend
-
 rem --- Get and hold on to column for qty_packed
 	packCartonGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
 	callpoint!.setDevObject("packCartonGrid",packCartonGrid!)
@@ -963,14 +956,14 @@ lot_ser_check: rem --- Check for lotted/serialized item
                rem   OUT: lotser_item$
 rem ==========================================================================
 	lotser_item$="N"
-	lotser_flag$=callpoint!.getDevObject("lotser_flag")
-	if cvs(item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+	if cvs(item_id$, 2)<>"" 
 		ivm01_dev=fnget_dev("IVM_ITEMMAST")
 		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 		read record (ivm01_dev, key=firm_id$+item_id$, dom=*endif) ivm01a$
-		if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+		if pos(ivm01a.lotser_flag$="LS") then lotser_item$="Y"
+		callpoint!.setDevObject("lotser_item",lotser_item$)
+		callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
 	endif
-	callpoint!.setDevObject("lotser_item",lotser_item$)
 
 	return
 
