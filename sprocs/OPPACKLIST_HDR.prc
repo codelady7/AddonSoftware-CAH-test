@@ -164,9 +164,9 @@ rem --- Heading (bill-to address)
     start_block = 1
 
     if start_block then
-        read record (arm01_dev, key=firm_id$+ope01a.customer_id$, dom=*endif) arm01!
+        read record (arm01_dev, key=firm_id$+opeInvHdr.customer_id$, dom=*endif) arm01!
         needAddress=1
-        read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"B", dom=*next) ope31!; needAddress=0
+        read record (ope31_dev, key=firm_id$+opeInvHdr.customer_id$+opeInvHdr.order_no$+opeInvHdr.ar_inv_no$+"B", dom=*next) ope31!; needAddress=0
         if !needAddress then
             b$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
             b$ = pad(arm01!.getFieldAsString("CUSTOMER_NAME"), bill_addrLine_len) + b$
@@ -189,14 +189,14 @@ rem --- Ship-To
     c$ = b$
     start_block = 1
 
-    if ope01a.shipto_type$ <> "B" then 
+    if opeInvHdr.shipto_type$ <> "B" then 
         needAddress=1
-        read record (ope31_dev, key=firm_id$+ope01a.customer_id$+ope01a.order_no$+ope01a.ar_inv_no$+"S", dom=*next) ope31!; needAddress=0
-        if !needAddress or ope01a.shipto_type$="M" then
+        read record (ope31_dev, key=firm_id$+opeInvHdr.customer_id$+opeInvHdr.order_no$+opeInvHdr.ar_inv_no$+"S", dom=*next) ope31!; needAddress=0
+        if !needAddress or opeInvHdr.shipto_type$="M" then
             c$ = func.formatAddress(table_chans$[all], ope31!, bill_addrLine_len, max_billAddr_lines-1)
         else
             rem --- Need non-manual ship-to address
-            find record (arm03_dev,key=firm_id$+ope01a.customer_id$+ope01a.shipto_no$, dom=*next) arm03!
+            find record (arm03_dev,key=firm_id$+opeInvHdr.customer_id$+opeInvHdr.shipto_no$, dom=*next) arm03!
             c$ = func.formatAddress(table_chans$[all], arm03!, cust_addrLine_len, max_custAddr_lines)
         endif
 
