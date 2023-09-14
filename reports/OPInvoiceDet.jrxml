@@ -17,7 +17,6 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Dev_aon\\aon\\reports\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="IVS_LOTSER_FLAG" class="java.lang.String"/>
 	<parameter name="AR_INV_NO" class="java.lang.String"/>
 	<parameter name="ITEM_MASK" class="java.lang.String"/>
 	<parameter name="REPORT_TYPE" class="java.lang.String"/>
@@ -35,7 +34,7 @@
 	<field name="EXTENDED_RAW" class="java.lang.String"/>
 	<field name="EXTENDED_MASKED" class="java.lang.String"/>
 	<field name="INTERNAL_SEQ_NO" class="java.lang.String"/>
-	<field name="ITEM_IS_LS" class="java.lang.String">
+	<field name="LOTSER_FLAG" class="java.lang.String">
 		<fieldDescription><![CDATA[Item is flagged as Lotted/Serialized]]></fieldDescription>
 	</field>
 	<field name="LINETYPE_ALLOWS_LS" class="java.lang.String">
@@ -50,8 +49,8 @@
 		<groupExpression><![CDATA[$F{INTERNAL_SEQ_NO}]]></groupExpression>
 		<groupFooter>
 			<band height="15" splitType="Stretch">
-				<printWhenExpression><![CDATA[($P{IVS_LOTSER_FLAG}=="L" || $P{IVS_LOTSER_FLAG}=="S")
-&& $F{ITEM_IS_LS} == "Y" && $F{LINETYPE_ALLOWS_LS} == "Y"]]></printWhenExpression>
+				<printWhenExpression><![CDATA[($F{LOTSER_FLAG}=="L" || $F{LOTSER_FLAG}=="S")
+ && $F{LINETYPE_ALLOWS_LS} == "Y"]]></printWhenExpression>
 				<subreport>
 					<reportElement x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" uuid="8c3bdbc6-c025-4818-96eb-9a460c53d528"/>
 					<subreportParameter name="QTY_MASK">
@@ -84,9 +83,6 @@
 					<subreportParameter name="INTERNAL_SEQ_NO">
 						<subreportParameterExpression><![CDATA[$F{INTERNAL_SEQ_NO}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="IVS_LOTSER_FLAG">
-						<subreportParameterExpression><![CDATA[$P{IVS_LOTSER_FLAG}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter name="QTY_MASK_PATTERN">
 						<subreportParameterExpression><![CDATA[$P{QTY_MASK_PATTERN}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -95,6 +91,9 @@
 					</subreportParameter>
 					<subreportParameter name="SHADE_BACKCOLOR">
 						<subreportParameterExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="LOTSER_FLAG">
+						<subreportParameterExpression><![CDATA[$F{LOTSER_FLAG}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["OPInvoiceDet-LotSer.jasper"]]></subreportExpression>

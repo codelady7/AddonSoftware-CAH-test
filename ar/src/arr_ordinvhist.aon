@@ -140,7 +140,6 @@ rem --- Initializations
 
     dim x0$(200),x[13],z0$(52),z1$(64),z[17]
     dim heading1$(width),heading2$(width)
-    lot_ser$=ivs01a.lotser_flag$
 
     call pgmdir$+"adc_progress.aon","N","","","","",0,header_channel,1,meter_num,status
 
@@ -180,11 +179,10 @@ rem --- miscellaneous headings
 rem --- Detail Headings
 
     if summ_dtl$="D" 
-        if lot_ser$="S" s$=Translate!.getTranslation("AON_/SER#") else if lot_ser$="L" s$=Translate!.getTranslation("AON_/LOT#") else let s$=""
         dim dtlhdg$[10]
         dtlhdg$[0]=Translate!.getTranslation("AON_SEQ")
         dtlhdg$[1]=Translate!.getTranslation("AON_LINE_CODE")
-        dtlhdg$[2]=Translate!.getTranslation("AON_ITEM/DESCRIPTION")+s$
+        dtlhdg$[2]=Translate!.getTranslation("AON_ITEM/DESCRIPTION/LOT_SER","Item/Description/Lot-Ser#",1)
         dtlhdg$[3]="WH"
         dtlhdg$[4]=Translate!.getTranslation("AON_ORDERED")
         dtlhdg$[5]=Translate!.getTranslation("AON_COMMITTED")
@@ -302,7 +300,7 @@ make_dtl_line: rem --- Store Detail Line
         next wk
         found=1,l=l+1,first=0
     endif
-    OutVect!.addItem(dtlrec.internal_seq_no$)
+    OutVect!.addItem(dtlrec.line_no$)
     OutVect!.addItem(dtlrec.line_code$+" - "+cvs(opm02a.code_desc$,2))
     OutVect!.addItem(u0$)
     OutVect!.addItem(dtlrec.warehouse_id$)
@@ -345,7 +343,6 @@ make_dtl_line: rem --- Store Detail Line
 
 rem --- Print Serial/Lotted History
 
-    if pos(lot_ser$="SL")=0 goto detail_loop
     lky$=dtlrec.firm_id$+dtlrec.ar_type$+dtlrec.customer_id$+dtlrec.order_no$+dtlrec.ar_inv_no$+dtlrec.internal_seq_no$    
     read (lot_channel,key=lky$,dom=*next)
 

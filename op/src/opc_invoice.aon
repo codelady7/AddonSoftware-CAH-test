@@ -521,7 +521,6 @@ rem --- Main Read
 		params!.put("BARISTA_WD",dir(""))
         params!.put("LOGO_FILE",logo_filename$)
 		params!.put("BATCH_MESSAGE",batch_adhoc_message$)
-		params!.put("IVS_LOTSER_FLAG",ivs01a.lotser_flag$)
 		
 		params!.put("AR_ADDRESS1",comp$((comp_addrLine_len*0)+1,comp_addrLine_len))
 		params!.put("AR_ADDRESS2",comp$((comp_addrLine_len*1)+1,comp_addrLine_len))

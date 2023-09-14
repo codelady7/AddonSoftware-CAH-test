@@ -48,7 +48,7 @@ rem --- create the in memory recordset for return
 	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), item_barCd:c(1*), whse:c(2*), "
 	dataTemplate$ = dataTemplate$ + "price_raw:c(1*), price_masked:c(1*), "
 	dataTemplate$ = dataTemplate$ + "location:c(1*), internal_seq_no:c(1*), um_sold:c(6*), "
-	dataTemplate$ = dataTemplate$ + "item_is_ls:c(1), linetype_allows_ls:c(1), carton:c(1*), "
+	dataTemplate$ = dataTemplate$ + "lotser_flag:c(1), linetype_allows_ls:c(1), carton:c(1*), "
     dataTemplate$ = dataTemplate$ + "whse_message:c(1*), whse_msg_sfx:c(1*), ship_qty_raw:c(1*), "
     dataTemplate$ = dataTemplate$ + "wo_info1:c(1*), wo_info2:c(1*), pick_flag:c(1*), line_type:c(1*)"
 
@@ -138,7 +138,7 @@ rem --- Main
 			location$ =           ""
 			internal_seq_no$ =    ""
 			linetype_allows_ls$ = "N"
-			item_is_ls$ =         "N"
+			lotser_flag$ =        "N"
             whse_message$ =       ""
             whse_msg_sfx$ =       ""
             ship_qty_raw$ =       ""
@@ -184,7 +184,7 @@ rem --- Main
 				if pos(pick_or_quote$="S") then linetype_allows_ls$ = "Y"
                 find record (ivm01_dev, key=firm_id$+ope11a.item_id$, dom=*next) ivm01a$
                 item_description$ = func.displayDesc(ivm01a.item_desc$)
-				if pos(pick_or_quote$="S") then item_is_ls$ = ivm01a.lotser_item$
+				if pos(pick_or_quote$="S") then lotser_flag$ = ivm01a.lotser_flag$
 				if barcode$="BAR" then item_barCd$=ivm01a.bar_code$
                 if barcode$="UPC" then item_barCd$=ivm01a.upc_code$
 				
@@ -317,7 +317,7 @@ line_detail: rem --- Item Detail
                 data!.setFieldValue("CARTON",carton$)
     			data!.setFieldValue("INTERNAL_SEQ_NO",internal_seq_no$)
                 if pos(opm02a.line_type$="MO")=0 then data!.setFieldValue("UM_SOLD",um_sold$)			
-    			data!.setFieldValue("ITEM_IS_LS",item_is_ls$)
+    			data!.setFieldValue("LOTSER_FLAG",lotser_flag$)
     			data!.setFieldValue("LINETYPE_ALLOWS_LS",linetype_allows_ls$)
                 data!.setFieldValue("WHSE_MESSAGE",whse_message$)
                 data!.setFieldValue("WHSE_MSG_SFX",whse_msg_sfx$)
@@ -393,7 +393,7 @@ rem --- return a final row that's empty except for the whse_message$, which will
     data!.setFieldValue("PRICE_MASKED", "")
     data!.setFieldValue("CARTON","")
     data!.setFieldValue("INTERNAL_SEQ_NO","")
-    data!.setFieldValue("ITEM_IS_LS","")
+    data!.setFieldValue("LOTSER_FLAG","")
     data!.setFieldValue("LINETYPE_ALLOWS_LS","")
     data!.setFieldValue("WHSE_MESSAGE",whse_message$);rem whse_message$ contains key to prop file and gets translated back in main report using str() function
     data!.setFieldValue("WHSE_MSG_SFX",whse_msg_sfx$)

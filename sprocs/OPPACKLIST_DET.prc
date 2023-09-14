@@ -36,7 +36,7 @@ rem --- Get 'IN' SPROC parameters
 rem --- create the in memory recordset for return
 	dataTemplate$ = ""
 	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), um_sold:c(6*),ship_qty:c(1*), pack_qty:c(1*), "
-	dataTemplate$ = dataTemplate$ + "carton_no:c(1*), orddet_seq_ref:c(1*), item_is_ls:c(1)"
+	dataTemplate$ = dataTemplate$ + "carton_no:c(1*), orddet_seq_ref:c(1*), lotser_flag:c(1)"
 
 	rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
 
@@ -108,12 +108,12 @@ rem --- Detail lines
         pack_qty$ = str(optCartDet.qty_packed:qty_mask$)
         carton_no$ = optCartDet.carton_no$
         orddet_seq_ref$ = optCartDet.orddet_seq_ref$
-		item_is_ls$ = "N"
+		lotser_flag$ = "N"
 	
         redim ivm01a$
         ivm01a.conv_factor=1
         findrecord(ivm01_dev,key=firm_id$+optCartDet.item_id$,dom=*next)ivm01a$
-		if pos(ivsParams.lotser_flag$="LS") then item_is_ls$=ivm01a.lotser_item$
+		lotser_flag$=ivm01a.lotser_flag$
         if cvs(ivm01a.item_id$,2)<>"" then
             item_id$=cvs(fnmask$(optCartDet.item_id$,ivIMask$),3)
         	item_description$=func.displayDesc(ivm01a.item_desc$)
@@ -131,7 +131,7 @@ rem --- Detail lines
 		data!.setFieldValue("PACK_QTY",cvs(pack_qty$,3))
         data!.setFieldValue("CARTON_NO",carton_no$)
         data!.setFieldValue("ORDDET_SEQ_REF",orddet_seq_ref$)
-		data!.setFieldValue("ITEM_IS_LS",item_is_ls$)
+		data!.setFieldValue("LOTSER_FLAG",lotser_flag$)
 
 		rs!.insert(data!)
     wend

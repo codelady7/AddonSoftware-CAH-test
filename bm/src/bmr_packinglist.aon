@@ -102,10 +102,10 @@ rem --- Headings and print positions
         dim columns$[4,10]
         columns = 5
         columns$[0,0]=" ",columns$[0,1]="C",columns$[0,2]="15"
-        columns$[1,0]=" ",columns$[1,1]="C",columns$[1,2]="45"
+        columns$[1,0]=" ",columns$[1,1]="C",columns$[1,2]="40"
         columns$[2,0]=" ",columns$[2,1]="C",columns$[2,2]="10"
         columns$[3,0]=" ",columns$[3,1]="C",columns$[3,2]="25"
-        columns$[4,0]=" ",columns$[4,1]="C",columns$[4,2]="15"
+        columns$[4,0]=" ",columns$[4,1]="C",columns$[4,2]="20"
 
         call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
 
