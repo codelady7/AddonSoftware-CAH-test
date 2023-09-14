@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-09-12
+ Report Date:   2023-09-14
  Report Branch: AddonSoftware 23.04
  Last Release:  AddonSoftware 23.03
 =======================================================================================================================================
@@ -57,4 +57,16 @@ Bug 10223 - AD - SQL in code stumbles over invalid characters
 (cherry picked from commit dc043e8e49496fd586ccfc51277eebcf556492ef)
 ----
 Modified: sprocs/OPPICKLIST_DET_LOTSER.prc
+
+=======================================================================================================================================
+Revision: 6a41e2ec03f70a2c3310bfa2bcffb63789df4ef3
+Author: Christine <chawkins@basis.com>
+Date: 9/14/2023 6:19:58 PM
+Message:
+Bug 10663 - OP - Printed Bill-To and Ship-To addresses may be missing after upgrade to v22
+ - corrected copy/paste typo (ope01a$ > opeInvHdr$)
+
+(cherry picked from commit 84117b819fb29ee4a568cdfa883767b6390c4ac1)
+----
+Modified: sprocs/OPPACKLIST_HDR.prc
 
