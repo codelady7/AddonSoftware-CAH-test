@@ -222,7 +222,7 @@ rem --- Get details
         item_desc$=func.displayDesc(ivm_itemmast.item_desc$)
         qty_OH$=str(ivm_itemwhse.qty_on_hand:qty_mask$)
         qty_CO$=str(ivm_itemwhse.qty_commit-(sfe_womatdtl.qty_ordered-sfe_womatdtl.tot_qty_iss):qty_mask$)
-        qty_AV$=str(ivm_itemwhse.qty_on_hand-num(qty_CO$):qty_mask$)
+        qty_AV$=str(ivm_itemwhse.qty_on_hand-(ivm_itemwhse.qty_commit-(sfe_womatdtl.qty_ordered-sfe_womatdtl.tot_qty_iss)):qty_mask$)
         qty_OO$=str(ivm_itemwhse.qty_on_order:qty_mask$)
 
         gosub add_to_recordset
