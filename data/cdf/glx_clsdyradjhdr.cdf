@@ -28,6 +28,27 @@ rem --- Capture totals controls for use in detail grid
 	callpoint!.setDevObject("totalCtrl",callpoint!.getControl("<<DISPLAY>>.TOTAL_AMOUNT"))
 	callpoint!.setDevObject("unitsCtrl",callpoint!.getControl("<<DISPLAY>>.UNITS"))
 
+[[GLX_CLSDYRADJHDR.AOPT-UPDT]]
+rem --- Run the register?
+	dim x$:stbl("+SYSINFO_TPL")
+	x$=stbl("+SYSINFO")                                                            
+	msg_id$="AON_RUN_QUERY"
+	dim msg_tokens$[1]
+	msg_tokens$[1]=x.task_desc$+" "+Translate!.getTranslation("AON_REGISTER")
+	gosub disp_message
+	 if msg_opt$="Y" then
+		rem --- Close files that will be locked in the register
+		num_files=2
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="GLX_CLSDYRADJHDR",open_opts$[1]="C"
+		open_tables$[2]="GLX_CLSDYRADJDET",open_opts$[2]="C"
+
+		gosub open_tables
+
+		rem --- Run register and update for all entries.
+		run stbl("+DIR_PGM")+"glr_clsdyradj.aon"
+	endif
+
 [[GLX_CLSDYRADJHDR.AREC]]
 rem --- Clear static label for fiscal period description
 	period_desc!=callpoint!.getDevObject("period_desc")
@@ -59,6 +80,22 @@ rem --- Files to be backed up
 	backupFiles!.addItem("glt-06")
 	backupFiles!.addItem("glt-15")
 	callpoint!.setDevObject("backupFiles",backupFiles!)
+
+[[GLX_CLSDYRADJHDR.BWRI]]
+rem --- Check for out of balance
+	balance=num(callpoint!.getColumnData("<<DISPLAY>>.TOTAL_AMOUNT"))
+	if balance<>0 then
+		rem --- Password override required for write when out of balance
+		call stbl("+DIR_PGM")+"adc_getmask.aon","","GL","A","",m0$,0,0
+		msg_id$="GL_JOURNAL_OOB"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=str(balance:m0$)
+		gosub disp_message
+		if pos("PASSVALID"=msg_opt$)=0 then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
 
 [[GLX_CLSDYRADJHDR.DIR_BROWSE.AVAL]]
 rem --- Backup directory must already exists

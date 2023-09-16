@@ -1,0 +1,229 @@
+rem --- Closed Fiscal Year Adjustments Update
+rem --- Program glu_clsdyradj.aon
+
+rem --- AddonSoftware Version 23.00
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+    setesc std_error
+    seterr std_error
+
+    next_overlay$="";rem --- clear next_var and outvect! so adc_process_end doesn't loop...i.e., don't run anything after this
+    if OutVect!<>null() OutVect!=null()
+
+rem --- Retrieve the program path
+    pgmdir$=stbl("+DIR_PGM",err=*next)
+
+rem --- Retrieve sysinfo data
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    firm_id$=sysinfo.firm_id$
+    task$=cvs(sysinfo.task_desc$,2)
+
+rem --- Open/Lock files
+    files=5,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="glt-04",ids$[1]="GLE_DAILYDETAIL"
+    files$[2]="aps_params",ids$[2]="APS_PARAMS";rem "aps-01 for Bank Recon Flag"
+    files$[3]="glm-05",ids$[3]="GLM_BANKMASTER";rem "glm-05 for Bank-GL Accts"
+    files$[4]="glt-15",ids$[4]="GLT_BANKOTHER"
+    files$[5]="ars_params",ids$[5]="ARS_PARAMS";rem --- also check AR Params for Bank Recon Flag
+
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:                                   ids$[all],templates$[all],channels[all],batch,status
+    if status goto std_exit_no_update
+
+    glt04_dev=channels[1]
+    aps01_dev=channels[2]
+    glm05_dev=channels[3]
+    glt15_dev=channels[4]
+    ars01_dev=channels[5]
+ 
+rem --- Retrieve templates
+    glcontrol_template$=stbl("+GLCONTROL_TPL",err=*next)
+    dim glcontrol$:glcontrol_template$
+    dim aps01a$:templates$[2],glm05a$:templates$[3],glt15a$:templates$[4],ars01a$:templates$[5]
+
+	
+rem --- Retrieve parameter records	
+	aps01a_key$=firm_id$+"AP00"
+	find record (aps01_dev,key=aps01a_key$,err=*next) aps01a$
+
+	ars01a_key$=firm_id$+"AR00"
+	find record (ars01_dev,key=ars01a_key$,err=*next) ars01a$
+    
+    if aps01a.br_interface$="Y" or ars01a.br_interface$="Y" then bankrec=1
+	
+rem --- Parameters
+    dim info$[20]
+    call pgmdir$+"adc_application.aon","GL",info$[all]
+    gl$=info$[9]
+
+rem --- Initializations
+    more=1
+    last$=""
+    action$="N"
+	
+rem --- Build List of GL Codes that have Bank Reconciliation Enabled
+    bank_gl_codes$=""
+    if bankrec then
+      read (glm05_dev,key=firm_id$,dom=*next)
+      while 1
+        readrecord(glm05_dev,end=*break)glm05a$
+        if firm_id$<>glm05a.firm_id$ then
+           break
+        endif
+        bank_gl_codes$=bank_gl_codes$+glm05a.gl_account$
+      wend
+    endif	
+
+rem --- Options
+    msg_id$="AON_UPDT_QUERY"
+    dim x$:stbl("+SYSINFO_TPL")
+    dim msg_tokens$[1]
+    x$=stbl("+SYSINFO")                                                            
+    msg_tokens$[1]=x.task_desc$
+    gosub disp_message
+    if msg_opt$<>"Y" goto std_exit_no_update
+
+rem --- Start up progress meter
+    call pgmdir$+"adc_progress.aon","N","","",Translate!.getTranslation("AON_UPDATING"),"",13,glw11_dev,1,meter_num,status
+
+rem --- Loop through GLX_CLSEDYRADJHDR records
+    read (glxClsdYrAdjHdr_dev,key=firm_id$,dom=*next)
+    while more
+          k$=key(glxClsdYrAdjHdr_dev,end=*break)
+          if pos(firm_id$=k$)<>1 break
+          read record(glxClsdYrAdjHdr_dev) glxClsdYrAdjHdr$
+          call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,0,status
+
+          rem --- Set Journal ID in +GLCONTROL
+          if glxClsdYrAdjHdr.journal_id$<>last$ 
+               last$=glxClsdYrAdjHdr.journal_id$
+               glcJournalCode_key$=firm_id$+glxClsdYrAdjHdr.journal_id$
+               find record (glcJournalCode_dev,key=glcJournalCode_key$,dom=*next)glcJournalCode$
+               glcontrol$=stbl("+GLCONTROL",err=*next)
+               glcontrol.journal_id$=glcJournalCode.journal_id$
+               glcontrol.permit_je$="Y"
+               glcontrol.post_yr_end$=glcJournalCode.post_yr_end$
+               glcontrol.post_locked$=glcJournalCode.post_locked$
+               x$=stbl("+GLCONTROL",glcontrol$)
+          endif
+
+          rem --- Cycle through all line items for this entry
+          read(glxClsdYrAdjDet_dev,key=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$,dom=*next)
+          while more
+                        
+              k1$=key(glxClsdYrAdjDet_dev,end=*break)
+              if pos(glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$=k1$)<>1 break
+              read record(glxClsdYrAdjDet_dev) glxClsdYrAdjDet$    
+              ref3$=""
+              post_amt=glxClsdYrAdjDet.debit_amt-glxClsdYrAdjDet.credit_amt
+
+              rem --- Post record in the daily detail file
+              call pgmdir$+"glc_glpost.aon",glmAcct_dev,glt04_dev,notused,glxClsdYrAdjDet.account$,glxClsdYrAdjHdr.trans_date$,
+:               glxClsdYrAdjHdr.trans_id$,glxClsdYrAdjDet.line_no$,ref3$,
+:               glxClsdYrAdjDet.memo_1024$,post_amt,glxClsdYrAdjDet.units,status
+	            if bankrec then
+                  trans_date$=glxClsdYrAdjHdr.trans_date$
+                  gosub bank_rec
+                endif
+
+              remove(glxClsdYrAdjDet_dev,key=k1$)
+          wend
+          remove(glxClsdYrAdjHdr_dev,key=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$)
+    wend
+
+rem --- All done
+    rem --- For reasons I don't quite understand, JE register creates glw-11 (which is fine),
+    rem --- but here in the update we aren't calling glc_update to forward glw-11 to glt-04.
+    rem --- We're calling glc_glpost to write directly to glt-04,
+    rem --- so need to clearpartial on glw-11 (to make up for the fact that glc_update would've removed the glw-11 recs).
+
+    rem --- Clear trans for this firm from glw-11 work file
+    if gl$="Y"
+        rec_pfx$=firm_id$+process_id$
+        call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glw11_dev,rec_pfx$,status
+    endif
+
+    call pgmdir$+"glc_ctlupdate.aon",status
+    call pgmdir$+"glc_ctldelete.aon",status
+    goto std_exit
+
+bank_rec:
+    if pos(glxClsdYrAdjDet.account$=bank_gl_codes$,10) then
+        redim glt15a$
+        glt15a.firm_id$=firm_id$
+        glt15a.gl_account$=glxClsdYrAdjDet.account$
+        glt15a.trans_type$="A"
+        glt15a.posted_code$="O"
+        glt15a.cash_rec_cd$=""
+        glt15a.trns_date$=trans_date$
+        glt15a.trans_amt=post_amt
+        glt15a.trans_no$=str(jul(num(trans_date$(1,4)),num(trans_date$(5,2)),num(trans_date$(7,2))):"0000000")
+        glt15a.description$=glxClsdYrAdjDet.post_memo$
+        seq_write:
+        glt15a.trans_no$=str(num(glt15a.trans_no$)+1)
+        glt15a$=field(glt15a$)
+        writerecord(glt15_dev,dom=seq_write)glt15a$
+    endif
+return
+
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+    return
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_end.src
+
+std_exit: rem --- Standard program end (01Mar2006)
+
+    msg_id$="UPDATE_COMPLETE"
+    dim msg_tokens$[1]
+    msg_opt$=""
+    gosub disp_message
+
+std_exit_no_update:
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
+    release
+
+rem #endinclude std_end.src
+
+    end

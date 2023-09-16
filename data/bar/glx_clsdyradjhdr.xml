@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glx_clsdyradjhdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glx_clsdyradjhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glx_clsdyradjhdr">20230912</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjhdr">20230912</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjhdr">20230912</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjhdr">175526</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjhdr">20230916</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjhdr">20230916</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjhdr">133134</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glx_clsdyradjhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glx_clsdyradjhdr">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glx_clsdyradjhdr"></DD_ATTR_DKNM>
@@ -58,6 +58,16 @@
 			<DD_ATTR_PADG id="ddm_tables.glx_clsdyradjhdr">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_aopt">
+		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
+		<RECORD id="ddm_table_aopt.glx_clsdyradjhdr01">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.glx_clsdyradjhdr01">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.glx_clsdyradjhdr01">01</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.glx_clsdyradjhdr01">Register - Updated</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.glx_clsdyradjhdr01">UPDT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.glx_clsdyradjhdr01">F</DD_ATTR_AOPT_FM>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.glx_clsdyradjhdradis">
@@ -68,6 +78,10 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdrafmc">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdrafmc">AFMC</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.glx_clsdyradjhdraopt-updt">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdraopt-updt">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdraopt-updt">AOPT-UPDT</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.glx_clsdyradjhdrarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdrarec">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdrarec">AREC</DD_ATTR_CPRO>
@@ -75,6 +89,10 @@
 		<RECORD id="ddm_table_cpro.glx_clsdyradjhdrbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdrbsho">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdrbsho">BSHO</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.glx_clsdyradjhdrbwri">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdrbwri">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdrbwri">BWRI</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_dtld">
@@ -125,6 +143,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glx_clsdyradjhdr">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glx_clsdyradjhdr"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glx_clsdyradjhdr">firm_id:c(2),journal_id:c(2),trans_id:c(10*),description:c(30),trans_date:c(8),dir_browse:c(256)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glx_clsdyradjhdrjournal_idglc_journalcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glx_clsdyradjhdrjournal_idglc_journalcode">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glx_clsdyradjhdrjournal_idglc_journalcode">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glx_clsdyradjhdrjournal_idglc_journalcode">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glx_clsdyradjhdrjournal_idglc_journalcode">FK_GLX_CLSDYRADJHDR_JOURNAL_ID_GLC_JOURNALCODE                                                                                                                                                                                                                 </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">JOURNAL_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glx_clsdyradjhdrjournal_idglc_journalcode0002">JOURNAL_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

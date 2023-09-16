@@ -1,0 +1,523 @@
+rem --- Closed Fiscal Year Adjustments Register
+rem --- Program glr_clsdyradj.aon
+
+rem --- AddonSoftware Version 23.00
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+    setesc std_error
+    seterr std_error
+
+    use ::ado_func.src::func
+
+rem --- Document initializations
+    OutVect!=bbjAPI().makeVector()
+    TotVect!=bbjAPI().makeVector()
+    rep_date$=date(0:"%Mz/%Dz/%Yd")
+    rep_date_stamp$=date(0:"%Yd%Mz%Dz")
+    rep_time$=date(0:"%hz:%mz %p")
+    rep_time_stamp$=date(0:"%Hz%mz%sz")
+    rep_prog$=pgm(-2)    
+
+rem --- Retrieve the program path
+    pgmdir$=stbl("+DIR_PGM",err=*next)
+
+rem --- Retrieve sysinfo data
+    rem --- If BUI, initialize Barista processes
+    if info(3,6)="5" then
+        use ::ado_util.src::util
+        Translate!=util.initBUIProcess()
+        if Translate!=null() then goto std_exit
+    endif
+
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    firm_id$=sysinfo.firm_id$
+    process_id$=stbl("+PROCESS_ID")    
+
+rem --- Open/Lock files
+    num_files=6
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLS_PARAMS",open_opts$[1]="OTA"
+    open_tables$[2]="GLX_CLSDYRADJHDR",open_opts$[2]="OTAL"
+    open_tables$[3]="GLX_CLSDYRADJDET",open_opts$[3]="OTAL"
+    open_tables$[4]="GLM_ACCT",open_opts$[4]="OTA"
+    open_tables$[5]="GLC_JOURNALCODE",open_opts$[5]="OTA"
+    open_tables$[6]="GLS_CALENDAR",open_opts$[6]="OTA"
+
+    gosub open_tables
+    if open_status goto std_exit_no_report
+
+    glsParams_dev=num(open_chans$[1]);dim glsParams$:open_tpls$[1]
+    glxClsdYrAdjHdr_dev=num(open_chans$[2]);dim glxClsdYrAdjHdr$:open_tpls$[2]
+    glxClsdYrAdjDet_dev=num(open_chans$[3]);dim glxClsdYrAdjDet$:open_tpls$[3]
+    glmAcct_dev=num(open_chans$[4]);dim glmAcct$:open_tpls$[4]
+    glcJournalCode_dev=num(open_chans$[5]);dim glcJournalCode$:open_tpls$[5]
+    glsCalendar_dev=num(open_chans$[6]);dim glsCalendar$:open_tpls$[6]
+
+rem --- Retrieve parameter records
+    glsParams_key$=sysinfo.firm_id$+"GL00"
+    find record (glsParams_dev,key=glsParams_key$,err=std_missing_params) glsParams$
+    find record (glsCalendar_dev,key=firm_id$+glsParams.current_year$,err=*next) glsCalendar$
+    if cvs(glsCalendar.firm_id$,2)="" then
+        msg_id$="AD_NO_FISCAL_CAL"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=glsParams.current_year$
+        gosub disp_message
+        goto std_exit_no_report
+    endif
+    total_periods=num(glsCalendar.total_pers$)
+    period=num(glsParams.current_per$)
+    year=num(glsParams.current_year$)
+    call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",m0$,0,acct_length
+    call stbl("+DIR_PGM")+"adc_getmask.aon","","GL","A","",m1$,0,m1
+    call stbl("+DIR_PGM")+"adc_getmask.aon","","GL","U","",m2$,0,m2
+
+rem --- Report initializations
+    headings=2
+    width=131
+    page=0
+    l9=59
+    l=l9+1
+    verify$="N"
+
+rem --- Initializations
+    dim amountdash$(20,"-"),unitdash$(15,"-")
+    dim headings$[headings+1],o[6],entry[2],total[2]
+    h1$=cvs(sysinfo.firm_name$,2)
+    h2$=cvs(sysinfo.task_desc$,2)
+    task$=h2$
+    when$=sysinfo.system_date$
+    clock$=""
+    done$="N"
+    errors=0
+    dw=30
+    update=0
+    number=0
+    more=1
+    moredetail=1
+    headings$[0]=h1$
+    headings$[1]=h2$
+    if glsParams.units_flag$<>"Y" unitdash$=""
+    recs=0
+
+rem --- set rd_alias_id$, if needed, for DocOut Settings
+    if rd_alias_id$=""
+        rd_alias_id$=pgm(-2)
+        rd_alias_id$=rd_alias_id$(max(pos("/"="/"+rd_alias_id$,-1),pos("\"="\"+rd_alias_id$,-1)))
+        rd_alias_id$=rd_alias_id$(1,pos("."=rd_alias_id$+".")-1)
+    endif
+	rd_alias_id$=cvs(rd_alias_id$,4)
+
+rem --- Additional file opens (for journal entry register)
+    source$=pgm(-2)
+    gl$="N"
+    status=0
+    call pgmdir$+"glc_ctlcreate.aon",err=std_exit_no_report,source$,"GL",glw11$,gl$,status
+    if status goto std_exit_no_report
+
+    files=1,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="glw-11",ids$[1]="GLW_DAILYDETAIL"
+    rem --- options$[endfile]="CL";do clear partial instead of full clear since everyone sharing glw-11. (batching.CAH)
+
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:                                   ids$[all],templates$[all],channels[all],batch,status
+    if status goto std_exit_no_report
+
+    glw11_dev=channels[1]
+
+    rem --- Clear trans for this firm/process from glw-11 work file
+    if gl$="Y"
+        rec_pfx$=firm_id$+process_id$
+        call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glw11_dev,rec_pfx$,status
+    endif
+        
+rem --- Document columns
+    reversal$=""
+    cycle_code$=""
+
+    columns=9
+    dim columns$[9,10]
+    columns$[0,0]=Translate!.getTranslation("AON_JRN_ID"),columns$[0,1]="C",columns$[0,2]="5"
+    columns$[1,0]=Translate!.getTranslation("AON_DESCRIPTION"),columns$[1,1]="C",columns$[1,2]="15"
+    columns$[2,0]=Translate!.getTranslation("AON_TRANSACTION"),columns$[2,1]="C",columns$[2,2]="30"
+    columns$[3,0]=Translate!.getTranslation("AON_DATE"),columns$[3,1]="C",columns$[3,2]="10"
+    columns$[4,0]=reversal$,columns$[4,1]="C",columns$[4,2]="10"
+    columns$[5,0]=Translate!.getTranslation("AON_MEMO"),columns$[5,1]="C",columns$[5,2]="30"
+    columns$[6,0]=cycle_code$,columns$[6,1]="C",columns$[6,2]="5"
+    columns$[7,0]=Translate!.getTranslation("AON_DEBITS"),columns$[7,1]="N",columns$[7,2]=str(len(m1$)),columns$[7,3]=m1$,columns$[7,10]="T"
+    columns$[8,0]=Translate!.getTranslation("AON_CREDITS"),columns$[8,1]="N",columns$[8,2]=str(len(m1$)),columns$[8,3]=m1$,columns$[8,10]="T"
+    columns$[9,0]=Translate!.getTranslation("AON_UNITS"),columns$[9,1]="N",columns$[9,2]=str(len(m2$)),columns$[9,3]=m2$,columns$[9,10]="T"
+
+    call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
+
+init_prog_meter: rem --- Initialize the progress meter and position the file
+    call pgmdir$+"adc_progress.aon","NC","","","","",0,glxClsdYrAdjHdr_dev,1,meter_num,status
+    read (glxClsdYrAdjHdr_dev,key=firm_id$,dom=*next)
+
+rem --- Loop through GLX_CLSEDYRADJHDR records
+    while more
+
+          glxClsdYrAdjHdr_key$=key(glxClsdYrAdjHdr_dev,end=*break)
+          if pos(firm_id$=glxClsdYrAdjHdr_key$)<>1 break
+          recs=recs+1
+          read record (glxClsdYrAdjHdr_dev)glxClsdYrAdjHdr$
+          
+          glxClsdYrAdjDet_key$=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$
+          
+          call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,0,status
+
+level_breaks: rem --- Level breaks
+          gosub transaction_break
+
+          rem --- Position to first line item"
+          gosub subheading
+          number=number+1
+          read (glxClsdYrAdjDet_dev,key=glxClsdYrAdjDet_key$,dom=*next)
+
+          rem --- Cycle through all line items for this entry
+          while moredetail
+
+                k$=key(glxClsdYrAdjDet_dev,end=*break)
+                if pos(glxClsdYrAdjDet_key$=k$)<>1 break
+                read record (glxClsdYrAdjDet_dev)glxClsdYrAdjDet$
+
+                rem --- Retrieve glm-01 Account Master
+                glmAcct_key$=firm_id$+glxClsdYrAdjDet.account$
+                glmAcct.gl_account$=glxClsdYrAdjDet.account$
+                glmAcct.gl_acct_desc$=pad(Translate!.getTranslation("AON_(NOT_ON_FILE)"),35)
+                find record (glmAcct_dev,key=glmAcct_key$,dom=*next)glmAcct$
+
+                rem --- Format output fields
+                debit$=""
+                credit$="" 
+                units$=""
+                amount=glxClsdYrAdjDet.debit_amt
+                if glxClsdYrAdjDet.credit_amt<>0 amount=-glxClsdYrAdjDet.credit_amt
+                if amount<0 credit$=str(abs(amount))
+                if amount>0 debit$=str(amount)
+                if glsParams.units_flag$="Y" if glxClsdYrAdjDet.units<>0 units$=str(glxClsdYrAdjDet.units)
+                
+                rem --- Split Journal Entry detail comments into multiple lines
+                lineVect!=func.splitMultiLineField(glxClsdYrAdjDet.memo_1024$,40)
+
+                rem --- Print detail line
+                OutVect!.addItem(glxClsdYrAdjDet.line_no$)
+                OutVect!.addItem(fnmask$(glxClsdYrAdjDet.account$(1,acct_length),m0$))
+                OutVect!.addItem(glmAcct.gl_acct_desc$)
+                OutVect!.addItem("")
+                OutVect!.addItem("")
+                if lineVect!.size() then
+                    OutVect!.addItem(lineVect!.getItem(0))
+                    lineVect!.removeItem(0)
+                else
+                    OutVect!.addItem("")
+                endif
+                OutVect!.addItem("")
+                OutVect!.addItem(debit$)
+                OutVect!.addItem(credit$)
+                OutVect!.addItem(units$)
+
+                rem --- Print rest of Journal Entry detail comments 
+                if lineVect!.size() then
+                    for i=0 to lineVect!.size()-1
+                        xwk=fnblank(5)
+                        OutVect!.addItem(lineVect!.getItem(i))
+                        xwk=fnblank(4)
+                    next i
+                endif
+
+                rem --- Accumulate totals
+                x=0
+                entry[2]=entry[2]+glxClsdYrAdjDet.units
+                if amount<0 x=1
+                entry[x]=entry[x]+amount
+
+                rem --- Generate summary record
+                account$=glxClsdYrAdjDet.account$
+                gldate$=glxClsdYrAdjHdr.trans_date$
+                units=glxClsdYrAdjDet.units
+                ref1$=glxClsdYrAdjHdr.trans_id$
+                ref2$=glxClsdYrAdjDet.line_no$
+                ref3$=""
+                memo$=glxClsdYrAdjDet.memo_1024$
+                gosub glrecap
+                
+          wend
+    wend
+
+rem --- All done
+    if recs=0
+        msg_id$="DOC_OUTPUT_NODATA"
+        gosub disp_message
+        goto std_exit_no_report
+    endif
+
+    done$="Y"
+    gosub transaction_break
+    balance=total[0]+total[1]
+    warning$="",units$=""
+    if balance<>0 warning$=Translate!.getTranslation("AON_REGISTER_IS_OUT_OF_BALANCE_---->")
+    debit$=str(total[0])
+    credit$=str(abs(total[1]))
+    if glsParams.units_flag$="Y" units$=str(total[2])
+ 
+
+    TotVect!.addItem(str(OutVect!.size()/(columns+1)))
+
+    abc=fnblank(2)
+    OutVect!.addItem(warning$)
+    abc=fnblank(3)
+    OutVect!.addItem(Translate!.getTranslation("AON_TOTAL_FOR_REGISTER"))
+    OutVect!.addItem(debit$)
+    OutVect!.addItem(credit$)
+    OutVect!.addItem(units$)
+
+rem --- Run update overlay
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+
+    update$="glu_clsdyradj.aon"
+
+    if errors
+       gosub Display_Message 
+       if special_flag$<>"Y" then update$=""
+    endif
+
+    next_overlay$="glr_recap.aon"
+    out_action$="PRT-PDF"   
+    if update$=""
+        goto std_exit_no_update
+    else
+        goto std_exit
+    endif
+
+subheading: rem --- Subheading
+    OutVect!.addItem(Translate!.getTranslation("AON_SEQ"))
+    OutVect!.addItem(Translate!.getTranslation("AON_ACCOUNT"))
+    OutVect!.addItem(Translate!.getTranslation("AON_DESCRIPTION"))
+    abc=fnblank(7)
+    return
+
+
+transaction_break: rem --- Transaction Break
+    if t0$="" goto journal_id
+    balance=entry[0]+entry[1]
+    reversal$=""
+    cycle_code$=""
+    units$=""
+    warning$=""
+    if balance<>0 warning$=Translate!.getTranslation("AON_ENTRY_IS_OUT_OF_BALANCE_---->")
+    debit$=str(entry[0])
+    credit$=str(abs(entry[1]))
+    if glsParams.units_flag$="Y" units$=str(entry[2])
+    for x=0 to 2
+        total[x]=total[x]+entry[x]
+    next x  
+
+    TotVect!.addItem(str(OutVect!.size()/(columns+1)))
+
+    abc=fnblank(2)
+    OutVect!.addItem(warning$)
+    abc=fnblank(3)
+    OutVect!.addItem(Translate!.getTranslation("AON_TOTAL_FOR_ENTRY"))
+    OutVect!.addItem(debit$)
+    OutVect!.addItem(credit$)
+    OutVect!.addItem(units$)
+
+journal_id: rem --- Retrieve journal id record
+    dim entry[2]
+    if done$="Y" goto transaction_break_exit
+    glcJournalCode_key$=firm_id$+glxClsdYrAdjHdr.journal_id$
+    glcJournalCode.code_desc$=Translate!.getTranslation("AON_(NOT_ON_FILE)")
+    missing=0
+    find record (glcJournalCode_dev,key=glcJournalCode_key$,dom=missing_journal_id)glcJournalCode$
+    goto transaction_heading
+
+missing_journal_id: rem --- Missing or invalid journal id code
+    errors=errors+1
+    missing=missing+1
+
+transaction_heading: rem --- Print transaction heading
+    abc=fnblank(10)
+    OutVect!.addItem(glcJournalCode.journal_id$)
+    OutVect!.addItem(glcJournalCode.code_desc$)
+    OutVect!.addItem(glxClsdYrAdjHdr.trans_id$)
+    OutVect!.addItem(fndate$(glxClsdYrAdjHdr.trans_date$))
+    OutVect!.addItem(reversal$)
+    OutVect!.addItem(glxClsdYrAdjHdr.description$)
+    OutVect!.addItem(cycle_code$)
+    abc=fnblank(3)
+    abc=fnblank(10)
+
+    t0$=glxClsdYrAdjHdr.trans_id$
+
+
+rem --- Update global variable
+    if gl$<>"Y" goto transaction_break_exit
+    if missing>0 goto transaction_break_exit
+    glcontrol_template$=stbl("+GLCONTROL_TPL",err=transaction_break_exit)
+    dim glcontrol$:glcontrol_template$
+    glcontrol$=stbl("+GLCONTROL",err=transaction_break_exit)
+    glcontrol.journal_id$=glcJournalCode.journal_id$
+    glcontrol.post_yr_end$=glcJournalCode.post_yr_end$
+    glcontrol.post_locked$=glcJournalCode.post_locked$
+    glcontrol.permit_je$=je$
+    x$=stbl("+GLCONTROL",glcontrol$)
+
+rem --- Transaction date already verified during adjustment entry
+
+transaction_break_exit:
+
+    return
+
+glrecap: rem --- Standard GL Recap Routine
+
+    if gl$="Y" call pgmdir$+"glc_glpost.aon",glmAcct_dev,glw11_dev,notused,account$,gldate$,
+:                                            ref1$,ref2$,ref3$,memo$,amount,units,status
+    return
+
+Display_Message: rem --- Display Message Routine
+
+    msg_id$="AON_REG_ERRS"
+    gosub disp_message
+    if pos("PASSVALID"=msg_opt$)<>0 special_flag$="Y"
+    return
+    
+rem --- Functions
+
+    def fndate$(q$)
+        q1$=""
+        q1$=date(jul(num(q$(1,4)),num(q$(5,2)),num(q$(7,2)),err=*next),err=*next)
+        if q1$="" q1$=q$
+        return q1$
+    fnend
+
+rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
+
+    def fnmask$(q1$,q2$)
+        if cvs(q1$,2)="" return ""
+        if q2$="" q2$=fill(len(q1$),"0")
+        if pos("E"=cvs(q1$,4)) goto alpha_mask
+:      else return str(-num(q1$,err=alpha_mask):q2$,err=alpha_mask)
+alpha_mask:
+        q=1
+        q0=0
+        while len(q2$(q))
+            if pos(q2$(q,1)="-()") q0=q0+1 else q2$(q,1)="X"
+            q=q+1
+        wend
+        if len(q1$)>len(q2$)-q0 q1$=q1$(1,len(q2$)-q0)
+        return str(q1$:q2$)
+    fnend
+
+rem --- Create blank line in OutVect! (no return value wanted or needed)
+    def fnblank(q0)
+        for q1=1 to q0
+            OutVect!.addItem("")
+        next q1
+        return q1
+    fnend    
+   
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       rd_table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+    return
+
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+    return
+
+rem #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_missing_params.src
+
+std_missing_params: rem --- Standard missing parameter handler (15Apr2006)
+
+    rd_err_text$=""
+    if tcb(5)<>0 and pgm(-1)=pgm(-2) rd_err_text$=pgm(tcb(5))
+    pgmdir$=stbl("+DIR_PGM",err=std_missing_params_exit)
+    call pgmdir$+"adc_noparams.aon",err=std_missing_params_exit,pgm(-2),str(tcb(5):"00000"),
+:                                   str(err:"000"),rd_err_text$,rd_err_act$
+std_missing_params_exit:
+    master_user$=cvs(stbl("+MASTER_USER",err=std_missing_params_release),2)
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=std_missing_params_release)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=std_missing_params_release)
+    if cvs(sysinfo.user_id$,2)=master_user$ escape
+std_missing_params_release:
+    status=999
+    if pgm(-1)<>pgm(-2) exit
+    release
+
+rem #endinclude std_missing_params.src
+
+rem #include std_end.src
+
+std_exit_no_report:
+
+    OutVect!=null();rem nothing to print, or some other err such that no report
+    
+std_exit_no_update:
+
+std_exit: rem --- Standard program end (01Mar2006)
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,status
+    run stbl("+DIR_SYP",err=*next)+"bas_process_end.bbj",err=*next
+    release
+
+rem #endinclude std_end.src
+
+    end
