@@ -342,8 +342,8 @@ rem --- Run update overlay
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
 
     if errors
-       gosub disp_message 
-        if special_flag$<>"Y" then update$=""
+       gosub Display_Message 
+       if special_flag$<>"Y" then update$=""
     endif
 
     next_overlay$="glr_recap.aon"
@@ -462,6 +462,13 @@ glrecap: rem --- Standard GL Recap Routine
 
     if gl$="Y" call pgmdir$+"glc_glpost.aon",glm01_dev,glw11_dev,notused,account$,gldate$,
 :                                            ref1$,ref2$,ref3$,memo$,amount,units,status
+    return
+
+Display_Message: rem --- Display Message Routine
+
+    msg_id$="AON_REG_ERRS"
+    gosub disp_message
+    if pos("PASSVALID"=msg_opt$)<>0 special_flag$="Y"
     return
     
 rem --- Functions
