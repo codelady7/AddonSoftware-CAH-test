@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-09-14
+ Report Date:   2023-09-16
  Report Branch: AddonSoftware 23.04
  Last Release:  AddonSoftware 23.03
 =======================================================================================================================================
@@ -70,3 +70,12 @@ Bug 10663 - OP - Printed Bill-To and Ship-To addresses may be missing after upgr
 ----
 Modified: sprocs/OPPACKLIST_HDR.prc
 
+=======================================================================================================================================
+Revision: cf6df9d1e891affc66b1647770209270d9c5f322
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 9/16/2023 1:56:36 PM
+Message:
+Bug 10723: Used "standard" Display_Message subroutine to display message
+when an error is reported on the register.
+----
+Modified: gl/src/glr_journal.aon
