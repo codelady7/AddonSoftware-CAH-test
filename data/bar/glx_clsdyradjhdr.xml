@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.glx_clsdyradjhdr"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glx_clsdyradjhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glx_clsdyradjhdr">20230912</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjhdr">20230916</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjhdr">20230916</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjhdr">133134</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjhdr">20230918</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjhdr">20230918</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjhdr">113536</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glx_clsdyradjhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glx_clsdyradjhdr">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glx_clsdyradjhdr"></DD_ATTR_DKNM>
@@ -58,16 +58,6 @@
 			<DD_ATTR_PADG id="ddm_tables.glx_clsdyradjhdr">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
-	<ALIAS id="ddm_table_aopt">
-		<ID id="ddm_table_aopt">DDM_TABLE_AOPT</ID>
-		<RECORD id="ddm_table_aopt.glx_clsdyradjhdr01">
-			<DD_TABLE_ALIAS id="ddm_table_aopt.glx_clsdyradjhdr01">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
-			<DD_ATTR_SEQ id="ddm_table_aopt.glx_clsdyradjhdr01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.glx_clsdyradjhdr01">Register - Updated</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.glx_clsdyradjhdr01">UPDT</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.glx_clsdyradjhdr01">F</DD_ATTR_AOPT_FM>
-		</RECORD>
-	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
 		<RECORD id="ddm_table_cpro.glx_clsdyradjhdradis">
@@ -77,10 +67,6 @@
 		<RECORD id="ddm_table_cpro.glx_clsdyradjhdrafmc">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdrafmc">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdrafmc">AFMC</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.glx_clsdyradjhdraopt-updt">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdraopt-updt">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.glx_clsdyradjhdraopt-updt">AOPT-UPDT</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.glx_clsdyradjhdrarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glx_clsdyradjhdrarec">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
