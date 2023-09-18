@@ -52,6 +52,7 @@ rem --- Retrieve parameter records
 	ars01a_key$=firm_id$+"AR00"
 	find record (ars01_dev,key=ars01a_key$,err=*next) ars01a$
     
+rem wgh ... 10627 ... need this???  
     if aps01a.br_interface$="Y" or ars01a.br_interface$="Y" then bankrec=1
 	
 rem --- Parameters
@@ -63,7 +64,8 @@ rem --- Initializations
     more=1
     last$=""
     action$="N"
-	
+
+rem wgh ... 10627 ... need this???	
 rem --- Build List of GL Codes that have Bank Reconciliation Enabled
     bank_gl_codes$=""
     if bankrec then
@@ -85,6 +87,21 @@ rem --- Options
     msg_tokens$[1]=x.task_desc$
     gosub disp_message
     if msg_opt$<>"Y" goto std_exit_no_update
+    
+rem --- Launch Backup Directory Entry form
+    rem --- Files to be backed up
+    ignore$=stbl("adx_backup_files","glm-01;glm-02;glt-04;glt-06;glt-15;")
+
+    call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:   "ADX_BACKUPDIR",
+:       stbl("+USER_ID"),
+:       "",
+:       "",
+:       table_chans$[all]
+
+    adx_backup_dir$ = stbl("ADX_BACKUP_DIR",err=*next)
+    if adx_backup_dir$="" then goto std_exit_no_update
+rem wgh ... 10627 ... stopped here
 
 rem --- Start up progress meter
     call pgmdir$+"adc_progress.aon","N","","",Translate!.getTranslation("AON_UPDATING"),"",13,glw11_dev,1,meter_num,status

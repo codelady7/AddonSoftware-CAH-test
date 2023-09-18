@@ -4,7 +4,6 @@ rem --- Calc and display totals (debits/credits, etc.)
 
 [[GLX_CLSDYRADJHDR.AFMC]]
 rem --- Inits
-	use java.io.File
 	use ::ado_util.src::util
 
 rem --- Add static label to display fiscal period description
@@ -51,15 +50,6 @@ rem --- GL using units?
 	readrecord(glsParams_dev,key=firm_id$+"GL00", dom=std_missing_params)glsParams$
 	callpoint!.setDevObject("units_flag",glsParams.units_flag$)
 
-rem --- Files to be backed up
-	backupFiles! = BBjAPI().makeVector()
-	backupFiles!.addItem("glm-01")
-	backupFiles!.addItem("glm-02")
-	backupFiles!.addItem("glt-04")
-	backupFiles!.addItem("glt-06")
-	backupFiles!.addItem("glt-15")
-	callpoint!.setDevObject("backupFiles",backupFiles!)
-
 [[GLX_CLSDYRADJHDR.BWRI]]
 rem --- Check for out of balance
 	balance=num(callpoint!.getColumnData("<<DISPLAY>>.TOTAL_AMOUNT"))
@@ -75,47 +65,6 @@ rem --- Check for out of balance
 			break
 		endif
 	endif
-
-[[GLX_CLSDYRADJHDR.DIR_BROWSE.AVAL]]
-rem --- Backup directory must already exists
-	backupDir$=callpoint!.getUserInput()
-	backupDir!=new File(backupDir$)
-	if !backupDir!.exists() or !backupDir!.isDirectory() then
-		msg_id$="AD_DIR_MISSING"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=backupDir$
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
-	rem --- Remove trailing slashes (/ and \) from backup dirctory
-	backupDir$=backupDir!.getCanonicalPath()
-	while len(backupDir$) and pos(backupDir$(len(backupDir$),1)="/\")
-		backupDir$ = backupDir$(1, len(backupDir$)-1)
-	wend
-
-rem --- Backup directory can NOT already contain GL data files that will be updated.
-	fileExists!=null()
-	backupFiles!=callpoint!.getDevObject("backupFiles")
-	for i=0 to backupFiles!.size()-1
-		thisFile!=new File(backupDir$+"/"+backupFiles!.getItem(i))
-		if thisFile!.exists() then
-			fileExists!=thisFile!
-			break
-		endif
-	next i
-	if fileExists!<>null() then
-		msg_id$="GL_BCKUP_FILE_EXISTS"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=fileExists!.getCanonicalPath()
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
-rem --- Use the backup directory's canonical path
-	callpoint!.setUserInput(backupDir$)
 
 [[GLX_CLSDYRADJHDR.JOURNAL_ID.AVAL]]
 rem --- Verify this Journal ID is allowed for Journal Entries.

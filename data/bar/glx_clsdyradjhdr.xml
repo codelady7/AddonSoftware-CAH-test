@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.glx_clsdyradjhdr">20230912</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjhdr">20230918</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjhdr">20230918</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjhdr">113536</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjhdr">141028</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glx_clsdyradjhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glx_clsdyradjhdr">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glx_clsdyradjhdr"></DD_ATTR_DKNM>
@@ -128,7 +128,7 @@
 		<RECORD id="ddm_table_tpls.glx_clsdyradjhdr">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glx_clsdyradjhdr">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glx_clsdyradjhdr"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.glx_clsdyradjhdr">firm_id:c(2),journal_id:c(2),trans_id:c(10*),description:c(30),trans_date:c(8),dir_browse:c(256)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.glx_clsdyradjhdr">firm_id:c(2),journal_id:c(2),trans_id:c(10*),description:c(30),trans_date:c(8)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -470,57 +470,6 @@
 			<DD_ATTR_RKEY id="ddm_table_cols.glx_clsdyradjhdr005">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.glx_clsdyradjhdr005">C</DD_ATTR_BTNS>
 		</RECORD>
-		<RECORD id="ddm_table_cols.glx_clsdyradjhdr006">
-			<DD_TABLE_ALIAS id="ddm_table_cols.glx_clsdyradjhdr006">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
-			<DD_SEQUENCE id="ddm_table_cols.glx_clsdyradjhdr006">006</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.glx_clsdyradjhdr006">DIR_BROWSE      </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.glx_clsdyradjhdr006">DIR_BROWSE      </DD_DVAR_NAME>
-			<DD_COL_REPEATS id="ddm_table_cols.glx_clsdyradjhdr006">0</DD_COL_REPEATS>
-			<DD_COL_OCCURS id="ddm_table_cols.glx_clsdyradjhdr006">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.glx_clsdyradjhdr006">N</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.glx_clsdyradjhdr006"></DD_DELIM_CHAR>
-			<DD_SYSTEM_REC id="ddm_table_cols.glx_clsdyradjhdr006"></DD_SYSTEM_REC>
-			<DD_SYSTEM_ID id="ddm_table_cols.glx_clsdyradjhdr006"></DD_SYSTEM_ID>
-			<DD_MASK_TYPE id="ddm_table_cols.glx_clsdyradjhdr006"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.glx_clsdyradjhdr006">20230912</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjhdr006">20230912</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjhdr006">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
-			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjhdr006">0</DD_ATTR_COLW>
-			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_CTLY>
-			<DD_ATTR_CTLW id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_CTLW>
-			<DD_ATTR_CTLH id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_DFLT>
-			<DD_ATTR_DRLE id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_DRLE>
-			<DD_ATTR_GHDR id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_GHDR>
-			<DD_ATTR_IDEF id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.glx_clsdyradjhdr006">Backup Directory</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.glx_clsdyradjhdr006">Backup Dir</DD_ATTR_LABS>
-			<DD_ATTR_MLAN id="ddm_table_cols.glx_clsdyradjhdr006">N</DD_ATTR_MLAN>
-			<DD_ATTR_MINL id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_MINL>
-			<DD_ATTR_MAXL id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_MAXL>
-			<DD_ATTR_MINV id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_MINV>
-			<DD_ATTR_MAXV id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_MAXV>
-			<DD_ATTR_PROM id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_PROM>
-			<DD_ATTR_PVAL id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_PVAL>
-			<DD_ATTR_SLEV id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_SLEV>
-			<DD_ATTR_TABG id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.glx_clsdyradjhdr006">6</DD_ATTR_TIND>
-			<DD_ATTR_HELP id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.glx_clsdyradjhdr006">DIR_BROWSE</SQL_COLUMN_NAME>
-			<DD_ATTR_FONT id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_FONT>
-			<DD_ATTR_STYL id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_STYL>
-			<DD_ATTR_FTSR id="ddm_table_cols.glx_clsdyradjhdr006">N</DD_ATTR_FTSR>
-			<DD_ATTR_CWID id="ddm_table_cols.glx_clsdyradjhdr006">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.glx_clsdyradjhdr006">3005</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.glx_clsdyradjhdr006">ine_dir_browse</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.glx_clsdyradjhdr006">0</DD_ATTR_CTLC>
-			<DD_ATTR_RADG id="ddm_table_cols.glx_clsdyradjhdr006"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.glx_clsdyradjhdr006">N</DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.glx_clsdyradjhdr006">F</DD_ATTR_BTNS>
-		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_disp">
 		<ID id="ddm_table_disp">DDM_TABLE_DISP</ID>
@@ -533,7 +482,7 @@
 			<DD_ATTR_LABS id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_LABS>
 			<DD_ATTR_CALC id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_CALC>
 			<DD_ATTR_CTLX id="ddm_table_disp.glx_clsdyradjhdr001">+40</DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_disp.glx_clsdyradjhdr001">-4</DD_ATTR_CTLY>
+			<DD_ATTR_CTLY id="ddm_table_disp.glx_clsdyradjhdr001">-3</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_CTLH>
 			<DD_ATTR_DRLE id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_DRLE>
@@ -541,7 +490,7 @@
 			<DD_ATTR_SLEV id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_disp.glx_clsdyradjhdr001">7</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr001">3006</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr001">3005</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.glx_clsdyradjhdr001">ine_gl_year</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glx_clsdyradjhdr001">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glx_clsdyradjhdr001"></DD_ATTR_RADG>
@@ -564,7 +513,7 @@
 			<DD_ATTR_SLEV id="ddm_table_disp.glx_clsdyradjhdr002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.glx_clsdyradjhdr002"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_disp.glx_clsdyradjhdr002">8</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr002">3007</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr002">3006</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.glx_clsdyradjhdr002">ine_gl_period</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glx_clsdyradjhdr002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glx_clsdyradjhdr002"></DD_ATTR_RADG>
@@ -587,7 +536,7 @@
 			<DD_ATTR_SLEV id="ddm_table_disp.glx_clsdyradjhdr003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.glx_clsdyradjhdr003"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_disp.glx_clsdyradjhdr003">9</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr003">3008</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr003">3007</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.glx_clsdyradjhdr003">inn_debit_amt</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glx_clsdyradjhdr003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glx_clsdyradjhdr003"></DD_ATTR_RADG>
@@ -610,7 +559,7 @@
 			<DD_ATTR_SLEV id="ddm_table_disp.glx_clsdyradjhdr004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.glx_clsdyradjhdr004"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_disp.glx_clsdyradjhdr004">10</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr004">3009</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr004">3008</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.glx_clsdyradjhdr004">inn_credit_amt</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glx_clsdyradjhdr004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glx_clsdyradjhdr004"></DD_ATTR_RADG>
@@ -633,7 +582,7 @@
 			<DD_ATTR_SLEV id="ddm_table_disp.glx_clsdyradjhdr005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.glx_clsdyradjhdr005"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_disp.glx_clsdyradjhdr005">11</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr005">3010</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr005">3009</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.glx_clsdyradjhdr005">inn_total_amount</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glx_clsdyradjhdr005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glx_clsdyradjhdr005"></DD_ATTR_RADG>
@@ -656,7 +605,7 @@
 			<DD_ATTR_SLEV id="ddm_table_disp.glx_clsdyradjhdr006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.glx_clsdyradjhdr006"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_disp.glx_clsdyradjhdr006">12</DD_ATTR_TIND>
-			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr006">3011</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_disp.glx_clsdyradjhdr006">3010</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.glx_clsdyradjhdr006">inn_units</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.glx_clsdyradjhdr006">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.glx_clsdyradjhdr006"></DD_ATTR_RADG>
@@ -674,11 +623,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.glx_clsdyradjhdrtrans_dateaval">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.glx_clsdyradjhdrtrans_dateaval">TRANS_DATE      </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.glx_clsdyradjhdrtrans_dateaval">AVAL</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_column_cpro.glx_clsdyradjhdrdir_browseaval">
-			<DD_TABLE_ALIAS id="ddm_column_cpro.glx_clsdyradjhdrdir_browseaval">GLX_CLSDYRADJHDR</DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_cpro.glx_clsdyradjhdrdir_browseaval">DIR_BROWSE      </DD_DVAR_NAME>
-			<DD_ATTR_CPRO id="ddm_column_cpro.glx_clsdyradjhdrdir_browseaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
@@ -980,58 +924,6 @@
 			<DD_ATTR_OEMD id="ddm_elements.trans_date"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.trans_date"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.trans_date"></DD_ATTR_CASB>
-		</RECORD>
-		<RECORD id="ddm_elements.dir_browse">
-			<DD_DATA_NAME id="ddm_elements.dir_browse">DIR_BROWSE      </DD_DATA_NAME>
-			<DD_DESCRIPTION id="ddm_elements.dir_browse">Directory Browser</DD_DESCRIPTION>
-			<DD_DATA_TYPE id="ddm_elements.dir_browse">C</DD_DATA_TYPE>
-			<DD_DATA_LENGTH id="ddm_elements.dir_browse">256</DD_DATA_LENGTH>
-			<DD_MASK_TYPE id="ddm_elements.dir_browse"></DD_MASK_TYPE>
-			<DD_SYSTEM_REC id="ddm_elements.dir_browse"></DD_SYSTEM_REC>
-			<ASC_COMP_ID id="ddm_elements.dir_browse">01007514</ASC_COMP_ID>
-			<ASC_PROD_ID id="ddm_elements.dir_browse">AD </ASC_PROD_ID>
-			<LOCALIZATION_EX id="ddm_elements.dir_browse">N</LOCALIZATION_EX>
-			<DD_CREATE_DATE id="ddm_elements.dir_browse">20100121</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.dir_browse">20100121</DD_LSTREV_DATE>
-			<DD_AUTO_COMP id="ddm_elements.dir_browse"></DD_AUTO_COMP>
-			<DD_ATTR_BLNK id="ddm_elements.dir_browse">N</DD_ATTR_BLNK>
-			<DD_ATTR_CDAT id="ddm_elements.dir_browse"></DD_ATTR_CDAT>
-			<DD_ATTR_CTLW id="ddm_elements.dir_browse"></DD_ATTR_CTLW>
-			<DD_ATTR_CTLH id="ddm_elements.dir_browse"></DD_ATTR_CTLH>
-			<DD_ATTR_CTYP id="ddm_elements.dir_browse">E</DD_ATTR_CTYP>
-			<DD_ATTR_DCOL id="ddm_elements.dir_browse"></DD_ATTR_DCOL>
-			<DD_ATTR_DCOM id="ddm_elements.dir_browse"></DD_ATTR_DCOM>
-			<DD_ATTR_DEXP id="ddm_elements.dir_browse"></DD_ATTR_DEXP>
-			<DD_ATTR_DFLT id="ddm_elements.dir_browse"></DD_ATTR_DFLT>
-			<DD_ATTR_DKNM id="ddm_elements.dir_browse"></DD_ATTR_DKNM>
-			<DD_ATTR_DKEY id="ddm_elements.dir_browse"></DD_ATTR_DKEY>
-			<DD_ATTR_DTAB id="ddm_elements.dir_browse"></DD_ATTR_DTAB>
-			<DD_ATTR_DINQ id="ddm_elements.dir_browse"></DD_ATTR_DINQ>
-			<DD_ATTR_ENCR id="ddm_elements.dir_browse"></DD_ATTR_ENCR>
-			<DD_ATTR_IDEF id="ddm_elements.dir_browse"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_elements.dir_browse">Directory</DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_elements.dir_browse">Directory</DD_ATTR_LABS>
-			<DD_ATTR_LDIS id="ddm_elements.dir_browse"></DD_ATTR_LDIS>
-			<DD_ATTR_MAXL id="ddm_elements.dir_browse"></DD_ATTR_MAXL>
-			<DD_ATTR_MAXR id="ddm_elements.dir_browse"></DD_ATTR_MAXR>
-			<DD_ATTR_MAXV id="ddm_elements.dir_browse"></DD_ATTR_MAXV>
-			<DD_ATTR_MINL id="ddm_elements.dir_browse"></DD_ATTR_MINL>
-			<DD_ATTR_MINV id="ddm_elements.dir_browse"></DD_ATTR_MINV>
-			<DD_ATTR_MSKI id="ddm_elements.dir_browse"></DD_ATTR_MSKI>
-			<DD_ATTR_MSKO id="ddm_elements.dir_browse"></DD_ATTR_MSKO>
-			<DD_ATTR_PADC id="ddm_elements.dir_browse"></DD_ATTR_PADC>
-			<DD_ATTR_PADJ id="ddm_elements.dir_browse"></DD_ATTR_PADJ>
-			<DD_ATTR_PREC id="ddm_elements.dir_browse">0</DD_ATTR_PREC>
-			<DD_ATTR_PROM id="ddm_elements.dir_browse"></DD_ATTR_PROM>
-			<DD_ATTR_PVAL id="ddm_elements.dir_browse"></DD_ATTR_PVAL>
-			<DD_ATTR_SDLG id="ddm_elements.dir_browse">D</DD_ATTR_SDLG>
-			<DD_ATTR_SLEV id="ddm_elements.dir_browse"></DD_ATTR_SLEV>
-			<DD_ATTR_STYP id="ddm_elements.dir_browse"></DD_ATTR_STYP>
-			<DD_ATTR_STEP id="ddm_elements.dir_browse"></DD_ATTR_STEP>
-			<DD_ATTR_FLPT id="ddm_elements.dir_browse"></DD_ATTR_FLPT>
-			<DD_ATTR_OEMD id="ddm_elements.dir_browse"></DD_ATTR_OEMD>
-			<DD_ATTR_Y2KW id="ddm_elements.dir_browse"></DD_ATTR_Y2KW>
-			<DD_ATTR_CASB id="ddm_elements.dir_browse"></DD_ATTR_CASB>
 		</RECORD>
 		<RECORD id="ddm_elements.year">
 			<DD_DATA_NAME id="ddm_elements.year">YEAR            </DD_DATA_NAME>
