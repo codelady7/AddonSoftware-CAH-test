@@ -71,6 +71,18 @@ Bug 10663 - OP - Printed Bill-To and Ship-To addresses may be missing after upgr
 Modified: sprocs/OPPACKLIST_HDR.prc
 
 =======================================================================================================================================
+Revision: 7199ea8516062d04a96fdb1de984a066316174c5
+Author: Christine <chawkins@basis.com>
+Date: 9/15/2023 3:42:34 PM
+Message:
+Bug 10722 - SF - Negative committed quantities cause error 26 in SF Pick List
+ - changed so qty_AV$ calculation doesn't use num(qty_CO$), which might have a trailing minus sign, but just repeats the calculation for qty_CO$ in-line.
+
+(cherry picked from commit 8e02e227d89dc857237e87d9619ff2d7fc89058f)
+----
+Modified: sprocs/SFPICKLIST.prc
+
+=======================================================================================================================================
 Revision: cf6df9d1e891affc66b1647770209270d9c5f322
 Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 9/16/2023 1:56:36 PM
