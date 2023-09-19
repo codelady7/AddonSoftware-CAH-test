@@ -681,7 +681,7 @@ serial_lotted: rem --- Serialized/Lotted Inventory
 
     if col_format$="Y" then return
 
-    ope21_trip$=ope11a_key$
+    ope21_trip$=ope11a.firm_id$+ope11a.trans_status$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
     read (ope21_dev,key=ope21_trip$,knum="AO_STATUS",dom=*next)
 
     while more
@@ -691,9 +691,10 @@ serial_lotted: rem --- Serialized/Lotted Inventory
 
         OutVect!.addItem(x2$+" "+ope21a.sequence_no$+" "+ope21a.lotser_no$)
         xwk = fnblank(2)
+        OutVect!.addItem(str(ope21a.qty_ordered:m2$)+$00$+"R")
+        xwk = fnblank(1)
         OutVect!.addItem(str(ope21a.qty_shipped:m2$)+$00$+"R")
-        OutVect!.addItem(str(ope21a.qty_shipped:m2$)+$00$+"R")
-        xwk = fnblank(4)
+        xwk = fnblank(3)
         OutVect!.addItem(str(ope21a.unit_cost:m3$)+$00$+"R")
         xwk = fnblank(4)
         l=l+1
