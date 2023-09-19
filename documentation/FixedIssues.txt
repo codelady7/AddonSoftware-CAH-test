@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-09-16
+ Report Date:   2023-09-19
  Report Branch: AddonSoftware 23.04
  Last Release:  AddonSoftware 23.03
 =======================================================================================================================================
@@ -91,3 +91,17 @@ Bug 10723: Used "standard" Display_Message subroutine to display message
 when an error is reported on the register.
 ----
 Modified: gl/src/glr_journal.aon
+
+=======================================================================================================================================
+Revision: 345c25d27c6b8cc69d7bd802e1a852d7b150bac7
+Author: Christine <chawkins@basis.com>
+Date: 9/19/2023 6:11:28 PM
+Message:
+Bug 10726 - OP - Open Order Detail Report doesn't show lot/serial numbers
+ - corrected trip key for opt-21 (ope_ordlsdet) key
+ - corrected display to show qty ordered/shipped
+
+(cherry picked from commit ff04f420c09bd65b7929a470781d9822ad12e08b)
+----
+Modified: op/src/opr_opnorddetail_o1.aon
+
