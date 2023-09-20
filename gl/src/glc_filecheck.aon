@@ -47,6 +47,10 @@ rem --- Open/Lock files
     
     gosub open_tables
 
+    gle01_dev=num(open_chans$[1])
+    gle03_dev=num(open_chans$[2])
+    glt04_dev=num(open_chans$[3])
+
 rem --- Initializations
 
     dim descriptions$[num_files],message$[1]

@@ -7,6 +7,10 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
     setesc std_error
     seterr std_error
 
+    use java.io.File
+
+    use ::ado_util.src::util
+
     next_overlay$="";rem --- clear next_var and outvect! so adc_process_end doesn't loop...i.e., don't run anything after this
     if OutVect!<>null() OutVect!=null()
 
@@ -21,29 +25,27 @@ rem --- Retrieve sysinfo data
     task$=cvs(sysinfo.task_desc$,2)
 
 rem --- Open/Lock files
-    files=5,begfile=1,endfile=files
-    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
-    files$[1]="glt-04",ids$[1]="GLE_DAILYDETAIL"
-    files$[2]="aps_params",ids$[2]="APS_PARAMS";rem "aps-01 for Bank Recon Flag"
-    files$[3]="glm-05",ids$[3]="GLM_BANKMASTER";rem "glm-05 for Bank-GL Accts"
-    files$[4]="glt-15",ids$[4]="GLT_BANKOTHER"
-    files$[5]="ars_params",ids$[5]="ARS_PARAMS";rem --- also check AR Params for Bank Recon Flag
+    rem --- GLM_ACCT opened in glr_recap.aon must be closed now so that it can be backed up
+    close(glm01_dev,err=*next)
 
-    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
-:                                   ids$[all],templates$[all],channels[all],batch,status
-    if status goto std_exit_no_update
+    num_files=4
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
+    open_tables$[2]="GLM_BANKMASTER",open_opts$[2]="OTA"
+    open_tables$[3]="ARS_PARAMS",open_opts$[3]="OTA"
+    open_tables$[4]="DDM_TABLES",open_opts$[4]="OTA[2_]"
 
-    glt04_dev=channels[1]
-    aps01_dev=channels[2]
-    glm05_dev=channels[3]
-    glt15_dev=channels[4]
-    ars01_dev=channels[5]
- 
+    gosub open_tables
+    if open_status goto std_exit_no_update
+
+    aps01_dev=num(open_chans$[1]);dim aps01a$:open_tpls$[1]
+    glm05_dev=num(open_chans$[2]);dim glm05a$:open_tpls$[2]
+    ars01_dev=num(open_chans$[3]);dim ars01a$:open_tpls$[3]
+    ddmTables_dev=num(open_chans$[4]);dim ddmTables$:open_tpls$[4]
+
 rem --- Retrieve templates
     glcontrol_template$=stbl("+GLCONTROL_TPL",err=*next)
     dim glcontrol$:glcontrol_template$
-    dim aps01a$:templates$[2],glm05a$:templates$[3],glt15a$:templates$[4],ars01a$:templates$[5]
-
 	
 rem --- Retrieve parameter records	
 	aps01a_key$=firm_id$+"AP00"
@@ -52,7 +54,6 @@ rem --- Retrieve parameter records
 	ars01a_key$=firm_id$+"AR00"
 	find record (ars01_dev,key=ars01a_key$,err=*next) ars01a$
     
-rem wgh ... 10627 ... need this???  
     if aps01a.br_interface$="Y" or ars01a.br_interface$="Y" then bankrec=1
 	
 rem --- Parameters
@@ -64,8 +65,8 @@ rem --- Initializations
     more=1
     last$=""
     action$="N"
+    BLOCKSIZE = 2^20
 
-rem wgh ... 10627 ... need this???	
 rem --- Build List of GL Codes that have Bank Reconciliation Enabled
     bank_gl_codes$=""
     if bankrec then
@@ -87,10 +88,32 @@ rem --- Options
     msg_tokens$[1]=x.task_desc$
     gosub disp_message
     if msg_opt$<>"Y" goto std_exit_no_update
+
+rem --- Are transaction files empty?
+    call pgmdir$+"glc_filecheck.aon",firm_id$,rd_table_chans$[all],status
+    if status goto std_exit_no_update
+
+rem --- Get filename and path for tables that will be backed up.
+    backupTables!=BBjAPI().makeVector()
+    backupTables!.addItem("GLM_ACCT")
+    backupTables!.addItem("GLM_ACCTSUMMARY")
+    backupTables!.addItem("GLE_DAILYDETAIL")
+    backupTables!.addItem("GLT_TRANSDETAIL")
+    backupTables!.addItem("GLT_BANKOTHER")
+
+    backupFiles$=""
+    fileVector!=BBjAPI().makeVector()
+    for i=0 to backupTables!.size()-1
+        readrecord(ddmTables_dev,key=pad(backupTables!.getItem(i),16," "),knum="PRIMARY",err=*continue)ddmTables$
+        thisFile$=cvs(ddmTables.dd_file_name$,2)
+        if thisFile$="" then thisFile$=cvs(ddmTables.dd_table_alias$,2+8)
+        backupFiles$=backupFiles$+thisFile$+";"
+        sourceFile$=BBjAPI().getFileSystem().resolvePath(util.resolvePathStbls(ddmTables.dd_table_path$)+"/"+thisFile$,err=*continue)
+        fileVector!.addItem(new File(sourceFile$))
+    next i
     
 rem --- Launch Backup Directory Entry form
-    rem --- Files to be backed up
-    ignore$=stbl("adx_backup_files","glm-01;glm-02;glt-04;glt-06;glt-15;")
+    ignore$=stbl("adx_backup_files",backupFiles$)
 
     call stbl("+DIR_SYP")+"bam_run_prog.bbj",
 :   "ADX_BACKUPDIR",
@@ -99,9 +122,56 @@ rem --- Launch Backup Directory Entry form
 :       "",
 :       table_chans$[all]
 
-    adx_backup_dir$ = stbl("ADX_BACKUP_DIR",err=*next)
-    if adx_backup_dir$="" then goto std_exit_no_update
-rem wgh ... 10627 ... stopped here
+    backupDir$ = stbl("ADX_BACKUP_DIR",err=*next)
+    if backupDir$="" then goto std_exit_no_update
+
+rem --- Back up GL data files that will be updated
+    for j=0 to fileVector!.size()-1
+        sourceFile!=fileVector!.get(j)
+        targetFile!=new File(backupDir$, sourceFile!.getName())
+        targetFile!.createNewFile()
+
+        rem --- Copy file to target directory
+        inStream!=new java.io.FileInputStream(sourceFile!)
+        outStream!=new java.io.FileOutputStream(targetFile!)
+        buffSize=2^16
+        byteArray!=(new String(fill(buffSize))).getBytes()
+        while 1
+            error=1
+            bytes=inStream!.read(byteArray!,0,buffSize,err=*next); error=0
+            if error then
+                msg_id$="AD_CANNOT_BACKUP"
+                dim msg_tokens$[1]
+                msg_tokens$[1]=sourceFile!.getName()
+                gosub disp_message
+
+                inStream!.close()
+                outStream!.close()
+                targetFile!.delete()
+                goto std_exit_no_update
+            endif
+            if bytes<0 then break
+            outStream!.write(byteArray!,0,bytes)
+        wend
+        inStream!.close()
+        outStream!.close()
+    next j
+
+rem --- Open needed files that were backed up so couldn't be opened earlier
+    num_files=3
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLE_DAILYDETAIL",open_opts$[1]="OTA"
+    open_tables$[2]="GLM_ACCT",open_opts$[2]="OTA"
+    open_tables$[3]="GLT_BANKOTHER",open_opts$[3]="OTA"
+
+    gosub open_tables
+    if open_status goto std_exit_no_update
+
+    gleDailyDetail_dev=num(open_chans$[1]);dim gleDailyDetail$:open_tpls$[1]
+    glmAcct_dev=num(open_chans$[2]);dim glmAcct$:open_tpls$[2]
+    gltBankOther_dev=num(open_chans$[3]);dim gltBankOther$:open_tpls$[3]
+
+escape; rem wgh ... 10627 ... stopped here 
 
 rem --- Start up progress meter
     call pgmdir$+"adc_progress.aon","N","","",Translate!.getTranslation("AON_UPDATING"),"",13,glw11_dev,1,meter_num,status
@@ -138,7 +208,7 @@ rem --- Loop through GLX_CLSEDYRADJHDR records
               post_amt=glxClsdYrAdjDet.debit_amt-glxClsdYrAdjDet.credit_amt
 
               rem --- Post record in the daily detail file
-              call pgmdir$+"glc_glpost.aon",glmAcct_dev,glt04_dev,notused,glxClsdYrAdjDet.account$,glxClsdYrAdjHdr.trans_date$,
+              call pgmdir$+"glc_glpost.aon",glmAcct_dev,gleDailyDetail_dev,notused,glxClsdYrAdjDet.account$,glxClsdYrAdjHdr.trans_date$,
 :               glxClsdYrAdjHdr.trans_id$,glxClsdYrAdjDet.line_no$,ref3$,
 :               glxClsdYrAdjDet.memo_1024$,post_amt,glxClsdYrAdjDet.units,status
 	            if bankrec then
@@ -169,22 +239,45 @@ rem --- All done
 
 bank_rec:
     if pos(glxClsdYrAdjDet.account$=bank_gl_codes$,10) then
-        redim glt15a$
-        glt15a.firm_id$=firm_id$
-        glt15a.gl_account$=glxClsdYrAdjDet.account$
-        glt15a.trans_type$="A"
-        glt15a.posted_code$="O"
-        glt15a.cash_rec_cd$=""
-        glt15a.trns_date$=trans_date$
-        glt15a.trans_amt=post_amt
-        glt15a.trans_no$=str(jul(num(trans_date$(1,4)),num(trans_date$(5,2)),num(trans_date$(7,2))):"0000000")
-        glt15a.description$=glxClsdYrAdjDet.post_memo$
+        redim gltBankOther$
+        gltBankOther.firm_id$=firm_id$
+        gltBankOther.gl_account$=glxClsdYrAdjDet.account$
+        gltBankOther.trans_type$="A"
+        gltBankOther.posted_code$="O"
+        gltBankOther.cash_rec_cd$=""
+        gltBankOther.trns_date$=trans_date$
+        gltBankOther.trans_amt=post_amt
+        gltBankOther.trans_no$=str(jul(num(trans_date$(1,4)),num(trans_date$(5,2)),num(trans_date$(7,2))):"0000000")
+        gltBankOther.description$=glxClsdYrAdjDet.post_memo$
         seq_write:
-        glt15a.trans_no$=str(num(glt15a.trans_no$)+1)
-        glt15a$=field(glt15a$)
-        writerecord(glt15_dev,dom=seq_write)glt15a$
+        gltBankOther.trans_no$=str(num(gltBankOther.trans_no$)+1)
+        gltBankOther$=field(gltBankOther$)
+        writerecord(gltBankOther_dev,dom=seq_write)gltBankOther$
     endif
 return
+   
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       rd_table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        release
+    endif
+    return
 
 disp_message:rem --- Display Message Dialog
 

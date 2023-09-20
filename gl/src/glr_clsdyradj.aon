@@ -45,14 +45,18 @@ rem --- Run the register?
     if msg_opt$<>"Y" goto std_exit_no_report
 
 rem --- Open/Lock files
-    num_files=6
+    num_files=10
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
     open_tables$[1]="GLS_PARAMS",open_opts$[1]="OTA"
     open_tables$[2]="GLX_CLSDYRADJHDR",open_opts$[2]="OTAL"
     open_tables$[3]="GLX_CLSDYRADJDET",open_opts$[3]="OTAL"
-    open_tables$[4]="GLM_ACCT",open_opts$[4]="OTA"
+    open_tables$[4]="GLM_ACCT",open_opts$[4]="OTAL"; rem --- Lock now to reduce risk of usage during backup in the update
     open_tables$[5]="GLC_JOURNALCODE",open_opts$[5]="OTA"
     open_tables$[6]="GLS_CALENDAR",open_opts$[6]="OTA"
+    open_tables$[7]="GLM_ACCTSUMMARY",open_opts$[7]="OTAL"; rem --- Lock now to reduce risk of usage during backup in the update
+    open_tables$[8]="GLE_DAILYDETAIL",open_opts$[8]="OTAL"; rem --- Lock now to reduce risk of usage during backup in the update
+    open_tables$[9]="GLT_TRANSDETAIL",open_opts$[9]="OTAL"; rem --- Lock now to reduce risk of usage during backup in the update
+    open_tables$[10]="GLT_BANKOTHER",open_opts$[10]="OTAL"; rem --- Lock now to reduce risk of usage during backup in the update
 
     gosub open_tables
     if open_status goto std_exit_no_report
@@ -522,6 +526,16 @@ std_exit_no_report:
 std_exit_no_update:
 
 std_exit: rem --- Standard program end (01Mar2006)
+
+    rem --- Must close here files being backed up in the update
+    num_files=5
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLM_ACCT",open_opts$[1]="C"
+    open_tables$[2]="GLM_ACCTSUMMARY",open_opts$[2]="C"
+    open_tables$[3]="GLE_DAILYDETAIL",open_opts$[3]="C"
+    open_tables$[4]="GLT_TRANSDETAIL",open_opts$[4]="C"
+    open_tables$[5]="GLT_BANKOTHER",open_opts$[5]="C"
+    gosub open_tables
 
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,status
     run stbl("+DIR_SYP",err=*next)+"bas_process_end.bbj",err=*next

@@ -35,8 +35,6 @@ rem --- Backup directory can NOT already contain data files that will be updated
 	fileExists$=""
 	backupFiles$=stbl("adx_backup_files",err=*next)
 	while len(backupFiles$)>0
-		nextFile$=backupFiles$(1,pos(";"=backupFiles$)-1)
-
 		thisFile!=new File(backupDir$+"/"+backupFiles$(1,pos(";"=backupFiles$)-1))
 		if thisFile!.exists() then
 			fileExists!=thisFile!
