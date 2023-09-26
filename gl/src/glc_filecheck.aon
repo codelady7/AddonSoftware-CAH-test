@@ -165,9 +165,13 @@ rem #include std_exit.src
 
 std_exit: rem --- Standard called program exit (01Mar2006)
 
-    close (gle01_dev,err=*next)
-    close (gle03_dev,err=*next)
-    close (glt04_dev,err=*next)
+    num_files=3
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLE_JRNLHDR",open_opts$[1]="C"
+    open_tables$[2]="GLE_ALLOCHDR",open_opts$[2]="C"
+    open_tables$[3]="GLE_DAILYDETAIL",open_opts$[3]="C"
+    gosub open_tables
+
     exit
 
 rem #endinclude std_exit.src

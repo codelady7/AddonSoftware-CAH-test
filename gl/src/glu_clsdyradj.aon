@@ -24,9 +24,20 @@ rem --- Retrieve sysinfo data
     firm_id$=sysinfo.firm_id$
     task$=cvs(sysinfo.task_desc$,2)
 
+rem --- Options
+    msg_id$="AON_UPDT_QUERY"
+    dim x$:stbl("+SYSINFO_TPL")
+    dim msg_tokens$[1]
+    x$=stbl("+SYSINFO")                                                            
+    msg_tokens$[1]=x.task_desc$
+    gosub disp_message
+    if msg_opt$<>"Y" goto std_exit_no_update
+
 rem --- Open/Lock files
-    rem --- GLM_ACCT opened in glr_recap.aon must be closed now so that it can be backed up
+    rem --- GLS_PARAMS, GLS_CALENDAR and GLM_ACCT are opened in glr_recap.aon and must be closed now so they can be locked
+    close(gls01_dev,err=*next)
     close(glm01_dev,err=*next)
+    close(gls_calendar_dev,err=*next)
 
     num_files=4
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -79,15 +90,6 @@ rem --- Build List of GL Codes that have Bank Reconciliation Enabled
         bank_gl_codes$=bank_gl_codes$+glm05a.gl_account$
       wend
     endif	
-
-rem --- Options
-    msg_id$="AON_UPDT_QUERY"
-    dim x$:stbl("+SYSINFO_TPL")
-    dim msg_tokens$[1]
-    x$=stbl("+SYSINFO")                                                            
-    msg_tokens$[1]=x.task_desc$
-    gosub disp_message
-    if msg_opt$<>"Y" goto std_exit_no_update
 
 rem --- Are transaction files empty?
     call pgmdir$+"glc_filecheck.aon",firm_id$,rd_table_chans$[all],status
@@ -157,12 +159,29 @@ rem --- Back up GL data files that will be updated
         outStream!.close()
     next j
 
+rem --- Cannot use adc_fiscalperyr.aon after GLS_CALENDAR is locked.
+rem --- So get transaction date's fiscal year and period here.
+    dateMap!= new java.util.HashMap()
+    read (glxClsdYrAdjHdr_dev,key=firm_id$,dom=*next)
+    while more
+          k$=key(glxClsdYrAdjHdr_dev,end=*break)
+          if pos(firm_id$=k$)<>1 break
+          read record(glxClsdYrAdjHdr_dev) glxClsdYrAdjHdr$
+          call pgmdir$+"adc_fiscalperyr.aon",firm_id$,glxClsdYrAdjHdr.trans_date$,period$,year$,table_chans$[all],status
+          yrPerVect!=BBjAPI().makeVector()
+          yrPerVect!.addItem(year$)
+          yrPerVect!.addItem(period$)
+          dateMap!.put(glxClsdYrAdjHdr.trans_date$, yrPerVect!)
+    wend
+
 rem --- Open needed files that were backed up so couldn't be opened earlier
-    num_files=3
+    num_files=5
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-    open_tables$[1]="GLE_DAILYDETAIL",open_opts$[1]="OTA"
-    open_tables$[2]="GLM_ACCT",open_opts$[2]="OTA"
-    open_tables$[3]="GLT_BANKOTHER",open_opts$[3]="OTA"
+    open_tables$[1]="GLE_DAILYDETAIL",open_opts$[1]="OTAL"
+    open_tables$[2]="GLM_ACCT",open_opts$[2]="OTAL"
+    open_tables$[3]="GLT_BANKOTHER",open_opts$[3]="OTAL"
+    open_tables$[4]="GLS_PARAMS",open_opts$[4]="OTAL"
+    open_tables$[5]="GLS_CALENDAR",open_opts$[5]="OTAL"
 
     gosub open_tables
     if open_status goto std_exit_no_update
@@ -170,19 +189,37 @@ rem --- Open needed files that were backed up so couldn't be opened earlier
     gleDailyDetail_dev=num(open_chans$[1]);dim gleDailyDetail$:open_tpls$[1]
     glmAcct_dev=num(open_chans$[2]);dim glmAcct$:open_tpls$[2]
     gltBankOther_dev=num(open_chans$[3]);dim gltBankOther$:open_tpls$[3]
-
-escape; rem wgh ... 10627 ... stopped here 
+    glsParams_dev=num(open_chans$[4]);dim glsParams$:open_tpls$[4]
+    glsCalendar_dev=num(open_chans$[5]);dim glsCalendar$:open_tpls$[5]
 
 rem --- Start up progress meter
     call pgmdir$+"adc_progress.aon","N","","",Translate!.getTranslation("AON_UPDATING"),"",13,glw11_dev,1,meter_num,status
 
 rem --- Loop through GLX_CLSEDYRADJHDR records
+    initial_currentYear$=""
+    initial_currentPeriod$=""
     read (glxClsdYrAdjHdr_dev,key=firm_id$,dom=*next)
     while more
           k$=key(glxClsdYrAdjHdr_dev,end=*break)
           if pos(firm_id$=k$)<>1 break
           read record(glxClsdYrAdjHdr_dev) glxClsdYrAdjHdr$
           call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,0,status
+
+          rem --- Unlock the Adjustment Fiscal Period
+          yrPerVect!=dateMap!.get(glxClsdYrAdjHdr.trans_date$)
+          readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
+          locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+          field glsCalendar$,locked_flag$="N"
+          writerecord(glsCalendar_dev)glsCalendar$
+
+          rem --- Open prior fiscal year, and set current fiscal year and period for the transaction date
+          readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+          if initial_currentYear$="" then initial_currentYear$=glsParams.current_year$
+          if initial_currentPeriod$="" then initial_currentPeriod$=glsParams.current_per$
+          glsParams.gl_yr_closed$="N"
+          glsParams.current_year$=year$
+          glsParams.current_per$=period$
+          writerecord(glsParams_dev)glsParams$
 
           rem --- Set Journal ID in +GLCONTROL
           if glxClsdYrAdjHdr.journal_id$<>last$ 
@@ -220,6 +257,41 @@ rem --- Loop through GLX_CLSEDYRADJHDR records
           wend
           remove(glxClsdYrAdjHdr_dev,key=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$)
     wend
+
+rem --- Run Daily Detail Register and Update
+rem wgh ... 10627 ... stopped here
+
+rem --- Re-lock the Adjustment Fiscal Period
+    transDates!=dateMap!.keySet()
+    datesIter!=transDates!.iterator()
+    while datesIter!.hasNext()
+        transDate$=datesIter!.next()
+        yrPerVect!=dateMap!.get(transDate$)
+    
+        readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
+        locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+        field glsCalendar$,locked_flag$="Y"
+        writerecord(glsCalendar_dev)glsCalendar$
+    wend
+
+rem --- Unlock files that are opened in Update Beginning Balances
+    unlock(gleDailyDetail_dev,err=*next)
+    unlock(glmAcct_dev,err=*next)
+    unlock(glsParams_dev,err=*next)
+    unlock(glsCalendar_dev,err=*next)
+
+rem --- Run Update Beginning Balances and update
+rem wgh ... 10627 ... stopped here
+
+rem --- Restore the initial current fiscal year and period
+    readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+    glsParams.gl_yr_closed$="Y"
+    glsParams.current_year$=initial_currentYear$
+    glsParams.current_per$=initial_currentPeriod$
+    writerecord(glsParams_dev)glsParams$
+
+rem --- Launch the Account Summary Activity tas
+rem wgh ... 10627 ... stopped here
 
 rem --- All done
     rem --- For reasons I don't quite understand, JE register creates glw-11 (which is fine),
