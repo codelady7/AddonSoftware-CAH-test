@@ -9,6 +9,7 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
     use java.io.File
 
+    use ::bbtranslator.bbj::BBTranslator
     use ::ado_util.src::util
 
     next_overlay$="";rem --- clear next_var and outvect! so adc_process_end doesn't loop...i.e., don't run anything after this
@@ -221,6 +222,13 @@ rem --- Loop through GLX_CLSEDYRADJHDR records
           glsParams.current_per$=period$
           writerecord(glsParams_dev)glsParams$
 
+          glcontrol$=stbl("+GLCONTROL",err=*next)
+          glcontrol.current_per$=glsParams.current_per$
+          glcontrol.current_year$=glsParams.current_year$
+          glcontrol.gl_period$=glsParams.current_per$
+          glcontrol.gl_year$=glsParams.current_year$
+          x$=stbl("+GLCONTROL",glcontrol$)
+
           rem --- Set Journal ID in +GLCONTROL
           if glxClsdYrAdjHdr.journal_id$<>last$ 
                last$=glxClsdYrAdjHdr.journal_id$
@@ -258,8 +266,59 @@ rem --- Loop through GLX_CLSEDYRADJHDR records
           remove(glxClsdYrAdjHdr_dev,key=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$)
     wend
 
+rem --- Unlock or close files that are opened or locked in Daily Detail Register and Update Beginning Balances
+    unlock(glmAcct_dev,err=*next)
+    unlock(glsParams_dev,err=*next)
+    unlock(glsCalendar_dev,err=*next)
+
+    num_files=1
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLE_DAILYDETAIL",open_opts$[1]="C"
+    gosub open_tables
+
 rem --- Run Daily Detail Register and Update
-rem wgh ... 10627 ... stopped here
+    bar_dir$=(new File(dir(""))).getCanonicalPath()
+    run_arg$="bbj -tT0 -q -WD"+$22$+bar_dir$+$22$
+:       +" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
+:       +" "+$22$+bar_dir$+"/sys/prog/bax_launch_task.bbj"+$22$
+
+    rdAdmin!=BBjAPI().getGroupNamespace().getValue("+bar_admin_"+cvs(stbl("+USER_ID",err=*next),11),err=*next)
+    glrDailyDetail$=BBjAPI().getFileSystem().resolvePath("glr_dailydetail.aon")
+    user_arg$=" - "
+:       +" -u"+rdAdmin!.getUser()
+:       +" -p"+rdAdmin!.getPassword()
+:       +" -y"+"A"
+:       +" -w"
+:       +" -a"+glrDailyDetail$+$22$+" - "
+:       +" glu_clsdyradj.aon"+$22$
+
+    global_ns!=BBjAPI().getGlobalNamespace()
+    global_ns!.setValue("gluClsdYrAdj:+DIR_PGM",stbl("+DIR_PGM"))
+    global_ns!.setValue("gluClsdYrAdj:+DIR_SYP",stbl("+DIR_SYP"))
+    global_ns!.setValue("gluClsdYrAdj:+MASTER_USER",stbl("+MASTER_USER",err=*next))
+    global_ns!.setValue("gluClsdYrAdj:+MILESTONE",stbl("+MILESTONE",err=*next))
+    global_ns!.setValue("gluClsdYrAdj:+PROCESS_ID",stbl("+PROCESS_ID"))
+    global_ns!.setValue("gluClsdYrAdj:+PROPS_NAME",stbl("+PROPS_NAME"))
+    global_ns!.setValue("gluClsdYrAdj:+SYSINFO",stbl("+SYSINFO"))
+    global_ns!.setValue("gluClsdYrAdj:+SYSINFO_TPL",stbl("+SYSINFO_TPL"))
+    global_ns!.setValue("gluClsdYrAdj:+USER_ID",stbl("+USER_ID"))
+    global_ns!.setValue("gluClsdYrAdj:+USER_LOCALE",stbl("+USER_LOCALE"))
+
+    rdTransSpaceKey$=stbl("+PROPS_NAME")+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
+    global_ns!.setValue("rdTransSpaceKey",rdTransSpaceKey$)
+    Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
+    if Translate!=null()
+        Translate!=BBTranslator.getInstance(stbl("+PROPS_NAME"),stbl("+USER_LOCALE"),null(),stbl("+PROPS_PATH"))
+    endif
+    global_ns!.setValue(rdTransSpaceKey$,Translate!)
+
+    success=0
+    scall_result=scall(run_arg$+user_arg$,err=*next); success=1
+    if !success or scall_result<>0 then
+        msg_id$="CLSDYRADJ_UPDT_STOP"
+        gosub disp_message
+        goto std_exit_no_update
+    endif
 
 rem --- Re-lock the Adjustment Fiscal Period
     transDates!=dateMap!.keySet()
@@ -274,14 +333,8 @@ rem --- Re-lock the Adjustment Fiscal Period
         writerecord(glsCalendar_dev)glsCalendar$
     wend
 
-rem --- Unlock files that are opened in Update Beginning Balances
-    unlock(gleDailyDetail_dev,err=*next)
-    unlock(glmAcct_dev,err=*next)
-    unlock(glsParams_dev,err=*next)
-    unlock(glsCalendar_dev,err=*next)
-
 rem --- Run Update Beginning Balances and update
-rem wgh ... 10627 ... stopped here
+escape; rem wgh ... 10627 ... stopped here #2
 
 rem --- Restore the initial current fiscal year and period
     readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
@@ -290,8 +343,23 @@ rem --- Restore the initial current fiscal year and period
     glsParams.current_per$=initial_currentPeriod$
     writerecord(glsParams_dev)glsParams$
 
-rem --- Launch the Account Summary Activity tas
-rem wgh ... 10627 ... stopped here
+rem --- Launch the Account Summary Activity task
+rem wgh ... 10627 ... stopped here #3
+
+rem --- Remove values added to GlobalNamespace
+    global_ns!.removeValue("gluClsdYrAdj:+DIR_PGM")
+    global_ns!.removeValue("gluClsdYrAdj:+DIR_SYP")
+    global_ns!.removeValue("gluClsdYrAdj:+MASTER_USER")
+    global_ns!.removeValue("gluClsdYrAdj:+MILESTONE")
+    global_ns!.removeValue("gluClsdYrAdj:+PROCESS_ID")
+    global_ns!.removeValue("gluClsdYrAdj:+PROPS_NAME")
+    global_ns!.removeValue("gluClsdYrAdj:+SYSINFO")
+    global_ns!.removeValue("gluClsdYrAdj:+SYSINFO_TPL")
+    global_ns!.removeValue("gluClsdYrAdj:+USER_ID")
+    global_ns!.removeValue("gluClsdYrAdj:+USER_LOCALE")
+
+    global_ns!.removeValue("rdTransSpaceKey")
+    global_ns!.removeValue(rdTransSpaceKey$)
 
 rem --- All done
     rem --- For reasons I don't quite understand, JE register creates glw-11 (which is fine),
