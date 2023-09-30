@@ -208,8 +208,10 @@ rem --- Loop through GLX_CLSEDYRADJHDR records
 
           rem --- Unlock the Adjustment Fiscal Period
           yrPerVect!=dateMap!.get(glxClsdYrAdjHdr.trans_date$)
-          readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
-          locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+          year$=yrPerVect!.getItem(0)
+          period$=yrPerVect!.getItem(1)
+          readrecord(glsCalendar_dev,key=firm_id$+year$)glsCalendar$
+          locked_flag$="locked_flag_"+period$
           field glsCalendar$,locked_flag$="N"
           writerecord(glsCalendar_dev)glsCalendar$
 
@@ -334,7 +336,7 @@ rem --- Re-lock the Adjustment Fiscal Period
     wend
 
 rem --- Run Update Beginning Balances and update
-escape; rem wgh ... 10627 ... stopped here #2
+rem wgh ... 10627 ... stopped here #2
 
 rem --- Restore the initial current fiscal year and period
     readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
@@ -342,9 +344,6 @@ rem --- Restore the initial current fiscal year and period
     glsParams.current_year$=initial_currentYear$
     glsParams.current_per$=initial_currentPeriod$
     writerecord(glsParams_dev)glsParams$
-
-rem --- Launch the Account Summary Activity task
-rem wgh ... 10627 ... stopped here #3
 
 rem --- Remove values added to GlobalNamespace
     global_ns!.removeValue("gluClsdYrAdj:+DIR_PGM")
@@ -375,6 +374,9 @@ rem --- All done
 
     call pgmdir$+"glc_ctlupdate.aon",status
     call pgmdir$+"glc_ctldelete.aon",status
+
+rem --- Launch the Account Summary Activity task
+rem wgh ... 10627 ... stopped here #3
     goto std_exit
 
 bank_rec:
