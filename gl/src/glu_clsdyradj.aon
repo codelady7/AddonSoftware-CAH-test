@@ -219,7 +219,7 @@ rem --- Loop through GLX_CLSEDYRADJHDR records
           readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
           if initial_currentYear$="" then initial_currentYear$=glsParams.current_year$
           if initial_currentPeriod$="" then initial_currentPeriod$=glsParams.current_per$
-          glsParams.gl_yr_closed$="N"
+          glsParams.gl_yr_closed$="Y"
           glsParams.current_year$=year$
           glsParams.current_per$=period$
           writerecord(glsParams_dev)glsParams$
@@ -336,7 +336,28 @@ rem --- Re-lock the Adjustment Fiscal Period
     wend
 
 rem --- Run Update Beginning Balances and update
-rem wgh ... 10627 ... stopped here #2
+    bar_dir$=(new File(dir(""))).getCanonicalPath()
+    run_arg$="bbj -tT0 -q -WD"+$22$+bar_dir$+$22$
+:       +" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
+:       +" "+$22$+bar_dir$+"/sys/prog/bax_launch_task.bbj"+$22$
+
+    rdAdmin!=BBjAPI().getGroupNamespace().getValue("+bar_admin_"+cvs(stbl("+USER_ID",err=*next),11),err=*next)
+    gleBeginBalance$=BBjAPI().getFileSystem().resolvePath("gle_beginbalance.aon")
+    user_arg$=" - "
+:       +" -u"+rdAdmin!.getUser()
+:       +" -p"+rdAdmin!.getPassword()
+:       +" -y"+"A"
+:       +" -w"
+:       +" -a"+gleBeginBalance$+$22$+" - "
+:       +" glu_clsdyradj.aon"+$22$
+
+    success=0
+    scall_result=scall(run_arg$+user_arg$,err=*next); success=1
+    if !success or scall_result<>0 then
+        msg_id$="CLSDYRADJ_UPDT_STOP2"
+        gosub disp_message
+        goto std_exit_no_update
+    endif
 
 rem --- Restore the initial current fiscal year and period
     readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
@@ -375,8 +396,29 @@ rem --- All done
     call pgmdir$+"glc_ctlupdate.aon",status
     call pgmdir$+"glc_ctldelete.aon",status
 
+    msg_id$="UPDATE_COMPLETE"
+    dim msg_tokens$[1]
+    msg_opt$=""
+    gosub disp_message
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+
 rem --- Launch the Account Summary Activity task
-rem wgh ... 10627 ... stopped here #3
+    msg_id$="GL_VERIFY_BEG_BAL"
+    gosub disp_message
+
+    dim dflt_data$[2,1]
+    dflt_data$[1,0]="FIRM_ID"
+    dflt_data$[1,1]=firm_id$
+    call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:       "GLM_ACCTSUMHDR",
+:       stbl("+USER_ID"),
+:       "",
+:       firm_id$,
+:       table_chans$[all],
+:       "",
+:       dflt_data$[all]
+
     goto std_exit
 
 bank_rec:
@@ -464,11 +506,6 @@ rem #endinclude std_error.src
 rem #include std_end.src
 
 std_exit: rem --- Standard program end (01Mar2006)
-
-    msg_id$="UPDATE_COMPLETE"
-    dim msg_tokens$[1]
-    msg_opt$=""
-    gosub disp_message
 
 std_exit_no_update:
 

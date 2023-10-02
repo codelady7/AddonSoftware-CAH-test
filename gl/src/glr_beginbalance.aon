@@ -58,6 +58,10 @@ rem --- Retrieve sysinfo data
     dim sysinfo$:sysinfo_template$
     sysinfo$=stbl("+SYSINFO",err=*next)
     firm_id$=sysinfo.firm_id$
+    if gluClsdYrAdj then
+        sysinfo.task_desc$=Translate!.getTranslation("AON_UPDATE")+" "+Translate!.getTranslation("AON_BEGINNING_BALANCE")
+        x$=stbl("+SYSINFO",sysinfo$)
+    endif
     
     milestone=50
     milestone=num(stbl("+MILESTONE",err=*next),err=*next)
@@ -118,7 +122,7 @@ rem --- Retrieve parameter records
         goto std_exit
     endif
 
-    if gls01a.gl_yr_closed$="Y"
+    if gls01a.gl_yr_closed$="Y" and !gluClsdYrAdj then
         msg_id$="FISCAL_CLOSED"
         dim msg_tokens$[1]
         msg_tokens$[1]=str(num(gls01a.current_year$)-1:"0000")
@@ -204,11 +208,13 @@ rem --- Prompt user for permission to continue for update beginning balances
 
 closing_year: rem --- Get confirmation from user when closing the fiscal year
 
-    msg_id$="GL_CLS_FISC"
-    dim msg_tokens$[1]
-    msg_tokens$[1]=prior$
-    gosub disp_message
-    if msg_opt$<>"Y" goto std_exit_no_print
+    if !gluClsdYrAdj then
+        msg_id$="GL_CLS_FISC"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=prior$
+        gosub disp_message
+        if msg_opt$<>"Y" goto std_exit_no_print
+    endif
 
 position_file: rem --- Setup DocOut, start progress meter and position File
 
