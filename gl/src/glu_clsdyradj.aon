@@ -12,6 +12,11 @@ rem --- Copyright BASIS International Ltd.  All Rights Reserved.
     use ::bbtranslator.bbj::BBTranslator
     use ::ado_util.src::util
 
+rem --- Initializations
+    initial_currentYear$=""
+    initial_currentPeriod$=""
+    dateMap!=null()
+
     next_overlay$="";rem --- clear next_var and outvect! so adc_process_end doesn't loop...i.e., don't run anything after this
     if OutVect!<>null() OutVect!=null()
 
@@ -323,17 +328,20 @@ rem --- Run Daily Detail Register and Update
     endif
 
 rem --- Re-lock the Adjustment Fiscal Period
-    transDates!=dateMap!.keySet()
-    datesIter!=transDates!.iterator()
-    while datesIter!.hasNext()
-        transDate$=datesIter!.next()
-        yrPerVect!=dateMap!.get(transDate$)
-    
-        readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
-        locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
-        field glsCalendar$,locked_flag$="Y"
-        writerecord(glsCalendar_dev)glsCalendar$
-    wend
+    if dateMap!<>null() then
+        transDates!=dateMap!.keySet()
+        datesIter!=transDates!.iterator()
+        while datesIter!.hasNext()
+            transDate$=datesIter!.next()
+            yrPerVect!=dateMap!.get(transDate$)
+        
+            readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
+            locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+            field glsCalendar$,locked_flag$="Y"
+            writerecord(glsCalendar_dev)glsCalendar$
+        wend
+        dateMap!=null()
+    endif
 
 rem --- Run Update Beginning Balances and update
     bar_dir$=(new File(dir(""))).getCanonicalPath()
@@ -360,11 +368,15 @@ rem --- Run Update Beginning Balances and update
     endif
 
 rem --- Restore the initial current fiscal year and period
-    readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
-    glsParams.gl_yr_closed$="Y"
-    glsParams.current_year$=initial_currentYear$
-    glsParams.current_per$=initial_currentPeriod$
-    writerecord(glsParams_dev)glsParams$
+    if initial_currentYear$<>"" and initial_currentPeriod$<>"" then
+        readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+        glsParams.gl_yr_closed$="Y"
+        glsParams.current_year$=initial_currentYear$
+        glsParams.current_per$=initial_currentPeriod$
+        writerecord(glsParams_dev)glsParams$
+        initial_currentYear$=""
+        initial_currentPeriod$=""
+    endif
 
 rem --- Remove values added to GlobalNamespace
     global_ns!.removeValue("gluClsdYrAdj:+DIR_PGM")
@@ -439,6 +451,36 @@ bank_rec:
         writerecord(gltBankOther_dev,dom=seq_write)gltBankOther$
     endif
 return
+
+reset_glParams: rem --- Reset GLS_PARAMS and GLS_CALENDAR changes
+    rem --- Restore the initial current fiscal year and period
+    if initial_currentYear$<>"" and initial_currentPeriod$<>"" then
+        readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+        glsParams.gl_yr_closed$="Y"
+        glsParams.current_year$=initial_currentYear$
+        glsParams.current_per$=initial_currentPeriod$
+        writerecord(glsParams_dev)glsParams$
+        initial_currentYear$=""
+        initial_currentPeriod$=""
+    endif
+
+    rem --- Re-lock the Adjustment Fiscal Period
+    if dateMap!<>null() then
+        transDates!=dateMap!.keySet()
+        datesIter!=transDates!.iterator()
+        while datesIter!.hasNext()
+            transDate$=datesIter!.next()
+            yrPerVect!=dateMap!.get(transDate$)
+        
+            readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
+            locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+            field glsCalendar$,locked_flag$="Y"
+            writerecord(glsCalendar_dev)glsCalendar$
+        wend
+        dateMap!=null()
+    endif
+
+   return
    
 open_tables:rem --- Open Tables
 
@@ -459,6 +501,7 @@ open_tables:rem --- Open Tables
         msg_tokens$[1]=open_status$
         gosub disp_message
         rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        gosub reset_glParams; rem --- modified
         release
     endif
     return
@@ -470,11 +513,12 @@ disp_message:rem --- Display Message Dialog
 
 rem #include std_error.src
 
-std_error: rem --- Standard error handler (11Oct2017)
+std_error: rem --- Modified standard error handler (11Oct2017)
 
     if tcb(19)>0
         rem --- Escape handler
         if and(chr(tcb(19)),$08$)=$08$
+            gosub reset_glParams; rem --- modified
             release
         else
             setesc std_error
@@ -498,6 +542,7 @@ std_error: rem --- Standard error handler (11Oct2017)
     call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
     if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
     if pos("RETRY"=rd_err_act$) retry
+    gosub reset_glParams; rem --- modified
     if pgm(-1)<>pgm(-2) status=999; exit 
     release
 
@@ -508,7 +553,8 @@ rem #include std_end.src
 std_exit: rem --- Standard program end (01Mar2006)
 
 std_exit_no_update:
-
+    gosub reset_glParams; rem --- modified
+    
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
     run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
     release
