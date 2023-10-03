@@ -97,10 +97,6 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
                 readrecord(admFirms_dev,end=*break)admFirms$
                 firms!.addItem(admFirms.company_id$)
             wend
-rem wgh ... 10627 ... testing
-firms!.addItem("33")
-firms!.addItem("55")
-firms!.addItem("77")
 
             rem --- Add firm "GL Adjustments" records to ADM_PROCMASTER
             read(admProcMaster_dev,key="ZZ"+"GL Adjustments",dom=*next)
@@ -220,7 +216,6 @@ done: rem --- Done, close things up
     print(log_dev)
     print(log_dev)"v2400conversion log finished: " + date(0:"%Yd-%Mz-%Dz@%Hz:%mz:%sz")
     close(log_dev)
-escape; rem wgh ... 10627 ... end test
 
     rem --- Close opened files
     if ddm_table_tpls then close(ddm_table_tpls,err=*next)
