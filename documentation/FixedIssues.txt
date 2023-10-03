@@ -1,107 +1,12 @@
 =======================================================================================================================================
- Report Date:   2023-09-19
- Report Branch: AddonSoftware 23.04
- Last Release:  AddonSoftware 23.03
+ Report Date:   2023-10-03
+ Report Branch: AddonSoftware 23.05
+ Last Release:  AddonSoftware 23.04
 =======================================================================================================================================
 
-23.03 released 08/28/2023
-BBjBaristaAddonDemos2303_08-23-2023_1521.jar
-
+23.04 released 10/02/2023
+BBjBaristaAddonDemos2304_09-28-2023_0931.jar
 =======================================================================================================================================
-Revision: 802af3c914918558265e35afd04962c6bb1d2aa0
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 8/30/2023 10:28:23 AM
-Message:
-Bug 10713: Moved PO_REC_INVOICED message to the accum_receiver_tot
-subroutine.
-----
-Modified: data/bar/poe_invsel.xml
-Modified: data/cdf/poe_invsel.cdf
 
-=======================================================================================================================================
-Revision: 7e718f8ccb40e6d0e3d747a8a6cfad146686fbed
-Author: Christine <chawkins@basis.com>
-Date: 9/7/2023 12:52:33 PM
-Message:
-Bug 10412 - IV - Use header-detail grid format for Inventory Transfer Entry form
- - correcting the menu, which was still launching the older form
 
-(cherry picked from commit dccca3df5d0af6cde6db9c2565fefdf86adc9f03)
-----
-Modified: data/sync/adm_mnu_item~[01007514IV].xml
-Modified: data/sync/adm_mnu_trans~[01007514IV].xml
-
-=======================================================================================================================================
-Revision: d050edc67528fc48ce396154e259bb2e76519866
-Author: Christine <chawkins@basis.com>
-Date: 9/8/2023 5:23:28 PM
-Message:
-Bug 10718 - AD - Utilities to clear firm or copy from firm to firm can give bogus license nags
- - use lcheckout directly rather than calling bax_lcheckout so we can set the option not to nag; instead, if no license, skip adding to the modules$ string.
-
-(cherry picked from commit 9d2204f8ffeb2fcaf6d223f407534474ec580d20)
-----
-Modified: data/bar/adx_clearfirm.xml
-Modified: data/bar/adx_copyfirm.xml
-Modified: data/cdf/adx_clearfirm.cdf
-Modified: data/cdf/adx_copyfirm.cdf
-
-=======================================================================================================================================
-Revision: 13e07f07750f075ec167cdfee8b227207b240124
-Author: Christine <chawkins@basis.com>
-Date: 9/12/2023 5:34:58 PM
-Message:
-Bug 10223 - AD - SQL in code stumbles over invalid characters
- - Fixed a typo in the Pick List SPROC that was part of original commit
-
-(cherry picked from commit dc043e8e49496fd586ccfc51277eebcf556492ef)
-----
-Modified: sprocs/OPPICKLIST_DET_LOTSER.prc
-
-=======================================================================================================================================
-Revision: 6a41e2ec03f70a2c3310bfa2bcffb63789df4ef3
-Author: Christine <chawkins@basis.com>
-Date: 9/14/2023 6:19:58 PM
-Message:
-Bug 10663 - OP - Printed Bill-To and Ship-To addresses may be missing after upgrade to v22
- - corrected copy/paste typo (ope01a$ > opeInvHdr$)
-
-(cherry picked from commit 84117b819fb29ee4a568cdfa883767b6390c4ac1)
-----
-Modified: sprocs/OPPACKLIST_HDR.prc
-
-=======================================================================================================================================
-Revision: 7199ea8516062d04a96fdb1de984a066316174c5
-Author: Christine <chawkins@basis.com>
-Date: 9/15/2023 3:42:34 PM
-Message:
-Bug 10722 - SF - Negative committed quantities cause error 26 in SF Pick List
- - changed so qty_AV$ calculation doesn't use num(qty_CO$), which might have a trailing minus sign, but just repeats the calculation for qty_CO$ in-line.
-
-(cherry picked from commit 8e02e227d89dc857237e87d9619ff2d7fc89058f)
-----
-Modified: sprocs/SFPICKLIST.prc
-
-=======================================================================================================================================
-Revision: cf6df9d1e891affc66b1647770209270d9c5f322
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 9/16/2023 1:56:36 PM
-Message:
-Bug 10723: Used "standard" Display_Message subroutine to display message
-when an error is reported on the register.
-----
-Modified: gl/src/glr_journal.aon
-
-=======================================================================================================================================
-Revision: 345c25d27c6b8cc69d7bd802e1a852d7b150bac7
-Author: Christine <chawkins@basis.com>
-Date: 9/19/2023 6:11:28 PM
-Message:
-Bug 10726 - OP - Open Order Detail Report doesn't show lot/serial numbers
- - corrected trip key for opt-21 (ope_ordlsdet) key
- - corrected display to show qty ordered/shipped
-
-(cherry picked from commit ff04f420c09bd65b7929a470781d9822ad12e08b)
-----
-Modified: op/src/opr_opnorddetail_o1.aon
 
