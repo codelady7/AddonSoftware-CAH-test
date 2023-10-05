@@ -137,7 +137,7 @@ rem --- Parameters
     n1$=sysinfo.firm_name$
     n2$="AR"
     n3$=sysinfo.task_desc$
-    r9$="N",ih$="N",ls$="N"
+    r9$="N",ih$="N"
     lf$="N",br$="N",gl$="N"
     jn$="N",sa$="N",po$="N"
     find record (ars01a_dev,key=firm_id$+n2$+"00",dom=std_missing_params) ars01a$
@@ -149,7 +149,6 @@ rem --- Parameters
 
     find record (ivs01a_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs01a$
 
-    if pos(ivs01a.lotser_flag$="LS") then let ls$="Y"
     if pos(ivs01a.lifofifo$="LF") then let lf$="Y"
 
     i[0]=ivs01a.item_id_len
@@ -964,7 +963,7 @@ rem dim d2$(62),d[20],h[2]
         if ivm02a.unit_cost then icost=ivm02a.unit_cost
         if lf$="Y" then gosub lifo_fifo
     
-        if ls$<>"Y" or ivm01a.lotser_item$<>"Y" then
+        if !pos(ivm01a.lotser_flag$="LS")
             ope11a.unit_cost=icost
         else
             ls_start$ = firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$

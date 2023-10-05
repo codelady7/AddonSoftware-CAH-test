@@ -69,20 +69,20 @@ rem --- sft-01/21/31 to sft-03/23/33 here
                 write record (wohist_dev) sfhist$
                 remove (wotran_dev,key=wotran_key$)
 
-                if pos(ivs01a.lotser_flag$="LS")=0 then continue
+rem ------------wot-11 To wot-12 Here (do lot/serial only if wotran_dev is sft-21/materials)
 
-rem ------------wot-11 To wot-12 Here
-
-                read (sft11_dev,key=w0$,dom=*next)
+                if wotran_dev<>sft21a_dev then continue
+             
+                read (sft11_dev,key=wotran_key$,dom=*next)
                 dim sfe11a_key$:sft11_key_tpl$
                 while more
                     sft11a_key$=key(sft11_dev,end=*break)
-                    if pos(w0$=sft11a_key$)<>1 then
+                    if pos(wotran_key$=sft11a_key$)<>1 then
                         break
                     endif
                     extract record (sft11_dev,key=sft11a_key$) sft11a$; rem --- Advisory locking
-					dim sft12a$:fattr(sft12a$)
-					call pgm_dir$+"adc_copyfile.aon",sft11a$,sf12a$,status
+                    dim sft12a$:fattr(sft12a$)
+                    call pgm_dir$+"adc_copyfile.aon",sft11a$,sft12a$,status
                     write record (sft12_dev,key=sft11a_key$) sft12a$
                     remove (sft11_dev,key=sft11a_key$)
                 wend

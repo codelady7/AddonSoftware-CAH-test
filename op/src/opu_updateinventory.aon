@@ -354,7 +354,7 @@ rem --- Read next invoice header --- Main Loop Starts
                             cost=ope11a.unit_cost
                             qnty=ope11a.qty_shipped
 
-                            if ls$="Y" and ivm01a.lotser_item$="Y" then
+                            if pos(ivm01a.lotser_flag$="LS") then
                                 ls_start$ = ope11_key$
                                 read (ope21_dev, key=ls_start$, dom=*next)
                                 while more

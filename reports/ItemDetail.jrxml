@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2021-03-17T17:46:25 -->
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ItemDetail" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="addon" uuid="6252a081-3d18-4c8d-ba1c-32db1d2fc9df">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BASIS JDBC"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="360"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="629"/>
 	<template><![CDATA["StyleTemplate.jrtx"]]></template>
 	<parameter name="FIRM_ID" class="java.lang.String"/>
 	<parameter name="DOC_NO" class="java.lang.String"/>
@@ -25,7 +26,7 @@
 	<parameter name="INACTIVE_ITEM" class="java.lang.String"/>
 	<parameter name="TAX_SVC_CD_MAP" class="java.util.HashMap" isForPrompting="false"/>
 	<queryString>
-		<![CDATA[select item_id, item_desc, product_type, unit_of_sale, purchase_um, sa_level, lotser_item, inventoried, taxable_flag, weight, conv_factor, bar_code, item_class, item_type, upc_code, alt_sup_flag, alt_sup_item, lstrec_date, lstblt_date, lstsal_date, lstiss_date, lstadj_date, lstxin_date, lstxot_date, lstret_date, msrp, conv_factor, item_inactive, sell_purch_um, tax_svc_cd, ivc_prodcode. code_desc AS prod_desc, ivc_clascode.code_desc AS class_desc, ivc_typecode.code_desc AS type_desc, iv2.item_desc AS alt_desc from ivm_itemmast iv1
+		<![CDATA[select item_id, item_desc, product_type, unit_of_sale, purchase_um, sa_level, lotser_flag, inventoried, taxable_flag, weight, conv_factor, bar_code, item_class, item_type, upc_code, alt_sup_flag, alt_sup_item, lstrec_date, lstblt_date, lstsal_date, lstiss_date, lstadj_date, lstxin_date, lstxot_date, lstret_date, msrp, conv_factor, item_inactive, sell_purch_um, tax_svc_cd, ivc_prodcode. code_desc AS prod_desc, ivc_clascode.code_desc AS class_desc, ivc_typecode.code_desc AS type_desc, iv2.item_desc AS alt_desc from ivm_itemmast iv1
 left join ivc_prodcode on iv1.firm_id = ivc_prodcode.firm_id and ivc_prodcode.record_id_a='A' and iv1.product_type = ivc_prodcode.product_type
 left join ivc_clascode on iv1.firm_id = ivc_clascode.firm_id and iv1.item_class = ivc_clascode.item_class
 left join ivc_typecode on iv1.firm_id = ivc_typecode.firm_id and iv1.item_type = ivc_typecode.item_type
@@ -38,7 +39,7 @@ where iv1.firm_id = $P{FIRM_ID} $P!{OPTION_ACTIVE} and iv1.item_id >= $P{ITEM_ID
 	<field name="UNIT_OF_SALE" class="java.lang.String"/>
 	<field name="PURCHASE_UM" class="java.lang.String"/>
 	<field name="SA_LEVEL" class="java.lang.String"/>
-	<field name="LOTSER_ITEM" class="java.lang.String"/>
+	<field name="LOTSER_FLAG" class="java.lang.String"/>
 	<field name="INVENTORIED" class="java.lang.String"/>
 	<field name="TAXABLE_FLAG" class="java.lang.String"/>
 	<field name="WEIGHT" class="java.math.BigDecimal"/>
@@ -380,7 +381,7 @@ where iv1.firm_id = $P{FIRM_ID} $P!{OPTION_ACTIVE} and iv1.item_id >= $P{ITEM_ID
 				<reportElement x="508" y="31" width="20" height="13" uuid="e1ab7da7-173f-43e8-86bf-627398bc0255">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{LOTSER_ITEM}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{LOTSER_FLAG}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="508" y="44" width="20" height="13" uuid="c7a0d914-1eeb-4bc4-bb60-8cc57650ab1d">

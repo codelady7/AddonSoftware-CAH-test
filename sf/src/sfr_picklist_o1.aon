@@ -176,7 +176,6 @@ rem --- Main Read
         params!.put("KEY_NUM",key_num$)
         params!.put("REP_SEQ",rep_seq$)
         params!.put("IV_PRECISION",ivs01_precision$)
-        params!.put("IV_LOTSER",ivs01a.lotser_flag$)
         params!.put("BANDED_ROWS","Y")
         params!.put("INFO_31",hta(info(3,1)))
         params!.put("COMMENTS",comments$)

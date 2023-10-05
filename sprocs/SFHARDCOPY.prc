@@ -307,7 +307,7 @@ rem --- Trip Read
 		dim ivm_itemmast$:fattr(ivm_itemmast$)
 		find record (ivm_itemmast_dev,key=firm_id$+read_tpl.item_id$,dom=*next)ivm_itemmast$
 
-		if pos(ivs_params.lotser_flag$="LS") and ivm_itemmast.lotser_item$="Y"
+		if pos(ivm_itemmast.lotser_flag$="LS")
 			include_lotser$="Y"
 		else	
 			include_lotser$="N"
@@ -483,7 +483,7 @@ get_traveler_join:
     tj_pre$=tj_pre$+"     , m.drawing_rev"
     tj_pre$=tj_pre$+"     , m.complete_flg"
     tj_pre$=tj_pre$+"     , m.recalc_flag"
-    tj_pre$=tj_pre$+"     , m.lotser_item"
+    tj_pre$=tj_pre$+"     , m.lotser_flag"
     tj_pre$=tj_pre$+"     , m.priority"
     tj_pre$=tj_pre$+"     , m.sched_flag"
     tj_pre$=tj_pre$+"     , m.forecast"
@@ -536,7 +536,7 @@ get_closedwo_join:
     cw_pre$=cw_pre$+"     , m.drawing_rev"
     cw_pre$=cw_pre$+"     , m.complete_flg"
     cw_pre$=cw_pre$+"     , m.recalc_flag"
-    cw_pre$=cw_pre$+"     , m.lotser_item"
+    cw_pre$=cw_pre$+"     , m.lotser_flag"
     cw_pre$=cw_pre$+"     , m.priority"
     cw_pre$=cw_pre$+"     , m.sched_flag"
     cw_pre$=cw_pre$+"     , m.forecast"

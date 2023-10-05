@@ -150,7 +150,7 @@ rem --- Read next Closed Work Order Transaction (SFE-CLOSEDWO) record
             gosub update_inventory
 
             rem --- Update Item ISSUED Quantity for non-lotted/serialized items
-            if sfe01a.lotser_item$<>"Y" 
+            if !pos(sfe01a.lotser_flag$="LS") 
                 action$="WO"
                 refs[0]=sfe01a.cls_inp_qty
                 refs[1]=sfe01a.closed_cost
@@ -159,7 +159,7 @@ rem --- Read next Closed Work Order Transaction (SFE-CLOSEDWO) record
         endif
 
         rem --- Serial/Lotted
-        if sfe01a.lotser_item$="Y" 
+        if pos(sfe01a.lotser_flag$="LS") 
             read (sfe06_dev,key=sfe04_key$,dom=*next)
             while 1
                 sfe06_key$=key(sfe06_dev,end=*break)

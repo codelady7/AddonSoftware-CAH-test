@@ -106,13 +106,11 @@ rem --- Document initializations
 rem --- Parameters
 
     n2$="AR"
-    ls$="N"
     find record (ars01_dev,key=firm_id$+n2$+"00",dom=std_missing_params) ars01a$
     dim c9$(55)
     find record (ars01c_dev,key=firm_id$+n2$+"01",dom=std_missing_params) ars01c$
     ars01c.display_bal$="N"
     find record (ivs01a_dev,key=firm_id$+"IV"+"00",dom=std_missing_params) ivs01a$
-    if pos(ivs01a.lotser_flag$="LS") then ls$="Y"
 
 rem --- Initialize Data
 
@@ -180,7 +178,8 @@ rem --- Header loop
 
                 rem --- Serialized/Lotted Items
 
-                    if ls$="Y" then
+                    read record (ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next) ivm01a$
+                    if pos(ivm01a.lotser_flag$="LS") then
                         ope21_trip$=ope11_key$
                         read (ope21_dev,key=ope21_trip$,knum="AO_STATUS",dom=*next)
 

@@ -360,56 +360,52 @@ rem --- Branch based on line code
 
 rem --- Lotted/Serialized?
 
-            if ls$<>"N"
+            if pom02a.line_type$="S"
 
-                if pom02a.line_type$="S"
-
-                    if (ivm01a.lotser_item$ <>"Y" or ivm01a.inventoried$ <> "Y")
-                   
-                        needed=0
-                        lastseq=0
-                        p13_key$=poe13a.firm_id$+poe13a.vendor_id$+poe13a.receiver_no$+
+                if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$ <> "Y"
+               
+                    needed=0
+                    lastseq=0
+                    p13_key$=poe13a.firm_id$+poe13a.vendor_id$+poe13a.receiver_no$+
 :                       poe13a.po_no$+poe13a.po_line_no$
-                        read (poe23_dev,key=p13_key$,dom=*next)
+                    read (poe23_dev,key=p13_key$,dom=*next)
 
 rem --- Read next lot/serial detail record
 
-                        while more
+                    while more
 
-                            poe23a_key$=key(poe23_dev,end=*break)
-                            if pos(p13_key$=poe23a_key$)<>1 break
-                            read record (poe23_dev) poe23a$
-                            precision 2
-                            extension=poe23a.qty_received*poe23a.unit_cost
-                            precision num(poe23a.precision$)
+                        poe23a_key$=key(poe23_dev,end=*break)
+                        if pos(p13_key$=poe23a_key$)<>1 break
+                        read record (poe23_dev) poe23a$
+                        precision 2
+                        extension=poe23a.qty_received*poe23a.unit_cost
+                        precision num(poe23a.precision$)
 
 rem --- Print detail line
 
-                            OutVect!.addItem(lsdesc$+" "+poe23a.sequence_no$+" "+poe23a.lotser_no$)
-                            blnk=fnblank(6)
-                            OutVect!.addItem(str(poe23a.qty_received:m2$))
-                            OutVect!.addItem(str(poe23a.qty_received:m2$))
-                            OutVect!.addItem(str(poe23a.unit_cost:m3$))
-                            OutVect!.addItem(str(extension:m1$))
+                        OutVect!.addItem(lsdesc$+" "+poe23a.sequence_no$+" "+poe23a.lotser_no$)
+                        blnk=fnblank(6)
+                        OutVect!.addItem(str(poe23a.qty_received:m2$))
+                        OutVect!.addItem(str(poe23a.qty_received:m2$))
+                        OutVect!.addItem(str(poe23a.unit_cost:m3$))
+                        OutVect!.addItem(str(extension:m1$))
 
-                            l=l+1
-                            needed=needed+poe23a.qty_received
-                            lastseq=num(poe23a.sequence_no$)
+                        l=l+1
+                        needed=needed+poe23a.qty_received
+                        lastseq=num(poe23a.sequence_no$)
 
-                        wend
+                    wend
 
 rem --- Enough lot/serial numbers?
 
-                        if needed<>poe13a.qa_rec_qty
+                    if needed<>poe13a.qa_rec_qty
 
-                            type$="L"
-                            qty=poe13a.qa_rec_qty-needed
-                            if needed<poe13a.qa_rec_qty xlimit=qty
-                            if ivs01a.lotser_flag$="L" xlimit=1
-                            if needed>poe13a.qa_rec_qty xlimit=0
-                            gosub store_diff
-
-                        endif
+                        type$="L"
+                        qty=poe13a.qa_rec_qty-needed
+                        if needed<poe13a.qa_rec_qty xlimit=qty
+                        if ivs01a.lotser_flag$="L" xlimit=1
+                        if needed>poe13a.qa_rec_qty xlimit=0
+                        gosub store_diff
 
                     endif
 

@@ -106,8 +106,6 @@ rem --- Initializations
     po_extension=0
 
 rem --- Additional File Opens
-
-    if ls$="N" goto l620
     
     files$[9]="ivm-07",ids$[9]="IVM_LSMASTER"
     files$[10]="ivm-17",ids$[10]="IVM_LSACT"
@@ -173,19 +171,19 @@ l630:
 :       sfe32a$:templates$[19],
 :       sft21a$:templates$[21],sft31a$:templates$[22]
 
-    if ls$="Y"     
-        files$[23]="sfe-14",ids$[23]="SFE_WOLSISSU"
-        files$[24]="pot_reclsdet",ids$[24]="POT_RECLSDET"
-        call pgmdir$+"adc_fileopen.aon",action,23,24,files$[all],options$[all],
-:                                   ids$[all],templates$[all],channels[all],batch,status
+     
+    files$[23]="sfe-14",ids$[23]="SFE_WOLSISSU"
+    files$[24]="pot_reclsdet",ids$[24]="POT_RECLSDET"
+    call pgmdir$+"adc_fileopen.aon",action,23,24,files$[all],options$[all],
+:       ids$[all],templates$[all],channels[all],batch,status
 
-        if status goto std_exit
-    
-        sfe14_dev=channels[23]
-        potRecLsDet_dev=channels[24]
-        dim sfe14a$:templates$[23]
-        dim potRecLsDet$:templates$[24]
-    endif
+    if status goto std_exit
+
+    sfe14_dev=channels[23]
+    potRecLsDet_dev=channels[24]
+    dim sfe14a$:templates$[23]
+    dim potRecLsDet$:templates$[24]
+
 
 l675: rem --- done file opens
 
@@ -277,7 +275,7 @@ l1800: rem --- Update Inventory
         linecost=poe14a.unit_cost/poe14a.conv_factor
         qty=lineqty
         cost=linecost
-        if ls$="Y" if ivm01a.lotser_item$+ivm01a.inventoried$="YY" goto l1850
+        if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" goto l1850
         if qty<>0 gosub l6100
         goto l2200
 

@@ -35,7 +35,6 @@ rem --- get SPROC parameters
     bm$=sp!.getParameter("BOM_INTERFACE")
     key_num$=sp!.getParameter("KEY_NUM")
     iv_precision=num(sp!.getParameter("IV_PRECISION"))
-    iv_lotser$=sp!.getParameter("IV_LOTSER")
     comments$=sp!.getParameter("COMMENTS")
     info31$=sp!.getParameter("INFO_31")
     barista_wd$=sp!.getParameter("BARISTA_WD")
@@ -222,7 +221,7 @@ rem --- Get details
         item_desc$=func.displayDesc(ivm_itemmast.item_desc$)
         qty_OH$=str(ivm_itemwhse.qty_on_hand:qty_mask$)
         qty_CO$=str(ivm_itemwhse.qty_commit-(sfe_womatdtl.qty_ordered-sfe_womatdtl.tot_qty_iss):qty_mask$)
-        qty_AV$=str(ivm_itemwhse.qty_on_hand-num(qty_CO$):qty_mask$)
+        qty_AV$=str(ivm_itemwhse.qty_on_hand-(ivm_itemwhse.qty_commit-(sfe_womatdtl.qty_ordered-sfe_womatdtl.tot_qty_iss)):qty_mask$)
         qty_OO$=str(ivm_itemwhse.qty_on_order:qty_mask$)
 
         gosub add_to_recordset
@@ -241,14 +240,13 @@ rem --- Get details
         ls_count=0
         lot_ser$=""
         lot_ser2$=""
-        
-        if iv_lotser$="S" and (ivm_itemmast.lotser_item$+ivm_itemmast.inventoried$)="YY"
+        if ivm_itemmast.lotser_flag$="S" and ivm_itemmast.inventoried$="Y"
             lot_ser$="AON_SERIAL_#:"
             lot_ser2$="AON_SERIAL_#:"
             ls_count=sfe_womatdtl.qty_ordered-sfe_womatdtl.tot_qty_iss
         endif
         
-        if iv_lotser$="L" and (ivm_itemmast.lotser_item$+ivm_itemmast.inventoried$)="YY"
+        if ivm_itemmast.lotser_flag$="L" and ivm_itemmast.inventoried$="Y"
             lot_ser$="AON_LOT_#:"
             lot_ser2$="AON_LOT_#:"
             ls_count=5

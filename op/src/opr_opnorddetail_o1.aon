@@ -65,7 +65,7 @@ rem --- Initializations
     h0=132
     h=0,l9=59,l=l9+1,when$=sysinfo.system_date$,clock$=""
     m9$="-###0.00%"
-    r9$="SPN",x2$=""
+    r9$="SPN"
 
     call stbl("+DIR_PGM")+"adc_getmask.aon","","AR","I","",m0$,m0,0
     call pgmdir$+"adc_getmask.aon","","IV","A",imask$,m1$,m1,0
@@ -78,8 +78,6 @@ rem --- Initializations
     lines$[0]="Standard Items"
     lines$[1]="Promotional Items"
     lines$[2]="Non-Stock Items"
-    if ivs01a.lotser_flag$="S" then  x2$="Ser#"
-    if ivs01a.lotser_flag$="L" then  x2$="Lot#"
 
     yes$=Translate!.getTranslation("AON_YES","Yes")
 
@@ -681,7 +679,7 @@ serial_lotted: rem --- Serialized/Lotted Inventory
 
     if col_format$="Y" then return
 
-    ope21_trip$=ope11a_key$
+    ope21_trip$=ope11a.firm_id$+ope11a.trans_status$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
     read (ope21_dev,key=ope21_trip$,knum="AO_STATUS",dom=*next)
 
     while more
@@ -689,11 +687,12 @@ serial_lotted: rem --- Serialized/Lotted Inventory
         if pos(ope21_trip$=ope21a_key$)<>1 then break
         read record (ope21_dev) ope21a$
 
-        OutVect!.addItem(x2$+" "+ope21a.sequence_no$+" "+ope21a.lotser_no$)
+        OutVect!.addItem("Lot/Ser# "+ope21a.sequence_no$+" "+ope21a.lotser_no$)
         xwk = fnblank(2)
+        OutVect!.addItem(str(ope21a.qty_ordered:m2$)+$00$+"R")
+        xwk = fnblank(1)
         OutVect!.addItem(str(ope21a.qty_shipped:m2$)+$00$+"R")
-        OutVect!.addItem(str(ope21a.qty_shipped:m2$)+$00$+"R")
-        xwk = fnblank(4)
+        xwk = fnblank(3)
         OutVect!.addItem(str(ope21a.unit_cost:m3$)+$00$+"R")
         xwk = fnblank(4)
         l=l+1
@@ -809,7 +808,7 @@ print_detail: rem --- Print Detail
             xwk = fnblank(9)
         endif
     
-        if pos(opm02a.line_type$="SP") and pos(ivs01a.lotser_flag$="SL") and ivm01a.lotser_item$="Y" then 
+        if pos(opm02a.line_type$="SP") and pos(ivm01a.lotser_flag$="LS") then 
             gosub serial_lotted
         endif
     endif  

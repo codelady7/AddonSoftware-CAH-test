@@ -152,10 +152,9 @@ rem --- Additional File Opens
         else
             open_tables$[7]="SFM_EMPLMAST", open_opts$[7]="OTA"; rem sfm-01
         endif
-        if pos(ivs01a.lotser_flag$="LS") then
-            open_tables$[8]="SFT_OPNLSTRN", open_opts$[8]="OTA"; rem sft-11
-            open_tables$[9]="SFT_CLSLSTRN", open_opts$[9]="OTA"; rem sft-12
-        endif
+
+        open_tables$[8]="SFT_OPNLSTRN", open_opts$[8]="OTA"; rem sft-11
+        open_tables$[9]="SFT_CLSLSTRN", open_opts$[9]="OTA"; rem sft-12
   	
 		gosub open_tables
 		
@@ -201,10 +200,8 @@ rem --- Dimension string templates & retrieve params (Add'l files)
 		
 		dim empcode$:open_tpls$[7]
         
-        if pos(ivs01a.lotser_flag$="LS") then
-		    sft11_tpls$=open_tpls$[8]; dim sft11a$:sft11_tpls$; rem Save tmpl for next o'lay
-		    sft12_tpls$=open_tpls$[9]; dim sft12a$:sft12_tpls$; rem Save tmpl for next o'lay
-		endif
+		sft11_tpls$=open_tpls$[8]; dim sft11a$:sft11_tpls$; rem Save tmpl for next o'lay
+		sft12_tpls$=open_tpls$[9]; dim sft12a$:sft12_tpls$; rem Save tmpl for next o'lay
 
 rem --- Init Data
 

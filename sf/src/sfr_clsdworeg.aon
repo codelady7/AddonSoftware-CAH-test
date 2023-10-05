@@ -133,7 +133,6 @@ rem --- Get IV parameters
     desc[1]=num(ivs01a.desc_len_01$)
     desc[2]=num(ivs01a.desc_len_02$)
     desc[3]=num(ivs01a.desc_len_03$)
-    ls$=ivs01a.lotser_flag$
 
 rem --- Additional File Opens
 
@@ -275,7 +274,7 @@ rem --- Main Read
 			sql_prep$=sql_prep$+",wo.CLOSED_DATE,  wo.WO_TYPE,      wo.COMPLETE_FLG "
 			sql_prep$=sql_prep$+",wo.LSTACT_DATE,  wo.CLS_INP_DATE, wo.SCH_PROD_QTY "
 			sql_prep$=sql_prep$+",wo.CLS_INP_QTY,  wo.QTY_CLS_TODT, wo.CLS_CST_TODT "
-			sql_prep$=sql_prep$+",wo.CLOSED_COST,  wo.RECALC_FLAG,  wo.LOTSER_ITEM "
+			sql_prep$=sql_prep$+",wo.CLOSED_COST,  wo.RECALC_FLAG,  wo.LOTSER_FLAG "
 
 			sql_prep$=sql_prep$+",typ.CODE_DESC,   typ.STDACT_FLAG, typ.GL_PUR_ACCT "
 			sql_prep$=sql_prep$+",typ.GL_WIP_ACCT, typ.GL_CLOSE_TO, typ.GL_LAB_VAR "
@@ -390,19 +389,17 @@ rem --- Main Read
 			sql_prep$=sql_prep$+"     AND subs.wo_no = '"+wo_no$+"' "
 			sql_prep$=sql_prep$+"  ) AS TOT_ACT_SUB_COST"
 						
-		rem --- If Lotted/Serialized, get the number of lot/serial number records on file for ea WO
+		rem --- Get the number of lot/serial number records on file for ea WO
 		rem --- This total will be compared w/Qty being closed.
 		rem --- Update will not run if they don't match.
 			
-			if pos(ls$="LS") then
-				sql_prep$=sql_prep$+",(SELECT SUM(cls_inp_qty) "
-				sql_prep$=sql_prep$+"    FROM sfe_wolotser AS ls"
-				sql_prep$=sql_prep$+"   WHERE ls.firm_id = '"+firm_id$+"' "
-				sql_prep$=sql_prep$+"     AND ls.wo_location = '"+wo_loc$+"' "
-				sql_prep$=sql_prep$+"     AND ls.wo_no = '"+wo_no$+"' "
-				sql_prep$=sql_prep$+"     AND ls.closed_flag<>'Y'  "				
-				sql_prep$=sql_prep$+"  ) AS TOT_LS_CLS_INP_QTY   "
-			endif
+			sql_prep$=sql_prep$+",(SELECT SUM(cls_inp_qty) "
+			sql_prep$=sql_prep$+"    FROM sfe_wolotser AS ls"
+			sql_prep$=sql_prep$+"   WHERE ls.firm_id = '"+firm_id$+"' "
+			sql_prep$=sql_prep$+"     AND ls.wo_location = '"+wo_loc$+"' "
+			sql_prep$=sql_prep$+"     AND ls.wo_no = '"+wo_no$+"' "
+			sql_prep$=sql_prep$+"     AND ls.closed_flag<>'Y'  "				
+			sql_prep$=sql_prep$+"  ) AS TOT_LS_CLS_INP_QTY   "
 
 		rem --- The rest of the query--the JOINs
 			sql_prep$=sql_prep$+" FROM SFE_WOMASTR AS wo "
@@ -447,13 +444,9 @@ rem --- Assign values from SQL query
 		this_close_qty 	 	= read_tpl.CLS_INP_QTY
 		complete_yn$ 	 	= iff(read_tpl.COMPLETE_FLG$="Y","Y","N")
 		recalc_flag$ 		= read_tpl.RECALC_FLAG$
-		if pos(ls$="LS") then
-					wo_lotser_item$     = read_tpl.LOTSER_ITEM$
-					total_ls_this_cls_qty = read_tpl.TOT_LS_CLS_INP_QTY
-		else
-			wo_lotser_item$     = "N"
-			total_ls_this_cls_qty = 0
-		endif
+
+		wo_lotser_flag$     = read_tpl.LOTSER_FLAG$
+		total_ls_this_cls_qty = read_tpl.TOT_LS_CLS_INP_QTY
 		
 		closed_cost         = read_tpl.CLOSED_COST
 		iv_unit_cost 	 	= read_tpl.UNIT_COST
@@ -681,7 +674,7 @@ rem --- Print
 	
 	rem --- Third line for WO
         ls_missing=this_close_qty-total_ls_this_cls_qty
-        if wo_category$="I" and wo_lotser_item$="Y" and ls_missing<>0 then
+        if wo_category$="I" and pos(wo_lotser_flag$="LS") and ls_missing<>0 then
             missing_lotser=1
             OutVect!.addItem("    **** "+str(ls_missing)+" "+Translate!.getTranslation("AON_LOT/SERIAL_ENTRIES_MISSING")+" ***")
             xwk=fnblank(4)

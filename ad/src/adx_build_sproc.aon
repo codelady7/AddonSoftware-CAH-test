@@ -1083,7 +1083,7 @@ rem --- now add them back (i.e., drop, then add, in case anything has changed)
     sproc_vw_name$="SFPICKLIST"
 	sqlprep$="CREATE PROCEDURE SFPICKLIST "
     sqlprep$=sqlprep$+"(FIRM_ID CHAR(2) IN, WO_LOCATION CHAR(2) IN, WO_NO CHAR(7) IN, CUST_MASK CHAR(20) IN, QTY_MASK CHAR(20) IN, "
-	sqlprep$=sqlprep$+"BOM_INTERFACE CHAR(1) IN, KEY_NUM CHAR(20) IN, IV_PRECISION CHAR(1) IN, IV_LOTSER CHAR(1) IN, COMMENTS CHAR(1) IN, "
+	sqlprep$=sqlprep$+"BOM_INTERFACE CHAR(1) IN, KEY_NUM CHAR(20) IN, IV_PRECISION CHAR(1) IN, COMMENTS CHAR(1) IN, "
     sqlprep$=sqlprep$+"INFO_31 CHAR(20) IN, ITEM_MASK CHAR(20) IN, BARISTA_WD VARCHAR(50) IN)"	
     sqlprep$=sqlprep$+"'"+sproc_path$+"SFPICKLIST.prc' '"+barista_cfg_path$+"barista.cfg' "
     sqlprep$=sqlprep$+"RESULT_SET "

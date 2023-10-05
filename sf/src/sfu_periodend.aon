@@ -102,18 +102,16 @@ rem --- Init Data
 
 rem --- Open Serial Files
 
-    if pos(ivs01a.lotser_flag$="LS")<>0
-		files=2,begfile=1,endfile=files
-		dim files$[files],options$[files],ids$[files],templates$[files],channels[files]	
-        files$[1]="sft-11"
-        files$[2]="sft-12"
-		call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+    files=2,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]	
+    files$[1]="sft-11"
+    files$[2]="sft-12"
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :       	                            ids$[all],templates$[all],channels[all],batch,status
 
-        if status then goto std_exit_no_update
-        sft11_dev=channels[1]
-        sft12_dev=channels[2]
-    endif
+    if status then goto std_exit_no_update
+    sft11_dev=channels[1]
+    sft12_dev=channels[2]
 
 rem --- Determine Period Limits
 

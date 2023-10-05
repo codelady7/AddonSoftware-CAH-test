@@ -456,9 +456,8 @@ rem --- Process Transactions
         rem --- Conditionally process Lot/Serial for Materials records
 
         if read_tpl.record_id$="M"      
-            if ivm_itemmast.lotser_item$="Y" and
-:              ivm_itemmast.inventoried$="Y" and
-:              pos(ivs_params.lotser_flag$="LS") then 
+            if pos(ivm_itemmast.lotser_flag$="LS") and
+:              ivm_itemmast.inventoried$="Y" then 
                   gosub lotserial_details               
             endif       
         endif
@@ -491,30 +490,29 @@ rem --- Subroutines
 
 rem --- Additional File Opens subroutines
 addl_opens_adc:
-rem --- Conditionally open L/S files
-    if pos(ivs_params.lotser_flag$="LS") then
-        files=2,begfile=1,endfile=files
-        dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+rem --- Open L/S files
 
-        files$[1]="sft-11",        ids$[1]="SFT_OPNLSTRN"
-        files$[2]="sft-12",        ids$[2]="SFT_CLSLSTRN"
-    
-        call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+    files=2,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+
+    files$[1]="sft-11",        ids$[1]="SFT_OPNLSTRN"
+    files$[2]="sft-12",        ids$[2]="SFT_CLSLSTRN"
+
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
-        if status then
-            seterr 0
-            x$=stbl("+THROWN_ERR","TRUE")   
-            throw "File open error.",1001
-        endif
+    if status then
+        seterr 0
+        x$=stbl("+THROWN_ERR","TRUE")   
+        throw "File open error.",1001
+    endif
 
-        sft11a_dev = channels[1]
-        sft12a_dev = channels[2]
+    sft11a_dev = channels[1]
+    sft12a_dev = channels[2]
 
-    rem --- Dimension L/S string templates
-        
-        sft11_tpls$=templates$[1]; dim sft11a$:sft11_tpls$; rem Save template for conditional use
-        sft12_tpls$=templates$[2]; dim sft12a$:sft12_tpls$; rem Save template for conditional use   
-    endif 
+rem --- Dimension L/S string templates
+    
+    sft11_tpls$=templates$[1]; dim sft11a$:sft11_tpls$; rem Save template for conditional use
+    sft12_tpls$=templates$[2]; dim sft12a$:sft12_tpls$; rem Save template for conditional use    
     
 rem --- Open either BM or SF OpCodes file and either PR or SF Employees file
 rem --- Conditionally open apm-01 for vendor name
@@ -569,10 +567,8 @@ rem --- Serial Numbers Here
         
         read record (lstran_dev,end=*break) lstran$ 
 
-        if pos(read_ls_key$=lstran$)=1 then      
-            if ivs_params.lotser_flag$="S" then lotser_lbl$="Serial:" else lotser_lbl$="Lot:"
-            
-			data!.setFieldValue("LOTSER_LBL",lotser_lbl$)
+        if pos(read_ls_key$=lstran$)=1 then     
+			data!.setFieldValue("LOTSER_LBL","Lot/Serial:")
 			data!.setFieldValue("LOTSER",lstran.lotser_no$)
 
             if lstran_dev=sft11a_dev then 
@@ -587,7 +583,6 @@ rem --- Serial Numbers Here
         else
             break
         endif
-		lotser_lbl$=""
     wend 
     
     return

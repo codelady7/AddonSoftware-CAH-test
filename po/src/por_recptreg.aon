@@ -168,7 +168,6 @@ rem --- Parameters
     ap$="N"
     ar$="N"
     sf$="N"
-    ls$="N"
     lf$="N"
     recs=0
 
@@ -213,7 +212,6 @@ rem --- Initializations
     dim y0$(4),y1$(32),y2$(g[4]),z0$(32),z1$(11*g[4]),r0$(24),r[1]
     dim l0$(28),l1$(20),l[1],dif$[99],lineqty[99],lsqty[99],factor[99]
     dim glfiles[20],glparams$[20],glparams[20],w$[10],tpls$[10]
-    if pos(ivs01a.lotser_flag$="LS")>0 ls$="Y"
     if pos(ivs01a.lifofifo$="LF")>0 lf$="Y"
     m0=len(m0$)
     width=132
@@ -237,8 +235,7 @@ rem --- Initializations
     bw=max(m0+16,32)
     dh1$=Translate!.getTranslation("AON_DIST")
     dh2$=Translate!.getTranslation("AON_CODE")
-    lsdesc$=Translate!.getTranslation("AON_SERIAL_NBR")
-    if ivs01a.lotser_flag$="L" lsdesc$=Translate!.getTranslation("AON_LOT_NBR")
+    lsdesc$=Translate!.getTranslation("AON_LOT/SERIAL_NO")
     xref_dev=0
     lotser=0
     errors=0
@@ -550,9 +547,8 @@ other: rem --- Other type line
             l=l+2
 
 lot_ser: rem --- Lotted/Serialized?
-            if ls$="N" goto l3000
             if pom02a.line_type$<>"S" goto l3000
-            if ivm01a.lotser_item$+ivm01a.inventoried$<>"YY" goto l3000
+            if !pos(ivm01a.lotser_flag$="LS") or ivm01a.inventoried$<>"Y" goto l3000
             total=0
             lastseq=0
             needed=poe14a.conv_factor*poe14a.qty_received
@@ -599,7 +595,7 @@ l2900: rem --- Print lines for missing lot/serial numbers
 
             if total>needed goto l3000
             dim x$(i[2],"_")
-            if ivs01a.lotser_flag$="L" needed=total+1
+            if ivm01a.lotser_flag$="L" needed=total+1
             for x=total+1 to needed
                 l=l+1
                 lastseq=lastseq+1
@@ -751,7 +747,6 @@ rem --- All done
 
 rem --- Any missing lot/serial numbers?
 
-    if ls$="N" goto l4900
     if lotser=0 goto l4900
     let ls=1,headings=headings-1,m2$=i7$
     gosub l5400

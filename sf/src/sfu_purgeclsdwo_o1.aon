@@ -68,7 +68,7 @@ rem --- Main Loop Starts
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
 
 	rem --- Lot/Serial Numbers Here sfe-06
-        if pos(ivs01a.lotser_flag$="LS")<>0 then
+        if pos(sfe01a.lotser_flag$="LS") then
             read (sfe06_dev,key=sfe01a_key$,dom=*next)
             while more
                 sfe06a_key$=key(sfe06_dev,end=*break)
