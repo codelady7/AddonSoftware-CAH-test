@@ -58,7 +58,7 @@ rem --- Start progress meter
     meter_text$=""
     meter_action$="WIN-LST"
     gosub disp_meter
-    
+
 rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenance and GL Posting Control to records for all firms (ER 10627)
     this_module$="AD"
     if installMap!.get(this_module$)="Y" then
@@ -159,9 +159,13 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             wend
                 
             rem --- close files opened for this conversion
-            num_files=1
+            num_files=5
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="ADM_FIRMS",        open_opts$[1]="C"
+            open_tables$[2]="ADM_PROCMASTER",   open_opts$[2]="C"
+            open_tables$[3]="ADM_PROCDETAIL",   open_opts$[3]="C"
+            open_tables$[4]="ADM_PROCTABLES",   open_opts$[4]="C"
+            open_tables$[5]="ADM_AUDITCONTROL", open_opts$[5]="C"
             gosub open_tables
            
             write(convCtrlFileChan)task$+"=Completed"
@@ -174,6 +178,209 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             meter_action$="MTR-LST"
             gosub disp_meter
             print(log_dev)meter_text$
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+    else
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:           Translate!.getTranslation("AON_SKIP","SKIP")+" "+Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    endif
+
+rem --- For version 24.00, set the Lotted/Serialized flag at the item level (ER 10627)
+    this_module$="IV"
+    if installMap!.get(this_module$)="Y" then
+        task$="2400_IV_lot_serial_flag"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+            if convCtrl!.getProperty("data_source")="OCJ" then
+                rem --- Data upgraded via EM Update Wizard (OCJ)
+
+                rem --- Increment progress meter
+                meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+        
+                rem --- Open File(s)
+                num_files=3
+                if installMap!.get("SF")="Y" then num_files=4
+                dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                open_tables$[1]="IVM_ITEMMAST", open_opts$[1]="OTA"
+                open_tables$[2]="IVE_PHYSICAL",   open_opts$[2]="OTA"
+                open_tables$[3]="IVS_DEFAULTS",   open_opts$[3]="OTA"
+                if installMap!.get("SF")="Y" then open_tables$[4]="SFE_WOMASTR",   open_opts$[4]="OTA"
+        
+                gosub open_tables
+
+                rem --- Need to get the LOTSER_FLAG from the old IVS_PARAMS
+                oldStbl$="+IVDATA"
+                oldFile$="ivs_params"
+                gosub get_path_to_old_file
+                old_ivsParams$=oldPathToFile$
+                open_success=0
+                old_ivsParams_dev=unt
+                open(old_ivsParams_dev,err=*next)old_ivsParams$; open_success=1
+                if open_success then
+                    rem --- Get record template for old source IVS_PARAMS file
+                    ddm_table_tpls$=convCtrl!.getProperty("barista_source")+"/barista/sys/data/ddm_table_tpls.dat"
+                    open_success=0
+                    ddm_table_tpls=unt
+                    open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
+                    if open_success then
+                        dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
+                        tpl_found=0
+                        findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
+                        if tpl_found then
+                            dim old_ivsParams_tpl$:ddm_table_tpls.template$
+                        else
+                            rem --- Required template missing
+                            err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
+:                                   " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+oldFile$+" *****"
+                            goto done
+                        endif
+                    else
+                        rem --- Required file missing
+                        msg_id$="AD_FILE_MISSING"
+                        dim msg_tokens$[1]
+                        msg_tokens$[1]=ddm_table_tpls$
+                        gosub disp_message
+                        err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                               Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+ddm_table_tpls$+" *****"
+                        goto done
+                    endif
+           
+                    rem --- Build lotserMap! HashMap from old_ivsParams_dev
+                    lotserMap!=new HashMap()
+                    read(old_ivsParams_dev,key="",dom=*next)
+                    while 1
+                        readrecord(old_ivsParams_dev,end=*break)old_ivsParams_tpl$
+                        lotserMap!.put(old_ivsParams_tpl.firm_id$,old_ivsParams_tpl.lotser_flag$)
+                    wend
+
+                    rem --- Must get LOTSER_ITEM from the old files
+                    oldFileMap!=new HashMap()
+                    fileVec!=BBjAPI().makeVector()
+                    fileVec!.addItem("IVM_ITEMMAST")
+                    fileVec!.addItem("+IVDATA")
+                    fileVec!.addItem("ivm-01")
+                    oldFileMap!.put(num(open_chans$[1]),fileVec!)
+                    fileVec!=BBjAPI().makeVector()
+                    fileVec!.addItem("IVE_PHYSICAL")
+                    fileVec!.addItem("+IVDATA")
+                    fileVec!.addItem("ive-03")
+                    oldFileMap!.put(num(open_chans$[2]),fileVec!)
+                    fileVec!=BBjAPI().makeVector()
+                    fileVec!.addItem("IVS_DEFAULTS")
+                    fileVec!.addItem("+IVDATA")
+                    fileVec!.addItem("ivs_defaults")
+                    oldFileMap!.put(num(open_chans$[3]),fileVec!)
+                    if installMap!.get("SF")="Y" then 
+                        fileVec!=BBjAPI().makeVector()
+                        fileVec!.addItem("SFE_WOMASTR")
+                        fileVec!.addItem("+SFDATA")
+                        fileVec!.addItem("sfe-01")
+                        oldFileMap!.put(num(open_chans$[4]),fileVec!)
+                    endif
+
+                    rem --- Initialize new LOTSER_FLAG in tables
+                    this_firm$=""
+                    for i=1 to num_files
+                        newTable_dev=num(open_chans$[i])
+                        dim newTable_tpl$:open_tpls$[i]
+
+                        rem --- Open old file
+                        fileVec!=oldFileMap!.get(newTable_dev)
+                        newTable_name$=fileVec!.getItem(0)
+                        oldStbl$=fileVec!.getItem(1)
+                        oldFile$=fileVec!.getItem(2)
+                        gosub get_path_to_old_file
+                        open_success=0
+                        oldTable_dev=unt
+                        open(oldTable_dev,err=*next)oldPathToFile$; open_success=1
+                        if open_success then
+                            dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
+                            tpl_found=0
+                            findrecord(ddm_table_tpls,key=pad(cvs(newTable_name$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
+                            if tpl_found then
+                                dim oldTable_tpl$:ddm_table_tpls.template$
+                            else
+                                rem --- Required template missing
+                                err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
+:                                       " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+newTable_name$+" *****"
+                                print(log_dev)err_msg$
+                                continue
+                            endif
+                        else
+                            rem --- Old file doesn't exist
+                            continue
+                        endif
+
+                        read(newTable_dev,key="",dom=*next)
+                        while 1
+                            this_key$=key(newTable_dev,end=*break)
+                            readrecord(newTable_dev)newTable_tpl$
+                            if newTable_tpl.firm_id$<>this_firm$ then
+                                this_firm$=newTable_tpl.firm_id$
+                                this_lotser$=lotserMap!.get(this_firm$)
+                                if this_lotser$="N" then
+                                    read(newTable_dev,key=this_firm$+$FF$,dom=*next)
+                                    continue
+                                endif
+                            endif
+
+                            rem --- lotser_item is NOT in the new files, must get it from the old files
+                            redim oldTable_tpl$
+                            readrecord(oldTable_dev,key=this_key$,dom=*next)oldTable_tpl$
+                            if oldTable_tpl.lotser_item$="Y" then
+                                newTable_tpl.lotser_flag$=this_lotser$
+                            else
+                                newTable_tpl.lotser_flag$="N"
+                            endif
+                            writerecord(newTable_dev)newTable_tpl$
+                        wend
+                    next i
+                else
+                    rem --- Required file missing
+                    msg_id$="AD_FILE_MISSING"
+                    dim msg_tokens$[1]
+                    msg_tokens$[1]=old_glsParams$
+                    gosub disp_message
+                    err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                           Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+oldPathToFile$+" *****"
+                    goto done
+                endif
+                    
+                rem --- close files opened for this conversion
+                dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                open_tables$[1]="IVM_ITEMMAST", open_opts$[1]="C"
+                open_tables$[2]="IVE_PHYSICAL",   open_opts$[2]="C"
+                open_tables$[3]="IVS_DEFAULTS",   open_opts$[3]="C"
+                if installMap!.get("SF")="Y" then open_tables$[4]="SFE_WOMASTR",   open_opts$[4]="C"
+                gosub open_tables
+    
+                rem --- This task$ conversion completed successfully
+                rem --- Increment progress meter
+                meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+            else
+                rem --- Data upgraded via DataPort
+            endif
+            write(convCtrlFileChan)task$+"=Completed"
         else
             rem --- Increment progress meter
             meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
@@ -222,6 +429,32 @@ done: rem --- Done, close things up
 
     if completed_successfully then conv_status=0; rem --- no errors encountered
 	goto std_exit
+
+get_path_to_old_file: rem --- Locate data directory in old Addon installation
+    rem --- IN: oldStbl$ - STBL in old addon.syn that points to the data directory where the old file is located
+    rem --- IN: oldFile$ - name of old file to get path for
+    rem --- OUT: oldPathToFile$ - full path to requested file, including the file name
+    oldPathToFile$=oldFile$
+
+    rem --- Open old aon/config/addon.syn
+    open_success=0
+    old_addonsyn_dev=unt
+    open(old_addonsyn_dev,isz=-1,err=*next)convCtrl!.getProperty("addon_source")+"/aon/config/addon.syn"; open_success=1
+    if !open_success then return
+
+    rem --- Get specified data directory from old addon.syn
+    key$="=SET "+oldStbl$+"="
+    while 1
+        read(old_addonsyn_dev,end=*break)record$
+        if(pos(key$=record$)) then
+            xpos=pos(key$=record$)
+            oldPathToFile$=record$(xpos+len(key$))+oldFile$
+            break
+        endif
+    wend
+    close(old_addonsyn_dev)
+
+    return
 
 open_log: rem --- Open log file
            
