@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.sft_clslstrn"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.sft_clslstrn">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.sft_clslstrn">SF </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.sft_clslstrn">23.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.sft_clslstrn">23.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.sft_clslstrn">6653C6A0ED1D3108594566412709FF4B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sft_clslstrn">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sft_clslstrn">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sft_clslstrn">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sft_clslstrn">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sft_clslstrn">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sft_clslstrn">20231005</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sft_clslstrn">20230508</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sft_clslstrn">132608</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sft_clslstrn"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sft_clslstrn"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sft_clslstrn"></DD_ATTR_DKNM>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.sft_clslstrn"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.sft_clslstrn"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.sft_clslstrn"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.sft_clslstrn"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.sft_clslstrn"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.sft_clslstrn"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.sft_clslstrn"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.sft_clslstrn"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.sft_clslstrn"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.sft_clslstrn"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.sft_clslstrn">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.sft_clslstrn">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.sft_clslstrn">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.sft_clslstrn">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.sft_clslstrn">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.sft_clslstrn">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.sft_clslstrn">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -90,7 +90,7 @@
 		<RECORD id="ddm_table_tpls.sft_clslstrn">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.sft_clslstrn">SFT_CLSLSTRN    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.sft_clslstrn">sft-12</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.sft_clslstrn">firm_id:c(2),wo_location:c(2),wo_no:c(7),trans_date:c(8),trans_seq_ref:c(12),sequence_no:c(3),lotser_no:c(20),qty_closed:n(7*),unit_cost:n(7*),ext_cost:n(15*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.sft_clslstrn">firm_id:c(2),wo_location:c(2),wo_no:c(7),trans_date:c(8),trans_seq_ref:c(12),sequence_no:c(3),lotser_no:c(20),cls_inp_qty:n(7*),closed_cost:n(7*),ext_cost:n(15*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -429,7 +429,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.sft_clslstrn005"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.sft_clslstrn005">5</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.sft_clslstrn005"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.sft_clslstrn005">SEQ_REF</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.sft_clslstrn005">TRANS_SEQ_REF</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.sft_clslstrn005"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.sft_clslstrn005"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.sft_clslstrn005"></DD_ATTR_FTSR>
@@ -547,7 +547,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_cols.sft_clslstrn008">SFT_CLSLSTRN    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.sft_clslstrn008">008</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.sft_clslstrn008">QTY_CLOSED      </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.sft_clslstrn008">QTY_CLOSED      </DD_DVAR_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.sft_clslstrn008">CLS_INP_QTY     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.sft_clslstrn008">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.sft_clslstrn008">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.sft_clslstrn008">Y</DD_FIELD_DELIM>
@@ -582,7 +582,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.sft_clslstrn008"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.sft_clslstrn008">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.sft_clslstrn008"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.sft_clslstrn008">QTY_CLOSED</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.sft_clslstrn008">CLS_INP_QTY</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.sft_clslstrn008"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.sft_clslstrn008"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.sft_clslstrn008"></DD_ATTR_FTSR>
@@ -598,7 +598,7 @@
 			<DD_TABLE_ALIAS id="ddm_table_cols.sft_clslstrn009">SFT_CLSLSTRN    </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.sft_clslstrn009">009</DD_SEQUENCE>
 			<DD_DATA_NAME id="ddm_table_cols.sft_clslstrn009">UNIT_COST       </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.sft_clslstrn009">UNIT_COST       </DD_DVAR_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.sft_clslstrn009">CLOSED_COST     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.sft_clslstrn009">1</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.sft_clslstrn009">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.sft_clslstrn009">Y</DD_FIELD_DELIM>
@@ -633,7 +633,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.sft_clslstrn009"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.sft_clslstrn009">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.sft_clslstrn009"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.sft_clslstrn009">UNIT_COST</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.sft_clslstrn009">CLOSED_COST</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.sft_clslstrn009"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.sft_clslstrn009"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.sft_clslstrn009"></DD_ATTR_FTSR>
