@@ -1034,7 +1034,7 @@ end_ddm04:
     endif
 
     rem --- Build lotserMap! HashMap from IVS-01. It's needed to set the Lotted/Serialized flag at the item level for v24.00
-    if pos(cvs(datafile$,8)="ivs-10;ive-03;ivm-01;woe-01;",7) and lotserMap!=null() then
+    if pos(cvs(datafile$,8)="ivs-10;ive-03;ivm-01;sfe-01;",7) and lotserMap!=null() then
         ivs01_dev=unt
         open (ivs01_dev)source_folder$+"/"+cvs("sys-01",version_cvs)
         lock (ivs01_dev)
@@ -1490,7 +1490,7 @@ rem ---  "PRM-01 - Employee Inactive - License Count"
     endif
 
 rem --- Set the Lotted/Serialized flag at the item level for v24.00
-    if pos(cvs(datafile$,8)="ive-03;ivm-01;woe-01;",7) or (pos(cvs(datafile$,8)="ivs-10",7) and old_rec$(3,1)="D") then
+    if pos(cvs(datafile$,8)="ive-03;ivm-01;sfe-01;",7) or (pos(cvs(datafile$,8)="ivs-10",7) and old_rec$(3,1)="D") then
         if old_rec.lotser_item$="Y" then
             new_rec.lotser_flag$=lotserMap!.get(old_rec.firm_id$)
         else
