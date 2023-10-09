@@ -1033,6 +1033,25 @@ end_ddm04:
           goto next_file
     endif
 
+    rem --- Build lotserMap! HashMap from IVS-01. It's needed to set the Lotted/Serialized flag at the item level for v24.00
+    if pos(cvs(datafile$,8)="ivs-10;ive-03;ivm-01;woe-01;",7) and lotserMap!=null() then
+        ivs01_dev=unt
+        open (ivs01_dev)source_folder$+"/"+cvs("sys-01",version_cvs)
+        lock (ivs01_dev)
+
+        lotserMap!=new HashMap()
+        read(ivs01_dev,key="",dom=*next)
+        while 1
+            read(ivs01_dev,end=*break)A0$,A1$,A2$,A3$
+            if len(A0$)<>6 then continue
+            if A0$(3,4)<>"IV00" then continue
+            lotserMap!.put(A0$(1,2),A3$(17,1))
+        wend
+    
+        unlock (ivs01_dev,err=*next)
+        close (ivs01_dev,err=*next)
+    endif    
+    
 next_rec:
     rem --- new_rec$ is NOT redimmed, so must clear existing city$, state_code$, zip_code$ and cntry_id$ for reformat_address subroutine to work correctly.
     field new_rec$,"city"="",err=*next
@@ -1398,12 +1417,6 @@ rem --- final misc processing prior to writing new record
        swend
        field new_rec$,"shipto_type"=shipto_type$
     endif
-
-rem --- As needed, fix ivs_default.inventoried
-
-    if table_alias$="IVS_DEFAULTS" then
-        if new_rec.lotser_item$<>"Y" then new_rec.inventoried$="N"
-    endif
     
 rem --- Initialize NS_ITEM_ID in POE_REQDET, POE_PODET, POE_QADET, POE_RECDET, and POT_RECDET
 
@@ -1474,6 +1487,15 @@ rem --- Initialize BMM_BILLMSUB.WO_REF_NUM and SFE_WOSUBCNT.WO_REF_NUM
 rem ---  "PRM-01 - Employee Inactive - License Count"
     if cvs(new_datafile$,2)="prm-01" and cvs(new_rec.term_date$,3)>"" then
          new_rec.empl_inactive$="Y"
+    endif
+
+rem --- Set the Lotted/Serialized flag at the item level for v24.00
+    if pos(cvs(datafile$,8)="ive-03;ivm-01;woe-01;",7) or (pos(cvs(datafile$,8)="ivs-10",7) and old_rec$(3,1)="D") then
+        if old_rec.lotser_item$="Y" then
+            new_rec.lotser_flag$=lotserMap!.get(old_rec.firm_id$)
+        else
+            new_rec.lotser_flag$="N"
+        endif
     endif
 
 rem --- "prt-02 and prt-03 have new sequence number in new file only"
@@ -1548,10 +1570,12 @@ eof:
     key_temp$=""
 
     if old_file then
+       unlock(old_file,err=*next)
        close (old_file)
        old_file=0
     endif
     if new_file then
+       unlock(new_file,err=*next)
        close (new_file)
        new_file=0
     endif
@@ -1594,7 +1618,9 @@ write_err:
            writerecord(temp_file)rec$
         endif
     wend
+    unlock(new_file,err=*next)
     close (new_file)
+    unlock(temp_file,err=*next)
     close (temp_file)
     erase new_file$
     rename temp_file$ to new_file$
@@ -4030,7 +4056,9 @@ split_header_detail_recs: rem --- Split old header/detail files into separate fi
             endif
         endif
     wend
+    unlock(split_file,err=*next)
     close (split_file)
+    unlock(temp_file,err=*next)
     close (temp_file)
 
     rem --- Append temporary file to vectPort!
