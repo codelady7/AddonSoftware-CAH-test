@@ -1363,7 +1363,7 @@ rem --- date formatting
                  value$=pad("",8)
               endif
               if date(jul(num(value$(1,4)),num(value$(5,2)),num(value$(7,2)),err=*next),err=*next)>"" break
-              print (err_dev)"There is an invalid date of "+value$+" in table "+new_datafile$+", old key = "+key(old_file,err=*next)
+              print (err_dev)"There is an invalid date of "+value$+" in table "+new_datafile$+", old key = "+keyp(old_file,err=*next)
               error_logged=1
               invalid_date$="Y"
               break
@@ -1374,7 +1374,7 @@ rem --- date formatting
            case 8
               value$=str(num(value$(1,4))+add_year)+value$(5)
               if date(jul(num(value$(1,4)),num(value$(5,2)),num(value$(7,2)),err=*next),err=*next)>"" break
-              print (err_dev)"There is an invalid date of "+value$+" in table "+new_datafile$+", old key = "+key(old_file,err=*next)
+              print (err_dev)"There is an invalid date of "+value$+" in table "+new_datafile$+", old key = "+keyp(old_file,err=*next)
               error_logged=1
               invalid_date$="Y"
               break
