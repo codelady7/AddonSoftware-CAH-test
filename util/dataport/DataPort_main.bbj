@@ -937,7 +937,8 @@ next_ddm04:
              endif
            endif
          endif
-       endif  
+       endif
+       if pos("WAREHOUSE_ID:C("=rd_temp_seg$)=1 then rd_temp_seg$="WAREHOUSE_ID:C(2"; rem --- IVE-17 has the wrong length for WAREHOUSE_ID
        rd_temp_seg$=rd_temp_seg$+")"
        fields = fields + 1
        if len(rd_gen_table_tpl$) then
@@ -1268,6 +1269,8 @@ rem --- Check value of new field for blanks if part of primary key
                             if cvs(new_datafile$,2)="art-26" and cvs(new_fieldlist.name$[field],2)="AR_CHECK_NO" goto no_msg
                             if cvs(new_datafile$,2)="bme-01" and cvs(new_fieldlist.name$[field],2)="BM_REFERENCE" goto no_msg
                             if cvs(new_datafile$,2)="glt-06" and cvs(new_fieldlist.name$[field],2)="GL_ADT_NO" goto no_msg
+                            if cvs(new_datafile$,2)="ive-02" and cvs(new_fieldlist.name$[field],2)="LOTSER_NO" goto no_msg
+                            if cvs(new_datafile$,2)="ive-03" and cvs(new_fieldlist.name$[field],2)="LOTSER_NO" goto no_msg
                             if cvs(new_datafile$,2)="ope-03" and cvs(new_fieldlist.name$[field],2)="ORDER_NO" goto no_msg
                             if cvs(new_datafile$,2)="pre-01" and cvs(new_fieldlist.name$[field],2)="CHECK_NO" goto no_msg
                             if cvs(new_datafile$,2)="pre-11" and cvs(new_fieldlist.name$[field],2)="CHECK_NO" goto no_msg
@@ -1366,7 +1369,6 @@ rem --- date formatting
         swend
 
 rem --- replace non-print characters with spaces
-
         value$=cvs(value$,16)
 
 rem --- Field terminators can result in short character fields that need to be padded.
