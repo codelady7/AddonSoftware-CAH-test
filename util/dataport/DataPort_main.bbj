@@ -1271,6 +1271,7 @@ rem --- Check value of new field for blanks if part of primary key
                             if cvs(new_datafile$,2)="glt-06" and cvs(new_fieldlist.name$[field],2)="GL_ADT_NO" goto no_msg
                             if cvs(new_datafile$,2)="ive-02" and cvs(new_fieldlist.name$[field],2)="LOTSER_NO" goto no_msg
                             if cvs(new_datafile$,2)="ive-03" and cvs(new_fieldlist.name$[field],2)="LOTSER_NO" goto no_msg
+                            if cvs(new_datafile$,2)="ope-01" and cvs(new_fieldlist.name$[field],2)="AR_INV_NO" goto no_msg
                             if cvs(new_datafile$,2)="ope-03" and cvs(new_fieldlist.name$[field],2)="ORDER_NO" goto no_msg
                             if cvs(new_datafile$,2)="pre-01" and cvs(new_fieldlist.name$[field],2)="CHECK_NO" goto no_msg
                             if cvs(new_datafile$,2)="pre-11" and cvs(new_fieldlist.name$[field],2)="CHECK_NO" goto no_msg
