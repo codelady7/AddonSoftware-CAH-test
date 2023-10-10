@@ -27,4 +27,14 @@ standard Addon AR demo data. No potential DataPort issues exposed by
 porting standard Addon AP demo data.
 ----
 Modified: util/dataport/DataPort_main.bbj
+=======================================================================================================================================
 
+Revision: dd5643b94535bd4927c83370c9e79732130776a6
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 10/10/2023 4:09:56 PM
+Message:
+Bug 10734: Corrected a potential DataPort issues exposed by porting
+standard Addon WO demo data. No potential DataPort issues exposed by
+porting standard Addon BM, GL, MP, PO, SA and SY demo data.
+----
+Modified: util/dataport/DataPort_main.bbj
