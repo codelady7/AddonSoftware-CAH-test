@@ -7,12 +7,24 @@
 23.04 released 10/02/2023
 BBjBaristaAddonDemos2304_09-28-2023_0931.jar
 =======================================================================================================================================
+
 Revision: 88c5a585170cd1c5964139f7b0941f5606aa8377
 Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 10/10/2023 12:16:41 PM
 Message:
 Bug 10734: Corrected a couple of potential DataPort issues exposed by
 porting standard Addon IV demo data.
+----
+Modified: util/dataport/DataPort_main.bbj
+=======================================================================================================================================
+
+Revision: 68e63dc10624e213654a98b35b0800e4a0e71309
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 10/10/2023 2:05:22 PM
+Message:
+Bug 10734: Corrected a potential DataPort issues exposed by porting
+standard Addon AR demo data. No potential DataPort issues exposed by
+porting standard Addon AP demo data.
 ----
 Modified: util/dataport/DataPort_main.bbj
 
