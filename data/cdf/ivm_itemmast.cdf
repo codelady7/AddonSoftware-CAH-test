@@ -1047,12 +1047,26 @@ endif
 if num(callpoint!.getUserInput())<0 then callpoint!.setStatus("ABORT")
 
 [[IVM_ITEMMAST.PRODUCT_TYPE.AVAL]]
-rem --- Set SA Level if new record
+rem --- Set SA Level and item defaults if new record
 	if callpoint!.getRecordMode()="A"
 		ivm10_dev=fnget_dev("IVC_PRODCODE")
 		dim ivm10a$:fnget_tpl$("IVC_PRODCODE")
 		read record (ivm10_dev,key=firm_id$+"A"+callpoint!.getUserInput()) ivm10a$
 		callpoint!.setColumnData("IVM_ITEMMAST.SA_LEVEL",ivm10a.sa_level$,1)
+
+		if cvs(ivm10a.item_class$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ITEM_CLASS", ivm10a.item_class$,1)
+		if cvs(ivm10a.buyer_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.BUYER_CODE", ivm10a.buyer_code$,1)
+		if cvs(ivm10a.ar_dist_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.AR_DIST_CODE", ivm10a.ar_dist_code$,1)
+		if cvs(ivm10a.unit_of_sale$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.UNIT_OF_SALE", ivm10a.unit_of_sale$,1)
+		if cvs(ivm10a.purchase_um$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.PURCHASE_UM", ivm10a.purchase_um$,1)
+		if cvs(ivm10a.lotser_flag$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG", ivm10a.lotser_flag$,1)
+		if cvs(ivm10a.inventoried$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED", ivm10a.inventoried$,1)
+		if cvs(ivm10a.taxable_flag$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.TAXABLE_FLAG", ivm10a.taxable_flag$,1)
+		if cvs(ivm10a.item_type$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ITEM_TYPE", ivm10a.item_type$,1)
+		if cvs(ivm10a.abc_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ABC_CODE", ivm10a.abc_code$,1)
+		if cvs(ivm10a.eoq_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.EOQ_CODE", ivm10a.eoq_code$,1)
+		if cvs(ivm10a.ord_pnt_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ORD_PNT_CODE", ivm10a.ord_pnt_code$,1)
+		if cvs(ivm10a.saf_stk_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.SAF_STK_CODE", ivm10a.saf_stk_code$,1)
 	endif
 
 [[IVM_ITEMMAST.SAFETY_STOCK.AVAL]]
