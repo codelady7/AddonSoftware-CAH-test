@@ -382,21 +382,24 @@ GitRepoInterface_error:rem --- Method error trap/handler (11Oct2017)
                     rem --- Already a local branch
                     checkoutCmd!=#git!.checkout().setName(branchName$)
                 endif
-                checkoutCmd!.call()
+                checkoutCmd!.call(err=*next)
                 results!=checkoutCmd!.getResult()
                 status$=results!.getStatus().toString()
+                if status$="OK"
+                    declare OwnerSetter setter!
+                    setter!=new OwnerSetter()
+                    if (! setter!.getOSIsWindows()) then
+                        setter!.setOwnerRecursively(#AonDir$)
+                    endif
 
-                declare OwnerSetter setter!
-                setter!=new OwnerSetter()
-                if (! setter!.getOSIsWindows()) then
-                    setter!.setOwnerRecursively(#AonDir$)
+                    rem --- Re-initialize
+                    #Branch$=#repository!.getBranch()
+                    #LocalBranch$="heads/"+branchName$
+                    #RemoteBranch$="remotes/origin/"+branchName$
+                    #ReleaseTag$="refs/tags/"+branchName$+"_Release"
+                else
+                    status$=status$+": "+BBjAPI().getLastBBjException().getMessage().toString()
                 endif
-
-                rem --- Re-initialize
-                #Branch$=#repository!.getBranch()
-                #LocalBranch$="heads/"+branchName$
-                #RemoteBranch$="remotes/origin/"+branchName$
-                #ReleaseTag$="refs/tags/"+branchName$+"_Release"
             endif
 
             methodret status$
@@ -1264,6 +1267,7 @@ pullRepository_error:rem --- Method error trap/handler (11Oct2017)
 
             while (diffIter!.hasNext())
                 entry!=cast(DiffEntry,diffIter!.next())
+                if !pos("DiffEntry[MODIFY"=entry!.toString()) then continue;rem --- shouldn't need to process ADDs
                 formatter!.format(entry!)
                 x$=outputStream!.toString()
                 outputStream!.reset()
@@ -1663,7 +1667,7 @@ class public Grepper extends SimpleFileVisitor
         declare Matcher matcher!
         
         path$ = cast(BBjString, path!.toString())
-        if (path$ = null()) methodret FileVisitResult.CONTINUE
+        if (path$ = null()) or pos("adx_upgradewiz"=path$) or pos("addonhelp.jar"=path$) then methodret FileVisitResult.CONTINUE
         fr! = new FileReader(path$)
         br! = new BufferedReader(fr!)
         if (br! = null()) then
