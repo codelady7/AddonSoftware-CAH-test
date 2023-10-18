@@ -139,7 +139,7 @@ rem --- Is this a restart after resolving Git conflicts?
             meter_proc_recs=meter_total_recs-5
             meter_action$="MTR-LST"
             gosub disp_meter
-            print(log_dev)"Upgrade Wizard re-started after Git conflicts"
+            print(log_dev)"Upgrade Wizard re-started"
             print(log_dev)
 
             rem --- Get from restart log the starting version for this upgrade
@@ -199,6 +199,9 @@ rem --- Is this a restart after resolving Git conflicts?
                 case restartAt$="restartUpgrade4"
                     goto restartUpgrade4
                     break
+                case restartAt$="restartUpgrade5"
+                    goto restartUpgrade5
+                    break
                 case default
                     goto restartUpgrade1
                     break
@@ -257,8 +260,11 @@ restartUpgrade4:
         rem --- Switch/checkout to branch for new version
         branchName$="BBJ"+newVersion$+"GA"
         gosub checkoutGitBranch
-        if status goto done
-
+        if restartFlag
+            restartAt$="restartUpgrade4"
+            gosub createRestartFile        
+            goto done
+        endif
         rem --- Update new addon.syn file
         gosub updateAddonSyn
 
@@ -332,16 +338,23 @@ restartUpgrade4:
         gosub moveModifiedCore
 
         rem --- Check for, and resolve, line ending issues
-        gosub checkLineEndings
+		gosub checkLineEndings
 
         rem --- Commit ALL of the above changes to the old Git branch
         gosub doInterimCommit
+restartUpgrade5:
         localCommitsList!.addItem(commit!)
 
         rem --- Switch/checkout to branch for new version
         branchName$="BBJ"+newVersion$+"GA"
         gosub checkoutGitBranch
-        if status goto done
+        if restartFlag
+            restartAt$="restartUpgrade5"
+			remainingCommits!=BBjAPI().makeVector()
+			remainingCommits!.addItem(commit!)
+            gosub createRestartFile
+            goto done
+        endif
 
         rem --- Save copy of standard Addon cdf files in UpgradeCdfDiffs directory where they can be alphabetized for diff'ing with merged mods cdfs
         gosub doUpgradeCdfDiffs
@@ -491,15 +504,22 @@ rem --- Run Install Application Wizard for applications being installed
     meter_proc_recs=meter_proc_recs+1
     meter_action$="MTR-LST"
 
-    rem --- Insert Addon as the first application to be installed
-    aList!=new ArrayList()
-    aList!.add("ADDON"); rem Application
-    aList!.add(""); rem App Parent
-    aList!.add("y"); rem Install
-    aList!.add(""); rem Copy
-    aList!.add(newAonDir$+"/"); rem Source
-    aList!.add(""); rem Target
-    appVect!.insertElementAt(aList!,0)
+    rem --- Insert Addon as the first application to be installed unless bar/data/delta/ dir is empty (i.e., no forms customized)
+	deltaDir!=new File(newAonDir$+"/data/bar/delta")
+    if deltaDir!.exists()
+        deltaVector! = new Vector(java.util.Arrays.asList(deltaDir!.listFiles()))
+        deltaIter!=deltaVector!.iterator()
+        if deltaIter!.hasNext()
+            aList!=new ArrayList()
+            aList!.add("ADDON"); rem Application
+            aList!.add(""); rem App Parent
+            aList!.add("y"); rem Install
+            aList!.add(""); rem Copy
+            aList!.add(newAonDir$+"/"); rem Source
+            aList!.add(""); rem Target
+            appVect!.insertElementAt(aList!,0)
+        endif
+    endif
 
     rem --- Install applications
 	iter!=appVect!.iterator()
@@ -1120,7 +1140,7 @@ checkoutGitBranch: rem --- Switch/checkout branch
         msg_tokens$[1]=branchName$
         gosub disp_message
         print(log_dev)"    ***** "+branchName$+" CHECKOUT FAILED ("+checkoutStatus$+") *****"
-        status=1
+        restartFlag=1
     endif
 
     rem --- Set permissions on all directories under cloneDir! for non-Windows OS

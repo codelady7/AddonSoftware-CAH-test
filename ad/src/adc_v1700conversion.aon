@@ -704,6 +704,40 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
         dim sysinfo$:sysinfo_template$
         sysinfo$=stbl("+SYSINFO",err=*next)
 
+        rem --- OCJ may have ported new gls_params file as gls_params.2 or gls_params.3 (due to multiple definitions referencing same physical file)
+        fileFound=0
+		glsParams!=new File(stbl("+GLDATA")+"gls_params")
+        if glsParams!.exists() then
+			gls_params=unt
+			open(gls_params)stbl("+GLDATA")+"gls_params"
+			glfid$=fid(gls_params)
+			close(gls_params)
+			if dec(glfid$(3,4))>0
+				fileFound=1
+			else
+				erase glfid$(9)
+			endif	
+		endif
+		if !fileFound
+			for i=2 to 3
+				bakFile!=new File(stbl("+GLDATA")+"gls_params"+"."+str(i))
+				if !bakFile!.exists() then continue
+				bakFile!.renameTo(glsParams!)
+				fileFound=1
+				break
+			next i
+        endif
+        if !fileFound then
+            rem --- Required file missing
+            msg_id$="AD_FILE_MISSING"
+            dim msg_tokens$[1]
+            msg_tokens$[1]=stbl("+GLDATA")+"gls_params"
+            gosub disp_message
+            err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:               Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+stbl("+GLDATA")+"gls_params"+" *****"
+            goto done
+        endif
+
         rem --- Open File(s)
         num_files=6
         dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -1162,7 +1196,7 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
                     gosub open_tables
                     glmAcctSummary_dev=num(open_chans$[1])
                     dim glmAcctSummary$:open_tpls$[1]
-    
+
                     rem --- Loop thru old/source GLM_ACCTSUMMARY (glm-02) and write records to appropriate new file
                     firm_id$=""
                     read(old_glm02_dev,key="",dom=*next)
