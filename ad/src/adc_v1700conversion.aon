@@ -710,12 +710,12 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
         if glsParams!.exists() then
 			gls_params=unt
 			open(gls_params)stbl("+GLDATA")+"gls_params"
-			glfid$=fid(gls_params)
+			glfin$=fin(gls_params)
 			close(gls_params)
-			if dec(glfid$(3,4))>0
+			if dec(glfin$(77,4))>0
 				fileFound=1
 			else
-				erase glfid$(9)
+				glsParams!.delete()
 			endif	
 		endif
 		if !fileFound
