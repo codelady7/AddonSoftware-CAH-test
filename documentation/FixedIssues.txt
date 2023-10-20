@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-10-10
+ Report Date:   2023-10-20
  Report Branch: AddonSoftware 23.05
  Last Release:  AddonSoftware 23.04
 =======================================================================================================================================
@@ -38,3 +38,38 @@ standard Addon WO demo data. No potential DataPort issues exposed by
 porting standard Addon BM, GL, MP, PO, SA and SY demo data.
 ----
 Modified: util/dataport/DataPort_main.bbj
+
+=======================================================================================================================================
+Revision: 3bf1e1c8789d2face41645d61d1ee16058e01cdc
+Author: Christine <chawkins@basis.com>
+Date: 10/18/2023 6:33:07 PM
+Message:
+Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
+1. Handle possibility of conflicts when switching to new branch
+2. Skip launching Barista Install wizard for Addon if there are no customized forms
+3. Skip adx_upgradewiz.aon and addonhelp.jar when looking for embedded conflicts
+4. Have v1700conversion.aon rename gls_params.2 to gls_params if needed
+5. Be sure adx_git_auth table is in app_data
+
+(cherry picked from commit b29851999c855e646c8ef3c5cfcb468d3db7648c)
+----
+Modified: ad/src/adc_v1700conversion.aon
+Modified: ad/src/ado_AO_GitRepoInterface.aon
+Modified: ad/src/adx_upgradewiz.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: f38a72e1c004690db51c328dff51d383b87f7da1
+Author: Christine <chawkins@basis.com>
+Date: 10/20/2023 11:26:38 AM
+Message:
+Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
+ - adjustment to v1700 conversion to use fin instead of fid
+ - added default of "addon" to adc_mvupgrdfiles.aon when setting translator key to fix situation where +PROPS_NAME global hasn't yet been set when launching new instance
+
+(cherry picked from commit 032f461a20e35d31f345b8f23b63335adf7a53e9)
+----
+Modified: ad/src/adc_mvupgrdfiles.aon
+Modified: ad/src/adc_v1700conversion.aon
+
