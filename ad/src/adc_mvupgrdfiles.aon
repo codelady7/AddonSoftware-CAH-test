@@ -49,7 +49,8 @@ rem --- Init directory to use for files we may *not* move because they already e
     
 rem --- Start progress meter
     declare BBTranslator Translate!
-    rdTransSpaceKey$=stbl("+PROPS_NAME")+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
+    rdTransSpaceKey$="addon_"+stbl("+USER_LOCALE")+"_BBTranslator"
+    rdTransSpaceKey$=stbl("+PROPS_NAME",err=*next)+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
     Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
     if Translate!=null()
         Translate!=BBTranslator.getInstance(stbl("+PROPS_NAME"),stbl("+USER_LOCALE"),null(),stbl("+PROPS_PATH"))
