@@ -41,7 +41,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=19,begfile=1,endfile=files
+    files=20,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS"
     files$[3]="gls_calendar",ids$[3]="GLS_CALENDAR"
@@ -59,6 +59,7 @@ rem --- Open/Lock files
     files$[17]="glm-01",ids$[17]="GLM_ACCT"
     files$[18]="glt-04",ids$[18]="GLE_DAILYDETAIL"
     files$[19]="glt-05",ids$[19]="GLT_BANKCHECKS"
+    files$[20]="apw_positivepay",ids$[20]="APW_POSITIVEPAY"
     call pgmdir$+"adc_fileopen.aon",action,begfile,16,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
@@ -75,6 +76,7 @@ rem --- Open/Lock files
     apwChkJasperPrn_dev=channels[14]
     aptVendPayments_dev=channels[15]
     adcBankAcctCode_dev=channels[16]
+    apwPositivePay_dev=channels[20]
 
 rem --- Dimension string templates
 
@@ -83,6 +85,7 @@ rem --- Dimension string templates
     dim apm10b$:templates$[8],apt01a$:templates$[9],apt02a$:templates$[10]
     dim apt05a$:templates$[11],apt11a$:templates$[12],apw01a$:templates$[13]
     dim apwChkJasperPrn$:templates$[14],aptVendPayments$:templates$[15],adcBankAcctCode$:templates$[16]
+    dim apwPositivePay$:templates$[20]
 
 rem --- Retrieve parameter records
 
@@ -296,9 +299,21 @@ remove_check: rem --- Remove Check
 
         remove (apw01_dev,key=k0$,dom=*next)
 
+        rem --- Save non-ACH check information for Positive Pay
+        if apw01a.comp_or_void$<>"A" and cvs(adcBankAcctCode.pp_pgm$,3)<>"" then gosub doPositivePay
     wend
 
 done: rem --- All done
+          
+    rem --- Build Positive Pay files
+    while len(bnkAcctCds$)
+        thisBnkAcctCd$=bnkAcctCds$(1,pos(";"=bnkAcctCds$)-1)
+        bnkAcctCds$=bnkAcctCds$(pos(";"=bnkAcctCds$)+1)
+        
+        findrecord(adcBankAcctCode_dev,key=firm_id$+thisBnkAcctCd$,dom=*continue)adcBankAcctCode$
+        pgmPath$=util.resolvePathStbls(cvs(adcBankAcctCode.pp_pgm$,3),err=*continue)
+        call pgmPath$,apwPositivePay_dev,status
+    wend
 
     rem --- Do NOT clear remainding records in APE_CHECKS. 
     rem --- They may be for invoices being paid with a checking account that checks haven't been printed for yet.
@@ -312,6 +327,25 @@ done: rem --- All done
     endif
     call pgmdir$+"adc_batchdelete.aon",err=*next,status
     goto std_exit
+          
+doPositivePay: rem --- Save information for Positive Pay
+    redim apwPositivePay$
+    apwPositivePay.firm_id$ = apw01a.firm_id$
+    apwPositivePay.bnk_acct_cd$ = apw01a.bnk_acct_cd$
+    apwPositivePay.check_no$ = apw01a.check_no$
+    apwPositivePay.check_date$ = apw01a.check_date$
+    apwPositivePay.comp_or_void$ = apw01a.trans_type$
+    apwPositivePay.bnk_acct_no$ = adcBankAcctCode.bnk_acct_no$
+    apwPositivePay.firm_name$ = sysinfo.firm_name$
+    apwPositivePay.vendor_name$ =apm01a.vendor_name$
+    apwPositivePay.payment_amt = ape04a.payment_amt
+    apwPositivePay$=field(apwPositivePay$)                
+    writerecord(apwPositivePay_dev)apwPositivePay$
+
+    rem --- Keep track of Bank Account Codes used
+    if pos(ape02a.bnk_acct_cd$=bnkAcctCds$+";")=0 then bnkAcctCds$=bnkAcctCds$+ape02a.bnk_acct_cd$+";"
+    
+    return
 
 updateAptVendPayments: rem --- Update APT_VENDPAYMENTS with new data from APT_CHECKHISTORY
     foundRec=0      
