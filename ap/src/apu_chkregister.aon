@@ -41,7 +41,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=20,begfile=1,endfile=files
+    files=17,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",ids$[1]="APS_PARAMS"
     files$[3]="gls_calendar",ids$[3]="GLS_CALENDAR"
@@ -56,11 +56,8 @@ rem --- Open/Lock files
     files$[14]="apw_chkjasperprn",ids$[14]="APW_CHKJASPERPRN"
     files$[15]="apt_vendpayments",ids$[15]="APT_VENDPAYMENTS"
     files$[16]="adc_bankacctcode",ids$[16]="ADC_BANKACCTCODE"
-    files$[17]="glm-01",ids$[17]="GLM_ACCT"
-    files$[18]="glt-04",ids$[18]="GLE_DAILYDETAIL"
-    files$[19]="glt-05",ids$[19]="GLT_BANKCHECKS"
-    files$[20]="apw_positivepay",ids$[20]="APW_POSITIVEPAY"
-    call pgmdir$+"adc_fileopen.aon",action,begfile,16,files$[all],options$[all],
+    files$[17]="apw_positivepay",ids$[17]="APW_POSITIVEPAY"
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
     ads01_dev=channels[1]
@@ -76,7 +73,7 @@ rem --- Open/Lock files
     apwChkJasperPrn_dev=channels[14]
     aptVendPayments_dev=channels[15]
     adcBankAcctCode_dev=channels[16]
-    apwPositivePay_dev=channels[20]
+    apwPositivePay_dev=channels[17]
 
 rem --- Dimension string templates
 
@@ -85,7 +82,7 @@ rem --- Dimension string templates
     dim apm10b$:templates$[8],apt01a$:templates$[9],apt02a$:templates$[10]
     dim apt05a$:templates$[11],apt11a$:templates$[12],apw01a$:templates$[13]
     dim apwChkJasperPrn$:templates$[14],aptVendPayments$:templates$[15],adcBankAcctCode$:templates$[16]
-    dim apwPositivePay$:templates$[20]
+    dim apwPositivePay$:templates$[17]
 
 rem --- Retrieve parameter records
 
@@ -129,16 +126,26 @@ rem --- Initializations
 rem --- Additional File Opens
 
     if gl$<>"Y" goto confirm_update
-    call pgmdir$+"adc_fileopen.aon",action,17,18,files$[all],options$[all],
+
+    files=2,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="glm-01",ids$[1]="GLM_ACCT"
+    files$[2]="glt-04",ids$[2]="GLE_DAILYDETAIL"
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
-    glm01_dev=channels[17];dim glm01a$:templates$[17]
-    glt04_dev=channels[18];dim glt04a$:templates$[18]
+    glm01_dev=channels[1];dim glm01a$:templates$[1]
+    glt04_dev=channels[2];dim glt04a$:templates$[2]
+
     if br$<>"Y" goto confirm_update
-    call pgmdir$+"adc_fileopen.aon",action,19,19,files$[all],options$[all],
+
+    files=1,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="glt-05",ids$[1]="GLT_BANKCHECKS"
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
-    glt05_dev=channels[19];dim glt05a$:templates$[19]
+    glt05_dev=channels[1];dim glt05a$:templates$[1]
 
 confirm_update: rem --- Run Update?
 
@@ -165,6 +172,7 @@ rem --- Main Read
         read record (apw01_dev) apw01a$
         if pos(firm_id$=apw01a.firm_id$)<>1 goto done
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
+        payment_amt=0
         if pos(apw01a.comp_or_void$="VX") then goto void_check
 
 rem --- Check Detail
@@ -183,6 +191,8 @@ next_invoice: rem --- Next Invoice
 
 open_invoice: rem --- Open Invoice
 
+        payment_amt=payment_amt + ape04a.payment_amt
+ 
         gosub update_open_invoice
 
 rem --- Vendor
@@ -295,6 +305,10 @@ void_check: rem --- Void Check
         write record (apt05_dev,dom=remove_check) apt05a$
         if br$="Y" x9$=x9$+apt05a.check_no$
 
+        rem --- Bank Account Code needed for Positive Pay
+        redim adcBankAcctCode$
+        readrecord(adcBankAcctCode_dev,key=apt05a.firm_id$+apt05a.bnk_acct_cd$,dom=*next)adcBankAcctCode$
+
 remove_check: rem --- Remove Check
 
         remove (apw01_dev,key=k0$,dom=*next)
@@ -312,7 +326,7 @@ done: rem --- All done
         
         findrecord(adcBankAcctCode_dev,key=firm_id$+thisBnkAcctCd$,dom=*continue)adcBankAcctCode$
         pgmPath$=util.resolvePathStbls(cvs(adcBankAcctCode.pp_pgm$,3),err=*continue)
-        call pgmPath$,apwPositivePay_dev,status
+        call pgmPath$,apwPositivePay_dev,fattr(apwPositivePay$),status
     wend
 
     rem --- Do NOT clear remainding records in APE_CHECKS. 
@@ -334,16 +348,16 @@ doPositivePay: rem --- Save information for Positive Pay
     apwPositivePay.bnk_acct_cd$ = apw01a.bnk_acct_cd$
     apwPositivePay.check_no$ = apw01a.check_no$
     apwPositivePay.check_date$ = apw01a.check_date$
-    apwPositivePay.comp_or_void$ = apw01a.trans_type$
-    apwPositivePay.bnk_acct_no$ = adcBankAcctCode.bnk_acct_no$
+    apwPositivePay.comp_or_void$ = apw01a.comp_or_void$
+    apwPositivePay.bnk_acct_no$ = encryptor!.decryptData(cvs(adcBankAcctCode.bnk_acct_no$,2))
     apwPositivePay.firm_name$ = sysinfo.firm_name$
     apwPositivePay.vendor_name$ =apm01a.vendor_name$
-    apwPositivePay.payment_amt = ape04a.payment_amt
+    apwPositivePay.payment_amt = payment_amt
     apwPositivePay$=field(apwPositivePay$)                
     writerecord(apwPositivePay_dev)apwPositivePay$
 
     rem --- Keep track of Bank Account Codes used
-    if pos(ape02a.bnk_acct_cd$=bnkAcctCds$+";")=0 then bnkAcctCds$=bnkAcctCds$+ape02a.bnk_acct_cd$+";"
+    if pos(apw01a.bnk_acct_cd$=bnkAcctCds$+";")=0 then bnkAcctCds$=bnkAcctCds$+apw01a.bnk_acct_cd$+";"
     
     return
 

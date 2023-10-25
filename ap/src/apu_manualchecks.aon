@@ -10,6 +10,7 @@ rem --- WIP to fill in missing logic 10/07.CH
 rem --- post codeport work done, but needs careful testing!.CH
 
     use ::ado_util.src::util
+    use ::sys/prog/bao_encryptor.bbj::Encryptor
 
     seterr std_error
     setesc std_error
@@ -46,6 +47,11 @@ rem --- Get user approval to update
     msg_tokens$[1]=x.task_desc$
     gosub disp_message
     if msg_opt$<>"Y" then goto std_exit_no_update
+
+rem --- Set up Encryptor
+    encryptor! = new Encryptor()
+    config_id$ = "BANK_ACCT_AUTH"
+    encryptor!.setConfiguration(config_id$)
 
 rem --- Start progress meter and position header file
 
@@ -410,6 +416,10 @@ rem --- Read next Check Header (ape-02) record
                     wend
                 endif
 
+                rem --- Bank Account Code needed for Positive Pay
+                redim adcBankAcctCode$
+                readrecord(adcBankAcctCode_dev,key=apt05a1.firm_id$+apt05a1.bnk_acct_cd$,dom=*next)adcBankAcctCode$
+
             break
 
             case default
@@ -435,7 +445,7 @@ rem --- Read next Check Header (ape-02) record
         
         findrecord(adcBankAcctCode_dev,key=firm_id$+thisBnkAcctCd$,dom=*continue)adcBankAcctCode$
         pgmPath$=util.resolvePathStbls(cvs(adcBankAcctCode.pp_pgm$,3),err=*continue)
-        call pgmPath$,apwPositivePay_dev,status
+        call pgmPath$,apwPositivePay_dev,fattr(apwPositivePay$),status
     wend
 
 rem --- All done
@@ -455,9 +465,9 @@ doPositivePay: rem --- Save information for Positive Pay
     apwPositivePay.check_no$ = ape02a.check_no$
     apwPositivePay.check_date$ = ape02a.check_date$
     apwPositivePay.comp_or_void$ = ape02a.trans_type$
-    apwPositivePay.bnk_acct_no$ = adcBankAcctCode.bnk_acct_no$
+    apwPositivePay.bnk_acct_no$ = encryptor!.decryptData(cvs(adcBankAcctCode.bnk_acct_no$,2))
     apwPositivePay.firm_name$ = sysinfo.firm_name$
-    apwPositivePay.vendor_name$ =ape02a.vendor_name$
+    apwPositivePay.vendor_name$ = ape02a.vendor_name$
     apwPositivePay.payment_amt = payment_amt
     apwPositivePay$=field(apwPositivePay$)                
     writerecord(apwPositivePay_dev)apwPositivePay$

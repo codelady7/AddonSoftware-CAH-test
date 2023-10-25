@@ -178,23 +178,25 @@ rem --- default micr_acct to a # for each character of bank account number
 [[ADC_BANKACCTCODE.PP_PGM.AVAL]]
 rem --- Verify program exists
 	pp_pgm$=cvs(callpoint!.getUserInput(),3)
-	pgmPath$=util.resolvePathStbls(pp_pgm$,err=*next)
-	if pgmPath$="" then
-		msg_id$="PROG_NOT_FOUND"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=pp_pgm$
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-	resolvedPgmPath$=BBjAPI().getFileSystem().resolvePath(pgmPath$,err=*next)
-	if resolvedPgmPath$="" then
-		msg_id$="PROG_NOT_FOUND"
-		dim msg_tokens$[1]
-		msg_tokens$[1]=pgmPath$
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-		break
+	if pp_pgm$<>"" then
+		pgmPath$=util.resolvePathStbls(pp_pgm$,err=*next)
+		if pgmPath$="" then
+			msg_id$="PROG_NOT_FOUND"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=pp_pgm$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+		resolvedPgmPath$=BBjAPI().getFileSystem().resolvePath(pgmPath$,err=*next)
+		if resolvedPgmPath$="" then
+			msg_id$="PROG_NOT_FOUND"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=pgmPath$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
 	endif
 
 [[ADC_BANKACCTCODE.<CUSTOM>]]

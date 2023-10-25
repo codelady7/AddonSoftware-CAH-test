@@ -4,16 +4,109 @@ rem --- Program apc_ppBoA_example.aon
 rem --- AddonSoftware Version 24.00
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
-rem --- apwPositivePay_dev: Channel APW_POSITIVEPAY is open on (input)
-rem --- status            : Status/0=No error (returned)
+rem --- apwPositivePay_dev : Channel APW_POSITIVEPAY is open on (input)
+rem --- apwPositivePay_tpl$: Record template for APW_POSITIVEPAY (input)
+rem --- status             : Status/0=No error (returned)
+
+    use java.io.File
+
+    use ::ado_file.src::FileObject
 
     seterr std_error
     setesc std_error
     
-    enter apwPositivePay_dev,status
+    enter apwPositivePay_dev,apwPositivePay_tpl$,status
 
 rem --- Initializations
     status=0
+    dim apwPositivePay$:apwPositivePay_tpl$
+
+rem --- Retrieve sysinfo data
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    firm_id$=sysinfo.firm_id$
+
+rem --- Create directory for Positive Pay files
+    ppDir$ = FileObject.fixPath(stbl("+DOC_DIR_DEFAULT") + "PP", "/")
+    FileObject.makeDirs(new File(ppDir$))
+
+rem --- Process checks in APW_POSITIVEPAY
+    read(apwPositivePay_dev,key=firm_id$,dom=*next)
+    while 1
+        apwPositivePay_key$=key(apwPositivePay_dev,end=*break)
+        readrecord(apwPositivePay_dev)apwPositivePay$
+        if pos(apwPositivePay.bnk_acct_cd$=bnkAcctCds$+";")=0 then
+            bnkAcctCds$=bnkAcctCds$+apwPositivePay.bnk_acct_cd$+";"
+    
+            rem --- Create and open new Positive Pay file
+            date$=DATE(0:"%Yd%Mz%Dz")
+            time$=DATE(0:"%Hz%mz")
+            bnk_acct_cd$=cvs(apwPositivePay.bnk_acct_cd$,3)
+            ppFile$=ppDir$+"/ppBoA_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
+            string ppFile$
+            ppFile_dev=unt
+            open(ppFile_dev)ppFile$
+
+            rem --- Add example warning to Positive Pay file
+            print(ppFile_dev)"  *** WARNING: Do NOT use this file. It was created with an example program.  ***"
+            print(ppFile_dev)"  *** The user is responsible for making all necessary program changes so the ***"
+            print(ppFile_dev)"  *** fields and formats meet the user's bank's requirements.                 ***"
+            print(ppFile_dev)""
+        endif
+
+        rem --- Format APW_POSITIVEPAY fields for Positive Pay file
+        rem --- Bank Account #: 12-char without hyphens, aligned rigt, zero padded
+        ppBankAccount!=cast(BBjString, cvs(apwPositivePay.bnk_acct_no$,3))
+        ppBankAccount$=ppBankAccount!.replace("-","")
+        if len(ppBankAccount$)<12 then ppBankAccount$=pad(ppBankAccount$,12,"R","0")
+        if len(ppBankAccount$)>12 then ppBankAccount$=ppBankAccount$((len(ppBankAccount$)-12)+1)
+        
+        rem --- Void Indicator: V for voids
+        if apwPositivePay.comp_or_void$="V" then
+            ppVoidIndicator$="V"
+        else
+            ppVoidIndicator$=" "
+        endif
+
+        rem --- Check #: 10-char, aligned rigt, zero padded
+        ppCheckNumber$=cvs(apwPositivePay.check_no$,3)
+        if len(ppCheckNumber$)<10 then ppCheckNumber$=pad(ppCheckNumber$,10,"R","0")
+        if len(ppCheckNumber$)>10 then ppCheckNumber$=ppCheckNumber$((len(ppCheckNumber$)-10)+1)
+
+        rem --- Check Amount: 12-char excluding decimal point, aligned right, zero padded  
+        ppCheckAmount$=str(apwPositivePay.payment_amt:"0000000000.00")
+        dp_pos=pos("."=ppCheckAmount$)
+        ppCheckAmount$=ppCheckAmount$(1,dp_pos-1)+ppCheckAmount$(dp_pos+1)
+
+        rem --- Check Date or Void Date: YYYYMMDD
+        ppCheckDate$=pad(apwPositivePay.check_date$,8,"R","0")
+        theYear=num(ppCheckDate$(1,4))
+        theMonth=num(ppCheckDate$(5,2))
+        theDay=num(ppCheckDate$(7,2))
+        goodDate=0
+        julDate=jul(theYear,theMonth,theDay,err=*next); goodDate=1
+        if goodDate then ppCheckDate$=DATE(julDate:"%Yd%Mz%Dz")
+
+        rem --- Payee #/Memo: 10-char, aligned left, blank space padded
+        ppPayee$=apwPositivePay.vendor_name$
+        if len(ppPayee$)<10 then ppPayee$=pad(ppPayee$,10,"L"," ")
+        if len(ppPayee$)>10 then ppPayee$=ppPayee$(1,10)
+
+        rem --- Company Name: 24-char, aligned left, blank space padded
+        ppCompanyName$=apwPositivePay.firm_name$
+        if len(ppCompanyName$)<24 then ppCompanyName$=pad(ppCompanyName$,24,"L"," ")
+        if len(ppCompanyName$)>24 then ppCompanyName$=ppCompanyName$(1,24)
+
+        rem --- Blank Space: 2 blank spaces
+        blankSpace$=pad("",2," ")
+
+        rem --- Add this check to Positive Pay file
+        print(ppFile_dev)ppBankAccount$+ppVoidIndicator$+ppCheckNumber$+ppCheckAmount$+ppCheckDate$+ppVoidIndicator$+ppPayee$+ppCompanyName$+blankSpace$
+
+        rem --- Remove this check from APW_POSITIVEPAY
+        remove(apwPositivePay_dev,key=apwPositivePay_key$)
+    wend
 
 done: rem --- All done
 
