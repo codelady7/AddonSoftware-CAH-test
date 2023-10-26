@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-10-20
+ Report Date:   2023-10-26
  Report Branch: AddonSoftware 23.05
  Last Release:  AddonSoftware 23.04
 =======================================================================================================================================
@@ -72,4 +72,18 @@ Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
 ----
 Modified: ad/src/adc_mvupgrdfiles.aon
 Modified: ad/src/adc_v1700conversion.aon
+
+=======================================================================================================================================
+Revision: a8b4349943ad7114b49fcd518038fecf68925186
+Author: Christine <chawkins@basis.com>
+Date: 10/26/2023 2:20:21 PM
+Message:
+Bug 10741 - AD - Packager/Extractor (Extractor) can throw error 12 extracting a production package
+ - Corrected typo (using mount_path$ instead of mount_dir$)
+ - Added logging to Extractor so if an <application>.syn file can't be opened, it logs it rather than throwing hard error
+ - Added messages prior to Pkg or Ext with info on Test vs Production Pkg/Ext to clarify/call out documented behavior
+
+(cherry picked from commit 62df71b47f77246e0142831c7688d600b2a1115e)
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
 
