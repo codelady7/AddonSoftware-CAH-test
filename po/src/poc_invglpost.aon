@@ -224,7 +224,7 @@ rem --- Invoice distribution
 
     apacct$=params$[10]
     apamt=iv_extension,ivmemo$=name$,ref3$=Translate!.getTranslation("AON_MISC")
-    if len(cvs(w0$,3))>20 then let ref3$=Translate!.getTranslation("AON_GL_SEQ_")+w0.line_no$;rem --- if misc gl dist, won't have line#
+    if len(cvs(w0$,3))>30 then let ref3$=Translate!.getTranslation("AON_GL_SEQ_")+w0.line_no$;rem --- if misc gl dist, won't have line#
 
 done: rem --- Generate GL Recap Postings
 
