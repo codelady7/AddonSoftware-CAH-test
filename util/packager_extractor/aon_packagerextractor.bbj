@@ -458,8 +458,18 @@ class public PackagerExtractor
 
         rem --- enable packaging if everything is ready and return status
         if (#isPackagerBaseDirectoryValid! and #isPackagerBaristaDirectoryValid! and #isPackagerArchiveFileValid!) then
-            #PackagerBtn!.setEnabled(1)
-            methodret 1
+            rem --- Give explanatory message about what is/isn't included in a Production vs Test Package and let user cancel or continue
+            infoMsg$="Before you Package:"+$0A$
+            infoMsg$=infoMsg$+"- Confirm that you are using the top-level directory (<aon_prod>) as the Installation Base Directory."+$0A$
+            infoMsg$=infoMsg$+"- When creating a Test package, all directories and files in the Installation Base (<aon_prod>) are included in the archive. Files outside of that directory are not included."+$0A$
+            infoMsg$=infoMsg$+"- When creating a Production package, only directories and files in the lowest, version-specific directory (<aon_prod>/vYY/vYYnn/) are included in the archive. Files outside of that directory are not included."
+            infoAccept=msgbox(infoMsg$,65,"AddonSoftware")
+            if infoAccept=1 
+                #PackagerBtn!.setEnabled(1)
+                methodret 1
+            else
+                methodret 0
+            endif
         else
             methodret 0
         endif
@@ -618,10 +628,10 @@ class public PackagerExtractor
             mountDir!=new java.io.File(mount_path$)
             mount_dir$=mountDir!.getCanonicalPath()
 
-            REM On Windows, do a case insensitive comparison when determining if mount_path$
-            REM falls under base_path$
+            REM On Windows, do a case insensitive comparison when determining if mount_dir$
+            REM falls under baseDir$
             if #isWindows! then
-                goodPath=pos(cvs(baseDir$,4)=cvs(mount_path$,4))=1
+                goodPath=pos(cvs(baseDir$,4)=cvs(mount_dir$,4))=1
             else
                 goodPath=pos(baseDir$=mount_dir$)=1
             endif
@@ -1663,8 +1673,18 @@ std_exit:
 
         rem -- allow extraction if all fields are ready
         if (isExtractorNewDatabaseNameReady! and isExtractorApplicationDescriptionReady! and isExtractorInstallationLocationReady! and isExtractorBaristaLocationReady! and isExtractorArchiveFileReady!) then
-            #ExtractorBtn!.setEnabled(1)
-            methodret 1
+            rem --- Give explanatory message about what is/isn't included in a Production vs Test Package and let user cancel or continue
+            infoMsg$="Before you Extract:"+$0A$+"- Confirm that you are using the top-level directory (<aon_prod>) as the Installation Base Directory."+$0A$
+            infoMsg$=infoMsg$+"- When extracting a Test package, any referenced files or Barista applications that reside outside of the Installation Base (<aon_prod>) must be in place prior to running the Extractor."+$0A$
+            infoMsg$=infoMsg$+"-  When extracting a Production package, any referenced files or Barista applications that reside outside of the lowest, version-specific directory (<aon_prod>/vYY/vYYnn/) must be in place prior to running the Extractor."+$0A$
+            infoMsg$=infoMsg$+"- Be sure to check paths in .syn or adm_modules*.xml files of any Barista applications manually copied into place and change if/as needed."
+            infoAccept=msgbox(infoMsg$,65,"AddonSoftware")
+            if infoAccept=1
+                #ExtractorBtn!.setEnabled(1)
+                methodret 1
+            else
+                methodret 0
+            endif
         else
             methodret 0
         endif
@@ -1932,7 +1952,7 @@ std_exit:
       while systemsIter!.hasNext()
           system$=systemsIter!.next()
           sourceMountDir$=systems!.getProperty(system$)
-          if !sourcePaths!.containsKey(sourceMountDir$) then continue
+          if !sourcePaths!.containsKey(sourceMountDir$) then continue;rem --- external app outside install base - VAR responsibility
           sourceCanonicalMountDir$=sourcePaths!.getProperty(sourceMountDir$)
           targetMountDir$=sourceCanonicalMountDir$
           if pos(sourceBaseDir$=sourceCanonicalMountDir$)=1 then
@@ -1944,7 +1964,12 @@ std_exit:
           rem --- Open target syn file, and temporary work file
           appSynFile$=targetMountDir$+"/config/"+cvs(system$,8)+".syn"
           appSyn_dev=unt
-          open(appSyn_dev,isz=-1)appSynFile$; rem --- Error if not found, something is wrong.
+          foundSyn=0
+          open(appSyn_dev,isz=-1,err=*next)appSynFile$; foundSyn=1; rem --- Error if not found, log and continue.
+          if !foundSyn
+            print(log_dev)"    Unable to open "+appSynFile$+". Cannot change these paths."
+            continue
+          endif
           tmpWorkFile$=targetMountDir$+"/config/workfile.tmp"
           erase tmpWorkFile$, err=*next
           tmpWork_dev=unt
@@ -2084,7 +2109,7 @@ std_exit:
           while systemsIter!.hasNext()
               system$=systemsIter!.next()
               sourceMountDir$=systems!.getProperty(system$)
-              if !sourcePaths!.containsKey(sourceMountDir$) then continue
+              if !sourcePaths!.containsKey(sourceMountDir$) then continue;rem --- external app outside install base - VAR responsibility
               sourceCanonicalMountDir$=sourcePaths!.getProperty(sourceMountDir$)
               targetMountDir$=sourceCanonicalMountDir$
               if pos(sourceBaseDir$=sourceCanonicalMountDir$)=1 then
@@ -2661,9 +2686,6 @@ std_exit:
                            next alphaOffset
                       endif
 
-                      rem --- Note: Most of the paths in barista.cfg containing the old base directory
-                      rem --- will have their path replaced with the new directory during a sync after 
-                      rem --- the startup of the new installation.  This utility does not change them.
                       key$=cvs(line$(1,pos("="=line$)-1),3)
                       switch (BBjAPI().TRUE)
                           case key$="SET +DBNAME"
