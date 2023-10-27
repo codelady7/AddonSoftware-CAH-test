@@ -4,6 +4,7 @@ rem --- Program apc_ppBoA_example.aon
 rem --- AddonSoftware Version 24.00
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
+rem --- bnkAcctCd$         : Bank Account Code checks are to be processed for (input)
 rem --- apwPositivePay_dev : Channel APW_POSITIVEPAY is open on (input)
 rem --- apwPositivePay_tpl$: Record template for APW_POSITIVEPAY (input)
 rem --- status             : Status/0=No error (returned)
@@ -15,7 +16,7 @@ rem --- status             : Status/0=No error (returned)
     seterr std_error
     setesc std_error
     
-    enter apwPositivePay_dev,apwPositivePay_tpl$,status
+    enter bnkAcctCd$,apwPositivePay_dev,apwPositivePay_tpl$,status
 
 rem --- Initializations
     status=0
@@ -32,13 +33,13 @@ rem --- Create directory for Positive Pay files
     FileObject.makeDirs(new File(ppDir$))
 
 rem --- Process checks in APW_POSITIVEPAY
-    read(apwPositivePay_dev,key=firm_id$,dom=*next)
+    ppFile_dev=-1
+    read(apwPositivePay_dev,key=firm_id$+bnkAcctCd$,dom=*next)
     while 1
         apwPositivePay_key$=key(apwPositivePay_dev,end=*break)
+        if pos(firm_id$+bnkAcctCd$=apwPositivePay_key$)<>1 then break
         readrecord(apwPositivePay_dev)apwPositivePay$
-        if pos(apwPositivePay.bnk_acct_cd$=bnkAcctCds$+";")=0 then
-            bnkAcctCds$=bnkAcctCds$+apwPositivePay.bnk_acct_cd$+";"
-    
+        if ppFile_dev<0 then
             rem --- Create and open new Positive Pay file
             date$=DATE(0:"%Yd%Mz%Dz")
             time$=DATE(0:"%Hz%mz")
@@ -63,7 +64,7 @@ rem --- Process checks in APW_POSITIVEPAY
         if len(ppBankAccount$)>12 then ppBankAccount$=ppBankAccount$((len(ppBankAccount$)-12)+1)
         
         rem --- Void Indicator: V for voids
-        if apwPositivePay.comp_or_void$="V" then
+        if pos(apwPositivePay.comp_or_void$="VX") then
             ppVoidIndicator$="V"
         else
             ppVoidIndicator$=" "

@@ -445,7 +445,7 @@ rem --- Read next Check Header (ape-02) record
         
         findrecord(adcBankAcctCode_dev,key=firm_id$+thisBnkAcctCd$,dom=*continue)adcBankAcctCode$
         pgmPath$=util.resolvePathStbls(cvs(adcBankAcctCode.pp_pgm$,3),err=*continue)
-        call pgmPath$,apwPositivePay_dev,fattr(apwPositivePay$),status
+        call pgmPath$,thisBnkAcctCd$,apwPositivePay_dev,fattr(apwPositivePay$),status
     wend
 
 rem --- All done

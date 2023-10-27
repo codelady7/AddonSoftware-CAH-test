@@ -309,6 +309,11 @@ void_check: rem --- Void Check
         redim adcBankAcctCode$
         readrecord(adcBankAcctCode_dev,key=apt05a.firm_id$+apt05a.bnk_acct_cd$,dom=*next)adcBankAcctCode$
 
+        rem --- Make sure Void information is set for doPositivePay subroutine
+        redim apm01a$
+        findrecord(apm01_dev,key=firm_id$+apw01a.vendor_id$,dom=*next)apm01a$
+        if pos(apw01a.comp_or_void$="VX")=0 then apw01a.comp_or_void$="V"
+
 remove_check: rem --- Remove Check
 
         remove (apw01_dev,key=k0$,dom=*next)
@@ -326,7 +331,7 @@ done: rem --- All done
         
         findrecord(adcBankAcctCode_dev,key=firm_id$+thisBnkAcctCd$,dom=*continue)adcBankAcctCode$
         pgmPath$=util.resolvePathStbls(cvs(adcBankAcctCode.pp_pgm$,3),err=*continue)
-        call pgmPath$,apwPositivePay_dev,fattr(apwPositivePay$),status
+        call pgmPath$,thisBnkAcctCd$,apwPositivePay_dev,fattr(apwPositivePay$),status
     wend
 
     rem --- Do NOT clear remainding records in APE_CHECKS. 
