@@ -57,7 +57,7 @@ rem --- Process checks in APW_POSITIVEPAY
             date$=DATE(0:"%Yd%Mz%Dz")
             time$=DATE(0:"%Hz%mz")
             bnk_acct_cd$=cvs(apwPositivePay.bnk_acct_cd$,3)
-            ppFile$=ppDir$+"/ppBoA_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
+            ppFile$=ppDir$+"/ppCNB_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
             string ppFile$
             ppFile_dev=unt
             open(ppFile_dev)ppFile$
