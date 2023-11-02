@@ -93,12 +93,12 @@
     <!-- ====================================== -->
     <!-- ids -->
     <path id="path.bbj">
-        <pathelement location="${install.dir}/lib/BBjStartup.jar"/>
+        <pathelement location="${install.dir}/.lib/BBjStartup.jar"/>
     </path>
 
     <path id="path.installBBj">
         <pathelement location="${work.dir}/installBBj.jar"/>
-        <pathelement location="${bbj.jars.dir}/commons-io-2.6.jar"/>
+        <pathelement location="${bbj.jars.dir}/commons-io-2.11.0.jar"/>
     </path>
 
     <path id="path.install.WriteConfigFiles">
