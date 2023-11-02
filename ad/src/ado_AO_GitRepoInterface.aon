@@ -1667,7 +1667,7 @@ class public Grepper extends SimpleFileVisitor
         declare Matcher matcher!
         
         path$ = cast(BBjString, path!.toString())
-        if (path$ = null()) or pos("adx_upgradewiz"=path$) or pos("addonhelp.jar"=path$) then methodret FileVisitResult.CONTINUE
+        if (path$ = null()) or pos("adx_upgradewiz"=path$) or pos("addonhelp.jar"=path$) or pos("aon"+File.separator+"documents"+File.separator=path$) then methodret FileVisitResult.CONTINUE
         fr! = new FileReader(path$)
         br! = new BufferedReader(fr!)
         if (br! = null()) then
