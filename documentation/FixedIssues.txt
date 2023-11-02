@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-10-26
+ Report Date:   2023-11-02
  Report Branch: AddonSoftware 23.05
  Last Release:  AddonSoftware 23.04
 =======================================================================================================================================
@@ -99,4 +99,15 @@ Bug 10742 - PO - Error 47 in poc_invglpost.aon when processing misc GL distribut
 ----
 Modified: po/src/poc_invglpost.aon
 
+=======================================================================================================================================
+Revision: 916d9eb95ed0328fe09a6e56834b1be634bfacf3
+Author: Christine <chawkins@basis.com>
+Date: 11/2/2023 6:07:48 PM
+Message:
+Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
+ - In addition to skipping adx_upgradewiz.aon and addohelp.jar when searching for possible embedded conflict markers, also skip aon/documents/ (typically only found on older non-version-neutral installs).
+
+(cherry picked from commit 8c41e7f6e3438a2f8a1c68044290fcdc2ea3128b)
+----
+Modified: ad/src/ado_AO_GitRepoInterface.aon
 
