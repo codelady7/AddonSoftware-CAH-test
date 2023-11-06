@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivm_itemmast">6C5023A67CECD2E068F479C37AF5FA89</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivm_itemmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivm_itemmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivm_itemmast">20231011</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemmast">20231011</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemmast">101710</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivm_itemmast">20231101</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemmast">20231101</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemmast">181522</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivm_itemmast"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivm_itemmast">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivm_itemmast"></DD_ATTR_DKNM>
@@ -327,7 +327,7 @@
 		<RECORD id="ddm_table_tpls.ivm_itemmast">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivm_itemmast">IVM_ITEMMAST    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivm_itemmast">ivm-01</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.ivm_itemmast">firm_id:c(2),item_id:c(20),item_desc:c(60),product_type:c(3),unit_of_sale:c(6),purchase_um:c(6),taxable_flag:c(1),buyer_code:c(3),vendor_id:c(6),sa_level:c(1),inventoried:c(1),item_class:c(6),stock_level:c(1),abc_code:c(1),eoq_code:c(1),ord_pnt_code:c(1),saf_stk_code:c(1),item_type:c(3),lstrec_date:c(8),lstblt_date:c(8),lstsal_date:c(8),lstiss_date:c(8),lstadj_date:c(8),lstxin_date:c(8),lstxot_date:c(8),lstret_date:c(8),upc_code:c(20),bar_code:c(20),alt_sup_flag:c(1),alt_sup_item:c(20),gl_inv_acct:c(10),gl_cogs_acct:c(10),gl_pur_acct:c(10),gl_ppv_acct:c(10),gl_inv_adj:c(10),gl_cogs_adj:c(10),image_path:c(250),display_desc:c(60),conv_factor:n(7*),weight:n(7*),msrp:n(7*),maximum_qty:n(7*),order_point:n(7*),safety_stock:n(7*),eoq:n(7*),lead_time:n(7*),item_inactive:c(1),export_desc:c(20),memo_1024:c(1024*=1),sell_purch_um:c(1),tax_svc_cd:c(10),lotser_flag:c(1)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.ivm_itemmast">firm_id:c(2),item_id:c(20),item_desc:c(60),product_type:c(3),unit_of_sale:c(6),purchase_um:c(6),taxable_flag:c(1),buyer_code:c(3),vendor_id:c(6),sa_level:c(1),inventoried:c(1),item_class:c(6),stock_level:c(1),abc_code:c(1),eoq_code:c(1),ord_pnt_code:c(1),saf_stk_code:c(1),item_type:c(3),lstrec_date:c(8),lstblt_date:c(8),lstsal_date:c(8),lstiss_date:c(8),lstadj_date:c(8),lstxin_date:c(8),lstxot_date:c(8),lstret_date:c(8),upc_code:c(20),bar_code:c(20),alt_sup_flag:c(1),alt_sup_item:c(20),gl_inv_acct:c(10),gl_cogs_acct:c(10),gl_pur_acct:c(10),gl_ppv_acct:c(10),gl_inv_adj:c(10),gl_cogs_adj:c(10),image_path:c(250),display_desc:c(60),conv_factor:n(7*),weight:n(7*),msrp:n(7*),maximum_qty:n(7*),order_point:n(7*),safety_stock:n(7*),eoq:n(7*),lead_time:n(7*),item_inactive:c(1),export_desc:c(20),memo_1024:c(1024*=1),sell_purch_um:c(1),tax_svc_cd:c(10),lotser_flag:c(1),kit:c(1)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1315,7 +1315,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast004"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast004">1</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast004">6</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast004">7</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast004"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast004">PRODUCT_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast004"></DD_ATTR_FONT>
@@ -1366,7 +1366,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast005"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast005">19</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast005">20</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast005"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast005">UNIT_OF_SALE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast005"></DD_ATTR_FONT>
@@ -1417,7 +1417,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast006"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast006"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast006">21</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast006">22</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast006"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast006">PURCHASE_UM</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast006"></DD_ATTR_FONT>
@@ -1468,7 +1468,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast007"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast007">17</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast007">18</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast007"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast007">TAXABLE_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast007"></DD_ATTR_FONT>
@@ -1519,7 +1519,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast008">42</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast008">43</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast008">BUYER_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast008"></DD_ATTR_FONT>
@@ -1570,7 +1570,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast009">43</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast009">44</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast009">VENDOR_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast009"></DD_ATTR_FONT>
@@ -1621,7 +1621,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast010"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast010"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast010"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast010">23</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast010">24</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast010"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast010">SA_LEVEL</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast010"></DD_ATTR_FONT>
@@ -1672,7 +1672,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast011"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast011"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast011"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast011">14</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast011">15</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast011"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast011">INVENTORIED</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast011"></DD_ATTR_FONT>
@@ -1723,7 +1723,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast012">7</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast012">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast012">ITEM_CLASS</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast012"></DD_ATTR_FONT>
@@ -1774,7 +1774,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast013">11</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast013">12</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast013">STOCK_LEVEL</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast013"></DD_ATTR_FONT>
@@ -1825,7 +1825,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast014">41</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast014">42</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast014">ABC_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast014"></DD_ATTR_FONT>
@@ -1876,7 +1876,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast015"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast015"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast015"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast015">49</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast015">50</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast015"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast015">EOQ_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast015"></DD_ATTR_FONT>
@@ -1927,7 +1927,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast016"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast016">47</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast016">48</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast016"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast016">ORD_PNT_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast016"></DD_ATTR_FONT>
@@ -1978,7 +1978,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast017"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast017"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast017"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast017">51</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast017">52</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast017"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast017">SAF_STK_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast017"></DD_ATTR_FONT>
@@ -2029,7 +2029,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast018"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast018"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast018"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast018">8</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast018">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast018"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast018">ITEM_TYPE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast018"></DD_ATTR_FONT>
@@ -2080,7 +2080,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast019"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast019"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast019"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast019">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast019">27</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast019"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast019">LSTREC_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast019"></DD_ATTR_FONT>
@@ -2131,7 +2131,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast020"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast020"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast020"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast020">27</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast020">28</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast020"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast020">LSTBLT_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast020"></DD_ATTR_FONT>
@@ -2182,7 +2182,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast021"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast021"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast021"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast021">28</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast021">29</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast021"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast021">LSTSAL_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast021"></DD_ATTR_FONT>
@@ -2233,7 +2233,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast022"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast022"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast022"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast022">29</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast022">30</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast022"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast022">LSTISS_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast022"></DD_ATTR_FONT>
@@ -2284,7 +2284,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast023"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast023"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast023"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast023">30</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast023">31</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast023"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast023">LSTADJ_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast023"></DD_ATTR_FONT>
@@ -2335,7 +2335,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast024"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast024">32</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast024">33</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast024"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast024">LSTXIN_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast024"></DD_ATTR_FONT>
@@ -2386,7 +2386,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast025"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast025"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast025"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast025">33</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast025">34</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast025"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast025">LSTXOT_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast025"></DD_ATTR_FONT>
@@ -2437,7 +2437,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast026"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast026"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast026"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast026">31</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast026">32</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast026"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast026">LSTRET_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast026"></DD_ATTR_FONT>
@@ -2488,7 +2488,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast027"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast027"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast027"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast027">10</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast027">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast027"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast027">UPC_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast027"></DD_ATTR_FONT>
@@ -2539,7 +2539,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast028"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast028"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast028"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast028">12</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast028">13</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast028"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast028">BAR_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast028"></DD_ATTR_FONT>
@@ -2590,7 +2590,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast029"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast029"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast029"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast029">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast029">25</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast029"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast029">ALT_SUP_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast029"></DD_ATTR_FONT>
@@ -2641,7 +2641,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast030"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast030"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast030"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast030">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast030">26</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast030"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast030">ALT_SUP_ITEM</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast030"></DD_ATTR_FONT>
@@ -2692,7 +2692,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast031"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast031"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast031">2</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast031">34</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast031">35</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast031"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast031">GL_INV_ACCT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast031"></DD_ATTR_FONT>
@@ -2743,7 +2743,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast032"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast032"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast032"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast032">35</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast032">36</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast032"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast032">GL_COGS_ACCT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast032"></DD_ATTR_FONT>
@@ -2794,7 +2794,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast033"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast033"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast033"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast033">36</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast033">37</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast033"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast033">GL_PUR_ACCT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast033"></DD_ATTR_FONT>
@@ -2845,7 +2845,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast034"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast034"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast034"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast034">37</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast034">38</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast034"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast034">GL_PPV_ACCT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast034"></DD_ATTR_FONT>
@@ -2896,7 +2896,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast035"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast035"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast035"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast035">38</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast035">39</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast035"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast035">GL_INV_ADJ</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast035"></DD_ATTR_FONT>
@@ -2947,7 +2947,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast036"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast036"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast036"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast036">39</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast036">40</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast036"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast036">GL_COGS_ADJ</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast036"></DD_ATTR_FONT>
@@ -2998,7 +2998,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast037"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast037"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast037">3</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast037">40</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast037">41</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast037"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast037">IMAGE_PATH</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast037"></DD_ATTR_FONT>
@@ -3100,7 +3100,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast039"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast039"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast039"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast039">22</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast039">23</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast039"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast039">CONV_FACTOR</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast039"></DD_ATTR_FONT>
@@ -3151,7 +3151,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast040"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast040"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast040"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast040">20</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast040">21</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast040"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast040">WEIGHT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast040"></DD_ATTR_FONT>
@@ -3202,7 +3202,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast041"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast041"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast041"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast041">9</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast041">10</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast041"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast041">MSRP</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast041"></DD_ATTR_FONT>
@@ -3253,7 +3253,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast042"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast042"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast042"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast042">45</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast042">46</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast042"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast042">MAXIMUM_QTY</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast042"></DD_ATTR_FONT>
@@ -3304,7 +3304,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast043"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast043"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast043"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast043">46</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast043">47</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast043"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast043">ORDER_POINT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast043"></DD_ATTR_FONT>
@@ -3355,7 +3355,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast044"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast044"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast044"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast044">50</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast044">51</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast044"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast044">SAFETY_STOCK</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast044"></DD_ATTR_FONT>
@@ -3406,7 +3406,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast045"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast045"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast045"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast045">48</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast045">49</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast045"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast045">EOQ</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast045"></DD_ATTR_FONT>
@@ -3457,7 +3457,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast046"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast046"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast046"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast046">44</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast046">45</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast046"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast046">LEAD_TIME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast046"></DD_ATTR_FONT>
@@ -3508,7 +3508,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast047"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast047"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast047"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast047">15</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast047">16</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast047"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast047">ITEM_INACTIVE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast047"></DD_ATTR_FONT>
@@ -3559,7 +3559,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast048"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast048"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast048"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast048">56</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast048">57</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast048"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast048">EXPORT_DESC</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast048"></DD_ATTR_FONT>
@@ -3610,7 +3610,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast049"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast049"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast049">5</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast049">57</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast049">58</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast049"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast049">MEMO_1024</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast049"></DD_ATTR_FONT>
@@ -3661,7 +3661,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast050"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast050"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast050"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast050">16</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast050">17</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast050"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast050">SELL_PURCH_UM</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast050"></DD_ATTR_FONT>
@@ -3712,7 +3712,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast051"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast051"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast051"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast051">18</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast051">19</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast051"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast051">TAX_SVC_CD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast051"></DD_ATTR_FONT>
@@ -3763,7 +3763,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast052">13</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast052">14</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast052">LOTSER_FLAG</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_FONT>
@@ -3776,6 +3776,57 @@
 			<DD_ATTR_RADG id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.ivm_itemmast052">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.ivm_itemmast052"></DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.ivm_itemmast053">
+			<DD_TABLE_ALIAS id="ddm_table_cols.ivm_itemmast053">IVM_ITEMMAST    </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.ivm_itemmast053">053</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.ivm_itemmast053">CHECK_YES_NO    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.ivm_itemmast053">KIT             </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.ivm_itemmast053">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.ivm_itemmast053">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.ivm_itemmast053">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.ivm_itemmast053"></DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.ivm_itemmast053"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.ivm_itemmast053"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.ivm_itemmast053"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.ivm_itemmast053">20231101</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemmast053">20231101</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemmast053">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemmast053">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.ivm_itemmast053">Kit Of Items?</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.ivm_itemmast053">Kit</DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.ivm_itemmast053">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.ivm_itemmast053">6</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.ivm_itemmast053">KIT</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.ivm_itemmast053">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.ivm_itemmast053">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.ivm_itemmast053">3003</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.ivm_itemmast053">cbx_kit</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.ivm_itemmast053">0</DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.ivm_itemmast053">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.ivm_itemmast053"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_disp">
@@ -3796,7 +3847,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ivm_itemmast001"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ivm_itemmast001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ivm_itemmast001">4</DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast001">52</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast001">53</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ivm_itemmast001">3401</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemmast001">ine_item_desc_seg_1</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemmast001">4</DD_ATTR_CTLC>
@@ -3819,7 +3870,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ivm_itemmast002"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ivm_itemmast002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ivm_itemmast002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast002">53</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast002">54</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ivm_itemmast002">3402</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemmast002">ine_item_desc_seg_2</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemmast002">4</DD_ATTR_CTLC>
@@ -3842,7 +3893,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ivm_itemmast003"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ivm_itemmast003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ivm_itemmast003"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast003">54</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast003">55</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ivm_itemmast003">3403</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemmast003">ine_item_desc_seg_3</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemmast003">4</DD_ATTR_CTLC>
@@ -3865,7 +3916,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.ivm_itemmast004"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.ivm_itemmast004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.ivm_itemmast004"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast004">55</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.ivm_itemmast004">56</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.ivm_itemmast004">3404</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemmast004">ine_temp_tab_stop</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemmast004">4</DD_ATTR_CTLC>
@@ -4072,6 +4123,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ivm_itemmastlotser_flagaval">IVM_ITEMMAST    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.ivm_itemmastlotser_flagaval">LOTSER_FLAG     </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.ivm_itemmastlotser_flagaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.ivm_itemmastkitaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.ivm_itemmastkitaval">IVM_ITEMMAST    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.ivm_itemmastkitaval">KIT             </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.ivm_itemmastkitaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.ivm_itemmastitem_desc_seg_1aval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ivm_itemmastitem_desc_seg_1aval">IVM_ITEMMAST    </DD_TABLE_ALIAS>
@@ -7106,6 +7162,58 @@
 			<DD_ATTR_OEMD id="ddm_elements.lotser_flag"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.lotser_flag"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.lotser_flag"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.check_yes_no">
+			<DD_DATA_NAME id="ddm_elements.check_yes_no">CHECK_YES_NO    </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.check_yes_no">Checkbox Yes/No</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.check_yes_no">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.check_yes_no">1</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.check_yes_no"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.check_yes_no"></DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.check_yes_no">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.check_yes_no">ADB</ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.check_yes_no"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.check_yes_no">20080602</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.check_yes_no">20080602</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.check_yes_no"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.check_yes_no"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.check_yes_no">Y;N</DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.check_yes_no"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.check_yes_no"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.check_yes_no">C</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.check_yes_no"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.check_yes_no"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.check_yes_no"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.check_yes_no"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.check_yes_no"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.check_yes_no"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.check_yes_no"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.check_yes_no"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.check_yes_no"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.check_yes_no"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.check_yes_no">Checkbox Yes/No</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.check_yes_no">Checkbox Yes/No</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.check_yes_no"></DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.check_yes_no"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.check_yes_no"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.check_yes_no"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.check_yes_no"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.check_yes_no"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.check_yes_no"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.check_yes_no"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.check_yes_no"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.check_yes_no"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.check_yes_no">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.check_yes_no"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.check_yes_no"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.check_yes_no"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.check_yes_no"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.check_yes_no"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.check_yes_no"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.check_yes_no"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.check_yes_no"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.check_yes_no"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.check_yes_no"></DD_ATTR_CASB>
 		</RECORD>
 		<RECORD id="ddm_elements.text_64">
 			<DD_DATA_NAME id="ddm_elements.text_64">TEXT_64         </DD_DATA_NAME>

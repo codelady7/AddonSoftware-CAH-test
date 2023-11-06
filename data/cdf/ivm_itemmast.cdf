@@ -91,6 +91,47 @@ rem --- Show TAX_SVC_CD description
 rem --- disable lot/ser trans hist if item isn't lot/serial
 	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 callpoint!.setOptionEnabled("LTRN",0)
 
+rem --- Kitted items cannot be lotted/serialized
+	if callpoint!.getColumnData("IVM_ITEMMAST.KIT")="Y" then
+		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+	else
+		rem --- Lotted/serialized items cannot be kitted
+		if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")<>"N" then
+			callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+		else
+			rem --- Kitting is not allowed if the corresponding BOM is NOT a phantom and it include either operations or subcontracts
+			bmm01_dev=fnget_dev("BMM_BILLMAST")
+			dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+			item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+			findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$
+			if bmm01.phantom_bill$="Y" then
+				bmm03_dev=fnget_dev("BMM_BILLOPER")
+				bmm03Found=0
+				read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+				bmm03_key$=key(bmm03_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+
+				bmm05_dev=fnget_dev("BMM_BILLSUB")
+				bmm05Found=0
+				read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+				bmm05_key$=key(bmm05_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+
+				if bmm03Found or bmm05Found then
+					callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+				endif
+			else
+				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+			endif
+		endif
+	endif
+
 [[IVM_ITEMMAST.AENA]]
 rem --- Disable Barista menu items
 	wctl$="31031"; rem --- Save-As menu item in barista.ini
@@ -504,14 +545,16 @@ rem --- if this is a newly added record, launch warehouse/stocking, vendors, and
 :			"",
 :			dflt_data$[all]
 
-		call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:			"IVM_ITEMVEND",
-:			user_id$,
-:			"",
-:			key_pfx$,
-:			table_chans$[all],
-:			"",
-:			dflt_data$[all]
+		if callpoint!.getColumnData("IVM_ITEMMAST.KIT")<>"Y" then
+			call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:				"IVM_ITEMVEND",
+:				user_id$,
+:				"",
+:				key_pfx$,
+:				table_chans$[all],
+:				"",
+:				dflt_data$[all]
+		endif
 
 		call stbl("+DIR_SYP")+"bam_run_prog.bbj",
 :			"IVM_ITEMSYN",
@@ -729,8 +772,10 @@ rem --- additional file opens, depending on which apps are installed, param valu
 	endif
 
 	if bm$="Y" then 
-		more_files$=more_files$+"BMM_BILLMAST;BMM_BILLMAT;"
-		files=files+2
+		more_files$=more_files$+"BMM_BILLMAST;BMM_BILLMAT;BMM_BILLOPER;BMM_BILLSUB;"
+		files=files+4
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",-1)
 	endif
 
 	if op$="Y" then 
@@ -1014,6 +1059,18 @@ rem --- See if Auto Numbering in effect
 		endif
 	endif
 
+[[IVM_ITEMMAST.KIT.AVAL]]
+rem --- Lotted/serialized items cannot be kitted
+	kit$=callpoint!.getUserInput()
+	if kit$="Y" then
+		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
+	endif
+
 [[IVM_ITEMMAST.LEAD_TIME.AVAL]]
 if num(callpoint!.getUserInput())<0 or fpt(num(callpoint!.getUserInput())) then callpoint!.setStatus("ABORT")
 
@@ -1033,6 +1090,46 @@ rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
 		callpoint!.setColumnData("IVM_ITEMMAST.SELL_PURCH_UM","N",1)
 	else
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+	endif
+
+rem --- Lotted/serialized items cannot be kitted
+	if lotser_flag$<>"N" then
+		callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+	else
+		rem --- Allow a kit if the corresponding BOM is a phantom and does NOT include operations or subcontracts
+		bmm01_dev=fnget_dev("BMM_BILLMAST")
+		dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+		item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+		bomFound=0
+		findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$; bomFound=1
+		if bomFound then
+			if bmm01.phantom_bill$="Y" then
+				bmm03_dev=fnget_dev("BMM_BILLOPER")
+				bmm03Found=0
+				read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+				bmm03_key$=key(bmm03_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+
+				bmm05_dev=fnget_dev("BMM_BILLSUB")
+				bmm05Found=0
+				read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+				bmm05_key$=key(bmm05_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+
+				if !bmm03Found and !bmm05Found then
+					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
+				else
+					callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+				endif
+			else
+				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+			endif
+		else
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
+		endif
 	endif
 
 [[IVM_ITEMMAST.MAXIMUM_QTY.AVAL]]

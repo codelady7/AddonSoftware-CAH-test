@@ -1,5 +1,18 @@
-[[BMM_BILLMAST.<CUSTOM>]]
-#include [+ADDON_LIB]std_missing_params.aon
+[[BMM_BILLMAST.ADIS]]
+rem --- set DevObjects
+	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM"))
+
+rem --- Kitted items must be phantom bills
+	item_id$=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+	findrecord(ivm01_dev,key=firm_id$+item_id$,dom=*next)ivm01a$
+	callpoint!.setDevObject("kit",ivm01a.kit$) 
+	if ivm01a.kit$="Y" then
+		callpoint!.setColumnData("BMM_BILLMAST.PHANTOM_BILL","Y",1)
+		callpoint!.setColumnEnabled("BMM_BILLMAST.PHANTOM_BILL",0)
+	endif
+
 [[BMM_BILLMAST.AENA]]
 rem --- Disable Barista menu items
 	wctl$="31031"; rem --- Save-As menu item in barista.ini
@@ -8,55 +21,7 @@ rem --- Disable Barista menu items
 	wmap$(wpos+6,1)="X"
 	callpoint!.setAbleMap(wmap$)
 	callpoint!.setStatus("ABLEMAP")
-[[BMM_BILLMAST.ADIS]]
-rem --- set DevObjects
 
-	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM"))
-[[BMM_BILLMAST.LOCK_REF_NUM.AVAL]]
-rem --- Notify when LOCK_REF_NUM is changed
-	prev_lockrefnum$=callpoint!.getDevObject("prev_lockrefnum")
-	lock_ref_num$=callpoint!.getUserInput()
-	callpoint!.setDevObject("lock_ref_num",lock_ref_num$)
-	if lock_ref_num$<>prev_lockrefnum$ then
-		dim msg_tokens$[2]
-		if lock_ref_num$="Y" then
-			msg_tokens$[1] = "lock"
-			msg_tokens$[2] = "cannot"
-		else
-			msg_tokens$[1] = "unlock"
-			msg_tokens$[2] = "can"
-		endif
-		msg_id$="SF_REFNUM_LOCK"
-		gosub disp_message
-		if msg_opt$<>"Y" then 
-			callpoint!.setColumnData("BMM_BILLMAST.LOCK_REF_NUM",prev_lockrefnum$,1)
-			callpoint!.setStatus("ABORT")
-		endif
-	endif
-[[BMM_BILLMAST.LOCK_REF_NUM.BINP]]
-rem --- Need to know if LOCK_REF_NUM is changed
-	prev_lockrefnum$=callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM")
-	callpoint!.setDevObject("prev_lockrefnum",prev_lockrefnum$)
-[[BMM_BILLMAST.BILL_NO.AINP]]
-rem --- Make sure item exists before allowing user to continue
-[[BMM_BILLMAST.AOPT-PLST]]
-rem --- Go run the Pick List form
-
-	bill_no$=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
-
-	dim dflt_data$[2,1]
-	dflt_data$[1,0]="BILL_NO_1"
-	dflt_data$[1,1]=bill_no$
-	dflt_data$[2,0]="BILL_NO_2"
-	dflt_data$[2,1]=bill_no$
-	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:		"BMR_PACKINGLIST",
-:		stbl("+USER_ID"),
-:		"MNT",
-:		"",
-:		table_chans$[all],
-:		"",
-:		dflt_data$[all]
 [[BMM_BILLMAST.AOPT-AINQ]]
 rem --- Go run the Availability Inquiry form
 
@@ -77,90 +42,7 @@ rem --- Go run the Availability Inquiry form
 :		table_chans$[all],
 :		"",
 :		dflt_data$[all]
-[[BMM_BILLMAST.AOPT-HCPY]]
-rem --- Go run the Hard Copy form
 
-	callpoint!.setDevObject("master_bill",callpoint!.getColumnData("BMM_BILLMAST.BILL_NO"))
-
-	dim dflt_data$[2,1]
-	dflt_data$[1,0]="PROD_DATE"
-	dflt_data$[1,1]=stbl("+SYSTEM_DATE")
-	dflt_data$[2,0]="INCLUDE_COMMENT"
-	dflt_data$[2,1]="Y"
-	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:		"BMM_DETAILLIST",
-:		stbl("+USER_ID"),
-:		"MNT",
-:		"",
-:		table_chans$[all],
-:		"",
-:		dflt_data$[all]
-[[BMM_BILLMAST.AOPT-TOTL]]
-rem --- Go run the Copy form
-
-	callpoint!.setDevObject("master_bill",callpoint!.getColumnData("BMM_BILLMAST.BILL_NO"))
-	callpoint!.setDevObject("lotsize",num(callpoint!.getColumnData("BMM_BILLMAST.STD_LOT_SIZE")))
-
-	dim dflt_data$[2,1]
-	dflt_data$[1,0]="PROD_DATE"
-	dflt_data$[1,1]=stbl("+SYSTEM_DATE")
-	dflt_data$[2,0]="WAREHOUSE_ID"
-	dflt_data$[2,1]=callpoint!.getDevObject("dflt_whse")
-	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:		"BME_TOTALS",
-:		stbl("+USER_ID"),
-:		"MNT",
-:		"",
-:		table_chans$[all],
-:		"",
-:		dflt_data$[all]
-[[BMM_BILLMAST.STD_LOT_SIZE.AVAL]]
-rem --- Set devobject
-
-	callpoint!.setDevObject("lotsize",num(callpoint!.getUserInput()))
-[[BMM_BILLMAST.BILL_NO.AVAL]]
-rem --- Set DevObject
-rem "Inventory Inactive Feature"
-item_id$=callpoint!.getUserInput()
-ivm01_dev=fnget_dev("IVM_ITEMMAST")
-ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
-dim ivm01a$:ivm01_tpl$
-ivm01a_key$=firm_id$+item_id$
-find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
-if ivm01a.item_inactive$="Y" then
-   msg_id$="IV_ITEM_INACTIVE"
-   dim msg_tokens$[2]
-   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
-   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
-   gosub disp_message
-   callpoint!.setStatus("ACTIVATE-ABORT")
-   goto std_exit
-endif
-
-	item$=callpoint!.getUserInput()
-	if cvs(item$,3)="" break
-	callpoint!.setDevObject("master_bill",item$)
-
-rem --- set defaults for new record
-
-	bmm01_dev=fnget_dev("BMM_BILLMAST")
-	new_rec$="Y"
-	while 1
-		find(bmm01_dev,key=firm_id$+item$,dom=*break)
-		new_rec$="N"
-		break
-	wend
-
-	if new_rec$="Y"
-		ivm01_dev=fnget_dev("IVM_ITEMMAST")
-		dim ivm01$:fnget_tpl$("IVM_ITEMMAST")
-		read record (ivm01_dev,key=firm_id$+item$)ivm01$
-		callpoint!.setColumnData("BMM_BILLMAST.CREATE_DATE",stbl("+SYSTEM_DATE"),1)
-		callpoint!.setColumnData("BMM_BILLMAST.UNIT_MEASURE",ivm01.unit_of_sale$,1)
-		callpoint!.setColumnData("BMM_BILLMAST.STD_LOT_SIZE","1",1)
-		callpoint!.setColumnData("BMM_BILLMAST.EST_YIELD","100",1)
-		callpoint!.setStatus("MODIFIED")
-	endif
 [[BMM_BILLMAST.AOPT-COPY]]
 rem --- Go run the Copy form
 
@@ -184,19 +66,65 @@ rem --- Go run the Copy form
 		callpoint!.setColumnData("BMM_BILLMAST.BILL_NO",new_bill$)
 		callpoint!.setStatus("RECORD:["+firm_id$+new_bill$+"]")
 	endif
-[[BMM_BILLMAST.AREC]]
-rem --- set devobject
 
-	callpoint!.setDevObject("yield",100)
-	callpoint!.setDevObject("master_bill","")
-	callpoint!.setDevObject("lotsize",1)
-	callpoint!.setColumnData("<<DISPLAY>>.WHERE_LAST_USED","",1)
-	callpoint!.setColumnData("BMM_BILLMAST.LOCK_REF_NUM","N")
-	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM"))
-[[BMM_BILLMAST.EST_YIELD.AVAL]]
-rem --- Set devobject
+[[BMM_BILLMAST.AOPT-HCPY]]
+rem --- Go run the Hard Copy form
 
-	callpoint!.setDevObject("yield",num(callpoint!.getUserInput()))
+	callpoint!.setDevObject("master_bill",callpoint!.getColumnData("BMM_BILLMAST.BILL_NO"))
+
+	dim dflt_data$[2,1]
+	dflt_data$[1,0]="PROD_DATE"
+	dflt_data$[1,1]=stbl("+SYSTEM_DATE")
+	dflt_data$[2,0]="INCLUDE_COMMENT"
+	dflt_data$[2,1]="Y"
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:		"BMM_DETAILLIST",
+:		stbl("+USER_ID"),
+:		"MNT",
+:		"",
+:		table_chans$[all],
+:		"",
+:		dflt_data$[all]
+
+[[BMM_BILLMAST.AOPT-PLST]]
+rem --- Go run the Pick List form
+
+	bill_no$=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
+
+	dim dflt_data$[2,1]
+	dflt_data$[1,0]="BILL_NO_1"
+	dflt_data$[1,1]=bill_no$
+	dflt_data$[2,0]="BILL_NO_2"
+	dflt_data$[2,1]=bill_no$
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:		"BMR_PACKINGLIST",
+:		stbl("+USER_ID"),
+:		"MNT",
+:		"",
+:		table_chans$[all],
+:		"",
+:		dflt_data$[all]
+
+[[BMM_BILLMAST.AOPT-TOTL]]
+rem --- Go run the Copy form
+
+	callpoint!.setDevObject("master_bill",callpoint!.getColumnData("BMM_BILLMAST.BILL_NO"))
+	callpoint!.setDevObject("lotsize",num(callpoint!.getColumnData("BMM_BILLMAST.STD_LOT_SIZE")))
+
+	dim dflt_data$[2,1]
+	dflt_data$[1,0]="PROD_DATE"
+	dflt_data$[1,1]=stbl("+SYSTEM_DATE")
+	dflt_data$[2,0]="WAREHOUSE_ID"
+	dflt_data$[2,1]=callpoint!.getDevObject("dflt_whse")
+	call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:		"BME_TOTALS",
+:		stbl("+USER_ID"),
+:		"MNT",
+:		"",
+:		table_chans$[all],
+:		"",
+:		dflt_data$[all]
+
 [[BMM_BILLMAST.ARAR]]
 rem --- Set DevObjects
 
@@ -217,6 +145,79 @@ rem --- Set DevObjects
 		endif
 	endif
 	
+
+[[BMM_BILLMAST.AREC]]
+rem --- set devobject
+
+	callpoint!.setDevObject("yield",100)
+	callpoint!.setDevObject("master_bill","")
+	callpoint!.setDevObject("lotsize",1)
+	callpoint!.setColumnData("<<DISPLAY>>.WHERE_LAST_USED","",1)
+	callpoint!.setColumnData("BMM_BILLMAST.LOCK_REF_NUM","N")
+	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM"))
+
+[[BMM_BILLMAST.BDTW]]
+rem --- Kits cannot include operations or subcontracts
+	if callpoint!.getDevObject("kit")="Y" and pos(callpoint!.getEventOptionStr()="DTLW-BMM_BILLOPER;DTLW-BMM_BILLSUB") then
+		msg_id$="BM_KIT_NOT_OPER_SUB"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=cvs(callpoint!.getColumnData("BMM_BILLMAST.BILL_NO"),2)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[BMM_BILLMAST.BILL_NO.AINP]]
+rem --- Make sure item exists before allowing user to continue
+
+[[BMM_BILLMAST.BILL_NO.AVAL]]
+rem --- Set DevObject
+	item_id$=callpoint!.getUserInput()
+	if cvs(item_id$,3)="" break
+	callpoint!.setDevObject("master_bill",item_id$)
+
+rem "Inventory Inactive Feature"
+	item_id$=callpoint!.getUserInput()
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+	dim ivm01a$:ivm01_tpl$
+	ivm01a_key$=firm_id$+item_id$
+	find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
+	if ivm01a.item_inactive$="Y" then
+		msg_id$="IV_ITEM_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		goto std_exit
+	endif
+
+rem --- Kitted items must be phantom bills
+	callpoint!.setDevObject("kit",ivm01a.kit$) 
+	if ivm01a.kit$="Y" then
+		callpoint!.setColumnData("BMM_BILLMAST.PHANTOM_BILL","Y",1)
+		callpoint!.setColumnEnabled("BMM_BILLMAST.PHANTOM_BILL",0)
+	endif
+
+rem --- set defaults for new record
+
+	bmm01_dev=fnget_dev("BMM_BILLMAST")
+	new_rec$="Y"
+	while 1
+		find(bmm01_dev,key=firm_id$+item_id$,dom=*break)
+		new_rec$="N"
+		break
+	wend
+
+	if new_rec$="Y"
+		callpoint!.setColumnData("BMM_BILLMAST.CREATE_DATE",stbl("+SYSTEM_DATE"),1)
+		callpoint!.setColumnData("BMM_BILLMAST.UNIT_MEASURE",ivm01a.unit_of_sale$,1)
+		callpoint!.setColumnData("BMM_BILLMAST.STD_LOT_SIZE","1",1)
+		callpoint!.setColumnData("BMM_BILLMAST.EST_YIELD","100",1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
 [[BMM_BILLMAST.BSHO]]
 rem --- Set DevObjects required
 
@@ -255,3 +256,46 @@ rem --- Set DevObjects required
 	else
 		callpoint!.setDevObject("this_precision",bms01a.bm_precision)
 	endif
+
+[[BMM_BILLMAST.EST_YIELD.AVAL]]
+rem --- Set devobject
+
+	callpoint!.setDevObject("yield",num(callpoint!.getUserInput()))
+
+[[BMM_BILLMAST.LOCK_REF_NUM.AVAL]]
+rem --- Notify when LOCK_REF_NUM is changed
+	prev_lockrefnum$=callpoint!.getDevObject("prev_lockrefnum")
+	lock_ref_num$=callpoint!.getUserInput()
+	callpoint!.setDevObject("lock_ref_num",lock_ref_num$)
+	if lock_ref_num$<>prev_lockrefnum$ then
+		dim msg_tokens$[2]
+		if lock_ref_num$="Y" then
+			msg_tokens$[1] = "lock"
+			msg_tokens$[2] = "cannot"
+		else
+			msg_tokens$[1] = "unlock"
+			msg_tokens$[2] = "can"
+		endif
+		msg_id$="SF_REFNUM_LOCK"
+		gosub disp_message
+		if msg_opt$<>"Y" then 
+			callpoint!.setColumnData("BMM_BILLMAST.LOCK_REF_NUM",prev_lockrefnum$,1)
+			callpoint!.setStatus("ABORT")
+		endif
+	endif
+
+[[BMM_BILLMAST.LOCK_REF_NUM.BINP]]
+rem --- Need to know if LOCK_REF_NUM is changed
+	prev_lockrefnum$=callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM")
+	callpoint!.setDevObject("prev_lockrefnum",prev_lockrefnum$)
+
+[[BMM_BILLMAST.STD_LOT_SIZE.AVAL]]
+rem --- Set devobject
+
+	callpoint!.setDevObject("lotsize",num(callpoint!.getUserInput()))
+
+[[BMM_BILLMAST.<CUSTOM>]]
+#include [+ADDON_LIB]std_missing_params.aon
+
+
+
