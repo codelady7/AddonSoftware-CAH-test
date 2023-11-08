@@ -1,60 +1,54 @@
-[[BMM_BILLMAT.MEMO_1024.AVAL]]
-rem --- Store first part of memo_1024 in ext_comment.
-rem --- This AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor.
-rem --- If use Comment field, or use ctrl-C or Comments button, code in the comment_entry subroutine is hit instead.
-	disp_text$=callpoint!.getUserInput()
-	if disp_text$<>callpoint!.getColumnUndoData("BMM_BILLMAT.MEMO_1024")
-		dim ext_comments$(60)
-		ext_comments$(1)=disp_text$(1,pos($0A$=disp_text$+$0A$)-1)
-		callpoint!.setColumnData("BMM_BILLMAT.MEMO_1024",disp_text$,1)
-		callpoint!.setColumnData("BMM_BILLMAT.EXT_COMMENTS",ext_comments$,1)
-		callpoint!.setStatus("MODIFIED")
+[[BMM_BILLMAT.AGDR]]
+rem --- Set ROW_NUM (material_seq may not be numbered sequentially from one when DataPorted)
+	dim bmm_billmat$:fnget_tpl$("BMM_BILLMAT")
+	wk$=fattr(bmm_billmat$,"material_seq")
+	new_row_num=1+callpoint!.getValidationRow()
+	callpoint!.setColumnData("<<DISPLAY>>.ROW_NUM",pad(str(new_row_num),dec(wk$(10,2)),"R","0"),1)
+
+rem --- Track wo_ref_num in Map to insure they are unique
+	refnumMap!=callpoint!.getDevObject("refnumMap")
+	wo_ref_num$=callpoint!.getColumnData("BMM_BILLMAT.WO_REF_NUM")
+	if cvs(wo_ref_num$,2)<>"" then
+		refnumMap!.put(wo_ref_num$,"")
 	endif
-[[BMM_BILLMAT.EXT_COMMENTS.BINP]]
-rem --- Launch Comments dialog
-	gosub comment_entry
-	callpoint!.setStatus("ABORT")
-[[BMM_BILLMAT.AOPT-COMM]]
-rem --- Launch Comments dialog
-	gosub comment_entry
-[[BMM_BILLMAT.LINE_TYPE.AVAL]]
-rem --- Clear cells if Line Type has changed
-	line_type$=callpoint!.getUserInput()
-	if line_type$=callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE") then break
-	callpoint!.setColumnData("BMM_BILLMAT.WO_REF_NUM","",1)
-	callpoint!.setColumnData("<<DISPLAY>>.SUB_BILL","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.ITEM_ID","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.EXT_COMMENTS","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.MEMO_1024","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.OP_INT_SEQ_REF","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.DIVISOR","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.QTY_REQUIRED","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.ALT_FACTOR","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.SCRAP_FACTOR","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.UNIT_MEASURE","",1)
-	callpoint!.setColumnData("<<DISPLAY>>.NET_REQD","",1)
-	callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST","",1)
-	callpoint!.setColumnData("<<DISPLAY>>.TOTAL_COST","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.EFFECT_DATE","",1)
-	callpoint!.setColumnData("BMM_BILLMAT.OBSOLT_DATE","",1)
 
 rem --- Enable/disable Comments button
+	line_type$=callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE")
 	gosub enable_comments
-[[BMM_BILLMAT.MEMO_1024.BINQ]]
-rem --- (Barista Bug 9179 workaround) If grid cell isn't editable, then abort so new text can't be entered via edit control.
-	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
-	col_hdr$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.MEMO_1024","LABS")
-	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
-	this_row=callpoint!.getValidationRow()
-	isEditable=maintGrid!.isCellEditable(this_row,memo_1024_col)
-	if !isEditable then callpoint!.setStatus("ABORT")
-[[BMM_BILLMAT.AREC]]
-rem --- Maintain count of inserted rows (don't count if last row)
-	if GridVect!.size()>1+callpoint!.getValidationRow() then
-		insertedRows=callpoint!.getDevObject("insertedRows")
-		insertedRows=insertedRows+1
-		callpoint!.setDevObject("insertedRows",insertedRows)
+
+[[BMM_BILLMAT.AGRE]]
+rem --- Display Net Quantity
+
+	if callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE")="S"
+		qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
+		alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
+		divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
+		scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
+		gosub calc_net
+		item$=callpoint!.getColumnData("BMM_BILLMAT.ITEM_ID")
+		gosub check_sub
 	endif
+
+[[BMM_BILLMAT.AGRN]]
+rem --- Set ROW_NUM
+	dim bmm_billmat$:fnget_tpl$("BMM_BILLMAT")
+	wk$=fattr(bmm_billmat$,"material_seq")
+	new_row_num=1+callpoint!.getValidationRow()
+	callpoint!.setColumnData("<<DISPLAY>>.ROW_NUM",pad(str(new_row_num),dec(wk$(10,2)),"R","0"),1)
+
+rem --- Enable/disable Comments button
+	line_type$=callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE")
+	gosub enable_comments
+
+[[BMM_BILLMAT.ALT_FACTOR.AVAL]]
+rem --- Display Net Quantity
+
+	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
+	alt_fact=num(callpoint!.getUserInput())
+	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
+	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
+	gosub calc_net
+
 [[BMM_BILLMAT.AOPT-AUTO]]
 rem --- Update displayed row nums for inserted and deleted rows, or
 	if callpoint!.getDevObject("insertedRows")+callpoint!.getDevObject("deletedRows") then
@@ -82,51 +76,71 @@ rem --- Auto create Reference Numbers
 
 rem --- Update grid with changes
 	callpoint!.setStatus("REFGRID")
-[[BMM_BILLMAT.AGRN]]
-rem --- Set ROW_NUM
-	dim bmm_billmat$:fnget_tpl$("BMM_BILLMAT")
-	wk$=fattr(bmm_billmat$,"material_seq")
-	new_row_num=1+callpoint!.getValidationRow()
-	callpoint!.setColumnData("<<DISPLAY>>.ROW_NUM",pad(str(new_row_num),dec(wk$(10,2)),"R","0"),1)
 
-rem --- Enable/disable Comments button
-	line_type$=callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE")
-	gosub enable_comments
-[[BMM_BILLMAT.AGDR]]
-rem --- Set ROW_NUM (material_seq may not be numbered sequentially from one when DataPorted)
-	dim bmm_billmat$:fnget_tpl$("BMM_BILLMAT")
-	wk$=fattr(bmm_billmat$,"material_seq")
-	new_row_num=1+callpoint!.getValidationRow()
-	callpoint!.setColumnData("<<DISPLAY>>.ROW_NUM",pad(str(new_row_num),dec(wk$(10,2)),"R","0"),1)
+[[BMM_BILLMAT.AOPT-COMM]]
+rem --- Launch Comments dialog
+	gosub comment_entry
 
-rem --- Track wo_ref_num in Map to insure they are unique
-	refnumMap!=callpoint!.getDevObject("refnumMap")
-	wo_ref_num$=callpoint!.getColumnData("BMM_BILLMAT.WO_REF_NUM")
-	if cvs(wo_ref_num$,2)<>"" then
-		refnumMap!.put(wo_ref_num$,"")
+[[BMM_BILLMAT.AREC]]
+rem --- Maintain count of inserted rows (don't count if last row)
+	if GridVect!.size()>1+callpoint!.getValidationRow() then
+		insertedRows=callpoint!.getDevObject("insertedRows")
+		insertedRows=insertedRows+1
+		callpoint!.setDevObject("insertedRows",insertedRows)
 	endif
 
-rem --- Enable/disable Comments button
-	line_type$=callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE")
-	gosub enable_comments
-[[BMM_BILLMAT.WO_REF_NUM.AVAL]]
-rem --- Verify wo_ref_num is unique
-	wo_ref_num$=callpoint!.getUserInput()
-	prev_wo_ref_num$=callpoint!.getDevObject("prev_wo_ref_num")
-	refnumMap!=callpoint!.getDevObject("refnumMap")
-	if wo_ref_num$<>prev_wo_ref_num$ then
-		if refnumMap!.containsKey(wo_ref_num$) then
-			msg_id$="SF_DUP_REF_NUM"
-			dim msg_tokens$[1]
-			msg_tokens$[1]=wo_ref_num$
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			break
-		else
-			if cvs(wo_ref_num$,2)<>"" then refnumMap!.put(wo_ref_num$,"")
-			if cvs(prev_wo_ref_num$,2)<>"" then refnumMap!.remove(prev_wo_ref_num$)
+[[BMM_BILLMAT.AWRI]]
+rem --- Skip until last row in grid
+	dim thisRow$:fnget_tpl$("BMM_BILLMAT")
+	thisRow$=rec_data$
+	lastRow$=GridVect!.getItem(GridVect!.size()-1)
+	if pos(thisRow.firm_id$+thisRow.bill_no$+thisRow.material_seq$+thisRow.item_id$+thisRow.wo_ref_num$=lastRow$)=1 then
+		rem --- Are there any kits in this BOM that need to be exploded?
+		bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
+		dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
+		ivm01_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+		seqMask$=pad("",len(bmmBillMat.material_seq$),"0")
+		kits=0
+		billMat_vec!=BBjAPI().makeVector()
+		bill_no$=callpoint!.getColumnData("BMM_BILLMAT.BILL_NO")
+		read(bmmBillMat_dev,key=firm_id$+bill_no$,dom=*next)
+		while 1
+			bmmBillMat_key$=key(bmmBillMat_dev,end=*break)
+			if pos(firm_id$+bill_no$=bmmBillMat_key$)=0 then break
+			readrecord(bmmBillMat_dev)bmmBillMat$
+
+			item_id$=bmmBillMat.item_id$
+			readrecord(ivm01_dev,key=firm_id$+item_id$,dom=*continue)ivm01a$
+			if ivm01a.kit$<>"Y" then
+				bmmBillMat.material_seq$=str(billMat_vec!.size()+1:seqMask$)
+				billMat_vec!.addItem(bmmBillMat$)
+			else
+				rem --- Explode this kit
+				kit_qty=bmmBillMat.qty_required
+				read(bmmBillMat_dev,key=firm_id$+item_id$,dom=*next)
+				while 1
+					explodeKey$=key(bmmBillMat_dev,end=*break)
+					if pos(firm_id$+item_id$=explodeKey$)=0 then break
+					readrecord(bmmBillMat_dev)bmmBillMat$
+					bmmBillMat.bill_no$=bill_no$
+					bmmBillMat.material_seq$=str(billMat_vec!.size()+1:seqMask$)
+					bmmBillMat.qty_required=kit_qty*bmmBillMat.qty_required
+					billMat_vec!.addItem(bmmBillMat$)
+					kits=kits+1
+				wend
+				read(bmmBillMat_dev,key=bmmBillMat_key$)
+			endif
+		wend
+
+		rem --- Add exploded kits to the Materials Requirements
+		if kits then
+			for i=0 to billMat_vec!.size()-1
+				writerecord(bmmBillMat_dev)billMat_vec!.getItem(i)
+			next i
 		endif
 	endif
+
 [[BMM_BILLMAT.BDEL]]
 rem --- Update refnumMap!
 	refnumMap!=callpoint!.getDevObject("refnumMap")
@@ -139,10 +153,104 @@ rem --- Maintain count of deleted rows
 	deletedRows=callpoint!.getDevObject("deletedRows")
 	deletedRows=deletedRows+1
 	callpoint!.setDevObject("deletedRows",deletedRows)
-[[BMM_BILLMAT.WO_REF_NUM.BINP]]
-rem --- Capture starting wo_ref_num
-	prev_wo_ref_num$=callpoint!.getColumnData("BMM_BILLMAT.WO_REF_NUM")
-	callpoint!.setDevObject("prev_wo_ref_num",prev_wo_ref_num$)
+
+[[BMM_BILLMAT.BGDR]]
+rem --- Display Net Quantity
+
+	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
+	alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
+	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
+	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
+	gosub calc_net
+	item$=callpoint!.getColumnData("BMM_BILLMAT.ITEM_ID")
+	gosub check_sub
+
+[[BMM_BILLMAT.BSHO]]
+rem --- Setup java class for Derived Data Element
+
+	use ::ado_func.src::func
+	use ::ado_util.src::util
+	use ::bmo_BmUtils.aon::BmUtils
+	declare BmUtils bmUtils!
+
+rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
+
+	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	col_hdr$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.MEMO_1024","LABS")
+	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
+	maintGrid!.setColumnWidth(memo_1024_col,15)
+
+rem --- init data
+
+	refnumMap!=new java.util.HashMap()
+	callpoint!.setDevObject("refnumMap",refnumMap!)
+	callpoint!.setDevObject("insertedRows",0)
+	callpoint!.setDevObject("deletedRows",0)
+
+rem --- Open files for later use
+
+	num_files=2
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="IVM_ITEMMAST",open_opts$[1]="OTAN[2_]"
+	open_tables$[2]="IVM_ITEMWHSE",open_opts$[2]="OTA"
+	gosub open_tables
+
+rem --- fill listbox for use with Op Sequence
+
+	bmm03_dev=fnget_dev("BMM_BILLOPER")
+	dim bmm03a$:fnget_tpl$("BMM_BILLOPER")
+	bmm08_dev=fnget_dev("BMC_OPCODES")
+	dim bmm08a$:fnget_tpl$("BMC_OPCODES")
+	bill_no$=callpoint!.getDevObject("master_bill")
+
+	ops_lines!=SysGUI!.makeVector()
+	ops_items!=SysGUI!.makeVector()
+	ops_list!=SysGUI!.makeVector()
+	ops_lines!.addItem("000000000000")
+	ops_items!.addItem("")
+	ops_list!.addItem("")
+	op_code_list$=""
+
+	read(bmm03_dev,key=firm_id$+bill_no$,dom=*next)
+	while 1
+		read record (bmm03_dev,end=*break) bmm03a$
+		if pos(firm_id$+bill_no$=bmm03a$)<>1 break
+		if bmm03a.line_type$<>"S" continue
+		dim bmm08a$:fattr(bmm08a$)
+		read record (bmm08_dev,key=firm_id$+bmm03a.op_code$,dom=*next)bmm08a$
+		ops_lines!.addItem(bmm03a.internal_seq_no$)
+		op_code_list$=op_code_list$+bmm03a.op_code$
+		ops_items!.addItem(bmm03a.wo_op_ref$)
+		ops_list!.addItem(bmm03a.wo_op_ref$+" - "+bmm03a.op_code$+" - "+bmm08a.code_desc$)
+	wend
+
+	ldat$=""
+	if ops_lines!.size()>0
+		descVect!=BBjAPI().makeVector()
+		codeVect!=BBjAPI().makeVector()
+		for x=0 to ops_lines!.size()-1
+			descVect!.addItem(ops_items!.getItem(x))
+			codeVect!.addItem(ops_lines!.getItem(x))
+		next x
+		ldat$=func.buildListButtonList(descVect!,codeVect!)
+	endif
+
+	callpoint!.setTableColumnAttribute("BMM_BILLMAT.OP_INT_SEQ_REF","LDAT",ldat$)
+	my_grid!=Form!.getControl(5000)
+	col_hdr$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.OP_INT_SEQ_REF","LABS")
+	col_ref=util.getGridColumnNumber(my_grid!, col_hdr$)
+	my_control!=my_grid!.getColumnListControl(col_ref)
+	my_control!.removeAllItems()
+	my_control!.insertItems(0,ops_list!)
+	my_grid!.setColumnListControl(col_ref,my_control!)
+
+rem --- Disable WO_REF_NUM when locked
+	if callpoint!.getDevObject("lock_ref_num")="Y" then
+		opts$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.WO_REF_NUM","OPTS")
+		callpoint!.setTableColumnAttribute("BMM_BILLMAT.WO_REF_NUM","OPTS",opts$+"C"); rem --- makes read only
+		callpoint!.setOptionEnabled("AUTO",0)
+	endif
+
 [[BMM_BILLMAT.BUDE]]
 rem --- verify wo_ref_num is unique
 	refnumMap!=callpoint!.getDevObject("refnumMap")
@@ -164,6 +272,7 @@ rem --- Maintain count of deleted rows
 	deletedRows=callpoint!.getDevObject("deletedRows")
 	deletedRows=deletedRows-1
 	callpoint!.setDevObject("deletedRows",deletedRows)
+
 [[BMM_BILLMAT.BWRI]]
 rem --- Divisor and Alt Factor need to be 1 if 0
 
@@ -181,21 +290,16 @@ rem --- Divisor and Alt Factor need to be 1 if 0
 			callpoint!.setFocus(callpoint!.getValidationRow(),"BMM_BILLMAT.QTY_REQUIRED")
 		endif
 	endif
-[[BMM_BILLMAT.OP_INT_SEQ_REF.AINP]]
-	ops_lines!=SysGUI!.makeVector()
-	ops_items!=SysGUI!.makeVector()
-	ops_list!=SysGUI!.makeVector()
 
-	ops_lines!=callpoint!.getDevObject("ops_lines")
-	ops_items!=callpoint!.getDevObject("ops_items")
-	ops_list!=callpoint!.getDevObject("ops_list")
-[[BMM_BILLMAT.OBSOLT_DATE.AVAL]]
-rem --- Check for valid dates
+[[BMM_BILLMAT.DIVISOR.AVAL]]
+rem --- Display Net Quantity
 
-	eff_date$=callpoint!.getColumnData("BMM_BILLMAT.EFFECT_DATE")
-	obs_date$=callpoint!.getUserInput()
-	msg_id$="BM_EFF_OBS"
-	gosub check_dates
+	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
+	alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
+	divisor=num(callpoint!.getUserInput())
+	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
+	gosub calc_net
+
 [[BMM_BILLMAT.EFFECT_DATE.AVAL]]
 rem --- Check for valid dates
 
@@ -203,28 +307,17 @@ rem --- Check for valid dates
 	obs_date$=callpoint!.getColumnData("BMM_BILLMAT.OBSOLT_DATE")
 	msg_id$="BM_OBS_EFF"
 	gosub check_dates
-[[BMM_BILLMAT.AGRE]]
-rem --- Display Net Quantity
 
-	if callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE")="S"
-		qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
-		alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
-		divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
-		scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
-		gosub calc_net
-		item$=callpoint!.getColumnData("BMM_BILLMAT.ITEM_ID")
-		gosub check_sub
-	endif
-[[BMM_BILLMAT.BGDR]]
-rem --- Display Net Quantity
+[[BMM_BILLMAT.EXT_COMMENTS.BINP]]
+rem --- Launch Comments dialog
+	gosub comment_entry
+	callpoint!.setStatus("ABORT")
 
-	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
-	alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
-	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
-	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
-	gosub calc_net
-	item$=callpoint!.getColumnData("BMM_BILLMAT.ITEM_ID")
-	gosub check_sub
+[[BMM_BILLMAT.ITEM_ID.AINV]]
+rem --- Check for item synonyms
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
 [[BMM_BILLMAT.ITEM_ID.AVAL]]
 rem "Inventory Inactive Feature"
 item_id$=callpoint!.getUserInput()
@@ -260,38 +353,94 @@ rem --- Check to see if item is a Sub Bill
 rem --- Set defaults for new record
 
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y"
-		callpoint!.setColumnData("BMM_BILLMAT.ALT_FACTOR","1")
-		callpoint!.setColumnData("BMM_BILLMAT.DIVISOR","1")
-		item_dev=fnget_dev("IVM_ITEMMAST")
-		dim item_tpl$:fnget_tpl$("IVM_ITEMMAST")
-		readrecord(item_dev,key=firm_id$+item$)item_tpl$
-		callpoint!.setColumnData("BMM_BILLMAT.UNIT_MEASURE",item_tpl.unit_of_sale$)
-		callpoint!.setStatus("REFRESH")
+		callpoint!.setColumnData("BMM_BILLMAT.ALT_FACTOR","1",1)
+		callpoint!.setColumnData("BMM_BILLMAT.DIVISOR","1",1)
+		callpoint!.setColumnData("BMM_BILLMAT.UNIT_MEASURE",ivm01a.unit_of_sale$,1)
 	endif
-[[BMM_BILLMAT.SCRAP_FACTOR.AVAL]]
-rem --- Display Net Quantity
 
-	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
-	alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
-	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
-	scrap_fact=num(callpoint!.getUserInput())
-	gosub calc_net
-[[BMM_BILLMAT.DIVISOR.AVAL]]
-rem --- Display Net Quantity
+rem --- Disable fields for kitted items
+	if ivm01a.kit$="Y" then
+		callpoint!.setColumnData("BMM_BILLMAT.WO_REF_NUM","",1)
+		thisRow=callpoint!.getValidationRow()
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.WO_REF_NUM",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.OP_INT_SEQ_REF",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.DIVISOR",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.ALT_FACTOR",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.SCRAP_FACTOR",0)
 
-	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
-	alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
-	divisor=num(callpoint!.getUserInput())
-	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
-	gosub calc_net
-[[BMM_BILLMAT.ALT_FACTOR.AVAL]]
-rem --- Display Net Quantity
+		callpoint!.setFocus(thisRow,"BMM_BILLMAT.QTY_REQUIRED",1)
+	else
+		thisRow=callpoint!.getValidationRow()
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.WO_REF_NUM",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.OP_INT_SEQ_REF",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.DIVISOR",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.ALT_FACTOR",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.SCRAP_FACTOR",1)
+	endif
 
-	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
-	alt_fact=num(callpoint!.getUserInput())
-	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
-	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
-	gosub calc_net
+[[BMM_BILLMAT.LINE_TYPE.AVAL]]
+rem --- Clear cells if Line Type has changed
+	line_type$=callpoint!.getUserInput()
+	if line_type$=callpoint!.getColumnData("BMM_BILLMAT.LINE_TYPE") then break
+	callpoint!.setColumnData("BMM_BILLMAT.WO_REF_NUM","",1)
+	callpoint!.setColumnData("<<DISPLAY>>.SUB_BILL","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.ITEM_ID","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.EXT_COMMENTS","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.MEMO_1024","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.OP_INT_SEQ_REF","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.DIVISOR","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.QTY_REQUIRED","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.ALT_FACTOR","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.SCRAP_FACTOR","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.UNIT_MEASURE","",1)
+	callpoint!.setColumnData("<<DISPLAY>>.NET_REQD","",1)
+	callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST","",1)
+	callpoint!.setColumnData("<<DISPLAY>>.TOTAL_COST","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.EFFECT_DATE","",1)
+	callpoint!.setColumnData("BMM_BILLMAT.OBSOLT_DATE","",1)
+
+rem --- Enable/disable Comments button
+	gosub enable_comments
+
+[[BMM_BILLMAT.MEMO_1024.AVAL]]
+rem --- Store first part of memo_1024 in ext_comment.
+rem --- This AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor.
+rem --- If use Comment field, or use ctrl-C or Comments button, code in the comment_entry subroutine is hit instead.
+	disp_text$=callpoint!.getUserInput()
+	if disp_text$<>callpoint!.getColumnUndoData("BMM_BILLMAT.MEMO_1024")
+		dim ext_comments$(60)
+		ext_comments$(1)=disp_text$(1,pos($0A$=disp_text$+$0A$)-1)
+		callpoint!.setColumnData("BMM_BILLMAT.MEMO_1024",disp_text$,1)
+		callpoint!.setColumnData("BMM_BILLMAT.EXT_COMMENTS",ext_comments$,1)
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+[[BMM_BILLMAT.MEMO_1024.BINQ]]
+rem --- (Barista Bug 9179 workaround) If grid cell isn't editable, then abort so new text can't be entered via edit control.
+	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	col_hdr$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.MEMO_1024","LABS")
+	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
+	this_row=callpoint!.getValidationRow()
+	isEditable=maintGrid!.isCellEditable(this_row,memo_1024_col)
+	if !isEditable then callpoint!.setStatus("ABORT")
+
+[[BMM_BILLMAT.OBSOLT_DATE.AVAL]]
+rem --- Check for valid dates
+
+	eff_date$=callpoint!.getColumnData("BMM_BILLMAT.EFFECT_DATE")
+	obs_date$=callpoint!.getUserInput()
+	msg_id$="BM_EFF_OBS"
+	gosub check_dates
+
+[[BMM_BILLMAT.OP_INT_SEQ_REF.AINP]]
+	ops_lines!=SysGUI!.makeVector()
+	ops_items!=SysGUI!.makeVector()
+	ops_list!=SysGUI!.makeVector()
+
+	ops_lines!=callpoint!.getDevObject("ops_lines")
+	ops_items!=callpoint!.getDevObject("ops_items")
+	ops_list!=callpoint!.getDevObject("ops_list")
+
 [[BMM_BILLMAT.QTY_REQUIRED.AVAL]]
 rem --- Display Net Quantity
 
@@ -307,6 +456,40 @@ rem --- Display Net Quantity
 	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
 	scrap_fact=num(callpoint!.getColumnData("BMM_BILLMAT.SCRAP_FACTOR"))
 	gosub calc_net
+
+[[BMM_BILLMAT.SCRAP_FACTOR.AVAL]]
+rem --- Display Net Quantity
+
+	qty_req=num(callpoint!.getColumnData("BMM_BILLMAT.QTY_REQUIRED"))
+	alt_fact=num(callpoint!.getColumnData("BMM_BILLMAT.ALT_FACTOR"))
+	divisor=num(callpoint!.getColumnData("BMM_BILLMAT.DIVISOR"))
+	scrap_fact=num(callpoint!.getUserInput())
+	gosub calc_net
+
+[[BMM_BILLMAT.WO_REF_NUM.AVAL]]
+rem --- Verify wo_ref_num is unique
+	wo_ref_num$=callpoint!.getUserInput()
+	prev_wo_ref_num$=callpoint!.getDevObject("prev_wo_ref_num")
+	refnumMap!=callpoint!.getDevObject("refnumMap")
+	if wo_ref_num$<>prev_wo_ref_num$ then
+		if refnumMap!.containsKey(wo_ref_num$) then
+			msg_id$="SF_DUP_REF_NUM"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=wo_ref_num$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		else
+			if cvs(wo_ref_num$,2)<>"" then refnumMap!.put(wo_ref_num$,"")
+			if cvs(prev_wo_ref_num$,2)<>"" then refnumMap!.remove(prev_wo_ref_num$)
+		endif
+	endif
+
+[[BMM_BILLMAT.WO_REF_NUM.BINP]]
+rem --- Capture starting wo_ref_num
+	prev_wo_ref_num$=callpoint!.getColumnData("BMM_BILLMAT.WO_REF_NUM")
+	callpoint!.setDevObject("prev_wo_ref_num",prev_wo_ref_num$)
+
 [[BMM_BILLMAT.<CUSTOM>]]
 rem ===================================================================
 calc_net:
@@ -428,100 +611,28 @@ rem line_type:	input
 rem ========================================================
 
 	if line_type$="M" then
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"BMM_BILLMAT.MEMO_1024",1)
+		thisRow=callpoint!.getValidationRow()
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.MEMO_1024",1)
 		callpoint!.setOptionEnabled("COMM",1)
+
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.WO_REF_NUM",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.OP_INT_SEQ_REF",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.DIVISOR",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.ALT_FACTOR",0)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.SCRAP_FACTOR",0)
 	else
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"BMM_BILLMAT.MEMO_1024",0)
+		thisRow=callpoint!.getValidationRow()
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.MEMO_1024",0)
 		callpoint!.setOptionEnabled("COMM",0)
+
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.WO_REF_NUM",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.OP_INT_SEQ_REF",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.DIVISOR",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.ALT_FACTOR",1)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.SCRAP_FACTOR",1)
 	endif
 
 	return
-[[BMM_BILLMAT.BSHO]]
-rem --- Setup java class for Derived Data Element
 
-	use ::ado_func.src::func
-	use ::ado_util.src::util
-	use ::bmo_BmUtils.aon::BmUtils
-	declare BmUtils bmUtils!
 
-rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
 
-	maintGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
-	col_hdr$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.MEMO_1024","LABS")
-	memo_1024_col=util.getGridColumnNumber(maintGrid!, col_hdr$)
-	maintGrid!.setColumnWidth(memo_1024_col,15)
-
-rem --- init data
-
-	refnumMap!=new java.util.HashMap()
-	callpoint!.setDevObject("refnumMap",refnumMap!)
-	callpoint!.setDevObject("insertedRows",0)
-	callpoint!.setDevObject("deletedRows",0)
-
-rem --- Open files for later use
-
-	num_files=2
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="IVM_ITEMMAST",open_opts$[1]="OTAN[2_]"
-	open_tables$[2]="IVM_ITEMWHSE",open_opts$[2]="OTA"
-	gosub open_tables
-
-rem --- fill listbox for use with Op Sequence
-
-	bmm03_dev=fnget_dev("BMM_BILLOPER")
-	dim bmm03a$:fnget_tpl$("BMM_BILLOPER")
-	bmm08_dev=fnget_dev("BMC_OPCODES")
-	dim bmm08a$:fnget_tpl$("BMC_OPCODES")
-	bill_no$=callpoint!.getDevObject("master_bill")
-
-	ops_lines!=SysGUI!.makeVector()
-	ops_items!=SysGUI!.makeVector()
-	ops_list!=SysGUI!.makeVector()
-	ops_lines!.addItem("000000000000")
-	ops_items!.addItem("")
-	ops_list!.addItem("")
-	op_code_list$=""
-
-	read(bmm03_dev,key=firm_id$+bill_no$,dom=*next)
-	while 1
-		read record (bmm03_dev,end=*break) bmm03a$
-		if pos(firm_id$+bill_no$=bmm03a$)<>1 break
-		if bmm03a.line_type$<>"S" continue
-		dim bmm08a$:fattr(bmm08a$)
-		read record (bmm08_dev,key=firm_id$+bmm03a.op_code$,dom=*next)bmm08a$
-		ops_lines!.addItem(bmm03a.internal_seq_no$)
-		op_code_list$=op_code_list$+bmm03a.op_code$
-		ops_items!.addItem(bmm03a.wo_op_ref$)
-		ops_list!.addItem(bmm03a.wo_op_ref$+" - "+bmm03a.op_code$+" - "+bmm08a.code_desc$)
-	wend
-
-	ldat$=""
-	if ops_lines!.size()>0
-		descVect!=BBjAPI().makeVector()
-		codeVect!=BBjAPI().makeVector()
-		for x=0 to ops_lines!.size()-1
-			descVect!.addItem(ops_items!.getItem(x))
-			codeVect!.addItem(ops_lines!.getItem(x))
-		next x
-		ldat$=func.buildListButtonList(descVect!,codeVect!)
-	endif
-
-	callpoint!.setTableColumnAttribute("BMM_BILLMAT.OP_INT_SEQ_REF","LDAT",ldat$)
-	my_grid!=Form!.getControl(5000)
-	col_hdr$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.OP_INT_SEQ_REF","LABS")
-	col_ref=util.getGridColumnNumber(my_grid!, col_hdr$)
-	my_control!=my_grid!.getColumnListControl(col_ref)
-	my_control!.removeAllItems()
-	my_control!.insertItems(0,ops_list!)
-	my_grid!.setColumnListControl(col_ref,my_control!)
-
-rem --- Disable WO_REF_NUM when locked
-	if callpoint!.getDevObject("lock_ref_num")="Y" then
-		opts$=callpoint!.getTableColumnAttribute("BMM_BILLMAT.WO_REF_NUM","OPTS")
-		callpoint!.setTableColumnAttribute("BMM_BILLMAT.WO_REF_NUM","OPTS",opts$+"C"); rem --- makes read only
-		callpoint!.setOptionEnabled("AUTO",0)
-	endif
-[[BMM_BILLMAT.ITEM_ID.AINV]]
-rem --- Check for item synonyms
-
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
