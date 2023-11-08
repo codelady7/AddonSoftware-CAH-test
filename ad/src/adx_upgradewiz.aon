@@ -188,19 +188,19 @@ rem --- Is this a restart after resolving Git conflicts?
             rem --- Goto restart location Label
             switch (BBjAPI().TRUE)
                 case restartAt$="restartUpgrade1"
-                    goto restartUpgrade1
+                    goto restartUpgrade1;rem --- cherry picking
                     break
                 case restartAt$="restartUpgrade2"
-                    goto restartUpgrade2
+                    goto restartUpgrade2;rem --- auto-sync (not expected)
                     break
                 case restartAt$="restartUpgrade3"
-                    goto restartUpgrade3
+                    goto restartUpgrade3;rem --- install app wizard (not expected)
                     break
                 case restartAt$="restartUpgrade4"
-                    goto restartUpgrade4
+                    goto restartUpgrade4;rem --- dirty WD, or can't switch/checkout to new version (the latter shouldn't happen for non-Git)
                     break
                 case restartAt$="restartUpgrade5"
-                    goto restartUpgrade5
+                    goto restartUpgrade5;rem --- can't switch/checkout to new version when doing non-Git (can happen if file added to old non-Git version has since been added to newer version)
                     break
                 case default
                     goto restartUpgrade1
@@ -400,7 +400,7 @@ rem --- Cherry pick local commits from old installation
 rem --- Check for Git conflicts
     gosub checkForGitConflicts
 
-rem --- Check for delta XML RESERVED_STR and RESERVED_NUM issues
+rem --- Check for delta XML RESERVED_STR and RESERVED_NUM issues (pre-v19)
     if !restartFlag then gosub checkForReservedStr
 
 rem --- Need to restart if there were Git conflicts, or a Git cherry pick failure
@@ -1201,7 +1201,7 @@ buildDeltaXmls: rem --- Build delta XMLs for modified bar/*.xml files that have 
         restartFlag=1
         return
     endif
-    staged!=repoInterface!.getUnstagedChanges()
+    staged!=repoInterface!.getStagedChanges()
     if staged!.size()>0 then
         msg_id$="AD_UNCOMMITTED_CHGS"
         dim msg_tokens$[1]
