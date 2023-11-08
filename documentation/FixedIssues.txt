@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-11-02
+ Report Date:   2023-11-08
  Report Branch: AddonSoftware 23.05
  Last Release:  AddonSoftware 23.04
 =======================================================================================================================================
@@ -110,4 +110,17 @@ Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
 (cherry picked from commit 8c41e7f6e3438a2f8a1c68044290fcdc2ea3128b)
 ----
 Modified: ad/src/ado_AO_GitRepoInterface.aon
+
+=======================================================================================================================================
+Revision: 73003565d1c291a5fe3840010621049472572351
+Author: Christine <chawkins@basis.com>
+Date: 11/8/2023 12:38:17 PM
+Message:
+Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
+ - Corrected to call both getUnstagedChanges() and getStagedChanges(). Was calling getUnstagedChanges() twice
+
+(cherry picked from commit 461ac6ef32ca6bda1617cdf9f7a9f07a83bc1e83)
+----
+Modified: ad/src/adx_upgradewiz.aon
+
 
