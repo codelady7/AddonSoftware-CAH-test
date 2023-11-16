@@ -1,126 +1,13 @@
 =======================================================================================================================================
- Report Date:   2023-11-08
- Report Branch: AddonSoftware 23.05
- Last Release:  AddonSoftware 23.04
+ Report Date:   2023-11-16
+ Report Branch: AddonSoftware 23.06
+ Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
 
-23.04 released 10/02/2023
-BBjBaristaAddonDemos2304_09-28-2023_0931.jar
+23.05 released 11/13/2023
+BBjBaristaDemos2305_11-09-2023_1048.jar
 =======================================================================================================================================
 
-Revision: 88c5a585170cd1c5964139f7b0941f5606aa8377
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 10/10/2023 12:16:41 PM
-Message:
-Bug 10734: Corrected a couple of potential DataPort issues exposed by
-porting standard Addon IV demo data.
-----
-Modified: util/dataport/DataPort_main.bbj
-=======================================================================================================================================
 
-Revision: 68e63dc10624e213654a98b35b0800e4a0e71309
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 10/10/2023 2:05:22 PM
-Message:
-Bug 10734: Corrected a potential DataPort issues exposed by porting
-standard Addon AR demo data. No potential DataPort issues exposed by
-porting standard Addon AP demo data.
-----
-Modified: util/dataport/DataPort_main.bbj
-=======================================================================================================================================
-
-Revision: dd5643b94535bd4927c83370c9e79732130776a6
-Author: Bill Halsted <bhalsted@basis.cloud>
-Date: 10/10/2023 4:09:56 PM
-Message:
-Bug 10734: Corrected a potential DataPort issues exposed by porting
-standard Addon WO demo data. No potential DataPort issues exposed by
-porting standard Addon BM, GL, MP, PO, SA and SY demo data.
-----
-Modified: util/dataport/DataPort_main.bbj
-
-=======================================================================================================================================
-Revision: 3bf1e1c8789d2face41645d61d1ee16058e01cdc
-Author: Christine <chawkins@basis.com>
-Date: 10/18/2023 6:33:07 PM
-Message:
-Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
-1. Handle possibility of conflicts when switching to new branch
-2. Skip launching Barista Install wizard for Addon if there are no customized forms
-3. Skip adx_upgradewiz.aon and addonhelp.jar when looking for embedded conflicts
-4. Have v1700conversion.aon rename gls_params.2 to gls_params if needed
-5. Be sure adx_git_auth table is in app_data
-
-(cherry picked from commit b29851999c855e646c8ef3c5cfcb468d3db7648c)
-----
-Modified: ad/src/adc_v1700conversion.aon
-Modified: ad/src/ado_AO_GitRepoInterface.aon
-Modified: ad/src/adx_upgradewiz.aon
-Modified: prop/addon.properties
-Modified: prop/addon_en.properties
-
-=======================================================================================================================================
-Revision: f38a72e1c004690db51c328dff51d383b87f7da1
-Author: Christine <chawkins@basis.com>
-Date: 10/20/2023 11:26:38 AM
-Message:
-Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
- - adjustment to v1700 conversion to use fin instead of fid
- - added default of "addon" to adc_mvupgrdfiles.aon when setting translator key to fix situation where +PROPS_NAME global hasn't yet been set when launching new instance
-
-(cherry picked from commit 032f461a20e35d31f345b8f23b63335adf7a53e9)
-----
-Modified: ad/src/adc_mvupgrdfiles.aon
-Modified: ad/src/adc_v1700conversion.aon
-
-=======================================================================================================================================
-Revision: a8b4349943ad7114b49fcd518038fecf68925186
-Author: Christine <chawkins@basis.com>
-Date: 10/26/2023 2:20:21 PM
-Message:
-Bug 10741 - AD - Packager/Extractor (Extractor) can throw error 12 extracting a production package
- - Corrected typo (using mount_path$ instead of mount_dir$)
- - Added logging to Extractor so if an <application>.syn file can't be opened, it logs it rather than throwing hard error
- - Added messages prior to Pkg or Ext with info on Test vs Production Pkg/Ext to clarify/call out documented behavior
-
-(cherry picked from commit 62df71b47f77246e0142831c7688d600b2a1115e)
-----
-Modified: util/packager_extractor/aon_packagerextractor.bbj
-
-=======================================================================================================================================
-Revision: 0c0896dd9f64f7a75760bb0319a0fc6d601ebbfc
-Author: Christine <chawkins@basis.com>
-Date: 10/26/2023 4:42:39 PM
-Message:
-Bug 10742 - PO - Error 47 in poc_invglpost.aon when processing misc GL distribution
- - changed misc dist code to test len>30 instead of len>20 since AP_INV_NO was expanded from 10 to 20
-
-(cherry picked from commit a92c625155335f707c4ff8050989f670b6f0c5ae)
-----
-Modified: po/src/poc_invglpost.aon
-
-=======================================================================================================================================
-Revision: 916d9eb95ed0328fe09a6e56834b1be634bfacf3
-Author: Christine <chawkins@basis.com>
-Date: 11/2/2023 6:07:48 PM
-Message:
-Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
- - In addition to skipping adx_upgradewiz.aon and addohelp.jar when searching for possible embedded conflict markers, also skip aon/documents/ (typically only found on older non-version-neutral installs).
-
-(cherry picked from commit 8c41e7f6e3438a2f8a1c68044290fcdc2ea3128b)
-----
-Modified: ad/src/ado_AO_GitRepoInterface.aon
-
-=======================================================================================================================================
-Revision: 73003565d1c291a5fe3840010621049472572351
-Author: Christine <chawkins@basis.com>
-Date: 11/8/2023 12:38:17 PM
-Message:
-Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
- - Corrected to call both getUnstagedChanges() and getStagedChanges(). Was calling getUnstagedChanges() twice
-
-(cherry picked from commit 461ac6ef32ca6bda1617cdf9f7a9f07a83bc1e83)
-----
-Modified: ad/src/adx_upgradewiz.aon
 
 
