@@ -1167,6 +1167,28 @@ rem --- Explode kits in this Order
 			callpoint!.setDevObject("refreshGrid","Y")
 			callpoint!.setDevObject("ordDet_vec",ordDet_vec!)
 		endif
+
+		rem --- Warn if ship quantity is more than currently available.
+		if shortage_vect!.size()>0 then
+			warning$=""
+			ship$=Translate!.getTranslation("AON_SHIP")+": "
+			available$=Translate!.getTranslation("AON_AVAILABLE")+": "
+			space=len(ship$)+15
+			for i=0 to shortage_vect!.size()-1
+				available_vect!=shortage_vect!.getItem(i)
+				item_id$=cvs(fnmask$(available_vect!.getItem(0),ivIMask$),3)
+				shipqty$=ship$+cvs(str(available_vect!.getItem(1):qty_mask$),3)
+				availqty$=available$+cvs(str(available_vect!.getItem(2):qty_mask$),3)
+				warning$=warning$+item_id$+"    "+shipqty$+pad("",space-len(shipqty$)," ")+availqty$+$0A$
+			next i
+
+			msg_id$="OP_KIT_EXCEEDS_AVAIL"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=item$
+			msg_tokens$[2]=warning$
+			gosub disp_message
+			callpoint!.setStatus("ACTIVATE")
+		endif
 	endif
 
 [[OPE_ORDDET.BDEL]]
@@ -3132,7 +3154,6 @@ explodeKits: rem --- Explode kits
 rem =========================================================
 	round_precision = num(callpoint!.getDevObject("precision"))
 
-rem wgh ... 7491 ... report shortages
 	rem --- Explode this kit
 	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
 	while 1
@@ -3217,6 +3238,17 @@ rem wgh ... 7491 ... report shortages
 		kitDetailLine.conv_factor=1
 
 		ordDet_vec!.addItem(kitDetailLine$)
+
+		rem --- Warn if ship quantity is more than currently available.
+		shipqty=kitDetailLine.qty_shipped
+		available=ivm02a.qty_on_hand-ivm02a.qty_commit
+		if shipqty>available then
+			available_vect!=BBjAPI().makeVector()
+			available_vect!.addItem(kitDetailLine.item_id$)
+			available_vect!.addItem(shipqty)
+			available_vect!.addItem(available)
+			shortage_vect!.addItem(available_vect!)
+		endif
 	wend
 
 return
