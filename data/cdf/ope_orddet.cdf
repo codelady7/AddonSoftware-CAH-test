@@ -99,8 +99,6 @@ rem --- Initialize UM_SOLD ListButton except when line type is non-stock
 		endif
 	endif
 
-[[OPE_ORDDET.AGDS]]
-
 [[OPE_ORDDET.AGRE]]
 rem --- Skip if (not a new row and not row modifed) or row deleted
 
@@ -1104,8 +1102,7 @@ rem --- Explode kits in this Order
 			readrecord(ope11_dev)ope11a$
 
 			redim ivm01a$
-			item_id$=ope11a.item_id$
-			readrecord(ivm01_dev,key=firm_id$+item_id$,dom=*next)ivm01a$
+			readrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
 			if ivm01a.kit$<>"Y" then
 				ope11a.line_no$=str(ordDet_vec!.size()+1:lineMask$)
 				ordDet_vec!.addItem(ope11a$)
@@ -1143,7 +1140,11 @@ rem --- Explode kits in this Order
 				ordDet_vec!.addItem(memoLine$)
 
 				rem --- Explode kits
-				gosub explodKits
+				kit_item$=ope11a.item_id$
+				kit_ordered=ope11a.qty_ordered
+				kit_shipped=ope11a.qty_shipped
+				shortage_vect!=BBjAPI().makeVector()
+				gosub explodeKits
 
 				rem --- Mark end of kit explosion with a memo line
 				call stbl("+DIR_SYP")+"bas_sequences.bbj", "INTERNAL_SEQ_NO",int_seq_no$,table_chans$[all]
@@ -3112,9 +3113,11 @@ rem =========================================================
 	return
 
 rem =========================================================
-explodKits: rem --- Explode kits
-	rem      IN: ordDet_vec!
-	rem           ope11a$
+explodeKits: rem --- Explode kits
+	rem      IN: ope11a$
+	rem           kit_item$
+	rem           kit_ordered
+	rem           kit_shipped
 	rem           bmmBillMat_dev
 	rem           bmmBillMat$
 	rem           ivm01_dev
@@ -3122,19 +3125,38 @@ explodKits: rem --- Explode kits
 	rem           ivm02_dev
 	rem           ivm02a$
 	rem           lineMask$
+	rem           ordDet_vec!
+	rem           shortage_vect!
 	rem   OUT: ordDet_vec!
+	rem           shortage_vect!
 rem =========================================================
 	round_precision = num(callpoint!.getDevObject("precision"))
-rem wgh ... 7491 ... explode sub-kits
+
 rem wgh ... 7491 ... report shortages
 	rem --- Explode this kit
-	kit_ordered=ope11a.qty_ordered
-	kit_shipped=ope11a.qty_shipped
-	read(bmmBillMat_dev,key=firm_id$+item_id$,dom=*next)
+	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
 	while 1
-		explodeKey$=key(bmmBillMat_dev,end=*break)
-		if pos(firm_id$+item_id$=explodeKey$)<>1 then break
+		kitKey$=key(bmmBillMat_dev,end=*break)
+		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
 		readrecord(bmmBillMat_dev)bmmBillMat$
+		redim ivm01a$
+		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
+		if ivm01a.kit$="Y" then
+			explodeKey$=kitKey$
+			explodeItem$=kit_item$
+			explodeOrdered=kit_ordered
+			explodeShipped=kit_shipped
+			kit_item$=bmmBillMat.item_id$
+			kit_ordered=round(explodeOrdered*bmmBillMat.qty_required,round_precision)
+			kit_shipped=round(explodeShipped*bmmBillMat.qty_required,round_precision)
+			gosub explodeKits
+
+			read(bmmBillMat_dev,key=explodeKey$)
+			kit_item$=explodeItem$
+			kit_ordered=explodeOrdered
+			kit_shipped=explodeShipped
+			continue
+		endif
 
 		dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
 		kitDetailLine$=ope11a$
@@ -3142,9 +3164,6 @@ rem wgh ... 7491 ... report shortages
 
 		call stbl("+DIR_SYP")+"bas_sequences.bbj", "INTERNAL_SEQ_NO",int_seq_no$,table_chans$[all]
 		kitDetailLine.internal_seq_no$=int_seq_no$
-
-		redim ivm01a$
-		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
 		kitDetailLine.product_type$=ivm01a.product_type$
 		kitDetailLine.item_id$=bmmBillMat.item_id$
 		kitDetailLine.um_sold$=ivm01a.unit_of_sale$
