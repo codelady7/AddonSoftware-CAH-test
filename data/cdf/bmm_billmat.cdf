@@ -89,58 +89,6 @@ rem --- Maintain count of inserted rows (don't count if last row)
 		callpoint!.setDevObject("insertedRows",insertedRows)
 	endif
 
-[[BMM_BILLMAT.AWRI]]
-rem --- Skip until last row in grid
-	dim thisRow$:fnget_tpl$("BMM_BILLMAT")
-	thisRow$=rec_data$
-	lastRow$=GridVect!.getItem(GridVect!.size()-1)
-	if pos(thisRow.firm_id$+thisRow.bill_no$+thisRow.material_seq$+thisRow.item_id$+thisRow.wo_ref_num$=lastRow$)=1 then
-		rem --- Are there any kits in this BOM that need to be exploded?
-		bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
-		dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
-		ivm01_dev=fnget_dev("IVM_ITEMMAST")
-		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-		seqMask$=pad("",len(bmmBillMat.material_seq$),"0")
-		kits=0
-		billMat_vec!=BBjAPI().makeVector()
-		bill_no$=callpoint!.getColumnData("BMM_BILLMAT.BILL_NO")
-		read(bmmBillMat_dev,key=firm_id$+bill_no$,dom=*next)
-		while 1
-			bmmBillMat_key$=key(bmmBillMat_dev,end=*break)
-			if pos(firm_id$+bill_no$=bmmBillMat_key$)=0 then break
-			readrecord(bmmBillMat_dev)bmmBillMat$
-
-			item_id$=bmmBillMat.item_id$
-			readrecord(ivm01_dev,key=firm_id$+item_id$,dom=*continue)ivm01a$
-			if ivm01a.kit$<>"Y" then
-				bmmBillMat.material_seq$=str(billMat_vec!.size()+1:seqMask$)
-				billMat_vec!.addItem(bmmBillMat$)
-			else
-				rem --- Explode this kit
-				kit_qty=bmmBillMat.qty_required
-				read(bmmBillMat_dev,key=firm_id$+item_id$,dom=*next)
-				while 1
-					explodeKey$=key(bmmBillMat_dev,end=*break)
-					if pos(firm_id$+item_id$=explodeKey$)=0 then break
-					readrecord(bmmBillMat_dev)bmmBillMat$
-					bmmBillMat.bill_no$=bill_no$
-					bmmBillMat.material_seq$=str(billMat_vec!.size()+1:seqMask$)
-					bmmBillMat.qty_required=kit_qty*bmmBillMat.qty_required
-					billMat_vec!.addItem(bmmBillMat$)
-					kits=kits+1
-				wend
-				read(bmmBillMat_dev,key=bmmBillMat_key$)
-			endif
-		wend
-
-		rem --- Add exploded kits to the Materials Requirements
-		if kits then
-			for i=0 to billMat_vec!.size()-1
-				writerecord(bmmBillMat_dev)billMat_vec!.getItem(i)
-			next i
-		endif
-	endif
-
 [[BMM_BILLMAT.BDEL]]
 rem --- Update refnumMap!
 	refnumMap!=callpoint!.getDevObject("refnumMap")
