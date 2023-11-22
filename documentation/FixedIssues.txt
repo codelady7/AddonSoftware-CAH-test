@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-11-21
+ Report Date:   2023-11-22
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -21,3 +21,17 @@ Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_invdet.cdf
 Modified: data/cdf/ope_orddet.cdf
 =======================================================================================================================================
+
+Revision: 53a6ef1ba34425e8030e7d614717b724c20fc52c
+Author: Christine <chawkins@basis.com>
+Date: 11/22/2023 11:45:24 AM
+Message:
+Bug 10752 - OP - Open Order Detail report Export Format column alignment incorrect for M/O line types
+ - corrected number of blank columns needed for M/O lines
+
+(cherry picked from commit 6b62ce81266a008d6e9c3f7121d4b5891f1db9a9)
+----
+Modified: op/src/opr_opnorddetail_o1.aon
+=======================================================================================================================================
+
+
