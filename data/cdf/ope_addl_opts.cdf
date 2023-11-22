@@ -34,14 +34,20 @@ rem --- Disable fields, set globals
 		if invoice_type$ = "P" then
 			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.COMMIT_FLAG",  -1)
 		endif
-	else
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.COMMIT_FLAG",  -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.DISC_PERCENT",  -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.EST_SHP_DATE", -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.MAN_PRICE", -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.NET_PRICE", -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.PRINTED", -1)
+
+		if callpoint!.getDevObject("kit")="Y" then
 			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.STD_LIST_PRC", -1)
+			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.DISC_PERCENT",  -1)
+			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.MAN_PRICE", -1)
+		endif
+	else
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.COMMIT_FLAG",  -1)
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.DISC_PERCENT",  -1)
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.EST_SHP_DATE", -1)
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.MAN_PRICE", -1)
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.NET_PRICE", -1)
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.PRINTED", -1)
+		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.STD_LIST_PRC", -1)
 	endif
 
 rem --- Initialize exit abort flag
