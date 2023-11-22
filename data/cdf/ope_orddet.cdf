@@ -1482,6 +1482,7 @@ rem --- Don't allow a kit if there is no Line Code with a Memo Line Type.
 			callpoint!.setDevObject("kit","Y")
 			callpoint!.setDevObject("memoCode",memoCode$)
 			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+			callpoint!.setOptionEnabled("RCPR",0)
 		else
 			msg_id$="OP_NO_MEMO_LINE"
 			gosub disp_message
@@ -2629,7 +2630,7 @@ rem ============================================================================
 
 
 	if pos(opc_linecode.line_type$="SP")>0 and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))<>0 and
-:	callpoint!.isEditMode() then
+:	callpoint!.isEditMode() and callpoint!.getDevObject("kit")<>"Y" then
 		callpoint!.setOptionEnabled("RCPR",1)
 	else
 		callpoint!.setOptionEnabled("RCPR",0)
@@ -2805,7 +2806,7 @@ rem ==========================================================================
 		gosub check_item_whse
 
 		if !user_tpl.item_wh_failed and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) and
-:		callpoint!.isEditMode() then
+:		callpoint!.isEditMode() and callpoint!.getDevObject("kit")<>"Y" then
 			callpoint!.setOptionEnabled("RCPR",1)
 		else
 			callpoint!.setOptionEnabled("RCPR",0)
