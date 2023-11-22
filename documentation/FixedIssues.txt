@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-11-16
+ Report Date:   2023-11-21
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -8,6 +8,16 @@
 BBjBaristaDemos2305_11-09-2023_1048.jar
 =======================================================================================================================================
 
-
-
-
+Revision: f39ff5da64a32b24142787634716684251aa329e
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 11/21/2023 4:30:42 PM
+Message:
+Bug 10751: Used the item's detail line conversion factor for the actual
+unit of measure sold instead of the item's inventory master conversion
+factor.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_orddet.cdf
+=======================================================================================================================================
