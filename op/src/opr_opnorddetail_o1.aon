@@ -743,7 +743,7 @@ print_detail: rem --- Print Detail
                     OutVect!.addItem("")
                 endif
         else
-            xwk = fnblank(10)
+            xwk = fnblank(11)
         endif
     
     else
