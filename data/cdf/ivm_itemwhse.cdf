@@ -2,17 +2,6 @@
 if (callpoint!.getUserInput()<"A" or callpoint!.getUserInput()>"Z") and cvs(callpoint!.getUserInput(),2)<>"" callpoint!.setStatus("ABORT")
 
 [[IVM_ITEMWHSE.ADIS]]
-rem --- If select in Physical Intentory, location and cycle can't change
-
-if callpoint!.getColumnData("IVM_ITEMWHSE.SELECT_PHYS") = "Y" then
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",0)
-	call stbl("+DIR_SYP")+"bac_message.bbj","IV_PHY_INV_SELECT",msg_tokens$[all],msg_opt$,table_chans$[all]
-else
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
-endif
-
 rem --- Draw attention when on-order quantities don't add up
 	qty_on_order=num(callpoint!.getColumnData("IVM_ITEMWHSE.QTY_ON_ORDER"))
 	po_qty=num(callpoint!.getColumnData("<<DISPLAY>>.ON_ORD_PO"))
@@ -33,14 +22,17 @@ rem --- Draw attention when commit quantities don't add up
 		qtyCommit!.setBackColor(rdErrorColor!)
 	endif
 
-rem --- Disable cost fields when there are transactions for this item.
+rem --- Enable/disable fields for kitted items
+	gosub disableKitFields
+
+rem --- Disable cost fields when there are transactions for this item, or it is a kit
 	ivt04_dev=fnget_dev("IVT_ITEMTRAN")
 	warehouse_id$=callpoint!.getColumnData("IVM_ITEMWHSE.WAREHOUSE_ID")
 	item_id$=callpoint!.getColumnData("IVM_ITEMWHSE.ITEM_ID")
 	read(ivt04_dev,key=firm_id$+warehouse_id$+item_id$,dom=*next)
 	ivt04_key$=""
 	ivt04_key$=key(ivt04_dev,end=*next)
-	if pos(firm_id$+warehouse_id$+item_id$=ivt04_key$)=1 then
+	if pos(firm_id$+warehouse_id$+item_id$=ivt04_key$)=1 or callpoint!.getDevObject("kit")="Y" then
 		rem --- Disable cost fields
 		enable=0
 	else
@@ -53,6 +45,16 @@ rem --- Disable cost fields when there are transactions for this item.
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",enable)
+
+rem --- If select in Physical Intentory, location and cycle can't change
+	if callpoint!.getColumnData("IVM_ITEMWHSE.SELECT_PHYS") = "Y" then
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",0)
+		call stbl("+DIR_SYP")+"bac_message.bbj","IV_PHY_INV_SELECT",msg_tokens$[all],msg_opt$,table_chans$[all]
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
+	endif
 
 [[IVM_ITEMWHSE.AENA]]
 rem --- Disable Barista menu items
@@ -269,13 +271,23 @@ rem --- Initialize product_type with ivm_itemmast product_type
 	readrecord(itemmast_dev,key=firm_id$+callpoint!.getColumnData("IVM_ITEMWHSE.ITEM_ID"),dom=*next)itemmast_tpl$
 	callpoint!.setColumnData("IVM_ITEMWHSE.PRODUCT_TYPE",itemmast_tpl.product_type$)
 
-rem --- Enisable cost fields for new item.
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.UNIT_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.AVG_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.STD_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",1)
+rem --- Enable/disable fields for kitted items
+	gosub disableKitFields
+
+rem --- Enable cost fields for new item if not a kit
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Disable cost fields
+		enable=0
+	else
+		rem --- Enable cost fields
+		enable=1
+	endif
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.UNIT_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.AVG_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.STD_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",enable)
 
 [[IVM_ITEMWHSE.AVG_COST.AVAL]]
 rem --- Update unit_cost if using average costing and average cost changes
@@ -342,6 +354,7 @@ dim ivs10d$:fnget_tpl$("IVS_DEFAULTS")
 
 ivs10d_key$ = firm_id$ + "D"
 find record(ivs10d_dev, key=ivs10d_key$, dom=*next) ivs10d$
+callpoint!.setDevObject("ivs10d",ivs10d$)
 
 callpoint!.setTableColumnAttribute("IVM_ITEMWHSE.BUYER_CODE","DFLT",ivs10d.buyer_code$)
 callpoint!.setTableColumnAttribute("IVM_ITEMWHSE.AR_DIST_CODE","DFLT",ivs10d.ar_dist_code$)
@@ -475,6 +488,110 @@ if cvs(ivm05a.firm_id$,2)=""  then
 endif
 
 [[IVM_ITEMWHSE.<CUSTOM>]]
+rem ==========================================================================
+disableKitFields: rem --- Enable/disable fields for kitted items
+rem ==========================================================================
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Disable Warehouse tab fields
+		callpoint!.setColumnData("IVM_ITEMWHSE.LOCATION","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.AR_DIST_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.AR_DIST_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.PI_CYCLECODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SPECIAL_ORD","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SPECIAL_ORD",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SELECT_PHYS","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SELECT_PHYS",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.LSTPHY_DATE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LSTPHY_DATE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.CUR_PRICE","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.CUR_PRICE_CD","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE_CD",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.PRI_PRICE","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.PRI_PRICE_CD","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE_CD",0)
+		rem --- UNIT_COST: Handled separately in ADIS and AREC
+		rem --- LANDED_COST: Handled separately in ADIS and AREC
+		rem --- LAST_PO_COST: Handled separately in ADIS and AREC
+		rem --- AVG_COST: Handled separately in ADIS and AREC
+		rem --- STD_COST: Handled separately in ADIS and AREC
+		rem --- REP_COST: Handled separately in ADIS and AREC
+		rem --- PRODUCT_TYPE: hidden don't clear, initialized to itemmast_tpl.product_type$
+
+		rem --- Disable Stocking tab fields
+		callpoint!.setColumnData("IVM_ITEMWHSE.ABC_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ABC_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.BUYER_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.BUYER_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.VENDOR_ID","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.VENDOR_ID",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.LEAD_TIME","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LEAD_TIME",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.MAXIMUM_QTY","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.MAXIMUM_QTY",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.ORDER_POINT","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORDER_POINT",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.EOQ","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SAFETY_STOCK","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAFETY_STOCK",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.ORD_PNT_CODE","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORD_PNT_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.EOQ_CODE","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SAF_STK_CODE","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAF_STK_CODE",0)
+	else
+		rem --- Get inventory defaults
+		dim ivs10d$:fnget_tpl$("IVS_DEFAULTS")
+		ivs10d$=callpoint!.getDevObject("ivs10d")
+
+		rem --- Enable Warehouse tab fields
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
+		rem --- NOTE: The AR_DIST_CODE field remains permanently disable if AR dist by item param is not checked
+		callpoint!.setColumnData("IVM_ITEMWHSE.AR_DIST_CODE",ivs10d.ar_dist_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.AR_DIST_CODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SPECIAL_ORD",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SELECT_PHYS",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LSTPHY_DATE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE_CD",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE_CD",1)
+		rem --- UNIT_COST: Handled separately in ADIS and AREC
+		rem --- LANDED_COST: Handled separately in ADIS and AREC
+		rem --- LAST_PO_COST: Handled separately in ADIS and AREC
+		rem --- AVG_COST: Handled separately in ADIS and AREC
+		rem --- STD_COST: Handled separately in ADIS and AREC
+		rem --- REP_COST: Handled separately in ADIS and AREC
+		rem --- PRODUCT_TYPE -- hidden don't clear, initialized to itemmast_tpl.product_type$
+
+		rem --- Enable Stocking tab fields
+		callpoint!.setColumnData("IVM_ITEMWHSE.ABC_CODE",ivs10d.abc_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ABC_CODE",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.BUYER_CODE",ivs10d.buyer_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.BUYER_CODE",1)
+		rem --- NOTE: The VENDOR_ID field remains permanently disable if if AP not installed
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.VENDOR_ID",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LEAD_TIME",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.MAXIMUM_QTY",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORDER_POINT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAFETY_STOCK",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.ORD_PNT_CODE",ivs10d.ord_pnt_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORD_PNT_CODE",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.EOQ_CODE",ivs10d.eoq_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ_CODE",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SAF_STK_CODE",ivs10d.saf_stk_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAF_STK_CODE",1)
+	endif
+
+	return
+
 #include [+ADDON_LIB]std_missing_params.aon
 #include [+ADDON_LIB]std_functions.aon
 

@@ -91,46 +91,43 @@ rem --- Show TAX_SVC_CD description
 rem --- disable lot/ser trans hist if item isn't lot/serial
 	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 callpoint!.setOptionEnabled("LTRN",0)
 
-rem --- Kitted items cannot be lotted/serialized
-	if callpoint!.getColumnData("IVM_ITEMMAST.KIT")="Y" then
-		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+
+	rem --- Lotted/serialized items cannot be kitted
+	if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")<>"N" then
+		callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 	else
-		rem --- Lotted/serialized items cannot be kitted
-		if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")<>"N" then
-			callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
-			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
-		else
-			rem --- Kitting is not allowed if the corresponding BOM is NOT a phantom and it include either operations or subcontracts
-			bmm01_dev=fnget_dev("BMM_BILLMAST")
-			dim bmm01$:fnget_tpl$("BMM_BILLMAST")
-			item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
-			findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$
-			if bmm01.phantom_bill$="Y" then
-				bmm03_dev=fnget_dev("BMM_BILLOPER")
-				bmm03Found=0
-				read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
-				bmm03_key$=key(bmm03_dev,end=*next)
-				if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+		rem --- Kitting is not allowed if the corresponding BOM is NOT a phantom and it include either operations or subcontracts
+		bmm01_dev=fnget_dev("BMM_BILLMAST")
+		dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+		item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+		findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$
+		if bmm01.phantom_bill$="Y" then
+			bmm03_dev=fnget_dev("BMM_BILLOPER")
+			bmm03Found=0
+			read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+			bmm03_key$=key(bmm03_dev,end=*next)
+			if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
 
-				bmm05_dev=fnget_dev("BMM_BILLSUB")
-				bmm05Found=0
-				read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
-				bmm05_key$=key(bmm05_dev,end=*next)
-				if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+			bmm05_dev=fnget_dev("BMM_BILLSUB")
+			bmm05Found=0
+			read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+			bmm05_key$=key(bmm05_dev,end=*next)
+			if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
 
-				if bmm03Found or bmm05Found then
-					callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
-					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
-				endif
-			else
+			if bmm03Found or bmm05Found then
 				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
 				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 			endif
+		else
+			callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 		endif
 	endif
+	callpoint!.setDevObject("kit",callpoint!.getColumnData("IVM_ITEMMAST.KIT"))
+
+rem --- Enable/disable fields for kitted items
+	gosub disableKitFields
 
 [[IVM_ITEMMAST.AENA]]
 rem --- Disable Barista menu items
@@ -604,6 +601,17 @@ rem --- Allow this item to be deleted?
 		if status then callpoint!.setStatus("ABORT")
 	endif
 
+[[IVM_ITEMMAST.BDTW]]
+rem --- Don't allow launching Vendor Detail form for kits
+	if callpoint!.getColumnData("IVM_ITEMMAST.KIT")="Y" and pos(callpoint!.getEventOptionStr()="DTLW-IVM_ITEMVEND") then
+		msg_id$="OP_KIT_NO_VENDOR"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=cvs(callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID"),2)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[IVM_ITEMMAST.BEND]]
 rem --- Close connection to Sales Tax Service
 	salesTax!=callpoint!.getDevObject("salesTax")
@@ -775,7 +783,12 @@ rem --- additional file opens, depending on which apps are installed, param valu
 		more_files$=more_files$+"BMM_BILLMAST;BMM_BILLMAT;BMM_BILLOPER;BMM_BILLSUB;"
 		files=files+4
 	else
+		rem --- Disable and hide KIT field when BM not installed
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",-1)
+		kitCtrl!=callpoint!.getControl("IVM_ITEMMAST.KIT")
+		kitCtrl!.setVisible(0)
+		tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+		tabCtrl!.setLocation(tabCtrl!.getX(),tabCtrl!.getY()-25)
 	endif
 
 	if op$="Y" then 
@@ -1060,16 +1073,8 @@ rem --- See if Auto Numbering in effect
 	endif
 
 [[IVM_ITEMMAST.KIT.AVAL]]
-rem --- Lotted/serialized items cannot be kitted
-	kit$=callpoint!.getUserInput()
-	if kit$="Y" then
-		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
-	else
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
-	endif
+rem --- Clear and disable fields not needed for a kit
+	gosub disableKitFields
 
 [[IVM_ITEMMAST.LEAD_TIME.AVAL]]
 if num(callpoint!.getUserInput())<0 or fpt(num(callpoint!.getUserInput())) then callpoint!.setStatus("ABORT")
@@ -1281,6 +1286,94 @@ rem ==========================================================================
 	wend
 
 return
+
+rem ==========================================================================
+disableKitFields: rem --- Enable/disable fields for kitted items
+rem ==========================================================================
+	if callpoint!.getColumnData("IVM_ITEMMAST.KIT")="Y" then
+		rem --- Disable Availability button
+		callpoint!.setOptionEnabled("ITAV",0)
+
+		rem --- Disable Item tab fields, except PRODUCT_TYPE, ITEM_CLASS, ITEM_TYPE and ITEM_INACTIVE
+		callpoint!.setColumnData("IVM_ITEMMAST.MSRP","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.MSRP",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.UPC_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UPC_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.BAR_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.BAR_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.UNIT_OF_SALE","EA",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UNIT_OF_SALE",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.WEIGHT","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.WEIGHT",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.PURCHASE_UM","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.PURCHASE_UM",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.CONV_FACTOR","1",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.CONV_FACTOR",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.SA_LEVEL","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SA_LEVEL",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.TAX_SVC_CD","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAX_SVC_CD",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.TAXABLE_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAXABLE_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.SELL_PURCH_UM","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PUCH_UM",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.ALT_SUP_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.ALT_SUP_ITEM","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_ITEM",0)
+
+		rem --- Clear and disable all GL Accounts tab fields
+		callpoint!.setColumnData("IVM_ITEMMAST.GL_INV_ACCT","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ACCT",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.GL_COGS_ACCT","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ACCT",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.GL_PUR_ACCT","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PUR_ACCT",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.GL_PPV_ACCT","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PPV_ACCT",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.GL_INV_ADJ","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ADJ",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.GL_COGS_ADJ","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ADJ",0)
+	else
+		rem --- Enable Availability button
+		callpoint!.setOptionEnabled("ITAV",1)
+
+		rem --- Enable Item tab fields
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.MSRP",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UPC_CODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.BAR_CODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UNIT_OF_SALE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.WEIGHT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.PURCHASE_UM",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.CONV_FACTOR",1)
+		rem --- NOTE: The SA_LEVEL field remains permanently disable if there is no SA
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SA_LEVEL",1)
+		rem --- NOTE: The TAX_SVC_CD field remains permanently disable if there is no OP or not using a Sales Tax Service
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAX_SVC_CD",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAXABLE_FLAG",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_FLAG",1)
+		if pos(callpoint!.getColumnData("IVM_ITEMMAST.ALT_SUP_FLAG")="AS") then
+			callpoint!.setColumnEnabled("IVM_ITEMMAST. ALT_SUP_ITEM",1)
+		endif
+
+		rem ---Enable all GL Accounts tab fields
+		rem --- NOTE: These fields remain permanently disable if there is no GL or not distributing by item
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ACCT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ACCT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PUR_ACCT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PPV_ACCT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ADJ",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ADJ",1)
+	endif
+
+	return
 
 rem ==========================================================================
 #include [+ADDON_LIB]std_missing_params.aon

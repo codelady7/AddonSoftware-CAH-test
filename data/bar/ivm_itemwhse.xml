@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivm_itemwhse">46A8D21149542FF2287ED5E9A98B817C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivm_itemwhse">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivm_itemwhse">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivm_itemwhse">20230821</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemwhse">20230821</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemwhse">172316</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivm_itemwhse">20231124</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemwhse">20231124</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemwhse">150738</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivm_itemwhse"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivm_itemwhse">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivm_itemwhse">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivm_itemwhse">AO_ITEM_WH</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivm_itemwhse"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivm_itemwhse">T</DD_ATTR_FTYP>
@@ -1141,7 +1141,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse010">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse010">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse010">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse010"></DD_ATTR_CTLY>
@@ -1294,7 +1294,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse013">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse013">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse013">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse013"></DD_ATTR_CTLY>
@@ -2161,7 +2161,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse030">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse030">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse030">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse030"></DD_ATTR_CTLY>
@@ -2212,7 +2212,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse031">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse031">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse031">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse031"></DD_ATTR_CTLY>
@@ -2263,7 +2263,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse032">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse032">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse032">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse032">-24</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse032"></DD_ATTR_CTLY>
@@ -2314,7 +2314,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse033">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse033">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse033">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse033">-24</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse033"></DD_ATTR_CTLY>
@@ -2365,7 +2365,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse034">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse034">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse034">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse034"></DD_ATTR_CTLY>
@@ -2569,7 +2569,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse038">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse038">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse038">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse038"></DD_ATTR_CTLY>
@@ -2620,7 +2620,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse039">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse039"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse039"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse039">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse039">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse039"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse039">+25</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse039">-3</DD_ATTR_CTLY>
@@ -2671,7 +2671,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse040">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse040">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse040">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse040"></DD_ATTR_CTLY>
@@ -2722,7 +2722,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivm_itemwhse041">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse041">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivm_itemwhse041">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivm_itemwhse041"></DD_ATTR_CTLY>
@@ -2980,7 +2980,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemwhse003">inn_on_ord_wo</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemwhse003">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ivm_itemwhse003"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse003">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse003">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.ivm_itemwhse004">
 			<DD_TABLE_ALIAS id="ddm_table_disp.ivm_itemwhse004">IVM_ITEMWHSE    </DD_TABLE_ALIAS>
@@ -3026,7 +3026,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.ivm_itemwhse005">inn_commit_wo</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.ivm_itemwhse005">1</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.ivm_itemwhse005"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse005">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.ivm_itemwhse005">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cmts">
