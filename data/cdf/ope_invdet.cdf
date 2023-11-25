@@ -2131,7 +2131,7 @@ rem ==========================================================================
 	wh$      = callpoint!.getColumnData("OPE_INVDET.WAREHOUSE_ID")
 	item$    = callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
 	ord_qty  = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
-	conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
+	conv_factor=num(callpoint!.getColumnData("OPE_ORDDET.CONV_FACTOR"))
 	if conv_factor=0 then conv_factor=1
 
 	if cvs(item$, 2)<>"" and cvs(wh$, 2)<>"" and ord_qty and ord_type$<>"P" and user_tpl.line_dropship$ = "N" then
