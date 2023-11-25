@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-11-22
+ Report Date:   2023-11-24
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -34,4 +34,13 @@ Bug 10752 - OP - Open Order Detail report Export Format column alignment incorre
 Modified: op/src/opr_opnorddetail_o1.aon
 =======================================================================================================================================
 
+Revision: 21c04ae534e45c4c4557eab2f8529643b40a1904
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 11/24/2023 7:16:57 PM
+Message:
+Bug 10751: Corrected typo in previous commit.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/cdf/ope_invdet.cdf
+=======================================================================================================================================
 
