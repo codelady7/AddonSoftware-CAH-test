@@ -3242,7 +3242,7 @@ rem =========================================================
 
 		rem --- Warn if ship quantity is more than currently available.
 		shipqty=kitDetailLine.qty_shipped
-		available=ivm02a.qty_on_hand-ivm02a.qty_commit
+		available=ivm02a.qty_on_hand-(ivm02a.qty_commit-shipqty)
 		if shipqty>available then
 			available_vect!=BBjAPI().makeVector()
 			available_vect!.addItem(kitDetailLine.item_id$)
