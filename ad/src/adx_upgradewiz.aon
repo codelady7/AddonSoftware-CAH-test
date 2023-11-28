@@ -517,7 +517,7 @@ rem --- Run Install Application Wizard for applications being installed
             aList!.add(""); rem Copy
             aList!.add(newAonDir$+"/"); rem Source
             aList!.add(""); rem Target
-            appVect!.insertElementAt(aList!,0)
+            appVect!.add(aList!)
         endif
     endif
 
@@ -1453,6 +1453,13 @@ bimBarista: rem --- Add new application to Barista Installation Manager
 :   +" -loc"+$22$+newAonLoc$+$22$
 :   +" -cp"+$22$+sscpName$+$22$
     scall_result=scall(run_arg$+user_arg$,err=*next)
+
+    newDB!=rdAdmin!.getDatabase(dbName$)
+    if newDB!.getType()=BBjAdminDatabase.DatabaseType.BARISTA
+        rem --- rename bbdict, if it exists/came up from bbj-home so it doesn't cause DBType confusion later
+        erase newBarDir$+"/bbdictOLD", err=*next
+        rename newBarDir$+"/bbdict", newBarDir$+"/bbdictOLD", err=*next
+    endif
     return
 
 updateSyncXml: rem --- Update new sync XML files (and copy old barista/settings dir)
