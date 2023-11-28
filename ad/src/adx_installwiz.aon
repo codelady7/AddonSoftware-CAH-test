@@ -261,6 +261,13 @@ rem --- Run BIM bai_install_manager.bbj program via synchronous system call beca
 :       +" -loc"+$22$+newAonLoc$+$22$
 :       +" -cp"+$22$+sscpName$+$22$
 	    scall_result=scall(run_arg$+user_arg$,err=*next)
+
+		newDB!=rdAdmin!.getDatabase(dbName$)
+		if newDB!.getType()=BBjAdminDatabase.DatabaseType.BARISTA
+			rem --- rename bbdict, if it exists/came up from bbj-home so it doesn't cause DBType confusion later
+            erase newBarDir$+"/bbdictOLD", err=*next
+			rename newBarDir$+"/bbdict", newBarDir$+"/bbdictOLD", err=*next
+		endif
 	endif
     
 rem --- Update new sync XML files
