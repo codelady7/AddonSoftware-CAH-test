@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-11-24
+ Report Date:   2023-11-28
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -44,3 +44,22 @@ Modified: data/bar/ope_invdet.xml
 Modified: data/cdf/ope_invdet.cdf
 =======================================================================================================================================
 
+Revision: d0d15bef4cf0d36bc10d5cc60e6a5b687b2664e9
+Author: Christine <chawkins@basis.com>
+Date: 11/28/2023 5:04:26 PM
+Message:
+Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
+ - Fixes for issues encountered during tutorial video creation:
+   - If the database type for an upgrade is BARISTA, rename bbdict, if it exists (it may exist if new Barista was installed over top of old in bbj-home)
+   - During upgrade, when installing Addon form changes and other apps via Barista Install App wizard, handle Addon last instead of first, to avoid errors if any of the Addon changes reference files from other apps not yet installed
+   - Add message to adx_init_data if the "old" addon_source property path in adx_conversionCtrl doesn't exist, which can happen if an upgraded instance is packaged then extracted to different server/OS/path
+   - Adjust Pkg/Ext so info messages only show once (when clicking the Package or Extract button)
+
+(cherry picked from commit 5d2ed63b0d51cd24c6c2003b504bf3dee8d52c69)
+----
+Modified: ad/src/adx_init_data.aon
+Modified: ad/src/adx_installwiz.aon
+Modified: ad/src/adx_upgradewiz.aon
+Modified: util/packager_extractor/aon_packagerextractor.bbj
+
+=======================================================================================================================================
