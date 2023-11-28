@@ -75,3 +75,15 @@ Bug 10753 - OP - The 'Disallow Inquiry column changes' flag on opt_invdet is ham
 Modified: data/bar/opt_invdet.xml
 =======================================================================================================================================
 
+Revision: 34d17627f22fc06a272906db8b88e6739f08c481
+Author: Christine <chawkins@basis.com>
+Date: 11/28/2023 6:21:15 PM
+Message:
+Bug 10747 - OP - Order Entry uses setColumnData(<column>,<value>,1) on hidden detail grid column
+ - fixed setColumnData() signature to not refresh hidden column
+
+(cherry picked from commit 604f4177091d2427ffda638412ee6f8351556ed3)
+----
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_orddet.cdf
+=======================================================================================================================================
