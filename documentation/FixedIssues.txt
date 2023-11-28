@@ -87,3 +87,17 @@ Bug 10747 - OP - Order Entry uses setColumnData(<column>,<value>,1) on hidden de
 Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_orddet.cdf
 =======================================================================================================================================
+
+Revision: 1979eeb7744e3ba27b633205bf27e6e803eb5a13
+Author: Christine <chawkins@basis.com>
+Date: 11/28/2023 6:41:09 PM
+Message:
+Bug 10748 - AR - Customers - Future Drilldown is not clickable properly
+ - moved Avg Days to Pay column a bit to the right
+
+(cherry picked from commit ef03f9a97d4f21799b0b64f9fafdd66e36515fe7)
+----
+Modified: data/bar/arm_custdet.xml
+Modified: data/bar/arm_custmast.xml
+Modified: data/bar/arm_custpmts.xml
+=======================================================================================================================================
