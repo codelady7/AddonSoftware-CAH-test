@@ -422,7 +422,7 @@ rem --- Does a revised picking list need to be printed?
 	if a!.getFieldAsString("PRINT_FLAG")="N" and
 :	callpoint!.getHeaderColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" and 
 :	callpoint!.getHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG")="Y" then
-		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M",1)
+		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M")
 	endif
 rem --- Need to commit?
 
@@ -1234,7 +1234,7 @@ rem --- Initialize RTP modified fields for modified existing records
 rem --- Does a revised picking list need to be printed?
 	if callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" and
 :	callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="Y" then
-		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M",1)
+		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M")
 	endif
 
 [[OPE_ORDDET.EXT_PRICE.AVAL]]
