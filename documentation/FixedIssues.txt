@@ -61,5 +61,17 @@ Modified: ad/src/adx_init_data.aon
 Modified: ad/src/adx_installwiz.aon
 Modified: ad/src/adx_upgradewiz.aon
 Modified: util/packager_extractor/aon_packagerextractor.bbj
-
 =======================================================================================================================================
+
+Revision: 3e6d7a8f59813042fa4127ec37a8fd2766c68773
+Author: Christine <chawkins@basis.com>
+Date: 11/28/2023 5:32:09 PM
+Message:
+Bug 10753 - OP - The 'Disallow Inquiry column changes' flag on opt_invdet is hampering custom queries
+ - removed the 'Disallow Inquiry column changes' option
+
+(cherry picked from commit 0ab95367991fe8d655db50f7f09413570726045b)
+----
+Modified: data/bar/opt_invdet.xml
+=======================================================================================================================================
+
