@@ -311,6 +311,20 @@ rem --- Can't do anything if required files aren't present.
         goto done
     endif
 
+rem --- If launching an instance that was extracted from a pkg created on different server/OS and/or with different paths,
+rem --- then the "old" Addon path contained in adx_conversionCtrl addon_source property may need to be corrected,
+rem --- so conversions can find "old" Addon files if/as needed.
+rem --- Check to see if "old" Addon path exists, and warn/prevent continuing if it doesn't.
+
+    oldAonDir$=convCtrl!.getProperty("addon_source")
+    oldAonDir!=new File(oldAonDir$,err=*next)
+    if !oldAonDir!.exists()
+        err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:       Translate!.getTranslation("AON_OLD_ADDON_NOT_FOUND","Old/source Addon not found at: ",1)+oldAonDir$+". "+
+:       Translate!.getTranslation("AON_CORRECT_CNVCTRL","Correct 'addon_source' property in adx_conversionCtrl file.",1)+" *****"
+        goto done    
+    endif
+
     rem --- Increment progress meter
     meter_text$=Translate!.getTranslation("AON_CHECKED_REQUIRED_FILES","Checked for required Addon files")
     meter_proc_recs=meter_proc_recs+1

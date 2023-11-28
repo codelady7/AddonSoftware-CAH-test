@@ -458,18 +458,8 @@ class public PackagerExtractor
 
         rem --- enable packaging if everything is ready and return status
         if (#isPackagerBaseDirectoryValid! and #isPackagerBaristaDirectoryValid! and #isPackagerArchiveFileValid!) then
-            rem --- Give explanatory message about what is/isn't included in a Production vs Test Package and let user cancel or continue
-            infoMsg$="Before you Package:"+$0A$
-            infoMsg$=infoMsg$+"- Confirm that you are using the top-level directory (<aon_prod>) as the Installation Base Directory."+$0A$
-            infoMsg$=infoMsg$+"- When creating a Test package, all directories and files in the Installation Base (<aon_prod>) are included in the archive. Files outside of that directory are not included."+$0A$
-            infoMsg$=infoMsg$+"- When creating a Production package, only directories and files in the lowest, version-specific directory (<aon_prod>/vYY/vYYnn/) are included in the archive. Files outside of that directory are not included."
-            infoAccept=msgbox(infoMsg$,65,"AddonSoftware")
-            if infoAccept=1 
-                #PackagerBtn!.setEnabled(1)
-                methodret 1
-            else
-                methodret 0
-            endif
+            #PackagerBtn!.setEnabled(1)
+            methodret 1
         else
             methodret 0
         endif
@@ -491,6 +481,14 @@ class public PackagerExtractor
     methodend
 
     method public void package(BBjButtonPushEvent event!)
+        rem --- Give explanatory message about what is/isn't included in a Production vs Test Package and let user cancel or continue
+        infoMsg$="Before you Package:"+$0A$
+        infoMsg$=infoMsg$+"- Confirm that you are using the top-level directory (<aon_prod>) as the Installation Base Directory."+$0A$
+        infoMsg$=infoMsg$+"- When creating a Test package, all directories and files in the Installation Base (<aon_prod>) are included in the archive. Files outside of that directory are not included."+$0A$
+        infoMsg$=infoMsg$+"- When creating a Production package, only directories and files in the lowest, version-specific directory (<aon_prod>/vYY/vYYnn/) are included in the archive. Files outside of that directory are not included."
+        infoAccept=msgbox(infoMsg$,65,"AddonSoftware")
+        if infoAccept<>1 then goto std_exit
+
         rem Set state of pack button back to disabled
         #PackagerBtn!.setEnabled(0)
 
@@ -1673,18 +1671,8 @@ std_exit:
 
         rem -- allow extraction if all fields are ready
         if (isExtractorNewDatabaseNameReady! and isExtractorApplicationDescriptionReady! and isExtractorInstallationLocationReady! and isExtractorBaristaLocationReady! and isExtractorArchiveFileReady!) then
-            rem --- Give explanatory message about what is/isn't included in a Production vs Test Package and let user cancel or continue
-            infoMsg$="Before you Extract:"+$0A$+"- Confirm that you are using the top-level directory (<aon_prod>) as the Installation Base Directory."+$0A$
-            infoMsg$=infoMsg$+"- When extracting a Test package, any referenced files or Barista applications that reside outside of the Installation Base (<aon_prod>) must be in place prior to running the Extractor."+$0A$
-            infoMsg$=infoMsg$+"-  When extracting a Production package, any referenced files or Barista applications that reside outside of the lowest, version-specific directory (<aon_prod>/vYY/vYYnn/) must be in place prior to running the Extractor."+$0A$
-            infoMsg$=infoMsg$+"- Be sure to check paths in .syn or adm_modules*.xml files of any Barista applications manually copied into place and change if/as needed."
-            infoAccept=msgbox(infoMsg$,65,"AddonSoftware")
-            if infoAccept=1
-                #ExtractorBtn!.setEnabled(1)
-                methodret 1
-            else
-                methodret 0
-            endif
+            #ExtractorBtn!.setEnabled(1)
+            methodret 1
         else
             methodret 0
         endif
@@ -1720,8 +1708,16 @@ std_exit:
 
       if (dbName$="" or appDesc$="" or aonProdDir$="" or jarFile$="" or barDir$="") then
           x=msgbox("Please fill in all values.")
-          return
+          goto std_exit
       endif
+
+      rem --- Give explanatory message about extracting Production vs Test Package and let user cancel or continue
+      infoMsg$="Before you Extract:"+$0A$+"- Confirm that you are using the top-level directory (<aon_prod>) as the Installation Base Directory."+$0A$
+      infoMsg$=infoMsg$+"- When extracting a Test package, any referenced files or Barista applications that reside outside of the Installation Base (<aon_prod>) must be in place prior to running the Extractor."+$0A$
+      infoMsg$=infoMsg$+"-  When extracting a Production package, any referenced files or Barista applications that reside outside of the lowest, version-specific directory (<aon_prod>/vYY/vYYnn/) must be in place prior to running the Extractor."+$0A$
+      infoMsg$=infoMsg$+"- Be sure to check paths in .syn or adm_modules*.xml files of any Barista applications manually copied into place and change if/as needed."
+      infoAccept=msgbox(infoMsg$,65,"AddonSoftware")
+      if infoAccept<>1 then goto std_exit
 
       call rd_dir_syp$+"bac_em_login.bbj",#Sysgui!,#Win!,rdAdmin!,status$,user$,password$
 
