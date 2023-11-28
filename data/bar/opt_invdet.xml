@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invdet">BA8EF92D04BD6C841674DEB28D164BD7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invdet">20090727</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invdet">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invdet">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invdet">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invdet">20231128</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invdet">20231128</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invdet">172638</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invdet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invdet">AO_STAT_CUST_INV</DD_ATTR_DKNM>
@@ -104,10 +104,6 @@
 		<RECORD id="ddm_table_opts.opt_invdetd">
 			<DD_TABLE_ALIAS id="ddm_table_opts.opt_invdetd">OPT_INVDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.opt_invdetd">D</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_table_opts.opt_invdeti">
-			<DD_TABLE_ALIAS id="ddm_table_opts.opt_invdeti">OPT_INVDET      </DD_TABLE_ALIAS>
-			<DD_ATTR_OPTS id="ddm_table_opts.opt_invdeti">I</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.opt_invdetn">
 			<DD_TABLE_ALIAS id="ddm_table_opts.opt_invdetn">OPT_INVDET      </DD_TABLE_ALIAS>
