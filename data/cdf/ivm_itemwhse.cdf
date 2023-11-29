@@ -173,34 +173,36 @@ rem --- Include non-drop ship items added in PO Receipt Entry that aren't in the
 
 rem --- Get total on Open SO lines
 
-	opdet_dev=fnget_dev("OPE_ORDDET")
-	dim opdet_tpl$:fnget_tpl$("OPE_ORDDET")
-	ophdr_dev=fnget_dev("OPE_ORDHDR")
-	dim ophdr_tpl$:fnget_tpl$("OPE_ORDHDR")
-	opm02_dev=fnget_dev("OPC_LINECODE")
-	dim opm02_tpl$:fnget_tpl$("OPC_LINECODE")
+	if callpoint!.getDevObject("kit")<>"Y" then
+		opdet_dev=fnget_dev("OPE_ORDDET")
+		dim opdet_tpl$:fnget_tpl$("OPE_ORDDET")
+		ophdr_dev=fnget_dev("OPE_ORDHDR")
+		dim ophdr_tpl$:fnget_tpl$("OPE_ORDHDR")
+		opm02_dev=fnget_dev("OPC_LINECODE")
+		dim opm02_tpl$:fnget_tpl$("OPC_LINECODE")
 
-	read(opdet_dev,key=firm_id$+"E"+item$+whse$,knum="STAT_ITEM_CUS_IN",dom=*next)
+		read(opdet_dev,key=firm_id$+"E"+item$+whse$,knum="STAT_ITEM_CUS_IN",dom=*next)
 
-	while 1
-		optdet_key$=key(opdet_dev,end=*break)
-		if pos(firm_id$+"E"+item$+whse$=optdet_key$)<>1 then break
-		read record (opdet_dev) opdet_tpl$
-		if opdet_tpl.commit_flag$<>"Y" then continue
+		while 1
+			optdet_key$=key(opdet_dev,end=*break)
+			if pos(firm_id$+"E"+item$+whse$=optdet_key$)<>1 then break
+			read record (opdet_dev) opdet_tpl$
+			if opdet_tpl.commit_flag$<>"Y" then continue
 
-		rem --- "Check header records for quotes
-		find record (ophdr_dev,key=opdet_tpl.firm_id$+opdet_tpl.ar_type$+opdet_tpl.customer_id$+opdet_tpl.order_no$+opdet_tpl.ar_inv_no$,dom=*continue) ophdr_tpl$
-		if ophdr_tpl.invoice_type$="P" or pos(opdet_tpl.trans_status$="ER")=0 then continue
+			rem --- "Check header records for quotes
+			find record (ophdr_dev,key=opdet_tpl.firm_id$+opdet_tpl.ar_type$+opdet_tpl.customer_id$+opdet_tpl.order_no$+opdet_tpl.ar_inv_no$,dom=*continue) ophdr_tpl$
+			if ophdr_tpl.invoice_type$="P" or pos(opdet_tpl.trans_status$="ER")=0 then continue
 
-		rem --- "Check line code for drop ships
-		find record (opm02_dev,key=opdet_tpl.firm_id$+opdet_tpl.line_code$,dom=*continue) opm02_tpl$
-		if pos(opm02_tpl.line_type$="MNO")<>0 or opm02_tpl.dropship$="Y" then continue
+			rem --- "Check line code for drop ships
+			find record (opm02_dev,key=opdet_tpl.firm_id$+opdet_tpl.line_code$,dom=*continue) opm02_tpl$
+			if pos(opm02_tpl.line_type$="MNO")<>0 or opm02_tpl.dropship$="Y" then continue
 
-		op_qty = op_qty + opdet_tpl.qty_ordered
-		endif
-	wend
+			op_qty = op_qty + opdet_tpl.qty_ordered
+			endif
+		wend
 
-	callpoint!.setColumnData("<<DISPLAY>>.COMMIT_SO",str(op_qty),1)
+		callpoint!.setColumnData("<<DISPLAY>>.COMMIT_SO",str(op_qty),1)
+	endif
 
 rem --- Get total on WO Finished Goods (On Order)
 
@@ -224,44 +226,46 @@ rem --- Get total on WO Finished Goods (On Order)
 
 rem --- Get WO commits
 
-		womatdtl_dev=fnget_dev("SFE_WOMATDTL")
-		dim womatdtl_tpl$:fnget_tpl$("SFE_WOMATDTL")
-		womatisd_dev=fnget_dev("SFE_WOMATISD")
-		dim womatisd_tpl$:fnget_tpl$("SFE_WOMATISD")
+		if callpoint!.getDevObject("kit")<>"Y" then
+			womatdtl_dev=fnget_dev("SFE_WOMATDTL")
+			dim womatdtl_tpl$:fnget_tpl$("SFE_WOMATDTL")
+			womatisd_dev=fnget_dev("SFE_WOMATISD")
+			dim womatisd_tpl$:fnget_tpl$("SFE_WOMATISD")
 
-		rem --- Get WO commits for open WOs
-		read(womatdtl_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
-		while 1
-			read record (womatdtl_dev,end=*break)womatdtl_tpl$
-			if firm_id$<>womatdtl_tpl.firm_id$ break
-			if whse$<>womatdtl_tpl.warehouse_id$ break
-			if item$<>womatdtl_tpl.item_id$ break
-			womatdtl_qty = womatdtl_qty + womatdtl_tpl.qty_ordered
-		wend
+			rem --- Get WO commits for open WOs
+			read(womatdtl_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
+			while 1
+				read record (womatdtl_dev,end=*break)womatdtl_tpl$
+				if firm_id$<>womatdtl_tpl.firm_id$ break
+				if whse$<>womatdtl_tpl.warehouse_id$ break
+				if item$<>womatdtl_tpl.item_id$ break
+				womatdtl_qty = womatdtl_qty + womatdtl_tpl.qty_ordered
+			wend
 
-		rem --- Include additional committments made after WO was released
-		read(womatisd_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
-		while 1
-			read record (womatisd_dev,end=*break)womatisd_tpl$
-			if firm_id$<>womatisd_tpl.firm_id$ break
-			if whse$<>womatisd_tpl.warehouse_id$ break
-			if item$<>womatisd_tpl.item_id$ break
-			rem --- Skip commits already counted for open WOs
-			if cvs(womatisd_tpl.womatdtl_seq_ref$,2)="" then
-				rem --- Not part of released WO
-				womatdtl_qty = womatdtl_qty + womatisd_tpl.qty_ordered
-			else
-				rem --- Only count portion of issue's qty_issued that is greater than released WO's qty_ordered
-				womatdtl_key$=firm_id$+womatisd_tpl.wo_location$+womatisd_tpl.wo_no$+womatisd_tpl.womatdtl_seq_ref$
-				findrecord(womatdtl_dev,key=womatdtl_key$,knum="PRIMARY",err=*endif)womatdtl_tpl$
-				if womatisd_tpl.qty_ordered - womatisd_tpl.tot_qty_iss > womatdtl_tpl.qty_ordered - womatdtl_tpl.tot_qty_iss then
-					womatdtl_qty = womatdtl_qty - womatdtl_tpl.qty_ordered
+			rem --- Include additional committments made after WO was released
+			read(womatisd_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
+			while 1
+				read record (womatisd_dev,end=*break)womatisd_tpl$
+				if firm_id$<>womatisd_tpl.firm_id$ break
+				if whse$<>womatisd_tpl.warehouse_id$ break
+				if item$<>womatisd_tpl.item_id$ break
+				rem --- Skip commits already counted for open WOs
+				if cvs(womatisd_tpl.womatdtl_seq_ref$,2)="" then
+					rem --- Not part of released WO
 					womatdtl_qty = womatdtl_qty + womatisd_tpl.qty_ordered
+				else
+					rem --- Only count portion of issue's qty_issued that is greater than released WO's qty_ordered
+					womatdtl_key$=firm_id$+womatisd_tpl.wo_location$+womatisd_tpl.wo_no$+womatisd_tpl.womatdtl_seq_ref$
+					findrecord(womatdtl_dev,key=womatdtl_key$,knum="PRIMARY",err=*endif)womatdtl_tpl$
+					if womatisd_tpl.qty_ordered - womatisd_tpl.tot_qty_iss > womatdtl_tpl.qty_ordered - womatdtl_tpl.tot_qty_iss then
+						womatdtl_qty = womatdtl_qty - womatdtl_tpl.qty_ordered
+						womatdtl_qty = womatdtl_qty + womatisd_tpl.qty_ordered
+					endif
 				endif
-			endif
-		wend
+			wend
 
-		callpoint!.setColumnData("<<DISPLAY>>.COMMIT_WO",str(womatdtl_qty),1)
+			callpoint!.setColumnData("<<DISPLAY>>.COMMIT_WO",str(womatdtl_qty),1)
+		endif
 	endif
 
 [[IVM_ITEMWHSE.AREC]]

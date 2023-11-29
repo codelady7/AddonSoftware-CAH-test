@@ -50,8 +50,9 @@ rem --- Get user approval to proceed
 
 rem --- Open/Lock files
 
-    files=13,begfile=1,endfile=files
+    files=12,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="ivm-01",ids$[1]="IVM_ITEMMAST"
     files$[2]="ivm-02",ids$[2]="IVM_ITEMWHSE",options$[2]="L"; rem Lock
     files$[3]="ivm-07",ids$[3]="IVM_LSMASTER",options$[3]="L"; rem Lock
     files$[4]="opt-01",ids$[4]="OPE_ORDHDR"
@@ -65,6 +66,7 @@ rem --- Open/Lock files
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit_no_update
+    ivm01_dev=channels[1]
     ivm02_dev=channels[2]
     ivm07_dev=channels[3]
     ope01_dev=channels[4]
@@ -78,7 +80,7 @@ rem --- Open/Lock files
 
 rem --- Dimension string templates
 
-    dim ivm02a$:templates$[2],ivm07a$:templates$[3],ope01a$:templates$[4],
+    dim ivm01a$:templates$[1],ivm02a$:templates$[2],ivm07a$:templates$[3],ope01a$:templates$[4],
 :       ope11a$:templates$[5],ope21a$:templates$[6],
 :       opm02a$:templates$[8],
 :       ivs01a$:templates$[9],ars01a$:templates$[10],sfs01a$:templates$[11]
@@ -196,6 +198,9 @@ rem --- Rebuild From ope-11 Committed
             read record (ope11_dev,end=*break)ope11a$
             if ope11a.firm_id$<>firm_id$ then break
             if pos(ope11a.trans_status$="ER")=0 then continue
+            redim ivm01a$
+            readrecord(ivm01_dev,key=ope11a.firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+            if ivm01a.kit$="Y" then continue
 			total_recs=total_recs+1
 			if mod(total_recs,milestone)=0 call stbl("+DIR_PGM")+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
             find record (ope01_dev,key=ope11a.firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$,dom=*continue) ope01a$; rem "Check header records for quotes
@@ -267,7 +272,10 @@ rem --- Rebuild From Shop Floor Committed
         read (sfe25_dev,key=firm_id$,dom=*next)
         while 1
             read record (sfe25_dev,end=*break)sfe25a$
-            if sfe25a$.firm_id$<>firm_id$ then break
+            if sfe25a.firm_id$<>firm_id$ then break
+            redim ivm01a$
+            readrecord(ivm01_dev,key=sfe25a.firm_id$+sfe25a.item_id$,dom=*next)ivm01a$
+            if ivm01a.kit$="Y" then continue
 			total_recs=total_recs+1
             if mod(total_recs,milestone)=0 call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
             found=0
@@ -308,7 +316,10 @@ rem --- Rebuild From Shop Floor Committed
         read (sfe23_dev,key=firm_id$,dom=*next)
         while more
             read record (sfe23_dev,end=*break)sfe23a$
-            if sfe23a$.firm_id$<>firm_id$ then break
+            if sfe23a.firm_id$<>firm_id$ then break
+            redim ivm01a$
+            readrecord(ivm01_dev,key=sfe23a.firm_id$+sfe23a.item_id$,dom=*next)ivm01a$
+            if ivm01a.kit$="Y" then continue
 			total_recs=total_recs+1
             if mod(total_recs,milestone)=0 call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
             found=0

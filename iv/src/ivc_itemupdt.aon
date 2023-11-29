@@ -231,33 +231,8 @@ rem --- ivm-01 Item Master
         if ivm01_extracted then read(ivm01_dev)
     endif
 
-rem --- Explode kits into their components
-    if ivm01a.kit$="Y" then
-        num_files=1
-        dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-        open_tables$[1]="BMM_BILLMAT",  open_opts$[1]="OTA"
-        gosub open_tables
-        if status then goto done; rem --- Kits require Bill Of Materials material requirements
-        bmmBillMat_dev=num(open_chans$[1])
-        dim bmmBillMat$:open_tpls$[1]
-
-    rem --- Explode this kit
-        read(bmmBillMat_dev,key=firm_id$+item$,dom=*next)
-        while 1
-            kitKey$=key(bmmBillMat_dev,end=*break)
-            if pos(firm_id$+item$=kitKey$)<>1 then break
-            readrecord(bmmBillMat_dev)bmmBillMat$
-
-            items$[1]=whse$
-            items$[2]=bmmBillMat.item_id$
-            refs[0]=qty*bmmBillMat.qty_required
-            call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-            read(bmmBillMat_dev,key=kitKey$)
-        wend
-
-        rem --- The kit itself is not stocked, just its components.
-        goto done
-    endif
+rem --- Kits are not stocked, so do not commit/uncommit them
+    if ivm01a.kit$="Y" then goto done
 
 rem --- ivm-02 Warehouse
 
