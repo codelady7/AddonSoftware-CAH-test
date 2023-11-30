@@ -316,19 +316,9 @@ rem --- Initialize "kit" DevObject
 	dim ivm01a$:ivm01_tpl$
 	ivm01a_key$=firm_id$+item$
 	find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
-	rem --- Don't allow a kit if there is no Line Code with a Memo Line Type.
 	if ivm01a.kit$="Y" then
-		memoCode$=callpoint!.getDevObject("memoCode")
-		if memoCode$<>"" then
-			callpoint!.setDevObject("kit","Y")
-			callpoint!.setDevObject("memoCode",memoCode$)
-			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
-		else
-			msg_id$="OP_NO_MEMO_LINE"
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			break
-		endif
+		callpoint!.setDevObject("kit","Y")
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 	else
 		callpoint!.setDevObject("kit","")
 	endif
@@ -1338,20 +1328,13 @@ rem "Inventory Inactive Feature"
 		break
 	endif
 
-rem --- Don't allow a kit if there is no Line Code with a Memo Line Type.
+rem --- Initialize "kit" DevObject
 	if ivm01a.kit$="Y" then
-		memoCode$=callpoint!.getDevObject("memoCode")
-		if memoCode$<>"" then
-			callpoint!.setDevObject("kit","Y")
-			callpoint!.setDevObject("memoCode",memoCode$)
-			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
-			callpoint!.setOptionEnabled("RCPR",0)
-		else
-			msg_id$="OP_NO_MEMO_LINE"
-			gosub disp_message
-			callpoint!.setStatus("ABORT")
-			break
-		endif
+		callpoint!.setDevObject("kit","Y")
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		callpoint!.setOptionEnabled("RCPR",0)
+	else
+		callpoint!.setDevObject("kit","")
 	endif
 
 rem --- Do not allow changing item when OP parameter set for asking about creating Work Order and item is committed.
@@ -2985,7 +2968,7 @@ rem =========================================================
 check_ship_qty: rem --- Warn if ship quantity is more than currently available.
 rem =========================================================
 	if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG") = "Y" and user_tpl.line_type$ <> "N" and
-:	user_tpl.line_dropship$ <> "Y" and callpoint!.getDevObject("warn_not_avail")="Y" then
+:	user_tpl.line_dropship$ <> "Y" and callpoint!.getDevObject("warn_not_avail")="Y" and callpoint!.getDevObject("kit")<>"Y" then
 		shipqty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
 		prev_available=num(userObj!.getItem(user_tpl.avail_avail).getText())
 		curr_available=prev_available+callpoint!.getDevObject("prior_qty")

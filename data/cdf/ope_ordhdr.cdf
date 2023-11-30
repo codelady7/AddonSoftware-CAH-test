@@ -2577,40 +2577,6 @@ rem --- Use standard magnifying glass lookup image on SNAME drilldown button
 		endif
 	next i
 
-rem --- If Bill Of Materials is installed, setup for possible kitting.
-	call stbl("+DIR_PGM")+"adc_application.aon","BM",info$[all]
-	bm$=info$[20]
-	if bm$="Y"
-
-		rem --- Using a kit requires a Line Code with a Memo Line Type.
-		opc_linecode_dev = fnget_dev("OPC_LINECODE")
-		dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
-		memoCode$=""
-		read(opc_linecode_dev,key=firm_id$,dom=*next)
-		while 1
-			opc_linecode_key$=key(opc_linecode_dev,end=*break)
-			if pos(firm_id$=opc_linecode_key$)<>1 then break
-			readrecord(opc_linecode_dev)opc_linecode$
-			if opc_linecode.line_type$<>"M" then continue
-			memoCode$=opc_linecode.line_code$
-			break
-		wend
-		callpoint!.setDevObject("memoCode",memoCode$)
-
-		rem --- Using a kit requires the Bill Of Materials Master table.
-		num_files=1
-		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-		open_tables$[1]="BMM_BILLMAT",  open_opts$[1]="OTA"
-		gosub open_tables
-
-		rem --- Using a kit requires the Inventory item description lengths.
-		itemDescLen! = BBjAPI().makeVector()
-		itemDescLen!.addItem(num(ivs01a.desc_len_01$))
-		itemDescLen!.addItem(num(ivs01a.desc_len_02$))
-		itemDescLen!.addItem(num(ivs01a.desc_len_03$))
-		callpoint!.setDevObject("itemDescLen",itemDescLen!)
-	endif
-
 [[OPE_ORDHDR.BWAR]]
 rem --- Has customer and order number been entered?
 	ordHelp! = cast(OrderHelper, callpoint!.getDevObject("order_helper_object"))
