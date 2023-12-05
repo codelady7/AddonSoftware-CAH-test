@@ -293,23 +293,6 @@ rem --- Set previous values
 
 	callpoint!.setDevObject("whse_item_warned","")
 
-rem --- Set buttons
-
-	gosub able_lot_button
-
-	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) <> "Y" then
-		gosub enable_repricing
-		gosub enable_addl_opts
-	endif
-
-rem --- Set availability info
-
-	gosub set_avail
-
-rem --- May want to skip line code entry, and/or warehouse code entry, the first time.
-	callpoint!.setDevObject("skipLineCode",user_tpl.skip_ln_code$)
-	callpoint!.setDevObject("skipWHCode",user_tpl.skip_whse$)
-
 rem --- Initialize "kit" DevObject
 	ivm01_dev=fnget_dev("IVM_ITEMMAST")
 	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
@@ -322,6 +305,22 @@ rem --- Initialize "kit" DevObject
 	else
 		callpoint!.setDevObject("kit","")
 	endif
+
+rem --- Set buttons
+
+	gosub able_lot_button
+	gosub able_kits_button
+
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) <> "Y" then
+		gosub enable_repricing
+		gosub enable_addl_opts
+	endif
+
+	gosub set_avail
+
+rem --- May want to skip line code entry, and/or warehouse code entry, the first time.
+	callpoint!.setDevObject("skipLineCode",user_tpl.skip_ln_code$)
+	callpoint!.setDevObject("skipWHCode",user_tpl.skip_whse$)
 
 [[OPE_ORDDET.AOPT-ADDL]]
 print "Det:AOPT.ADDL"; rem debug
@@ -490,6 +489,45 @@ rem --- Return focus to where we were (Detail line grid)
 rem --- invoke the comments dialog
 
 	gosub comment_entry
+
+[[OPE_ORDDET.AOPT-KITS]]
+rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
+	rem --- Hold on to this detail record for use in OPT_INVKITDET grid
+	callpoint!.setDevObject("kitDetailLine",rec_data$)
+	callpoint!.setDevObject("orderDate",user_tpl.order_date$)
+	callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+	callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+	callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+
+	ar_type$ = callpoint!.getColumnData("OPE_ORDDET.AR_TYPE")
+	cust$ = callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
+	order$ = callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
+	invoice_no$ = callpoint!.getColumnData("OPE_ORDDET.AR_INV_NO")
+	seq$ = callpoint!.getColumnData("OPE_ORDDET.INTERNAL_SEQ_NO")
+	key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+
+	dim dflt_data$[6,1]
+	dflt_data$[1,0] = "TRANS_STATUS"
+	dflt_data$[1,1] = "E"
+	dflt_data$[2,0] = "AR_TYPE"
+	dflt_data$[2,1] = ar_type$
+	dflt_data$[3,0] = "CUSTOMER_ID"
+	dflt_data$[3,1] = cust$
+	dflt_data$[4,0] = "ORDER_NO"
+	dflt_data$[4,1] = order$
+	dflt_data$[5,0] = "AR_INV_NO"
+	dflt_data$[5,1] = invoice_no$
+	dflt_data$[6,0] = "ORDDET_SEQ_REF"
+	dflt_data$[6,1] = seq$
+
+	call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:		"OPT_INVKITDET", 
+:		stbl("+USER_ID"), 
+:		"MNT", 
+:		key_pfx$, 
+:		table_chans$[all], 
+:		"",
+:		dflt_data$[all]
 
 [[OPE_ORDDET.AOPT-LENT]]
 rem --- Save current context so we'll know where to return from lot lookup
@@ -717,6 +755,7 @@ rem --- Set defaults for new record
 rem --- Buttons start disabled
 
 	callpoint!.setOptionEnabled("LENT",0)
+	callpoint!.setOptionEnabled("KITS",0)
 	callpoint!.setOptionEnabled("RCPR",0)
 	callpoint!.setOptionEnabled("ADDL",0)
 	callpoint!.setOptionEnabled("COMM",0)
@@ -1045,6 +1084,44 @@ awri_update_hdr: rem --- Update header
 		endif
 	endif
 
+rem wgh ... 7491 ...
+rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
+	if callpoint!.getDevObject("kit")="Y" and curr_qty<>0 then
+		rem --- Hold on to this detail record for use in OPT_INVKITDET grid
+		callpoint!.setDevObject("kitDetailLine",rec_data$)
+		callpoint!.setDevObject("kitRowNew",callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()))
+		callpoint!.setDevObject("kitRowModified",callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()))
+		callpoint!.setDevObject("orderDate",user_tpl.order_date$)
+		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+		callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+		callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+
+		key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+
+		dim dflt_data$[6,1]
+		dflt_data$[1,0] = "TRANS_STATUS"
+		dflt_data$[1,1] = "E"
+		dflt_data$[2,0] = "AR_TYPE"
+		dflt_data$[2,1] = ar_type$
+		dflt_data$[3,0] = "CUSTOMER_ID"
+		dflt_data$[3,1] = cust$
+		dflt_data$[4,0] = "ORDER_NO"
+		dflt_data$[4,1] = order$
+		dflt_data$[5,0] = "AR_INV_NO"
+		dflt_data$[5,1] = invoice_no$
+		dflt_data$[6,0] = "ORDDET_SEQ_REF"
+		dflt_data$[6,1] = seq$
+
+		call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:			"OPT_INVKITDET", 
+:			stbl("+USER_ID"), 
+:			"MNT", 
+:			key_pfx$, 
+:			table_chans$[all], 
+:			"",
+:			dflt_data$[all]
+	endif
+
 rem --- set prior's = curr's here, since row has been written
 rem --- this way, if we stay on the same row, as will be the case if we've pressed Recalc, Lot/Ser, or Additional buttons,
 rem --- then next time thru AWRI it won't see a false difference between curr and pri, so won't over-commit
@@ -1330,12 +1407,30 @@ rem "Inventory Inactive Feature"
 
 rem --- Initialize "kit" DevObject
 	if ivm01a.kit$="Y" then
+		rem --- Can NOT dropship a kit
+		file$ = "OPC_LINECODE"
+		opcLineCode_dev=fnget_dev("OPC_LINECODE")
+		dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
+		line_code$=callpoint!.getColumnData("OPE_ORDDET.LINE_CODE")
+		findrecord(opcLineCode_dev,key=firm_id$+line_code$,dom=*endif)opcLineCode$
+		if opcLineCode.dropship$="Y" then
+			msg_id$="OP_DROPSHIP_KIT"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=cvs(item$,2)
+			gosub disp_message
+			callpoint!.setStatus("ACTIVATE-ABORT")
+			break
+		endif
+
 		callpoint!.setDevObject("kit","Y")
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 		callpoint!.setOptionEnabled("RCPR",0)
 	else
 		callpoint!.setDevObject("kit","")
 	endif
+
+rem --- Enable/disable KITS button
+	gosub able_kits_button
 
 rem --- Do not allow changing item when OP parameter set for asking about creating Work Order and item is committed.
 
@@ -1614,6 +1709,9 @@ rem --- When OP parameter set for asking about creating Work Order, check if the
 	callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP",str(boqty))
 	gosub update_record_fields
 
+rem --- Enable/disable KITS button
+	gosub able_kits_button
+
 rem --- Warn if ship quantity is more than currently available.
 	gosub check_ship_qty
 
@@ -1716,6 +1814,9 @@ rem --- Warn if ship quantity is more than currently available.
 rem --- Skip UNIT_PRICE for kits
 	if callpoint!.getDevObject("kit")="Y" then callpoint!.setFocus(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_BACKORD_DSP",1)
 
+rem --- Enable/disable KITS button
+	gosub able_kits_button
+
 [[<<DISPLAY>>.QTY_ORDERED_DSP.AVEC]]
 rem --- Extend price now that grid vector has been updated, if the order quantity has changed
 if num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) <> user_tpl.prev_qty_ord then
@@ -1815,6 +1916,9 @@ rem --- When OP parameter set for asking about creating Work Order, check if the
 	rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
 	callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP",str(shipqty))
 	gosub update_record_fields
+
+rem --- Enable/disable KITS button
+	gosub able_kits_button
 
 rem --- Warn if ship quantity is more than currently available.
 	gosub check_ship_qty
@@ -2676,6 +2780,21 @@ rem ==========================================================================
 		callpoint!.setOptionEnabled("LENT",1)
 	else
 		callpoint!.setOptionEnabled("LENT",0)
+	endif
+
+	return
+
+rem ==========================================================================
+able_kits_button: rem --- Enable/disable Kit Components KITS button
+rem ==========================================================================
+
+	if callpoint!.isEditMode() and callpoint!.getDevObject("kit")="Y" and
+:	num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))<>0 and
+:	callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" and 
+:	callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow())<>"Y" then
+		callpoint!.setOptionEnabled("KITS",1)
+	else
+		callpoint!.setOptionEnabled("KITS",0)
 	endif
 
 	return
