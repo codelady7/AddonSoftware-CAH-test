@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_orddet">BA8EF92D04BD6C841674DEB28D164BD7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_orddet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_orddet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_orddet">20231205</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_orddet">20231205</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_orddet">135656</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_orddet">20231206</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_orddet">20231206</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_orddet">173738</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_orddet">OPT_INVDET      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_orddet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_orddet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -63,7 +63,7 @@
 		<RECORD id="ddm_table_aopt.ope_orddet01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_orddet01">OPE_ORDDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_orddet01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_orddet01">&Serial Entry</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_orddet01">&Lot/Serial Entry</DD_ATTR_AOPT>
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_orddet01">LENT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_orddet01">B</DD_ATTR_AOPT_FM>
 		</RECORD>

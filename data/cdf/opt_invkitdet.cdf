@@ -53,9 +53,101 @@ rem --- Was this kit just added to the order?
 	callpoint!.setDevObject("shortageVect",shortage_vect!)
 
 rem --- Was the order for this kit changed?
-	if callpoint!.getDevObject("kitRowModified")="Y" then
+	if callpoint!.getDevObject("kitRowModified")="Y" and callpoint!.getDevObject("kitRowNew")<>"Y" then
+		shortage_vect!=BBjAPI().makeVector()
+		round_precision = num(callpoint!.getDevObject("precision"))
+
 		rem --- Update this kit's components for the changes made to the order
-rem wgh ... 7491 ... update component entries for this kit
+		kit_ordered=kitDetailLine.qty_ordered
+		kit_shipped=kitDetailLine.qty_shipped
+		kit_commit$=kitDetailLine.commit_flag$
+		kit_prior_qty=callpoint!.getDevObject("prior_qty")
+
+		optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+		dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+		kit_keyPrefix$=cvs(callpoint!.getKeyPrefix(),2)
+		read(optInvKitDet_dev,key=kit_keyPrefix$,knum="AO_STAT_CUST_ORD",dom=*next)
+		while 1
+			thisKey$=key(optInvKitDet_dev,end=*break)
+			if pos(kit_keyPrefix$=thisKey$)<>1 then break
+			extractrecord(optInvKitDet_dev)optInvKitDet$
+			comp_per_kit=optInvKitDet.comp_per_kit
+			adjusted_kit_ordered=round(kit_ordered*comp_per_kit,round_precision)
+
+			rem --- If the modified kit record is committed and the existing component record is committed, then …
+			if kit_commit$="Y" and optInvKitDet.commit_flag$="Y" then
+				rem --- If adjusted kit_ordered>optInvKitDet.qty_ordered then ...
+				if adjusted_kit_ordered>optInvKitDet.qty_ordered then
+					rem --- Commit adjusted kit_ordered-optInvKitDet.qty_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+					items$[1]=optInvKitDet.warehouse_id$
+					items$[2]=optInvKitDet.item_id$
+					refs[0]=adjusted_kit_ordered-optInvKitDet.qty_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				endif
+
+				rem --- If adjusted kit_ordered<optInvKitDet.qty_ordered then ...
+				if adjusted_kit_ordered<optInvKitDet.qty_ordered then
+					rem --- Uncommit optInvKitDet.qty_ordered-adjusted kit_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+					items$[1]=optInvKitDet.warehouse_id$
+					items$[2]=optInvKitDet.item_id$
+					refs[0]=optInvKitDet.qty_ordered-adjusted_kit_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				endif
+			endif
+
+			rem --- If the modified kit record is committed and the existing component record is NOT committed, then ...
+			if kit_commit$="Y" and optInvKitDet.commit_flag$<>"Y" then
+				rem --- Commit the adjusted kit_ordered
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+				items$[1]=optInvKitDet.warehouse_id$
+				items$[2]=optInvKitDet.item_id$
+				refs[0]=adjusted_kit_ordered
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			endif
+
+			rem --- If the modified kit record is NOT committed and the existing component record is committed, then ...
+			if kit_commit$<>"Y" and optInvKitDet.commit_flag$="Y" then
+				rem --- Uncommit optInvKitDet.qty_ordered
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+				items$[1]=optInvKitDet.warehouse_id$
+				items$[2]=optInvKitDet.item_id$
+				refs[0]=optInvKitDet.qty_ordered
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			endif
+
+			rem --- If the modified kit record is NOT committed and the existing component record is NOT committed, then ... 
+			if kit_commit$<>"Y" and optInvKitDet.commit_flag$<>"Y" then
+				rem --- Do NOT commit/uncommit inventory
+			endif
+
+			rem --- Update this kit component record
+			optInvKitDet.commit_flag$=kit_commit$
+			optInvKitDet.qty_ordered=round(kit_ordered*comp_per_kit,round_precision)
+			optInvKitDet.qty_shipped=round(kit_shipped*comp_per_kit,round_precision)
+			optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
+			writerecord(optInvKitDet_dev)optInvKitDet$
+
+			rem --- Warn if ship quantity is more than currently available.
+			ivm02_dev=fnget_dev("IVM_ITEMWHSE")
+			dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
+			readrecord(ivm02_dev,key=firm_id$+optInvKitDet.warehouse_id$+optInvKitDet.item_id$,dom=*next)ivm02a$
+			shipqty=optInvKitDet.qty_shipped
+			available=ivm02a.qty_on_hand-ivm02a.qty_commit
+			if available<=0 then
+				available_vect!=BBjAPI().makeVector()
+				available_vect!.addItem(optInvKitDet.item_id$)
+				available_vect!.addItem(shipqty)
+				available_vect!.addItem(available)
+				shortage_vect!.addItem(available_vect!)
+			endif
+			callpoint!.setDevObject("shortageVect",shortage_vect!)
+		wend
 	endif
 
 [[OPT_INVKITDET.BGDR]]
@@ -179,6 +271,7 @@ rem =========================================================
 		else
 			optInvKitDet.conv_factor=1
 		endif
+		optInvKitDet.comp_per_kit=bmmBillMat.qty_required*kit_ordered/kitDetailLine.qty_ordered
 
 		redim ivm02a$
 		readrecord(ivm02_dev,key=firm_id$+optInvKitDet.warehouse_id$+optInvKitDet.item_id$,dom=*next)ivm02a$
@@ -242,7 +335,8 @@ rem =========================================================
 
 		rem --- Warn if ship quantity is more than currently available.
 		shipqty=optInvKitDet.qty_shipped
-		available=ivm02a.qty_on_hand-ivm02a.qty_commit; rem --- Note: ivm_itemwhse record read before this component was committed
+		available=ivm02a.qty_on_hand-ivm02a.qty_commit
+		rem --- Note: ivm_itemwhse record read before this component was committed
 		if shipqty>available then
 			available_vect!=BBjAPI().makeVector()
 			available_vect!.addItem(optInvKitDet.item_id$)

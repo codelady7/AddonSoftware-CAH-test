@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invkitdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invkitdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invkitdet">2460278</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20231205</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20231205</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">135754</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20231206</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20231206</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">173504</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invkitdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invkitdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -109,7 +109,202 @@
 		<RECORD id="ddm_table_tpls.opt_invkitdet">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.opt_invkitdet">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.opt_invkitdet"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.opt_invkitdet">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),orddet_seq_ref:c(12),internal_seq_no:c(12),line_no:c(3),trans_status:c(1),line_code:c(1),kit_id:c(20),warehouse_id:c(2),item_id:c(20),product_type:c(3),um_sold:c(6),est_shp_date:c(8),commit_flag:c(1),pick_flag:c(1),man_price:c(1),vendor_id:c(6),dropship:c(1),order_memo:c(40),memo_1024:c(1024*=1),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*),conv_factor:n(7*),unit_cost:n(7*),unit_price:n(7*),qty_ordered:n(7*),qty_backord:n(7*),qty_shipped:n(7*),std_list_prc:n(7*),ext_price:n(7*),taxable_amt:n(7*),disc_percent:n(7*),comm_percent:n(7*),comm_amt:n(7*),spl_comm_pct:n(7*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.opt_invkitdet">firm_id:c(2),ar_type:c(2),customer_id:c(6),order_no:c(7),ar_inv_no:c(7),orddet_seq_ref:c(12),internal_seq_no:c(12),line_no:c(3),trans_status:c(1),line_code:c(1),kit_id:c(20),warehouse_id:c(2),item_id:c(20),product_type:c(3),um_sold:c(6),est_shp_date:c(8),commit_flag:c(1),pick_flag:c(1),man_price:c(1),vendor_id:c(6),dropship:c(1),order_memo:c(40),memo_1024:c(1024*=1),created_user:c(16),created_date:c(8),created_time:c(4),mod_user:c(16),mod_date:c(8),mod_time:c(4),arc_user:c(16),arc_date:c(8),arc_time:c(4),batch_no:c(7),audit_number:n(7*),conv_factor:n(7*),comp_per_kit:n(7*),unit_cost:n(7*),unit_price:n(7*),qty_ordered:n(7*),qty_backord:n(7*),qty_shipped:n(7*),std_list_prc:n(7*),ext_price:n(7*),taxable_amt:n(7*),disc_percent:n(7*),comm_percent:n(7*),comm_amt:n(7*),spl_comm_pct:n(7*)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.opt_invkitdetarc_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetarc_useradm_user">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetarc_useradm_user">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetarc_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetarc_useradm_user">FK_OPT_INVKITDET_ARC_USER_ADM_USER                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetcreated_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetcreated_useradm_user">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetcreated_useradm_user">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetcreated_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetcreated_useradm_user">FK_OPT_INVKITDET_CREATED_USER_ADM_USER                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetcustomer_idarm_custmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetcustomer_idarm_custmast">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetcustomer_idarm_custmast">FK_OPT_INVKITDET_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                      </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetitem_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetitem_idivm_itemmast">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetitem_idivm_itemmast">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetitem_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetitem_idivm_itemmast">FK_OPT_INVKITDET_ITEM_ID_IVM_ITEMMAST                                                                                                                                                                                                                          </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetkit_idivm_itemmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetkit_idivm_itemmast">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetkit_idivm_itemmast">KIT_ID          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetkit_idivm_itemmast">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetkit_idivm_itemmast">FK_OPT_INVKITDET_KIT_ID_IVM_ITEMMAST                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetline_codeopc_linecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetline_codeopc_linecode">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetline_codeopc_linecode">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetline_codeopc_linecode">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetline_codeopc_linecode">FK_OPT_INVKITDET_LINE_CODE_OPC_LINECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetmod_useradm_user">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetmod_useradm_user">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetmod_useradm_user">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetmod_useradm_user">ADM_USER        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetmod_useradm_user">FK_OPT_INVKITDET_MOD_USER_ADM_USER                                                                                                                                                                                                                             </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetum_soldivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetum_soldivc_umcodes">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetum_soldivc_umcodes">UM_SOLD         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetum_soldivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetum_soldivc_umcodes">FK_OPT_INVKITDET_UM_SOLD_IVC_UMCODES                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.opt_invkitdetvendor_idapm_vendmast">
+			<DD_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetvendor_idapm_vendmast">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.opt_invkitdetvendor_idapm_vendmast">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.opt_invkitdetvendor_idapm_vendmast">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.opt_invkitdetvendor_idapm_vendmast">FK_OPT_INVKITDET_VENDOR_ID_APM_VENDMAST                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">ARC_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetarc_useradm_user0001">ARC_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">CREATED_USER    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetcreated_useradm_user0001">CREATED_USER    </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">ITEM_ID         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetitem_idivm_itemmast0002">ITEM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">KIT_ID          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">KIT_ID          </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">IVM_ITEMMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">ITEM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetkit_idivm_itemmast0002">KIT_ID          </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">LINE_CODE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">OPC_LINECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">LINE_CODE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetline_codeopc_linecode0002">LINE_CODE       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">MOD_USER        </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">ADM_USER        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">USER_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetmod_useradm_user0001">MOD_USER        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">UM_SOLD         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">UM_SOLD         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetum_soldivc_umcodes0002">UM_SOLD         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">VENDOR_ID       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">APM_VENDMAST    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">VENDOR_ID       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.opt_invkitdetvendor_idapm_vendmast0002">VENDOR_ID       </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -3586,8 +3781,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet036">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet036">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet036">036</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet036">UNIT_COST       </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet036">UNIT_COST       </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet036">CONV_FACTOR     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet036">COMP_PER_KIT    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet036">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet036">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet036">Y</DD_FIELD_DELIM>
@@ -3595,8 +3790,8 @@
 			<DD_SYSTEM_REC id="ddm_table_cols.opt_invkitdet036"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.opt_invkitdet036"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.opt_invkitdet036"></DD_MASK_TYPE>
-			<DD_CREATE_DATE id="ddm_table_cols.opt_invkitdet036">20231129</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet036">20231129</DD_LSTREV_DATE>
+			<DD_CREATE_DATE id="ddm_table_cols.opt_invkitdet036">20231206</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet036">20231206</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_CPGM>
@@ -3609,8 +3804,8 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_LABL>
-			<DD_ATTR_LABS id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_LABS>
+			<DD_ATTR_LABL id="ddm_table_cols.opt_invkitdet036">Component Per Kit</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opt_invkitdet036">Comp/Kit</DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.opt_invkitdet036">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_MINL>
 			<DD_ATTR_MAXL id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_MAXL>
@@ -3622,7 +3817,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet036">36</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet036">UNIT_COST</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet036">COMP_PER_KIT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet036"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet036">N</DD_ATTR_FTSR>
@@ -3637,8 +3832,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet037">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet037">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet037">037</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet037">UNIT_PRICE      </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet037">UNIT_PRICE      </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet037">UNIT_COST       </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet037">UNIT_COST       </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet037">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet037">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet037">Y</DD_FIELD_DELIM>
@@ -3671,9 +3866,9 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_invkitdet037"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_invkitdet037"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet037"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet037">40</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet037">37</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet037"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet037">UNIT_PRICE</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet037">UNIT_COST</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet037"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet037"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet037">N</DD_ATTR_FTSR>
@@ -3688,8 +3883,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet038">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet038">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet038">038</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet038">QTY_ORDERED     </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet038">QTY_ORDERED     </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet038">UNIT_PRICE      </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet038">UNIT_PRICE      </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet038">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet038">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet038">Y</DD_FIELD_DELIM>
@@ -3722,9 +3917,9 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_invkitdet038"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_invkitdet038"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet038"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet038">38</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet038">41</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet038"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet038">QTY_ORDERED</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet038">UNIT_PRICE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet038"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet038"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet038">N</DD_ATTR_FTSR>
@@ -3739,8 +3934,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet039">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet039">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet039">039</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet039">QTY_BACKORD     </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet039">QTY_BACKORD     </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet039">QTY_ORDERED     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet039">QTY_ORDERED     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet039">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet039">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet039">Y</DD_FIELD_DELIM>
@@ -3773,9 +3968,9 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_invkitdet039"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_invkitdet039"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet039"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet039">42</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet039">39</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet039"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet039">QTY_BACKORD</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet039">QTY_ORDERED</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet039"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet039"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet039">N</DD_ATTR_FTSR>
@@ -3790,8 +3985,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet040">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet040">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet040">040</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet040">QTY_SHIPPED     </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet040">QTY_SHIPPED     </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet040">QTY_BACKORD     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet040">QTY_BACKORD     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet040">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet040">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet040">Y</DD_FIELD_DELIM>
@@ -3824,9 +4019,9 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_invkitdet040"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_invkitdet040"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet040"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet040">44</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet040">43</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet040"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet040">QTY_SHIPPED</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet040">QTY_BACKORD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet040"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet040"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet040">N</DD_ATTR_FTSR>
@@ -3841,8 +4036,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet041">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet041">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet041">041</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet041">STD_LIST_PRC    </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet041">STD_LIST_PRC    </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet041">QTY_SHIPPED     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet041">QTY_SHIPPED     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet041">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet041">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet041">Y</DD_FIELD_DELIM>
@@ -3875,9 +4070,9 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.opt_invkitdet041"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.opt_invkitdet041"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet041"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet041">46</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet041">45</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet041"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet041">STD_LIST_PRC</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet041">QTY_SHIPPED</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet041"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet041"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet041">N</DD_ATTR_FTSR>
@@ -3892,8 +4087,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet042">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet042">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet042">042</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet042">EXT_PRICE       </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet042">EXT_PRICE       </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet042">STD_LIST_PRC    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet042">STD_LIST_PRC    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet042">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet042">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet042">Y</DD_FIELD_DELIM>
@@ -3928,14 +4123,14 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet042">47</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet042">EXT_PRICE</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet042">STD_LIST_PRC</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet042">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opt_invkitdet042">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opt_invkitdet042">3013</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.opt_invkitdet042">inn_ext_price</DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.opt_invkitdet042">0</DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_BTNS>
@@ -3943,8 +4138,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet043">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet043">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet043">043</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet043">TAXABLE_AMT     </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet043">TAXABLE_AMT     </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet043">EXT_PRICE       </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet043">EXT_PRICE       </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet043">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet043">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet043">Y</DD_FIELD_DELIM>
@@ -3979,14 +4174,14 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet043">48</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet043">TAXABLE_AMT</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet043">EXT_PRICE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet043">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.opt_invkitdet043">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.opt_invkitdet043">3013</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opt_invkitdet043">inn_ext_price</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opt_invkitdet043">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_BTNS>
@@ -3994,8 +4189,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet044">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet044">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet044">044</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet044">DISC_PERCENT    </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet044">DISC_PERCENT    </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet044">TAXABLE_AMT     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet044">TAXABLE_AMT     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet044">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet044">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet044">Y</DD_FIELD_DELIM>
@@ -4030,7 +4225,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet044"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet044">49</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet044"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet044">DISC_PERCENT</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet044">TAXABLE_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet044"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet044"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet044">N</DD_ATTR_FTSR>
@@ -4045,8 +4240,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet045">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet045">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet045">045</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet045">COMM_PERCENT    </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet045">COMM_PERCENT    </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet045">DISC_PERCENT    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet045">DISC_PERCENT    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet045">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet045">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet045">Y</DD_FIELD_DELIM>
@@ -4081,7 +4276,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet045"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet045">50</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet045"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet045">COMM_PERCENT</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet045">DISC_PERCENT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet045"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet045"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet045">N</DD_ATTR_FTSR>
@@ -4096,8 +4291,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet046">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet046">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet046">046</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet046">COMM_AMT        </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet046">COMM_AMT        </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet046">COMM_PERCENT    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet046">COMM_PERCENT    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet046">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet046">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet046">Y</DD_FIELD_DELIM>
@@ -4132,7 +4327,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet046"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet046">51</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet046"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet046">COMM_AMT</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet046">COMM_PERCENT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet046"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet046"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet046">N</DD_ATTR_FTSR>
@@ -4147,8 +4342,8 @@
 		<RECORD id="ddm_table_cols.opt_invkitdet047">
 			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet047">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet047">047</DD_SEQUENCE>
-			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet047">SPL_COMM_PCT    </DD_DATA_NAME>
-			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet047">SPL_COMM_PCT    </DD_DVAR_NAME>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet047">COMM_AMT        </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet047">COMM_AMT        </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet047">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet047">0</DD_COL_OCCURS>
 			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet047">Y</DD_FIELD_DELIM>
@@ -4183,7 +4378,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet047">52</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet047">SPL_COMM_PCT</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet047">COMM_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet047">N</DD_ATTR_FTSR>
@@ -4194,6 +4389,57 @@
 			<DD_ATTR_RADG id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.opt_invkitdet047"></DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.opt_invkitdet048">
+			<DD_TABLE_ALIAS id="ddm_table_cols.opt_invkitdet048">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.opt_invkitdet048">048</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.opt_invkitdet048">SPL_COMM_PCT    </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.opt_invkitdet048">SPL_COMM_PCT    </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.opt_invkitdet048">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.opt_invkitdet048">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.opt_invkitdet048">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.opt_invkitdet048">0A</DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.opt_invkitdet048"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.opt_invkitdet048"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.opt_invkitdet048"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.opt_invkitdet048">20231129</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet048">20231129</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.opt_invkitdet048">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.opt_invkitdet048">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.opt_invkitdet048">53</DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.opt_invkitdet048">SPL_COMM_PCT</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.opt_invkitdet048">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.opt_invkitdet048">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.opt_invkitdet048"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_disp">
@@ -4214,7 +4460,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.opt_invkitdet001"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.opt_invkitdet001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.opt_invkitdet001"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet001">37</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet001">38</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.opt_invkitdet001">3008</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet001">inn_unit_cost_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet001">0</DD_ATTR_CTLC>
@@ -4237,7 +4483,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.opt_invkitdet002"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.opt_invkitdet002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.opt_invkitdet002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet002">39</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet002">40</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.opt_invkitdet002">3009</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet002">inn_qty_ordered_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet002">0</DD_ATTR_CTLC>
@@ -4260,7 +4506,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.opt_invkitdet003"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.opt_invkitdet003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.opt_invkitdet003"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet003">41</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet003">42</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.opt_invkitdet003">3010</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet003">inn_unit_price_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet003">0</DD_ATTR_CTLC>
@@ -4283,7 +4529,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.opt_invkitdet004"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.opt_invkitdet004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.opt_invkitdet004"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet004">43</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet004">44</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.opt_invkitdet004">3011</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet004">inn_qty_backord_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet004">0</DD_ATTR_CTLC>
@@ -4306,7 +4552,7 @@
 			<DD_ATTR_GHDR id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_GHDR>
 			<DD_ATTR_SLEV id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet005">45</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_disp.opt_invkitdet005">46</DD_ATTR_TIND>
 			<DD_ATTR_CTLI id="ddm_table_disp.opt_invkitdet005">3012</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet005">inn_qty_shipped_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet005">0</DD_ATTR_CTLC>
@@ -4611,10 +4857,25 @@
 			<DD_DVAR_NAME id="ddm_column_opts.opt_invkitdetaudit_numberw">AUDIT_NUMBER    </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.opt_invkitdetaudit_numberw">W</DD_ATTR_OPTS>
 		</RECORD>
-		<RECORD id="ddm_column_opts.opt_invkitdetconv_factoro">
-			<DD_TABLE_ALIAS id="ddm_column_opts.opt_invkitdetconv_factoro">OPT_INVKITDET   </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.opt_invkitdetconv_factoro">CONV_FACTOR     </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.opt_invkitdetconv_factoro">O</DD_ATTR_OPTS>
+		<RECORD id="ddm_column_opts.opt_invkitdetconv_factorg">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_invkitdetconv_factorg">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_invkitdetconv_factorg">CONV_FACTOR     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_invkitdetconv_factorg">G</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.opt_invkitdetconv_factorw">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_invkitdetconv_factorw">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_invkitdetconv_factorw">CONV_FACTOR     </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_invkitdetconv_factorw">W</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.opt_invkitdetcomp_per_kitg">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_invkitdetcomp_per_kitg">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_invkitdetcomp_per_kitg">COMP_PER_KIT    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_invkitdetcomp_per_kitg">G</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.opt_invkitdetcomp_per_kitw">
+			<DD_TABLE_ALIAS id="ddm_column_opts.opt_invkitdetcomp_per_kitw">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.opt_invkitdetcomp_per_kitw">COMP_PER_KIT    </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.opt_invkitdetcomp_per_kitw">W</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.opt_invkitdetunit_coste">
 			<DD_TABLE_ALIAS id="ddm_column_opts.opt_invkitdetunit_coste">OPT_INVKITDET   </DD_TABLE_ALIAS>

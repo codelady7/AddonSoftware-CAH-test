@@ -529,6 +529,8 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 :		"",
 :		dflt_data$[all]
 
+rem wgh ... 7491 ... update header totals
+
 [[OPE_ORDDET.AOPT-LENT]]
 rem --- Save current context so we'll know where to return from lot lookup
 
@@ -1084,7 +1086,6 @@ awri_update_hdr: rem --- Update header
 		endif
 	endif
 
-rem wgh ... 7491 ...
 rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 	if callpoint!.getDevObject("kit")="Y" and curr_qty<>0 then
 		rem --- Hold on to this detail record for use in OPT_INVKITDET grid
