@@ -3,12 +3,6 @@ rem  --- Report component shortages
 		gosub reportShortages
 
 [[OPT_INVKITDET.BFMC]]
-rem --- Make sure BMM_BILLMAT has been opened
-	num_files = 1
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="BMM_BILLMAT", open_opts$[1]="OTA"
-	gosub open_tables
-
 rem --- Get the kit's item descripton
 	dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
 	kitDetailLine$=callpoint!.getDevObject("kitDetailLine")
@@ -138,8 +132,8 @@ rem --- Was the order for this kit changed?
 			dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
 			readrecord(ivm02_dev,key=firm_id$+optInvKitDet.warehouse_id$+optInvKitDet.item_id$,dom=*next)ivm02a$
 			shipqty=optInvKitDet.qty_shipped
-			available=ivm02a.qty_on_hand-ivm02a.qty_commit
-			if available<=0 then
+			available=ivm02a.qty_on_hand-(ivm02a.qty_commit-shipqty); rem --- Note: ivm_itemwhse record read AFTER this component was committed
+			if shipqty>available then
 				available_vect!=BBjAPI().makeVector()
 				available_vect!.addItem(optInvKitDet.item_id$)
 				available_vect!.addItem(shipqty)
@@ -276,6 +270,7 @@ rem =========================================================
 		redim ivm02a$
 		readrecord(ivm02_dev,key=firm_id$+optInvKitDet.warehouse_id$+optInvKitDet.item_id$,dom=*next)ivm02a$
 		optInvKitDet.unit_cost=ivm02a.unit_cost
+		optInvKitDet.qty_ordered=round(kit_ordered*bmmBillMat.qty_required,round_precision)
 
 		dim pc_files[6]
 		pc_files[1] = fnget_dev("IVM_ITEMMAST")
@@ -305,7 +300,6 @@ rem =========================================================
 		endif
 		optInvKitDet.unit_price=price
 
-		optInvKitDet.qty_ordered=round(kit_ordered*bmmBillMat.qty_required,round_precision)
 		optInvKitDet.qty_shipped=round(kit_shipped*bmmBillMat.qty_required,round_precision)
 		optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
 		optInvKitDet.std_list_prc=ivm02a.cur_price
@@ -335,8 +329,7 @@ rem =========================================================
 
 		rem --- Warn if ship quantity is more than currently available.
 		shipqty=optInvKitDet.qty_shipped
-		available=ivm02a.qty_on_hand-ivm02a.qty_commit
-		rem --- Note: ivm_itemwhse record read before this component was committed
+		available=ivm02a.qty_on_hand-ivm02a.qty_commit; rem --- Note: ivm_itemwhse record read BEFORE this component was committed
 		if shipqty>available then
 			available_vect!=BBjAPI().makeVector()
 			available_vect!.addItem(optInvKitDet.item_id$)

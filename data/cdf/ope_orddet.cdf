@@ -529,8 +529,6 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 :		"",
 :		dflt_data$[all]
 
-rem wgh ... 7491 ... update header totals
-
 [[OPE_ORDDET.AOPT-LENT]]
 rem --- Save current context so we'll know where to return from lot lookup
 
@@ -1406,33 +1404,6 @@ rem "Inventory Inactive Feature"
 		break
 	endif
 
-rem --- Initialize "kit" DevObject
-	if ivm01a.kit$="Y" then
-		rem --- Can NOT dropship a kit
-		file$ = "OPC_LINECODE"
-		opcLineCode_dev=fnget_dev("OPC_LINECODE")
-		dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
-		line_code$=callpoint!.getColumnData("OPE_ORDDET.LINE_CODE")
-		findrecord(opcLineCode_dev,key=firm_id$+line_code$,dom=*endif)opcLineCode$
-		if opcLineCode.dropship$="Y" then
-			msg_id$="OP_DROPSHIP_KIT"
-			dim msg_tokens$[1]
-			msg_tokens$[1]=cvs(item$,2)
-			gosub disp_message
-			callpoint!.setStatus("ACTIVATE-ABORT")
-			break
-		endif
-
-		callpoint!.setDevObject("kit","Y")
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
-		callpoint!.setOptionEnabled("RCPR",0)
-	else
-		callpoint!.setDevObject("kit","")
-	endif
-
-rem --- Enable/disable KITS button
-	gosub able_kits_button
-
 rem --- Do not allow changing item when OP parameter set for asking about creating Work Order and item is committed.
 
 	if item$<>user_tpl.prev_item$ then
@@ -1553,6 +1524,53 @@ rem --- Initialize UM_SOLD ListButton for a new or changed item
 		rem --- Initialize CONV_FACTOR
 		callpoint!.setColumnData("OPE_ORDDET.CONV_FACTOR","1")
 	endif
+
+rem --- Initialize "kit" DevObject
+	if ivm01a.kit$="Y" then
+		rem --- Can NOT dropship a kit
+		file$ = "OPC_LINECODE"
+		opcLineCode_dev=fnget_dev("OPC_LINECODE")
+		dim opcLineCode$:fnget_tpl$("OPC_LINECODE")
+		line_code$=callpoint!.getColumnData("OPE_ORDDET.LINE_CODE")
+		findrecord(opcLineCode_dev,key=firm_id$+line_code$,dom=*endif)opcLineCode$
+		if opcLineCode.dropship$="Y" then
+			msg_id$="OP_DROPSHIP_KIT"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=cvs(item$,2)
+			gosub disp_message
+			callpoint!.setStatus("ACTIVATE-ABORT")
+			break
+		endif
+
+		callpoint!.setDevObject("kit","Y")
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		callpoint!.setOptionEnabled("RCPR",0)
+
+rem wgh ... 7491 ... testing
+		rem --- Initialize UNIT_PRICE for newly entered kits
+		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
+			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+
+			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
+			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
+			ivm01_dev=fnget_dev("IVM_ITEMMAST")
+			dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+			dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
+			kitDetailLine$=rec_data$
+			kit_item$=item$
+			kit_ordered=1
+			kitExtendedPrice=0
+			gosub getKitExtendedPrice
+			callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(kitExtendedPrice),1)
+		endif
+	else
+		callpoint!.setDevObject("kit","")
+	endif
+
+rem --- Enable/disable KITS button
+	gosub able_kits_button
 
 [[OPE_ORDDET.ITEM_ID.AVEC]]
 print "Det:ITEM_ID.AVEC"; rem debug
@@ -2307,33 +2325,55 @@ rem ==========================================================================
 		return
 	endif
 
-	dim pc_files[6]
-	pc_files[1] = fnget_dev("IVM_ITEMMAST")
-	pc_files[2] = fnget_dev("IVM_ITEMWHSE")
-	pc_files[3] = fnget_dev("IVM_ITEMPRIC")
-	pc_files[4] = fnget_dev("IVC_PRICCODE")
-	pc_files[5] = fnget_dev("ARS_PARAMS")
-	pc_files[6] = fnget_dev("IVS_PARAMS")
+	if callpoint!.getDevObject("kit")<>"Y" then
+		rem --- Pricing a non-kitted item
+		dim pc_files[6]
+		pc_files[1] = fnget_dev("IVM_ITEMMAST")
+		pc_files[2] = fnget_dev("IVM_ITEMWHSE")
+		pc_files[3] = fnget_dev("IVM_ITEMPRIC")
+		pc_files[4] = fnget_dev("IVC_PRICCODE")
+		pc_files[5] = fnget_dev("ARS_PARAMS")
+		pc_files[6] = fnget_dev("IVS_PARAMS")
 
-	call stbl("+DIR_PGM")+"opc_pricing.aon",
-:		pc_files[all],
-:		firm_id$,
-:		wh$,
-:		item$,
-:		user_tpl.price_code$,
-:		cust$,
-:		user_tpl.order_date$,
-:		user_tpl.pricing_code$,
-:		qty_ord*conv_factor,
-:		typeflag$,
-:		price,
-:		disc,
-:		status
+		call stbl("+DIR_PGM")+"opc_pricing.aon",
+:			pc_files[all],
+:			firm_id$,
+:			wh$,
+:			item$,
+:			user_tpl.price_code$,
+:			cust$,
+:			user_tpl.order_date$,
+:			user_tpl.pricing_code$,
+:			qty_ord*conv_factor,
+:			typeflag$,
+:			price,
+:			disc,
+:			status
 
-	if status=999 then
-		exitto std_exit
+		if status=999 then
+			exitto std_exit
+		else
+			price=price*conv_factor
+		endif
 	else
-		price=price*conv_factor
+		rem --- Pricing a kitted item
+rem wgh ... 7491 ... need to modify pricing routine for kits
+		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+		callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+
+		bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
+		dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
+		ivm01_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+		dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
+		kitDetailLine$=rec_data$
+		kit_item$=item$
+		kit_ordered=qty_ord
+		kitExtendedPrice=0
+		gosub getKitExtendedPrice
+		price=kitExtendedPrice/kit_ordered
+		disc=0
 	endif
 
 	if price=0 and callpoint!.getVariableName()<>"<<DISPLAY>>.QTY_ORDERED_DSP" then
@@ -3099,6 +3139,77 @@ rem =========================================================
 		endif
 	endif
 	return
+
+rem =========================================================
+getKitExtendedPrice: rem --- Get a kit's extended price based on the sum of its components' extended price.
+	rem    IN:	bmmBillMat_dev
+	rem  	bmmBillMat$
+	rem  	ivm01_dev
+	rem  	ivm01a$
+	rem		kitDetailLine$
+	rem		kit_item$
+	rem		kit_ordered
+	rem		kitExtendedPrice
+	rem OUT:	kitExtendedPrice
+rem =========================================================
+rem wgh ... 7491 ... getKitExtendedPrice
+	rem --- Explode this kit to get it's extended price
+	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
+	while 1
+		kitKey$=key(bmmBillMat_dev,end=*break)
+		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
+		readrecord(bmmBillMat_dev)bmmBillMat$
+		redim ivm01a$
+		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
+		if ivm01a.kit$="Y" then
+			explodeKey$=kitKey$
+			explodeItem$=kit_item$
+			explodeOrdered=kit_ordered
+			kit_item$=bmmBillMat.item_id$
+			kit_ordered=round(explodeOrdered*bmmBillMat.qty_required,round_precision)
+			gosub getKitExtendedPrice
+
+			read(bmmBillMat_dev,key=explodeKey$)
+			kit_item$=explodeItem$
+			kit_ordered=explodeOrdered
+			continue
+		endif
+
+		qty_ordered=round(kit_ordered*bmmBillMat.qty_required,round_precision)
+		dim pc_files[6]
+		pc_files[1] = fnget_dev("IVM_ITEMMAST")
+		pc_files[2] = fnget_dev("IVM_ITEMWHSE")
+		pc_files[3] = fnget_dev("IVM_ITEMPRIC")
+		pc_files[4] = fnget_dev("IVC_PRICCODE")
+		pc_files[5] = fnget_dev("ARS_PARAMS")
+		pc_files[6] = fnget_dev("IVS_PARAMS")
+		call stbl("+DIR_PGM")+"opc_pricing.aon",
+:			pc_files[all],
+:			firm_id$,
+:			kitDetailLine.warehouse_id$,
+:			bmmBillMat.item_id$,
+:			callpoint!.getDevObject("priceCode"),
+:			kitDetailLine.customer_id$,
+:			str(callpoint!.getDevObject("orderDate")),
+:			callpoint!.getDevObject("pricingCode"),
+:			qty_ordered,
+:			typeflag$,
+:			price,
+:			disc,
+:			status
+		if status=999 then
+			typeflag$="N"
+			price=0
+			disc=0
+		endif
+		unit_price=price
+
+		ext_price=round(qty_ordered * unit_price, 2)
+		kitExtendedPrice=kitExtendedPrice+ext_price
+	wend
+
+	return
+
 rem ==========================================================================
 #include [+ADDON_LIB]std_missing_params.aon
 rem ==========================================================================
