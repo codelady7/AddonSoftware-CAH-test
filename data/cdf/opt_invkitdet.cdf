@@ -122,9 +122,58 @@ rem --- Was the order for this kit changed?
 
 			rem --- Update this kit component record
 			optInvKitDet.commit_flag$=kit_commit$
+			prior_qty_ordered=optInvKitDet.qty_ordered
 			optInvKitDet.qty_ordered=round(kit_ordered*comp_per_kit,round_precision)
+			prior_qty_shipped=optInvKitDet.qty_shipped
 			optInvKitDet.qty_shipped=round(kit_shipped*comp_per_kit,round_precision)
 			optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
+
+			rem --- Update unit_price and disc_perect if qty_ordered changed
+			prior_unit_price=optInvKitDet.unit_price
+			if prior_qty_ordered<>optInvKitDet.qty_ordered then
+				dim pc_files[6]
+				pc_files[1] = fnget_dev("IVM_ITEMMAST")
+				pc_files[2] = fnget_dev("IVM_ITEMWHSE")
+				pc_files[3] = fnget_dev("IVM_ITEMPRIC")
+				pc_files[4] = fnget_dev("IVC_PRICCODE")
+				pc_files[5] = fnget_dev("ARS_PARAMS")
+				pc_files[6] = fnget_dev("IVS_PARAMS")
+				call stbl("+DIR_PGM")+"opc_pricing.aon",
+:					pc_files[all],
+:					firm_id$,
+:					optInvKitDet.warehouse_id$,
+:					optInvKitDet.item_id$,
+:					callpoint!.getDevObject("priceCode"),
+:					optInvKitDet.customer_id$,
+:					callpoint!.getDevObject("orderDate"),
+:					callpoint!.getDevObject("pricingCode"),
+:					optInvKitDet.qty_ordered,
+:					typeflag$,
+:					price,
+:					disc,
+:					status
+				if status=999 then
+					typeflag$="N"
+					price=0
+					disc=0
+				endif
+				optInvKitDet.unit_price=price
+				optInvKitDet.disc_percent=disc
+			endif
+
+			rem --- Update ext_price and taxable_amt if unit_price or qty_shipped changed
+			if prior_unit_price<>optInvKitDet.unit_price or prior_qty_shipped<>optInvKitDet.qty_shipped then
+				optInvKitDet.ext_price=round(optInvKitDet.qty_shipped * optInvKitDet.unit_price, 2)
+
+				redim ivmItemMast$
+				readrecord(ivmItemMast_dev,key=firm_id$+optInvKitDet.item_id$,dom=*next)ivmItemMast$
+				if (callpoint!.getDevObject("lineCodeTaxable")="Y" and ivmItemMast.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
+					optInvKitDet.taxable_amt=optInvKitDet.ext_price
+				else
+					optInvKitDet.taxable_amt=0
+				endif
+			endif
+
 			writerecord(optInvKitDet_dev)optInvKitDet$
 
 			rem --- Warn if ship quantity is more than currently available.
@@ -305,7 +354,7 @@ rem =========================================================
 		optInvKitDet.std_list_prc=ivm02a.cur_price
 		optInvKitDet.ext_price=round(optInvKitDet.qty_shipped * optInvKitDet.unit_price, 2)
 
-		if (callpoint!.getDevObject("lineCodeTaxable")="Y" and ivm01a$.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
+		if (callpoint!.getDevObject("lineCodeTaxable")="Y" and ivm01a.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
 			optInvKitDet.taxable_amt=optInvKitDet.ext_price
 		else
 			optInvKitDet.taxable_amt=0

@@ -1546,7 +1546,6 @@ rem --- Initialize "kit" DevObject
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 		callpoint!.setOptionEnabled("RCPR",0)
 
-rem wgh ... 7491 ... testing
 		rem --- Initialize UNIT_PRICE for newly entered kits
 		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
@@ -2357,7 +2356,6 @@ rem ==========================================================================
 		endif
 	else
 		rem --- Pricing a kitted item
-rem wgh ... 7491 ... need to modify pricing routine for kits
 		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 		callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
@@ -3152,7 +3150,6 @@ getKitExtendedPrice: rem --- Get a kit's extended price based on the sum of its 
 	rem		kitExtendedPrice
 	rem OUT:	kitExtendedPrice
 rem =========================================================
-rem wgh ... 7491 ... getKitExtendedPrice
 	rem --- Explode this kit to get it's extended price
 	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
 	while 1
