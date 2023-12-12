@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invkitdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invkitdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invkitdet">2460278</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20231208</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20231208</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">142358</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20231211</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20231211</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">120240</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invkitdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invkitdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -90,6 +90,10 @@
 		<RECORD id="ddm_table_opts.opt_invkitdetp">
 			<DD_TABLE_ALIAS id="ddm_table_opts.opt_invkitdetp">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.opt_invkitdetp">P</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.opt_invkitdets">
+			<DD_TABLE_ALIAS id="ddm_table_opts.opt_invkitdets">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.opt_invkitdets">S</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.opt_invkitdetu">
 			<DD_TABLE_ALIAS id="ddm_table_opts.opt_invkitdetu">OPT_INVKITDET   </DD_TABLE_ALIAS>
@@ -2621,7 +2625,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet013">20231129</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet013">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invkitdet013">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_CTLY>
@@ -4558,6 +4562,14 @@
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_RADG>
 			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_CPGM>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.opt_invkitdetitem_idbinq">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetitem_idbinq">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetitem_idbinq">ITEM_ID         </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetitem_idbinq">BINQ</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">

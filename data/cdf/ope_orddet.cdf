@@ -238,6 +238,21 @@ rem --- Allow displaying OP_TOTALS_TAB message in ope_ordhdr BWRI when after hea
 
 	callpoint!.setDevObject("OP_TOTALS_TAB_msg",1)
 
+rem --- Initialize "kit" DevObject
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+	dim ivm01a$:ivm01_tpl$
+	item$=callpoint!.getColumnData("OPE_ORDDET.ITEM_ID")
+	ivm01a_key$=firm_id$+item$
+	find record (ivm01_dev,key=ivm01a_key$,err=*next)ivm01a$
+	if ivm01a.kit$="Y" then
+		callpoint!.setDevObject("kit","Y")
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		callpoint!.setOptionEnabled("RCPR",0)
+	else
+		callpoint!.setDevObject("kit","")
+	endif
+
 rem --- Disable by line type (Needed because Barista is skipping Line Code)
 
 	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow())) <> "Y"
@@ -292,19 +307,6 @@ rem --- Set previous values
 	callpoint!.setDevObject("prior_commit",callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG"))
 
 	callpoint!.setDevObject("whse_item_warned","")
-
-rem --- Initialize "kit" DevObject
-	ivm01_dev=fnget_dev("IVM_ITEMMAST")
-	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
-	dim ivm01a$:ivm01_tpl$
-	ivm01a_key$=firm_id$+item$
-	find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
-	if ivm01a.kit$="Y" then
-		callpoint!.setDevObject("kit","Y")
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
-	else
-		callpoint!.setDevObject("kit","")
-	endif
 
 rem --- Set buttons
 
@@ -491,6 +493,11 @@ rem --- invoke the comments dialog
 	gosub comment_entry
 
 [[OPE_ORDDET.AOPT-KITS]]
+rem --- Save current context so we'll know where to return from lot lookup
+	declare BBjStandardGrid grid!
+	grid! = util.getGrid(Form!)
+	grid_ctx=grid!.getContextID()
+
 rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 	rem --- Hold on to this detail record for use in OPT_INVKITDET grid
 	callpoint!.setDevObject("kitDetailLine",rec_data$)
@@ -529,9 +536,11 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 :		"",
 :		dflt_data$[all]
 
-[[OPE_ORDDET.AOPT-LENT]]
-rem --- Save current context so we'll know where to return from lot lookup
+rem --- Return focus to where we were in Detail Line grid
+			sysgui!.setContext(grid_ctx)
 
+[[OPE_ORDDET.AOPT-LENT]]
+rem --- Save current context so we'll know where to return from Git Components grid
 	declare BBjStandardGrid grid!
 	grid! = util.getGrid(Form!)
 	grid_ctx=grid!.getContextID()
@@ -1119,6 +1128,9 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 :			table_chans$[all], 
 :			"",
 :			dflt_data$[all]
+
+		callpoint!.setDevObject("kitRowNew","N")
+		callpoint!.setDevObject("kitRowModified","N")
 	endif
 
 rem --- set prior's = curr's here, since row has been written
@@ -1546,12 +1558,13 @@ rem --- Initialize "kit" DevObject
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 		callpoint!.setOptionEnabled("RCPR",0)
 
-		rem --- Initialize UNIT_PRICE for newly entered kits
+		rem --- Initialize UNIT_PRICE and UNIT_COST for newly entered kits
 		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 
+			round_precision = num(callpoint!.getDevObject("precision"))
 			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
 			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
 			ivm01_dev=fnget_dev("IVM_ITEMMAST")
@@ -1563,6 +1576,12 @@ rem --- Initialize "kit" DevObject
 			kitExtendedPrice=0
 			gosub getKitExtendedPrice
 			callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(kitExtendedPrice),1)
+
+			ivm02_dev = fnget_dev("IVM_ITEMWHSE")
+			dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
+			kitCost=0
+			gosub getKitCost
+			callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP",str(kitCost),1)
 		endif
 	else
 		callpoint!.setDevObject("kit","")
@@ -2598,9 +2617,9 @@ rem ==========================================================================
 
 rem =============================================================================
 disable_by_linetype: rem --- Set enable/disable based on line type
-		rem --- <<CALLPOINT>> enable in item#, memo, ordered, price and ext price on form handles enable/disable
+		rem --- <<CALLPOINT>> enable in item#, memo, ordered and ext price on form handles enable/disable
 		rem --- based strictly on line type, via the callpoint!.setStatus("ENABLE:"+opc_linecode.line_type$) command.
-		rem --- cost, product type, backordered and shipped are enabled/disabled directly based on additional conditions
+		rem --- cost, price, product type, backordered and shipped are enabled/disabled directly based on additional conditions
 		rem      IN: line_code$
 rem =============================================================================
 
@@ -2648,6 +2667,18 @@ rem --- Disable/enable displayed unit price and quantity ordered
 	else
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_ORDERED_DSP", 0)
+	endif
+
+rem --- Initialize "kit" DevObject
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+	dim ivm01a$:ivm01_tpl$
+	item$=callpoint!.getColumnData("OPE_ORDDET.ITEM_ID")
+	ivm01a_key$=firm_id$+item$
+	find record (ivm01_dev,key=ivm01a_key$,err=*next)ivm01a$
+	if ivm01a.kit$="Y" then
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		callpoint!.setOptionEnabled("RCPR",0)
 	endif
 
 rem --- Disable/enable unit cost (can't just enable/disable this field by line type)
@@ -3140,7 +3171,8 @@ rem =========================================================
 
 rem =========================================================
 getKitExtendedPrice: rem --- Get a kit's extended price based on the sum of its components' extended price.
-	rem    IN:	bmmBillMat_dev
+	rem    IN:	round_precision
+	rem 		bmmBillMat_dev
 	rem  	bmmBillMat$
 	rem  	ivm01_dev
 	rem  	ivm01a$
@@ -3203,6 +3235,52 @@ rem =========================================================
 
 		ext_price=round(qty_ordered * unit_price, 2)
 		kitExtendedPrice=kitExtendedPrice+ext_price
+	wend
+
+	return
+
+rem =========================================================
+getKitCOST: rem --- Get a kit's unit cost based on the sum of its components' extended unit cost.
+	rem    IN:	round_precision
+	rem 		bmmBillMat_dev
+	rem  	bmmBillMat$
+	rem  	ivm01_dev
+	rem  	ivm01a$
+	rem		ivm02_dev
+	rem		dim ivm02a$
+	rem		kitDetailLine$
+	rem		kit_item$
+	rem		kit_ordered
+	rem		kitCost
+	rem OUT:	kitCost
+rem =========================================================
+	rem --- Explode this kit to get it's extended unit cost
+	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
+	while 1
+		kitKey$=key(bmmBillMat_dev,end=*break)
+		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
+		readrecord(bmmBillMat_dev)bmmBillMat$
+		redim ivm01a$
+		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
+		if ivm01a.kit$="Y" then
+			explodeKey$=kitKey$
+			explodeItem$=kit_item$
+			explodeOrdered=kit_ordered
+			kit_item$=bmmBillMat.item_id$
+			kit_ordered=round(explodeOrdered*bmmBillMat.qty_required,round_precision)
+			gosub getKitCost
+
+			read(bmmBillMat_dev,key=explodeKey$)
+			kit_item$=explodeItem$
+			kit_ordered=explodeOrdered
+			continue
+		endif
+
+		redim ivm02a$
+		readrecord(ivm02_dev,key=firm_id$+kitDetailLine.warehouse_id$+bmmBillMat.item_id$,dom=*next)ivm02a$
+		unit_cost=ivm02a.unit_cost
+		qty_ordered=round(kit_ordered*bmmBillMat.qty_required,round_precision)
+		kitCost=kitCost+round(qty_ordered * unit_cost, round_precision)
 	wend
 
 	return

@@ -217,6 +217,29 @@ rem --- Set column size for memo_1024 field very small so it doesn't take up roo
 	memo_1024_col=util.getGridColumnNumber(grid!, col_hdr$)
 	grid!.setColumnWidth(memo_1024_col,15)
 
+[[OPT_INVKITDET.ITEM_ID.BINQ]]
+rem --- Inventory Item/Whse Lookup
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","IVM_ITEMWHSE","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim ivmItemWhse_key$:key_tpl$
+	dim filter_defs$[2,2]
+	filter_defs$[1,0]="IVM_ITEMWHSE.FIRM_ID"
+	filter_defs$[1,1]="='"+firm_id$ +"'"
+	filter_defs$[1,2]="LOCK"
+	filter_defs$[2,0]="IVM_ITEMWHSE.WAREHOUSE_ID"
+	filter_defs$[2,1]="='"+callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")+"'"
+	filter_defs$[2,2]=""
+	
+	call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,form!,"IV_ITEM_WHSE_LK","",table_chans$[all],ivmItemWhse_key$,filter_defs$[all]
+
+	rem --- Update item_id if changed
+	if cvs(ivmItemWhse_key$,2)<>"" and ivmItemWhse_key.item_id$<>callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID") then 
+		callpoint!.setColumnData("OPT_INVKITDET.ITEM_ID",ivmItemWhse_key.item_id$,1)
+		callpoint!.setStatus("MODIFIED")
+		callpoint!.setFocus(num(callpoint!.getValidationRow()),"OPT_INVKITDET.ITEM_ID",1)
+	endif
+
+	callpoint!.setStatus("ACTIVATE-ABORT")
+
 [[OPT_INVKITDET.<CUSTOM>]]
 rem =========================================================
 explodeKit: rem --- Explode kit
