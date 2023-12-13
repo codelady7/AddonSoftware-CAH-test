@@ -3386,6 +3386,8 @@ rem =========================================================
 		kitKey$=key(bmmBillMat_dev,end=*break)
 		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
 		readrecord(bmmBillMat_dev)bmmBillMat$
+		if cvs(bmmBillMat.effect_date$,2)<>"" and sysinfo.system_date$<bmmBillMat.effect_date$ then continue
+		if cvs(bmmBillMat.obsolt_date$,2)<>"" and sysinfo.system_date$>=bmmBillMat.obsolt_date$ then continue
 		redim ivm01a$
 		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
 		if ivm01a.kit$="Y" then
@@ -3438,7 +3440,7 @@ rem =========================================================
 	return
 
 rem =========================================================
-getKitCOST: rem --- Get a kit's unit cost based on the sum of its components' extended unit cost.
+getKitCost: rem --- Get a kit's unit cost based on the sum of its components' extended unit cost.
 	rem    IN:	round_precision
 	rem 		bmmBillMat_dev
 	rem  	bmmBillMat$
@@ -3458,6 +3460,8 @@ rem =========================================================
 		kitKey$=key(bmmBillMat_dev,end=*break)
 		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
 		readrecord(bmmBillMat_dev)bmmBillMat$
+		if cvs(bmmBillMat.effect_date$,2)<>"" and sysinfo.system_date$<bmmBillMat.effect_date$ then continue
+		if cvs(bmmBillMat.obsolt_date$,2)<>"" and sysinfo.system_date$>=bmmBillMat.obsolt_date$ then continue
 		redim ivm01a$
 		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
 		if ivm01a.kit$="Y" then
@@ -3512,6 +3516,8 @@ rem =========================================================
 		kitKey$=key(bmmBillMat_dev,end=*break)
 		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
 		readrecord(bmmBillMat_dev)bmmBillMat$
+		if cvs(bmmBillMat.effect_date$,2)<>"" and sysinfo.system_date$<bmmBillMat.effect_date$ then continue
+		if cvs(bmmBillMat.obsolt_date$,2)<>"" and sysinfo.system_date$>=bmmBillMat.obsolt_date$ then continue
 		redim ivm01a$
 		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
 		if ivm01a.kit$="Y" then

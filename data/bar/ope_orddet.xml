@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.ope_orddet">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ope_orddet">20231213</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ope_orddet">20231213</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_orddet">134556</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_orddet">150544</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_orddet">OPT_INVDET      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_orddet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_orddet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
