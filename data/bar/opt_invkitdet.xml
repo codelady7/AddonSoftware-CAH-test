@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invkitdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invkitdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invkitdet">2460278</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20231211</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20231211</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">120240</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20231213</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20231213</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">133336</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invkitdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invkitdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -60,13 +60,9 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
-		<RECORD id="ddm_table_cpro.opt_invkitdetagrn">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetagrn">OPT_INVKITDET   </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetagrn">AGRN</DD_ATTR_CPRO>
-		</RECORD>
-		<RECORD id="ddm_table_cpro.opt_invkitdetbfmc">
-			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbfmc">OPT_INVKITDET   </DD_TABLE_ALIAS>
-			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbfmc">BFMC</DD_ATTR_CPRO>
+		<RECORD id="ddm_table_cpro.opt_invkitdetagds">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetagds">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetagds">AGDS</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_invkitdetbgdr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbgdr">OPT_INVKITDET   </DD_TABLE_ALIAS>

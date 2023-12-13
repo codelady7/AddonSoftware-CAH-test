@@ -82,6 +82,7 @@ rem --- Are Bill Of Materials and Shop Floor installed?
 	call stbl("+DIR_PGM")+"adc_application.aon","SF",info$[all]
 	sf$=info$[20]
 	if bm$="Y" and sf$="Y" then bm_sf$="Y"
+	callpoint!.setDevObject("bm",bm$)
 
 rem --- Open files
 
@@ -117,6 +118,9 @@ rem --- Check to see if main AR param rec (firm/AR/00) exists; if not, tell user
 		gosub remove_process_bar
 		release
 	endif
+
+rem --- Disable LAUNCH_KIT_GRID checkbox if BM isn't installed
+	if bm$<>"Y" then callpoint!.setColumnEnabled("OPS_PARAMS.LAUNCH_KIT_GRID",-1)
 
 rem --- Check to see if main GL param rec (firm/GL/00) exists; if not, tell user to set it up first
 
