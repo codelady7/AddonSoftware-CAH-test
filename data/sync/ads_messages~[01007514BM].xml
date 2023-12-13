@@ -13,4 +13,16 @@
 		<MSG_TEXT>Item %1 is a kit, and BOMs for kits cannot include operations or subcontracts.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </MSG_TEXT>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
+	<barista_record>
+		<MSG_ID>BM_KIT_NOT_LOTSER   </MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>BM </ASC_PROD_ID>
+		<MSG_TEXT>BOM %1 is a kit, and its components cannot be lotted or serialized.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
 </barista_admin_records>

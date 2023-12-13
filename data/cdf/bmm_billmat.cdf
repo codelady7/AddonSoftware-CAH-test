@@ -294,6 +294,17 @@ rem --- Component must not be the same as the Master Bill
 		break
 	endif
 
+rem --- Kit components cannot be lotted/serialized
+	if callpoint!.getDevObject("kit") ="Y" and pos(ivm01a.lotser_flag$="LS") then
+		msg_id$="BM_KIT_NOT_LOTSER"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=cvs(callpoint!.getDevObject("master_bill"),3)
+		gosub disp_message
+		callpoint!.setUserInput("")
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Check to see if item is a Sub Bill
 
 	gosub check_sub

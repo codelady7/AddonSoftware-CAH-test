@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.bmm_billmat">46B14A353DD5EC77FA2FA141B846A6D1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bmm_billmat">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bmm_billmat">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bmm_billmat">20231122</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bmm_billmat">20231122</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bmm_billmat">091756</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bmm_billmat">20231212</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bmm_billmat">20231212</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bmm_billmat">155110</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bmm_billmat"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.bmm_billmat">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bmm_billmat"></DD_ATTR_DKNM>
