@@ -1818,7 +1818,7 @@ rem --- Initialize "kit" DevObject
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP",0)
 		callpoint!.setOptionEnabled("RCPR",0)
 
-		rem --- Initialize UNIT_PRICE and UNIT_COST for newly entered kits
+		rem --- Initialize UNIT_PRICE for newly entered kits
 		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
@@ -1836,12 +1836,6 @@ rem --- Initialize "kit" DevObject
 			kitExtendedPrice=0
 			gosub getKitExtendedPrice
 			callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(kitExtendedPrice),1)
-
-			ivm02_dev = fnget_dev("IVM_ITEMWHSE")
-			dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
-			kitCost=0
-			gosub getKitCost
-			callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP",str(kitCost),1)
 		endif
 	else
 		callpoint!.setDevObject("kit","")
@@ -3515,54 +3509,6 @@ rem =========================================================
 
 		ext_price=round(qty_ordered * unit_price, 2)
 		kitExtendedPrice=kitExtendedPrice+ext_price
-	wend
-
-	return
-
-rem =========================================================
-getKitCost: rem --- Get a kit's unit cost based on the sum of its components' extended unit cost.
-	rem    IN:	round_precision
-	rem 		bmmBillMat_dev
-	rem  	bmmBillMat$
-	rem  	ivm01_dev
-	rem  	ivm01a$
-	rem		ivm02_dev
-	rem		dim ivm02a$
-	rem		kitDetailLine$
-	rem		kit_item$
-	rem		kit_ordered
-	rem		kitCost
-	rem OUT:	kitCost
-rem =========================================================
-	rem --- Explode this kit to get it's extended unit cost
-	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
-	while 1
-		kitKey$=key(bmmBillMat_dev,end=*break)
-		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
-		readrecord(bmmBillMat_dev)bmmBillMat$
-		if cvs(bmmBillMat.effect_date$,2)<>"" and sysinfo.system_date$<bmmBillMat.effect_date$ then continue
-		if cvs(bmmBillMat.obsolt_date$,2)<>"" and sysinfo.system_date$>=bmmBillMat.obsolt_date$ then continue
-		redim ivm01a$
-		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
-		if ivm01a.kit$="Y" then
-			explodeKey$=kitKey$
-			explodeItem$=kit_item$
-			explodeOrdered=kit_ordered
-			kit_item$=bmmBillMat.item_id$
-			kit_ordered=round(explodeOrdered*bmmBillMat.qty_required,round_precision)
-			gosub getKitCost
-
-			read(bmmBillMat_dev,key=explodeKey$)
-			kit_item$=explodeItem$
-			kit_ordered=explodeOrdered
-			continue
-		endif
-
-		redim ivm02a$
-		readrecord(ivm02_dev,key=firm_id$+kitDetailLine.warehouse_id$+bmmBillMat.item_id$,dom=*next)ivm02a$
-		unit_cost=ivm02a.unit_cost
-		qty_ordered=round(kit_ordered*bmmBillMat.qty_required,round_precision)
-		kitCost=kitCost+round(qty_ordered * unit_cost, round_precision)
 	wend
 
 	return
