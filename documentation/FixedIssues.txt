@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-11-28
+ Report Date:   2023-12-22
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -100,4 +100,16 @@ Bug 10748 - AR - Customers - Future Drilldown is not clickable properly
 Modified: data/bar/arm_custdet.xml
 Modified: data/bar/arm_custmast.xml
 Modified: data/bar/arm_custpmts.xml
+=======================================================================================================================================
+
+Revision: 4aae4e6e34d24b0c60810f825cc816b6d898734e
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 12/22/2023 5:03:18 PM
+Message:
+Bug 10760: Cascaded delete/undelete of lot/serial items in the Invoice
+Entry detail grid to the lot/serial number records opt_invlsdet, and
+updated their inventory commits.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/cdf/ope_invdet.cdf
 =======================================================================================================================================
