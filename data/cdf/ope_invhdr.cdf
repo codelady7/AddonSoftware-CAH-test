@@ -1859,7 +1859,7 @@ rem --- Detail loop
 		for row=0 to recs!.size()-1
 			gridrec$ = recs!.getItem(row)
 
-			if ordHelp!.isLottedSerial(gridrec.item_id$) then
+			if ordHelp!.isLottedSerial(gridrec.item_id$) and callpoint!.getGridRowDeleteStatus(row)<>"Y" then
 				lot_ser_total = ordHelp!.totalLotSerialAmount( gridrec.internal_seq_no$ )
 
 				if lot_ser_total <> gridrec.qty_shipped then
