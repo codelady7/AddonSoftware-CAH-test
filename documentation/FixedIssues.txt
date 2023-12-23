@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-12-22
+ Report Date:   2023-12-23
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -112,4 +112,17 @@ updated their inventory commits.
 ----
 Modified: data/bar/ope_invdet.xml
 Modified: data/cdf/ope_invdet.cdf
+=======================================================================================================================================
+
+Revision: ae4c855c3f26804787a78a0ab8395ddb5abc6a33
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 12/23/2023 1:26:22 PM
+Message:
+Bug 10759: Cascaded undelete of lot/serial items in the Order Entry
+detail grid to the lot/serial number records opt_invlsdet, and updated
+their inventory commits.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_orddet.cdf
 =======================================================================================================================================
