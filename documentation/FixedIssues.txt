@@ -126,3 +126,14 @@ Modified: data/bar/ope_invdet.xml
 Modified: data/bar/ope_orddet.xml
 Modified: data/cdf/ope_orddet.cdf
 =======================================================================================================================================
+
+Revision: 1c32d03324c753224d858ff7863edfd5d235fce9
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 12/23/2023 2:22:24 PM
+Message:
+Bug 10758: Do NOT issue OP_ITEM_LS_TOTAL warning for deleted detail
+rows.
+----
+Modified: data/bar/ope_invhdr.xml
+Modified: data/cdf/ope_invhdr.cdf
+=======================================================================================================================================
