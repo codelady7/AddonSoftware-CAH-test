@@ -1078,15 +1078,6 @@ rem --- Set qty_ordered to zero rather than deleting the detail line if it's alr
 		endif
 	endif
 
-rem --- remove and uncommit Lot/Serial records (if any) and detail lines if not
-
-	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" and
-:		callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y"
-:	then
-		action$="UC"
-		gosub uncommit_iv
-	endif
-
 rem --- Get user approval to delete if there is a WO linked to this detail line
 
 	op_create_wo$=callpoint!.getDevObject("op_create_wo")
@@ -1098,6 +1089,47 @@ rem --- Get user approval to delete if there is a WO linked to this detail line
 			break
 		endif
 		callpoint!.setStatus("ACTIVATE")
+	endif
+
+rem --- Update inventory commitments
+	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" and
+:		callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y"
+:	then
+		action$="UC"
+		gosub uncommit_iv
+	endif
+
+rem --- Delete ope_ordlsdet records for lot/serial items. NOTE: Barista's Undelete does NOT cascade.
+	item_id$ = callpoint!.getColumnData("OPE_ORDDET.ITEM_ID")
+	gosub lot_ser_check
+	if lotted$ = "Y" then
+		rem --- Use a HashMap to temporarily hold onto deleted records so they can be undeleted later.
+		if callpoint!.getDevObject("undeleteRecs")=null() then
+			undeleteRecs!=new HashMap()
+			callpoint!.setDevObject("undeleteRecs",undeleteRecs!)
+		endif
+		undeleteRecs!=callpoint!.getDevObject("undeleteRecs")
+
+		rem --- Delete ope_ordlsdet records entered for this lot/serial items
+		ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+		dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+		ar_type$=callpoint!.getColumnData("OPE_ORDDET.AR_TYPE") 
+		cust$=callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
+		order$=callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
+		invoice_no$=callpoint!.getColumnData("OPE_ORDDET.AR_INV_NO")
+		seq$=callpoint!.getColumnData("OPE_ORDDET.INTERNAL_SEQ_NO")
+		ope_ordlsdet_key$=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$
+		read(ope_ordlsdet_dev,key=ope_ordlsdet_key$,knum="PRIMARY",dom=*next)
+		while 1
+			thisKey$=key(ope_ordlsdet_dev,end=*break)
+			if pos(ope_ordlsdet_key$=thisKey$)<>1 then break
+			readrecord(ope_ordlsdet_dev,key=thisKey$)ope_ordlsdet$
+			remove(ope_ordlsdet_dev,key=thisKey$)
+
+			rem --- Hold onto this record for now so it can be undeleted if necessary.
+			undeleteRecs!.put(thisKey$,ope_ordlsdet$)
+		wend
+		read(ope_ordlsdet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next); rem --- Reset to alternate key
 	endif
 
 [[OPE_ORDDET.BDGX]]
@@ -1150,8 +1182,38 @@ rem --- Initialize UM_SOLD related <DISPLAY> fields
 	callpoint!.setColumnData("OPE_ORDDET.STD_LIST_PRC",str(std_list_prc))
 
 [[OPE_ORDDET.BUDE]]
-rem --- add and recommit Lot/Serial records (if any) and detail lines if not
+rem --- Undelete ope_ordlsdet records for lot/serial items. NOTE: Barista's Undelete does NOT cascade.
+	item_id$ = callpoint!.getColumnData("OPE_ORDDET.ITEM_ID")
+	gosub lot_ser_check
+	if lotted$ = "Y" then
+		rem --- Unelete ope_ordlsdet records entered for this lot/serial items
+		ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+		dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+		ar_type$=callpoint!.getColumnData("OPE_ORDDET.AR_TYPE") 
+		cust$=callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
+		order$=callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
+		invoice_no$=callpoint!.getColumnData("OPE_ORDDET.AR_INV_NO")
+		seq$=callpoint!.getColumnData("OPE_ORDDET.INTERNAL_SEQ_NO")
+		ope_ordlsdet_key$=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$
 
+		restoredRecs!=BBjAPI().makeVector()
+		undeleteRecs!=callpoint!.getDevObject("undeleteRecs")
+		undeleteRecIter!=undeleteRecs!.keySet().iterator()
+		while undeleteRecIter!.hasNext()
+			undeleteRecKey$=undeleteRecIter!.next()
+			if pos(ope_ordlsdet_key$=undeleteRecKey$)<>1 then continue
+			ope_ordlsdet$=undeleteRecs!.get(undeleteRecKey$)
+			writerecord(ope_ordlsdet_dev)ope_ordlsdet$
+			restoredRecs!.addItem(undeleteRecKey$)
+		wend
+		restoredRecsIter!=restoredRecs!.iterator()
+		while restoredRecsIter!.hasNext()
+			restoredRecKey$=restoredRecsIter!.next()
+			undeleteRecs!.remove(restoredRecKey$)
+		wend
+	endif
+
+rem --- Update inventory commitments
 	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" and
 :		callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y"
 :	then
@@ -2378,6 +2440,7 @@ rem ==========================================================================
 	dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
 
 	ord_type$ = callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE")
+	trans_status$=callpoint!.getColumnData("OPE_ORDDET.TRANS_STATUS")
 	cust$    = callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
 	ar_type$ = callpoint!.getColumnData("OPE_ORDDET.AR_TYPE")
 	order$   = callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
@@ -2405,19 +2468,19 @@ rem ==========================================================================
 			endif
 		else
 			found_lot=0
-			read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+			trip_key$=firm_id$+trans_status$+ar_type$+cust$+order$+invoice_no$+seq$
+			read (ope_ordlsdet_dev, key=trip_key$,knum="AO_STAT_CUST_ORD",dom=*next)
 
 			while 1
+				this_key$=key(ope_ordlsdet_dev,end=*break)
+				if pos(trip_key$=this_key$)<>1 then break
 				read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
-				if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
-				if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
 				items$[3] = ope_ordlsdet.lotser_no$
 				refs[0]   = ope_ordlsdet.qty_ordered
 				if (action$="CO" and line_ship_date$<=user_tpl.def_commit$) or
 :				(callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y") then
 					call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 				endif
-				if action$="UC" then remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
 				found_lot=1
 			wend
 
@@ -2966,6 +3029,7 @@ rem ==========================================================================
 rem 	Use util object
 rem ==========================================================================
 
+	use java.util.HashMap
 	use ::ado_util.src::util
 
 
