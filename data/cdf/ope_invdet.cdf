@@ -992,7 +992,6 @@ rem --- Update inventory commitments
 		gosub uncommit_iv
 	endif
 
-rem wgh ... 10760 ... test this!!!
 rem --- Delete ope_ordlsdet records for lot/serial items. NOTE: Barista's Undelete does NOT cascade.
 	item_id$ = callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
 	gosub lot_ser_check
@@ -1073,7 +1072,6 @@ rem --- Initialize UM_SOLD related <DISPLAY> fields
 	callpoint!.setColumnData("OPE_INVDET.STD_LIST_PRC",str(std_list_prc))
 
 [[OPE_INVDET.BUDE]]
-rem wgh ... 10760 ... test this!!!
 rem --- Undelete ope_ordlsdet records for lot/serial items. NOTE: Barista's Undelete does NOT cascade.
 	item_id$ = callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
 	gosub lot_ser_check
