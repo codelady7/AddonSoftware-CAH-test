@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-12-23
+ Report Date:   2023-12-26
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -136,4 +136,21 @@ rows.
 ----
 Modified: data/bar/ope_invhdr.xml
 Modified: data/cdf/ope_invhdr.cdf
+=======================================================================================================================================
+
+Revision: c1c16d1a389037eceb20de6e35b40492916a09d1
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 12/26/2023 2:25:25 PM
+Message:
+Bug 10761: Modified Order/Invoice Entry to use the AO_STAT_CUST_ORD
+alternate key to access the OPE_ORDLSDET table.
+----
+Modified: data/bar/ope_invdet.xml
+Modified: data/bar/ope_invhdr.xml
+Modified: data/bar/ope_orddet.xml
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_invdet.cdf
+Modified: data/cdf/ope_invhdr.cdf
+Modified: data/cdf/ope_orddet.cdf
+Modified: data/cdf/ope_ordhdr.cdf
 =======================================================================================================================================
