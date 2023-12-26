@@ -796,7 +796,7 @@ rem --- Update order detail records for new customer
 	ope21_dev = fnget_dev("OPE_ORDLSDET")
 	ope21_dev2=fnget_dev("2_OPE_ORDLSDET")
 	dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
-	read (ope21_dev, key=optInvHdrDev2_key$, dom=*next)
+	read (ope21_dev, key=optInvHdrDev2_key$,knum="PRIMARY",dom=*next)
 	while 1
 		readrecord(ope21_dev,end=*break)ope21a$
 		if pos(optInvHdrDev2_key$=ope21a$)<>1 then break
@@ -810,6 +810,7 @@ rem --- Update order detail records for new customer
 		ope21a.mod_time$=date(0:"%Hz%mz")
 		writerecord(ope21_dev2)ope21a$
 	wend
+	read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 
 	rem --- Update OPE_PRNTLIST for new customer
 	ope_prntlist_dev=fnget_dev("OPE_PRNTLIST")
@@ -4149,7 +4150,7 @@ rem ==========================================================================
 
 					if pos(user_tpl.lotser_flag$="LS") then 
 						rem --- Process lotted/serialized items
-						read(ope21_dev,key=ope11_key$,dom=*next)
+						read(ope21_dev,key=ope11_key$,knum="PRIMARY",dom=*next)
 						while 1
 							ope21_key$=key(ope21_dev,end=*break)
 							if pos(ope11_key$=ope21_key$)<>1 then break
@@ -4158,6 +4159,7 @@ rem ==========================================================================
 							ls_id$=ope21a.lotser_no$
 							gosub update_totals; rem --- do ATAMO for lot/serial
 						wend
+						read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 					endif
 				endif
 			wend
@@ -4211,7 +4213,7 @@ rem ==========================================================================
 
 	ope21_dev = fnget_dev("OPE_ORDLSDET")
 	dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
-	read (ope21_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$+ord_seq$, dom=*next)
+	read (ope21_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$+ord_seq$,knum="PRIMARY",dom=*next)
 
 	while 1
 		read record (ope21_dev, end=*break) ope21a$
@@ -4238,6 +4240,7 @@ rem ==========================================================================
 
 		remove (ope21_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$+ord_seq$+ope21a.sequence_no$)
 	wend
+	read (ope21_dev, key="",knum="AO_STAT_CUST_ORD",dom=*next)
 
 	return
 
@@ -4853,13 +4856,14 @@ rem ==========================================================================
 
 		rem --- Capture lot/serial records
 		ope21_trip$=firm_id$+ar_type$+cust_id$+order_no$+invoice_no$+ope11a.internal_seq_no$
-		read(ope21_dev,key=ope21_trip$,dom=*next)
+		read(ope21_dev,key=ope21_trip$,knum="PRIMARY",dom=*next)
 		while 1
 			ope21_key$=key(ope21_dev,end=*break)
 			if pos(ope21_trip$=ope21_key$)<>1 then break
 			readrecord(ope21_dev)ope21a$
 			ackRecsMap!.put(ope21_key$,ope21a$)
 		wend
+		read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 	wend
 
 	callpoint!.setDevObject("ackRecsMap",ackRecsMap!)
@@ -4916,7 +4920,7 @@ rem ==========================================================================
 							else
 								rem --- Check lot/serial records
 								ope21_trip$=firm_id$+ar_type$+cust_id$+order_no$+invoice_no$+ope11a.internal_seq_no$
-								read(ope21_dev,key=ope21_trip$,dom=*next)
+								read(ope21_dev,key=ope21_trip$,knum="PRIMARY",dom=*next)
 								while 1
 									ope21_key$=key(ope21_dev,end=*break)
 									if pos(ope21_trip$=ope21_key$)<>1 then break
@@ -4932,6 +4936,7 @@ rem ==========================================================================
 										endif
 									endif
 								wend
+								read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 								if orderChanged then break
 							endif
 						endif
