@@ -3618,7 +3618,7 @@ rem ==========================================================================
 
 	ope21_dev = fnget_dev("OPE_ORDLSDET")
 	dim ope21a$:fnget_tpl$("OPE_ORDLSDET")
-	read (ope21_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$+ord_seq$, dom=*next)
+	read (ope21_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$+ord_seq$,knum="PRIMARY", dom=*next)
 
 	while 1
 		read record (ope21_dev, end=*break) ope21a$
@@ -3645,6 +3645,7 @@ rem ==========================================================================
 
 		remove (ope21_dev, key=firm_id$+ar_type$+cust$+ord$+invoice$+ord_seq$+ope21a.sequence_no$)
 	wend
+	read (ope21_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
 
 	return
 
@@ -3978,7 +3979,7 @@ rem ==========================================================================
 
 					if pos(user_tpl.lotser_flag$="LS") then 
 						rem --- Process lotted/serialized items
-						read(ope21_dev,key=ope11_key$,dom=*next)
+						read(ope21_dev,key=ope11_key$,knum="PRIMARY",dom=*next)
 						while 1
 							ope21_key$=key(ope21_dev,end=*break)
 							if pos(ope11_key$=ope21_key$)<>1 then break
@@ -3987,6 +3988,7 @@ rem ==========================================================================
 							ls_id$=ope21a.lotser_no$
 							gosub update_totals; rem --- do ATAMO for lot/serial
 						wend
+						read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 					endif
 				endif
 			wend

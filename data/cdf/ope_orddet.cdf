@@ -802,7 +802,7 @@ rem --- Items or warehouses are different: uncommit previous
 					found_lot=0
 					ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
 					dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
-					read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+					read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$,knum="PRIMARY", dom=*next)
 					while 1
 						read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
 						if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
@@ -816,6 +816,7 @@ rem --- Items or warehouses are different: uncommit previous
 						endif
 						remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
 					wend
+					read (ope_ordlsdet_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
 
 					if found_lot=0
 						if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
@@ -873,7 +874,7 @@ rem --- New record or item and warehouse haven't changed: commit difference
 						committed_qty=0
 						ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
 						dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
-						read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+						read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$,knum="PRIMARY", dom=*next)
 						while 1
 							extractrecord (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
 							if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then read(ope_ordlsdet_dev); break
@@ -898,6 +899,7 @@ rem --- New record or item and warehouse haven't changed: commit difference
 								writerecord(ope_ordlsdet_dev)ope_ordlsdet$
 							endif
 						wend
+						read (ope_ordlsdet_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
 
 						if found_lot=0
 							if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
@@ -946,7 +948,7 @@ rem --- and that's when this code should be hit.
 				found_lot=0
 				ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
 				dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
-				read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$, dom=*next)
+				read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$,knum="PRIMARY", dom=*next)
 				while 1
 					read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
 					if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
@@ -960,6 +962,7 @@ rem --- and that's when this code should be hit.
 					endif
 					remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
 				wend
+				read (ope_ordlsdet_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
 
 				if found_lot=0
 					if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
