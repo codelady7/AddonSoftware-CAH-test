@@ -858,6 +858,30 @@ rem --- Items or warehouses are different: uncommit previous
 					if callpoint!.getColumnData("OPE_ORDDET.COMMIT_FLAG")="Y" then
 						call user_tpl.pgmdir$+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 						if status then goto awri_update_hdr
+
+						rem --- NOTE: ivc_itemupdt.aon skips kits
+						rem --- Uncommit kit components for prior item
+						ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+						dim prior_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+						read record (ivm_itemmast_dev, key=firm_id$+prior_item$, dom=*next) prior_itemmast$
+						if prior_itemmast.kit$="Y" then
+							optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+							dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+							optInvKitDet_key$=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$
+							read(optInvKitDet_dev,key=optInvKitDet_key$,knum="PRIMARY",dom=*next)
+							while 1
+								thisKey$=key(optInvKitDet_dev,end=*break)
+								if pos(optInvKitDet_key$=thisKey$)<>1 then break
+								readrecord(optInvKitDet_dev,key=thisKey$)optInvKitDet$
+								remove(optInvKitDet_dev,key=thisKey$)
+
+								items$[1]=optInvKitDet.warehouse_id$
+								items$[2]=optInvKitDet.item_id$
+								refs[0]=optInvKitDet.qty_ordered
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							wend
+							read(optInvKitDet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next); rem --- Reset to alternate key
+						endif
 					endif
 				else
 					found_lot=0
@@ -1121,7 +1145,8 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 		rem --- Was this kit just added to the order?
 		shortage_vect!=BBjAPI().makeVector()
 		callpoint!.setDevObject("shortageVect",shortage_vect!)
-		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
+		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" or
+:		(curr_whse$<>prior_whse$ or  curr_item$<>prior_item$) then
 			rem --- Explode this kit into its components
 			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
 			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
@@ -1145,7 +1170,8 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 		endif
 
 		rem --- Was the order for this kit changed?
-		if callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow())="Y" and 
+		if (curr_whse$=prior_whse$ or  curr_item$=prior_item$) and
+:		callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow())="Y" and 
 :		callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
 			shortage_vect!=BBjAPI().makeVector()
 			round_precision = num(callpoint!.getDevObject("precision"))
@@ -1465,6 +1491,7 @@ rem --- Delete opt_invkitdet records. NOTE: Barista's Undelete does NOT cascade.
 		read(optInvKitDet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next); rem --- Reset to alternate key
     endif
     
+
 [[OPE_ORDDET.BDGX]]
 rem --- Disable detail-only buttons
 
