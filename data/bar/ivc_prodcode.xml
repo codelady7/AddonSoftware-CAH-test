@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivc_prodcode">F5221ABFA816BC18C4BAC9866D198CF3</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivc_prodcode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivc_prodcode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivc_prodcode">20231011</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivc_prodcode">20231011</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivc_prodcode">091932</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivc_prodcode">20231228</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivc_prodcode">20231228</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivc_prodcode">142632</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivc_prodcode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ivc_prodcode">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ivc_prodcode">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivc_prodcode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ivc_prodcode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ivc_prodcode">T</DD_ATTR_FTYP>
@@ -118,6 +118,108 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.ivc_prodcode">IVC_PRODCODE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.ivc_prodcode"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.ivc_prodcode">firm_id:c(2),record_id_a:c(1),product_type:c(3),code_desc:c(20),sa_level:c(1),code_inactive:c(1),tax_svc_cd:c(10),item_class:c(6),buyer_code:c(3),ar_dist_code:c(2),unit_of_sale:c(6),purchase_um:c(6),lotser_flag:c(1),inventoried:c(1),taxable_flag:c(1),item_type:c(3),abc_code:c(1),eoq_code:c(1),ord_pnt_code:c(1),saf_stk_code:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.ivc_prodcodeitem_classivc_clascode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodeitem_classivc_clascode">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivc_prodcodeitem_classivc_clascode">ITEM_CLASS      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodeitem_classivc_clascode">IVC_CLASCODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivc_prodcodeitem_classivc_clascode">FK_IVC_PRODCODE_ITEM_CLASS_IVC_CLASCODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivc_prodcodeitem_typeivc_typecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodeitem_typeivc_typecode">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivc_prodcodeitem_typeivc_typecode">ITEM_TYPE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodeitem_typeivc_typecode">IVC_TYPECODE    </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivc_prodcodeitem_typeivc_typecode">FK_IVC_PRODCODE_ITEM_TYPE_IVC_TYPECODE                                                                                                                                                                                                                         </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivc_prodcodepurchase_umivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodepurchase_umivc_umcodes">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivc_prodcodepurchase_umivc_umcodes">PURCHASE_UM     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodepurchase_umivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivc_prodcodepurchase_umivc_umcodes">FK_IVC_PRODCODE_PURCHASE_UM_IVC_UMCODES                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.ivc_prodcodeunit_of_saleivc_umcodes">
+			<DD_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodeunit_of_saleivc_umcodes">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.ivc_prodcodeunit_of_saleivc_umcodes">UNIT_OF_SALE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.ivc_prodcodeunit_of_saleivc_umcodes">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.ivc_prodcodeunit_of_saleivc_umcodes">FK_IVC_PRODCODE_UNIT_OF_SALE_IVC_UMCODES                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">ITEM_CLASS      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">IVC_CLASCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">ITEM_CLASS      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">IVC_CLASCODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">ITEM_CLASS      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_classivc_clascode0002">ITEM_CLASS      </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">ITEM_TYPE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">IVC_TYPECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">ITEM_TYPE       </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">IVC_TYPECODE    </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">ITEM_TYPE       </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodeitem_typeivc_typecode0002">ITEM_TYPE       </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">PURCHASE_UM     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">PURCHASE_UM     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodepurchase_umivc_umcodes0002">PURCHASE_UM     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">UNIT_OF_SALE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">IVC_PRODCODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">UNIT_OF_SALE    </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">IVC_UMCODES     </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">UNIT_MEASURE    </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.ivc_prodcodeunit_of_saleivc_umcodes0002">UNIT_OF_SALE    </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -496,7 +598,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ivc_prodcode007">20201230</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ivc_prodcode007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ivc_prodcode007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ivc_prodcode007">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ivc_prodcode007">C:/dev_aon_er2416/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivc_prodcode007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivc_prodcode007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ivc_prodcode007"></DD_ATTR_CTLY>
@@ -851,8 +953,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.ivc_prodcode014"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.ivc_prodcode014">20231010</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.ivc_prodcode014">20231010</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.ivc_prodcode014"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.ivc_prodcode014"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.ivc_prodcode014">IVC_PRODCODE.LOTSER_FLAG</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.ivc_prodcode014">L;S</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.ivc_prodcode014"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ivc_prodcode014">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ivc_prodcode014"></DD_ATTR_CTLX>
