@@ -23,38 +23,8 @@ rem --- set flag in devObject to say we're not on a new record
 rem --- Store starting product_type so we'll know later if it was changed.
 	callpoint!.setDevObject("start_product_type",callpoint!.getColumnData("IVM_ITEMMAST.PRODUCT_TYPE"))
 
-rem --- Disable inventoried if not lotted/serialized
-	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
-	else
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",1)
-	endif
-
-rem --- Disable lotted/serialized flag if inventoried=Y
-	if callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")="Y" then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
-	else
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
-	endif
-
-rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
-	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS") or callpoint!.getDevObject("allow_SellPurchUM")="N" then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
-	else
-		rem --- Always disable if BOM and creating WOs from Sales Orders
-		if callpoint!.getDevObject("bm_installed")="Y" and cvs(callpoint!.getDevObject("op_create_wo"),2)<>"" then
-			bmm01_dev = fnget_dev("BMM_BILLMAST")
-			found_bom=0
-			find(bmm01_dev,key=firm_id$+callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID"),dom=*next); found_bom=1
-			if found_bom then
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
-			else
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
-			endif
-		else
-			callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
-		endif
-	endif
+	gosub enableLS
+	gosub enableSellPurchUM
 
 rem --- Show TAX_SVC_CD description
 	salesTax!=callpoint!.getDevObject("salesTax")
@@ -1356,8 +1326,8 @@ rem ==========================================================================
 		rem --- NOTE: The TAX_SVC_CD field remains permanently disable if there is no OP or not using a Sales Tax Service
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAX_SVC_CD",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAXABLE_FLAG",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+		gosub enableLS; rem callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
+		gosub enableSellPurchUM; rem callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_FLAG",1)
 		if pos(callpoint!.getColumnData("IVM_ITEMMAST.ALT_SUP_FLAG")="AS") then
 			callpoint!.setColumnEnabled("IVM_ITEMMAST. ALT_SUP_ITEM",1)
@@ -1371,6 +1341,49 @@ rem ==========================================================================
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PPV_ACCT",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ADJ",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ADJ",1)
+	endif
+
+	return
+
+rem ==========================================================================
+enableLS:
+rem ==========================================================================
+rem --- Disable inventoried if not lotted/serialized
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 then
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",1)
+	endif
+
+rem --- Disable lotted/serialized flag if inventoried=Y
+	if callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")="Y" then
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
+	endif
+
+	return
+
+rem ==========================================================================
+enableSellPurchUM:
+rem ==========================================================================
+rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS") or callpoint!.getDevObject("allow_SellPurchUM")="N" then
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
+	else
+		rem --- Always disable if BOM and creating WOs from Sales Orders
+		if callpoint!.getDevObject("bm_installed")="Y" and cvs(callpoint!.getDevObject("op_create_wo"),2)<>"" then
+			bmm01_dev = fnget_dev("BMM_BILLMAST")
+			found_bom=0
+			find(bmm01_dev,key=firm_id$+callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID"),dom=*next); found_bom=1
+			if found_bom then
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
+			else
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+			endif
+		else
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+		endif
 	endif
 
 	return
