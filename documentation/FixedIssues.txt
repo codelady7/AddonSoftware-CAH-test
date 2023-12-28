@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-12-26
+ Report Date:   2023-12-28
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -154,3 +154,19 @@ Modified: data/cdf/ope_invhdr.cdf
 Modified: data/cdf/ope_orddet.cdf
 Modified: data/cdf/ope_ordhdr.cdf
 =======================================================================================================================================
+
+Revision: 4d4ebdf1bec7963c3a87e34344ee3f5aa48a6f9a
+Author: Christine <chawkins@basis.com>
+Date: 12/28/2023 11:21:46 AM
+Message:
+Bug 10768 - AP - Export to 1099 throws error 252 and error 12 when using client side save
+ - corrected typo causing err 252
+ - corrected code that copies server side 1099 file to client to handle multiple 1099 files (1099MISC, 1099INT, etc.)
+
+(cherry picked from commit 390a276154deb8127661f2eec5caae153053f18d)
+----
+Modified: ap/src/apx_export_1099.aon
+=======================================================================================================================================
+
+
+
