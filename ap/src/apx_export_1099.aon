@@ -235,7 +235,7 @@ rem --- Write to Client export file
     print (client_dev)rec$
 
     if client_dir$<>"" then
-        cfs! = BBjAPI().getThinClient().getClientfileSystem()
+        cfs! = BBjAPI().getThinClient().getClientFileSystem()
         cf!=cfs!.getClientFile(client_dir$+clientfile$)
         cf!.copyToClient(export_path$+clientfile$)
     endif
@@ -423,10 +423,15 @@ rem --- Write record. Loop up for next Vendor
             print (ten99_dev)rec$,$0D0A$,
         wend
     wend
-    
+
     if client_dir$<>"" then
-        cf!=cfs!.getClientFile(client_dir$+ten99file$)
-        cf!.copyToClient(export_path$+ten99file$)
+        iter!=formDevs!.keySet().iterator()
+        while iter!.hasNext()
+            formKey$=iter!.next()
+            fileName$=ten99file!.replace("?",formKey$)
+            cf!=cfs!.getClientFile(client_dir$+fileName$)
+            cf!.copyToClient(export_path$+fileName$)
+        wend
     endif
 
 done:
