@@ -73,7 +73,7 @@ rem --- Initializations
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
 
-    files=iff(sf$="Y",6,5),begfile=1,endfile=files
+    files=iff(sf$="Y",7,6),begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
     files$[1]="ivm-01",      ids$[1]="IVM_ITEMMAST"
@@ -81,7 +81,8 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     files$[3]="opm-02",      ids$[3]="OPC_LINECODE"
     files$[4]="ivm-02",      ids$[4]="IVM_ITEMWHSE"
     files$[5]="ivs_params",  ids$[5]="IVS_PARAMS"
-    if sf$="Y" then files$[6]="sfe-01",ids$[6]="SFE_WOMASTR"
+    files$[6]="opt_invkitdet",  ids$[6]="OPT_INVKITDET"
+    if sf$="Y" then files$[7]="sfe-01",ids$[7]="SFE_WOMASTR"
 
 	call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 
@@ -98,16 +99,20 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     opm02_dev   = channels[3]
     ivm02_dev   = channels[4]
     ivsParams_dev=channels[5]
+    optInvKitDet_dev=channels[6]
     
     dim ivm01a$:templates$[1]
-    dim ope11a$:templates$[2]
+    ope11a_tpl$=templates$[2]
+    dim ope11a$:ope11a_tpl$
     dim opm02a$:templates$[3]
     dim ivm02a$:templates$[4]
     dim ivsParams$:templates$[5]
+    optInvKitDet_tpl$=templates$[6]
+    dim optInvKitDet$:optInvKitDet_tpl$
     
     if sf$="Y" then
-        sfe01_dev=channels[6]
-        dim sfe01a$:templates$[6]
+        sfe01_dev=channels[7]
+        dim sfe01a$:templates$[7]
     endif
 
 rem --- Get IV parameters
@@ -157,182 +162,29 @@ rem --- Main
             if order_no$    <> ope11a.order_no$    then break
             if ar_inv_no$   <> ope11a.ar_inv_no$   then break
 
-			internal_seq_no$ = ope11a.internal_seq_no$
-            pick_flag$=ope11a.pick_flag$
-            order_qty_raw$ =str(ope11a.qty_ordered)
-            if !whse_len then whse_len=len(ope11a.warehouse_id$);rem store len of wh field on first detail read for later use in warehouse message routine (to avoid hard-coding '2')
-		
-        rem --- Type
-		
-            dim opm02a$:fattr(opm02a$)
-            dim ivm01a$:fattr(ivm01a$)
-            item_description$ = "Item not found"
-            start_block = 1
-			
-            if start_block then
-                find record (opm02_dev, key=firm_id$+ope11a.line_code$, dom=*endif) opm02a$
-                ivm01a.item_desc$ = fnmask$(ope11a.item_id$,ivIMask$)
-                
-                if pos(pick_or_quote$="P")<>0 or ope11a.commit_flag$<>"N" and pos(ope11a.warehouse_id$=othwhse$)=0 
-                    othwhse$=othwhse$+ope11a.warehouse_id$
-                endif
-                
-                if pos(pick_or_quote$="S") and selected_whse$<>"" and ope11a.warehouse_id$<>selected_whse$ then continue
-            endif
-
-            if pos(opm02a.line_type$=" SP") then
-				if pos(pick_or_quote$="S") then linetype_allows_ls$ = "Y"
-                find record (ivm01_dev, key=firm_id$+ope11a.item_id$, dom=*next) ivm01a$
-                item_description$ = func.displayDesc(ivm01a.item_desc$)
-				if pos(pick_or_quote$="S") then lotser_flag$ = ivm01a.lotser_flag$
-				if barcode$="BAR" then item_barCd$=ivm01a.bar_code$
-                if barcode$="UPC" then item_barCd$=ivm01a.upc_code$
-				
-                find record (ivm02_dev,key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next) ivm02a$
-			endif
-
-            if opm02a.line_type$="M" and pos(opm02a.message_type$="BO ")=0 then continue
-
-line_detail: rem --- Item Detail
-
-			if pos(opm02a.line_type$="MO")=0 then
-                qtyOrdered_salesUM=ope11a.qty_ordered
-				order_qty_masked$= str(ope11a.qty_ordered:qty_mask$)
-                ship_qty_raw$= str(ope11a.qty_ordered)
-				if ope11a.commit_flag$="N"
-                    ship_qty$=func.formatDate(ope11a.est_shp_date$)
+            rem --- If NOT a quote, use opt_invketdet for kits
+            if pick_or_quote$="P" then
+                gosub doDetailLine
+            else
+                redim ivm01a$
+                findrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+                if ivm01a.kit$<>"Y" then
+                    gosub doDetailLine
                 else
-                    ship_qty$=""
-                    bo_qty$=""
-                endif
-                carton$=""
-                if ivsParams.sell_purch_um$="Y" and ivm01a.sell_purch_um$="Y" then
-                    rem --- Use Unit of Purchase, and as necessary also use Unit of Sale
-                    qtyOrdered_purchaseUM=int(ope11a.qty_ordered/ivm01a.conv_factor)
-                    qtyOrdered_salesUM=ope11a.qty_ordered-(qtyOrdered_purchaseUM*ivm01a.conv_factor)
-                    if qtyOrdered_purchaseUM then
-                        rem --- Use Unit of Purchase
-                        order_qty_masked$= str(qtyOrdered_purchaseUM:qty_mask$)
-                        ship_qty_raw$= str(qtyOrdered_purchaseUM)
-                    endif
-                endif
-			endif
-
-			if pos(opm02a.line_type$="MNO") then
-				item_desc$=cvs(ope11a.memo_1024$,3)
-			endif
-
-			if pos(opm02a.line_type$=" SP") then 
-				item_desc$=cvs(fnmask$(ope11a.item_id$,ivIMask$),3)
-                item_id$=cvs(fnmask$(ope11a.item_id$,ivIMask$),3)
-			endif
-
-			if pos(opm02a.line_type$=" SNPO") and print_prices$="Y" 
-				price_raw$=   str(ope11a.unit_price*ope11a.qty_ordered)
-				price_masked$=str(ope11a.unit_price:price_mask$)
-			endif
-			if pos(opm02a.line_type$=" SNPO") and print_prices$="Y" then
-			    if qtyOrdered_purchaseUM then
-                    rem --- Use Unit of Purchase
-                    price_raw$=   str(ope11a.unit_price*ivm01a.conv_factor*qtyOrdered_purchaseUM)
-                    price_masked$=str(ope11a.unit_price*ivm01a.conv_factor:price_mask$)
-			    else
-                    rem --- Use Unit of Sale
-    				price_raw$=   str(ope11a.unit_price*qtyOrdered_salesUM)
-    				price_masked$=str(ope11a.unit_price:price_mask$)
-				endif
-			endif
-
-            if pick_or_quote$<>"P"
-                if pos(opm02a.line_type$=" SNP") and mult_wh$ = "Y" then 
-                    whse$ = ope11a.warehouse_id$
-                else
-                    whse$ = ""
-                endif
-			        
-                if opm02a.dropship$="Y"
-                    location$ = "AON_DROPSHIP"				
-                else   
-                    if pos(opm02a.line_type$=" SP")<>0
-                        location$ = ivm02a.location$
-                    endif
-                endif  
-            endif
-
-			if pos(opm02a.line_type$="SP") then
-				item_desc$=item_desc$+" "+cvs(item_description$,3)+iff(cvs(ope11a.memo_1024$,3)="",""," - "+cvs(ope11a.memo_1024$,3))
-			endif
-
-            if len(item_desc$) then if item_desc$(len(item_desc$),1)=$0A$ then item_desc$=item_desc$(1,len(item_desc$)-1)
-
-            if sf$="Y" then
-                redim sfe01a$
-                read(sfe01_dev,key=firm_id$+customer_id$+order_no$+ope11a.internal_seq_no$,knum="AO_CST_ORD_LINE",dom=*next)
-                readrecord(sfe01_dev,end=*endif)sfe01a$
-                if sfe01a.firm_id$+sfe01a.customer_id$+sfe01a.order_no$+sfe01a.sls_ord_seq_ref$=firm_id$+customer_id$+order_no$+ope11a.internal_seq_no$ then
-                    wo_info1$ = woInfoLabel$[1]+": "+sfe01a.wo_no$+"   "+woInfoLabel$[2]+": "+sfe01a.wo_status$+"   "+woInfoLabel$[3]+": "+cvs(str(sfe01a.sch_prod_qty:qty_mask$),3)
-                    wo_info2$ = woInfoLabel$[4]+": "+fndate$(sfe01a.eststt_date$)+"   "+woInfoLabel$[5]+": "+fndate$(sfe01a.estcmp_date$)
+                    rem --- Explode kit into its components
+                    optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
+                    dim ope11a$:optInvKitDet_tpl$; rem --- Temporarily set the ope11a$ string to the opt_invkitdet template
+                    read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                    while 1
+                        thisKey$=key(optInvKitDet_dev,end=*break)
+                        if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                        readrecord(optInvKitDet_dev,key=thisKey$)ope11a$
+            
+                        gosub doDetailLine
+                    wend
+                    dim ope11a$:ope11a_tpl$; rem --- Reset the ope11a$ string back to the opt_invdet template
                 endif
             endif
-
-            rem --- How many pick list lines are needed for this order detail line?
-            linesNeeded=1
-            if qtyOrdered_purchaseUM and qtyOrdered_salesUM then linesNeeded=2
-
-            for line=1 to linesNeeded
-                rem --- Unit of Purchase can only be used on the first line, but the first line can use either Unit of Purchase or Unit of Sale.
-                if line=1 and qtyOrdered_purchaseUM then
-                    rem --- Use Unit of Purchase
-                    um_sold$=ivm01a.purchase_um$
-                else
-                    rem --- Use Unit of Sale
-                    if pos(opm02a.line_type$="MO")=0 then
-                        um_sold$=ivm01a.unit_of_sale$
-                        order_qty_masked$= str(qtyOrdered_salesUM:qty_mask$)
-                        ship_qty_raw$= str(qtyOrdered_salesUM)
-                        if opm02a.line_type$="N" then um_sold$=ope11a.um_sold$;rem if non-stock, use UM from ope-11 (i.e., item isn't in ivm-01)
-                    endif
-                    if pos(opm02a.line_type$=" SNPO") and print_prices$="Y" then
-                        price_raw$=   str(ope11a.unit_price*qtyOrdered_salesUM)
-                        price_masked$=str(ope11a.unit_price:price_mask$)
-                    endif
-                endif
-                
-                rem --- Cannot use internal_seq_no for the second line because the Jasper LINE_ITEM Group Header is grouped by internal_seq_no.
-                rem --- Use line_no instead of internal_seq_no for the second line to avoid that grouping, which causes second line to not print.
-                if line=2 then internal_seq_no$=ope11a.line_no$
-
-    			data! = rs!.getEmptyRecordData()
-                data!.setFieldValue("ORDER_QTY_RAW", order_qty_raw$)
-    			data!.setFieldValue("ORDER_QTY_MASKED", order_qty_masked$)
-    			data!.setFieldValue("SHIP_QTY", ship_qty$)
-    			data!.setFieldValue("BO_QTY", bo_qty$)
-    			data!.setFieldValue("ITEM_ID", item_id$)
-    			data!.setFieldValue("ITEM_DESC", item_desc$)
-                data!.setFieldValue("ITEM_BARCD", item_barCd$)
-    			data!.setFieldValue("WHSE", whse$)
-                data!.setFieldValue("LOCATION",location$)
-    			data!.setFieldValue("PRICE_RAW", price_raw$)
-    			data!.setFieldValue("PRICE_MASKED", price_masked$)
-                data!.setFieldValue("CARTON",carton$)
-    			data!.setFieldValue("INTERNAL_SEQ_NO",internal_seq_no$)
-                if pos(opm02a.line_type$="MO")=0 then data!.setFieldValue("UM_SOLD",um_sold$)			
-    			data!.setFieldValue("LOTSER_FLAG",lotser_flag$)
-    			data!.setFieldValue("LINETYPE_ALLOWS_LS",linetype_allows_ls$)
-                data!.setFieldValue("WHSE_MESSAGE",whse_message$)
-                data!.setFieldValue("WHSE_MSG_SFX",whse_msg_sfx$)
-                data!.setFieldValue("SHIP_QTY_RAW", ship_qty_raw$)
-                data!.setFieldValue("WO_INFO1", wo_info1$)
-                data!.setFieldValue("WO_INFO2", wo_info2$)
-                data!.setFieldValue("PICK_FLAG", pick_flag$)
-                data!.setFieldValue("LINE_TYPE", opm02a.line_type$)
-    
-    			rs!.insert(data!)
-                if mult_wh$="Y" and selected_whse$="" then
-                    sortKey$=ope11a.warehouse_id$+ope11a.line_no$+str(line)
-                    detailLineTree!.put(sortKey$,data!)
-                endif
-			next line		
 
         rem --- End of detail lines
         wend
@@ -408,6 +260,184 @@ rem --- Tell the stored procedure to return the result set.
 	sp!.setRecordSet(rs!)
 
 	goto std_exit
+
+doDetailLine: rem --- Prepare this detail line for printing
+
+    internal_seq_no$ = ope11a.internal_seq_no$
+    pick_flag$=ope11a.pick_flag$
+    order_qty_raw$ =str(ope11a.qty_ordered)
+    if !whse_len then whse_len=len(ope11a.warehouse_id$);rem store len of wh field on first detail read for later use in warehouse message routine (to avoid hard-coding '2')
+
+    dim opm02a$:fattr(opm02a$)
+    dim ivm01a$:fattr(ivm01a$)
+    item_description$ = "Item not found"
+    start_block = 1
+    
+    if start_block then
+        find record (opm02_dev, key=firm_id$+ope11a.line_code$, dom=*endif) opm02a$
+        ivm01a.item_desc$ = fnmask$(ope11a.item_id$,ivIMask$)
+        
+        if pos(pick_or_quote$="P")<>0 or ope11a.commit_flag$<>"N" and pos(ope11a.warehouse_id$=othwhse$)=0 
+            othwhse$=othwhse$+ope11a.warehouse_id$
+        endif
+
+        if pos(pick_or_quote$="S") and selected_whse$<>"" and ope11a.warehouse_id$<>selected_whse$ then return
+    endif
+
+    if pos(opm02a.line_type$=" SP") then
+        if pos(pick_or_quote$="S") then linetype_allows_ls$ = "Y"
+        find record (ivm01_dev, key=firm_id$+ope11a.item_id$, dom=*next) ivm01a$
+        item_description$ = func.displayDesc(ivm01a.item_desc$)
+        if pos(pick_or_quote$="S") then lotser_flag$ = ivm01a.lotser_flag$
+        if barcode$="BAR" then item_barCd$=ivm01a.bar_code$
+        if barcode$="UPC" then item_barCd$=ivm01a.upc_code$
+        
+        find record (ivm02_dev,key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next) ivm02a$
+    endif
+
+    if opm02a.line_type$="M" and pos(opm02a.message_type$="BO ")=0 then return
+
+    rem --- Item Detail
+    if pos(opm02a.line_type$="MO")=0 then
+        qtyOrdered_salesUM=ope11a.qty_ordered
+        order_qty_masked$= str(ope11a.qty_ordered:qty_mask$)
+        ship_qty_raw$= str(ope11a.qty_ordered)
+        if ope11a.commit_flag$="N"
+            ship_qty$=func.formatDate(ope11a.est_shp_date$)
+        else
+            ship_qty$=""
+            bo_qty$=""
+        endif
+        carton$=""
+        if ivsParams.sell_purch_um$="Y" and ivm01a.sell_purch_um$="Y" then
+            rem --- Use Unit of Purchase, and as necessary also use Unit of Sale
+            qtyOrdered_purchaseUM=int(ope11a.qty_ordered/ivm01a.conv_factor)
+            qtyOrdered_salesUM=ope11a.qty_ordered-(qtyOrdered_purchaseUM*ivm01a.conv_factor)
+            if qtyOrdered_purchaseUM then
+                rem --- Use Unit of Purchase
+                order_qty_masked$= str(qtyOrdered_purchaseUM:qty_mask$)
+                ship_qty_raw$= str(qtyOrdered_purchaseUM)
+            endif
+        endif
+    endif
+
+    if pos(opm02a.line_type$="MNO") then
+        item_desc$=cvs(ope11a.memo_1024$,3)
+    endif
+
+    if pos(opm02a.line_type$=" SP") then 
+        item_desc$=cvs(fnmask$(ope11a.item_id$,ivIMask$),3)
+        item_id$=cvs(fnmask$(ope11a.item_id$,ivIMask$),3)
+    endif
+
+    if pos(opm02a.line_type$=" SNPO") and print_prices$="Y" 
+        price_raw$=   str(ope11a.unit_price*ope11a.qty_ordered)
+        price_masked$=str(ope11a.unit_price:price_mask$)
+    endif
+    if pos(opm02a.line_type$=" SNPO") and print_prices$="Y" then
+        if qtyOrdered_purchaseUM then
+            rem --- Use Unit of Purchase
+            price_raw$=   str(ope11a.unit_price*ivm01a.conv_factor*qtyOrdered_purchaseUM)
+            price_masked$=str(ope11a.unit_price*ivm01a.conv_factor:price_mask$)
+        else
+            rem --- Use Unit of Sale
+            price_raw$=   str(ope11a.unit_price*qtyOrdered_salesUM)
+            price_masked$=str(ope11a.unit_price:price_mask$)
+        endif
+    endif
+
+    if pick_or_quote$<>"P"
+        if pos(opm02a.line_type$=" SNP") and mult_wh$ = "Y" then 
+            whse$ = ope11a.warehouse_id$
+        else
+            whse$ = ""
+        endif
+            
+        if opm02a.dropship$="Y"
+            location$ = "AON_DROPSHIP"              
+        else   
+            if pos(opm02a.line_type$=" SP")<>0
+                location$ = ivm02a.location$
+            endif
+        endif  
+    endif
+
+    if pos(opm02a.line_type$="SP") then
+        item_desc$=item_desc$+" "+cvs(item_description$,3)+iff(cvs(ope11a.memo_1024$,3)="",""," - "+cvs(ope11a.memo_1024$,3))
+    endif
+
+    if len(item_desc$) then if item_desc$(len(item_desc$),1)=$0A$ then item_desc$=item_desc$(1,len(item_desc$)-1)
+
+    if sf$="Y" then
+        redim sfe01a$
+        read(sfe01_dev,key=firm_id$+customer_id$+order_no$+ope11a.internal_seq_no$,knum="AO_CST_ORD_LINE",dom=*next)
+        readrecord(sfe01_dev,end=*endif)sfe01a$
+        if sfe01a.firm_id$+sfe01a.customer_id$+sfe01a.order_no$+sfe01a.sls_ord_seq_ref$=firm_id$+customer_id$+order_no$+ope11a.internal_seq_no$ then
+            wo_info1$ = woInfoLabel$[1]+": "+sfe01a.wo_no$+"   "+woInfoLabel$[2]+": "+sfe01a.wo_status$+"   "+woInfoLabel$[3]+": "+cvs(str(sfe01a.sch_prod_qty:qty_mask$),3)
+            wo_info2$ = woInfoLabel$[4]+": "+fndate$(sfe01a.eststt_date$)+"   "+woInfoLabel$[5]+": "+fndate$(sfe01a.estcmp_date$)
+        endif
+    endif
+
+    rem --- How many pick list lines are needed for this order detail line?
+    linesNeeded=1
+    if qtyOrdered_purchaseUM and qtyOrdered_salesUM then linesNeeded=2
+
+    for line=1 to linesNeeded
+        rem --- Unit of Purchase can only be used on the first line, but the first line can use either Unit of Purchase or Unit of Sale.
+        if line=1 and qtyOrdered_purchaseUM then
+            rem --- Use Unit of Purchase
+            um_sold$=ivm01a.purchase_um$
+        else
+            rem --- Use Unit of Sale
+            if pos(opm02a.line_type$="MO")=0 then
+                um_sold$=ivm01a.unit_of_sale$
+                order_qty_masked$= str(qtyOrdered_salesUM:qty_mask$)
+                ship_qty_raw$= str(qtyOrdered_salesUM)
+                if opm02a.line_type$="N" then um_sold$=ope11a.um_sold$;rem if non-stock, use UM from ope-11 (i.e., item isn't in ivm-01)
+            endif
+            if pos(opm02a.line_type$=" SNPO") and print_prices$="Y" then
+                price_raw$=   str(ope11a.unit_price*qtyOrdered_salesUM)
+                price_masked$=str(ope11a.unit_price:price_mask$)
+            endif
+        endif
+        
+        rem --- Cannot use internal_seq_no for the second line because the Jasper LINE_ITEM Group Header is grouped by internal_seq_no.
+        rem --- Use line_no instead of internal_seq_no for the second line to avoid that grouping, which causes second line to not print.
+        if line=2 then internal_seq_no$=ope11a.line_no$
+
+        data! = rs!.getEmptyRecordData()
+        data!.setFieldValue("ORDER_QTY_RAW", order_qty_raw$)
+        data!.setFieldValue("ORDER_QTY_MASKED", order_qty_masked$)
+        data!.setFieldValue("SHIP_QTY", ship_qty$)
+        data!.setFieldValue("BO_QTY", bo_qty$)
+        data!.setFieldValue("ITEM_ID", item_id$)
+        data!.setFieldValue("ITEM_DESC", item_desc$)
+        data!.setFieldValue("ITEM_BARCD", item_barCd$)
+        data!.setFieldValue("WHSE", whse$)
+        data!.setFieldValue("LOCATION",location$)
+        data!.setFieldValue("PRICE_RAW", price_raw$)
+        data!.setFieldValue("PRICE_MASKED", price_masked$)
+        data!.setFieldValue("CARTON",carton$)
+        data!.setFieldValue("INTERNAL_SEQ_NO",internal_seq_no$)
+        if pos(opm02a.line_type$="MO")=0 then data!.setFieldValue("UM_SOLD",um_sold$)           
+        data!.setFieldValue("LOTSER_FLAG",lotser_flag$)
+        data!.setFieldValue("LINETYPE_ALLOWS_LS",linetype_allows_ls$)
+        data!.setFieldValue("WHSE_MESSAGE",whse_message$)
+        data!.setFieldValue("WHSE_MSG_SFX",whse_msg_sfx$)
+        data!.setFieldValue("SHIP_QTY_RAW", ship_qty_raw$)
+        data!.setFieldValue("WO_INFO1", wo_info1$)
+        data!.setFieldValue("WO_INFO2", wo_info2$)
+        data!.setFieldValue("PICK_FLAG", pick_flag$)
+        data!.setFieldValue("LINE_TYPE", opm02a.line_type$)
+
+        rs!.insert(data!)
+        if mult_wh$="Y" and selected_whse$="" then
+            sortKey$=ope11a.warehouse_id$+ope11a.internal_seq_no$+ope11a.line_no$+str(line)
+            detailLineTree!.put(sortKey$,data!)
+        endif
+    next line
+
+    return  
 
 rem --- Functions
 
