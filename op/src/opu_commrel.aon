@@ -45,6 +45,7 @@ rem --- Open/Lock files
     open_tables$[3]="ARC_TERMCODE",  open_opts$[3]="OTA"
     open_tables$[4]="IVM_ITEMMAST",  open_opts$[4]="OTA"
     open_tables$[7]="OPE_ORDHDR",    open_opts$[7]="OTA"
+    open_tables$[8]="OPT_INVKITDET", open_opts$[8]="OTA"
     open_tables$[9]="OPE_CREDDATE",  open_opts$[9]="OTA"
     open_tables$[10]="OPE_PRNTLIST", open_opts$[10]="OTA"
     open_tables$[11]="OPE_ORDDET",   open_opts$[11]="OTA"
@@ -61,6 +62,7 @@ rem --- Open/Lock files
     arm10_dev=num(open_chans$[3])
     ivm01_dev=num(open_chans$[4])
     ope01_dev=num(open_chans$[7])
+    optInvKitDet_dev=num(open_chans$[8])
     ope03_dev=num(open_chans$[9])
     ope04_dev=num(open_chans$[10])
     ope11_dev=num(open_chans$[11])
@@ -74,7 +76,7 @@ rem --- Open/Lock files
 rem --- Dimension string templates
 
     dim arm02a$:open_tpls$[2],arm10a$:open_tpls$[3],ivm01a$:open_tpls$[4]
-    dim ope01a$:open_tpls$[7],ope03a$:open_tpls$[9],ope04a$:open_tpls$[10]
+    dim ope01a$:open_tpls$[7],optInvKitDet$:open_tpls$[8],ope03a$:open_tpls$[9],ope04a$:open_tpls$[10]
     dim ope11a$:open_tpls$[11],ope21a$:open_tpls$[12],opm02a$:open_tpls$[13]
     dim ars01a$:open_tpls$[14],ars01c$:open_tpls$[15],ivs01a$:open_tpls$[16]
     dim opm06a$:open_tpls$[17]
@@ -166,9 +168,12 @@ rem --- Header loop
                 read(ope11_dev)
                 continue
             endif
+            
+            rem --- Get the item master record
+            readrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
 
             if pos(opm02a.line_type$="NOM")=0
-                if opm02a.dropship$<>"Y"
+                if opm02a.dropship$<>"Y" and ivm01a.kit$<>"Y" then
                     iv_items$[1]=ope11a.warehouse_id$
                     iv_items$[2]=ope11a.item_id$
                     iv_items$[3]=""
@@ -177,8 +182,6 @@ rem --- Header loop
                     call pgmdir$+"ivc_itemupdt.aon","OE",iv_channels[all],ivs01a$,iv_items$[all],iv_refs$[all],iv_refs[all],iv_table_chans$[all],status
 
                 rem --- Serialized/Lotted Items
-
-                    read record (ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next) ivm01a$
                     if pos(ivm01a.lotser_flag$="LS") then
                         ope21_trip$=ope11_key$
                         read (ope21_dev,key=ope21_trip$,knum="AO_STATUS",dom=*next)
@@ -229,6 +232,43 @@ rem --- Header loop
             ope11a.mod_time$=date(0:"%Hz%mz")
             ope11a$ = field(ope11a$)
             write record (ope11_dev) ope11a$
+            
+            rem --- Explode kits into their componets, and commit them
+            if ivm01a.kit$="Y" then
+                optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
+                read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                while 1
+                    thisKey$=key(optInvKitDet_dev,end=*break)
+                    if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                    readrecord(optInvKitDet_dev,key=thisKey$)optInvKitDet$
+
+                    rem --- Commit this component
+                    iv_items$[1]=optInvKitDet.warehouse_id$
+                    iv_items$[2]=optInvKitDet.item_id$
+                    iv_items$[3]=""
+                    iv_refs$[0]=sysinfo.system_date$
+                    iv_refs[0]=optInvKitDet.qty_ordered
+                    call pgmdir$+"ivc_itemupdt.aon","OE",iv_channels[all],ivs01a$,iv_items$[all],iv_refs$[all],iv_refs[all],iv_table_chans$[all],status
+
+                    rem --- Update this component's record
+                    optInvKitDet.commit_flag$="Y"
+                    optInvKitDet.pick_flag$="N"
+                    optInvKitDet.qty_shipped=optInvKitDet.qty_ordered
+                    precision 2
+                    optInvKitDet.ext_price=optInvKitDet.unit_price*optInvKitDet.qty_shipped
+
+                    ope11a.ext_price=optInvKitDet.ext_price
+                    gosub Taxable_Check
+                    optInvKitDet.taxable_amt=ope11a.taxable_amt
+                    precision num(ivs01a.precision$)
+
+                    optInvKitDet.mod_user$=sysinfo.user_id$
+                    optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+                    optInvKitDet.mod_time$=date(0:"%Hz%mz")
+                    optInvKitDet$=field(optInvKitDet$)
+                    writerecord(optInvKitDet_dev)optInvKitDet$
+                wend
+            endif
 
             new$="YES"; rem "Changed one. Generate pick ticket."
             recs=recs+1
@@ -310,8 +350,6 @@ Taxable_Check: rem --- Check If Taxable
         ope11a.taxable_amt=ope11a.ext_price
     else
         if opm02a.taxable_flag$<>"N" then
-            read record (ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*endif) ivm01a$
-    
             if pos(opm02a.line_type$="MNO") or ivm01a.taxable_flag$="Y" then
                 ope11a.taxable_amt=ope11a.ext_price
             endif
