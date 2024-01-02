@@ -18,7 +18,7 @@ rem Program ID: apr_vendinv_irpt.aon  <Dec 10, 2008>
     screen_height = ScreenSize!.height - 50
 
 rem --- Get HashMap of Values in Options Entry Form
-rem --- CAH test commit
+
     params! = Option!.getOptionMap()
     rem "VENDOR INACTIVE FEATURE"
     inactive$=Option!.getOptionData("VEND_INACTIVE")
