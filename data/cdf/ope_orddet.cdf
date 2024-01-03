@@ -2201,6 +2201,9 @@ rem --- Skip UNIT_PRICE for kits
 rem --- Enable/disable KITS button
 	gosub able_kits_button
 
+rem --- Warn if ship quantity is more than currently available.
+	gosub check_ship_qty
+
 [[<<DISPLAY>>.QTY_ORDERED_DSP.AVEC]]
 rem --- Extend price now that grid vector has been updated, if the order quantity has changed
 if num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) <> user_tpl.prev_qty_ord then

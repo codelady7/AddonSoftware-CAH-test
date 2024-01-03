@@ -154,7 +154,6 @@ rem --- Invoice packed and shipped orders
             read(optInvDet_dev,key=optInvDet_key$,dom=*next)
         wend
 
-rem wgh ... 7491 ... test this!!!
         rem --- Replace opt_invkitdet order records with opt_invkitdet invoice records
         skipNewKitDetRecords$=""
         optInvKitDet_trip$=optInvHdr_key$

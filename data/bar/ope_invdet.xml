@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_invdet">BA8EF92D04BD6C841674DEB28D164BD7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_invdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_invdet">20090501</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_invdet">20231225</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_invdet">20231225</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_invdet">121432</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_invdet">20240102</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_invdet">20240102</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_invdet">184552</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_invdet">OPT_INVDET      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_invdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_invdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -70,23 +70,30 @@
 		<RECORD id="ddm_table_aopt.ope_invdet02">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invdet02">OPE_INVDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invdet02">02</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet02">Recalc &Price</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet02">RCPR</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet02">Kit Components</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet02">KITS</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invdet02">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_invdet03">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invdet03">OPE_INVDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invdet03">03</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet03">&Additional</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet03">ADDL</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet03">Recalc &Price</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet03">RCPR</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invdet03">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_invdet04">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invdet04">OPE_INVDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invdet04">04</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet04">&Comments</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet04">COMM</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet04">&Additional</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet04">ADDL</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invdet04">B</DD_ATTR_AOPT_FM>
+		</RECORD>
+		<RECORD id="ddm_table_aopt.ope_invdet05">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invdet05">OPE_INVDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invdet05">05</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet05">&Comments</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet05">COMM</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invdet05">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -126,6 +133,10 @@
 		<RECORD id="ddm_table_cpro.ope_invdetaopt-comm">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_invdetaopt-comm">OPE_INVDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ope_invdetaopt-comm">AOPT-COMM</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ope_invdetaopt-kits">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_invdetaopt-kits">OPE_INVDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ope_invdetaopt-kits">AOPT-KITS</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ope_invdetaopt-lent">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_invdetaopt-lent">OPE_INVDET      </DD_TABLE_ALIAS>

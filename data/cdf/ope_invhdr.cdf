@@ -1884,7 +1884,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=49
+	num_files=50
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -1933,6 +1933,7 @@ rem --- Open needed files
 	open_tables$[47]="OPT_CARTHDR", open_opts$[47]="OTA"
 	open_tables$[48]="OPT_CARTDET", open_opts$[48]="OTA"
 	open_tables$[49]="OPT_CARTLSDET", open_opts$[49]="OTA"
+	open_tables$[50]="OPT_INVKITDET", open_opts$[50]="OTA"
 
 	gosub open_tables
 
@@ -4210,7 +4211,7 @@ rem ==========================================================================
 				ope11_key$=key(ope11_dev,end=*break)
 				if pos(ope11_trip$=ope11_key$)<>1 then break
 				extractrecord(ope11_dev)ope11a$; rem Advisory locking
-				rem --- Skip new ope_invdet ope-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if for "M" and "O" line types.
+				rem --- Skip new ope_invdet ope-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if for NOT "M" and "O" line types.
 				skipNewOpe11Record=0
 				if ope11a.qty_ordered=0 and ope11a.qty_shipped=0 and ope11a.qty_backord=0 then
 					opc_linecode_dev = fnget_dev("OPC_LINECODE")
@@ -4256,6 +4257,64 @@ rem ==========================================================================
 				ope11_primary$=ope11a.firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+old_inv_no$+ope11a.internal_seq_no$
 				remove(ope11_dev,key=ope11_primary$)
 				read(ope11_dev,key=ope11_key$,dom=*next)
+			wend
+
+			rem --- Replace opt_invkitdet order records with opt_invkitdet invoice records
+			skipNewKitDetRecords$=""
+			optInvKitDet_dev = fnget_dev("OPT_INVKITDET")
+			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+			optInvKitDet_trip$=firm_id$+status$+ar_type$+customer_id$+order_no$+old_inv_no$
+			read (optInvKitDet_dev, key=optInvKitDet_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+			while 1
+				optInvKitDet_key$=key(optInvkitDet_dev,end=*break)
+				if pos(optInvKitDet_trip$=optInvKitDet_key$)<>1 then break
+				extractrecord(optInvKitDet_dev)optInvKitDet$; rem Advisory locking
+				rem --- Skip new opt_invkitdet records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if NOT for "M" and "O" line types.
+				skipNewkitDetRecord=0
+				if optInvKitDet.qty_ordered=0 and optInvKitDet.qty_shipped=0 and optInvKitDet.qty_backord=0 then
+					opc_linecode_dev = fnget_dev("OPC_LINECODE")
+					dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
+					read record (opc_linecode_dev, key=firm_id$+optInvKitDet.line_code$, dom=*next)opc_linecode$
+					if pos(opc_linecode.line_type$="MO")=0 then
+						skipNewOpe11Record=1
+						skipNewKitDetRecords$=skipNewKitDetRecords$+optInvKitDet.internal_seq_no$+";"
+					endif
+				endif
+				if !skipNewOpe11Record then
+					if didFulfillment then
+						rem --- Use Fulfillment item picking info
+						optFillmntDet_dev = fnget_dev("OPT_FILLMNTDET")
+						dim optFillmntDet$:fnget_tpl$("OPT_FILLMNTDET")
+						optFillmntDet_trip$=firm_id$+"E"+ar_type$+customer_id$+order_no$+old_inv_no$+ope11a.internal_seq_no$
+						read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS_ORDDET",dom=*next)
+						while 1
+							optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+							if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+							readrecord(optFillmntDet_dev)optFillmntDet$
+							break
+						wend
+						rem --- Make sure this detail line is pickable
+						if optFillmntDet.qty_shipped>0 then
+							opc_linecode_dev = fnget_dev("OPC_LINECODE")
+							dim opc_linecode$:fnget_tpl$("OPC_LINECODE")
+							read record (opc_linecode_dev, key=firm_id$+optInvKitDet.line_code$, dom=*next)opc_linecode$
+							if pos(opc_linecode.line_type$="MO")=0 and opc_linecode.dropship$<>"Y" then 
+								optInvKitDet.qty_shipped=optFillmntDet.qty_picked
+								if optInvKitDet.qty_shipped<=optInvKitDet.qty_ordered then optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
+							endif
+						endif
+					endif
+            
+					optInvKitDet.ar_inv_no$=inv_no$
+					optInvKitDet.mod_user$=sysinfo.user_id$
+					optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+					optInvKitDet.mod_time$=date(0:"%Hz%mz")
+					optInvKitDet$=field(optInvKitDet$)
+					writerecord(optInvKitDet_dev)optInvKitDet$
+				endif
+				optInvKitDet_primary$=optInvKitDet.firm_id$+optInvKitDet.ar_type$+optInvKitDet.customer_id$+optInvKitDet.order_no$+old_inv_no$+optInvKitDet.orddet_seq_ref$+optInvKitDet.internal_seq_no$
+				remove(optInvKitDet_dev,key=optInvKitDet_primary$)
+				read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
 			wend
 
 			rem --- Replace ope_ordlsdet ope-21 records
