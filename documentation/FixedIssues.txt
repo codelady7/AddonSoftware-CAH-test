@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2023-12-28
+ Report Date:   2024-01-03
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -166,6 +166,21 @@ Bug 10768 - AP - Export to 1099 throws error 252 and error 12 when using client 
 (cherry picked from commit 390a276154deb8127661f2eec5caae153053f18d)
 ----
 Modified: ap/src/apx_export_1099.aon
+=======================================================================================================================================
+
+Revision: 4718bbe1ecdaa2bb14937e9cb5b2f0945bc28ac3
+Author: Christine <chawkins@basis.com>
+Date: 1/3/2024 3:50:50 PM
+Message:
+Bug 10773 - OP - Generating Order Acknowledgement throws error 0 when in edit mode
+ - Changed opc_ordconf.aon to use OPE_ORDHDR/DET instead of OPE_INVHDR/DET
+ - Changed BREX in ope_ordhdr.cdf to call opc_ordconf.aon using table_chans$[] instead of rd_table_chans$[]
+
+(cherry picked from commit 40ff0640d7acc6577826517f43e9e9e17001efe5)
+----
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_ordhdr.cdf
+Modified: op/src/opc_ordconf.aon
 =======================================================================================================================================
 
 
