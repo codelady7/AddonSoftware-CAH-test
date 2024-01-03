@@ -113,17 +113,18 @@ rem --- Invoice packed and shipped orders
             optInvDet_key$=key(optInvDet_dev,end=*break)
             if pos(optInvDet_trip$=optInvDet_key$)<>1 then break
             extractrecord(optInvDet_dev)optInvDet$; rem Advisory locking
-            rem --- Skip new opt_invdet opt-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if for "M" and "O" line types.
+            rem --- Skip new opt_invdet opt-11 records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if NOT for "M" and "O" line types.
             skipNewOpe11Record=0
             if optInvDet.qty_ordered=0 and optInvDet.qty_shipped=0 and optInvDet.qty_backord=0 then
                 read record (opcLineCode_dev, key=firm_id$+optInvDet.line_code$, dom=*next)opcLineCode$
                 if pos(opcLineCode.line_type$="MO")=0 then
                     skipNewOpe11Record=1
-                    skipNewOpe21Records$=skipNewOpe21Records$+ope11a.internal_seq_no$+";"
+                    skipNewOpe21Records$=skipNewOpe21Records$+optInvDet.internal_seq_no$+";"
                 endif
             endif
             if !skipNewOpe11Record then
                 rem --- Use Fulfillment item picking info
+                redim optFillmntDet$
                 optFillmntDet_trip$=optInvHdr_key$+optInvDet.internal_seq_no$
                 read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS_ORDDET",dom=*next)
                 while 1
@@ -148,9 +149,59 @@ rem --- Invoice packed and shipped orders
                 optInvDet$=field(optInvDet$)
                 writerecord(optInvDet_dev)optInvDet$
             endif
-           optInvDet_primary$=optInvDet.firm_id$+optInvDet.ar_type$+optInvDet.customer_id$+optInvDet.order_no$+old_inv_no$+optInvDet.internal_seq_no$
+            optInvDet_primary$=optInvDet.firm_id$+optInvDet.ar_type$+optInvDet.customer_id$+optInvDet.order_no$+old_inv_no$+optInvDet.internal_seq_no$
             remove(optInvDet_dev,key=optInvDet_primary$)
             read(optInvDet_dev,key=optInvDet_key$,dom=*next)
+        wend
+
+rem wgh ... 7491 ... test this!!!
+        rem --- Replace opt_invkitdet order records with opt_invkitdet invoice records
+        skipNewKitDetRecords$=""
+        optInvKitDet_trip$=optInvHdr_key$
+        read (optInvKitDet_dev, key=optInvKitDet_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+        while 1
+            optInvKitDet_key$=key(optInvkitDet_dev,end=*break)
+            if pos(optInvKitDet_trip$=optInvKitDet_key$)<>1 then break
+            extractrecord(optInvKitDet_dev)optInvKitDet$; rem Advisory locking
+            rem --- Skip new opt_invkitdet records where QTY_ORDERED=0, QTY_SHIPPED=0 and QTY_BACKORD=0, if NOT for "M" and "O" line types.
+            skipNewkitDetRecord=0
+            if optInvKitDet.qty_ordered=0 and optInvKitDet.qty_shipped=0 and optInvKitDet.qty_backord=0 then
+                read record (opcLineCode_dev, key=firm_id$+optInvKitDet.line_code$, dom=*next)opcLineCode$
+                if pos(opcLineCode.line_type$="MO")=0 then
+                    skipNewOpe11Record=1
+                    skipNewKitDetRecords$=skipNewKitDetRecords$+optInvKitDet.internal_seq_no$+";"
+                endif
+            endif
+            if !skipNewOpe11Record then
+                rem --- Use Fulfillment item picking info
+                redim optFillmntDet$
+                optFillmntDet_trip$=optInvHdr_key$+optInvKitDet.internal_seq_no$
+                read(optFillmntDet_dev,key=optFillmntDet_trip$,knum="AO_STATUS_ORDDET",dom=*next)
+                while 1
+                    optFillmntDet_key$=key(optFillmntDet_dev,end=*break)
+                    if pos(optFillmntDet_trip$=optFillmntDet_key$)<>1 then break
+                    readrecord(optFillmntDet_dev)optFillmntDet$
+                    break
+                wend
+                rem --- Make sure this detail line is pickable
+                if optFillmntDet.qty_shipped>0 then
+                    read record (opcLineCode_dev, key=firm_id$+optInvKitDet.line_code$, dom=*next)opcLineCode$
+                    if pos(opcLineCode.line_type$="MO")=0 and opcLineCode.dropship$<>"Y" then 
+                        optInvKitDet.qty_shipped=optFillmntDet.qty_picked
+                        if optInvKitDet.qty_shipped<=optInvKitDet.qty_ordered then optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
+                    endif
+                endif
+            
+                optInvKitDet.ar_inv_no$=inv_no$
+                optInvKitDet.mod_user$=sysinfo.user_id$
+                optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+                optInvKitDet.mod_time$=date(0:"%Hz%mz")
+                optInvKitDet$=field(optInvKitDet$)
+                writerecord(optInvKitDet_dev)optInvKitDet$
+            endif
+            optInvKitDet_primary$=optInvKitDet.firm_id$+optInvKitDet.ar_type$+optInvKitDet.customer_id$+optInvKitDet.order_no$+old_inv_no$+optInvKitDet.orddet_seq_ref$+optInvKitDet.internal_seq_no$
+            remove(optInvKitDet_dev,key=optInvKitDet_primary$)
+            read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
         wend
 
         rem --- Replace opt_invlsdet opt-21 records

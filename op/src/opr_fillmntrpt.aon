@@ -36,7 +36,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=10,begfile=1,endfile=files
+    files=11,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="opt-01",        ids$[1]="OPT_INVHDR"
     files$[2]="opt-11",        ids$[2]="OPT_INVDET"
@@ -48,6 +48,7 @@ rem --- Open/Lock files
     files$[8]="opm-02",        ids$[8]="OPC_LINECODE"
     files$[9]="ivs_params",    ids$[9]="IVS_PARAMS"
     files$[10]="ivm-01",       ids$[10]="IVM_ITEMMAST"
+    files$[11]="opt_invkitdet",       ids$[11]="OPT_INVKITDET"
 
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :       ids$[all],templates$[all],channels[all],batch,status
@@ -63,11 +64,13 @@ rem --- Open/Lock files
     opcLineCode_dev=channels[8]
     ivsParams_dev=channels[9]
     ivmItemMast_dev=channels[10]
+    optInvKitDet_dev=channels[11]
 
 rem --- Dimension string templates
 
     dim optInvHdr$:templates$[1]
-    dim optInvDet$:templates$[2]
+    optInvDet_tpl$=templates$[2]
+    dim optInvDet$:optInvDet_tpl$
     dim optFillmntHdr$:templates$[3]
     dim optFillmntDet$:templates$[4]
     dim optCartHdr$:templates$[5]
@@ -76,6 +79,8 @@ rem --- Dimension string templates
     dim opcLineCode$:templates$[8]
     dim ivsParams$:templates$[9]
     dim ivmItemMast$:templates$[10]
+    optInvKitDet_tpl$=templates$[11]
+    dim optInvKitDet$:optInvKitDet_tpl$
 
 rem --- Assign form input values to local variables
 
@@ -215,65 +220,32 @@ rem --- Main Loop Starts
         OutVect!.addItem(Translate!.getTranslation("AON_SHIPPED","Shipped")+$00$+"B")
         xwk = fnblank(2)
 
+        lineNo=0
         read(optInvDet_dev,key=optInvHdr_key$,knum="AO_STATUS",dom=*next)
         while 1
             optInvDet_key$=key(optInvDet_dev,end=*break)
             if pos(optInvHdr_key$=optInvDet_key$)<>1 then break
             readrecord(optInvDet_dev)optInvDet$
-            
-            rem --- Get the Line Type
-            findrecord(opcLineCode_dev,key=firm_id$+optInvDet.line_code$,dom=*continue)opcLineCode$
 
-            rem --- Get quantity picked
-            qty_picked=0
-            read(optFillmntDet_dev,key=optInvDet_key$,knum="AO_STATUS_ORDDET",dom=*next)
-            optFillmntDet_key$=key(optFillmntDet_dev,end=*next)
-            if pos(optInvDet_key$=optFillmntDet_key$)=1 then
-                readrecord(optFillmntDet_dev)optFillmntDet$
-                qty_picked=optFillmntDet.qty_picked
-            endif
-
-            rem --- Get quantity packed and quantity shipped
-            qty_packed=0
-            qty_shipped=0
-            read(optCartDet_dev,key=optInvDet_key$,knum="AO_ORDDET_CART",dom=*next)
-            while 1
-                optCartDet_key$=key(optCartDet_dev,end=*break)
-                if pos(optInvDet_key$=optCartDet_key$)<>1 then break
-                readrecord(optCartDet_dev)optCartDet$
-                qty_packed=qty_packed+optCartDet.qty_packed
-                
-                optCartHdr_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+optCartDet.carton_no$
-                findrecord(optCartHdr_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*continue)optCartHdr$
-                if optCartHdr.shipped_flag$="Y" then qty_shipped=qty_shipped++optCartDet.qty_packed
-            wend
- 
-            if pos(opcLineCode.line_type$="MO") then
-                rem --- Memo (M) and Other (O) line types
-                xwk = fnblank(1)
-                OutVect!.addItem(optInvDet.line_code$)
-                OutVect!.addItem(optInvDet.order_memo$)
-                xwk = fnblank(10)
+            rem --- Explode kits into their components
+            redim ivmItemMast$
+            findrecord(ivmItemMast_dev,key=firm_id$+optInvDet.item_id$,dom=*next)ivmItemMast$
+            if ivmItemMast.kit$<>"Y" then
+                gosub doDetailLine
             else
-                rem --- Regular Sale (S), Non-Stock (N) and Special Distribution (P) line types
-                rem --- Get Item Description
-                redim ivmItemMast$
-                findrecord(ivmItemMast_dev,key=firm_id$+optInvDet.item_id$,dom=*next)ivmItemMast$
-                
-                xwk = fnblank(1)
-                OutVect!.addItem(optInvDet.line_code$+"     "+fnmask$(optInvDet.item_id$,ivIMask$))
-                if opcLineCode.line_type$="N" then
-                    OutVect!.addItem(optInvDet.order_memo$)
-                else
-                    OutVect!.addItem(fnitem$(ivmItemMast.item_desc$,i[3],i[4],i[5]))
-                endif
-                xwk = fnblank(3)
-                OutVect!.addItem(str(optInvDet.qty_ordered:m2$))
-                OutVect!.addItem(str(optInvDet.qty_backord:m2$))
-                OutVect!.addItem(str(qty_picked:m2$))
-                OutVect!.addItem(str(qty_packed:m2$))
-                OutVect!.addItem(str(qty_shipped:m2$))
-                xwk = fnblank(2)
+                rem --- Explode this kit into its components
+                optInvKitDet_key$=firm_id$+optInvDet.ar_type$+optInvDet.customer_id$+optInvDet.order_no$+optInvDet.ar_inv_no$+optInvDet.internal_seq_no$
+                dim optInvDet$:optInvKitDet_tpl$; rem --- Temporarily set the optInvDet$ string to the opt_invkitdet template
+                read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                while 1
+                    thisKey$=key(optInvKitDet_dev,end=*break)
+                    if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                    readrecord(optInvKitDet_dev,key=thisKey$)optInvDet$
+
+                    optInvDet_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+optInvDet.internal_seq_no$
+                    gosub doDetailLine
+                wend
+                dim optInvDet$:optInvDet_tpl$; rem --- Reset the optInvDet$ string back to the opt_invdet template
             endif
         wend
     wend
@@ -293,6 +265,64 @@ rem --- All done
 
     goto std_exit
 
+doDetailLine: rem --- Prepare and print this detail line
+    rem --- Get the Line Type
+    findrecord(opcLineCode_dev,key=firm_id$+optInvDet.line_code$,dom=*continue)opcLineCode$
+
+    rem --- Get quantity picked
+    qty_picked=0
+    read(optFillmntDet_dev,key=optInvDet_key$,knum="AO_STATUS_ORDDET",dom=*next)
+    optFillmntDet_key$=key(optFillmntDet_dev,end=*next)
+    if pos(optInvDet_key$=optFillmntDet_key$)=1 then
+        readrecord(optFillmntDet_dev)optFillmntDet$
+        qty_picked=optFillmntDet.qty_picked
+    endif
+
+    rem --- Get quantity packed and quantity shipped
+    qty_packed=0
+    qty_shipped=0
+    read(optCartDet_dev,key=optInvDet_key$,knum="AO_ORDDET_CART",dom=*next)
+    while 1
+        optCartDet_key$=key(optCartDet_dev,end=*break)
+        if pos(optInvDet_key$=optCartDet_key$)<>1 then break
+        readrecord(optCartDet_dev)optCartDet$
+        qty_packed=qty_packed+optCartDet.qty_packed
+        
+        optCartHdr_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+optCartDet.carton_no$
+        findrecord(optCartHdr_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*continue)optCartHdr$
+        if optCartHdr.shipped_flag$="Y" then qty_shipped=qty_shipped++optCartDet.qty_packed
+            wend
+ 
+            if pos(opcLineCode.line_type$="MO") then
+        rem --- Memo (M) and Other (O) line types
+        xwk = fnblank(1)
+        OutVect!.addItem(optInvDet.line_code$)
+        OutVect!.addItem(optInvDet.order_memo$)
+        xwk = fnblank(10)
+    else
+        rem --- Regular Sale (S), Non-Stock (N) and Special Distribution (P) line types
+        rem --- Get Item Description
+        redim ivmItemMast$
+        findrecord(ivmItemMast_dev,key=firm_id$+optInvDet.item_id$,dom=*next)ivmItemMast$
+        
+        xwk = fnblank(1)
+        OutVect!.addItem(optInvDet.line_code$+"     "+fnmask$(optInvDet.item_id$,ivIMask$))
+        if opcLineCode.line_type$="N" then
+            OutVect!.addItem(optInvDet.order_memo$)
+        else
+            OutVect!.addItem(fnitem$(ivmItemMast.item_desc$,i[3],i[4],i[5]))
+        endif
+        xwk = fnblank(3)
+        OutVect!.addItem(str(optInvDet.qty_ordered:m2$))
+        OutVect!.addItem(str(optInvDet.qty_backord:m2$))
+        OutVect!.addItem(str(qty_picked:m2$))
+        OutVect!.addItem(str(qty_packed:m2$))
+        OutVect!.addItem(str(qty_shipped:m2$))
+        xwk = fnblank(2)
+    endif
+
+    return
+    
 rem --- Date/time handling functions
 
     def fndate$(q$)

@@ -603,6 +603,7 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 	dim opeOrdDet$:fnget_tpl$("OPE_ORDDET")
 	ivmItemWhse_dev=fnget_dev("IVM_ITEMWHSE")
 	dim ivmItemWhse$:fnget_tpl$("IVM_ITEMWHSE")
+	lineNo=0
 	read(opeOrdDet_dev,key=opeOrdHdr_key$,knum="PRIMARY",dom=*next)
 	while 1
 		opeOrdDet_key$=key(opeOrdDet_dev,end=*break)
@@ -654,28 +655,71 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		redim ivmItemWhse$
 		readrecord(ivmItemWhse_dev,key=firm_id$+opeOrdDet.warehouse_id$+opeOrdDet.item_id$,dom=*next)ivmItemWhse$
 
-		redim optFillmntDet$
-		optFillmntDet.firm_id$=firm_id$
-		optFillmntDet.ar_type$=opeOrdDet.ar_type$
-		optFillmntDet.customer_id$=opeOrdDet.customer_id$
-		optFillmntDet.order_no$=opeOrdDet.order_no$
-		optFillmntDet.ar_inv_no$=opeOrdDet.ar_inv_no$
-		optFillmntDet.line_no$=opeOrdDet.line_no$
-		optFillmntDet.orddet_seq_ref$=opeOrdDet.internal_seq_no$
-		optFillmntDet.warehouse_id$=opeOrdDet.warehouse_id$
-		optFillmntDet.item_id$=opeOrdDet.item_id$
-		optFillmntDet.order_memo$=opeOrdDet.order_memo$
-		optFillmntDet.memo_1024$=opeOrdDet.memo_1024$
-		optFillmntDet.um_sold$=opeOrdDet.um_sold$
-		optFillmntDet.location$=ivmItemWhse.location$
-		optFillmntDet.created_user$=sysinfo.user_id$
-		optFillmntDet.created_date$=date(0:"%Yd%Mz%Dz")
-		optFillmntDet.created_time$=date(0:"%Hz%mz")
-		optFillmntDet.trans_status$="E"
-		optFillmntDet.qty_shipped=opeOrdDet.qty_shipped
-		optFillmntDet.qty_picked=0
-		optFillmntDet.conv_factor=opeOrdDet.conv_factor
-		writerecord(optFillmntDet_dev)optFillmntDet$
+		rem --- Initialize OPT_FILLMNTDET with corresponding OPE_ORDDET data
+		ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
+		readrecord(ivmItemMast_dev,key=firm_id$+opeOrdDet.item_id$,dom=*next)ivmItemMast$
+		if ivmItemMast.kit$<>"Y" then
+			rem --- Initialize OPT_FILLMNTDET with this OPE_ORDDET data record
+			redim optFillmntDet$
+			optFillmntDet.firm_id$=firm_id$
+			optFillmntDet.ar_type$=opeOrdDet.ar_type$
+			optFillmntDet.customer_id$=opeOrdDet.customer_id$
+			optFillmntDet.order_no$=opeOrdDet.order_no$
+			optFillmntDet.ar_inv_no$=opeOrdDet.ar_inv_no$
+			lineNo=lineNo+1
+			optFillmntDet.line_no$=pad(str(lineNo),len(opeOrdDet.line_no$),"R","0")
+			optFillmntDet.orddet_seq_ref$=opeOrdDet.internal_seq_no$
+			optFillmntDet.warehouse_id$=opeOrdDet.warehouse_id$
+			optFillmntDet.item_id$=opeOrdDet.item_id$
+			optFillmntDet.order_memo$=opeOrdDet.order_memo$
+			optFillmntDet.memo_1024$=opeOrdDet.memo_1024$
+			optFillmntDet.um_sold$=opeOrdDet.um_sold$
+			optFillmntDet.location$=ivmItemWhse.location$
+			optFillmntDet.created_user$=sysinfo.user_id$
+			optFillmntDet.created_date$=date(0:"%Yd%Mz%Dz")
+			optFillmntDet.created_time$=date(0:"%Hz%mz")
+			optFillmntDet.trans_status$="E"
+			optFillmntDet.qty_shipped=opeOrdDet.qty_shipped
+			optFillmntDet.qty_picked=0
+			optFillmntDet.conv_factor=opeOrdDet.conv_factor
+			writerecord(optFillmntDet_dev)optFillmntDet$
+		else
+			rem --- Explode this kit into its components and initialize OPT_FILLMNTDET with the OPT_INVKITDET data
+			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+			optInvKitDet_key$=firm_id$+opeOrdDet.ar_type$+opeOrdDet.customer_id$+opeOrdDet.order_no$+opeOrdDet.ar_inv_no$+opeOrdDet.internal_seq_no$
+			read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+			while 1
+				thisKey$=key(optInvKitDet_dev,end=*break)
+				if pos(optInvKitDet_key$=thisKey$)<>1 then break
+				readrecord(optInvKitDet_dev,key=thisKey$)optInvKitDet$
+
+				redim optFillmntDet$
+				optFillmntDet.firm_id$=firm_id$
+				optFillmntDet.ar_type$=optInvKitDet.ar_type$
+				optFillmntDet.customer_id$=optInvKitDet.customer_id$
+				optFillmntDet.order_no$=optInvKitDet.order_no$
+				optFillmntDet.ar_inv_no$=optInvKitDet.ar_inv_no$
+				lineNo=lineNo+1
+				optFillmntDet.line_no$=pad(str(lineNo),len(optInvKitDet.line_no$),"R","0")
+				optFillmntDet.orddet_seq_ref$=optInvKitDet.internal_seq_no$
+				optFillmntDet.warehouse_id$=optInvKitDet.warehouse_id$
+				optFillmntDet.item_id$=optInvKitDet.item_id$
+				optFillmntDet.order_memo$=optInvKitDet.order_memo$
+				optFillmntDet.memo_1024$=optInvKitDet.memo_1024$
+				optFillmntDet.um_sold$=optInvKitDet.um_sold$
+				optFillmntDet.location$=ivmItemWhse.location$
+				optFillmntDet.created_user$=sysinfo.user_id$
+				optFillmntDet.created_date$=date(0:"%Yd%Mz%Dz")
+				optFillmntDet.created_time$=date(0:"%Hz%mz")
+				optFillmntDet.trans_status$="E"
+				optFillmntDet.qty_shipped=optInvKitDet.qty_shipped
+				optFillmntDet.qty_picked=0
+				optFillmntDet.conv_factor=optInvKitDet.conv_factor
+				writerecord(optFillmntDet_dev)optFillmntDet$
+			wend
+		endif
 	wend
 
 rem --- Remove Barista soft lock for the Order.
@@ -966,7 +1010,7 @@ rem --- Init Java classes
 	use ::ado_util.src::util
 
 rem --- Open needed files
-	num_files=16
+	num_files=17
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="OPE_ORDHDR",  open_opts$[1]="OTA"
@@ -985,6 +1029,7 @@ rem --- Open needed files
 	open_tables$[14]="IVM_LSMASTER",   open_opts$[14]="OTA"
 	open_tables$[15]="OPC_LINECODE",   open_opts$[15]="OTA"
 	open_tables$[16]="ARC_SHIPVIACODE",   open_opts$[16]="OTA"
+	open_tables$[17]="OPT_INVKITDET",   open_opts$[17]="OTA"
 
 	gosub open_tables
 
