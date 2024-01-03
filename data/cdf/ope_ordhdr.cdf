@@ -2145,7 +2145,7 @@ rem --- Skip Acknowledgements for quotes
 				rem --- Do Acknowledgement without launching the form
 				cust_id$=callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
 				order_no$=callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
-				call stbl("+DIR_PGM")+"opc_ordconf.aon::auto_on_demand", cust_id$, order_no$, rd_table_chans$[all], status
+				call stbl("+DIR_PGM")+"opc_ordconf.aon::auto_on_demand", cust_id$, order_no$, table_chans$[all], status
 
 				callpoint!.setColumnData("OPE_ORDHDR.ORD_CONF_PRINTED","Y")
 				callpoint!.setColumnData("OPE_ORDHDR.MOD_USER",sysinfo.user_id$)
@@ -2168,7 +2168,7 @@ rem --- Skip Acknowledgements for quotes
 			rem --- Do Acknowledgement without launching the form
 			cust_id$=callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
 			order_no$=callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
-			call stbl("+DIR_PGM")+"opc_ordconf.aon::auto_on_demand", cust_id$, order_no$, rd_table_chans$[all], status
+			call stbl("+DIR_PGM")+"opc_ordconf.aon::auto_on_demand", cust_id$, order_no$, table_chans$[all], status
 		endif
 	endif
 
