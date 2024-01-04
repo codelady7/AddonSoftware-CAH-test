@@ -2156,7 +2156,11 @@ rem --- called from AWIN and filter_recs
 			gridInvoices!.setCellText(wk / gridInvoices!.getNumColumns(), 7, "")
 		next wk
 
+		sel_rows!=gridInvoices!.getSelectedRows()
 		gridInvoices!.resort()
+		if sel_rows!.size()
+			gridInvoices!.setSelectedRows(sel_rows!)
+		endif 
 	else
 		gridInvoices!.clearMainGrid()
 		gridInvoices!.setColumnStyle(2,SysGUI!.GRID_STYLE_UNCHECKED)
