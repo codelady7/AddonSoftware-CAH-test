@@ -318,6 +318,8 @@ rem --- Set buttons
 		gosub enable_addl_opts
 	endif
 
+rem --- Set availability info
+
 	gosub set_avail
 
 rem --- May want to skip line code entry, and/or warehouse code entry, the first time.
@@ -1496,6 +1498,7 @@ rem --- Delete opt_invkitdet records. NOTE: Barista's Undelete does NOT cascade.
 rem --- Disable detail-only buttons
 
 	callpoint!.setOptionEnabled("LENT",0)
+	callpoint!.setOptionEnabled("KITS",0)
 	callpoint!.setOptionEnabled("RCPR",0)
 	callpoint!.setOptionEnabled("ADDL",0)
 	callpoint!.setOptionEnabled("COMM",0)
@@ -2200,9 +2203,6 @@ rem --- Skip UNIT_PRICE for kits
 
 rem --- Enable/disable KITS button
 	gosub able_kits_button
-
-rem --- Warn if ship quantity is more than currently available.
-	gosub check_ship_qty
 
 [[<<DISPLAY>>.QTY_ORDERED_DSP.AVEC]]
 rem --- Extend price now that grid vector has been updated, if the order quantity has changed

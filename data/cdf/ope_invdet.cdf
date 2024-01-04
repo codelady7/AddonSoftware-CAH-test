@@ -1357,10 +1357,42 @@ rem --- Delete ope_ordlsdet records for lot/serial items. NOTE: Barista's Undele
 		read(ope_ordlsdet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next); rem --- Reset to alternate key
 	endif
 
+rem --- Delete opt_invkitdet records. NOTE: Barista's Undelete does NOT cascade.
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Use a HashMap to temporarily hold onto deleted records so they can be undeleted later.
+		if callpoint!.getDevObject("undeleteRecs")=null() then
+			undeleteRecs!=new HashMap()
+			callpoint!.setDevObject("undeleteRecs",undeleteRecs!)
+		endif
+		undeleteRecs!=callpoint!.getDevObject("undeleteRecs")
+
+		rem --- Delete the kit's components
+		optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+		dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+		ar_type$=callpoint!.getColumnData("OPE_INVDET.AR_TYPE") 
+		cust$=callpoint!.getColumnData("OPE_INVDET.CUSTOMER_ID")
+		order$=callpoint!.getColumnData("OPE_INVDET.ORDER_NO")
+		invoice_no$=callpoint!.getColumnData("OPE_INVDET.AR_INV_NO")
+		seq$=callpoint!.getColumnData("OPE_INVDET.INTERNAL_SEQ_NO")
+		optInvKitDet_key$=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$
+		read(optInvKitDet_dev,key=optInvKitDet_key$,knum="PRIMARY",dom=*next)
+		while 1
+			thisKey$=key(optInvKitDet_dev,end=*break)
+			if pos(optInvKitDet_key$=thisKey$)<>1 then break
+			readrecord(optInvKitDet_dev,key=thisKey$)optInvKitDet$
+			remove(optInvKitDet_dev,key=thisKey$)
+
+			rem --- Hold onto this record for now so it can be undeleted if necessary.
+			undeleteRecs!.put(thisKey$,optInvKitDet$)
+		wend
+		read(optInvKitDet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next); rem --- Reset to alternate key
+    endif
+
 [[OPE_INVDET.BDGX]]
 rem --- Disable detail-only buttons
 
 	callpoint!.setOptionEnabled("LENT",0)
+	callpoint!.setOptionEnabled("KITS",0)
 	callpoint!.setOptionEnabled("RCPR",0)
 	callpoint!.setOptionEnabled("ADDL",0)
 	callpoint!.setOptionEnabled("COMM",0)
@@ -1379,8 +1411,9 @@ rem --- Set header total amounts
 		ordHelp!.setTaxCode(callpoint!.getHeaderColumnData("OPE_INVHDR.TAX_CODE"))
 		ordHelp!.totalSalesDisk(cust_id$, order_no$, inv_type$)
 		
-		callpoint!.setHeaderColumnData( "OPE_INVHDR.TOTAL_SALES", str(ordHelp!.getExtPrice()) )
-		callpoint!.setHeaderColumnData( "OPE_INVHDR.TOTAL_COST",  str(ordHelp!.getExtCost()) )
+		callpoint!.setHeaderColumnData( "OPE_INVHDR.TOTAL_SALES", str(round(ordHelp!.getExtPrice(),2)))
+		round_precision = num(callpoint!.getDevObject("precision"))
+		callpoint!.setHeaderColumnData( "OPE_INVHDR.TOTAL_COST",  str(round(ordHelp!.getExtCost(),round_precision)))
 
 		callpoint!.setStatus("REFRESH;SETORIG")
 
@@ -1408,7 +1441,7 @@ rem --- Undelete ope_ordlsdet records for lot/serial items. NOTE: Barista's Unde
 	item_id$ = callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
 	gosub lot_ser_check
 	if lotted$ = "Y" then
-		rem --- Unelete ope_ordlsdet records entered for this lot/serial items
+		rem --- Undelete ope_ordlsdet records entered for this lot/serial items
 		ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
 		dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
 		ar_type$=callpoint!.getColumnData("OPE_INVDET.AR_TYPE") 
@@ -1426,6 +1459,35 @@ rem --- Undelete ope_ordlsdet records for lot/serial items. NOTE: Barista's Unde
 			if pos(ope_ordlsdet_key$=undeleteRecKey$)<>1 then continue
 			ope_ordlsdet$=undeleteRecs!.get(undeleteRecKey$)
 			writerecord(ope_ordlsdet_dev)ope_ordlsdet$
+			restoredRecs!.addItem(undeleteRecKey$)
+		wend
+		restoredRecsIter!=restoredRecs!.iterator()
+		while restoredRecsIter!.hasNext()
+			restoredRecKey$=restoredRecsIter!.next()
+			undeleteRecs!.remove(restoredRecKey$)
+		wend
+	endif
+
+rem --- Undelete opt_invkitdet records. NOTE: Barista's Undelete does NOT cascade.
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Undelete the kit's components
+		optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+		dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+		ar_type$=callpoint!.getColumnData("OPE_INVDET.AR_TYPE") 
+		cust$=callpoint!.getColumnData("OPE_INVDET.CUSTOMER_ID")
+		order$=callpoint!.getColumnData("OPE_INVDET.ORDER_NO")
+		invoice_no$=callpoint!.getColumnData("OPE_INVDET.AR_INV_NO")
+		seq$=callpoint!.getColumnData("OPE_INVDET.INTERNAL_SEQ_NO")
+		optInvKitDet_key$=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$
+
+		restoredRecs!=BBjAPI().makeVector()
+		undeleteRecs!=callpoint!.getDevObject("undeleteRecs")
+		undeleteRecIter!=undeleteRecs!.keySet().iterator()
+		while undeleteRecIter!.hasNext()
+			undeleteRecKey$=undeleteRecIter!.next()
+			if pos(optInvKitDet_key$=undeleteRecKey$)<>1 then continue
+			optInvKitDet$=undeleteRecs!.get(undeleteRecKey$)
+			writerecord(optInvKitDet_dev)optInvKitDet$
 			restoredRecs!.addItem(undeleteRecKey$)
 		wend
 		restoredRecsIter!=restoredRecs!.iterator()
@@ -1927,6 +1989,9 @@ rem --- Recalc quantities and extended price
 
 rem --- Enable/disable KITS button
 	gosub able_kits_button
+
+rem --- Skip UNIT_PRICE for kits
+	if callpoint!.getDevObject("kit")="Y" then callpoint!.setFocus(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_BACKORD_DSP",1)
 
 rem --- Warn if ship quantity is more than currently available.
 	gosub check_ship_qty
@@ -2614,7 +2679,25 @@ rem ==========================================================================
 		refs[0]=ord_qty*conv_factor
 
 		if !pos(ivm_itemmast.lotser_flag$="LS") or ivm_itemmast.inventoried$<>"Y" then
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			if callpoint!.getDevObject("kit")<>"Y" then
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			else
+				rem --- Skip the kit, and do its components instead.
+				optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+				dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+				optInvKitDet_key$=firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+				read(optInvKitDet_dev,key=optInvKitDet_key$,knum="AO_STAT_CUST_ORD",dom=*next)
+				while 1
+					thisKey$=key(optInvKitDet_dev,end=*break)
+					if pos(optInvKitDet_key$=thisKey$)<>1 then break
+					readrecord(optInvKitDet_dev)optInvKitDet$
+
+					items$[1]=optInvKitDet.warehouse_id$
+					items$[2]=optInvKitDet$.item_id$
+					refs[0]=optInvKitDet.qty_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				wend
+			endif
 		else
 			found_lot=0
 			trip_key$=firm_id$+trans_status$+ar_type$+cust$+order$+invoice_no$+seq$
@@ -2646,9 +2729,9 @@ rem ==========================================================================
 
 rem ==========================================================================
 disable_by_linetype: rem --- Set enable/disable based on line type
-	rem --- <<CALLPOINT>> enable in item#, memo, ordered, price and ext price on form handles enable/disable
+	rem --- <<CALLPOINT>> enable in item#, memo, ordered and ext price on form handles enable/disable
 	rem --- based strictly on line type, via the callpoint!.setStatus("ENABLE:"+opc_linecode.line_type$) command.
-	rem --- cost, product type, backordered and shipped are enabled/disabled directly based on additional conditions
+	rem --- cost, price, product type, backordered and shipped are enabled/disabled directly based on additional conditions
 	rem      IN: line_code$
 rem ==========================================================================
 
@@ -2666,7 +2749,7 @@ rem ==========================================================================
 	user_tpl.line_prod_type_pr$ = opc_linecode.prod_type_pr$
 
 	if pos(opc_linecode.line_type$="SP")>0 and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))<>0 and
-:	callpoint!.isEditMode() then
+:	callpoint!.isEditMode() and callpoint!.getDevObject("kit")<>"Y" then
 		callpoint!.setOptionEnabled("RCPR",1)
 	else
 		callpoint!.setOptionEnabled("RCPR",0)
@@ -2698,8 +2781,19 @@ rem --- Disable/enable displayed unit price and quantity ordered
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_ORDERED_DSP", 0)
 	endif
 
-rem --- Disable / enable unit cost
+rem --- Initialize "kit" DevObject
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+	dim ivm01a$:ivm01_tpl$
+	item$=callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
+	ivm01a_key$=firm_id$+item$
+	find record (ivm01_dev,key=ivm01a_key$,err=*next)ivm01a$
+	if ivm01a.kit$="Y" then
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		callpoint!.setOptionEnabled("RCPR",0)
+	endif
 
+rem --- Disable/enable unit cost (can't just enable/disable this field by line type)
 	if pos(user_tpl.line_type$="NSP") = 0 then
 		rem --- always disable cost if line type Memo or Other
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP", 0)
@@ -2836,7 +2930,7 @@ rem ==========================================================================
 		gosub check_item_whse
 
 		if !user_tpl.item_wh_failed and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) and
-:		callpoint!.isEditMode() then
+:		callpoint!.isEditMode() and callpoint!.getDevObject("kit")<>"Y" then
 			callpoint!.setOptionEnabled("RCPR",1)
 		else
 			callpoint!.setOptionEnabled("RCPR",0)
