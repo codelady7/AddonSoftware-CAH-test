@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-01-03
+ Report Date:   2024-01-04
  Report Branch: AddonSoftware 23.06
  Last Release:  AddonSoftware 23.05
 =======================================================================================================================================
@@ -183,5 +183,17 @@ Modified: data/cdf/ope_ordhdr.cdf
 Modified: op/src/opc_ordconf.aon
 =======================================================================================================================================
 
+Revision: 995f85e10baedc1a96db1a5d35fbd970c6c72f1c
+Author: Christine <chawkins@basis.com>
+Date: 1/4/2024 11:58:40 AM
+Message:
+Bug 10772 - AP - Selection of items in Payment Selection grid not working properly
+ - most likely a Barista issue, but found a workaround in the app callpoint code to correct the behavior
+
+(cherry picked from commit d438f309b0e52ccb38098c7f6557fff50112ddb5)
+----
+Modified: data/bar/ape_payselect.xml
+Modified: data/cdf/ape_payselect.cdf
+=======================================================================================================================================
 
 
