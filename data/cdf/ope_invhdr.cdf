@@ -2008,6 +2008,18 @@ rem --- See if blank warehouse exists
 		blank_whse$ = "Y"
 	endif
 
+rem --- If BM is installed, open BMM_BILLMAT
+	bm_sf$="N"
+	dim info$[20]
+	call stbl("+DIR_PGM")+"adc_application.aon","BM",info$[all]
+	bm$=info$[20]
+	if bm$="Y" then
+		num_files = 1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="BMM_BILLMAT", open_opts$[1]="OTA"
+		gosub open_tables
+	endif
+
 rem --- Disable display fields
 
 	declare BBjVector column!

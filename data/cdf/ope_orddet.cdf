@@ -493,7 +493,7 @@ rem --- invoke the comments dialog
 	gosub comment_entry
 
 [[OPE_ORDDET.AOPT-KITS]]
-rem --- Save current context so we'll know where to return from lot lookup
+rem --- Save current context so we'll know where to return from Git Components grid
 	declare BBjStandardGrid grid!
 	grid! = util.getGrid(Form!)
 	grid_ctx=grid!.getContextID()
@@ -542,7 +542,7 @@ rem --- Return focus to where we were in Detail Line grid
 	sysgui!.setContext(grid_ctx)
 
 [[OPE_ORDDET.AOPT-LENT]]
-rem --- Save current context so we'll know where to return from Git Components grid
+rem --- Save current context so we'll know where to return from lot lookup
 	declare BBjStandardGrid grid!
 	grid! = util.getGrid(Form!)
 	grid_ctx=grid!.getContextID()
@@ -1318,7 +1318,7 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 			wend
 		endif
 
-		rem --- Auto launch Git Components grid if allowed
+		rem --- Auto launch Kit Components grid if allowed
 		ars01_dev = fnget_dev("ARS_PARAMS")
 		dim ars01a$:fnget_tpl$("ARS_PARAMS")
 		read record (ars01_dev, key=firm_id$+"AR00") ars01a$
