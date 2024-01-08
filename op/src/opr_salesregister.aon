@@ -58,7 +58,7 @@ rem --- Open/Lock files
     files$[8]="ivm-02",       ids$[8]="IVM_ITEMWHSE"
     files$[9]="ivm-04",       ids$[9]="IVM_ITEMTIER"
     files$[10]="ivs_params",  ids$[10]="IVS_PARAMS"
-    rem files$[11]="ivw-04",      ids$[11]="IVW_LFDET"
+    files$[11]="opt_invkitdet",ids$[11]="OPT_INVKITDET"
     files$[13]="opt-01",      ids$[13]="OPE_ORDHDR"
     files$[14]="ope-04",      ids$[14]="OPE_PRNTLIST"
     files$[15]="opt-11",      ids$[15]="OPE_ORDDET"
@@ -90,7 +90,7 @@ rem --- Open/Lock files
     ivm02_dev=channels[8]
     ivm04_dev=channels[9]
     ivs01a_dev=channels[10]
-    rem ivw04_dev=channels[11]
+    optInvKitDet_dev=channels[11]
     ope01_dev=channels[13]
     ope04_dev=channels[14]
     ope11_dev=channels[15]
@@ -116,7 +116,7 @@ rem glw11a$:templates$[7],
     dim arm01a$:templates$[1],arm10c$:templates$[2],arm10d$:templates$[3],arm10d0$:templates$[3],
 :       ars01a$:templates$[4],glm01a$:templates$[5],
 :       ivm01a$:templates$[7],ivm02a$:templates$[8],
-:       ivm04a$:templates$[9],ivs01a$:templates$[10],
+:       ivm04a$:templates$[9],ivs01a$:templates$[10],optInvKitDet$:templates$[11],
 :       ope01a$:templates$[13],ope04a$:templates$[14],
 :       ope11a$:templates$[15],ope21a$:templates$[16],ope41a$:templates$[17],
 :       opm02a$:templates$[18],opm06a$:templates$[19],ops10s$:templates$[20],
@@ -536,6 +536,26 @@ rem --- Check to see if record is in use in Invoice Entry
             if gl_adt_no then ope11a.audit_number=gl_adt_no
             ope11a$ = field(ope11a$)
             write record (ope11_dev) ope11a$
+
+            rem --- Update trans_status of kit components
+            findrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+            if ivm01a.kit$="Y" then
+                optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
+                read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                while 1
+                    thisKey$=key(optInvKitDet_dev,end=*break)
+                    if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                    readrecord(optInvKitDet_dev)optInvKitDet$
+                    optInvKitDet.trans_status$="R"     
+                    optInvKitDet.mod_user$=sysinfo.user_id$
+                    optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+                    optInvKitDet.mod_time$=date(0:"%Hz%mz")
+                    optInvKitDet.batch_no$=batch_no$
+                    if gl_adt_no then optInvKitDet.audit_number=gl_adt_no
+                    optInvKitDet$ = field(optInvKitDet$)
+                    writerecord(optInvKitDet_dev)optInvKitDet$
+                wend
+            endif
 
             if ope11a.ext_price<0 then t[1]=t[1]+ope11a.ext_price
             if ope11a.ext_price>0 then t[0]=t[0]+ope11a.ext_price

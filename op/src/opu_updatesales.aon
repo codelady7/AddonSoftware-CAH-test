@@ -72,7 +72,7 @@ rem --- Open/Lock files
     rem files$[13]="opt-01",ids$[13]="OPT_INVHDR"
     rem files$[14]="opt-21",ids$[14]="OPT_INVLSDET"
     rem files$[15]="opt-31",ids$[15]="OPT_INVSHIP"
-    rem files$[16]="opt-41",ids$[16]="OPT_INVCASH"
+    files$[16]="opt_invkitdet",ids$[16]="OPT_INVKITDET"
     files$[17]="sam-01",ids$[17]="SAM_CUSTOMER"
     files$[18]="sam-02",ids$[18]="SAM_TERRITRY"
     files$[19]="sam-03",ids$[19]="SAM_SALESPSN"
@@ -116,7 +116,7 @@ rem --- Open/Lock files
     rem opt01_dev=channels[13]
     rem opt21_dev=channels[14]
     rem opt31_dev=channels[15]
-    rem opt41_dev=channels[16]
+    optInvKitDet_dev=channels[16]
     sam01_dev=channels[17]
     sam02_dev=channels[18]
     sam03_dev=channels[19]
@@ -147,7 +147,7 @@ rem --- Dimension string templates
 :       ivm02a$:templates$[4],ope01a$:templates$[6],
 :       ope04a$:templates$[7],ope11a$:templates$[8],ope31a$:templates$[9],
 :       ope41a$:templates$[10],opm02a$:templates$[11],opm09a$:templates$[12],
-:       sam01a$:templates$[17],sam02a$:templates$[18],
+:       optInvKitDet$:templates$[16],sam01a$:templates$[17],sam02a$:templates$[18],
 :       sam03a$:templates$[19],sam04a$:templates$[20],sam05a$:templates$[21],
 :       sam06a$:templates$[22],sam07a$:templates$[23],sam08a$:templates$[24],
 :       sam09a$:templates$[25],sam10a$:templates$[26],sam11a$:templates$[27],
@@ -312,6 +312,7 @@ rem --- Main read
             if pos(opm02a.line_type$="SNPO")=0 then continue
             if pos(opm02a.line_type$="NPO") and opm02a.prod_type_pr$="N" then continue
 
+rem wgh ... 7491 ... sales analysis for both the kit AND it's components?
             ivm01a.sa_level$="I"
             arm02a.sa_flag$="I"
             if opm02a.line_type$="N" then ivm01a.sa_level$="P"
@@ -878,6 +879,24 @@ no_to_update: rem --- NO to Update: Clear On-Sales-Register Flags
                 ope11a.mod_time$=date(0:"%Hz%mz")
                 ope11a$ = field(ope11a$)
                 write record (ope11_dev) ope11a$
+
+                rem --- Update trans_status of kit components
+                findrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+                if ivm01a.kit$="Y" then
+                    optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
+                    read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                    while 1
+                        thisKey$=key(optInvKitDet_dev,end=*break)
+                        if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                        readrecord(optInvKitDet_dev)optInvKitDet$
+                        optInvKitDet.trans_status$="E"     
+                        optInvKitDet.mod_user$=sysinfo.user_id$
+                        optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+                        optInvKitDet.mod_time$=date(0:"%Hz%mz")
+                        optInvKitDet$ = field(optInvKitDet$)
+                        writerecord(optInvKitDet_dev)optInvKitDet$
+                    wend
+                endif
 
                 ope21_trip$=ope11_key$
                 read (ope21_dev,key=ope21_trip$,dom=*next)

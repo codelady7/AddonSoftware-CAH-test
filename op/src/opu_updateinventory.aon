@@ -67,7 +67,7 @@ rem --- Open/Lock files
     files$[25]="opm-06",ids$[25]="OPC_TAXCODE"
     files$[27]="ops_mtdsales",ids$[27]="OPS_MTDSALES"
     rem files$[28]="opt-01",ids$[28]="OPT_INVHDR"
-    rem files$[29]="opt-21",ids$[29]="OPT_INVLSDET"
+    files$[29]="opt_invkitdet",ids$[29]="OPT_INVKITDET"
     files$[30]="opt-71",ids$[30]="OPT_SALESCOM"
     files$[31]="poe-08",ids$[31]="POE_LINKED"
     files$[32]="poe-12",ids$[32]="POE_PODET"
@@ -105,7 +105,7 @@ rem --- Open/Lock files
     opm06_dev=channels[25]
     ops10_dev=channels[27]
     rem opt01_dev=channels[28]
-    rem opt21_dev=channels[29]
+    optInvKitDet_dev=channels[29]
     opt71_dev=channels[30]
     poe08_dev=channels[31]
     poe12_dev=channels[32]
@@ -123,7 +123,7 @@ rem --- Dimension string templates
 :       ope03a$:templates$[18],ope04a$:templates$[19],
 :       ope11a$:templates$[20],ope21a$:templates$[21],ope31a$:templates$[22],
 :       ope41a$:templates$[23],opm02a$:templates$[24],opm06a$:templates$[25],
-:       ops10s$:templates$[27],
+:       ops10s$:templates$[27],optInvKitDet$:templates$[29],
 :       opt71a$:templates$[30],poe08a$:templates$[31],poe12a$:templates$[32],
 :       poe02a$:templates$[33],opm03a$:templates$[34]
 
@@ -464,6 +464,81 @@ rem --- Read next invoice header --- Main Loop Starts
             ope11a.mod_time$=date(0:"%Hz%mz")
             ope11a$ = field(ope11a$)
             write record (ope11_dev) ope11a$
+
+            rem --- Update kit components
+            findrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+            if ivm01a.kit$="Y" then
+                optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
+                read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                while 1
+                    thisKey$=key(optInvKitDet_dev,end=*break)
+                    if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                    readrecord(optInvKitDet_dev)optInvKitDet$
+
+                    if ope11a.commit_flag$="Y" then
+                        rem --- Update inventory for kit components
+                        if optInvKitDet.qty_shipped<>0 then
+                            iv_items$[1]=optInvKitDet.warehouse_id$
+                            iv_items$[2]=optInvKitDet.item_id$
+                            iv_items$[3]=""
+                            iv_refs$[0]=ope01a.invoice_date$
+                            iv_refs$[1]=ope01a.customer_id$
+                            iv_refs$[2]=ope01a.order_no$
+                            iv_refs$[3]=ope01a.ar_inv_no$
+                            iv_refs$[5]=line_nbr$
+                            iv_refs$[6]=optInvKitDet.line_code$
+                            iv_refs$[7]=arm10d.gl_inv_acct$
+                            iv_refs$[12]=opm02a.dropship$
+                            iv_refs[0]=-optInvKitDet.qty_shipped
+                            iv_refs[1]=optInvKitDet.unit_cost
+                            iv_refs[2]=optInvKitDet.unit_price
+                            call pgmdir$+"ivc_itemupdt.aon","OP",iv_files[all],ivs01a$,iv_items$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
+                            if iv_status = 999 then exitto std_exit
+                        endif
+
+                        rem --- Re-commit over shipped quantity for kit components
+                        if optInvKitDet.qty_shipped>optInvKitDet.qty_ordered then
+                            rem --- Adjust committed quantity for difference between ordered (committed) and shipped (uncommitted) quantities.
+                            iv_items$[1]=optInvKitDet.warehouse_id$
+                            iv_items$[2]=optInvKitDet.item_id$
+                            iv_items$[3]=""
+                            iv_refs[0]=optInvKitDet.qty_shipped-optInvKitDet.qty_ordered
+                            call pgmdir$+"ivc_itemupdt.aon","CO",iv_files[all],ivs01a$,iv_items$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
+                            if iv_status = 999 then exitto std_exit
+                        endif
+
+                        rem --- Uncommit quantity shipped for kit components
+                        if optInvKitDet.qty_ordered-optInvKitDet.qty_backord-optInvKitDet.qty_shipped>0 then
+                            iv_items$[1]=optInvKitDet.warehouse_id$
+                            iv_items$[2]=optInvKitDet.item_id$
+                            iv_items$[3]=""
+                            iv_refs[0]=optInvKitDet.qty_ordered-optInvKitDet.qty_backord-optInvKitDet.qty_shipped
+                            call pgmdir$+"ivc_itemupdt.aon","UC",iv_files[all],ivs01a$,iv_items$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
+                            if iv_status = 999 then exitto std_exit
+                        endif
+
+                        rem --- Handle kit NOT backordered but a component is
+                        if ope11a.qty_backord=0 and optInvKitDet.qty_backord<>0 then
+                            something_backord=1
+                            gosub kit_component_BO
+                        endif
+                    else
+                        rem --- Handle kit NOT backordered but a component is
+                        something_commit=1
+                        if (ope11a.qty_backord=0 and optInvKitDet.qty_backord<>0) or ope11a.commit_flag$="Y" then
+                            if optInvKitDet.qty_backord<>0 then something_backord=1
+                            gosub kit_component_BO
+                        endif
+                    endif
+
+                    optInvKitDet.trans_status$="U"     
+                    optInvKitDet.mod_user$=sysinfo.user_id$
+                    optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+                    optInvKitDet.mod_time$=date(0:"%Hz%mz")
+                    optInvKitDet$ = field(optInvKitDet$)
+                    writerecord(optInvKitDet_dev)optInvKitDet$
+                wend
+            endif
 
             rem --- Remove/Update line item
 
@@ -1345,6 +1420,31 @@ update_order_detail:
     precision i[2]
     write record (ope11_dev) ope11a$
     precision 2
+    read(ope11_dev,key=ope11_key$); rem --- reset file pointer
+
+    return
+
+kit_component_BO: rem --- Handle kit NOT backordered but a component is
+    rem --- Copy opt_invkitdet record to new ope_invdet record
+    dim new_ope11a$:fattr(ope11a$)
+    call stbl("+DIR_PGM")+"adc_copyfile.aon",optInvKitDet$,new_ope11a$,status
+
+    rem --- Update new ope_invdet record for backordered kit component
+    new_ope11a.qty_ordered=new_ope11a.qty_backord
+    new_ope11a.qty_backord=0
+    new_ope11a.qty_shipped=new_ope11a_ordered
+    new_ope11a.ext_price=round(new_ope11a.qty_ordered*new_ope11a.unit_price,2)
+    new_ope11a.ar_inv_no$=""
+    new_ope11a.pick_flag$ = "N"
+    total_sales = total_sales + new_ope11a.ext_price
+    total_cost_ord = total_cost_ord + round(new_ope11a.qty_ordered * new_ope11a.unit_cost, 2)
+    if new_ope11a.est_shp_date$<newshpdt$ or newshpdt$="" then newshpdt$=new_ope11a.est_shp_date$
+    new_ope11a.trans_status$="E"
+    new_ope11a.created_user$=sysinfo.user_id$
+    new_ope11a.created_date$=date(0:"%Yd%Mz%Dz")
+    new_ope11a.created_time$=date(0:"%Hz%mz")
+    new_ope11a$=field(new_ope11a$)
+    writerecord(ope11_dev)new_ope11a$
     read(ope11_dev,key=ope11_key$); rem --- reset file pointer
 
     return
