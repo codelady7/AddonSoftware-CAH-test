@@ -7,9 +7,64 @@ rem --- Set column size for memo_1024 field very small so it doesn't take up roo
 	grid!.setColumnWidth(memo_1024_col,15)
 
 [[OPT_INVDET.AGRN]]
-rem --- Set buttons
+rem --- Initialize "kit" DevObject
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+	dim ivm01a$:ivm01_tpl$
+	item$=callpoint!.getColumnData("OPT_INVDET.ITEM_ID")
+	ivm01a_key$=firm_id$+item$
+	find record (ivm01_dev,key=ivm01a_key$,err=*next)ivm01a$
+	if ivm01a.kit$="Y" then
+		callpoint!.setDevObject("kit","Y")
+	else
+		callpoint!.setDevObject("kit","")
+	endif
 
+rem --- Set buttons
 	gosub able_lot_button
+	gosub able_kits_button
+
+[[OPT_INVDET.AOPT-KITS]]
+rem --- Save current context so we'll know where to return from Git Components grid
+	declare BBjStandardGrid grid!
+	grid! = util.getGrid(Form!)
+	grid_ctx=grid!.getContextID()
+
+rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
+	callpoint!.setDevObject("disable_grid","Y")
+
+	ar_type$ = callpoint!.getColumnData("OPT_INVDET.AR_TYPE")
+	cust$ = callpoint!.getColumnData("OPT_INVDET.CUSTOMER_ID")
+	order$ = callpoint!.getColumnData("OPT_INVDET.ORDER_NO")
+	invoice_no$ = callpoint!.getColumnData("OPT_INVDET.AR_INV_NO")
+	seq$ = callpoint!.getColumnData("OPT_INVDET.INTERNAL_SEQ_NO")
+	key_pfx$ = firm_id$+"U"+ar_type$+cust$+order$+invoice_no$+seq$
+
+	dim dflt_data$[6,1]
+	dflt_data$[1,0] = "TRANS_STATUS"
+	dflt_data$[1,1] = "U"
+	dflt_data$[2,0] = "AR_TYPE"
+	dflt_data$[2,1] = ar_type$
+	dflt_data$[3,0] = "CUSTOMER_ID"
+	dflt_data$[3,1] = cust$
+	dflt_data$[4,0] = "ORDER_NO"
+	dflt_data$[4,1] = order$
+	dflt_data$[5,0] = "AR_INV_NO"
+	dflt_data$[5,1] = invoice_no$
+	dflt_data$[6,0] = "ORDDET_SEQ_REF"
+	dflt_data$[6,1] = seq$
+
+	call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:		"OPT_INVKITDET", 
+:		stbl("+USER_ID"), 
+:		"MNT", 
+:		key_pfx$, 
+:		table_chans$[all], 
+:		"",
+:		dflt_data$[all]
+
+rem --- Return focus to where we were in Detail Line grid
+	sysgui!.setContext(grid_ctx)
 
 [[OPT_INVDET.AOPT-LENT]]
 rem --- Save current context so we'll know where to return from lot lookup
@@ -73,6 +128,7 @@ rem			callpoint!.setStatus("REFRESH")
 rem --- Disable detail-only buttons
 
 	callpoint!.setOptionEnabled("LENT",0)
+	callpoint!.setOptionEnabled("KITS",0)
 
 [[OPT_INVDET.BGDR]]
 rem --- Initialize UM_SOLD related <DISPLAY> fields
@@ -127,6 +183,18 @@ rem ==========================================================================
 		callpoint!.setOptionEnabled("LENT",1)
 	else
 		callpoint!.setOptionEnabled("LENT",0)
+	endif
+
+	return
+
+rem ==========================================================================
+able_kits_button: rem --- Enable/disable Kit Components KITS button
+rem ==========================================================================
+
+	if callpoint!.getDevObject("kit")="Y" and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))<>0 then
+		callpoint!.setOptionEnabled("KITS",1)
+	else
+		callpoint!.setOptionEnabled("KITS",0)
 	endif
 
 	return

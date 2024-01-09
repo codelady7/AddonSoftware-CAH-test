@@ -2,6 +2,20 @@
 rem  --- Report component shortages
 		gosub reportShortages
 
+[[OPT_INVKITDET.ASHO]]
+rem --- Disable grid for Invoice History Inquiry
+	if callpoint!.getDevObject("disable_grid")<>null() and callpoint!.getDevObject("disable_grid")="Y" then
+		formControls!=Form!.getAllControls()
+		for i=0 to formControls!.size()-1
+			nextControl!=formControls!.getItem(i)
+			rem --- Grid control type is 107
+			if nextControl!.getControlType()=107 then
+				nextControl!.setEditable(0)
+				break
+			endif
+		next i
+	endif
+
 [[OPT_INVKITDET.BGDR]]
 rem --- Initialize UM_SOLD related <DISPLAY> fields
 	conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
