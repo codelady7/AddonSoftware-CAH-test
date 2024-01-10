@@ -274,6 +274,17 @@ rem --- Verify not an inactive item
 	endif
 	gosub get_item 
 
+rem --- Can't transfer kits
+	if ivm01a.kit$="Y" then
+		msg_id$="IV_KIT_TRANSFER"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
 rem --- Check item against both warehouse
 	whse$ = callpoint!.getHeaderColumnData("IVE_TRANSFERHDR.WAREHOUSE_ID_TO")
 	gosub check_item_whse

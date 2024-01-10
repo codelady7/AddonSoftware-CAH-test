@@ -368,6 +368,17 @@ if ivm01a.item_inactive$="Y" then
    goto std_exit
 endif
 
+rem --- Can't transfer kits
+	if ivm01a.kit$="Y" then
+		msg_id$="IV_KIT_TRANSFER"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
 rem --- Get item data (sets available)
 
 	item$ = callpoint!.getUserInput()

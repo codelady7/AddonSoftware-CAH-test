@@ -470,8 +470,6 @@ rem --- Item synonym processing
 	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::grid_entry"
 
 [[IVE_TRANSDET.ITEM_ID.AVAL]]
-print "in ITEM_ID After Column Validation (AVAL)"; rem debug
-
 rem "Inventory Inactive Feature"
 item_id$=callpoint!.getUserInput()
 ivm01_dev=fnget_dev("IVM_ITEMMAST")
@@ -488,6 +486,17 @@ if ivm01a.item_inactive$="Y" then
    callpoint!.setStatus("ACTIVATE")
    goto std_exit
 endif
+
+rem --- Can't make transactions for kits
+	if ivm01a.kit$="Y" then
+		msg_id$="IV_KIT_TRANS"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
 
 rem --- Set and display default values
 
