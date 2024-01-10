@@ -192,6 +192,9 @@ rem --- Additional reads
 		
         find record (itemmast_dev, key=firm_id$+item$,       dom=*next) itemmast_rec$
         find record (itemwhse_dev, key=firm_id$+whse$+item$, dom=*next) itemwhse_rec$
+        
+        rem --- Skip kits
+        if itemmast_rec.kit$="Y" then continue
 		
         if itemwhse_rec.cur_price_cd$<>pricerev_rec.price_code$ continue
 		

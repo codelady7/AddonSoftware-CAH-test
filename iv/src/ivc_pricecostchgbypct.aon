@@ -176,6 +176,9 @@ rem --- Read item and warehouse records
 
     rem --- Skip kits when doing costing
     if action$="C" and itemmast_rec.kit$="Y" then continue
+
+    rem --- Skip kits when doing pricing
+    if pos(action$="PR") and itemmast_rec.kit$="Y" then continue
         
     if itemmast_rec.stock_level$<>"W" then
             vendor$=itemmast_rec.vendor_id$
