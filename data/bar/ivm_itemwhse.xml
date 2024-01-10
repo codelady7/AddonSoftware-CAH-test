@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivm_itemwhse">46A8D21149542FF2287ED5E9A98B817C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivm_itemwhse">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivm_itemwhse">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivm_itemwhse">20231128</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemwhse">20231128</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemwhse">154934</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivm_itemwhse">20240110</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemwhse">20240110</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemwhse">104238</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivm_itemwhse"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivm_itemwhse">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivm_itemwhse">AO_ITEM_WH</DD_ATTR_DKNM>

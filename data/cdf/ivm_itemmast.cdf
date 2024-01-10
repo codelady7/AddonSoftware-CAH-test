@@ -1043,6 +1043,10 @@ rem --- See if Auto Numbering in effect
 	endif
 
 [[IVM_ITEMMAST.KIT.AVAL]]
+rem --- Set DevObject whether or not this is a kit
+	kit$=callpoint!.getUserInput()
+	callpoint!.setDevObject("kit",kit$)
+
 rem --- Clear and disable fields not needed for a kit
 	gosub disableKitFields
 
@@ -1260,7 +1264,7 @@ return
 rem ==========================================================================
 disableKitFields: rem --- Enable/disable fields for kitted items
 rem ==========================================================================
-	if callpoint!.getColumnData("IVM_ITEMMAST.KIT")="Y" then
+	if callpoint!.getDevObject("kit")="Y" then
 		rem --- Disable Availability button
 		callpoint!.setOptionEnabled("ITAV",0)
 
