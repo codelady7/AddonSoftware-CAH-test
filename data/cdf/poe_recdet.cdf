@@ -742,6 +742,17 @@ if ivm01a.item_inactive$="Y" then
    callpoint!.setStatus("ACTIVATE")
 endif
 
+rem --- Can't purchase kits
+	if ivm01a.kit$="Y" then
+		msg_id$="PO_KIT_PURCHASE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
 gosub validate_whse_item
 if pos("ABORT"=callpoint!.getStatus())<>0
 	callpoint!.setUserInput("")
