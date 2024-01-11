@@ -1312,7 +1312,7 @@ rem --- Validate manually entered SO Item IDs
 	endif
 	if item_id$=cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2) then break
 
-rem --- Can't purchase kits
+rem --- Can't manufacture kits
 	ivm01_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 	findrecord(ivm01_dev,key=firm_id$+pad(item_id$,len(ivm01a.item_id$),"L"," "),dom=*next)ivm01a$
@@ -1426,7 +1426,7 @@ if ivm01a.item_inactive$="Y" then
    goto std_exit
 endif
 
-rem --- Can't purchase kits
+rem --- Can't manufacture kits
 	if ivm01a.kit$="Y" then
 		msg_id$="SF_KIT_WO"
 		dim msg_tokens$[2]

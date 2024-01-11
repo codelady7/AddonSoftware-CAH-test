@@ -387,6 +387,16 @@ rem --- Item ID is disabled except for a new row, so can init entire new row her
 	ivm_itemwhse_dev=fnget_dev("IVM_ITEMWHSE")
 	dim ivm_itemwhse$:fnget_tpl$("IVM_ITEMWHSE")
 	findrecord(ivm_itemmast_dev,key=firm_id$+item_id$,dom=*next)ivm_itemmast$
+	rem --- A kit is a non-stock phantom BOM, and cannot be used here
+	if ivm01a.kit$="Y" then
+		msg_id$="SF_KIT_PHANTOM"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
 	unit_measure$=ivm_itemmast.unit_of_sale$
 	callpoint!.setDevObject("lotser",ivm_itemmast.lotser_flag$)
 	findrecord(ivm_itemwhse_dev,key=firm_id$+warehouse_id$+item_id$,dom=*next)ivm_itemwhse$
