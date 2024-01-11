@@ -1312,6 +1312,20 @@ rem --- Validate manually entered SO Item IDs
 	endif
 	if item_id$=cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2) then break
 
+rem --- Can't purchase kits
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+	findrecord(ivm01_dev,key=firm_id$+pad(item_id$,len(ivm01a.item_id$),"L"," "),dom=*next)ivm01a$
+	if ivm01a.kit$="Y" then
+		msg_id$="SF_KIT_WO"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
 rem --- Verify there is an existing Sales Order detail line with TRANS_STATUS=E for this SO item.
 	ope11_dev=fnget_dev("OPE_ORDDET")
 	dim ope11a$:fnget_tpl$("OPE_ORDDET")
@@ -1379,6 +1393,7 @@ rem --- Verify there is an existing Sales Order detail line with TRANS_STATUS=E 
 			callpoint!.setUserInput(cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2))
 			callpoint!.setColumnData("SFE_WOMASTR.CUSTOMER_ID",customer_id$,1)
 			callpoint!.setStatus("ACTIVATE-ABORT")
+			break
 		else
 			msg_id$="SF_SO_ITEM_DUPLICATES"
 			dim msg_tokens$[3]
@@ -1389,6 +1404,7 @@ rem --- Verify there is an existing Sales Order detail line with TRANS_STATUS=E 
 			callpoint!.setUserInput(cvs(callpoint!.getColumnData("<<DISPLAY>>.ITEM_ID"),2))
 			callpoint!.setColumnData("SFE_WOMASTR.CUSTOMER_ID",customer_id$,1)
 			callpoint!.setStatus("ACTIVATE-ABORT")
+			break
 		endif
 	endif
 
@@ -1409,6 +1425,17 @@ if ivm01a.item_inactive$="Y" then
    callpoint!.setStatus("ACTIVATE-ABORT")
    goto std_exit
 endif
+
+rem --- Can't purchase kits
+	if ivm01a.kit$="Y" then
+		msg_id$="SF_KIT_WO"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
 
 rem --- Set default values if item_id changed
 	if callpoint!.getUserInput()=callpoint!.getColumnData("SFE_WOMASTR.ITEM_ID") then break
