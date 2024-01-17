@@ -76,11 +76,11 @@ rem --- Get next cycle
 
         rem --- Lotted/Serialized Item Break?
 
-            if pos(physical_rec.lotser_flag$="LS") and pos(lastitem$=physical_key$) <> 1 then 
-                gosub lot_ser_item_break
+            if pos(lastitem$=physical_key$) <> 1 
+                gosub item_break
             endif
 
-            if !pos(physical_rec.lotser_flag$="LS") or pos(lastitem$=physical_key$) <> 1 then 
+            if lsitem$<>"Y"
 
             rem --- Selected for Phys Inventory?
 
@@ -122,6 +122,12 @@ rem --- Get next cycle
                 endif
 
                 if start_block then
+                    redim lsmaster_rec$
+                    lsmaster_rec.firm_id$=firm_id$
+                    lsmaster_rec.warehouse_id$=whse_id$
+                    lsmaster_rec.item_id$=item_id$
+                    lsmaster_rec.lotser_no$=physical_rec.lotser_no$
+
                     extract record (lsmaster_dev, key=firm_id$+whse_id$+item_id$+physical_rec.lotser_no$, dom=*endif) lsmaster_rec$; rem Advisory Locking
                     cost=lsmaster_rec.unit_cost
                 endif
@@ -195,7 +201,7 @@ rem --- Get next cycle
 
         wend
 
-        if lsitem$="Y" then gosub lot_ser_item_break
+        if lsitem$="Y" then gosub item_break
 
     rem --- Update cycle code record (back to zero)
 
@@ -219,10 +225,10 @@ rem --- All done
 
     goto std_exit
 
-lot_ser_item_break: rem --- Lotted/Serialized Item Break, update item warehouse 
+item_break: rem --- Lotted/Serialized Item Break, update item warehouse 
 
     if lastitem$ <> "" and lsitem$ = "Y" then 
-        extract record (itemwhse_dev, key=firm_id$+whse_id$+item_id$, dom=*endif) itemwhse_rec$; rem Advisory Locking
+        extract record (itemwhse_dev, key=firm_id$+whse_id$+lastitemid$, dom=*endif) itemwhse_rec$; rem Advisory Locking
         itemwhse_rec.select_phys$ = "N"
 
         if lscntntrd then 
@@ -245,11 +251,13 @@ rem --- Is Next Item Lotted/Serialized?
             lsitem$="Y"
         endif
 
-        lastitem$    = firm_id$ + whse_id$ + cycle_code$ + location$ + item_id$
         tot_countqty = 0
         lscntntrd    = 0
 
     endif
+
+    lastitem$    = firm_id$ + whse_id$ + cycle_code$ + location$ + item_id$
+    lastitemid$  = item_id$
 
     return
 

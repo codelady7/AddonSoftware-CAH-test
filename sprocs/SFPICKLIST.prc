@@ -249,7 +249,7 @@ rem --- Get details
         if ivm_itemmast.lotser_flag$="L" and ivm_itemmast.inventoried$="Y"
             lot_ser$="AON_LOT_#:"
             lot_ser2$="AON_LOT_#:"
-            ls_count=5
+            ls_count=min((sfe_womatdtl.qty_ordered-sfe_womatdtl.tot_qty_iss),5)
         endif
 
         if ls_count

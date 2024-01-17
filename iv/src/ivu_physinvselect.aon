@@ -220,7 +220,7 @@ rem --- Write Physical Entry record for lot/serial
 
 rem --- Missing Lot/Serial Numbers?
 
-			if onhand > total then 
+			if onhand > total or (onhand=0 and total=0) then 
 				dim physical_rec$:fattr(physical_rec$)
 				physical_rec.firm_id$      = firm_id$
 				physical_rec.warehouse_id$ = whse_id$
@@ -232,6 +232,8 @@ rem --- Missing Lot/Serial Numbers?
 				physical_rec.entered_flag$ = "N"
 				physical_rec.lotser_flag$  = itemmast_rec.lotser_flag$
 				physical_rec.freeze_qty    = onhand - total
+                
+                write record (physical_dev) physical_rec$
 			endif
 
         else
