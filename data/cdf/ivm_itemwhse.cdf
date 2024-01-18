@@ -282,6 +282,9 @@ rem --- Enable cost fields for new item if not a kit
 	if callpoint!.getDevObject("kit")="Y" then
 		rem --- Disable cost fields
 		enable=0
+
+		rem --- New warehouse for a kit, so allow save without any changes
+		callpoint!.setStatus("MODIFIED")
 	else
 		rem --- Enable cost fields
 		enable=1
@@ -292,9 +295,6 @@ rem --- Enable cost fields for new item if not a kit
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",enable)
-
-rem --- New warehouse for a kit, so allow save without any changes
-	callpoint!.setStatus("MODIFIED")
 
 [[IVM_ITEMWHSE.AVG_COST.AVAL]]
 rem --- Update unit_cost if using average costing and average cost changes

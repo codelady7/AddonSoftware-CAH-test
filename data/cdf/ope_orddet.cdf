@@ -507,6 +507,8 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 	callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 	callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 	callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+	callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
+	callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_ORDHDR.CASH_SALE"))
 	shortage_vect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("shortageVect",shortage_vect!)
 
@@ -1331,6 +1333,8 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 			callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+			callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
+			callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_ORDHDR.CASH_SALE"))
 
 			key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
 
