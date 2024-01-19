@@ -1759,7 +1759,7 @@ rem ==========================================================================
 					rem --- Reviewer
 					if pos("A"=usertype$) then
 						if len(to$) then to$ = to$ + ", "
-						to$ = to$ + ", " + adm_user.email_address$
+						to$ = to$ + adm_user.email_address$
 					endif
 				else
 					rem --- Not approver or reviewer
