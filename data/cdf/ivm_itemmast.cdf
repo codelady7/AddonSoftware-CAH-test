@@ -1283,8 +1283,6 @@ rem ==========================================================================
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.PURCHASE_UM",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.CONV_FACTOR","1",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.CONV_FACTOR",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.SA_LEVEL","N",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.SA_LEVEL",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
@@ -1295,20 +1293,6 @@ rem ==========================================================================
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_FLAG",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.ALT_SUP_ITEM","",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_ITEM",0)
-
-		rem --- Clear and disable all GL Accounts tab fields
-		callpoint!.setColumnData("IVM_ITEMMAST.GL_INV_ACCT","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ACCT",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.GL_COGS_ACCT","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ACCT",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.GL_PUR_ACCT","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PUR_ACCT",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.GL_PPV_ACCT","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PPV_ACCT",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.GL_INV_ADJ","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ADJ",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.GL_COGS_ADJ","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ADJ",0)
 	else
 		rem --- Enable Availability button
 		callpoint!.setOptionEnabled("ITAV",1)
@@ -1321,8 +1305,6 @@ rem ==========================================================================
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.WEIGHT",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.PURCHASE_UM",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.CONV_FACTOR",1)
-		rem --- NOTE: The SA_LEVEL field remains permanently disable if there is no SA
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.SA_LEVEL",1)
 		rem --- NOTE: The TAX_SVC_CD field remains permanently disable if there is no OP or not using a Sales Tax Service
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAX_SVC_CD",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAXABLE_FLAG",1)
@@ -1332,15 +1314,6 @@ rem ==========================================================================
 		if pos(callpoint!.getColumnData("IVM_ITEMMAST.ALT_SUP_FLAG")="AS") then
 			callpoint!.setColumnEnabled("IVM_ITEMMAST. ALT_SUP_ITEM",1)
 		endif
-
-		rem ---Enable all GL Accounts tab fields
-		rem --- NOTE: These fields remain permanently disable if there is no GL or not distributing by item
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ACCT",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ACCT",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PUR_ACCT",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_PPV_ACCT",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_INV_ADJ",1)
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.GL_COGS_ADJ",1)
 	endif
 
 	return

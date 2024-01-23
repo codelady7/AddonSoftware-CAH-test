@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivm_itemmast">6C5023A67CECD2E068F479C37AF5FA89</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivm_itemmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivm_itemmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivm_itemmast">20240110</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemmast">20240110</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemmast">103458</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivm_itemmast">20240122</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivm_itemmast">20240122</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivm_itemmast">183412</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivm_itemmast"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivm_itemmast">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivm_itemmast"></DD_ATTR_DKNM>
@@ -7126,7 +7126,7 @@
 			<ASC_PROD_ID id="ddm_elements.lotser_flag">IV </ASC_PROD_ID>
 			<LOCALIZATION_EX id="ddm_elements.lotser_flag"></LOCALIZATION_EX>
 			<DD_CREATE_DATE id="ddm_elements.lotser_flag">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_elements.lotser_flag">20230815</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.lotser_flag">20240112</DD_LSTREV_DATE>
 			<DD_AUTO_COMP id="ddm_elements.lotser_flag"></DD_AUTO_COMP>
 			<DD_ATTR_BLNK id="ddm_elements.lotser_flag"></DD_ATTR_BLNK>
 			<DD_ATTR_CDAT id="ddm_elements.lotser_flag"></DD_ATTR_CDAT>

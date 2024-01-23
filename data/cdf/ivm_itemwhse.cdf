@@ -502,10 +502,6 @@ rem ==========================================================================
 		rem --- Disable Warehouse tab fields
 		callpoint!.setColumnData("IVM_ITEMWHSE.LOCATION","",1)
 		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
-		callpoint!.setColumnData("IVM_ITEMWHSE.AR_DIST_CODE","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMWHSE.AR_DIST_CODE",0)
-		callpoint!.setColumnData("IVM_ITEMWHSE.PI_CYCLECODE","",1)
-		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",0)
 		callpoint!.setColumnData("IVM_ITEMWHSE.SPECIAL_ORD","N",1)
 		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SPECIAL_ORD",0)
 		callpoint!.setColumnData("IVM_ITEMWHSE.SELECT_PHYS","N",1)
@@ -558,9 +554,6 @@ rem ==========================================================================
 
 		rem --- Enable Warehouse tab fields
 		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
-		rem --- NOTE: The AR_DIST_CODE field remains permanently disable if AR dist by item param is not checked
-		callpoint!.setColumnData("IVM_ITEMWHSE.AR_DIST_CODE",ivs10d.ar_dist_code$,1)
-		callpoint!.setColumnEnabled("IVM_ITEMWHSE.AR_DIST_CODE",1)
 		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
 		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SPECIAL_ORD",1)
 		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SELECT_PHYS",1)
