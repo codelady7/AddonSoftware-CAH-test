@@ -50,9 +50,100 @@ rem --- Initialize UM_SOLD ListButton except when line type is non-stock
 rem  --- Report component shortages
 		gosub reportShortages
 
+[[OPT_INVKITDET.AGRE]]
+rem --- Skip if (not a new row and not row modified) or row deleted
+	this_row = callpoint!.getValidationRow()
+	if callpoint!.getGridRowNewStatus(this_row) <> "Y" and callpoint!.getGridRowModifyStatus(this_row) <> "Y" then
+		break; rem --- exit callpoint
+	endif
+	if  callpoint!.getGridRowDeleteStatus(this_row) = "Y"
+		break; rem --- exit callpoint
+	endif
+	
+rem --- Warehouse and Item must be correct, don't let user leave corrupt row
+	wh$   = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
+	item$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+	warn  = 1
+
+	gosub check_item_whse	
+
+	if callpoint!.getDevObject("item_wh_failed") then 
+		callpoint!.setFocus(this_row,"OPT_INVKITDET.ITEM_ID",1)
+		break; rem --- exit callpoint
+	endif
+
+rem --- Returns
+	if num( callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP") ) < 0 then
+		callpoint!.setColumnData( "<<DISPLAY>>.QTY_SHIPPED_DSP", callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
+		callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP", "0")
+	endif
+
+rem --- Verify Qty Ordered is not 0 for unprinted S, N or P line types
+	if pos(callpoint!.getDevObject("component_line_type")="SNP") and cvs(callpoint!.getColumnData("OPT_INVKITDET.PICK_FLAG"),2)="" then
+		if num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) = 0
+			msg_id$="OP_QTY_ZERO"
+			gosub disp_message
+			callpoint!.setFocus(this_row,"<<DISPLAY>>.QTY_ORDERED_DSP",1)
+			callpoint!.setStatus("ABORT")
+			break; rem --- exit callpoint
+		endif
+	endif
+
+rem --- What is extended price?
+	unit_price = num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))
+	if pos(callpoint!.getDevObject("component_line_type")="SNP") then
+		ext_price = round( num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP")) * unit_price, 2 )
+	else
+		ext_price = round( num(callpoint!.getColumnData("OPT_INVKITDET.EXT_PRICE")), 2 )
+	endif
+
+rem --- Check for minimum line extension
+	commit_flag$    = callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")
+	qty_backordered = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_BACKORD_DSP"))
+	min_ord_amt=callpoint!.getDevObject("min_line_amt")
+	if callpoint!.getDevObject("component_line_type") <> "M" and 
+:		qty_backorderd = 0         and 
+:		commit_flag$ = "Y"         and
+:		abs(ext_price) < min_ord_amt 
+:	then
+		msg_id$ = "OP_LINE_UNDER_MIN"
+		dim msg_tokens$[1]
+		msg_tokens$[1] = str(min_ord_amt:callpoint!.getDevObject("amount_mask"))
+		gosub disp_message
+	endif
+
+rem --- Set taxable amount
+	if (callpoint!.getDevObject("component_line_taxable")="Y" and (pos(callpoint!.getDevObject("component_line_type")="OMN") or callpoint!.getDevObject("component_taxable")="Y" )) or
+: 	callpoint!.getDevObject("use_tax_service")="Y" then 
+		callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT", str(ext_price))
+	endif
+
+rem --- Set price and discount
+	std_price  = num(callpoint!.getColumnData("OPT_INVKITDET.STD_LIST_PRC"))
+	disc_per   = num(callpoint!.getColumnData("OPT_INVKITDET.DISC_PERCENT"))
+	if std_price then
+		callpoint!.setColumnData("OPT_INVKITDET.DISC_PERCENT", str(round(100 - unit_price * 100 / std_price, 2)))
+	else
+		if disc_per <> 100 then
+			round_precision = num(callpoint!.getDevObject("precision"))
+			callpoint!.setColumnData("OPT_INVKITDET.STD_LIST_PRC", str(round(unit_price * 100 / (100 - disc_per), round_precision)))
+		endif
+	endif
+
+rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
+	gosub update_record_fields
+
 [[OPT_INVKITDET.AGRN]]
 rem --- Initialize kit_whse_item_warned flag
 	callpoint!.setDevObject("kit_whse_item_warned","")
+
+rem --- Coming back from Recalc button?
+	if callpoint!.getDevObject("rcpr_row") <> ""
+		callpoint!.setFocus(num(callpoint!.getDevObject("rcpr_row")),"<<DISPLAY>>.UNIT_PRICE_DSP")
+		callpoint!.setDevObject("rcpr_row","")
+		callpoint!.setDevObject("details_changed","Y")
+		break
+	endif
 
 rem --- Disable by line type (Needed because Barista is skipping Line Code)
 	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow())) <> "Y"
@@ -64,8 +155,21 @@ rem --- Disable by line type (Needed because Barista is skipping Line Code)
 		gosub able_qtyshipped
 	endif
 
+rem --- Disable cost if necessary
+	if pos(callpoint!.getDevObject("component_line_type")="SP") and num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_COST_DSP")) then
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP", 0)
+	endif
+
 rem --- Set item tax flag
 	gosub set_item_taxable
+
+rem --- Set previous values
+
+rem --- Set buttons
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) <> "Y" then
+		gosub enable_repricing
+		gosub enable_addl_opts
+	endif
 
 [[OPT_INVKITDET.AREC]]
 rem --- Initialize new record based on the kit's detail line
@@ -95,6 +199,7 @@ rem --- Set defaults for new record
 	callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG", "")
 	callpoint!.setColumnData("OPT_INVKITDET.VENDOR_ID", "")
 	callpoint!.setColumnData("OPT_INVKITDET.DROPSHIP", "")
+	callpoint!.setColumnData("OPT_INVKITDET.COMP_PER_KIT", "1")
 	gosub clear_all_numerics
 
 rem --- Disable by line type
@@ -123,7 +228,7 @@ rem --- Initialize detail line for the line_code
 	endif
 
 	rem --- Initialize UM_SOLD ListButton with a blank item for new rows except when line type is non-stock
-	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" and opc_linecode.line_type$<>"N" then
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" and callpoint!.getDevObject("component_line_type")<>"N" then
 		rem --- Skip if UM_SOLD ListButton is already initialized
 		grid!=Form!.getControl(num(stbl("+GRID_CTL")))
 		col_hdr$=callpoint!.getTableColumnAttribute("OPT_INVKITDET.UM_SOLD","LABS")
@@ -330,11 +435,11 @@ rem --- Check item/warehouse combination and setup values
 		conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
 		if conv_factor=0 then conv_factor=1
 		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", str(ivm02a.unit_cost*conv_factor))
+		callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(ivm02a.cur_price))
 		callpoint!.setColumnData("OPT_INVKITDET.STD_LIST_PRC", str(ivm02a.cur_price))
 		if pos(callpoint!.getDevObject("component_line_prod_type_pr")="DN")=0
 			callpoint!.setColumnData("OPT_INVKITDET.PRODUCT_TYPE", ivm01a.product_type$)
 		endif
-		callpoint!.setDevObject("component_item_price",ivm02a.cur_price)
 		if pos(callpoint!.getDevObject("component_line_type")="SP") and num(ivm02a.unit_cost$)=0
 			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP",1)
 		endif
@@ -720,8 +825,31 @@ rem ==========================================================================
 		dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
 		item_id$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
 		find record (ivmItemMast_dev, key=firm_id$+item_id$, dom=*next)ivmItemMast$
-		callpoint!.setDevObject("component_line_taxable",ivmItemMast.taxable_flag$)
+		callpoint!.setDevObject("component_taxable",ivmItemMast.taxable_flag$)
 	endif
+
+	return
+
+rem ==========================================================================
+update_record_fields: rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
+rem ==========================================================================
+	conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
+	if conv_factor=0 then
+		conv_factor=1
+		callpoint!.setColumnData("OPT_INVKITDET.CONV_FACTOR",str(conv_factor))
+	endif
+	unit_cost=num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_COST_DSP"))/conv_factor
+	callpoint!.setColumnData("OPT_INVKITDET.UNIT_COST",str(unit_cost))
+	qty_ordered=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))*conv_factor
+	callpoint!.setColumnData("OPT_INVKITDET.QTY_ORDERED",str(qty_ordered))
+	unit_price=num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))/conv_factor
+	callpoint!.setColumnData("OPT_INVKITDET.UNIT_PRICE",str(unit_price))
+	qty_backord=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_BACKORD_DSP"))*conv_factor
+	callpoint!.setColumnData("OPT_INVKITDET.QTY_BACKORD",str(qty_backord))
+	qty_shipped=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))*conv_factor
+	callpoint!.setColumnData("OPT_INVKITDET.QTY_SHIPPED",str(qty_shipped))
+	std_list_prc=num(callpoint!.getColumnData("OPT_INVKITDET.STD_LIST_PRC"))/conv_factor
+	callpoint!.setColumnData("OPT_INVKITDET.STD_LIST_PRC",str(std_list_prc))
 
 	return
 

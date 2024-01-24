@@ -2501,6 +2501,9 @@ rem --- Setup user_tpl$
 	user_tpl.credit_limit_warned = 0
 	user_tpl.shipto_warned     = 0
 
+	callpoint!.setDevObject("min_line_amt",user_tpl.min_line_amt)
+	callpoint!.setDevObject("amount_mask",user_tpl.amount_mask$)
+
 rem --- Columns for the util disableCell() method
 
 	user_tpl.bo_col            = 11

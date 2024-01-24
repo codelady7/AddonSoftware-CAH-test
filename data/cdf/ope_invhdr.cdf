@@ -2207,6 +2207,8 @@ rem --- Setup user_tpl$
 	user_tpl.shipto_warned     = 0
 
 	callpoint!.setDevObject("min_csh_sale",ars01a.min_csh_sale)
+	callpoint!.setDevObject("min_line_amt",user_tpl.min_line_amt)
+	callpoint!.setDevObject("amount_mask",user_tpl.amount_mask$)
 
 rem --- Columns for the util disableCell() method
 
