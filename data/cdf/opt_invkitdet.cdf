@@ -133,6 +133,8 @@ rem --- Set price and discount
 rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
 	gosub update_record_fields
 
+	callpoint!.setStatus("MODIFIED-REFRESH")
+
 [[OPT_INVKITDET.AGRN]]
 rem --- Initialize kit_whse_item_warned flag
 	callpoint!.setDevObject("kit_whse_item_warned","")
@@ -141,7 +143,7 @@ rem --- Coming back from Recalc button?
 	if callpoint!.getDevObject("rcpr_row") <> ""
 		callpoint!.setFocus(num(callpoint!.getDevObject("rcpr_row")),"<<DISPLAY>>.UNIT_PRICE_DSP")
 		callpoint!.setDevObject("rcpr_row","")
-		callpoint!.setDevObject("details_changed","Y")
+		callpoint!.setDevObject("kit_details_changed","Y")
 		break
 	endif
 
@@ -163,7 +165,12 @@ rem --- Disable cost if necessary
 rem --- Set item tax flag
 	gosub set_item_taxable
 
-rem --- Set previous values
+rem --- Set component previous values
+	callpoint!.setDevObject("component_prior_whse",callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID"))
+	callpoint!.setDevObject("component_prior_item",callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID"))
+	prior_qty=num(callpoint!.getColumnData("OPT_INVKITDET.QTY_ORDERED"))*num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
+	callpoint!.setDevObject("component_prior_qty",prior_qty)
+	callpoint!.setDevObject("component_prior_commit",callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG"))
 
 rem --- Set buttons
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) <> "Y" then
@@ -199,7 +206,7 @@ rem --- Set defaults for new record
 	callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG", "")
 	callpoint!.setColumnData("OPT_INVKITDET.VENDOR_ID", "")
 	callpoint!.setColumnData("OPT_INVKITDET.DROPSHIP", "")
-	callpoint!.setColumnData("OPT_INVKITDET.COMP_PER_KIT", "1")
+	callpoint!.setColumnData("OPT_INVKITDET.COMP_PER_KIT", "0"); rem --- Zero for custom components not part of the defined kit
 	gosub clear_all_numerics
 
 rem --- Disable by line type
@@ -275,6 +282,242 @@ rem --- Disable grid for Invoice History Inquiry
 rem --- Set Kit Component grid's kit_detail_changed flag
 	callpoint!.setDevObject("kit_details_changed","Y")
 
+rem --- Is this row deleted?
+	if callpoint!.getGridRowModifyStatus( callpoint!.getValidationRow() ) <> "Y" then 
+		break; rem --- exit callpoint
+	endif
+
+rem --- Get current and prior values
+	curr_whse$ = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
+	curr_item$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+	curr_qty   = num(callpoint!.getColumnData("OPT_INVKITDET.QTY_ORDERED"))
+	curr_commit$=callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")
+
+	prior_whse$ = callpoint!.getDevObject("component_prior_whse")
+	prior_item$ = callpoint!.getDevObject("component_prior_item")
+	prior_qty   = callpoint!.getDevObject("component_prior_qty")
+	prior_commit$=callpoint!.getDevObject("component_prior_commit")
+
+	line_ship_date$=callpoint!.getColumnData("OPT_INVKITDET.EST_SHP_DATE")
+	cust$    = callpoint!.getColumnData("OPT_INVKITDET.CUSTOMER_ID")
+	ar_type$ = callpoint!.getColumnData("OPT_INVKITDET.AR_TYPE")
+	order$   = callpoint!.getColumnData("OPT_INVKITDET.ORDER_NO")
+	invoice_no$= callpoint!.getColumnData("OPT_INVKITDET.AR_INV_NO")
+	seq$     = callpoint!.getColumnData("OPT_INVKITDET.INTERNAL_SEQ_NO")
+
+rem --- Don't commit/uncommit Quotes
+	if  callpoint!.getDevObject("invoice_type")="P" goto awri_update_hdr
+
+rem --- Update inventory if there have been any changes
+	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))="Y" or
+:		((curr_whse$<>prior_whse$ or curr_item$<>prior_item$ or curr_qty<>prior_qty) and curr_commit$=prior_commit$) then
+		rem --- Initialize inventory item update
+		status=999
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+		if status then goto awri_update_hdr
+
+		ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+		dim curr_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+		read record (ivm_itemmast_dev, key=firm_id$+curr_item$, dom=awri_update_hdr) curr_itemmast$
+		if cvs(prior_item$,2)<>"" then
+			dim prior_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+			read record (ivm_itemmast_dev, key=firm_id$+prior_item$, dom=awri_update_hdr) prior_itemmast$
+		endif
+
+		rem --- If item or warehouse is different then uncommit previous, else commit current
+		if (prior_whse$<>"" and prior_whse$<>curr_whse$) or (prior_item$<>"" and prior_item$<>curr_item$) then
+			rem --- Uncommit prior item and warehouse
+			if prior_whse$<>"" and prior_item$<>"" and prior_qty<>0 then
+				items$[1] = prior_whse$
+				items$[2] = prior_item$
+				refs[0]   = prior_qty
+
+				if !pos(prior_itemmast.lotser_flag$="LS") or prior_itemmast.inventoried$<>"Y" then
+					if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+				else
+					found_lot=0
+					ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+					dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+					read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$,knum="PRIMARY", dom=*next)
+					while 1
+						read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
+						if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
+						if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
+						found_lot=1
+						items$[3] = ope_ordlsdet.lotser_no$
+						refs[0]   = ope_ordlsdet.qty_ordered
+						if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							if status then goto awri_update_hdr
+						endif
+						remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+					wend
+					read (ope_ordlsdet_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
+
+					if found_lot=0
+						if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+							call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							if status then goto awri_update_hdr
+						endif
+					endif
+				endif
+			endif
+
+			rem --- Commit quantity for current item and warehouse
+			if curr_whse$<>"" and curr_item$<>"" and curr_qty<>0 then
+				items$[1] = curr_whse$
+				items$[2] = curr_item$
+				refs[0]   = curr_qty
+
+				if line_ship_date$<=stbl("OPE_DEF_COMMIT") then
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					if status then goto awri_update_hdr
+				endif
+			endif
+		endif
+
+rem --- If new record, or item and warehouse haven't changed, then commit difference
+		if (prior_whse$="" or prior_whse$=curr_whse$) and (prior_item$="" or prior_item$=curr_item$) then
+			rem --- Commit quantity for current item and warehouse
+			if curr_whse$<>"" and curr_item$<>"" and curr_qty - prior_qty <> 0
+				items$[1] = curr_whse$
+				items$[2] = curr_item$
+				refs[0]   = curr_qty - prior_qty
+
+				if curr_qty - prior_qty > 0 then
+					rem --- Commit
+					if line_ship_date$<=stbl("OPE_DEF_COMMIT") then
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+				else
+					rem --- Uncommit
+					refs[0]=abs(refs[0])
+					if !pos(curr_itemmast.lotser_flag$="LS") or curr_itemmast.inventoried$<>"Y" then
+						if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+							call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+							if status then goto awri_update_hdr
+						endif
+					else
+						rem --- Uncommit lotted/serialized and inventoried items
+						found_lot=0
+						committed_qty=0
+						ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+						dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+						read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$,knum="PRIMARY", dom=*next)
+						while 1
+							extractrecord (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
+							if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then read(ope_ordlsdet_dev); break
+							if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
+							found_lot=1
+							if committed_qty + ope_ordlsdet.qty_ordered <= curr_qty then
+								 committed_qty=committed_qty + ope_ordlsdet.qty_ordered
+								continue
+							else
+								refs[0]=ope_ordlsdet.qty_ordered - (curr_qty - committed_qty)
+								committed_qty = curr_qty
+							endif
+							items$[3] = ope_ordlsdet.lotser_no$
+							if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+								if status then goto awri_update_hdr
+							endif
+							if ope_ordlsdet.qty_ordered=refs[0] then
+								remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+							else
+								ope_ordlsdet.qty_ordered=ope_ordlsdet.qty_ordered-refs[0]
+								writerecord(ope_ordlsdet_dev)ope_ordlsdet$
+							endif
+						wend
+						read (ope_ordlsdet_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
+
+						if found_lot=0
+							if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+								call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+								if status then goto awri_update_hdr
+							endif
+						endif
+					endif
+				endif
+			endif
+		endif
+	endif
+
+rem --- Only do the next if the commit flag has been changed (i.e. via Additional button/form)
+rem --- Note: AWRI will have been executed before launching that form to do first/main commit.
+rem --- When form is dismissed, row is marked modified, so when leaving it, AWRI will fire again,
+rem --- and that's when this code should be hit.
+	if curr_commit$ <> prior_commit$
+		rem --- Initialize inventory item update
+		status=999
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",err=*next,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+		if status then goto awri_update_hdr
+
+		action$=""
+		if curr_commit$ ="N" and prior_commit$ = "Y" then action$="UC"
+		if curr_commit$ = "Y" and prior_commit$ <> "Y" then action$="CO"
+
+		rem --- uncommit or commit, depending on action$
+		if curr_qty<>0 and action$<>"" and curr_item$<>"" then
+			items$[1] = curr_whse$
+			items$[2] = curr_item$
+			refs[0]   = curr_qty
+
+			ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
+			dim curr_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+			read record (ivm_itemmast_dev, key=firm_id$+curr_item$, dom=awri_update_hdr) curr_itemmast$
+
+		        if action$="CO" or !pos(curr_itemmast.lotser_flag$="LS") or curr_itemmast.inventoried$<>"Y" then
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				if status then goto awri_update_hdr
+			else
+				rem --- Uncommitted lotted/serialized and inventoried items
+				found_lot=0
+				ope_ordlsdet_dev=fnget_dev("OPE_ORDLSDET")
+				dim ope_ordlsdet$:fnget_tpl$("OPE_ORDLSDET")
+				read (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$,knum="PRIMARY", dom=*next)
+				while 1
+					read record (ope_ordlsdet_dev, end=*break) ope_ordlsdet$
+					if pos(firm_id$+ar_type$+cust$+order$+invoice_no$+seq$=ope_ordlsdet$)<>1 then break
+					if pos(ope_ordlsdet.trans_status$="ER")=0 then continue
+					found_lot=1
+					items$[3] = ope_ordlsdet.lotser_no$
+					refs[0]   = ope_ordlsdet.qty_ordered
+					if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+					remove (ope_ordlsdet_dev, key=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$+ope_ordlsdet.sequence_no$)
+				wend
+				read (ope_ordlsdet_dev, key="",knum="AO_STAT_CUST_ORD", dom=*next)
+
+				if found_lot=0
+					if callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y" then
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+						if status then goto awri_update_hdr
+					endif
+				endif
+			endif
+		endif
+	endif
+
+awri_update_hdr: rem --- Update header
+
+rem --- set prior's = curr's here, since row has been written
+rem --- this way, if we stay on the same row, as will be the case if we've pressed Recalc, Lot/Ser, or Additional buttons,
+rem --- then next time thru AWRI it won't see a false difference between curr and pri, so won't over-commit
+	callpoint!.setDevObject("component_prior_whse", curr_whse$)
+	callpoint!.setDevObject("component_prior_item", curr_item$)
+	callpoint!.setDevObject("component_prior_qty", curr_qty)
+	callpoint!.setDevObject("component_prior_commit", curr_commit$)
+
+[[OPT_INVKITDET.BEND]]
+rem  --- Report component shortages
+		gosub reportShortages
+
 [[OPT_INVKITDET.BGDR]]
 rem --- Initialize UM_SOLD related <DISPLAY> fields
 	conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
@@ -322,6 +565,59 @@ rem --- Set column size for memo_1024 field very small so it doesn't take up roo
 
 rem --- Initialize Kit Component grid's kit_detail_changed flag
 	callpoint!.setDevObject("kit_details_changed","N")
+
+[[OPT_INVKITDET.BWRI]]
+rem --- Set values based on line type
+	file$ = "OPC_LINECODE"
+	dim linecode_rec$:fnget_tpl$(file$)
+	line_code$ = callpoint!.getColumnData("OPT_INVKITDET.LINE_CODE")
+	find record(fnget_dev(file$), key=firm_id$+line_code$) linecode_rec$
+
+rem --- If line type is Memo, clear the extended price
+	if linecode_rec.line_type$ = "M" then 
+		callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", "0")
+	endif
+
+rem --- Clear quantities if line type is Memo or Other
+	if pos(linecode_rec.line_type$="MO") then
+		callpoint!.setColumnData("OPT_INVKITDET.QTY_ORDERED", "0")
+		callpoint!.setColumnData("OPT_INVKITDET.QTY_BACKORD", "0")
+		callpoint!.setColumnData("OPT_INVKITDET.QTY_SHIPPED", "0")
+	endif
+
+rem --- Order quantity is required for unprinted S, N and P line types
+	if pos(linecode_rec.line_type$="SNP") and cvs(callpoint!.getColumnData("OPT_INVKITDET.PICK_FLAG"),2)="" then
+		if num(callpoint!.getColumnData("OPT_INVKITDET.QTY_ORDERED")) = 0 then
+			msg_id$="OP_QTY_ZERO"
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+rem --- Set product types for certain line types 
+	if pos(linecode_rec.line_type$="NOP") then
+		if linecode_rec.prod_type_pr$ = "D" then			
+			callpoint!.setColumnData("OPT_INVKITDET.PRODUCT_TYPE", linecode_rec.product_type$)
+		else
+			if linecode_rec.prod_type_pr$ = "N" then
+				callpoint!.setColumnData("OPT_INVKITDET.PRODUCT_TYPE", "")
+			endif
+		endif
+	endif
+
+rem --- Initialize RTP modified fields for modified existing records
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
+		callpoint!.setColumnData("OPT_INVKITDET.MOD_USER", sysinfo.user_id$)
+		callpoint!.setColumnData("OPT_INVKITDET.MOD_DATE", date(0:"%Yd%Mz%Dz"))
+		callpoint!.setColumnData("OPT_INVKITDET.MOD_TIME", date(0:"%Hz%mz"))
+	endif
+
+rem --- Does a revised picking list need to be printed?
+	if callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" and
+:	callpoint!.getColumnData("OPT_INVKITDET.PICK_FLAG")="Y" then
+		callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG","M")
+	endif
 
 [[OPT_INVKITDET.ITEM_ID.AINV]]
 rem --- Skip check for item synonyms
@@ -553,7 +849,7 @@ rem --- Inventory Item/Whse Lookup
 	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[<<DISPLAY>>.QTY_ORDERED_DSP.AVAL]]
-rem wgh ... 7491 ... set comp_per_kit using item's conv_factor
+rem wgh ... 7491 ... don't allow changing qty_ordered if comp_per_kit<>0, i.e. this component is part of the defined kit
 
 [[OPT_INVKITDET.<CUSTOM>]]
 rem =========================================================

@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invkitdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invkitdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invkitdet">2460278</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20240123</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20240123</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">173958</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20240124</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20240124</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">175302</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invkitdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invkitdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -112,6 +112,10 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetawri">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetawri">AWRI</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_invkitdetbend">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbend">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbend">BEND</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_invkitdetbgdr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbgdr">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbgdr">BGDR</DD_ATTR_CPRO>
@@ -119,6 +123,10 @@
 		<RECORD id="ddm_table_cpro.opt_invkitdetbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbsho">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbsho">BSHO</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_invkitdetbwri">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbwri">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbwri">BWRI</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">

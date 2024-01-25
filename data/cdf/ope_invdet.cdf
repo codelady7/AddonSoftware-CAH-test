@@ -505,6 +505,9 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 	callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 	callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 	callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+	callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
+	callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_INVHDR.CASH_SALE"))
+	callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_INVHDR.INVOICE_TYPE"))
 	shortage_vect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("shortageVect",shortage_vect!)
 
@@ -1227,7 +1230,7 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 
 					redim ivmItemMast$
 					readrecord(ivmItemMast_dev,key=firm_id$+optInvKitDet.item_id$,dom=*next)ivmItemMast$
-					if (callpoint!.getDevObject("lineCodeTaxable")="Y" and ivmItemMast.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
+					if (user_tpl.line_taxable$="Y" and ivmItemMast.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
 						optInvKitDet.taxable_amt=optInvKitDet.ext_price
 					else
 						optInvKitDet.taxable_amt=0
@@ -1264,6 +1267,9 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 			callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+			callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
+			callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_INVHDR.CASH_SALE"))
+			callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_INVHDR.INVOICE_TYPE"))
 
 			key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
 
@@ -3238,7 +3244,12 @@ check_ship_qty: rem --- Warn if ship quantity is more than currently available.
 rem =========================================================
 	if callpoint!.getColumnData("OPE_INVDET.COMMIT_FLAG") = "Y" and user_tpl.line_type$ <> "N" and
 :	user_tpl.line_dropship$ <> "Y" and callpoint!.getDevObject("warn_not_avail")="Y" and callpoint!.getDevObject("kit")<>"Y" then
-		shipqty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+		if conv_factor=0 then
+			conv_factor=1
+			callpoint!.setColumnData("OPE_ORDDET.CONV_FACTOR",str(conv_factor))
+		endif
+
+		shipqty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))*conv_factor
 		prev_available=num(userObj!.getItem(user_tpl.avail_avail).getText())
 		curr_available=prev_available+callpoint!.getDevObject("prior_qty")
 		if shipqty>curr_available then
@@ -3459,7 +3470,7 @@ rem =========================================================
 		optInvKitDet.std_list_prc=ivm02a.cur_price
 		optInvKitDet.ext_price=round(optInvKitDet.qty_shipped * optInvKitDet.unit_price, 2)
 
-		if (callpoint!.getDevObject("lineCodeTaxable")="Y" and ivm01a.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
+		if (user_tpl.line_taxable$="Y" and ivm01a.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
 			optInvKitDet.taxable_amt=optInvKitDet.ext_price
 		else
 			optInvKitDet.taxable_amt=0
