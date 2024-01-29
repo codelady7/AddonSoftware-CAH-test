@@ -1,9 +1,53 @@
+[[IVR_PHYSPRINT.ACUS]]
+rem --- Process custom event -- used in this section to select/de-select checkboxes in grid
+rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
+rem --- This routine is executed when callbacks have been set to run a "custom event"
+rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
+rem --- of event it is.  In this case, we're toggling checkboxes on/off in form grid control
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$ = SysGUI!.getLastEventString()
+	this_id    = dec(gui_event.ID$)
+	grid!      = callpoint!.getDevObject("grid_object")
+
+	rem --- Is this even for the grid?
+	if this_id = user_tpl.grid_id then 
+
+		rem --- Notify events
+		if gui_event.code$ = "N" then
+			notify_base$ = notice(gui_dev, gui_event.x%)
+			dim notice$:noticetpl(notify_base.objtype%, gui_event.flags%)
+			notice$  = notify_base$
+			this_row = notice.row
+			this_col = notice.col
+
+			switch notice.code
+
+				rem --- Mouse click
+				case 14
+					if this_col = 0 then gosub toggle_checkbox
+					break
+
+				rem --- Key press
+				case 12
+
+					rem --- Space bar
+					if notice.wparam=32 then gosub toggle_selected
+					break
+
+			swend
+
+		endif
+	endif
+
 [[IVR_PHYSPRINT.AREC]]
 rem --- Display default warehouse ID, if any
 
 	if user_tpl.whse_id$ <> "" then
 		callpoint!.setColumnData("IVR_PHYSPRINT.WAREHOUSE_ID", user_tpl.whse_id$)
 	endif
+
 [[IVR_PHYSPRINT.ASVA]]
 rem --- Check for values in warehouse and cutoff date
 
@@ -71,48 +115,40 @@ rem --- Roll thru grid rows, saving the pending action of checked records
 	callpoint!.setDevObject("IVR_PHYSPRINT.SELECTED_ALL", selected_all)
 
 asva_end:
-[[IVR_PHYSPRINT.ACUS]]
-rem --- Process custom event -- used in this section to select/de-select checkboxes in grid
-rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
-rem --- This routine is executed when callbacks have been set to run a "custom event"
-rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
-rem --- of event it is.  In this case, we're toggling checkboxes on/off in form grid control
 
-	dim gui_event$:tmpl(gui_dev)
-	dim notify_base$:noticetpl(0,0)
-	gui_event$ = SysGUI!.getLastEventString()
-	this_id    = dec(gui_event.ID$)
-	grid!      = callpoint!.getDevObject("grid_object")
+[[IVR_PHYSPRINT.AWIN]]
+rem --- Inits
 
-	rem --- Is this even for the grid?
-	if this_id = user_tpl.grid_id then 
+	use ::ado_util.src::util
 
-		rem --- Notify events
-		if gui_event.code$ = "N" then
-			notify_base$ = notice(gui_dev, gui_event.x%)
-			dim notice$:noticetpl(notify_base.objtype%, gui_event.flags%)
-			notice$  = notify_base$
-			this_row = notice.row
-			this_col = notice.col
+	dim user_tpl$:"grid_id:u(2), whse_id:c(2), whse_changed:u(1)"
+	user_tpl.whse_changed = 0
+	more = 1
 
-			switch notice.code
+rem --- Open files
 
-				rem --- Mouse click
-				case 14
-					if this_col = 0 then gosub toggle_checkbox
-					break
+	num_files=1
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="IVC_PHYSCODE", open_opts$[1]="OTA"; rem "open_opts$[1]="OTAL" - bug 4276 - IV File Locking"
 
-				rem --- Key press
-				case 12
+	gosub open_tables
 
-					rem --- Space bar
-					if notice.wparam=32 then gosub toggle_selected
-					break
+	physcode_dev = num(open_chans$[1])
+	dim physcode_rec$:open_tpls$[1]
 
-			swend
+rem --- Display grid
 
-		endif
-	endif
+	gosub create_grid
+	util.resizeWindow(Form!, SysGui!)
+	gosub get_data
+	whse$ = user_tpl.whse_id$
+	gosub fill_grid
+
+rem --- Set callbacks - processed in ACUS callpoint
+
+	grid!.setCallback(grid!.ON_GRID_KEY_PRESS,"custom_event")
+	grid!.setCallback(grid!.ON_GRID_MOUSE_UP, "custom_event")
+
 [[IVR_PHYSPRINT.WAREHOUSE_ID.AVAL]]
 rem --- Filter grid on selected warehouse
 
@@ -123,6 +159,7 @@ rem --- Filter grid on selected warehouse
 	endif
 
 	gosub fill_grid
+
 [[IVR_PHYSPRINT.<CUSTOM>]]
 rem ==========================================================================
 create_grid: rem --- Create grid
@@ -317,42 +354,15 @@ rem ==========================================================================
 	rem --- Roll thru selected rows
 	rem --- Toggle the first row, then set all rows to that state
 
-	for i = 0 to rows!.size() - 1
-		row = num( rows!.getItem(i) )
-		if state = -1 then state = !( grid!.getCellState(row, 0) )
-		grid!.setCellState(row, 0, state)
-	next i
+	if rows!.size()>0
+		for i = 0 to rows!.size() - 1
+			row = num( rows!.getItem(i) )
+			if state = -1 then state = !( grid!.getCellState(row, 0) )
+			grid!.setCellState(row, 0, state)
+		next i
+	endif
 
 	return
-[[IVR_PHYSPRINT.AWIN]]
-rem --- Inits
 
-	use ::ado_util.src::util
 
-	dim user_tpl$:"grid_id:u(2), whse_id:c(2), whse_changed:u(1)"
-	user_tpl.whse_changed = 0
-	more = 1
 
-rem --- Open files
-
-	num_files=1
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="IVC_PHYSCODE", open_opts$[1]="OTA"; rem "open_opts$[1]="OTAL" - bug 4276 - IV File Locking"
-
-	gosub open_tables
-
-	physcode_dev = num(open_chans$[1])
-	dim physcode_rec$:open_tpls$[1]
-
-rem --- Display grid
-
-	gosub create_grid
-	util.resizeWindow(Form!, SysGui!)
-	gosub get_data
-	whse$ = user_tpl.whse_id$
-	gosub fill_grid
-
-rem --- Set callbacks - processed in ACUS callpoint
-
-	grid!.setCallback(grid!.ON_GRID_KEY_PRESS,"custom_event")
-	grid!.setCallback(grid!.ON_GRID_MOUSE_UP, "custom_event")

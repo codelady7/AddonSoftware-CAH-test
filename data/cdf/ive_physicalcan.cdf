@@ -1,3 +1,57 @@
+[[IVE_PHYSICALCAN.ACUS]]
+rem --- Process custom event -- used in this section to select/de-select checkboxes in grid
+rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
+rem --- This routine is executed when callbacks have been set to run a 'custom event'
+rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
+rem --- of event it is.  In this case, we're toggling checkboxes on/off in form grid control
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$ = SysGUI!.getLastEventString()
+	this_id    = dec(gui_event.ID$)
+	grid!      = callpoint!.getDevObject("grid_object")
+	cycleData! = cast(BBjVector, callpoint!.getDevObject("cycle_data"))
+
+	rem --- Is this even for the grid?
+	if this_id = user_tpl.grid_id then 
+
+		rem --- Notify events
+		if gui_event.code$ = "N" then
+			notify_base$ = notice(gui_dev, gui_event.x%)
+			dim notice$:noticetpl(notify_base.objtype%, gui_event.flags%)
+			notice$  = notify_base$
+			this_row = notice.row
+			this_col = notice.col
+			if this_row>=0
+				this_action$ = str( cycleData!.getItem( this_row * 4 + this_col ) )
+			else
+				this_action$ = "0"
+			endif
+
+			rem --- Don't change a record with a panding action of 5 (delete)
+			if this_action$ <> "5" then
+
+				switch notice.code
+
+					rem --- Mouse click
+					case 14
+						if this_col = 0 then gosub toggle_checkbox
+						break
+
+					rem --- Key press
+					case 12
+
+						rem --- Space bar
+						if notice.wparam=32 then gosub toggle_selected
+						break
+
+				swend
+
+			endif
+		endif
+	endif
+	
+
 [[IVE_PHYSICALCAN.AREC]]
 rem --- Display default warehouse ID, if any
 
@@ -5,6 +59,7 @@ rem --- Display default warehouse ID, if any
 		callpoint!.setColumnData("IVE_PHYSICALCAN.WAREHOUSE_ID", user_tpl.whse_id$)
 	endif
 	
+
 [[IVE_PHYSICALCAN.ASVA]]
 rem --- Check for values in warehouse and cutoff date
 
@@ -72,70 +127,7 @@ rem --- Roll thru grid rows, saving the pending action of checked records
 	callpoint!.setDevObject("IVE_PHYSICALCAN.SELECTED_ALL", selected_all)
 
 asva_end:
-[[IVE_PHYSICALCAN.ACUS]]
-rem --- Process custom event -- used in this section to select/de-select checkboxes in grid
-rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info
-rem --- This routine is executed when callbacks have been set to run a 'custom event'
-rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
-rem --- of event it is.  In this case, we're toggling checkboxes on/off in form grid control
 
-	dim gui_event$:tmpl(gui_dev)
-	dim notify_base$:noticetpl(0,0)
-	gui_event$ = SysGUI!.getLastEventString()
-	this_id    = dec(gui_event.ID$)
-	grid!      = callpoint!.getDevObject("grid_object")
-	cycleData! = cast(BBjVector, callpoint!.getDevObject("cycle_data"))
-
-	rem --- Is this even for the grid?
-	if this_id = user_tpl.grid_id then 
-
-		rem --- Notify events
-		if gui_event.code$ = "N" then
-			notify_base$ = notice(gui_dev, gui_event.x%)
-			dim notice$:noticetpl(notify_base.objtype%, gui_event.flags%)
-			notice$  = notify_base$
-			this_row = notice.row
-			this_col = notice.col
-			if this_row>=0
-				this_action$ = str( cycleData!.getItem( this_row * 4 + this_col ) )
-			else
-				this_action$ = "0"
-			endif
-
-			rem --- Don't change a record with a panding action of 5 (delete)
-			if this_action$ <> "5" then
-
-				switch notice.code
-
-					rem --- Mouse click
-					case 14
-						if this_col = 0 then gosub toggle_checkbox
-						break
-
-					rem --- Key press
-					case 12
-
-						rem --- Space bar
-						if notice.wparam=32 then gosub toggle_selected
-						break
-
-				swend
-
-			endif
-		endif
-	endif
-	
-[[IVE_PHYSICALCAN.WAREHOUSE_ID.AVAL]]
-rem --- Filter grid on selected warehouse
-
-	whse$ = callpoint!.getUserInput()
-
-	if callpoint!.getColumnUndoData("IVE_PHYSICALCAN.WAREHOUSE_ID") <> whse$ then
-		user_tpl.whse_changed = 1
-	endif
-
-	gosub fill_grid
-	
 [[IVE_PHYSICALCAN.AWIN]]
 rem print 'show',; rem debug
 
@@ -171,6 +163,19 @@ rem --- Set callbacks - processed in ACUS callpoint
 	grid!.setCallback(grid!.ON_GRID_KEY_PRESS,"custom_event")
 	grid!.setCallback(grid!.ON_GRID_MOUSE_UP, "custom_event")
 	
+
+[[IVE_PHYSICALCAN.WAREHOUSE_ID.AVAL]]
+rem --- Filter grid on selected warehouse
+
+	whse$ = callpoint!.getUserInput()
+
+	if callpoint!.getColumnUndoData("IVE_PHYSICALCAN.WAREHOUSE_ID") <> whse$ then
+		user_tpl.whse_changed = 1
+	endif
+
+	gosub fill_grid
+	
+
 [[IVE_PHYSICALCAN.<CUSTOM>]]
 rem ==========================================================================
 create_grid: rem --- Create grid
@@ -361,10 +366,15 @@ rem ==========================================================================
 	rem --- Roll thru selected rows
 	rem --- Toggle the first row, then set all rows to that state
 
-	for i = 0 to rows!.size() - 1
-		row = num( rows!.getItem(i) )
-		if state = -1 then state = !( grid!.getCellState(row, 0) )
-		grid!.setCellState(row, 0, state)
-	next i
+	if rows!.size()>0
+		for i = 0 to rows!.size() - 1
+			row = num( rows!.getItem(i) )
+			if state = -1 then state = !( grid!.getCellState(row, 0) )
+			grid!.setCellState(row, 0, state)
+		next i
+	endif
 
 	return
+
+
+

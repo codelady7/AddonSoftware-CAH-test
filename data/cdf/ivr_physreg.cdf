@@ -351,11 +351,13 @@ rem ==========================================================================
 	rem --- Roll thru selected rows
 	rem --- Toggle the first row, then set all rows to that state
 
-	for i = 0 to rows!.size() - 1
-		row = num( rows!.getItem(i) )
-		if state = -1 then state = !( grid!.getCellState(row, 0) )
-		grid!.setCellState(row, 0, state)
-	next i
+	if rows!.size()>0
+		for i = 0 to rows!.size() - 1
+			row = num( rows!.getItem(i) )
+			if state = -1 then state = !( grid!.getCellState(row, 0) )
+			grid!.setCellState(row, 0, state)
+		next i
+	endif
 
 	return
 

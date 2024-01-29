@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ivr_physreg"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ivr_physreg">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ivr_physreg">20090317</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ivr_physreg">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ivr_physreg">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ivr_physreg">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ivr_physreg">20240129</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ivr_physreg">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ivr_physreg">161130</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ivr_physreg"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ivr_physreg">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ivr_physreg"></DD_ATTR_DKNM>
