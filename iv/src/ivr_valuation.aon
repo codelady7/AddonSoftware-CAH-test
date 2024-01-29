@@ -88,7 +88,7 @@ rem --- Retrieve parameter records
 rem --- Parameters
 
     dim p[5],g[5],headings$[7]
-    ls$="N", lf$="N"
+    lf$="N"
     p[0]=ivs01a.item_id_len
     p[1]=num(ivs01a.precision$)
     p[2]=ivs01a.ls_no_len
@@ -96,7 +96,6 @@ rem --- Parameters
     p[4]=num(ivs01a.desc_len_02$)
     p[5]=num(ivs01a.desc_len_03$)
     if ivs01a.lifofifo$<>"N" lf$="Y"
-    if ivs01a.lotser_flag$<>"N" ls$="Y"
     di$=ars01a.dist_by_item$
 
 rem --- Initializations
@@ -106,10 +105,8 @@ rem --- Initializations
 
 rem --- Additional File Opens
 
-    if ls$="Y" then
-        files$[9]="ivm-07",ids$[9]="IVM_LSMASTER"
-        files$[10]="ivm-17",ids$[10]="IVM_LSACT"
-    endif
+    files$[9]="ivm-07",ids$[9]="IVM_LSMASTER"
+    files$[10]="ivm-17",ids$[10]="IVM_LSACT"
 
     if lf$="Y" then
         files$[11]="ivm-04",ids$[11]="IVM_ITEMTIER"
@@ -128,10 +125,8 @@ rem --- Additional File Opens
 :       ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
 
-    if ls$="Y" then
-        ivm07_dev=channels[9],ivm17_dev=channels[10]
-        dim ivm07a$:templates$[9],ivm17a$:templates$[10]
-    endif
+    ivm07_dev=channels[9],ivm17_dev=channels[10]
+    dim ivm07a$:templates$[9],ivm17a$:templates$[10]
 
     if lf$="Y" then
         ivm04_dev=channels[11]
@@ -194,11 +189,9 @@ rem --- Summary by item
 rem --- Detail report
 
     if level$="D" then
-        format=3
+        format=6
         headings$[1]=Translate!.getTranslation("AON_DETAIL_")+headings$[1]
-        if ls$="Y" then format=6
-        if lf$="Y" then format=5
-        if ls$="Y" and lf$="Y" then format=4
+        if lf$="Y" then format=4
     endif
 
 rem --- Resize masks

@@ -55,7 +55,7 @@ rem --- Get user approval to proceed
 
 rem --- Open/Lock Files
 
-	num_files=16
+	num_files=19
 	dim open_tables$[1:num_files], open_opts$[1:num_files], open_chans$[1:num_files], open_tpls$[1:num_files]
 
 	open_tables$[1] ="SFS_PARAMS",    open_opts$[1] = "OTA"
@@ -73,6 +73,9 @@ rem --- Open/Lock Files
 	open_tables$[14]="IVM_ITEMWHSE",  open_opts$[14] = "OTA"
 	open_tables$[15]="IVM_ITEMACT",   open_opts$[15] = "OTA"
 	open_tables$[16]="IVT_ITEMTRAN",  open_opts$[16] = "OTA"
+    open_tables$[17] ="SFE_WOLSISSU", open_opts$[17] = "OTA"
+    open_tables$[18] ="SFT_OPNLSTRN", open_opts$[18] = "OTA"
+    open_tables$[19] ="IVM_LSMASTER", open_opts$[19] = "OTA"
 
     rem --- Lock if not batching
     if num(batch_no$)=0 then 
@@ -97,6 +100,9 @@ rem --- Open/Lock Files
     ivm02_dev = num(open_chans$[14])
     ivm12_dev = num(open_chans$[15])
     ivt04_dev = num(open_chans$[16])
+    sfe14_dev = num(open_chans$[17])
+    sft11_dev = num(open_chans$[18])
+    ivm07_dev = num(open_chans$[19])
 
 rem --- Dimension string templates
 
@@ -105,7 +111,7 @@ rem --- Dimension string templates
 :       sfe25a$:open_tpls$[7],sfm10a$:open_tpls$[9],
 :       sft21a$:open_tpls$[10],sfw01a$:open_tpls$[11],ivs01a$:open_tpls$[12],
 :       ivm01a$:open_tpls$[13],ivm02a$:open_tpls$[14],ivm12a$:open_tpls$[15],
-:       ivt04a$:open_tpls$[16]
+:       ivt04a$:open_tpls$[16],sfe14a$:open_tpls$[17],sft11a$:open_tpls$[18],ivm07a$:open_tpls$[19]
 
 rem --- Parameters
 
@@ -116,7 +122,6 @@ rem --- Parameters
     p[2]=ivs01a.ls_no_len
     ivs01_precision=num(ivs01a.precision$)
     lf$=iff(pos(ivs01a.lifofifo$="LF"),"Y","N")
-    p9$=ivs01a.lotser_flag$
     dim desc[3]
     desc[1]=num(ivs01a.desc_len_01$)
     desc[2]=num(ivs01a.desc_len_02$)
@@ -149,12 +154,6 @@ rem --- Additional File Opens
         open_tables$[3] ="ARC_DISTCODE",    open_opts$[3] = "OTA"
     endif
 
-    if pos(p9$="LS") then 
-        open_tables$[4] ="SFE_WOLSISSU",    open_opts$[4] = "OTA"
-        open_tables$[5] ="SFT_OPNLSTRN",    open_opts$[5] = "OTA"
-        open_tables$[6] ="IVM_LSMASTER",    open_opts$[6] = "OTA"
-    endif
-
     if lf$="Y" then
         open_tables$[7] ="IVM_ITEMTIER",    open_opts$[7] = "OTA"
         open_tables$[9] ="IVW_LFDET",       open_opts$[9] = "OTAL"
@@ -176,13 +175,6 @@ rem --- Additional File Opens
         arm01_dev=num(open_chans$[2])
         arm10_dev=num(open_chans$[3])
         dim ars01a$:open_tpls$[1],arm01a$:open_tpls$[2],arm10a$:open_tpls$[3]
-    endif
-    
-    if pos(p9$="LS") then 
-        sfe14_dev=num(open_chans$[4])
-        sft11_dev=num(open_chans$[5])
-        ivm07_dev=num(open_chans$[6])
-        dim sfe14a$:open_tpls$[4],sft11a$:open_tpls$[5],ivm07a$:open_tpls$[6]
     endif
     
     if lf$="Y" then
@@ -264,7 +256,7 @@ rem --- Initializations
     m2=len(m2$)
     call stbl("+DIR_PGM")+"adc_getmask.aon","","SF","R","",m3$,0,0
     m3=len(m3$)
-    if p9$="L" p8$=Translate!.getTranslation("AON_____LOT_NUMBER:_") else p8$=Translate!.getTranslation("AON_____SERIAL_NUMBER:_")
+    p8$=Translate!.getTranslation("AON_____LOT/SERIAL_NUMBER:_","    Lot/Serial Number: ",1)
     dim s[1],t[1]
     missing_lotser=0
     
@@ -390,7 +382,7 @@ rem --- Read next Issue Inventory Transaction (SFE_WOTRANS) record
                 sfe23a.issue_cost=sfe25a.issue_cost
             endif
 
-            if lf$="Y" and (pos(p9$="LS")=0 or ivm01a.lotser_item$<>"Y" or ivm01a.inventoried$<>"Y") then
+            if lf$="Y" and (!pos(ivm01a.lotser_flag$="LS") or ivm01a.inventoried$<>"Y") then
                 rem --- Get LIFO-FIFO cost
                 gosub lifo_fifo
                 sfe25a.issue_cost=icost
@@ -417,7 +409,7 @@ rem --- Read next Issue Inventory Transaction (SFE_WOTRANS) record
             gosub issue_detail
 
             rem --- Process Lotted/Serialized Issues (SFE_WOLSISSU, sfe-14) records
-            if pos(p9$="LS") and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
+            if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
                 t1=0,t2=0
                 sfe14_trip$=sfe25a.firm_id$+sfe25a.wo_location$+sfe25a.wo_no$+sfe25a.internal_seq_no$
                 read (sfe14_dev,key=sfe14_trip$,dom=*next)
@@ -436,7 +428,7 @@ rem --- Read next Issue Inventory Transaction (SFE_WOTRANS) record
                     sfe14a.lotser_no$(1)=fill(p[2],"_")
                     sfe14a.qty_issued=0
                     sfe14a.issue_cost=0
-                    i=iff(p9$="L",1,sfe25a.qty_issued-t1)
+                    i=iff(ivm01a.lotser_flag$="L",1,sfe25a.qty_issued-t1)
                     for xwk=1 to i
                         gosub serial_detail
                     next xwk
@@ -690,7 +682,7 @@ issue_detail: rem --- Issue Detail
     OutVect!.addItem(desc$(1,min(len(desc$),31)))
     OutVect!.addItem(sfe25a.unit_measure$)
     OutVect!.addItem(fndate$(sfe25a.require_date$))
-    if pos(p9$="LS") and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
+    if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
         x=fnblank(columns-4)
     else
         OutVect!.addItem(str(sfe25a.qty_ordered))

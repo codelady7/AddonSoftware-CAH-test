@@ -117,7 +117,11 @@ rem --- Loop through result set from work file query
 		
 		if prev_inv_no$="" or prev_inv_no$<>read_tpl.stub_inv_no$
 			inv_no$=          read_tpl.stub_inv_no$
-			inv_date$=fndate$(read_tpl.stub_inv_date$)
+            if cvs(read_tpl.stub_inv_date$,2)<>"" then
+                inv_date$=fndate$(read_tpl.stub_inv_date$)
+			else
+			    inv_date$=""
+			endif
 			inv_amt$=     str(read_tpl.stub_inv_amt:stub_amt_mask$)
 			inv_discamt$= str(read_tpl.stub_inv_discamt:stub_amt_mask$)
 			inv_amt_pd$=  str(read_tpl.stub_inv_amt_pd:stub_amt_mask$)	
@@ -134,7 +138,7 @@ rem --- Loop through result set from work file query
 		
 		if read_tpl.stub_is_total$<>"Y" then 				
 			data! = rs!.getEmptyRecordData()
-			data!.setFieldValue("CHECK_DATE", fndate$(read_tpl.check_date$))
+		    data!.setFieldValue("CHECK_DATE", fndate$(read_tpl.check_date$))
 			data!.setFieldValue("INVOICE_NUMBER", inv_no$)
 			data!.setFieldValue("INVOICE_DATE", inv_date$)
 			data!.setFieldValue("INVOICE_AMT", inv_amt$)

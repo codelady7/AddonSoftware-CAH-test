@@ -249,7 +249,7 @@ rem --- Build new APT_VENDPAYMENTS from APT_CHECKHISTORY
         endif
     
         foundRec=0      
-        aptVendPayments_key$=aptCheckHistory.firm_id$+aptCheckHistory.vendor_id$+aptCheckHistory.check_no$+aptCheckHistory.bnk_acct_cd$
+        aptVendPayments_key$=aptCheckHistory.firm_id$+aptCheckHistory.vendor_id$+aptCheckHistory.check_no$+aptCheckHistory.bnk_acct_cd$+aptCheckHistory.check_date$
         readrecord(aptVendPayments_dev,key=aptVendPayments_key$,dom=*next)aptVendPayments$; foundRec=1
         if !foundRec then
             redim aptVendPayments$

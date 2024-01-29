@@ -34,7 +34,7 @@ rem --- Initializations
     done=0
     if sequence$="L" headings=6 else headings=7
     dim headings$[headings+1]
-    if ivs01a.lotser_flag$="L" p8$=Translate!.getTranslation("AON_LOT_#") else p8$=Translate!.getTranslation("AON_SERIAL_#")
+    p8$=Translate!.getTranslation("AON_LOT/SERIAL_NO")
     more=1
     recs=0
     total_recs=0

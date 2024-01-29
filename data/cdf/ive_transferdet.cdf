@@ -11,9 +11,8 @@ rem --- Enable/disable fields
 rem --- Set/display item data
 	item_id$=callpoint!.getColumnData("IVE_TRANSFERDET.ITEM_ID")
 	gosub get_item
-	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("lotser_item")="Y" and
-:	callpoint!.getDevObject("inventoried")="Y" then
-		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",0)
+	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("inventoried")="Y" then
+		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",1)
 	endif
 
 [[IVE_TRANSFERDET.AGRN]]
@@ -84,7 +83,7 @@ rem --- Initializations for new row
 	callpoint!.setDevObject("prev_qty",0)
 	callpoint!.setDevObject("qty_ok","")
 
-	callpoint!.setColumnEnabled("IVE_TRANSFERDET.LOTSER_NO",0)
+	callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",0)
 
 [[IVE_TRANSFERDET.AWRI]]
 rem --- Commit inventory
@@ -275,6 +274,17 @@ rem --- Verify not an inactive item
 	endif
 	gosub get_item 
 
+rem --- Can't transfer kits
+	if ivm01a.kit$="Y" then
+		msg_id$="IV_KIT_TRANSFER"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
 rem --- Check item against both warehouse
 	whse$ = callpoint!.getHeaderColumnData("IVE_TRANSFERHDR.WAREHOUSE_ID_TO")
 	gosub check_item_whse
@@ -300,15 +310,14 @@ rem --- Initialize row fields
 
 rem --- Enable/Disable Lot/Serial Number and Transfer Qty
 	callpoint!.setColumnData("IVE_TRANSFERDET.ITEM_ID",item_id$)
-	if pos(callpoint!.getDevObject("lotser_flag")="LS") and callpoint!.getDevObject("lotser_item")="Y" then
-		trans_qty=1
-		callpoint!.setColumnData("IVE_TRANSFERDET.TRANS_QTY",str(trans_qty),1)
-		callpoint!.setColumnData("IVE_TRANSFERDET.EXT_COST", str(ivm02a.unit_cost * trans_qty),1)
-
+	if pos(callpoint!.getDevObject("lotser_flag")="LS") then
+		if callpoint!.getDevObject("lotser_flag")="S"
+			trans_qty=1
+			callpoint!.setColumnData("IVE_TRANSFERDET.TRANS_QTY",str(trans_qty),1)
+		endif
 		if callpoint!.getDevObject("inventoried")="Y" then
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",1)
 			callpoint!.setFocus(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",1)
-			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",0)
 		else
 			callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"IVE_TRANSFERDET.LOTSER_NO",0)
 			callpoint!.setFocus(callpoint!.getValidationRow(),"IVE_TRANSFERDET.TRANS_QTY",1)
@@ -430,7 +439,7 @@ rem ===========================================================================
 	findrecord (ivm01_dev, key=firm_id$+item_id$) ivm01a$
 	callpoint!.setColumnData("<<DISPLAY>>.UNIT_OF_SALE",ivm01a.unit_of_sale$,1)
 
-	callpoint!.setDevObject("lotser_item",ivm01a.lotser_item$)
+	callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
 	callpoint!.setDevObject("inventoried",ivm01a.inventoried$)
 
 	return
@@ -498,8 +507,7 @@ rem ===========================================================================
 
 	rem --- Quantity can only be 1 for serial#'s
 	if !failed then
-		if trans_qty<>1 and  callpoint!.getDevObject("lotser_flag")="S" and callpoint!.getDevObject("lotser_item")="Y" and
-:		callpoint!.getDevObject("inventoried")="Y" then
+		if trans_qty<>1 and  callpoint!.getDevObject("lotser_flag")="S" and callpoint!.getDevObject("inventoried")="Y" then
 			callpoint!.setMessage("IV_SER_JUST_ONE")
 			failed = 1
 		endif

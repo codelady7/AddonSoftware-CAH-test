@@ -357,7 +357,7 @@ rem --- Get Item Info
         i0$=bme01a.item_id$
         gosub get_iteminfo
         ivacct$=ivm01a.gl_inv_acct$
-        if bme01a.update_flag$="Y" and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
+        if bme01a.update_flag$="Y" and pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
             noUpdate=1
             OutVect!.addItem(Translate!.getTranslation("AON_***_CANNOT_UPDATE_INV_LS_ITEM"))
             xwk=fnblank(columns)
@@ -418,7 +418,7 @@ message:
                         
 print_components: rem --- Print Components
 
-            if ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
+            if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
                 noUpdate=1
                 OutVect!.addItem(Translate!.getTranslation("AON_***_CANNOT_UPDATE_INV_LS_ITEM"))
                 xwk=fnblank(columns)

@@ -1217,6 +1217,13 @@ rem --- Set Backordered text field
 
 	call user_tpl.pgmdir$+"opc_creditmsg.aon","H",callpoint!,UserObj!
 
+rem --- Update sales tax calculation if it was previously deferred
+	if num(callpoint!.getColumnData("OPE_ORDHDR.NO_SLS_TAX_CALC"))=1 then
+		disc_amt = num(callpoint!.getColumnData("OPE_ORDHDR.DISCOUNT_AMT"))
+		freight_amt = num(callpoint!.getColumnData("OPE_ORDHDR.FREIGHT_AMT"))
+		gosub calculate_tax
+	endif
+
 rem --- Set MODIFIED if totals were changed in the grid
 
 	if cvs(callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID"),3)<>"" 
@@ -1237,13 +1244,6 @@ rem --- Set MODIFIED if totals were changed in the grid
 			callpoint!.setStatus("MODIFIED")
 		endif
 	endif	
-
-rem --- Update sales tax calculation if it was previously deferred
-	if num(callpoint!.getColumnData("OPE_ORDHDR.NO_SLS_TAX_CALC"))=1 then
-		disc_amt = num(callpoint!.getColumnData("OPE_ORDHDR.DISCOUNT_AMT"))
-		freight_amt = num(callpoint!.getColumnData("OPE_ORDHDR.FREIGHT_AMT"))
-		gosub calculate_tax
-	endif
 
 rem --- Update REPRINT_FLAG for workaround to Barista Bug 10297
 	if callpoint!.getDevObject("ReprintFlag")="Y" and callpoint!.getColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" then
@@ -1723,11 +1723,30 @@ rem --- Remove committments for detail records by calling ATAMO
 			endif
 		endif
 
-		if pos(user_tpl.lotser_flag$="LS") then 
 			ord_seq$ = ope11a.internal_seq_no$
 			gosub remove_lot_ser_det
-		endif
 
+		ivm01_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+		readrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+		if ivm01a.kit$="Y" then
+			rem --- Delete the kit's components
+			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+			ar_type$=ope11a.ar_type$ 
+			cust$=ope11a.customer_id$
+			order$=ope11a.order_no$
+			invoice_no$=ope11a.ar_inv_no$
+			seq$=ope11a.internal_seq_no$
+			optInvKitDet_key$=firm_id$+ar_type$+cust$+order$+invoice_no$+seq$
+			read(optInvKitDet_dev,key=optInvKitDet_key$,knum="PRIMARY",dom=*next)
+			while 1
+				thisKey$=key(optInvKitDet_dev,end=*break)
+				if pos(optInvKitDet_key$=thisKey$)<>1 then break
+				remove(optInvKitDet_dev,key=thisKey$)
+	wend
+			read(optInvKitDet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next); rem --- Reset to alternate key
+		endif
 	wend
 
 	remove (ope31_dev, key=firm_id$+cust$+ord$+invoice$+"B", dom=*next)
@@ -2178,7 +2197,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=48
+	num_files=49
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -2226,6 +2245,7 @@ rem --- Open needed files
 	open_tables$[46]="OPE_ORDLSDET", open_opts$[46]="OTA[2_]"
 	open_tables$[47]="ADM_RPTCTL_RCP",open_opts$[47]="OTA"
 	open_tables$[48]="OPT_FILLMNTHDR",open_opts$[48]="OTA"
+	open_tables$[49]="OPT_INVKITDET",open_opts$[49]="OTA"
 
 	gosub open_tables
 
@@ -2301,6 +2321,19 @@ rem --- see if blank warehouse exists
 	if start_block then
 		read record (num(open_chans$[28]), key=firm_id$+"C"+ivm10c.warehouse_id$, dom=*endif) ivm10c$
 		blank_whse$="Y"
+	endif
+
+
+rem --- If BM is installed, open BMM_BILLMAT
+	bm_sf$="N"
+	dim info$[20]
+	call stbl("+DIR_PGM")+"adc_application.aon","BM",info$[all]
+	bm$=info$[20]
+	if bm$="Y" then
+		num_files = 1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="BMM_BILLMAT", open_opts$[1]="OTA"
+		gosub open_tables
 	endif
 
 rem --- Disable display fields
@@ -2415,7 +2448,6 @@ rem --- Setup user_tpl$
 :		"item_price:n(7*), " +
 :		"line_dropship:c(1), " +
 :		"dropship_cost:c(1), " +
-:		"lotser_flag:c(1), " +
 :		"new_detail:u(1), " +
 :		"prev_line_code:c(1*), " +
 :		"prev_item:c(1*), " +
@@ -2459,7 +2491,6 @@ rem --- Setup user_tpl$
 	user_tpl.min_ord_amt       = num(ars01a.min_ord_amt$)
 	user_tpl.min_line_amt      = num(ars01a.min_line_amt$)
 	user_tpl.def_whse$         = ivs01a.warehouse_id$
-	user_tpl.lotser_flag$      = ivs01a.lotser_flag$
 	user_tpl.pgmdir$           = stbl("+DIR_PGM",err=*next)
 	user_tpl.cur_row           = -1
 	user_tpl.detail_modified   = 0
@@ -2469,6 +2500,9 @@ rem --- Setup user_tpl$
 	user_tpl.new_order         = 0
 	user_tpl.credit_limit_warned = 0
 	user_tpl.shipto_warned     = 0
+
+	callpoint!.setDevObject("min_line_amt",user_tpl.min_line_amt)
+	callpoint!.setDevObject("amount_mask",user_tpl.amount_mask$)
 
 rem --- Columns for the util disableCell() method
 
@@ -2516,19 +2550,8 @@ rem --- Create GL Posting Control
 	user_tpl.glint$=gl$
 	callpoint!.setDevObject("glint",gl$)
 
-rem --- Set variables for called forms (OPE_ORDLSDET)
-
-	callpoint!.setDevObject("lotser_flag", ivs01a.lotser_flag$)
-
-rem --- Set up Lot/Serial button (and others) properly
-
-	switch pos(ivs01a.lotser_flag$="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_LOT_ENTRY")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_SERIAL_ENTRY")); break
-		case default; break
-	swend
-
 	callpoint!.setOptionEnabled("LENT",0)
+	callpoint!.setOptionEnabled("KITS",0)
 	callpoint!.setOptionEnabled("RCPR",0)
 	callpoint!.setOptionEnabled("DINV",0)
 	callpoint!.setOptionEnabled("CINV",0)
@@ -4148,7 +4171,6 @@ rem ==========================================================================
 					qty=ope11a.qty_ordered
 					gosub update_totals; rem --- do ATAMO for item
 
-					if pos(user_tpl.lotser_flag$="LS") then 
 						rem --- Process lotted/serialized items
 						read(ope21_dev,key=ope11_key$,knum="PRIMARY",dom=*next)
 						while 1
@@ -4161,7 +4183,6 @@ rem ==========================================================================
 						wend
 						read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 					endif
-				endif
 			wend
 			read(ope11_dev,knum="AO_STAT_CUST_ORD",dom=*next); rem --- reset key to OPE_ORDDET form's key
 
@@ -4176,7 +4197,8 @@ rem ==========================================================================
 
 rem ==========================================================================
 update_totals: rem --- Update Order/Invoice Totals & Commit Inventory
-               rem      IN: wh_id$
+               rem      IN: ope11a$
+	       rem	      wh_id$
                rem          item_id$
                rem          ls_id$ 
                rem          qty
@@ -4194,7 +4216,33 @@ rem ==========================================================================
 		if pos(opc_linecode.line_type$="SP")=0 then break
 		if opc_linecode.dropship$="Y" or inv_type$="P" then break; rem "Dropship or quote
 		if line_sign>0 then iv_action$="OE" else iv_action$="UC"
+		ivm01_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+		readrecord(ivm01_dev,key=firm_id$+item_id$,dom=*next)ivm01a$
+		if ivm01a.kit$<>"Y" then
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon",iv_action$,iv_files[all],ivs01a$,iv_info$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
+		else
+			rem --- Skip the kit, and do its components instead.
+			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+			ar_type$=ope11a.ar_type$ 
+			cust$=ope11a.customer_id$
+			order$=ope11a.order_no$
+			invoice_no$=ope11a.ar_inv_no$
+			seq$=ope11a.internal_seq_no$
+			optInvKitDet_key$=firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+			read(optInvKitDet_dev,key=optInvKitDet_key$,knum="AO_STAT_CUST_ORD",dom=*next)
+			while 1
+				thisKey$=key(optInvKitDet_dev,end=*break)
+				if pos(optInvKitDet_key$=thisKey$)<>1 then break
+				readrecord(optInvKitDet_dev)optInvKitDet$
+
+				iv_info$[1] = optInvKitDet.warehouse_id$
+				iv_info$[2] = optInvKitDet$.item_id$
+				iv_refs[0]  = optInvKitDet.qty_ordered
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",iv_action$,iv_files[all],ivs01a$,iv_info$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
+			wend
+		endif
 		break
 	wend
 

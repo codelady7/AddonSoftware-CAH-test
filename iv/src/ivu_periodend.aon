@@ -117,19 +117,15 @@ rem --- Init Data
     call "ivc_itemupdt.aon::init",channs[all],ivs01a$,items$[all],refs$[all],refs[all],rd_table_chans$[all],status
 	if status = 999 then goto std_exit_no_update
 
-rem --- Check on Lot/Serial Flag
+rem --- Open Lot/Serial Files
 
-    ls$="N"
-    if pos(ivs01a.lotser_flag$="LS") then
-        call pgmdir$+"adc_fileopen.aon",1,25,28,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
-        if status goto std_exit_no_update
-        ivm07_dev=channels[25]
-        ivm17_dev=channels[27]
-        ivt01_dev=channels[28]
-        dim ivm07a$:templates$[25]
-        dim ivm17a$:templates$[27]
-        ls$=ivs01a.lotser_flag$
-    endif
+    call pgmdir$+"adc_fileopen.aon",1,25,28,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
+    if status goto std_exit_no_update
+    ivm07_dev=channels[25]
+    ivm17_dev=channels[27]
+    ivt01_dev=channels[28]
+    dim ivm07a$:templates$[25]
+    dim ivm17a$:templates$[27]
 
 rem --- Check on Replenishment
 
@@ -176,7 +172,7 @@ rem --- Main Read
 
 rem --- Check for Serial Numbers
 
-        if ls$<>"N" and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then 
+        if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then 
 
             read (ivm07_dev, key=firm_id$+whse$+item$, dom=*next)
 

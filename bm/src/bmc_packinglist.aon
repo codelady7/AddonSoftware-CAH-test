@@ -193,13 +193,13 @@ rem --- Print Detail
 
 rem --- Serial/Lot Numbers
 
-        if ivm01a.lotser_item$<>"Y" or ivs01a.lotser_flag$="N" then continue
-        if ivs01a.lotser_flag$="S" then
+        if !pos(ivm01a.lotser_flag$="LS") then continue
+        if ivm01a.lotser_flag$="S"
             x$=Translate!.getTranslation("AON_SERIAL_NUMBER:_")
         else
             x$=Translate!.getTranslation("AON_LOT_NUMBER:_")
         endif
-        if ivs01a.lotser_flag$="L" and bmm02a.qty_required>5 then bmm02a.qty_required=5
+        if ivm01a.lotser_flag$="L" and bmm02a.qty_required>5 then bmm02a.qty_required=5
         for i=1 to bmm02a.qty_required
             xwk=fnblank(1)
             OutVect!.addItem("    "+x$+fill(30,"_"))
@@ -247,7 +247,7 @@ rem --- Heading
         OutVect!.addItem(ivm01a.ITEM_DESC$(desc[1]+1,min(desc[2],34)))
         OutVect!.addItem(Translate!.getTranslation("AON_REVISION_CODE:_")+bmm01a.BILL_REV$)
         xwk=fnblank(1)
-        OutVect!.addItem(Translate!.getTranslation("U/M")+bmm01a.UNIT_MEASURE$)
+        OutVect!.addItem(Translate!.getTranslation("AON_UM:_")+bmm01a.UNIT_MEASURE$)
 
         OutVect!.addItem(Translate!.getTranslation("AON_DRAWING_NUMBER:_")+bmm01a.DRAWING_NO$)
         OutVect!.addItem(ivm01a.ITEM_DESC$(desc[1]+desc[2]+1,min(desc[3],32)))

@@ -199,7 +199,7 @@ rem --- Set remaining work order fields using item and bill information
 
 remaining_initializations:
 
-    if pos(ivs01a.lotser_flag$="SL") then if ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then let sfe01a.lotser_item$="Y"
+    if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then let sfe01a.lotser_flag$=ivm01a.lotser_flag$
     sfe01a.unit_measure$=ivm01a.unit_of_sale$
     sfe01a.bill_rev$=bmm01a.bill_rev$
     sfe01a.drawing_no$=bmm01a.drawing_no$

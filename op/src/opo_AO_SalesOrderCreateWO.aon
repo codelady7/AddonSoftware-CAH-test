@@ -992,10 +992,10 @@ canCreateWO_1_error:rem --- Method error trap/handler (11Oct2017)
             sfeWOMastrRec.drawing_rev$=bmmBillMastRec.drawing_rev$
             sfeWOMastrRec.complete_flg$=""
             sfeWOMastrRec.recalc_flag$=""
-            if ivmItemMastRec.lotser_item$="Y" and ivmItemMastRec.inventoried$="Y" then
-                sfeWOMastrRec.lotser_item$="Y"
+            if ivmItemMastRec.inventoried$="Y"
+                sfeWOMastrRec.lotser_flag$=ivmItemMastRec.lotser_flag$
             else
-                sfeWOMastrRec.lotser_item$=""
+                sfeWOMastrRec.lotser_flag$="N"
             endif
             sfeWOMastrRec.priority$="5"
             sfeWOMastrRec.sched_flag$="M"

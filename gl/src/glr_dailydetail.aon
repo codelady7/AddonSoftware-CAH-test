@@ -13,6 +13,32 @@ rem  +-----------------------------------------+
 
     use ::ado_func.src::func
 
+rem --- Get program arguments
+
+    if argc>1
+        for curr_argv=1 to argc-1
+            temp_argv$=argv(curr_argv)
+            if pos("glu_clsdyradj.aon"=temp_argv$)=1 then gluClsdYrAdj=1; rem --- Program launched from glu_clsdyradj.aon
+        next curr_argv
+    endif
+    
+    if gluClsdYrAdj then
+        global_ns!=BBjAPI().getGlobalNamespace()
+        x$=stbl("+DIR_PGM",global_ns!.getValue("gluClsdYrAdj:+DIR_PGM"))
+        x$=stbl("+DIR_SYP",global_ns!.getValue("gluClsdYrAdj:+DIR_SYP"))
+        x$=stbl("+MASTER_USER",global_ns!.getValue("gluClsdYrAdj:+MASTER_USER",err=*next))  
+        x$=stbl("+MILESTONE",global_ns!.getValue("gluClsdYrAdj:+MILESTONE",err=*next))  
+        x$=stbl("+PROCESS_ID",global_ns!.getValue("gluClsdYrAdj:+PROCESS_ID"))  
+        x$=stbl("+PROPS_NAME",global_ns!.getValue("gluClsdYrAdj:+PROPS_NAME"))  
+        x$=stbl("+SYSINFO",global_ns!.getValue("gluClsdYrAdj:+SYSINFO"))
+        x$=stbl("+SYSINFO_TPL",global_ns!.getValue("gluClsdYrAdj:+SYSINFO_TPL"))
+        x$=stbl("+USER_ID",global_ns!.getValue("gluClsdYrAdj:+USER_ID"))
+        x$=stbl("+USER_LOCALE",global_ns!.getValue("gluClsdYrAdj:+USER_LOCALE"))
+
+        rdTransSpaceKey$=global_ns!.getValue("rdTransSpaceKey")
+        Translate!=global_ns!.getValue(rdTransSpaceKey$)
+    endif
+    
 rem --- Retrieve the program path
 
     pgmdir$=stbl("+DIR_PGM",err=*next)
@@ -24,7 +50,10 @@ rem --- Retrieve sysinfo data
     sysinfo$=stbl("+SYSINFO",err=*next)
     firm_id$=sysinfo.firm_id$
     system_date$=sysinfo.system_date$
-    
+    if gluClsdYrAdj then
+        sysinfo.task_desc$=Translate!.getTranslation("DDM_TABLES-GLR_DAILYDETAIL-DD_ATTR_WINT")
+        x$=stbl("+SYSINFO",sysinfo$)
+    endif
     
     milestone=50
     milestone=num(stbl("+MILESTONE",err=*next),err=*next)  
@@ -61,16 +90,18 @@ rem --- Dimension string templates
 
 rem --- Assign input values to local variables
 
-    begacct$=Option!.getOptionData("GL_ACCOUNT_1")
-    endacct$=Option!.getOptionData("GL_ACCOUNT_2")
-    wildcard$=Option!.getOptionData("GL_WILDCARD")
-    journal$=Option!.getOptionData("JOURNAL_ID_ENTRY")
-    sequence$=Option!.getOptionData("REPORT_SEQ_DA")
-    begaudit$=Option!.getOptionData("GL_ADT_NO_1")
-    endaudit$=Option!.getOptionData("GL_ADT_NO_2")
-    begdate$=Option!.getOptionData("TRNS_DATE_1")
-    enddate$=Option!.getOptionData("TRNS_DATE_2")
-    pagebreak$=Option!.getOptionData("PAGE_BREAK")
+    if !gluClsdYrAdj then
+        begacct$=Option!.getOptionData("GL_ACCOUNT_1")
+        endacct$=Option!.getOptionData("GL_ACCOUNT_2")
+        wildcard$=Option!.getOptionData("GL_WILDCARD")
+        journal$=Option!.getOptionData("JOURNAL_ID_ENTRY")
+        sequence$=Option!.getOptionData("REPORT_SEQ_DA")
+        begaudit$=Option!.getOptionData("GL_ADT_NO_1")
+        endaudit$=Option!.getOptionData("GL_ADT_NO_2")
+        begdate$=Option!.getOptionData("TRNS_DATE_1")
+        enddate$=Option!.getOptionData("TRNS_DATE_2")
+        pagebreak$=Option!.getOptionData("PAGE_BREAK")
+    endif
     if cvs(sequence$,2)="" sequence$="A"
 
 rem --- Retrieve parameter records

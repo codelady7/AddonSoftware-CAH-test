@@ -1,3 +1,37 @@
+[[BME_PRODUCT.ADIS]]
+rem --- set comments
+
+	bill_no$=callpoint!.getColumnData("BME_PRODUCT.ITEM_ID")
+	gosub disp_bill_comments
+
+[[BME_PRODUCT.ARAR]]
+rem --- Get Unit of Sale
+
+	item$=callpoint!.getColumnData("BME_PRODUCT.ITEM_ID")
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+
+	while 1
+		read record (ivm01_dev,key=firm_id$+item$,dom=*break)ivm01a$
+		callpoint!.setColumnData("<<DISPLAY>>.UNIT_OF_SALE",ivm01a.unit_of_sale$,1)
+		break
+	wend
+
+	bill_no$=item$
+	gosub disp_bill_comments
+
+[[BME_PRODUCT.AREC]]
+rem --- Set default warehouse
+
+	if callpoint!.getDevObject("multi_wh")<>"Y"
+		gosub disable_wh
+	else
+		wh$=callpoint!.getDevObject("def_wh")
+		callpoint!.setColumnData("BME_PRODUCT.WAREHOUSE_ID",wh$)
+	endif
+
+	callpoint!.setColumnData("<<DISPLAY>>.COMMENTS","")
+
 [[BME_PRODUCT.ARNF]]
 if num(stbl("+BATCH_NO"),err=*next)<>0
 	rem --- Check if this record exists in a different batch
@@ -10,6 +44,7 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
 	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
 endif
+
 [[BME_PRODUCT.BEND]]
 rem --- remove software lock on batch, if batching
 
@@ -22,6 +57,117 @@ rem --- remove software lock on batch, if batching
 		lock_disp$=""
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 	endif
+
+[[BME_PRODUCT.BSHO]]
+rem --- Open files
+
+	num_files=4
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	open_tables$[1]="IVM_ITEMMAST",open_opts$[1]="OTA"
+	open_tables$[2]="IVM_ITEMWHSE",open_opts$[2]="OTA"
+	open_tables$[3]="IVS_PARAMS",open_opts$[3]="OTA"
+	open_tables$[4]="BMM_BILLMAST",open_opts$[4]="OTA"
+	gosub open_tables
+
+rem --- get multiple warehouse flag and default warehouse
+
+	ivs01_dev=num(open_chans$[3])
+	dim ivs01a$:open_tpls$[3]
+	read record (ivs01_dev,key=firm_id$+"IV00",dom=std_missing_params)ivs01a$
+
+	callpoint!.setDevObject("multi_wh",ivs01a.multi_whse$)
+	callpoint!.setDevObject("def_wh",ivs01a.warehouse_id$)
+	if ivs01a.multi_whse$<>"Y"
+		gosub disable_wh
+	else
+		callpoint!.setColumnData("BME_PRODUCT.WAREHOUSE_ID",ivs01a.warehouse_id$)
+	endif
+
+rem --- Additional Init
+	gl$="N"
+	status=0
+	source$=pgm(-2)
+	call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"IV",glw11$,gl$,status
+	if status<>0 goto std_exit
+	callpoint!.setDevObject("glint",gl$)
+
+rem --- Additional Init
+
+	gl$="N"
+	status=0
+	source$=pgm(-2)
+	call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"BM",glw11$,gl$,status
+	if status<>0 goto std_exit
+
+[[BME_PRODUCT.BTBL]]
+rem --- Get Batch information
+
+call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
+callpoint!.setTableColumnAttribute("BME_PRODUCT.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
+[[BME_PRODUCT.BWRI]]
+rem --- Validate Quantity
+
+	if num(callpoint!.getColumnData("BME_PRODUCT.QTY_ORDERED")) = 0
+		msg_id$="IV_QTY_ZERO"
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[BME_PRODUCT.ITEM_ID.AINV]]
+rem --- Item synonym processing
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
+	callpoint!.setFocus("BME_PRODUCT.ITEM_ID")
+
+[[BME_PRODUCT.ITEM_ID.AVAL]]
+rem --- Validate Item/Whse
+rem "Inventory Inactive Feature"
+item_id$=callpoint!.getUserInput()
+ivm01_dev=fnget_dev("IVM_ITEMMAST")
+ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
+dim ivm01a$:ivm01_tpl$
+ivm01a_key$=firm_id$+item_id$
+find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
+if ivm01a.item_inactive$="Y" then
+   msg_id$="IV_ITEM_INACTIVE"
+   dim msg_tokens$[2]
+   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+   gosub disp_message
+   callpoint!.setStatus("ACTIVATE-ABORT")
+   goto std_exit
+endif
+
+	item$=callpoint!.getUserInput()
+	wh$=callpoint!.getColumnData("BME_PRODUCT.WAREHOUSE_ID")
+	gosub check_item_whse
+	if callpoint!.getDevObject("item_wh_failed") = "1" break
+
+rem --- Get item info from ivm_itemmast
+
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+	read record (ivm01_dev,key=firm_id$+item$,dom=*next)ivm01a$
+	if ivm01a.item_id$=item$ then
+		rem --- Get Unit of Sale
+		callpoint!.setColumnData("<<DISPLAY>>.UNIT_OF_SALE",ivm01a.unit_of_sale$,1)
+	endif
+
+	bill_no$=item$
+	gosub disp_bill_comments
+
+	rem --- Cannot update inventoried lotted/serialed items
+	if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
+		callpoint!.setColumnData("BME_PRODUCT.UPDATE_FLAG","N",1)
+		callpoint!.setColumnEnabled("BME_PRODUCT.UPDATE_FLAG",0)
+		msg_id$="NOT_UPDT_INV_LS_ITEM"
+		gosub disp_message
+	else
+		callpoint!.setColumnEnabled("BME_PRODUCT.UPDATE_FLAG",1)
+	endif
+
 [[BME_PRODUCT.ITEM_ID.BINQ]]
 rem --- Bill of Materials Item/Whse Lookup
 	call stbl("+DIR_SYP")+"bac_key_template.bbj","IVM_ITEMWHSE","PRIMARY",key_tpl$,rd_table_chans$[all],status$
@@ -43,50 +189,19 @@ rem --- Bill of Materials Item/Whse Lookup
 	endif
 
 	callpoint!.setStatus("ACTIVATE-ABORT")
-[[BME_PRODUCT.BTBL]]
-rem --- Get Batch information
 
-call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
-callpoint!.setTableColumnAttribute("BME_PRODUCT.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
-[[BME_PRODUCT.ARAR]]
-rem --- Get Unit of Sale
+[[BME_PRODUCT.PROD_DATE.AVAL]]
+rem --- make sure accting date is in an appropriate GL period
 
-	item$=callpoint!.getColumnData("BME_PRODUCT.ITEM_ID")
-	ivm01_dev=fnget_dev("IVM_ITEMMAST")
-	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-
-	while 1
-		read record (ivm01_dev,key=firm_id$+item$,dom=*break)ivm01a$
-		callpoint!.setColumnData("<<DISPLAY>>.UNIT_OF_SALE",ivm01a.unit_of_sale$,1)
-		break
-	wend
-
-	bill_no$=item$
-	gosub disp_bill_comments
-[[BME_PRODUCT.BWRI]]
-rem --- Validate Quantity
-
-	if num(callpoint!.getColumnData("BME_PRODUCT.QTY_ORDERED")) = 0
-		msg_id$="IV_QTY_ZERO"
-		gosub disp_message
-		callpoint!.setStatus("ABORT")
-	endif
-[[BME_PRODUCT.ADIS]]
-rem --- set comments
-
-	bill_no$=callpoint!.getColumnData("BME_PRODUCT.ITEM_ID")
-	gosub disp_bill_comments
-[[BME_PRODUCT.AREC]]
-rem --- Set default warehouse
-
-	if callpoint!.getDevObject("multi_wh")<>"Y"
-		gosub disable_wh
-	else
-		wh$=callpoint!.getDevObject("def_wh")
-		callpoint!.setColumnData("BME_PRODUCT.WAREHOUSE_ID",wh$)
+	gl$=callpoint!.getDevObject("glint")
+	prod_date$=callpoint!.getUserInput()        
+	if gl$="Y" 
+		call stbl("+DIR_PGM")+"glc_datecheck.aon",prod_date$,"Y",per$,yr$,status
+		if status>99
+			callpoint!.setStatus("ABORT")
+		endif
 	endif
 
-	callpoint!.setColumnData("<<DISPLAY>>.COMMENTS","")
 [[BME_PRODUCT.QTY_ORDERED.AVAL]]
 rem --- Check for zero quantity
 
@@ -94,6 +209,7 @@ rem --- Check for zero quantity
 		callpoint!.setMessage("IV_QTY_ZERO")
 		callpoint!.setStatus("ABORT")
 	endif
+
 [[BME_PRODUCT.<CUSTOM>]]
 rem ===========================================================================
 check_item_whse: rem --- Check that a warehouse record exists for this item
@@ -153,106 +269,6 @@ disable_wh:
 	callpoint!.setStatus("ABLEMAP-REFRESH-ACTIVATE")
 return
 #include [+ADDON_LIB]std_missing_params.aon
-[[BME_PRODUCT.PROD_DATE.AVAL]]
-rem --- make sure accting date is in an appropriate GL period
 
-	gl$=callpoint!.getDevObject("glint")
-	prod_date$=callpoint!.getUserInput()        
-	if gl$="Y" 
-		call stbl("+DIR_PGM")+"glc_datecheck.aon",prod_date$,"Y",per$,yr$,status
-		if status>99
-			callpoint!.setStatus("ABORT")
-		endif
-	endif
-[[BME_PRODUCT.ITEM_ID.AVAL]]
-rem --- Validate Item/Whse
-rem "Inventory Inactive Feature"
-item_id$=callpoint!.getUserInput()
-ivm01_dev=fnget_dev("IVM_ITEMMAST")
-ivm01_tpl$=fnget_tpl$("IVM_ITEMMAST")
-dim ivm01a$:ivm01_tpl$
-ivm01a_key$=firm_id$+item_id$
-find record (ivm01_dev,key=ivm01a_key$,err=*break)ivm01a$
-if ivm01a.item_inactive$="Y" then
-   msg_id$="IV_ITEM_INACTIVE"
-   dim msg_tokens$[2]
-   msg_tokens$[1]=cvs(ivm01a.item_id$,2)
-   msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
-   gosub disp_message
-   callpoint!.setStatus("ACTIVATE-ABORT")
-   goto std_exit
-endif
 
-	item$=callpoint!.getUserInput()
-	wh$=callpoint!.getColumnData("BME_PRODUCT.WAREHOUSE_ID")
-	gosub check_item_whse
-	if callpoint!.getDevObject("item_wh_failed") = "1" break
 
-rem --- Get item info from ivm_itemmast
-
-	ivm01_dev=fnget_dev("IVM_ITEMMAST")
-	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-	read record (ivm01_dev,key=firm_id$+item$,dom=*next)ivm01a$
-	if ivm01a.item_id$=item$ then
-		rem --- Get Unit of Sale
-		callpoint!.setColumnData("<<DISPLAY>>.UNIT_OF_SALE",ivm01a.unit_of_sale$,1)
-	endif
-
-	bill_no$=item$
-	gosub disp_bill_comments
-
-	rem --- Cannot update inventoried lotted/serialed items
-	if ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
-		callpoint!.setColumnData("BME_PRODUCT.UPDATE_FLAG","N",1)
-		callpoint!.setColumnEnabled("BME_PRODUCT.UPDATE_FLAG",0)
-		msg_id$="NOT_UPDT_INV_LS_ITEM"
-		gosub disp_message
-	else
-		callpoint!.setColumnEnabled("BME_PRODUCT.UPDATE_FLAG",1)
-	endif
-[[BME_PRODUCT.BSHO]]
-rem --- Open files
-
-	num_files=4
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	open_tables$[1]="IVM_ITEMMAST",open_opts$[1]="OTA"
-	open_tables$[2]="IVM_ITEMWHSE",open_opts$[2]="OTA"
-	open_tables$[3]="IVS_PARAMS",open_opts$[3]="OTA"
-	open_tables$[4]="BMM_BILLMAST",open_opts$[4]="OTA"
-	gosub open_tables
-
-rem --- get multiple warehouse flag and default warehouse
-
-	ivs01_dev=num(open_chans$[3])
-	dim ivs01a$:open_tpls$[3]
-	read record (ivs01_dev,key=firm_id$+"IV00",dom=std_missing_params)ivs01a$
-
-	callpoint!.setDevObject("multi_wh",ivs01a.multi_whse$)
-	callpoint!.setDevObject("def_wh",ivs01a.warehouse_id$)
-	if ivs01a.multi_whse$<>"Y"
-		gosub disable_wh
-	else
-		callpoint!.setColumnData("BME_PRODUCT.WAREHOUSE_ID",ivs01a.warehouse_id$)
-	endif
-
-rem --- Additional Init
-	gl$="N"
-	status=0
-	source$=pgm(-2)
-	call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"IV",glw11$,gl$,status
-	if status<>0 goto std_exit
-	callpoint!.setDevObject("glint",gl$)
-
-rem --- Additional Init
-
-	gl$="N"
-	status=0
-	source$=pgm(-2)
-	call stbl("+DIR_PGM")+"glc_ctlcreate.aon",err=*next,source$,"BM",glw11$,gl$,status
-	if status<>0 goto std_exit
-[[BME_PRODUCT.ITEM_ID.AINV]]
-rem --- Item synonym processing
-
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
-
-	callpoint!.setFocus("BME_PRODUCT.ITEM_ID")

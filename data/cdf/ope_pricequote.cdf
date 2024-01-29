@@ -51,6 +51,19 @@ ivm01_dev=num(open_chans$[6]),ivm01_tpl$=open_tpls$[6]
 ivm06_dev=num(open_chans$[7]),ivm06_tpl$=open_tpls$[7]
 ivcwhse_dev=num(open_chans$[8]),ivcwhse_tpl$=open_tpls$[8]
 
+
+rem --- If BM is installed, open BMM_BILLMAT
+	bm_sf$="N"
+	dim info$[20]
+	call stbl("+DIR_PGM")+"adc_application.aon","BM",info$[all]
+	bm$=info$[20]
+	if bm$="Y" then
+		num_files = 1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="BMM_BILLMAT", open_opts$[1]="OTA"
+		gosub open_tables
+	endif
+
 [[OPE_PRICEQUOTE.CUSTOMER_ID.AVAL]]
 rem "Customer Inactive Feature"
 customer_id$=callpoint!.getUserInput()
@@ -220,9 +233,18 @@ build_arrays:
 		dim ivm06a$:fnget_tpl$("IVM_ITEMPRIC")
 		precision 9
 		readrecord(arm02_dev,key=firm_id$+cust_id$+"  ")arm02a$
-		readrecord(ivm02_dev,key=firm_id$+wh$+item$,dom=*next)ivm02a$
 		readrecord(ivm01_dev,key=firm_id$+item$)ivm01a$
 		readrecord (ivcprice_dev,key=firm_id$+"E"+ivm01a.item_class$+arm02a.pricing_code$,dom=*next)ivcprice$
+		readrecord(ivm02_dev,key=firm_id$+wh$+item$,dom=*next)ivm02a$
+		rem --- Get current unit price for kits
+		if ivm01a.kit$="Y" then
+			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
+			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
+			kit_item$=item$
+			kit_unit_price=0
+			gosub getKitUnitPrice
+			ivm02a.cur_price=kit_unit_price
+		endif
 		listprice=ivm02a.cur_price*(100-ivcprice.break_disc_01)/100
 		callpoint!.setColumnData("OPE_PRICEQUOTE.UNIT_PRICE_01",str(listprice))
 		description$=cvs(ivcprice.code_desc$,2)
@@ -317,6 +339,36 @@ determine_price:
 			price=cost*factor
 		endif
 	endif
+return
+
+rem --- Get current unit price for kit based on its component's unit price
+getKitUnitPrice:
+	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
+	while 1
+		kitKey$=key(bmmBillMat_dev,end=*break)
+		if pos(firm_id$+kit_item$=kitKey$)<>1 then break
+		readrecord(bmmBillMat_dev)bmmBillMat$
+		if cvs(bmmBillMat.effect_date$,2)<>"" and sysinfo.system_date$<bmmBillMat.effect_date$ then continue
+		if cvs(bmmBillMat.obsolt_date$,2)<>"" and sysinfo.system_date$>=bmmBillMat.obsolt_date$ then continue
+		redim ivm01a$
+		readrecord(ivm01_dev,key=firm_id$+bmmBillMat.item_id$,dom=*next)ivm01a$
+		if ivm01a.kit$="Y" then
+			explodeKey$=kitKey$
+			explodeItem$=kit_item$
+			kit_item$=bmmBillMat.item_id$
+			kit_ordered=round(explodeOrdered*bmmBillMat.qty_required,round_precision)
+			kit_shipped=round(explodeShipped*bmmBillMat.qty_required,round_precision)
+			gosub getKitUnitPrice
+
+			read(bmmBillMat_dev,key=explodeKey$)
+			kit_item$=explodeItem$
+			continue
+		endif
+
+		dim component_ivm02a$:fattr(ivm02a$)
+		readrecord(ivm02_dev,key=firm_id$+wh$+bmmBillMat.item_id$,dom=*next)component_ivm02a$
+		kit_unit_price=kit_unit_price+component_ivm02a.cur_price
+	wend
 return
 
 

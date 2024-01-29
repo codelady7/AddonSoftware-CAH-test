@@ -51,7 +51,7 @@ rem --- create the in memory recordset for return
 	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), um:c(1*), "
 	dataTemplate$ = dataTemplate$ + "price_raw:c(1*), price_masked:c(1*), "
 	dataTemplate$ = dataTemplate$ + "extended_raw:c(1*), extended_masked:c(1*), internal_seq_no:c(1*), "
-	dataTemplate$ = dataTemplate$ + "item_is_ls:c(1), linetype_allows_ls:c(1)"
+	dataTemplate$ = dataTemplate$ + "lotser_flag:c(1), linetype_allows_ls:c(1)"
 
 
 	rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
@@ -111,7 +111,7 @@ rem --- Main
 			ext_masked$ =         ""
 			internal_seq_no$ =    ""
 			linetype_allows_ls$ = "N"
-			item_is_ls$ =         "N"	
+			lotser_flag$ =        "N"	
 			
             read record (ope11_dev, end=*break) ope11a$
 
@@ -139,7 +139,7 @@ rem --- Main
 				linetype_allows_ls$ = "Y"
                 find record (ivm01_dev, key=firm_id$+ope11a.item_id$, dom=*next) ivm01a$
                 item_description$ = func.displayDesc(ivm01a.item_desc$)
-				item_is_ls$ = ivm01a.lotser_item$
+				lotser_flag$ = ivm01a.lotser_flag$
 			endif
 
             if opm02a.line_type$="M" and pos(opm02a.message_type$="BI ")=0 then continue
@@ -189,7 +189,7 @@ line_detail: rem --- Item Detail
 			data!.setFieldValue("EXTENDED_RAW", ext_raw$)
 			data!.setFieldValue("EXTENDED_MASKED", ext_masked$)
 			data!.setFieldValue("INTERNAL_SEQ_NO",internal_seq_no$)
-			data!.setFieldValue("ITEM_IS_LS",item_is_ls$)
+			data!.setFieldValue("LOTSER_FLAG",lotser_flag$)
 			data!.setFieldValue("LINETYPE_ALLOWS_LS",linetype_allows_ls$)
 
 			rs!.insert(data!)		

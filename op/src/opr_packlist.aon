@@ -126,7 +126,6 @@ rem --- Set Report parameters
     params!.put("CUST_SIZE",str(cust_size))
     params!.put("BARISTA_WD",dir(""))
     params!.put("LOGO_FILE",logo_filename$)
-    params!.put("IVS_LOTSER_FLAG",ivParams.lotser_flag$)
     if callpoint!.getDevObject("reprint_flag")="Y" then
         params!.put("REPRINT",Translate!.getTranslation("AON_REPRINT"))
     else

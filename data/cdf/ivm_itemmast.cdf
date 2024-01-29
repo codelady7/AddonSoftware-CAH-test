@@ -14,7 +14,7 @@ rem --- Save old Bar Code and UPC Code for Synonym Maintenance
 
 rem --- store lot/serialized flag in devObject for use later
 
-	callpoint!.setDevObject("lot_serial_item",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM"))
+	callpoint!.setDevObject("lot_serial_flag",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG"))
 
 rem --- set flag in devObject to say we're not on a new record
 
@@ -23,38 +23,8 @@ rem --- set flag in devObject to say we're not on a new record
 rem --- Store starting product_type so we'll know later if it was changed.
 	callpoint!.setDevObject("start_product_type",callpoint!.getColumnData("IVM_ITEMMAST.PRODUCT_TYPE"))
 
-rem --- Disable inventoried if not lotted/serialized
-	if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM")<>"Y" then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
-	else
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",1)
-	endif
-
-rem --- Disable lotted/serialized flag if inventoried=Y
-	if callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")="Y" then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",0)
-	else
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",1)
-	endif
-
-rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
-	if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM")="Y" or callpoint!.getDevObject("allow_SellPurchUM")="N" then
-		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
-	else
-		rem --- Always disable if BOM and creating WOs from Sales Orders
-		if callpoint!.getDevObject("bm_installed")="Y" and cvs(callpoint!.getDevObject("op_create_wo"),2)<>"" then
-			bmm01_dev = fnget_dev("BMM_BILLMAST")
-			found_bom=0
-			find(bmm01_dev,key=firm_id$+callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID"),dom=*next); found_bom=1
-			if found_bom then
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
-			else
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
-			endif
-		else
-			callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
-		endif
-	endif
+	gosub enableLS
+	gosub enableSellPurchUM
 
 rem --- Show TAX_SVC_CD description
 	salesTax!=callpoint!.getDevObject("salesTax")
@@ -87,6 +57,47 @@ rem --- Show TAX_SVC_CD description
 			tax_svc_cd_desc!.setText("")
 		endif
 	endif
+
+rem --- disable lot/ser trans hist if item isn't lot/serial
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 callpoint!.setOptionEnabled("LTRN",0)
+
+
+	rem --- Lotted/serialized items cannot be kitted
+	if callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")<>"N" then
+		callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+	else
+		rem --- Kitting is not allowed if the corresponding BOM is NOT a phantom and it include either operations or subcontracts
+		bmm01_dev=fnget_dev("BMM_BILLMAST")
+		dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+		item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+		findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$
+		if bmm01.phantom_bill$="Y" then
+			bmm03_dev=fnget_dev("BMM_BILLOPER")
+			bmm03Found=0
+			read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+			bmm03_key$=key(bmm03_dev,end=*next)
+			if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+
+			bmm05_dev=fnget_dev("BMM_BILLSUB")
+			bmm05Found=0
+			read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+			bmm05_key$=key(bmm05_dev,end=*next)
+			if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+
+			if bmm03Found or bmm05Found then
+				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+			endif
+		else
+			callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+		endif
+	endif
+	callpoint!.setDevObject("kit",callpoint!.getColumnData("IVM_ITEMMAST.KIT"))
+
+rem --- Enable/disable fields for kitted items
+	gosub disableKitFields
 
 [[IVM_ITEMMAST.AENA]]
 rem --- Disable Barista menu items
@@ -353,7 +364,7 @@ rem -- Get default values for new record from ivs-10D, IVS_DEFAULTS
 	callpoint!.setColumnData("IVM_ITEMMAST.PURCHASE_UM",ivs10d.purchase_um$)
 	callpoint!.setColumnData("IVM_ITEMMAST.TAXABLE_FLAG",ivs10d.taxable_flag$)
 	callpoint!.setColumnData("IVM_ITEMMAST.BUYER_CODE",ivs10d.buyer_code$)
-	callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_ITEM",ivs10d.lotser_item$)
+	callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG",ivs10d.lotser_flag$)
 	callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED",ivs10d.inventoried$)
 	callpoint!.setColumnData("IVM_ITEMMAST.ITEM_CLASS",ivs10d.item_class$)
 	callpoint!.setColumnData("IVM_ITEMMAST.STOCK_LEVEL","W")
@@ -481,7 +492,7 @@ rem --- Add new UPC Code and Bar Code
 
 rem --- store lot/serialized flag in devObject for use later
 
-	callpoint!.setDevObject("lot_serial_item",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_ITEM"))
+	callpoint!.setDevObject("lot_serial_flag",callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG"))
 
 rem --- if this is a newly added record, launch warehouse/stocking, vendors, and synonymns forms
 
@@ -501,14 +512,16 @@ rem --- if this is a newly added record, launch warehouse/stocking, vendors, and
 :			"",
 :			dflt_data$[all]
 
-		call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:			"IVM_ITEMVEND",
-:			user_id$,
-:			"",
-:			key_pfx$,
-:			table_chans$[all],
-:			"",
-:			dflt_data$[all]
+		if callpoint!.getColumnData("IVM_ITEMMAST.KIT")<>"Y" then
+			call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:				"IVM_ITEMVEND",
+:				user_id$,
+:				"",
+:				key_pfx$,
+:				table_chans$[all],
+:				"",
+:				dflt_data$[all]
+		endif
 
 		call stbl("+DIR_SYP")+"bam_run_prog.bbj",
 :			"IVM_ITEMSYN",
@@ -558,6 +571,17 @@ rem --- Allow this item to be deleted?
 		if status then callpoint!.setStatus("ABORT")
 	endif
 
+[[IVM_ITEMMAST.BDTW]]
+rem --- Don't allow launching Vendor Detail form for kits
+	if callpoint!.getColumnData("IVM_ITEMMAST.KIT")="Y" and pos(callpoint!.getEventOptionStr()="DTLW-IVM_ITEMVEND") then
+		msg_id$="OP_KIT_NO_VENDOR"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=cvs(callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID"),2)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[IVM_ITEMMAST.BEND]]
 rem --- Close connection to Sales Tax Service
 	salesTax!=callpoint!.getDevObject("salesTax")
@@ -580,8 +604,8 @@ rem --- Is Sales Order Processing installed?
 
 rem --- Open/Lock files
 
-	num_files=8
-	if op$="Y" then num_files=9
+	num_files=11
+	if op$="Y" then num_files=12
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_DEFAULTS",open_opts$[2]="OTA"
@@ -590,6 +614,9 @@ rem --- Open/Lock files
 	open_tables$[5]="IVM_ITEMWHSE",open_opts$[5]="OTA"
 	open_tables$[7]="IVM_ITEMSYN",open_opts$[7]="OTA"
 	open_tables$[8]="IVT_ITEMTRAN",open_opts$[8]="OTA"
+	open_tables$[9]="IVM_LSMASTER",open_opts$[9]="OTA"
+	open_tables$[10]="IVM_LSACT",open_opts$[10]="OTA"
+	open_tables$[11]="IVT_LSTRANS",open_opts$[11]="OTA"
 	if op$="Y" then open_tables$[9]="OPS_PARAMS",open_opts$[9]="OTA"
 
 	gosub open_tables
@@ -703,7 +730,6 @@ rem --- Disable option menu items
 	callpoint!.setOptionEnabled("STOK",0); rem --- per bug 5774, disabled for now
 	if ap$<>"Y" then callpoint!.setOptionEnabled("IVM_ITEMVEND",0)
 	if pos(ivs01a.lifofifo$="LF")=0 callpoint!.setOptionEnabled("LIFO",0)
-	if pos(ivs01a.lotser_flag$="LS")=0 callpoint!.setOptionEnabled("LTRN",0)
 	if op$<>"Y" callpoint!.setOptionEnabled("SORD",0)
 	if po$<>"Y" callpoint!.setOptionEnabled("PORD",0)
 	if bm$<>"Y" callpoint!.setOptionEnabled("BOMU",0)
@@ -718,19 +744,21 @@ rem --- additional file opens, depending on which apps are installed, param valu
 		files=files+1
 	endif
 
-	if pos(ivs01a.lotser_flag$="LS")<>0 then 
-		more_files$=more_files$+"IVM_LSMASTER;IVM_LSACT;IVT_LSTRANS;"
-		files=files+3
-	endif
-
 	if ar$="Y" then 
 		more_files$=more_files$+"ARM_CUSTMAST;ARC_DISTCODE;"
 		files=files+2
 	endif
 
 	if bm$="Y" then 
-		more_files$=more_files$+"BMM_BILLMAST;BMM_BILLMAT;"
-		files=files+2
+		more_files$=more_files$+"BMM_BILLMAST;BMM_BILLMAT;BMM_BILLOPER;BMM_BILLSUB;"
+		files=files+4
+	else
+		rem --- Disable and hide KIT field when BM not installed
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",-1)
+		kitCtrl!=callpoint!.getControl("IVM_ITEMMAST.KIT")
+		kitCtrl!.setVisible(0)
+		tabCtrl!=Form!.getControl(num(stbl("+TAB_CTL")))
+		tabCtrl!.setLocation(tabCtrl!.getX(),tabCtrl!.getY()-25)
 	endif
 
 	if op$="Y" then 
@@ -805,10 +833,6 @@ rem --- Disable fields based on parameters
 
 	able_map = 0
 	wmap$=callpoint!.getAbleMap()
-
-rem --- if you aren't doing lotted/serialized
-
-	if pos(ivs01a.lotser_flag$="LS")=0 then callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",-1)
 
 rem --- Don't allow SELL_PURCH_UM if not allowed in IVS_PARAMS or not using lotted/serialized inventory.
 	allow_SellPurchUM$="Y"
@@ -899,7 +923,7 @@ gosub gl_active
 gosub gl_active
 
 [[IVM_ITEMMAST.INVENTORIED.AVAL]]
-rem --- Can't change Inventoried flag if there is QOH, and disable lotted/serialized flag if inventoried=Y
+rem --- Can't change Inventoried flag if there is QOH
 
 	prev_inv_flag$=callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")
 	this_inv_flag$ = callpoint!.getUserInput()
@@ -912,9 +936,9 @@ rem --- Can't change Inventoried flag if there is QOH, and disable lotted/serial
 			callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED",prev_inv_flag$,1)
 		else
 			if this_inv_flag$="Y" then
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",0)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
 			else
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_ITEM",1)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
 			endif
 		endif
 	endif
@@ -1018,13 +1042,21 @@ rem --- See if Auto Numbering in effect
 		endif
 	endif
 
+[[IVM_ITEMMAST.KIT.AVAL]]
+rem --- Set DevObject whether or not this is a kit
+	kit$=callpoint!.getUserInput()
+	callpoint!.setDevObject("kit",kit$)
+
+rem --- Clear and disable fields not needed for a kit
+	gosub disableKitFields
+
 [[IVM_ITEMMAST.LEAD_TIME.AVAL]]
 if num(callpoint!.getUserInput())<0 or fpt(num(callpoint!.getUserInput())) then callpoint!.setStatus("ABORT")
 
-[[IVM_ITEMMAST.LOTSER_ITEM.AVAL]]
+[[IVM_ITEMMAST.LOTSER_FLAG.AVAL]]
 rem --- Disable inventoried if not lotted/serialized
-	inventoried$=callpoint!.getUserInput()
-	if inventoried$<>"Y" then
+	lotser_flag$=callpoint!.getUserInput()
+	if !pos(lotser_flag$="LS") then
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
 	else
@@ -1032,11 +1064,51 @@ rem --- Disable inventoried if not lotted/serialized
 	endif
 
 rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
-	if inventoried$="Y" or callpoint!.getDevObject("allow_SellPurchUM")="N" then
+	if pos(lotser_flag$="LS") or callpoint!.getDevObject("allow_SellPurchUM")="N" then
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.SELL_PURCH_UM","N",1)
 	else
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+	endif
+
+rem --- Lotted/serialized items cannot be kitted
+	if lotser_flag$<>"N" then
+		callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+	else
+		rem --- Allow a kit if the corresponding BOM is a phantom and does NOT include operations or subcontracts
+		bmm01_dev=fnget_dev("BMM_BILLMAST")
+		dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+		item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+		bomFound=0
+		findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$; bomFound=1
+		if bomFound then
+			if bmm01.phantom_bill$="Y" then
+				bmm03_dev=fnget_dev("BMM_BILLOPER")
+				bmm03Found=0
+				read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+				bmm03_key$=key(bmm03_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+
+				bmm05_dev=fnget_dev("BMM_BILLSUB")
+				bmm05Found=0
+				read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+				bmm05_key$=key(bmm05_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+
+				if !bmm03Found and !bmm05Found then
+					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
+				else
+					callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+				endif
+			else
+				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+			endif
+		else
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
+		endif
 	endif
 
 [[IVM_ITEMMAST.MAXIMUM_QTY.AVAL]]
@@ -1051,12 +1123,26 @@ endif
 if num(callpoint!.getUserInput())<0 then callpoint!.setStatus("ABORT")
 
 [[IVM_ITEMMAST.PRODUCT_TYPE.AVAL]]
-rem --- Set SA Level if new record
+rem --- Set SA Level and item defaults if new record
 	if callpoint!.getRecordMode()="A"
 		ivm10_dev=fnget_dev("IVC_PRODCODE")
 		dim ivm10a$:fnget_tpl$("IVC_PRODCODE")
 		read record (ivm10_dev,key=firm_id$+"A"+callpoint!.getUserInput()) ivm10a$
 		callpoint!.setColumnData("IVM_ITEMMAST.SA_LEVEL",ivm10a.sa_level$,1)
+
+		if cvs(ivm10a.item_class$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ITEM_CLASS", ivm10a.item_class$,1)
+		if cvs(ivm10a.buyer_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.BUYER_CODE", ivm10a.buyer_code$,1)
+		if cvs(ivm10a.ar_dist_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.AR_DIST_CODE", ivm10a.ar_dist_code$,1)
+		if cvs(ivm10a.unit_of_sale$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.UNIT_OF_SALE", ivm10a.unit_of_sale$,1)
+		if cvs(ivm10a.purchase_um$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.PURCHASE_UM", ivm10a.purchase_um$,1)
+		if cvs(ivm10a.lotser_flag$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG", ivm10a.lotser_flag$,1)
+		if cvs(ivm10a.inventoried$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED", ivm10a.inventoried$,1)
+		if cvs(ivm10a.taxable_flag$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.TAXABLE_FLAG", ivm10a.taxable_flag$,1)
+		if cvs(ivm10a.item_type$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ITEM_TYPE", ivm10a.item_type$,1)
+		if cvs(ivm10a.abc_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ABC_CODE", ivm10a.abc_code$,1)
+		if cvs(ivm10a.eoq_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.EOQ_CODE", ivm10a.eoq_code$,1)
+		if cvs(ivm10a.ord_pnt_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.ORD_PNT_CODE", ivm10a.ord_pnt_code$,1)
+		if cvs(ivm10a.saf_stk_code$,2)<>"" then callpoint!.setColumnData("IVM_ITEMMAST.SAF_STK_CODE", ivm10a.saf_stk_code$,1)
 	endif
 
 [[IVM_ITEMMAST.SAFETY_STOCK.AVAL]]
@@ -1174,6 +1260,106 @@ rem ==========================================================================
 	wend
 
 return
+
+rem ==========================================================================
+disableKitFields: rem --- Enable/disable fields for kitted items
+rem ==========================================================================
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Disable Availability button
+		callpoint!.setOptionEnabled("ITAV",0)
+
+		rem --- Disable Item tab fields, except PRODUCT_TYPE, ITEM_CLASS, ITEM_TYPE and ITEM_INACTIVE
+		callpoint!.setColumnData("IVM_ITEMMAST.MSRP","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.MSRP",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.UPC_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UPC_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.BAR_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.BAR_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.UNIT_OF_SALE","EA",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UNIT_OF_SALE",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.WEIGHT","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.WEIGHT",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.PURCHASE_UM","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.PURCHASE_UM",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.CONV_FACTOR","1",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.CONV_FACTOR",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.LOTSER_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.INVENTORIED","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.SELL_PURCH_UM","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PUCH_UM",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.ALT_SUP_FLAG","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_FLAG",0)
+		callpoint!.setColumnData("IVM_ITEMMAST.ALT_SUP_ITEM","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_ITEM",0)
+	else
+		rem --- Enable Availability button
+		callpoint!.setOptionEnabled("ITAV",1)
+
+		rem --- Enable Item tab fields
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.MSRP",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UPC_CODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.BAR_CODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.UNIT_OF_SALE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.WEIGHT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.PURCHASE_UM",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.CONV_FACTOR",1)
+		rem --- NOTE: The TAX_SVC_CD field remains permanently disable if there is no OP or not using a Sales Tax Service
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAX_SVC_CD",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.TAXABLE_FLAG",1)
+		gosub enableLS; rem callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
+		gosub enableSellPurchUM; rem callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.ALT_SUP_FLAG",1)
+		if pos(callpoint!.getColumnData("IVM_ITEMMAST.ALT_SUP_FLAG")="AS") then
+			callpoint!.setColumnEnabled("IVM_ITEMMAST. ALT_SUP_ITEM",1)
+		endif
+	endif
+
+	return
+
+rem ==========================================================================
+enableLS:
+rem ==========================================================================
+rem --- Disable inventoried if not lotted/serialized
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS")=0 then
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",0)
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.INVENTORIED",1)
+	endif
+
+rem --- Disable lotted/serialized flag if inventoried=Y
+	if callpoint!.getColumnData("IVM_ITEMMAST.INVENTORIED")="Y" then
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",0)
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.LOTSER_FLAG",1)
+	endif
+
+	return
+
+rem ==========================================================================
+enableSellPurchUM:
+rem ==========================================================================
+rem --- Disable sell_purch_um if lotted/serialized, or sell_purch_um not allowed
+	if pos(callpoint!.getColumnData("IVM_ITEMMAST.LOTSER_FLAG")="LS") or callpoint!.getDevObject("allow_SellPurchUM")="N" then
+		callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
+	else
+		rem --- Always disable if BOM and creating WOs from Sales Orders
+		if callpoint!.getDevObject("bm_installed")="Y" and cvs(callpoint!.getDevObject("op_create_wo"),2)<>"" then
+			bmm01_dev = fnget_dev("BMM_BILLMAST")
+			found_bom=0
+			find(bmm01_dev,key=firm_id$+callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID"),dom=*next); found_bom=1
+			if found_bom then
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",0)
+			else
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+			endif
+		else
+			callpoint!.setColumnEnabled("IVM_ITEMMAST.SELL_PURCH_UM",1)
+		endif
+	endif
+
+	return
 
 rem ==========================================================================
 #include [+ADDON_LIB]std_missing_params.aon

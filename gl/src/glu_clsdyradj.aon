@@ -1,0 +1,564 @@
+rem --- Closed Fiscal Year Adjustments Update
+rem --- Program glu_clsdyradj.aon
+
+rem --- AddonSoftware Version 23.00
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+    setesc std_error
+    seterr std_error
+
+    use java.io.File
+
+    use ::bbtranslator.bbj::BBTranslator
+    use ::ado_util.src::util
+
+rem --- Initializations
+    initial_currentYear$=""
+    initial_currentPeriod$=""
+    dateMap!=null()
+
+    next_overlay$="";rem --- clear next_var and outvect! so adc_process_end doesn't loop...i.e., don't run anything after this
+    if OutVect!<>null() OutVect!=null()
+
+rem --- Retrieve the program path
+    pgmdir$=stbl("+DIR_PGM",err=*next)
+
+rem --- Retrieve sysinfo data
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    firm_id$=sysinfo.firm_id$
+    task$=cvs(sysinfo.task_desc$,2)
+
+rem --- Options
+    msg_id$="AON_UPDT_QUERY"
+    dim x$:stbl("+SYSINFO_TPL")
+    dim msg_tokens$[1]
+    x$=stbl("+SYSINFO")                                                            
+    msg_tokens$[1]=x.task_desc$
+    gosub disp_message
+    if msg_opt$<>"Y" goto std_exit_no_update
+
+rem --- Open/Lock files
+    rem --- GLS_PARAMS, GLS_CALENDAR and GLM_ACCT are opened in glr_recap.aon and must be closed now so they can be locked
+    close(gls01_dev,err=*next)
+    close(glm01_dev,err=*next)
+    close(gls_calendar_dev,err=*next)
+
+    num_files=4
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
+    open_tables$[2]="GLM_BANKMASTER",open_opts$[2]="OTA"
+    open_tables$[3]="ARS_PARAMS",open_opts$[3]="OTA"
+    open_tables$[4]="DDM_TABLES",open_opts$[4]="OTA[2_]"
+
+    gosub open_tables
+    if open_status goto std_exit_no_update
+
+    aps01_dev=num(open_chans$[1]);dim aps01a$:open_tpls$[1]
+    glm05_dev=num(open_chans$[2]);dim glm05a$:open_tpls$[2]
+    ars01_dev=num(open_chans$[3]);dim ars01a$:open_tpls$[3]
+    ddmTables_dev=num(open_chans$[4]);dim ddmTables$:open_tpls$[4]
+
+rem --- Retrieve templates
+    glcontrol_template$=stbl("+GLCONTROL_TPL",err=*next)
+    dim glcontrol$:glcontrol_template$
+	
+rem --- Retrieve parameter records	
+	aps01a_key$=firm_id$+"AP00"
+	find record (aps01_dev,key=aps01a_key$,err=*next) aps01a$
+
+	ars01a_key$=firm_id$+"AR00"
+	find record (ars01_dev,key=ars01a_key$,err=*next) ars01a$
+    
+    if aps01a.br_interface$="Y" or ars01a.br_interface$="Y" then bankrec=1
+	
+rem --- Parameters
+    dim info$[20]
+    call pgmdir$+"adc_application.aon","GL",info$[all]
+    gl$=info$[9]
+
+rem --- Initializations
+    more=1
+    last$=""
+    action$="N"
+    BLOCKSIZE = 2^20
+
+rem --- Build List of GL Codes that have Bank Reconciliation Enabled
+    bank_gl_codes$=""
+    if bankrec then
+      read (glm05_dev,key=firm_id$,dom=*next)
+      while 1
+        readrecord(glm05_dev,end=*break)glm05a$
+        if firm_id$<>glm05a.firm_id$ then
+           break
+        endif
+        bank_gl_codes$=bank_gl_codes$+glm05a.gl_account$
+      wend
+    endif	
+
+rem --- Are transaction files empty?
+    call pgmdir$+"glc_filecheck.aon",firm_id$,rd_table_chans$[all],status
+    if status goto std_exit_no_update
+
+rem --- Get filename and path for tables that will be backed up.
+    backupTables!=BBjAPI().makeVector()
+    backupTables!.addItem("GLM_ACCT")
+    backupTables!.addItem("GLM_ACCTSUMMARY")
+    backupTables!.addItem("GLE_DAILYDETAIL")
+    backupTables!.addItem("GLT_TRANSDETAIL")
+    backupTables!.addItem("GLT_BANKOTHER")
+
+    backupFiles$=""
+    fileVector!=BBjAPI().makeVector()
+    for i=0 to backupTables!.size()-1
+        readrecord(ddmTables_dev,key=pad(backupTables!.getItem(i),16," "),knum="PRIMARY",err=*continue)ddmTables$
+        thisFile$=cvs(ddmTables.dd_file_name$,2)
+        if thisFile$="" then thisFile$=cvs(ddmTables.dd_table_alias$,2+8)
+        backupFiles$=backupFiles$+thisFile$+";"
+        sourceFile$=BBjAPI().getFileSystem().resolvePath(util.resolvePathStbls(ddmTables.dd_table_path$)+"/"+thisFile$,err=*continue)
+        fileVector!.addItem(new File(sourceFile$))
+    next i
+    
+rem --- Launch Backup Directory Entry form
+    ignore$=stbl("adx_backup_files",backupFiles$)
+
+    call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:   "ADX_BACKUPDIR",
+:       stbl("+USER_ID"),
+:       "",
+:       "",
+:       table_chans$[all]
+
+    backupDir$ = stbl("ADX_BACKUP_DIR",err=*next)
+    if backupDir$="" then goto std_exit_no_update
+
+rem --- Back up GL data files that will be updated
+    for j=0 to fileVector!.size()-1
+        sourceFile!=fileVector!.get(j)
+        targetFile!=new File(backupDir$, sourceFile!.getName())
+        targetFile!.createNewFile()
+
+        rem --- Copy file to target directory
+        inStream!=new java.io.FileInputStream(sourceFile!)
+        outStream!=new java.io.FileOutputStream(targetFile!)
+        buffSize=2^16
+        byteArray!=(new String(fill(buffSize))).getBytes()
+        while 1
+            error=1
+            bytes=inStream!.read(byteArray!,0,buffSize,err=*next); error=0
+            if error then
+                msg_id$="AD_CANNOT_BACKUP"
+                dim msg_tokens$[1]
+                msg_tokens$[1]=sourceFile!.getName()
+                gosub disp_message
+
+                inStream!.close()
+                outStream!.close()
+                targetFile!.delete()
+                goto std_exit_no_update
+            endif
+            if bytes<0 then break
+            outStream!.write(byteArray!,0,bytes)
+        wend
+        inStream!.close()
+        outStream!.close()
+    next j
+
+rem --- Cannot use adc_fiscalperyr.aon after GLS_CALENDAR is locked.
+rem --- So get transaction date's fiscal year and period here.
+    dateMap!= new java.util.HashMap()
+    read (glxClsdYrAdjHdr_dev,key=firm_id$,dom=*next)
+    while more
+          k$=key(glxClsdYrAdjHdr_dev,end=*break)
+          if pos(firm_id$=k$)<>1 break
+          read record(glxClsdYrAdjHdr_dev) glxClsdYrAdjHdr$
+          call pgmdir$+"adc_fiscalperyr.aon",firm_id$,glxClsdYrAdjHdr.trans_date$,period$,year$,table_chans$[all],status
+          yrPerVect!=BBjAPI().makeVector()
+          yrPerVect!.addItem(year$)
+          yrPerVect!.addItem(period$)
+          dateMap!.put(glxClsdYrAdjHdr.trans_date$, yrPerVect!)
+    wend
+
+rem --- Open needed files that were backed up so couldn't be opened earlier
+    num_files=5
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLE_DAILYDETAIL",open_opts$[1]="OTAL"
+    open_tables$[2]="GLM_ACCT",open_opts$[2]="OTAL"
+    open_tables$[3]="GLT_BANKOTHER",open_opts$[3]="OTAL"
+    open_tables$[4]="GLS_PARAMS",open_opts$[4]="OTAL"
+    open_tables$[5]="GLS_CALENDAR",open_opts$[5]="OTAL"
+
+    gosub open_tables
+    if open_status goto std_exit_no_update
+
+    gleDailyDetail_dev=num(open_chans$[1]);dim gleDailyDetail$:open_tpls$[1]
+    glmAcct_dev=num(open_chans$[2]);dim glmAcct$:open_tpls$[2]
+    gltBankOther_dev=num(open_chans$[3]);dim gltBankOther$:open_tpls$[3]
+    glsParams_dev=num(open_chans$[4]);dim glsParams$:open_tpls$[4]
+    glsCalendar_dev=num(open_chans$[5]);dim glsCalendar$:open_tpls$[5]
+
+rem --- Start up progress meter
+    call pgmdir$+"adc_progress.aon","N","","",Translate!.getTranslation("AON_UPDATING"),"",13,glw11_dev,1,meter_num,status
+
+rem --- Loop through GLX_CLSEDYRADJHDR records
+    initial_currentYear$=""
+    initial_currentPeriod$=""
+    read (glxClsdYrAdjHdr_dev,key=firm_id$,dom=*next)
+    while more
+          k$=key(glxClsdYrAdjHdr_dev,end=*break)
+          if pos(firm_id$=k$)<>1 break
+          read record(glxClsdYrAdjHdr_dev) glxClsdYrAdjHdr$
+          call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,0,status
+
+          rem --- Unlock the Adjustment Fiscal Period
+          yrPerVect!=dateMap!.get(glxClsdYrAdjHdr.trans_date$)
+          year$=yrPerVect!.getItem(0)
+          period$=yrPerVect!.getItem(1)
+          readrecord(glsCalendar_dev,key=firm_id$+year$)glsCalendar$
+          locked_flag$="locked_flag_"+period$
+          field glsCalendar$,locked_flag$="N"
+          writerecord(glsCalendar_dev)glsCalendar$
+
+          rem --- Open prior fiscal year, and set current fiscal year and period for the transaction date
+          readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+          if initial_currentYear$="" then initial_currentYear$=glsParams.current_year$
+          if initial_currentPeriod$="" then initial_currentPeriod$=glsParams.current_per$
+          glsParams.gl_yr_closed$="Y"
+          glsParams.current_year$=year$
+          glsParams.current_per$=period$
+          writerecord(glsParams_dev)glsParams$
+
+          glcontrol$=stbl("+GLCONTROL",err=*next)
+          glcontrol.current_per$=glsParams.current_per$
+          glcontrol.current_year$=glsParams.current_year$
+          glcontrol.gl_period$=glsParams.current_per$
+          glcontrol.gl_year$=glsParams.current_year$
+          x$=stbl("+GLCONTROL",glcontrol$)
+
+          rem --- Set Journal ID in +GLCONTROL
+          if glxClsdYrAdjHdr.journal_id$<>last$ 
+               last$=glxClsdYrAdjHdr.journal_id$
+               glcJournalCode_key$=firm_id$+glxClsdYrAdjHdr.journal_id$
+               find record (glcJournalCode_dev,key=glcJournalCode_key$,dom=*next)glcJournalCode$
+               glcontrol$=stbl("+GLCONTROL",err=*next)
+               glcontrol.journal_id$=glcJournalCode.journal_id$
+               glcontrol.permit_je$="Y"
+               glcontrol.post_yr_end$=glcJournalCode.post_yr_end$
+               glcontrol.post_locked$=glcJournalCode.post_locked$
+               x$=stbl("+GLCONTROL",glcontrol$)
+          endif
+
+          rem --- Cycle through all line items for this entry
+          read(glxClsdYrAdjDet_dev,key=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$,dom=*next)
+          while more
+                        
+              k1$=key(glxClsdYrAdjDet_dev,end=*break)
+              if pos(glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$=k1$)<>1 break
+              read record(glxClsdYrAdjDet_dev) glxClsdYrAdjDet$    
+              ref3$=""
+              post_amt=glxClsdYrAdjDet.debit_amt-glxClsdYrAdjDet.credit_amt
+
+              rem --- Post record in the daily detail file
+              call pgmdir$+"glc_glpost.aon",glmAcct_dev,gleDailyDetail_dev,notused,glxClsdYrAdjDet.account$,glxClsdYrAdjHdr.trans_date$,
+:               glxClsdYrAdjHdr.trans_id$,glxClsdYrAdjDet.line_no$,ref3$,
+:               glxClsdYrAdjDet.memo_1024$,post_amt,glxClsdYrAdjDet.units,status
+	            if bankrec then
+                  trans_date$=glxClsdYrAdjHdr.trans_date$
+                  gosub bank_rec
+                endif
+
+              remove(glxClsdYrAdjDet_dev,key=k1$)
+          wend
+          remove(glxClsdYrAdjHdr_dev,key=glxClsdYrAdjHdr.firm_id$+glxClsdYrAdjHdr.journal_id$+glxClsdYrAdjHdr.trans_id$)
+    wend
+
+rem --- Unlock or close files that are opened or locked in Daily Detail Register and Update Beginning Balances
+    unlock(glmAcct_dev,err=*next)
+    unlock(glsParams_dev,err=*next)
+    unlock(glsCalendar_dev,err=*next)
+
+    num_files=1
+    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+    open_tables$[1]="GLE_DAILYDETAIL",open_opts$[1]="C"
+    gosub open_tables
+
+rem --- Run Daily Detail Register and Update
+    bar_dir$=(new File(dir(""))).getCanonicalPath()
+    run_arg$="bbj -tT0 -q -WD"+$22$+bar_dir$+$22$
+:       +" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
+:       +" "+$22$+bar_dir$+"/sys/prog/bax_launch_task.bbj"+$22$
+
+    rdAdmin!=BBjAPI().getGroupNamespace().getValue("+bar_admin_"+cvs(stbl("+USER_ID",err=*next),11),err=*next)
+    glrDailyDetail$=BBjAPI().getFileSystem().resolvePath("glr_dailydetail.aon")
+    user_arg$=" - "
+:       +" -u"+rdAdmin!.getUser()
+:       +" -p"+rdAdmin!.getPassword()
+:       +" -y"+"A"
+:       +" -w"
+:       +" -a"+glrDailyDetail$+$22$+" - "
+:       +" glu_clsdyradj.aon"+$22$
+
+    global_ns!=BBjAPI().getGlobalNamespace()
+    global_ns!.setValue("gluClsdYrAdj:+DIR_PGM",stbl("+DIR_PGM"))
+    global_ns!.setValue("gluClsdYrAdj:+DIR_SYP",stbl("+DIR_SYP"))
+    global_ns!.setValue("gluClsdYrAdj:+MASTER_USER",stbl("+MASTER_USER",err=*next))
+    global_ns!.setValue("gluClsdYrAdj:+MILESTONE",stbl("+MILESTONE",err=*next))
+    global_ns!.setValue("gluClsdYrAdj:+PROCESS_ID",stbl("+PROCESS_ID"))
+    global_ns!.setValue("gluClsdYrAdj:+PROPS_NAME",stbl("+PROPS_NAME"))
+    global_ns!.setValue("gluClsdYrAdj:+SYSINFO",stbl("+SYSINFO"))
+    global_ns!.setValue("gluClsdYrAdj:+SYSINFO_TPL",stbl("+SYSINFO_TPL"))
+    global_ns!.setValue("gluClsdYrAdj:+USER_ID",stbl("+USER_ID"))
+    global_ns!.setValue("gluClsdYrAdj:+USER_LOCALE",stbl("+USER_LOCALE"))
+
+    rdTransSpaceKey$=stbl("+PROPS_NAME")+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
+    global_ns!.setValue("rdTransSpaceKey",rdTransSpaceKey$)
+    Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
+    if Translate!=null()
+        Translate!=BBTranslator.getInstance(stbl("+PROPS_NAME"),stbl("+USER_LOCALE"),null(),stbl("+PROPS_PATH"))
+    endif
+    global_ns!.setValue(rdTransSpaceKey$,Translate!)
+
+    success=0
+    scall_result=scall(run_arg$+user_arg$,err=*next); success=1
+    if !success or scall_result<>0 then
+        msg_id$="CLSDYRADJ_UPDT_STOP"
+        gosub disp_message
+        goto std_exit_no_update
+    endif
+
+rem --- Re-lock the Adjustment Fiscal Period
+    if dateMap!<>null() then
+        transDates!=dateMap!.keySet()
+        datesIter!=transDates!.iterator()
+        while datesIter!.hasNext()
+            transDate$=datesIter!.next()
+            yrPerVect!=dateMap!.get(transDate$)
+        
+            readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
+            locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+            field glsCalendar$,locked_flag$="Y"
+            writerecord(glsCalendar_dev)glsCalendar$
+        wend
+        dateMap!=null()
+    endif
+
+rem --- Run Update Beginning Balances and update
+    bar_dir$=(new File(dir(""))).getCanonicalPath()
+    run_arg$="bbj -tT0 -q -WD"+$22$+bar_dir$+$22$
+:       +" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
+:       +" "+$22$+bar_dir$+"/sys/prog/bax_launch_task.bbj"+$22$
+
+    rdAdmin!=BBjAPI().getGroupNamespace().getValue("+bar_admin_"+cvs(stbl("+USER_ID",err=*next),11),err=*next)
+    gleBeginBalance$=BBjAPI().getFileSystem().resolvePath("gle_beginbalance.aon")
+    user_arg$=" - "
+:       +" -u"+rdAdmin!.getUser()
+:       +" -p"+rdAdmin!.getPassword()
+:       +" -y"+"A"
+:       +" -w"
+:       +" -a"+gleBeginBalance$+$22$+" - "
+:       +" glu_clsdyradj.aon"+$22$
+
+    success=0
+    scall_result=scall(run_arg$+user_arg$,err=*next); success=1
+    if !success or scall_result<>0 then
+        msg_id$="CLSDYRADJ_UPDT_STOP2"
+        gosub disp_message
+        goto std_exit_no_update
+    endif
+
+rem --- Restore the initial current fiscal year and period
+    if initial_currentYear$<>"" and initial_currentPeriod$<>"" then
+        readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+        glsParams.gl_yr_closed$="Y"
+        glsParams.current_year$=initial_currentYear$
+        glsParams.current_per$=initial_currentPeriod$
+        writerecord(glsParams_dev)glsParams$
+        initial_currentYear$=""
+        initial_currentPeriod$=""
+    endif
+
+rem --- Remove values added to GlobalNamespace
+    global_ns!.removeValue("gluClsdYrAdj:+DIR_PGM")
+    global_ns!.removeValue("gluClsdYrAdj:+DIR_SYP")
+    global_ns!.removeValue("gluClsdYrAdj:+MASTER_USER")
+    global_ns!.removeValue("gluClsdYrAdj:+MILESTONE")
+    global_ns!.removeValue("gluClsdYrAdj:+PROCESS_ID")
+    global_ns!.removeValue("gluClsdYrAdj:+PROPS_NAME")
+    global_ns!.removeValue("gluClsdYrAdj:+SYSINFO")
+    global_ns!.removeValue("gluClsdYrAdj:+SYSINFO_TPL")
+    global_ns!.removeValue("gluClsdYrAdj:+USER_ID")
+    global_ns!.removeValue("gluClsdYrAdj:+USER_LOCALE")
+
+    global_ns!.removeValue("rdTransSpaceKey")
+    global_ns!.removeValue(rdTransSpaceKey$)
+
+rem --- All done
+    rem --- For reasons I don't quite understand, JE register creates glw-11 (which is fine),
+    rem --- but here in the update we aren't calling glc_update to forward glw-11 to glt-04.
+    rem --- We're calling glc_glpost to write directly to glt-04,
+    rem --- so need to clearpartial on glw-11 (to make up for the fact that glc_update would've removed the glw-11 recs).
+
+    rem --- Clear trans for this firm from glw-11 work file
+    if gl$="Y"
+        rec_pfx$=firm_id$+process_id$
+        call stbl("+DIR_PGM")+"adc_clearpartial.aon","N",glw11_dev,rec_pfx$,status
+    endif
+
+    call pgmdir$+"glc_ctlupdate.aon",status
+    call pgmdir$+"glc_ctldelete.aon",status
+
+    msg_id$="UPDATE_COMPLETE"
+    dim msg_tokens$[1]
+    msg_opt$=""
+    gosub disp_message
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+
+rem --- Launch the Account Summary Activity task
+    msg_id$="GL_VERIFY_BEG_BAL"
+    gosub disp_message
+
+    dim dflt_data$[2,1]
+    dflt_data$[1,0]="FIRM_ID"
+    dflt_data$[1,1]=firm_id$
+    call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:       "GLM_ACCTSUMHDR",
+:       stbl("+USER_ID"),
+:       "",
+:       firm_id$,
+:       table_chans$[all],
+:       "",
+:       dflt_data$[all]
+
+    goto std_exit
+
+bank_rec:
+    if pos(glxClsdYrAdjDet.account$=bank_gl_codes$,10) then
+        redim gltBankOther$
+        gltBankOther.firm_id$=firm_id$
+        gltBankOther.gl_account$=glxClsdYrAdjDet.account$
+        gltBankOther.trans_type$="A"
+        gltBankOther.posted_code$="O"
+        gltBankOther.cash_rec_cd$=""
+        gltBankOther.trns_date$=trans_date$
+        gltBankOther.trans_amt=post_amt
+        gltBankOther.trans_no$=str(jul(num(trans_date$(1,4)),num(trans_date$(5,2)),num(trans_date$(7,2))):"0000000")
+        gltBankOther.description$=glxClsdYrAdjDet.post_memo$
+        seq_write:
+        gltBankOther.trans_no$=str(num(gltBankOther.trans_no$)+1)
+        gltBankOther$=field(gltBankOther$)
+        writerecord(gltBankOther_dev,dom=seq_write)gltBankOther$
+    endif
+return
+
+reset_glParams: rem --- Reset GLS_PARAMS and GLS_CALENDAR changes
+    rem --- Restore the initial current fiscal year and period
+    if initial_currentYear$<>"" and initial_currentPeriod$<>"" then
+        readrecord(glsParams_dev,key=firm_id$+"GL00")glsParams$
+        glsParams.gl_yr_closed$="Y"
+        glsParams.current_year$=initial_currentYear$
+        glsParams.current_per$=initial_currentPeriod$
+        writerecord(glsParams_dev)glsParams$
+        initial_currentYear$=""
+        initial_currentPeriod$=""
+    endif
+
+    rem --- Re-lock the Adjustment Fiscal Period
+    if dateMap!<>null() then
+        transDates!=dateMap!.keySet()
+        datesIter!=transDates!.iterator()
+        while datesIter!.hasNext()
+            transDate$=datesIter!.next()
+            yrPerVect!=dateMap!.get(transDate$)
+        
+            readrecord(glsCalendar_dev,key=firm_id$+yrPerVect!.getItem(0))glsCalendar$
+            locked_flag$="locked_flag_"+yrPerVect!.getItem(1)
+            field glsCalendar$,locked_flag$="Y"
+            writerecord(glsCalendar_dev)glsCalendar$
+        wend
+        dateMap!=null()
+    endif
+
+   return
+   
+open_tables:rem --- Open Tables
+
+    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
+:       open_beg,
+:       open_end,
+:       open_tables$[all],
+:       open_opts$[all],
+:       open_chans$[all],
+:       open_tpls$[all],
+:       rd_table_chans$[all],
+:       open_batch,
+:       open_status$
+
+    if open_status$<>"" then
+        msg_id$="ENTRY_OPEN_ERROR"
+        dim msg_tokens$[1]
+        msg_tokens$[1]=open_status$
+        gosub disp_message
+        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
+        gosub reset_glParams; rem --- modified
+        release
+    endif
+    return
+
+disp_message:rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+    return
+
+rem #include std_error.src
+
+std_error: rem --- Modified standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            gosub reset_glParams; rem --- modified
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    gosub reset_glParams; rem --- modified
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem #endinclude std_error.src
+
+rem #include std_end.src
+
+std_exit: rem --- Standard program end (01Mar2006)
+
+std_exit_no_update:
+    gosub reset_glParams; rem --- modified
+    
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
+    release
+
+rem #endinclude std_end.src
+
+    end

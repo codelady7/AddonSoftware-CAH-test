@@ -2,17 +2,6 @@
 if (callpoint!.getUserInput()<"A" or callpoint!.getUserInput()>"Z") and cvs(callpoint!.getUserInput(),2)<>"" callpoint!.setStatus("ABORT")
 
 [[IVM_ITEMWHSE.ADIS]]
-rem --- If select in Physical Intentory, location and cycle can't change
-
-if callpoint!.getColumnData("IVM_ITEMWHSE.SELECT_PHYS") = "Y" then
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",0)
-	call stbl("+DIR_SYP")+"bac_message.bbj","IV_PHY_INV_SELECT",msg_tokens$[all],msg_opt$,table_chans$[all]
-else
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
-endif
-
 rem --- Draw attention when on-order quantities don't add up
 	qty_on_order=num(callpoint!.getColumnData("IVM_ITEMWHSE.QTY_ON_ORDER"))
 	po_qty=num(callpoint!.getColumnData("<<DISPLAY>>.ON_ORD_PO"))
@@ -33,14 +22,17 @@ rem --- Draw attention when commit quantities don't add up
 		qtyCommit!.setBackColor(rdErrorColor!)
 	endif
 
-rem --- Disable cost fields when there are transactions for this item.
+rem --- Enable/disable fields for kitted items
+	gosub disableKitFields
+
+rem --- Disable cost fields when there are transactions for this item, or it is a kit
 	ivt04_dev=fnget_dev("IVT_ITEMTRAN")
 	warehouse_id$=callpoint!.getColumnData("IVM_ITEMWHSE.WAREHOUSE_ID")
 	item_id$=callpoint!.getColumnData("IVM_ITEMWHSE.ITEM_ID")
 	read(ivt04_dev,key=firm_id$+warehouse_id$+item_id$,dom=*next)
 	ivt04_key$=""
 	ivt04_key$=key(ivt04_dev,end=*next)
-	if pos(firm_id$+warehouse_id$+item_id$=ivt04_key$)=1 then
+	if pos(firm_id$+warehouse_id$+item_id$=ivt04_key$)=1 or callpoint!.getDevObject("kit")="Y" then
 		rem --- Disable cost fields
 		enable=0
 	else
@@ -53,6 +45,16 @@ rem --- Disable cost fields when there are transactions for this item.
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",enable)
+
+rem --- If select in Physical Intentory, location and cycle can't change
+	if callpoint!.getColumnData("IVM_ITEMWHSE.SELECT_PHYS") = "Y" then
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",0)
+		call stbl("+DIR_SYP")+"bac_message.bbj","IV_PHY_INV_SELECT",msg_tokens$[all],msg_opt$,table_chans$[all]
+	else
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
+	endif
 
 [[IVM_ITEMWHSE.AENA]]
 rem --- Disable Barista menu items
@@ -171,34 +173,36 @@ rem --- Include non-drop ship items added in PO Receipt Entry that aren't in the
 
 rem --- Get total on Open SO lines
 
-	opdet_dev=fnget_dev("OPE_ORDDET")
-	dim opdet_tpl$:fnget_tpl$("OPE_ORDDET")
-	ophdr_dev=fnget_dev("OPE_ORDHDR")
-	dim ophdr_tpl$:fnget_tpl$("OPE_ORDHDR")
-	opm02_dev=fnget_dev("OPC_LINECODE")
-	dim opm02_tpl$:fnget_tpl$("OPC_LINECODE")
+	if callpoint!.getDevObject("kit")<>"Y" then
+		opdet_dev=fnget_dev("OPE_ORDDET")
+		dim opdet_tpl$:fnget_tpl$("OPE_ORDDET")
+		ophdr_dev=fnget_dev("OPE_ORDHDR")
+		dim ophdr_tpl$:fnget_tpl$("OPE_ORDHDR")
+		opm02_dev=fnget_dev("OPC_LINECODE")
+		dim opm02_tpl$:fnget_tpl$("OPC_LINECODE")
 
-	read(opdet_dev,key=firm_id$+"E"+item$+whse$,knum="STAT_ITEM_CUS_IN",dom=*next)
+		read(opdet_dev,key=firm_id$+"E"+item$+whse$,knum="STAT_ITEM_CUS_IN",dom=*next)
 
-	while 1
-		optdet_key$=key(opdet_dev,end=*break)
-		if pos(firm_id$+"E"+item$+whse$=optdet_key$)<>1 then break
-		read record (opdet_dev) opdet_tpl$
-		if opdet_tpl.commit_flag$<>"Y" then continue
+		while 1
+			optdet_key$=key(opdet_dev,end=*break)
+			if pos(firm_id$+"E"+item$+whse$=optdet_key$)<>1 then break
+			read record (opdet_dev) opdet_tpl$
+			if opdet_tpl.commit_flag$<>"Y" then continue
 
-		rem --- "Check header records for quotes
-		find record (ophdr_dev,key=opdet_tpl.firm_id$+opdet_tpl.ar_type$+opdet_tpl.customer_id$+opdet_tpl.order_no$+opdet_tpl.ar_inv_no$,dom=*continue) ophdr_tpl$
-		if ophdr_tpl.invoice_type$="P" or pos(opdet_tpl.trans_status$="ER")=0 then continue
+			rem --- "Check header records for quotes
+			find record (ophdr_dev,key=opdet_tpl.firm_id$+opdet_tpl.ar_type$+opdet_tpl.customer_id$+opdet_tpl.order_no$+opdet_tpl.ar_inv_no$,dom=*continue) ophdr_tpl$
+			if ophdr_tpl.invoice_type$="P" or pos(opdet_tpl.trans_status$="ER")=0 then continue
 
-		rem --- "Check line code for drop ships
-		find record (opm02_dev,key=opdet_tpl.firm_id$+opdet_tpl.line_code$,dom=*continue) opm02_tpl$
-		if pos(opm02_tpl.line_type$="MNO")<>0 or opm02_tpl.dropship$="Y" then continue
+			rem --- "Check line code for drop ships
+			find record (opm02_dev,key=opdet_tpl.firm_id$+opdet_tpl.line_code$,dom=*continue) opm02_tpl$
+			if pos(opm02_tpl.line_type$="MNO")<>0 or opm02_tpl.dropship$="Y" then continue
 
-		op_qty = op_qty + opdet_tpl.qty_ordered
-		endif
-	wend
+			op_qty = op_qty + opdet_tpl.qty_ordered
+			endif
+		wend
 
-	callpoint!.setColumnData("<<DISPLAY>>.COMMIT_SO",str(op_qty),1)
+		callpoint!.setColumnData("<<DISPLAY>>.COMMIT_SO",str(op_qty),1)
+	endif
 
 rem --- Get total on WO Finished Goods (On Order)
 
@@ -222,44 +226,46 @@ rem --- Get total on WO Finished Goods (On Order)
 
 rem --- Get WO commits
 
-		womatdtl_dev=fnget_dev("SFE_WOMATDTL")
-		dim womatdtl_tpl$:fnget_tpl$("SFE_WOMATDTL")
-		womatisd_dev=fnget_dev("SFE_WOMATISD")
-		dim womatisd_tpl$:fnget_tpl$("SFE_WOMATISD")
+		if callpoint!.getDevObject("kit")<>"Y" then
+			womatdtl_dev=fnget_dev("SFE_WOMATDTL")
+			dim womatdtl_tpl$:fnget_tpl$("SFE_WOMATDTL")
+			womatisd_dev=fnget_dev("SFE_WOMATISD")
+			dim womatisd_tpl$:fnget_tpl$("SFE_WOMATISD")
 
-		rem --- Get WO commits for open WOs
-		read(womatdtl_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
-		while 1
-			read record (womatdtl_dev,end=*break)womatdtl_tpl$
-			if firm_id$<>womatdtl_tpl.firm_id$ break
-			if whse$<>womatdtl_tpl.warehouse_id$ break
-			if item$<>womatdtl_tpl.item_id$ break
-			womatdtl_qty = womatdtl_qty + womatdtl_tpl.qty_ordered
-		wend
+			rem --- Get WO commits for open WOs
+			read(womatdtl_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
+			while 1
+				read record (womatdtl_dev,end=*break)womatdtl_tpl$
+				if firm_id$<>womatdtl_tpl.firm_id$ break
+				if whse$<>womatdtl_tpl.warehouse_id$ break
+				if item$<>womatdtl_tpl.item_id$ break
+				womatdtl_qty = womatdtl_qty + womatdtl_tpl.qty_ordered
+			wend
 
-		rem --- Include additional committments made after WO was released
-		read(womatisd_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
-		while 1
-			read record (womatisd_dev,end=*break)womatisd_tpl$
-			if firm_id$<>womatisd_tpl.firm_id$ break
-			if whse$<>womatisd_tpl.warehouse_id$ break
-			if item$<>womatisd_tpl.item_id$ break
-			rem --- Skip commits already counted for open WOs
-			if cvs(womatisd_tpl.womatdtl_seq_ref$,2)="" then
-				rem --- Not part of released WO
-				womatdtl_qty = womatdtl_qty + womatisd_tpl.qty_ordered
-			else
-				rem --- Only count portion of issue's qty_issued that is greater than released WO's qty_ordered
-				womatdtl_key$=firm_id$+womatisd_tpl.wo_location$+womatisd_tpl.wo_no$+womatisd_tpl.womatdtl_seq_ref$
-				findrecord(womatdtl_dev,key=womatdtl_key$,knum="PRIMARY",err=*endif)womatdtl_tpl$
-				if womatisd_tpl.qty_ordered - womatisd_tpl.tot_qty_iss > womatdtl_tpl.qty_ordered - womatdtl_tpl.tot_qty_iss then
-					womatdtl_qty = womatdtl_qty - womatdtl_tpl.qty_ordered
+			rem --- Include additional committments made after WO was released
+			read(womatisd_dev,key=firm_id$+whse$+item$,knum="AO_WH_ITM_LOC_WO",dom=*next)
+			while 1
+				read record (womatisd_dev,end=*break)womatisd_tpl$
+				if firm_id$<>womatisd_tpl.firm_id$ break
+				if whse$<>womatisd_tpl.warehouse_id$ break
+				if item$<>womatisd_tpl.item_id$ break
+				rem --- Skip commits already counted for open WOs
+				if cvs(womatisd_tpl.womatdtl_seq_ref$,2)="" then
+					rem --- Not part of released WO
 					womatdtl_qty = womatdtl_qty + womatisd_tpl.qty_ordered
+				else
+					rem --- Only count portion of issue's qty_issued that is greater than released WO's qty_ordered
+					womatdtl_key$=firm_id$+womatisd_tpl.wo_location$+womatisd_tpl.wo_no$+womatisd_tpl.womatdtl_seq_ref$
+					findrecord(womatdtl_dev,key=womatdtl_key$,knum="PRIMARY",err=*endif)womatdtl_tpl$
+					if womatisd_tpl.qty_ordered - womatisd_tpl.tot_qty_iss > womatdtl_tpl.qty_ordered - womatdtl_tpl.tot_qty_iss then
+						womatdtl_qty = womatdtl_qty - womatdtl_tpl.qty_ordered
+						womatdtl_qty = womatdtl_qty + womatisd_tpl.qty_ordered
+					endif
 				endif
-			endif
-		wend
+			wend
 
-		callpoint!.setColumnData("<<DISPLAY>>.COMMIT_WO",str(womatdtl_qty),1)
+			callpoint!.setColumnData("<<DISPLAY>>.COMMIT_WO",str(womatdtl_qty),1)
+		endif
 	endif
 
 [[IVM_ITEMWHSE.AREC]]
@@ -269,13 +275,26 @@ rem --- Initialize product_type with ivm_itemmast product_type
 	readrecord(itemmast_dev,key=firm_id$+callpoint!.getColumnData("IVM_ITEMWHSE.ITEM_ID"),dom=*next)itemmast_tpl$
 	callpoint!.setColumnData("IVM_ITEMWHSE.PRODUCT_TYPE",itemmast_tpl.product_type$)
 
-rem --- Enisable cost fields for new item.
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.UNIT_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.AVG_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.STD_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",1)
-	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",1)
+rem --- Enable/disable fields for kitted items
+	gosub disableKitFields
+
+rem --- Enable cost fields for new item if not a kit
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Disable cost fields
+		enable=0
+
+		rem --- New warehouse for a kit, so allow save without any changes
+		callpoint!.setStatus("MODIFIED")
+	else
+		rem --- Enable cost fields
+		enable=1
+	endif
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.UNIT_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.AVG_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.STD_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.REP_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",enable)
+	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",enable)
 
 [[IVM_ITEMWHSE.AVG_COST.AVAL]]
 rem --- Update unit_cost if using average costing and average cost changes
@@ -328,7 +347,7 @@ find record (ivs01_dev,key=ivs01a_key$,err=std_missing_params) ivs01a$
 rem --- Disable Option menu options
 
 if pos(ivs01a.lifofifo$="LF")=0 then callpoint!.setOptionEnabled("LIFO",0)
-if pos(ivs01a.lotser_flag$="LS")=0 or str(callpoint!.getDevObject("lot_serial_item"))<>"Y" then
+if !pos(callpoint!.getDevObject("lot_serial_flag")="LS") then
 	callpoint!.setOptionEnabled("IVM_LSMASTER",0)
 else
 	callpoint!.setOptionEnabled("IVM_LSMASTER",1)
@@ -342,6 +361,7 @@ dim ivs10d$:fnget_tpl$("IVS_DEFAULTS")
 
 ivs10d_key$ = firm_id$ + "D"
 find record(ivs10d_dev, key=ivs10d_key$, dom=*next) ivs10d$
+callpoint!.setDevObject("ivs10d",ivs10d$)
 
 callpoint!.setTableColumnAttribute("IVM_ITEMWHSE.BUYER_CODE","DFLT",ivs10d.buyer_code$)
 callpoint!.setTableColumnAttribute("IVM_ITEMWHSE.AR_DIST_CODE","DFLT",ivs10d.ar_dist_code$)
@@ -475,6 +495,103 @@ if cvs(ivm05a.firm_id$,2)=""  then
 endif
 
 [[IVM_ITEMWHSE.<CUSTOM>]]
+rem ==========================================================================
+disableKitFields: rem --- Enable/disable fields for kitted items
+rem ==========================================================================
+	if callpoint!.getDevObject("kit")="Y" then
+		rem --- Disable Warehouse tab fields
+		callpoint!.setColumnData("IVM_ITEMWHSE.LOCATION","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SPECIAL_ORD","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SPECIAL_ORD",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SELECT_PHYS","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SELECT_PHYS",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.LSTPHY_DATE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LSTPHY_DATE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.CUR_PRICE","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.CUR_PRICE_CD","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE_CD",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.PRI_PRICE","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.PRI_PRICE_CD","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE_CD",0)
+		rem --- UNIT_COST: Handled separately in ADIS and AREC
+		rem --- LANDED_COST: Handled separately in ADIS and AREC
+		rem --- LAST_PO_COST: Handled separately in ADIS and AREC
+		rem --- AVG_COST: Handled separately in ADIS and AREC
+		rem --- STD_COST: Handled separately in ADIS and AREC
+		rem --- REP_COST: Handled separately in ADIS and AREC
+		rem --- PRODUCT_TYPE: hidden don't clear, initialized to itemmast_tpl.product_type$
+
+		rem --- Disable Stocking tab fields
+		callpoint!.setColumnData("IVM_ITEMWHSE.ABC_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ABC_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.BUYER_CODE","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.BUYER_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.VENDOR_ID","",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.VENDOR_ID",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.LEAD_TIME","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LEAD_TIME",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.MAXIMUM_QTY","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.MAXIMUM_QTY",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.ORDER_POINT","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORDER_POINT",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.EOQ","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SAFETY_STOCK","0",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAFETY_STOCK",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.ORD_PNT_CODE","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORD_PNT_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.EOQ_CODE","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ_CODE",0)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SAF_STK_CODE","N",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAF_STK_CODE",0)
+	else
+		rem --- Get inventory defaults
+		dim ivs10d$:fnget_tpl$("IVS_DEFAULTS")
+		ivs10d$=callpoint!.getDevObject("ivs10d")
+
+		rem --- Enable Warehouse tab fields
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LOCATION",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PI_CYCLECODE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SPECIAL_ORD",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SELECT_PHYS",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LSTPHY_DATE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.CUR_PRICE_CD",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.PRI_PRICE_CD",1)
+		rem --- UNIT_COST: Handled separately in ADIS and AREC
+		rem --- LANDED_COST: Handled separately in ADIS and AREC
+		rem --- LAST_PO_COST: Handled separately in ADIS and AREC
+		rem --- AVG_COST: Handled separately in ADIS and AREC
+		rem --- STD_COST: Handled separately in ADIS and AREC
+		rem --- REP_COST: Handled separately in ADIS and AREC
+		rem --- PRODUCT_TYPE -- hidden don't clear, initialized to itemmast_tpl.product_type$
+
+		rem --- Enable Stocking tab fields
+		callpoint!.setColumnData("IVM_ITEMWHSE.ABC_CODE",ivs10d.abc_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ABC_CODE",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.BUYER_CODE",ivs10d.buyer_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.BUYER_CODE",1)
+		rem --- NOTE: The VENDOR_ID field remains permanently disable if if AP not installed
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.VENDOR_ID",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.LEAD_TIME",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.MAXIMUM_QTY",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORDER_POINT",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ",1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAFETY_STOCK",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.ORD_PNT_CODE",ivs10d.ord_pnt_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.ORD_PNT_CODE",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.EOQ_CODE",ivs10d.eoq_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.EOQ_CODE",1)
+		callpoint!.setColumnData("IVM_ITEMWHSE.SAF_STK_CODE",ivs10d.saf_stk_code$,1)
+		callpoint!.setColumnEnabled("IVM_ITEMWHSE.SAF_STK_CODE",1)
+	endif
+
+	return
+
 #include [+ADDON_LIB]std_missing_params.aon
 #include [+ADDON_LIB]std_functions.aon
 

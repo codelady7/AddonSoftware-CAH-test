@@ -1,7 +1,3 @@
-[[IVR_COSTCHGBYPCT.ITEM_ID.AINV]]
-rem --- Item synonym processing
-
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
 [[IVR_COSTCHGBYPCT.ASVA]]
 rem --- Percent change can't be zero
 
@@ -10,14 +6,6 @@ rem --- Percent change can't be zero
 		callpoint!.setStatus("ABORT")
 	endif
 
-[[IVR_COSTCHGBYPCT.PERCENT_CHANGE.AVAL]]
-rem --- Percent can't be zero
-
-	if num( callpoint!.getUserInput() ) = 0 then
-		callpoint!.setStatus("ABORT")
-	endif
-[[IVR_COSTCHGBYPCT.<CUSTOM>]]
-#include [+ADDON_LIB]std_missing_params.aon
 [[IVR_COSTCHGBYPCT.BSHO]]
 rem --- Inits
 
@@ -26,9 +14,10 @@ rem --- Inits
 
 rem --- Open files
 
-	num_files=1
+	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVS_PARAMS", open_opts$[1]="OTA"
+	open_tables$[2]="IVM_ITEMMAST", open_opts$[2]="OTA"
 
 	gosub open_tables
 
@@ -64,3 +53,37 @@ rem --- stbl("+BATCH_NO) will either be zero (not batching) or contain the batch
 call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
 
 bsho_end:
+
+[[IVR_COSTCHGBYPCT.ITEM_ID.AINV]]
+rem --- Item synonym processing
+
+	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
+
+[[IVR_COSTCHGBYPCT.ITEM_ID.AVAL]]
+rem --- Can't change cost for kits, which is the sum of the cost of its components
+	item_id$=callpoint!.getUserInput()
+	ivm01_dev=fnget_dev("IVM_ITEMMAST")
+	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+	findrecord(ivm01_dev,key=firm_id$+item_id$,dom=*next)ivm01a$
+	if ivm01a.kit$="Y" then
+		msg_id$="IV_KIT_COST_CHNG"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(ivm01a.item_id$,2)
+		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
+[[IVR_COSTCHGBYPCT.PERCENT_CHANGE.AVAL]]
+rem --- Percent can't be zero
+
+	if num( callpoint!.getUserInput() ) = 0 then
+		callpoint!.setStatus("ABORT")
+	endif
+
+[[IVR_COSTCHGBYPCT.<CUSTOM>]]
+#include [+ADDON_LIB]std_missing_params.aon
+
+
+

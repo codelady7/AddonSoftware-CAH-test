@@ -76,7 +76,7 @@ rem --- Report headings
     if cvs(endlot$,2)="" headings$[4]=headings$[4]+Translate!.getTranslation("AON_--_TO_LOT/SERIAL_NUMBER:_LAST") else headings$[4]=headings$[4]+Translate!.getTranslation("AON__--_TO_LOT/SERIAL_NUMBER:_")+endlot$
     headings$[5]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_ITEMS")+" = "+inactive$
     if sequence$="I" then headings$[6]="[HEADER]"
-    if ivs01a.lotser_flag$="L" p8$=Translate!.getTranslation("AON_LOT_#") else p8$=Translate!.getTranslation("AON_SERIAL_#")
+    p8$=Translate!.getTranslation("AON_LOT/SERIAL_NO")
     if sequence$="I" then column_head$=Translate!.getTranslation("AON_ITEM^LOT/SERIAL_#") else column_head$=p8$+Translate!.getTranslation("AON_^WHSE_ITEM")
 
 rem ----  column heading
@@ -172,6 +172,7 @@ rem --- Get next lot/serial master
 
         receipt$=ivm07a.lstrec_date$
         issued$=ivm07a.lstsal_date$
+        whse$=ivm07a.warehouse_id$
         if ivm07a.lstblt_date$>receipt$ receipt$=ivm07a.lstblt_date$
         if ivm07a.lstiss_date$>issued$ issued$=ivm07a.lstiss_date$
         if cvs(receipt$,2)<>"" receipt$=func.formatDate(receipt$)

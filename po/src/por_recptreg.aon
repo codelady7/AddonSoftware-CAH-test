@@ -168,7 +168,6 @@ rem --- Parameters
     ap$="N"
     ar$="N"
     sf$="N"
-    ls$="N"
     lf$="N"
     recs=0
 
@@ -213,7 +212,6 @@ rem --- Initializations
     dim y0$(4),y1$(32),y2$(g[4]),z0$(32),z1$(11*g[4]),r0$(24),r[1]
     dim l0$(28),l1$(20),l[1],dif$[99],lineqty[99],lsqty[99],factor[99]
     dim glfiles[20],glparams$[20],glparams[20],w$[10],tpls$[10]
-    if pos(ivs01a.lotser_flag$="LS")>0 ls$="Y"
     if pos(ivs01a.lifofifo$="LF")>0 lf$="Y"
     m0=len(m0$)
     width=132
@@ -237,8 +235,7 @@ rem --- Initializations
     bw=max(m0+16,32)
     dh1$=Translate!.getTranslation("AON_DIST")
     dh2$=Translate!.getTranslation("AON_CODE")
-    lsdesc$=Translate!.getTranslation("AON_SERIAL_NBR")
-    if ivs01a.lotser_flag$="L" lsdesc$=Translate!.getTranslation("AON_LOT_NBR")
+    lsdesc$=Translate!.getTranslation("AON_LOT/SERIAL_NO")
     xref_dev=0
     lotser=0
     errors=0
@@ -254,8 +251,8 @@ rem --- Headings and print positions
     columns$[1,0]=Translate!.getTranslation("AON_CD"), columns$[1,1]="C", columns$[1,2]="3"
     columns$[2,0]=Translate!.getTranslation("AON_WH"), columns$[2,1]="C",columns$[2,2]="3"
     columns$[3,0]=Translate!.getTranslation("AON_ITEM"), columns$[3,1]="C",columns$[3,2]="12"
-    columns$[4,0]=Translate!.getTranslation("AON_DIST_CODE"), columns$[4,1]="C",columns$[4,2]="8"
-    columns$[5,0]="UM", columns$[5,1]="C",columns$[5,2]="8"
+    columns$[4,0]=Translate!.getTranslation("AON_DIST_CODE"), columns$[4,1]="C",columns$[4,2]="15"
+    columns$[5,0]="UM", columns$[5,1]="C",columns$[5,2]="3"
     columns$[6,0]=Translate!.getTranslation("AON_QUANTITY^ORDERED"), columns$[6,1]="C", columns$[6,2]=str(len(m2$)), columns$[6,5]="R^R", columns$[6,10]="T"
     columns$[7,0]=Translate!.getTranslation("AON_QUANTITY^RECEIVED"), columns$[7,1]="C", columns$[7,2]=str(len(m2$)), columns$[7,5]="R^R", columns$[7,10]="T"
     columns$[8,0]=cost$+"^"+Translate!.getTranslation("AON_COST"), columns$[8,1]="C", columns$[8,2]=str(len(m3$)), columns$[8,5]="R^R"
@@ -550,9 +547,8 @@ other: rem --- Other type line
             l=l+2
 
 lot_ser: rem --- Lotted/Serialized?
-            if ls$="N" goto l3000
             if pom02a.line_type$<>"S" goto l3000
-            if ivm01a.lotser_item$+ivm01a.inventoried$<>"YY" goto l3000
+            if !pos(ivm01a.lotser_flag$="LS") or ivm01a.inventoried$<>"Y" goto l3000
             total=0
             lastseq=0
             needed=poe14a.conv_factor*poe14a.qty_received
@@ -570,7 +566,7 @@ rem --- Read next lot/serial detail record
 rem --- Print detail line
 
                 xvk=fnblank(3)
-                OutVect!.addItem(lsdesc$+" "+poe24a.sequence_no$+" "+poe24a.lotser_no$(1,i[2]))
+                OutVect!.addItem(lsdesc$+" "+poe24a.sequence_no$+" "+poe24a.lotser_no$)
                 xvk=fnblank(1)
                 OutVect!.addItem(ivm01a.unit_of_sale$)
                 xvk=fnblank(1)
@@ -599,7 +595,7 @@ l2900: rem --- Print lines for missing lot/serial numbers
 
             if total>needed goto l3000
             dim x$(i[2],"_")
-            if ivs01a.lotser_flag$="L" needed=total+1
+            if ivm01a.lotser_flag$="L" needed=total+1
             for x=total+1 to needed
                 l=l+1
                 lastseq=lastseq+1
@@ -751,7 +747,6 @@ rem --- All done
 
 rem --- Any missing lot/serial numbers?
 
-    if ls$="N" goto l4900
     if lotser=0 goto l4900
     let ls=1,headings=headings-1,m2$=i7$
     gosub l5400

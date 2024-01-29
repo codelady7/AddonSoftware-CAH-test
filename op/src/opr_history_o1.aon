@@ -57,14 +57,6 @@ rem --- Initialize Data
 
 rem --- 0-4 = LIST,COST,QTY ORDERED,QTY B/O,QTY SHIPPED
 
-    if ivs01a.lotser_flag$="S" then
-        let x2$="Ser#"
-    else
-        if ivs01a.lotser_flag$="L" then
-            let x2$="Lot#"
-        endif
-    endif
-
     if s0$="" then let h4$="First" else h4$=fnmask$(s0$(1,m0),m0$)
     if s1$="" then let h5$="Last" else h5$=fnmask$(s1$(1,m0),m0$)
     if s2$="" then let h6$="First" else h6$=fndate$(s2$)
@@ -560,7 +552,7 @@ serialized_inventory: rem --- Serialized/Lotted Inventory
 		m2$=m2s$
 	endif
 		
-        OutVect!.addItem(x2$+" "+opt21a.sequence_no$+" "+opt21a.lotser_no$)
+        OutVect!.addItem("Lot/Ser# "+opt21a.sequence_no$+" "+opt21a.lotser_no$)
         OutVect!.addItem(str(opt21a.qty_ordered:m2$))
         OutVect!.addItem(str(opt21a.qty_ordered - opt21a.qty_shipped:m2$))
 		OutVect!.addItem(str(opt21a.qty_shipped:m2$))
@@ -610,7 +602,7 @@ print_detail: rem --- Print Detail
 
     endif
 
-    if pos(opm02a.line_type$="SP")<>0 and pos(ivs01a.lotser_flag$="SL")<>0 and ivm01a.lotser_item$="Y" then gosub serialized_inventory
+    if pos(opm02a.line_type$="SP")<>0 and pos(ivm01a.lotser_flag$="LS") then gosub serialized_inventory
     
     return
 

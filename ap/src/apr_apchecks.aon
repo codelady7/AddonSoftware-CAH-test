@@ -175,7 +175,7 @@ rem --- Set Report Name & Subreport directory
 	
 rem --- Open/Lock files
 
-    files=20,begfile=1,endfile=files
+    files=21,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="aps_params",  ids$[1]="APS_PARAMS"
     files$[2]="ape-04",      ids$[2]="APE_CHECKS"
@@ -197,6 +197,7 @@ rem --- Open/Lock files
     files$[18]="ape-02",      ids$[18]="APE_MANCHECKHDR"
     files$[19]="ape-22",      ids$[19]="APE_MANCHECKDET"
     files$[20]="ape-12",      ids$[20]="APE_MANCHECKDIST"
+    files$[21]="apt-01",      ids$[21]="APT_INVOICEHDR"
 	
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
     if status goto all_done
@@ -221,6 +222,7 @@ rem --- Open/Lock files
     ape02_dev=channels[18]
     ape22_dev=channels[19]
     ape12_dev=channels[20]
+    apt01_dev=channels[21]
 
 rem --- Dimension string templates
 
@@ -229,8 +231,8 @@ rem --- Dimension string templates
     dim apt02a$:templates$[7],apw01a$:templates$[8],aps01b$:templates$[9]
 	dim apw_chkprn$:templates$[10],adxlocks$:templates$[11],payauth$:templates$[12]
     dim apm_approvers$:templates$[13],apt_invapproval$:templates$[14],apsACH$:templates$[15]
-    dim adcBnkAcct$:templates$[16],apm02a$:templates$[17]
-    dim ape02a$:templates$[18],ape22a$:templates$[19],ape12a$:templates$[20]
+    dim adcBnkAcct$:templates$[16],apm02a$:templates$[17],ape02a$:templates$[18]
+    dim ape22a$:templates$[19],ape12a$:templates$[20],apt01a$:templates$[21]
 
 rem --- Assign form input values to local variables
 
@@ -388,8 +390,8 @@ initializations: rem --- Initializations
 
     q6=0
     show_progress=1
-    prev_aptype_t0$=""
     prev_aptype_vend_t1$=""
+    prev_ccPaid=0
     dim t[3]
 	
     stub_amt_mask$="########.00CR"
@@ -488,6 +490,9 @@ rem --- Initialize the print work file fields
 	chk_exactly$=""; rem Text for amount on check ('Exactly*10*dollars'...)
 	chk_amt_str$=""; rem Masked check amount or "*VOID*"
 
+	ccPaid_stubInvAmt=0
+	ccPaid_stubInvDiscAmt=0
+	ccPaid_stubInvAmtPd=0
 	stub_inv_amt=0
 	stub_inv_discamt=0
 	stub_inv_amt_pd=0
@@ -513,6 +518,20 @@ rem --- Init Read
             if aps01a.post_to_gl$="Y" and pos(ape04a.ap_type$+ape04a.vendor_id$+ape04a.ap_inv_no$+"::"=payInvoices$)=0 then
                 invSkipped=1
                 continue
+            endif
+
+            rem --- Was this invoice previously paid via credit card?
+            redim apt01a$
+            readrecord(apt01_dev,key=ape04Key$,dom=*next)apt01a$
+            if cvs(apt01a.creditcard_id$,2)="" then
+                ccPaid=0
+            else
+                ccPaid=1
+
+                rem --- Accummulating totals for "Credit card charges" rather than showing individual invoices on stub.
+                ccPaid_stubInvAmt=ccPaid_stubInvAmt+ape04a.invoice_amt
+                ccPaid_stubInvDiscAmt=ccPaid_stubInvDiscAmt+ape04a.discount_amt
+                ccPaid_stubInvAmtPd=ccPaid_stubInvAmtPd+ape04a.payment_amt
             endif
     
             rem --- Breaks
@@ -563,6 +582,21 @@ rem --- Init Read
             redim ape22a$
             readrecord(ape22_dev,end=*break)ape22a$
             if pos(ape02_key$=ape22a$)<>1 then break
+
+            rem --- Was this invoice previously paid via credit card?
+            redim apt01a$
+            apt01_key$=firm_id$+ap_type$+vendor_id$+ape22a.ap_inv_no$
+            readrecord(apt01_dev,key=apt01_key$,dom=*next)apt01a$
+            if cvs(apt01a.creditcard_id$,2)="" then
+                ccPaid=0
+            else
+                ccPaid=1
+
+                rem --- Accummulating totals for "Credit card charges" rather than showing individual invoices on stub.
+                ccPaid_stubInvAmt=ccPaid_stubInvAmt+ape22a.invoice_amt
+                ccPaid_stubInvDiscAmt=ccPaid_stubInvDiscAmt+ape22a.discount_amt
+                ccPaid_stubInvAmtPd=ccPaid_stubInvAmtPd+ape22a.net_paid_amt
+            endif
 
             prev_invoice$=ape22a.ap_inv_no$
             gosub inv_detail
@@ -770,7 +804,7 @@ rem --- Event Control
     rdSysGUI!=rdBBjAPI!.getSysGui()
     rdStatusSpace!=rdBBjAPI!.getGroupNamespace()
     rdFuncSpace!=rdBBjAPI!.getGroupNamespace()
-rdFuncSpace!.getValue("+active_task")
+    rdFuncSpace!.getValue("+active_task")
 
     
     rem --- Clear softlock on jasper work file, apw_chkjasperprn
@@ -1060,6 +1094,10 @@ check_stub_detail:
     rem --- Do NOT print ACH checks for ACH payments when doing a Restart.
     if restart$="Y" and ach_payment$="Y" then return 
     if bottom_part$="X" and section_type$="A" then return;rem ER 10575 check w/ long stub, so no acctg stub
+
+    rem --- If this invoice was previously paid via credit card, accummulating totals for "Credit card charges" rather than showing on stub.
+    if ccPaid then return; rem --- Don't show individual invoices previously paid via credit card
+
 	rem --- Write STUB detail row record to jasper print file
     dim apw_chkprn$:fattr(apw_chkprn$)
 
@@ -1104,7 +1142,7 @@ check_stub_detail:
     apw_chkprn.ach_payment$=   ach_payment$
 	
 	apw_chkprn.chk_amt=0
-	
+
     write record (apw_chkprn_dev) apw_chkprn$
 	
     return
@@ -1114,6 +1152,43 @@ stub_total: rem --- Stub Total
     rem --- Do NOT print ACH checks for ACH payments when doing a Restart.
     if restart$="Y" and ach_payment$="Y" then return 
     if bottom_part$="X" and section_type$="A" then return;rem ER 10575 check w/ long stub, so no acctg stub
+
+    rem --- If this invoice was previously paid via credit card, report accummulated totals for "Credit card charges".
+    if ccPaid_stubInvAmt<>0 or ccPaid_stubInvDiscAmt<>0 or ccPaid_stubInvAmtPd<>0 then
+        redim apw_chkprn$
+        
+        apw_chkprn.firm_id$=       firm_id$
+        apw_chkprn.ap_type$=       prev_aptype_vend_t1$
+        apw_chkprn.bnk_acct_cd$=   bnkAcctCd$
+        apw_chkprn.check_no$=      check_no$
+        apw_chkprn.chk_pagenum$=   str(chk_pagenum:chk_pagenum_mask$)
+        apw_chkprn.section_type$="A"
+        apw_chkprn.section_detseq$=str(acctstub_rowcnt:section_detseq_mask$)
+        apw_chkprn.check_date$=    check_date$
+        apw_chkprn.vendor_id$=     prev_aptype_vend_t1$(3,6)
+        apw_chkprn.stub_inv_no$=    ""
+        apw_chkprn.stub_inv_date$=  ""
+        apw_chkprn.stub_memo_dist$=Translate!.getTranslation("AON_CC_TRANSACTIONS")
+        apw_chkprn.stub_is_total$=  "N" 
+        apw_chkprn.chk_is_void$=   "N"
+        apw_chkprn.chk_exactly$=   ""
+        apw_chkprn.chk_amt_str$=   ""
+        apw_chkprn.signature_1$=   ""
+        apw_chkprn.signature_2$=   ""
+        apw_chkprn.ach_payment$=   ach_payment$
+        apw_chkprn.stub_inv_amt=ccPaid_stubInvAmt
+        apw_chkprn.stub_inv_discamt=ccPaid_stubInvDiscAmt
+        apw_chkprn.stub_inv_amt_pd=ccPaid_stubInvAmtPd
+        apw_chkprn.chk_amt=0
+        write record (apw_chkprn_dev) apw_chkprn$; rem --- Accounting stub
+        acctstub_rowcnt=acctstub_rowcnt+1
+        
+        apw_chkprn.section_type$="V"
+        apw_chkprn.section_detseq$=str(vendstub_rowcnt:section_detseq_mask$)
+        write record (apw_chkprn_dev) apw_chkprn$; rem --- Vendor stub        
+        vendstub_rowcnt=vendstub_rowcnt+1
+    endif
+
 	rem --- Write STUB TOTAL record to jasper print file
     dim apw_chkprn$:fattr(apw_chkprn$)
 	
@@ -1152,9 +1227,12 @@ stub_total: rem --- Stub Total
 	apw_chkprn.stub_inv_amt_pd= stub_inv_amt_pd; rem passed in since variable: overflow vs actual total
 	
 	apw_chkprn.chk_amt=0
-	
+
     write record (apw_chkprn_dev) apw_chkprn$
 	
+    ccPaid_stubInvAmt=0
+    ccPaid_stubInvDiscAmt=0
+    ccPaid_stubInvAmtPd=0
 	stub_inv_amt=     0
 	stub_inv_discamt= 0
 	stub_inv_amt_pd=  0
@@ -1275,7 +1353,7 @@ check_face: rem --- Print Check
 	apw_chkprn.stub_inv_amt_pd=0
 	
 	apw_chkprn.chk_amt=chk_amt
-	
+
     write record (apw_chkprn_dev) apw_chkprn$
 	
     return
@@ -1285,6 +1363,9 @@ overflow: rem --- Overflow
 	chk_is_void$="Y"
 
     rem --- Write stubs' Total rec w/"*Continued*" so stub prints right
+    ccPaid_stubInvAmt=0
+    ccPaid_stubInvDiscAmt=0
+    ccPaid_stubInvAmtPd=0
 	stub_inv_amt=     0
 	stub_inv_discamt= 0
 	stub_inv_amt_pd=  0
@@ -1294,6 +1375,9 @@ overflow: rem --- Overflow
 	gosub stub_total; rem accounting stub
 	acctstub_rowcnt=1
 		
+    ccPaid_stubInvAmt=0
+    ccPaid_stubInvDiscAmt=0
+    ccPaid_stubInvAmtPd=0
 	stub_inv_amt=     0
 	stub_inv_discamt= 0
 	stub_inv_amt_pd=  0
@@ -1381,7 +1465,7 @@ rem --- Write Void
 	apw_chkprn.stub_inv_amt_pd=0
 	
 	apw_chkprn.chk_amt=chk_amt
-	
+
     write record (apw_chkprn_dev) apw_chkprn$
 
     gosub increment_check

@@ -2,7 +2,15 @@
 <barista_record_table>ADS_FILTERS</barista_record_table>
 <barista_admin_records>
 	<barista_record>
-		<USER_ID>ADMIN           </USER_ID>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_CREDITCARD_LK</DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_CREDITCARD             </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_CREDITCARD</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
 		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
 		<FILTER_ID>PAID                          </FILTER_ID>
 		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
@@ -11,6 +19,248 @@
 	</barista_record>
 	<barista_record>
 		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
+		<FILTER_ID>UNPAID                        </FILTER_ID>
+		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_INV_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VEND_W_INV             </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VEND_W_INV</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_INV_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VEND_W_INV                </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VEND_W_INV</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VENDORS                </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VENDORS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VENDORS                   </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VENDORS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_PO_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VEND_W_PO              </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VEND_W_PO</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_PO_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VEND_W_PO                 </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VEND_W_PO</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_REQ_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VEND_W_REQ             </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VEND_W_REQ</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_REQ_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VEND_W_REQ                </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VEND_W_REQ</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_CUSTOMERS              </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_CUSTOMERS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_CUSTOMERS                 </FILTER_ID>
+		<DD_DESCRIPTION>ALL_CUSTOMERS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_ORD_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_CUST_W_ORDERS          </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_CUST_W_ORDERS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_ORD_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_CUST_W_ORDERS             </FILTER_ID>
+		<DD_DESCRIPTION>ALL_CUST_W_ORDERS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
+		<FILTER_ID>PAID                          </FILTER_ID>
+		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
+		<FILTER_ID>UNPAID                        </FILTER_ID>
+		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEMWHS_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_BILLS                  </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_BILLS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEMWHS_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_BILLS                     </FILTER_ID>
+		<DD_DESCRIPTION>ALL_BILLS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_BILLS                  </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_BILLS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_BILLS                     </FILTER_ID>
+		<DD_DESCRIPTION>ALL_BILLS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>GL_ACCT_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ACCOUNTS               </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ACCOUNTS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>GL_ACCT_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ACCOUNTS                  </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ACCOUNTS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_30_DAYS                  </FILTER_ID>
+		<DD_DESCRIPTION>LAST_30_DAYS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_60_DAYS                  </FILTER_ID>
+		<DD_DESCRIPTION>LAST_60_DAYS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_90_DAYS                  </FILTER_ID>
+		<DD_DESCRIPTION>LAST_90_DAYS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_YEAR                     </FILTER_ID>
+		<DD_DESCRIPTION>LAST_YEAR</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS                  </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS                     </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LOT_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS_W_LOTS           </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS_W_LOTS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LOT_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS_W_LOTS              </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS_W_LOTS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_SYN_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS_W_SYNONYMS       </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS_W_SYNONYMS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_SYN_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS_W_SYNONYMS          </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS_W_SYNONYMS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_VEND_LK </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS_W_VENDORS        </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS_W_VENDORS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_VEND_LK </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS_W_VENDORS           </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS_W_VENDORS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ORDERS_AND_INVOICES       </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ORDERS_AND_INVOICES</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
+		<FILTER_ID>OPEN_ORDERS_AND_INVOICES      </FILTER_ID>
+		<DD_DESCRIPTION>OPEN_ORDERS_AND_INVOICES</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>                </USER_ID>
+		<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
+		<FILTER_ID>OPEN_ORDERS_ONLY              </FILTER_ID>
+		<DD_DESCRIPTION>OPEN_ORDERS_ONLY</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_CREDITCARD_LK</DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_CREDITCARD             </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_CREDITCARD</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
 		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
 		<FILTER_ID>PAID                          </FILTER_ID>
 		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
@@ -25,21 +275,85 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<USER_ID>                </USER_ID>
-		<DD_TABLE_ALIAS>AP_HISTINV      </DD_TABLE_ALIAS>
-		<FILTER_ID>UNPAID                        </FILTER_ID>
-		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
-		<USER_MODIFIED> </USER_MODIFIED>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_INV_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VEND_W_INV             </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VEND_W_INV</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
 	</barista_record>
 	<barista_record>
 		<USER_ID>ADMIN           </USER_ID>
-		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
-		<FILTER_ID>PAID                          </FILTER_ID>
-		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
-		<USER_MODIFIED> </USER_MODIFIED>
+		<DD_TABLE_ALIAS>AP_VEND_INV_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VEND_W_INV                </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VEND_W_INV</DD_DESCRIPTION>
 	</barista_record>
 	<barista_record>
-		<USER_ID>                </USER_ID>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VENDORS                </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VENDORS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VENDORS                   </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VENDORS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_PO_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VEND_W_PO              </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VEND_W_PO</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_PO_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VEND_W_PO                 </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VEND_W_PO</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_REQ_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_VEND_W_REQ             </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_VEND_W_REQ</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AP_VEND_REQ_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_VEND_W_REQ                </FILTER_ID>
+		<DD_DESCRIPTION>ALL_VEND_W_REQ</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_CUSTOMERS              </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_CUSTOMERS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_CUSTOMERS                 </FILTER_ID>
+		<DD_DESCRIPTION>ALL_CUSTOMERS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_ORD_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_CUST_W_ORDERS          </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_CUST_W_ORDERS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>AR_CUST_ORD_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_CUST_W_ORDERS             </FILTER_ID>
+		<DD_DESCRIPTION>ALL_CUST_W_ORDERS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
 		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
 		<FILTER_ID>PAID                          </FILTER_ID>
 		<DD_DESCRIPTION>PAID</DD_DESCRIPTION>
@@ -54,11 +368,137 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<USER_ID>                </USER_ID>
-		<DD_TABLE_ALIAS>AR_INVOICES     </DD_TABLE_ALIAS>
-		<FILTER_ID>UNPAID                        </FILTER_ID>
-		<DD_DESCRIPTION>UNPAID</DD_DESCRIPTION>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEMWHS_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_BILLS                  </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_BILLS</DD_DESCRIPTION>
 		<DFLT_FILT>Y</DFLT_FILT>
-		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEMWHS_LK   </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_BILLS                     </FILTER_ID>
+		<DD_DESCRIPTION>ALL_BILLS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_BILLS                  </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_BILLS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>BM_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_BILLS                     </FILTER_ID>
+		<DD_DESCRIPTION>ALL_BILLS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>GL_ACCT_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ACCOUNTS               </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ACCOUNTS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>GL_ACCT_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ACCOUNTS                  </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ACCOUNTS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_30_DAYS                  </FILTER_ID>
+		<DD_DESCRIPTION>LAST_30_DAYS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_60_DAYS                  </FILTER_ID>
+		<DD_DESCRIPTION>LAST_60_DAYS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_90_DAYS                  </FILTER_ID>
+		<DD_DESCRIPTION>LAST_90_DAYS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEMTRANS    </DD_TABLE_ALIAS>
+		<FILTER_ID>LAST_YEAR                     </FILTER_ID>
+		<DD_DESCRIPTION>LAST_YEAR</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS                  </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LK      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS                     </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LOT_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS_W_LOTS           </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS_W_LOTS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_LOT_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS_W_LOTS              </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS_W_LOTS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_SYN_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS_W_SYNONYMS       </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS_W_SYNONYMS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_SYN_LK  </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS_W_SYNONYMS          </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS_W_SYNONYMS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_VEND_LK </DD_TABLE_ALIAS>
+		<FILTER_ID>ACTIVE_ITEMS_W_VENDORS        </FILTER_ID>
+		<DD_DESCRIPTION>ACTIVE_ITEMS_W_VENDORS</DD_DESCRIPTION>
+		<DFLT_FILT>Y</DFLT_FILT>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>IV_ITEM_VEND_LK </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ITEMS_W_VENDORS           </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ITEMS_W_VENDORS</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
+		<FILTER_ID>ALL_ORDERS_AND_INVOICES       </FILTER_ID>
+		<DD_DESCRIPTION>ALL_ORDERS_AND_INVOICES</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
+		<FILTER_ID>OPEN_ORDERS_AND_INVOICES      </FILTER_ID>
+		<DD_DESCRIPTION>OPEN_ORDERS_AND_INVOICES</DD_DESCRIPTION>
+	</barista_record>
+	<barista_record>
+		<USER_ID>ADMIN           </USER_ID>
+		<DD_TABLE_ALIAS>OP_ENTRY_1      </DD_TABLE_ALIAS>
+		<FILTER_ID>OPEN_ORDERS_ONLY              </FILTER_ID>
+		<DD_DESCRIPTION>OPEN_ORDERS_ONLY</DD_DESCRIPTION>
 	</barista_record>
 </barista_admin_records>

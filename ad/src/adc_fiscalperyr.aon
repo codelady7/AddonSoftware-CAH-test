@@ -34,16 +34,16 @@ rem --- Retrieve sysinfo data
     milestone=num(stbl("+MILESTONE",err=*next),err=*next)
     if cvs(firm_id$,2)="" then firm_id$=sysinfo.firm_id$
 
-rem --- Open/Lock files
+rem --- Use adc_template.aon instead of bac_open_tables.bbj to open and close GLS_CALENDAR so it can be locked in glu_clsdyradj.aon
 
-    num_files=1
-    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-    open_tables$[1]="GLS_CALENDAR",open_opts$[1]="OTA@"
-    
-    gosub open_tables
-    
-    gls_calendar_dev=num(open_chans$[1])
-    dim gls_calendar$:open_tpls$[1]
+    files=1,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="gls_calendar",ids$[1]="GLS_CALENDAR"
+
+    call stbl("+DIR_PGM")+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:                                   ids$[all],templates$[all],channels[all],batch,status
+
+    gls_calendar_dev=channels[1];dim gls_calendar$:templates$[1]
 
 get_calendar: rem --- Get calendar for the fiscal year
 
@@ -179,6 +179,8 @@ rem #endinclude std_missing_params.src
 rem #include std_exit.src
 
 std_exit: rem --- Standard called program exit (01Mar2006)
+
+    close(gls_calendar_dev,err=*next)
 
     exit
 rem #endinclude std_exit.src

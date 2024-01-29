@@ -12,7 +12,7 @@
 	<parameter name="OPE11_QTY_SHIPPED" class="java.lang.String"/>
 	<parameter name="QTY_MASK" class="java.lang.String"/>
 	<parameter name="QTY_MASK_PATTERN" class="java.lang.String"/>
-	<parameter name="IVS_LOTSER_FLAG" class="java.lang.String"/>
+	<parameter name="LOTSER_FLAG" class="java.lang.String"/>
 	<parameter name="BARISTA_WD" class="java.lang.String"/>
 	<parameter name="ITEM_ID" class="java.lang.String">
 		<parameterDescription><![CDATA[Item:]]></parameterDescription>
@@ -21,7 +21,7 @@
 	<parameter name="REPORT_TYPE" class="java.lang.String"/>
 	<parameter name="SHADE_BACKCOLOR" class="java.lang.Boolean"/>
 	<queryString language="SQL">
-		<![CDATA[call OPInvoice_Det_LotSer($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{INTERNAL_SEQ_NO},$P{OPE11_QTY_SHIPPED},$P{QTY_MASK},$P{IVS_LOTSER_FLAG},$P{BARISTA_WD},$P{REPORT_TYPE})]]>
+		<![CDATA[call OPInvoice_Det_LotSer($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{INTERNAL_SEQ_NO},$P{OPE11_QTY_SHIPPED},$P{QTY_MASK},$P{LOTSER_FLAG},$P{BARISTA_WD},$P{REPORT_TYPE})]]>
 	</queryString>
 	<field name="LOTSER_NO" class="java.lang.String">
 		<fieldDescription><![CDATA[Lot/Serial Number]]></fieldDescription>
@@ -58,7 +58,7 @@
 			<textField>
 				<reportElement x="183" y="0" width="20" height="12" uuid="54b51076-5982-496b-87bc-101927de7b4c">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<printWhenExpression><![CDATA[$P{IVS_LOTSER_FLAG} == "L"]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{LOTSER_FLAG} == "L"]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="7" isBold="true"/>
@@ -69,7 +69,7 @@
 			<staticText>
 				<reportElement x="184" y="0" width="20" height="12" uuid="1b58072d-2fb7-42c2-8394-a10f9ba8f735">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<printWhenExpression><![CDATA[$P{IVS_LOTSER_FLAG} == "S"]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{LOTSER_FLAG} == "S"]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="7" isBold="true"/>
@@ -98,7 +98,7 @@
 			<textField>
 				<reportElement x="310" y="0" width="33" height="12" uuid="1ea53f6d-1c30-4d5d-bbe0-6bb23a242a7d">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<printWhenExpression><![CDATA[$P{IVS_LOTSER_FLAG} == "L"]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{LOTSER_FLAG} == "L"]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="7" isBold="true"/>
@@ -108,7 +108,7 @@
 			<textField pattern="">
 				<reportElement x="344" y="0" width="45" height="12" uuid="a844369b-6873-44bb-9ff3-939d46825237">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
-					<printWhenExpression><![CDATA[$P{IVS_LOTSER_FLAG} == "L"]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{LOTSER_FLAG} == "L"]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="8"/>

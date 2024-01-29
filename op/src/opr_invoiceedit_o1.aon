@@ -74,10 +74,7 @@ rem call stbl("+DIR_PGM")+"adc_getmask.aon","","AR","A","",m1$,0,m1
     if print_stat$="A" then  x1$="All Invoices"
     h8$=x1$
     
-    lot_ser$=""
     if taken_by$="" h9$="Invoiced By:All"  else h9$="Invoiced By: "+taken_by$
-    if ivs01a.lotser_flag$="S" then  lot_ser$="Ser#"
-    if ivs01a.lotser_flag$="L" then  lot_ser$="Lot#"
     
     if from_cust$="" then  h4$="First" else h4$=from_cust$
     if thru_cust$="" then  h5$="Last"  else h5$=thru_cust$
@@ -620,7 +617,7 @@ serialized_inventory: rem --- Serialized/Lotted Inventory
         read record (ope21_dev) ope21a$
         if ope21a.trans_status$<>"E" then continue
         
-        OutVect!.addItem("  "+lot_ser$+" "+ope21a.sequence_no$+" "+ope21a.lotser_no$)
+        OutVect!.addItem("  Lot/Ser# "+ope21a.sequence_no$+" "+ope21a.lotser_no$)
         OutVect!.addItem(str(ope21a.qty_ordered:m2$)+$00$+"R")
 		OutVect!.addItem("")
         OutVect!.addItem(str(ope21a.qty_shipped:m2$)+$00$+"R")
@@ -642,8 +639,7 @@ rem --- First line
     OutVect!.addItem(column1$)
     
     if  pos(opm02a.line_type$="SP")   and 
-:       pos(ivs01a.lotser_flag$="SL") and 
-:       ivm01a.lotser_item$="Y" 
+:       pos(ivm01a.lotser_flag$="LS")
 :   then 
         gosub average_item_cost
         if ser_qty then
@@ -689,8 +685,7 @@ rem --- Print the description/comment/memo lines
 rem --- Subsequent lines
 
     if  pos(opm02a.line_type$="SP")   and 
-:       pos(ivs01a.lotser_flag$="SL") and 
-:       ivm01a.lotser_item$="Y" 
+:       pos(ivm01a.lotser_flag$="LS") 
 :   then 
         gosub serialized_inventory
     endif

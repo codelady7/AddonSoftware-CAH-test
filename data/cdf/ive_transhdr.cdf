@@ -175,20 +175,6 @@ rem --- Numeric masks
 
 rem --- Lotted flags, Lifo/fifo
 
-	user_tpl.lotted = 0
-	user_tpl.serialized = 0
-	user_tpl.ls$ = "N"
-
-	if ivs01a.lotser_flag$="L" then 
-		user_tpl.ls$="Y"
-		user_tpl.lotted=1
-	else 
-		if ivs01a.lotser_flag$="S" then 
-			user_tpl.ls$="Y"
-			user_tpl.serialized=1
-		endif
-	endif
-
 	if pos(ivs01a.lifofifo$="LF") then user_tpl.lf$="Y" else user_tpl.lf$ = "N"
 
 rem --- Is GL installed?

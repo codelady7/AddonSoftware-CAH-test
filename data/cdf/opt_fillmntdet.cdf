@@ -16,13 +16,6 @@ rem --- Create linetypeMap, dropshipMap and unitcostMap HashMaps
 	unitcostMap!= new java.util.HashMap()
 	callpoint!.setDevObject("unitcostMap",unitcostMap!)
 
-rem --- Set Lot/Serial button up properly
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_PICK")+" "+Translate!.getTranslation("AON_LOT")); break
-		case 2; callpoint!.setOptionText("LENT",Translate!.getTranslation("AON_PICK")+" "+Translate!.getTranslation("AON_SERIAL")); break
-		case default; callpoint!.setOptionEnabled("LENT",0); break
-	swend
-
 [[OPT_FILLMNTDET.AGDR]]
 rem --- Get corresponding order detail line.
 	opeOrdDet_dev=fnget_dev("OPE_ORDDET")
@@ -292,7 +285,6 @@ rem --- Do not allow returns
 	endif
 
 rem --- For lot/serial items, item qty_picked must equal sum of lot/serial number qty_picked
-	callpoint!.setDevObject("lotser_item",lotser_item$)
 	if callpoint!.getDevObject("lotser_item")="Y" then
 		lotser_picked=0
 		optFillmntLsDet_dev=fnget_dev("OPT_FILLMNTLSDET")
@@ -391,14 +383,15 @@ lot_ser_check: rem --- Check for lotted/serialized item
                rem   OUT: lotser_item$
 rem ==========================================================================
 	lotser_item$="N"
-	lotser_flag$=callpoint!.getDevObject("lotser_flag")
-	if cvs(item_id$, 2)<>"" and pos(lotser_flag$ = "LS") then 
+	if cvs(item_id$, 2)<>""
 		ivm01_dev=fnget_dev("IVM_ITEMMAST")
 		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 		read record (ivm01_dev, key=firm_id$+item_id$, dom=*endif) ivm01a$
-		if ivm01a.lotser_item$="Y" then lotser_item$="Y"
+		if pos(ivm01a.lotser_flag$="LS") then lotser_item$="Y"
+		callpoint!.setDevObject("lotser_item",lotser_item$)
+		callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
 	endif
-	callpoint!.setDevObject("lotser_item",lotser_item$)
+
 
 	return
 

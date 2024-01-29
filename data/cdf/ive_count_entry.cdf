@@ -66,46 +66,27 @@ rem --- Inits
 
 	use ::ado_func.src::func
 
-	dim user_tpl$:"amt_mask:c(1*), ls:c(1), lotser_flag:c(1), this_item_lot_ser:u(1)," +
-:                "entered_flag:c(1), lotser_item:c(1), freeze_qty:n(1*), prev_cycle:c(2)"
+	dim user_tpl$:"amt_mask:c(1*), this_item_lot_ser:u(1)," +
+:                "entered_flag:c(1), lotser_flag:c(1), freeze_qty:n(1*), prev_cycle:c(2)"
 
 rem --- Open files
 
 	num_files=5
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVE_PHYSICAL", open_opts$[1]="OTA"
-	open_tables$[2]="IVS_PARAMS",   open_opts$[2]="OTA"
-	open_tables$[3]="IVM_ITEMMAST", open_opts$[3]="OTA"
-	open_tables$[4]="IVM_ITEMWHSE", open_opts$[4]="OTA"
-	open_tables$[5]="IVC_PHYSCODE", open_opts$[5]="OTA"
+	open_tables$[2]="IVM_ITEMMAST", open_opts$[2]="OTA"
+	open_tables$[3]="IVM_ITEMWHSE", open_opts$[3]="OTA"
+	open_tables$[4]="IVC_PHYSCODE", open_opts$[4]="OTA"
+	open_tables$[5]="IVM_LSMASTER", open_opts$[5]="OTA"
 
 	gosub open_tables
 
 	physical_dev = num(open_chans$[1])
-	params_dev   = num(open_chans$[2])
 
-	dim params_rec$:open_tpls$[2]
+rem --- Get IV amt mask
 
-rem --- Get IV params, set mask, lot/serial
-
-	find record (params_dev, key=firm_id$+"IV00", dom=std_missing_params) params_rec$
 	call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","A","",amt_mask$,0,0
 	user_tpl.amt_mask$ = amt_mask$
-	if pos(params_rec.lotser_flag$ = "LS") then ls$ = "Y" else ls$ = "N"
-	user_tpl.ls$ = ls$
-	user_tpl.lotser_flag$ = params_rec.lotser_flag$
-
-	if ls$ = "N" then
-		callpoint!.setColumnEnabled("IVE_COUNT_ENTRY.LOTSER_ITEM", -1)
-	endif
-
-rem --- Additional file opens
-
-	if ls$ = "Y" then
-		open_beg=1, open_end=1
-		open_tables$[1]="IVM_LSMASTER", open_opts$[1]="OTA"
-		gosub open_tables
-	endif
 
 rem --- Set at first record
 
@@ -354,7 +335,8 @@ rem ==========================================================================
 	dim itemmast_rec$:fnget_tpl$(item_file$)
 	find record (fnget_dev(item_file$), key=firm_id$+item$) itemmast_rec$
 
-	user_tpl.this_item_lot_ser = (user_tpl.ls$ = "Y" and itemmast_rec.lotser_item$ = "Y" and itemmast_rec.inventoried$ = "Y")
+	user_tpl.this_item_lot_ser = (pos(itemmast_rec.lotser_flag$="LS") and itemmast_rec.inventoried$ = "Y")
+	user_tpl.lotser_flag$=itemmast_rec.lotser_flag$
 
 	if user_tpl.this_item_lot_ser then
 		callpoint!.setColumnEnabled("IVE_COUNT_ENTRY.LOTSER_NO", 1)
@@ -436,7 +418,7 @@ print "in display_record"; rem debug
 	callpoint!.setColumnData("IVE_COUNT_ENTRY.COUNT_STRING", physical_rec.count_string$,1)
 
 	user_tpl.entered_flag$ = physical_rec.entered_flag$
-	user_tpl.lotser_item$  = physical_rec.lotser_item$
+	user_tpl.lotser_flag$  = physical_rec.lotser_flag$
 	user_tpl.freeze_qty   = physical_rec.freeze_qty
 
 	rem count$ = physical_rec.count_string$
@@ -475,12 +457,10 @@ find_record_new:
 	if new_record then
 print "record not found"; rem debug
 		user_tpl.entered_flag$ = "Y"
-		user_tpl.lotser_item$  = iff(user_tpl.this_item_lot_ser = 1, "Y", "N")
 		user_tpl.freeze_qty   = 1
 	endif
 
 	return
-
 
 rem ==========================================================================
 item_in_cycle: rem --- Is this item in the selected cycle?
@@ -519,7 +499,7 @@ print "in write_record"; rem debug
 
 	physical_rec.cutoff_date$  = callpoint!.getColumnData("IVE_COUNT_ENTRY.CUTOFF_DATE")
 	physical_rec.entered_flag$ = user_tpl.entered_flag$
-	physical_rec.lotser_item$  = user_tpl.lotser_item$
+	physical_rec.lotser_flag$  = user_tpl.lotser_flag$
 	physical_rec.count_string$ = callpoint!.getColumnData("IVE_COUNT_ENTRY.COUNT_STRING")
 	physical_rec.freeze_qty   = user_tpl.freeze_qty
 	physical_rec.act_phys_cnt = num(callpoint!.getColumnData("IVE_COUNT_ENTRY.ACT_PHYS_CNT"))

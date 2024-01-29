@@ -222,7 +222,7 @@ rem --- Main Read
         if format=4 or format=6 then 
             fromlf=0
             if include$="N" and quantity=0 then continue
-            if ls$="Y" and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
+            if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
                 read (ivm07_dev,key=ivm02a.firm_id$+ivm02a.warehouse_id$+ivm02a.item_id$,dom=*next)
 
             rem --- Read next lot/serial master

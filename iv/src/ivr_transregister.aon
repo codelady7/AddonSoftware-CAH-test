@@ -113,19 +113,8 @@ rem --- Parameters
     if gl$="Y" then 
 		call stbl("+DIR_PGM")+"adc_getmask.aon","GL_ACCOUNT","","","",g0$,0,account_length
     endif
-    
-    if pos(ivs01a.lotser_flag$="LS") then 
-        ls$="Y" 
-        
-        if ivs01a.lotser_flag$="L" then
-            lotser_text$=Translate!.getTranslation("AON___LOT:_")
-        else
-            lotser_text$=Translate!.getTranslation("AON___SERIAL#:_")
-        endif
-        
-    else 
-        ls$="N"
-    endif
+
+    lotser_text$=Translate!.getTranslation("AON_LOT/SERIAL_NO:_","Lot/Serial No: ",1)
     
     if pos(ivs01a.lifofifo$="LF") then lf$="Y" else lf$="N"
     
@@ -234,10 +223,10 @@ rem --- Column heading
 
 rem --- Additional File Opens
 
-    if ls$="Y" then
-        files$[20]="ivm-07",ids$[20]="IVM_LSMASTER"
-        files$[21]="ivm-17",ids$[21]="IVM_LSACT"
-    endif
+
+    files$[20]="ivm-07",ids$[20]="IVM_LSMASTER"
+    files$[21]="ivm-17",ids$[21]="IVM_LSACT"
+
     
     if lf$="Y" then
         files$[22]="ivm-04",ids$[22]="IVM_ITEMTIER"
@@ -329,7 +318,7 @@ rem --- Additional Reads
             
 rem --- Not lotted
 
-            if ls$="N" or ivm01a.lotser_item$<>"Y" or ivm01a.inventoried$<>"Y" then
+            if !pos(ivm01a.lotser_flag$="LS") or ivm01a.inventoried$<>"Y" then
             
 rem --- LIFO/FIFO?
 
@@ -367,7 +356,7 @@ rem --- Print detail line
             lotser$=""
             prev_total=prev_total+ive11a.total_cost
             if gl$="Y" then account$=fnmask$(ive11a.gl_account$(1,account_length),g0$)
-            if ls$="Y" and ivm01a.inventoried$="Y" then lotser$=ive11a.lotser_no$
+            if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then lotser$=ive11a.lotser_no$
             
             OutVect!.addItem(ive11a.warehouse_id$)
             OutVect!.addItem(fnmask$(ive11a.item_id$,ivIMask$))

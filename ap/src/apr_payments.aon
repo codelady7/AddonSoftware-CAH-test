@@ -235,7 +235,24 @@ rem --- Read next Check Detail (ape-04) record
         recs=recs+1
         read record (ape04_dev) ape04a$
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
+ 
+        rem --- Was this invoice previously paid via credit card?
+        redim apt01a$
+        readrecord(apt01_dev,key=k$,dom=*next)apt01a$
+        if cvs(apt01a.creditcard_id$,2)="" then
+            ccPaid=0
+        else
+            ccPaid=1
 
+            rem --- Get the original vendor
+            redim apm01a$
+            apm01a.firm_id$=apt01a.firm_id$
+            apm01a.vendor_id$=apt01a.orig_vendor$
+            apm01a.vendor_name$=nf$
+            findrecord(apm01_dev,key=apm01a.firm_id$+apm01a.vendor_id$,dom=*next)apm01a$
+            originalVendor$=fnmask$(apm01a.vendor_id$(1,vendor_size),m0$)+" "+apm01a.vendor_name$
+        endif
+       
     rem --- Level breaks
 
         if ape04a.ap_type$<>lasttype$ and multitypes then gosub type_break
@@ -247,12 +264,29 @@ rem --- Read next Check Detail (ape-04) record
         if retention retention$=str(ape04a.retention)
 
         OutVect!.addItem(vendor$)
-        OutVect!.addItem(name$)
+        if !ccpaid then
+            OutVect!.addItem(name$)
+        else
+            if name$<>"" then
+                OutVect!.addItem(name$)
+                xwk = fnblank(9) 
+            endif
+            OutVect!.addItem(originalVendor$)
+            if retention OutVect!.addItem(retention$)
+        endif
         OutVect!.addItem(ach$)
         OutVect!.addItem(ape04a.ap_inv_no$)
         OutVect!.addItem(fndate$(ape04a.invoice_date$))
-        OutVect!.addItem(fndate$(ape04a.inv_due_date$))
-        OutVect!.addItem(fndate$(ape04a.disc_date$))
+        if cvs(ape04a.inv_due_date$,2)<>"" then
+            OutVect!.addItem(fndate$(ape04a.inv_due_date$))
+        else
+            OutVect!.addItem("")
+        endif
+        if cvs(ape04a.disc_date$,2)<>"" then
+            OutVect!.addItem(fndate$(ape04a.disc_date$))
+        else
+            OutVect!.addItem("")
+        endif
         OutVect!.addItem(str(ape04a.invoice_amt))
         OutVect!.addItem(str(ape04a.discount_amt))
         OutVect!.addItem(str(ape04a.payment_amt)); rem payment

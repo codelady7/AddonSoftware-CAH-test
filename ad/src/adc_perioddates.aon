@@ -32,17 +32,17 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    num_files=2
-    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-    open_tables$[1]="GLS_PARAMS",open_opts$[1]="OTA@"
-    open_tables$[2]="GLS_CALENDAR",open_opts$[2]="OTA@"
-    
-    gosub open_tables
-    
-    gls01_dev=num(open_chans$[1])
-    gls_calendar_dev=num(open_chans$[2])
-    dim gls01a$:open_tpls$[1]
-    dim gls_calendar$:open_tpls$[2]
+    rem --- Using adc_fileopen.aon instead of bac_open_tables.bbj so files can be opened on new channels that can be closed on exit
+    files=2,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="gls_params",ids$[1]="GLS_PARAMS"
+    files$[2]="gls_calendar",ids$[2]="GLS_CALENDAR"
+
+    call stbl("+DIR_PGM")+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:                                   ids$[all],templates$[all],channels[all],batch,status
+
+    gls01_dev=channels[1];dim gls01a$:templates$[1]
+    gls_calendar_dev=channels[2];dim gls_calendar$:templates$[2]
 
 rem --- Retrieve parameter records
 
@@ -83,29 +83,6 @@ rem --- Done
 
     status=0
     goto std_exit
-   
-open_tables:rem --- Open Tables
-
-    call stbl("+DIR_SYP")+"bac_open_tables.bbj",
-:       open_beg,
-:       open_end,
-:       open_tables$[all],
-:       open_opts$[all],
-:       open_chans$[all],
-:       open_tpls$[all],
-:       table_chans$[all],
-:       open_batch,
-:       open_status$
-
-    if open_status$<>"" then
-        msg_id$="ENTRY_OPEN_ERROR"
-        dim msg_tokens$[1]
-        msg_tokens$[1]=open_status$
-        gosub disp_message
-        rdFuncSpace!=bbjAPI().getGroupNamespace().setValue("+build_task","OFF")
-        release
-    endif
-    return
 
 disp_message: rem --- Display Message Dialog
 
@@ -180,6 +157,9 @@ rem #endinclude std_missing_params.src
 rem #include std_exit.src
 
 std_exit: rem --- Standard called program exit (01Mar2006)
+
+    close(gls01_dev,err=*next)
+    close(gls_calendar_dev,err=*next)
 
     exit
 

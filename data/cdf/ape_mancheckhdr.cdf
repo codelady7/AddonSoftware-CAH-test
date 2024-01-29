@@ -848,6 +848,8 @@ rem --- Preventing manual check from being modified after it has been printed on
 		endif
 	endif
 
+	callpoint!.setColumnData("APE_MANCHECKHDR.VENDOR_NAME",apm01a.vendor_name$)
+
 [[APE_MANCHECKHDR.VENDOR_ID.BINP]]
 rem --- set devObject with AP Type and a temp vend indicator, so if we decide to set up a temporary vendor from here,
 rem --- we'll know which AP type to use, and we can automatically set the temp vendor flag in the vendor master

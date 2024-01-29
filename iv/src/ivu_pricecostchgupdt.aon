@@ -20,7 +20,6 @@ rem   *_REC$: A templated string to hold the record
 rem            0 = pricechg_rec$
 rem            1 = costchg_rec$
 rem            2 = pricerev_rec$
-rem      LS$: Y = Lots or Serial#'s, N = neither (cost only)
 
 rem --- Development Note: this should be three separate programs
 
@@ -135,22 +134,18 @@ rem --- Make changes to item/warehouse record
 
 rem --- Cost only: update Lot/Serial costs
 
-                if ls$="Y" then 
-
-                    read (lsmaster_dev,key=firm_id$+whse$+item$,dom=*next)
+                read (lsmaster_dev,key=firm_id$+whse$+item$,dom=*next)
+                
+                while more
+                    lsmaster_key$ = key(lsmaster_dev, end=*break)
+                    if pos(firm_id$+whse$+item$ = lsmaster_key$)<>1 break
                     
-                    while more
-                        lsmaster_key$ = key(lsmaster_dev, end=*break)
-                        if pos(firm_id$+whse$+item$ = lsmaster_key$)<>1 break
-                        
-                        extract record (lsmaster_dev, key=lsmaster_key$) lsmaster_rec$
-                        lsmaster_rec.unit_cost = costchg_rec.new_cost
-                        lsmaster_rec.std_cost  = costchg_rec.new_cost
-                        lsmaster_rec$ = field(lsmaster_rec$)
-                        write record (lsmaster_dev) lsmaster_rec$
-                    wend
-                    
-                endif
+                    extract record (lsmaster_dev, key=lsmaster_key$) lsmaster_rec$
+                    lsmaster_rec.unit_cost = costchg_rec.new_cost
+                    lsmaster_rec.std_cost  = costchg_rec.new_cost
+                    lsmaster_rec$ = field(lsmaster_rec$)
+                    write record (lsmaster_dev) lsmaster_rec$
+                wend
     
             else
                 if o0 = price_reversal then 

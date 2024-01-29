@@ -39,6 +39,17 @@ rem --- display formatted bank acct number (using MICR font if loaded on the cli
 		micr_acct$=cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_ACCT"),3)
 		gosub format_acct_no
 
+rem --- Disable and clear NXT_CHECK_NO and PP_PGM if this is NOT a checking account
+	if callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_TYPE")<>"C" then
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.NXT_CHECK_NO",0)
+		callpoint!.setColumnData("ADC_BANKACCTCODE.NXT_CHECK_NO","",1)
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.PP_PGM",0)
+		callpoint!.setColumnData("ADC_BANKACCTCODE.PP_PGM","",1)
+	else
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.NXT_CHECK_NO",1)
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.PP_PGM",1)
+	endif
+
 [[ADC_BANKACCTCODE.AREC]]
 rem --- init static text field that displays MICR
 
@@ -112,12 +123,15 @@ rem --- Reset micr account format if bank account number has changed
 	endif
 
 [[ADC_BANKACCTCODE.BNK_ACCT_TYPE.AVAL]]
-rem --- Disable and clear NXT_CHECK_NO if this is NOT a checking account
+rem --- Disable and clear NXT_CHECK_NO and PP_PGM if this is NOT a checking account
 	if callpoint!.getUserInput()<>"C" then
 		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.NXT_CHECK_NO",0)
 		callpoint!.setColumnData("ADC_BANKACCTCODE.NXT_CHECK_NO","",1)
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.PP_PGM",0)
+		callpoint!.setColumnData("ADC_BANKACCTCODE.PP_PGM","",1)
 	else
 		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.NXT_CHECK_NO",1)
+		callpoint!.setColumnEnabled("ADC_BANKACCTCODE.PP_PGM",1)
 	endif
 
 [[ADC_BANKACCTCODE.BSHO]]
@@ -172,6 +186,30 @@ rem --- default micr_acct to a # for each character of bank account number
 		if cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_ACCT"),3)="" 
 			bnk_acct_no$=cvs(callpoint!.getColumnData("ADC_BANKACCTCODE.BNK_ACCT_NO"),3)
 			callpoint!.setColumnData("ADC_BANKACCTCODE.MICR_ACCT",pad(callpoint!.getColumnData("ADC_BANKACCTCODE.MICR_ACCT"),len(bnk_acct_no$),"#"),1)
+		endif
+	endif
+
+[[ADC_BANKACCTCODE.PP_PGM.AVAL]]
+rem --- Verify program exists
+	pp_pgm$=cvs(callpoint!.getUserInput(),3)
+	if pp_pgm$<>"" then
+		pgmPath$=util.resolvePathStbls(pp_pgm$,err=*next)
+		if pgmPath$="" then
+			msg_id$="PROG_NOT_FOUND"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=pp_pgm$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+		resolvedPgmPath$=BBjAPI().getFileSystem().resolvePath(pgmPath$,err=*next)
+		if resolvedPgmPath$="" then
+			msg_id$="PROG_NOT_FOUND"
+			dim msg_tokens$[1]
+			msg_tokens$[1]=pgmPath$
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
 		endif
 	endif
 

@@ -109,7 +109,7 @@ rem --- Remaining initializations
 
     rem --- Open files
 
-        files=10,begfile=1,endfile=files
+        files=11,begfile=1,endfile=files
         dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
         files$[1]="gls_params",ids$[1]=files$[1]
         files$[2]="gls_suspense",ids$[2]=files$[2]
@@ -121,6 +121,7 @@ rem --- Remaining initializations
         if module$="IV" then files$[8]="ivs_params",ids$[8]=files$[8]
         if module$="PR" then files$[9]="prs_params",ids$[9]=files$[9]
         if module$="SF" then files$[10]="sfs_params",ids$[10]=files$[10]
+        files$[11]="gls_calendar",ids$[11]="GLS_CALENDAR"
         
         call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :           ids$[all],templates$[all],channels[all],batch,status
@@ -136,6 +137,7 @@ rem --- Remaining initializations
         ivs01_dev=channels[8]
         prs01_dev=channels[9]
         sfs01_dev=channels[10]
+        gls_calendar_dev=channels[11]
 
     rem --- Dimension string templates
 
@@ -146,16 +148,14 @@ rem --- Remaining initializations
         if module$="IV" then dim ivs01a$:templates$[8]
         if module$="PR" then dim prs01a$:templates$[9]
         if module$="SF" then dim sfs01a$:templates$[10]
+        dim gls_calendar$:templates$[11]
 
-        num_files=2
+        num_files=1
         dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
         open_tables$[1]="ADM_MODULES",open_opts$[1]="OTA"
-        open_tables$[2]="GLS_CALENDAR",open_opts$[2]="OTA"
         gosub open_tables
         adm04_dev=num(open_chans$[1]),adm04a_tpl$=open_tpls$[1]
         dim adm04a$:adm04a_tpl$
-        gls_calendar_dev=num(open_chans$[2])
-        dim gls_calendar$:open_tpls$[2]
 
     rem --- Retrieve GL parameter records
 
@@ -643,6 +643,7 @@ std_exit: rem --- Exit program
     close (adm19_dev,err=*next)
     close (glm03_dev,err=*next)
     close (glm06_dev,err=*next)
+    close (gls_calendar_dev,err=*next)
 
 	num_files=1
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]

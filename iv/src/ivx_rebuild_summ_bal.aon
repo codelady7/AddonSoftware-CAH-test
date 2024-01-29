@@ -67,7 +67,6 @@ rem --- Retrieve parameter records
     find record (ivs01a_dev,key=ivs01a_key$,err=std_missing_params) ivs01a$
     ivperiod$=ivs01a.current_per$
     ivyear$=ivs01a.current_year$
-    if pos(ivs01a.lotser_flag$="LS")>0 ls_firm_id$="Y" else ls_firm_id$="N"
 
 rem --- Initializations
 
@@ -138,7 +137,6 @@ rem --- Get On-Hand Quantity From ivm-02
 
 rem --- Position ivm-07
 
-	if ls_firm_id$<>"Y" then goto std_exit
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
     call pgmdir$+"adc_progress.aon","N","IVM_LSMASTER","","","",0,0,1,meter_num,status
 	total_recs=0

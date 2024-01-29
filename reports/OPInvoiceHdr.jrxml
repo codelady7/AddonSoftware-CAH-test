@@ -20,7 +20,6 @@
 	<parameter name="BARISTA_WD" class="java.lang.String"/>
 	<parameter name="LOGO_FILE" class="java.lang.String"/>
 	<parameter name="BATCH_MESSAGE" class="java.lang.String"/>
-	<parameter name="IVS_LOTSER_FLAG" class="java.lang.String"/>
 	<parameter name="AR_ADDRESS1" class="java.lang.String"/>
 	<parameter name="AR_ADDRESS2" class="java.lang.String"/>
 	<parameter name="AR_ADDRESS3" class="java.lang.String"/>
@@ -950,9 +949,6 @@
 				</subreportParameter>
 				<subreportParameter name="CUSTOMER_ID">
 					<subreportParameterExpression><![CDATA[$P{CUSTOMER_ID}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="IVS_LOTSER_FLAG">
-					<subreportParameterExpression><![CDATA[$P{IVS_LOTSER_FLAG}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="QTY_MASK_PATTERN">
 					<subreportParameterExpression><![CDATA[$P{QTY_MASK_PATTERN}]]></subreportParameterExpression>

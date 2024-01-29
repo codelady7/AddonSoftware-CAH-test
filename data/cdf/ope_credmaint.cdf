@@ -136,7 +136,7 @@ rem --- Uncommit Inventory
 		items$[2]=ope11a.item_id$
 		action$="UC"
 		refs[0]=ope11a.qty_ordered
-		if ivm_itemmast.lotser_item$<>"Y" or ivm_itemmast.inventoried$<>"Y"
+		if !pos(ivm_itemmast.lotser_flag$="LS") or ivm_itemmast.inventoried$<>"Y"
 			call "ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 			goto remove_line
 		else

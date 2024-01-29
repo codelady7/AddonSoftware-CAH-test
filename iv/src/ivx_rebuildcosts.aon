@@ -57,10 +57,8 @@ rem --- Retrieve parameter records
 
     ivs01a_key$=firm_id$+"IV00"
     find record (ivs01_dev,key=ivs01a_key$,err=std_missing_params) ivs01a$
-    ls$="N"
     iv_precision=num(ivs01a.precision$)
     method$=ivs01a.cost_method$
-    if pos(ivs01a.lotser_flag$="LS") then ls$="Y" else ls$="N"
 
 rem --- Initializations
 
@@ -68,15 +66,13 @@ rem --- Initializations
 
 rem --- Additional file opens
 
-    if ls$="Y"
-        files=1,begfile=1,endfile=files
-        files$[1]="ivm-07",ids$[1]="IVM_LSMASTER"
-        call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],
+    files=1,begfile=1,endfile=files
+    files$[1]="ivm-07",ids$[1]="IVM_LSMASTER"
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],
 :                               templates$[all],channels[all],batch,status
-        if status goto std_exit_no_update
-        ivm07_dev=channels[1]
-        dim ivm07a$:templates$[1]
-    endif
+    if status goto std_exit_no_update
+    ivm07_dev=channels[1]
+    dim ivm07a$:templates$[1]
 
 rem --- Options
 
@@ -105,7 +101,6 @@ rem --- Reset ivm-02 Unit Cost
 
 rem --- Position Lot/Serial Number file
 
-    if ls$="N" goto done
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
     call pgmdir$+"adc_progress.aon","NC","","","","",0,ivm07_dev,1,meter_num,status
     read (ivm07_dev,key=firm_id$,dom=*next)

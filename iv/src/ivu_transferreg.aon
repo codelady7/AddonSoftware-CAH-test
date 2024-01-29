@@ -35,6 +35,9 @@ rem --- Open/Lock files
     
     files$[11]="ivm-12",     ids$[11]="IVM_ITEMACT"
     files$[15]="ivt-04",     ids$[15]="IVT_ITEMTRAN"
+    files$[23]="ivm-07",     ids$[23]="IVM_LSMASTER"
+    files$[24]="ivm-17",     ids$[24]="IVM_LSACT"
+    files$[25]="ivt-01",     ids$[25]="IVT_LSTRANS"
 
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
@@ -61,12 +64,6 @@ rem --- Additional File Opens
         files$[20]="glm-01",       ids$[20]="GLM_ACCT"
         files$[21]="glt-04",       ids$[21]="GLE_DAILYDETAIL"
         files$[22]="arc_distcode", ids$[22]="ARC_DISTCODE"
-    endif
-    
-    if ls$="Y" then 
-        files$[23]="ivm-07", ids$[23]="IVM_LSMASTER"
-        files$[24]="ivm-17", ids$[24]="IVM_LSACT"
-        files$[25]="ivt-01", ids$[25]="IVT_LSTRANS"
     endif
     
     if lf$="Y" then
@@ -123,7 +120,7 @@ rem --- Inventory initializations
                 dim item$[3],refs$[20],refs[20]
                 
                 item$[2] = iveTransferDet.item_id$
-                if ls$="Y" then item$[3] = iveTransferDet.lotser_no$
+                item$[3] = iveTransferDet.lotser_no$
                 refs$[0] = iveTransferDet.trans_date$
                 refs$[2] = iveTransferDet.inv_xfer_no$
                 account$ = ""

@@ -515,7 +515,6 @@ rem --- Misc setup and qualification
 		params!.put("CUST_SIZE",str(cust_size))
 		params!.put("BARISTA_WD",dir(""))
         params!.put("LOGO_FILE",logo_filename$)
-		params!.put("IVS_LOTSER_FLAG",params_rec.lotser_flag$)
         params!.put("PICK_OR_QUOTE",pick_or_quote$)
         params!.put("PRINT_PRICES",print_prices$)
         params!.put("REPRINT",reprint$)

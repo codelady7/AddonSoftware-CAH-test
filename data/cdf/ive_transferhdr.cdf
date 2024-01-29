@@ -108,8 +108,6 @@ rem --- Open files
 
 rem --- Get IV parameter record
 	find record(ivs01_dev,key=firm_id$+"IV00",dom=std_missing_params) ivs01a$
-	callpoint!.setDevObject("lotser_flag",ivs01a.lotser_flag$)
-
 	precision num(ivs01a.precision$)
 
 rem --- Exit if not multi-warehouse

@@ -65,6 +65,13 @@ rem --- Is this a new invoice or an adjustment to an existing invoice?
 ap_inv_no$=callpoint!.getColumnData("POE_INVHDR.AP_INV_NO")
 gosub invoiceOrAdjustment
 
+rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id is blank.
+	if cvs(callpoint!.getColumnData("POE_INVHDR.CREDITCARD_ID"),2)="" then
+		callpoint!.setColumnEnabled("POE_INVHDR.CC_TRANS_DATE",0)
+	else
+		callpoint!.setColumnEnabled("POE_INVHDR.CC_TRANS_DATE",1)
+	endif
+
 [[POE_INVHDR.AOPT-GDIS]]
 pfx$=firm_id$+callpoint!.getColumnData("POE_INVHDR.AP_TYPE")+callpoint!.getColumnData("POE_INVHDR.VENDOR_ID")+callpoint!.getColumnData("POE_INVHDR.AP_INV_NO")
 dim dflt_data$[3,1]
@@ -266,6 +273,7 @@ callpoint!.setColumnData("<<DISPLAY>>.DIST_BAL","0")
 rem --- Re-enable disabled fields
 callpoint!.setColumnEnabled("POE_INVHDR.INV_DATE",1)
 callpoint!.setColumnEnabled("POE_INVHDR.NET_INV_AMT",1)
+callpoint!.setColumnEnabled("POE_INVHDR.CC_TRANS_DATE",0)
 rem --- disable opt buttons
 callpoint!.setOptionEnabled("INVD",0)
 callpoint!.setOptionEnabled("GDIS",0)
@@ -395,7 +403,7 @@ callpoint!.setOptionEnabled("INVB",0)
 
 [[POE_INVHDR.BTBL]]
 rem --- Open/Lock files
-files=18,begfile=1,endfile=files
+files=22,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 
 rem files$[1]="",options$[1]=""
@@ -416,6 +424,10 @@ files$[15]="APC_TERMSCODE",options$[15]="OTA"
 files$[16]="APC_TYPECODE",options$[16]="OTA"
 files$[17]="GLS_CALENDAR",options$[17]="OTA"
 files$[18]="POT_INVDET",options$[18]="OTA"
+files$[19]="APM_CCVEND",options$[19]="OTA"
+files$[20]="APE_INVOICEHDR",options$[20]="OTA"
+files$[21]="APE_CHECKS",options$[21]="OTA"
+files$[22]="APE_MANCHECKDET",options$[22]="OTA"
 
 call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :	begfile,
@@ -570,6 +582,159 @@ if dont_write$="Y"
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
 endif
+
+[[POE_INVHDR.CREDITCARD_ID.AVAL]]
+rem --- Skip if CREDITCARD_ID wasn't changed
+	ccID$=callpoint!.getUserInput()
+	if cvs(ccID$,2)=cvs(callpoint!.getDevObject("prior_CcID"),2) then break
+	callpoint!.setStatus("MODIFIED")
+
+rem --- Entered CREDITCARD_ID cannot be inactive.
+	if cvs(ccID$,2)<>"" then
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		findrecord(apmCcVend_dev,key=firm_id$+ccID$)apmCcVend$
+		if apmCcVend.code_inactive$="Y" then
+			msg_id$="AD_CODE_INACTIVE"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=cvs(ccID$,2)
+			msg_tokens$[2]=cvs(apmCcVend.cc_desc$,2)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+rem ---  Do NOT allow the AP_INV_NO if it already exists for the CREDITCARD_ID's Credit Card Vendor.
+	if cvs(ccID$,2)<>"" then
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		findrecord(apmCcVend_dev,key=firm_id$+ccID$)apmCcVend$
+		cc_aptype$=apmCcVend.cc_aptype$
+		cc_vendor$=apmCcVend.cc_vendor$
+
+		rem --- Check POE_INVHDR
+		ap_inv_no$=callpoint!.getColumnData("POE_INVHDR.AP_INV_NO")
+		poeInvHdr_dev=fnget_dev("POE_INVHDR")
+		foundInvoice=0
+		read(poeInvHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next); foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("DDM_TABLES-POE_INVHDR-DD_ATTR_WINT")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Check APE_INVOICEHDR
+		apeInvoiceHdr_dev=fnget_dev("APE_INVOICEHDR")
+		foundInvoice=0
+		read(apeInvoiceHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,knum="PRIMARY",dom=*next); foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("DDM_TABLES-APE_INVOICEHDR-DD_ATTR_WINT")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Check APE_CHECKS
+		apeChecks_dev=fnget_dev("APE_CHECKS")
+		foundInvoice=0
+		read(apeChecks_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next); foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("AON_CHECK")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Check APE_MANCHECKDET
+		apeManCheckDet_dev=fnget_dev("APE_MANCHECKDET")
+		read(apeManCheckDet_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,knum="AO_VEND_INV",dom=*next)
+		apeManCheckDet_key$=key(apeManCheckDet_dev,end=*next)
+		if pos(firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$=apeManCheckDet_key$)=1 then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			msg_tokens$[3]=Translate!.getTranslation("AON_MANUAL_CHECK")
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+
+		rem --- Check APT_INVOICEHDR
+		aptInvoiceHdr_dev=fnget_dev("APT_INVOICEHDR")
+		dim aptInvoiceHdr$:fnget_tpl$("APT_INVOICEHDR")
+		foundInvoice=0
+		read(aptInvoiceHdr_dev,key=firm_id$+cc_aptype$+cc_vendor$+ap_inv_no$,dom=*next)aptInvoiceHdr$; foundInvoice=1
+		if foundInvoice then
+			msg_id$="AP_CC_INV_USED"
+			dim msg_tokens$[3]
+			msg_tokens$[1]=cvs(ap_inv_no$,2)
+			msg_tokens$[2]=cvs(cc_vendor$,2)
+			if aptInvoiceHdr.invoice_bal=0 then
+				msg_tokens$[3]=Translate!.getTranslation("AON_INVOICE_HISTORY")
+			else
+				msg_tokens$[3]=Translate!.getTranslation("AON_CHECK")
+			endif
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id is blank.
+	if cvs(ccID$,2)="" then
+		callpoint!.setColumnEnabled("POE_INVHDR.CC_TRANS_DATE",0)
+		callpoint!.setColumnData("POE_INVHDR.CC_TRANS_DATE","",1)
+	else
+		callpoint!.setColumnEnabled("POE_INVHDR.CC_TRANS_DATE",1)
+		if cvs(callpoint!.getColumnData("POE_INVHDR.CC_TRANS_DATE"),2)="" then
+			invoice_date$=callpoint!.getColumnData("POE_INVHDR.INV_DATE")
+			callpoint!.setColumnData("POE_INVHDR.CC_TRANS_DATE",invoice_date$,1)
+		endif
+	endif
+
+[[POE_INVHDR.CREDITCARD_ID.BINP]]
+rem --- Capture starting/current creditcard_id
+	callpoint!.setDevObject("prior_CcID",callpoint!.getColumnData("POE_INVHDR.CREDITCARD_ID"))
+
+[[POE_INVHDR.CREDITCARD_ID.BINQ]]
+rem --- In lookup only show CREDITCARD_IDs that are active.
+	dim filter_defs$[1,2]
+	filter_defs$[0,0]="POE_INVHDR.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+
+	call STBL("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev, 
+:		form!,
+:		"AP_CREDITCARD_LK",
+:		"DEFAULT",
+:		table_chans$[all],
+:		sel_key$,
+:		filter_defs$[all]
+
+	if sel_key$<>""
+		apmCcVend_dev=fnget_dev("APM_CCVEND")
+		dim apmCcVend$:fnget_tpl$("APM_CCVEND")
+		thisKey$=sel_key$(1,pos("^"=sel_key$)-1)
+		findrecord(apmCcVend_dev,key=thisKey$)apmCcVend$
+		callpoint!.setColumnData("POE_INVHDR.CREDITCARD_ID",apmCcVend.creditcard_id$,1)
+	endif	
+	callpoint!.setStatus("ACTIVATE-ABORT")
 
 [[POE_INVHDR.INVOICE_AMT.AVAL]]
 callpoint!.setColumnData("POE_INVHDR.NET_INV_AMT", callpoint!.getUserInput())

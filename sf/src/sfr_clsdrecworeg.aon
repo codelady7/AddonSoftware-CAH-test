@@ -131,7 +131,6 @@ rem --- Get IV parameters
     desc[1]=num(ivs01a.desc_len_01$)
     desc[2]=num(ivs01a.desc_len_02$)
     desc[3]=num(ivs01a.desc_len_03$)
-	ls$=ivs01a.lotser_flag$
 	
 rem --- Additional File Opens
 

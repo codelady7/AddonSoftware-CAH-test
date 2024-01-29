@@ -59,13 +59,15 @@ rem --- Initializations
 
 rem --- Request user approval to update the daily detail
 
-    msg_id$="AON_UPDT_QUERY"
-    dim x$:stbl("+SYSINFO_TPL")
-    dim msg_tokens$[1]
-    x$=stbl("+SYSINFO")                                                            
-    msg_tokens$[1]=x.task_desc$
-    gosub disp_message
-    if msg_opt$<>"Y" goto std_exit_1 
+    if !gluClsdYrAdj then
+        msg_id$="AON_UPDT_QUERY"
+        dim x$:stbl("+SYSINFO_TPL")
+        dim msg_tokens$[1]
+        x$=stbl("+SYSINFO")                                                            
+        msg_tokens$[1]=x.task_desc$
+        gosub disp_message
+        if msg_opt$<>"Y" goto std_exit_1
+    endif
 
 rem --- Start progress meter and position files
 
@@ -235,8 +237,12 @@ rem #include std_end.src
 std_exit: rem --- Standard program end (01Mar2006)
 
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,ignore_status
-    msg_id$="UPDATE_COMPLETE"
-    gosub disp_message
+
+    if !gluClsdYrAdj then
+        msg_id$="UPDATE_COMPLETE"
+        gosub disp_message
+    endif
+    
 std_exit_1: rem --- from adc_yes_no if user says Translate!.getTranslation("AON_NO")
     run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
     release

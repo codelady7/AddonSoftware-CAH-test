@@ -170,7 +170,7 @@ rem		where_clause$=where_clause$+"mast.wo_location = '  ' AND "
     select$=select$+"     , mast.closed_date"+$0a$
     select$=select$+"     , mast.description_01"+$0a$
     select$=select$+"     , mast.description_02"+$0a$
-    select$=select$+"     , mast.lotser_item"+$0a$
+    select$=select$+"     , mast.lotser_flag"+$0a$
     select$=select$+"     , mast.sch_prod_qty"+$0a$
     select$=select$+"     , mast.qty_cls_todt"+$0a$
     select$=select$+"     , mast.cls_cst_todt"+$0a$
@@ -584,7 +584,7 @@ material_details: rem --- Materials Here
 lotserial_details: rem --- Lot/Serial Here
 
     if record_id_field$="M"
-        if ivm01a.lotser_item$+ivm01a.inventoried$="YY" and pos(ivs01a.lotser_flag$="LS")<>0 then 
+        if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then 
 rem --- Serial Numbers Here
             if read_tpl.wo_status$<>"C" or read_tpl.closed_date$>sf_prevper_enddate$ then 
                 lstran_dev=sft11a_dev
@@ -599,7 +599,7 @@ rem --- Serial Numbers Here
                 if pos(sftran.firm_id$+sftran.wo_location$+sftran.wo_no$+sftran.trans_date$+sftran.trans_seq$=k1$)=1 then
                     read record (lstran_dev) lstran$ 
 rem --- Print It Here
-                    if ivs01a.lotser_flag$="S" then lotser$=Translate!.getTranslation("AON_SERIAL:_") else lotser$=Translate!.getTranslation("AON_LOT:_")
+                    lotser$=Translate!.getTranslation("AON_LOT/SERIAL_NO:_")
                     xwk=fnblank(3)
                     
 					rem -- Columns$[3,x]

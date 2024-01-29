@@ -81,7 +81,7 @@ rem --- Read next Issue Inventory Transaction (SFE_WOTRANS) record
             
             rem --- Update ivm-02 Warehouse Record
             updated_unit_cost=sfe25a.issue_cost
-            if pos(p9$="LS")=0 or ivm01a.lotser_item$<>"Y" or ivm01a.inventoried$<>"Y" then
+            if !pos(ivm01a.lotser_flag$="LS") or ivm01a.inventoried$<>"Y" then
                 gosub update_warehouse_record
             endif
 
@@ -115,7 +115,7 @@ rem --- Read next Issue Inventory Transaction (SFE_WOTRANS) record
 			rem --- Note: WO Transaction Cross Reference has been replaced by SQL query in code that needs the data
 
             rem --- Update Lotted/Serialized Issues (SFE_WOLSISSU, sfe-14)
-            if pos(p9$="LS") and ivm01a.lotser_item$="Y" and ivm01a.inventoried$="Y" then
+            if pos(ivm01a.lotser_flag$="LS") and ivm01a.inventoried$="Y" then
                 t1=0,t2=0
                 sfe14_trip$=sfe25a.firm_id$+sfe25a.wo_location$+sfe25a.wo_no$+sfe25a.internal_seq_no$
                 read (sfe14_dev,key=sfe14_trip$,dom=*next)

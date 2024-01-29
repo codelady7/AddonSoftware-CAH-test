@@ -1,3 +1,69 @@
+[[IVC_ITEMLOOKUP.ACUS]]
+rem --- Process custom event -- used in this pgm to select lot and display info.
+rem
+rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
+rem
+rem --- This routine is executed when callbacks have been set to run a "custom event".
+rem
+rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
+rem --- of event it is... in this case, we're toggling checkboxes on/off in form grid control.
+
+rem --- Get the control ID of the event
+
+	dim gui_event$:tmpl(gui_dev)
+	dim notify_base$:noticetpl(0,0)
+	gui_event$=SysGUI!.getLastEventString()
+	ctl_ID=dec(gui_event.ID$)
+
+	rem --- Get Grid's ID
+
+	gridSearch!=callpoint!.getDevObject("gridSearch")
+	wctl=gridSearch!.getID()
+
+	rem --- This is a grid event
+
+	if ctl_ID=wctl
+	
+		if gui_event.code$="N"
+			notify_base$=notice(gui_dev,gui_event.x%)
+			dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
+			notice$=notify_base$
+		endif
+		
+		numcols=gridSearch!.getNumColumns()
+		vectSearch!=callpoint!.getDevObject("vectSearch")
+		curr_row=dec(notice.row$)
+		curr_col=dec(notice.col$)
+		
+		switch notice.code
+			case 19; rem grid_key_press
+			case 14; rem grid_mouse_up
+				callpoint!.setDevObject("selected_item",firm_id$+gridSearch!.getCellText(curr_row,1))
+				gosub get_inventory_detail		
+			break
+		swend
+	endif
+
+[[IVC_ITEMLOOKUP.ARER]]
+rem --- set default search type to I (by item)
+callpoint!.setColumnData("IVC_ITEMLOOKUP.SEARCH_BY","I")
+
+dflt_meth!=callpoint!.getDevObject("default_meth")
+if dflt_meth!<>null() callpoint!.setColumnData("IVC_ITEMLOOKUP.SEARCH_BY",dflt_meth!)
+
+dflt_start!=callpoint!.getDevObject("default_start")
+if dflt_start!<>null! 
+	callpoint!.setColumnData("IVC_ITEMLOOKUP.SEARCH_KEY",dflt_start!)
+	search_dev=fnget_dev("@IVM_ITEMSYN")
+	dim searchrec$:fnget_tpl$("@IVM_ITEMSYN")
+	search_knum$="PRIMARY"
+	search_text$=dflt_start!
+	search_field$="ITEM_SYNONYM"
+	gosub load_and_display_grid
+endif
+
+callpoint!.setStatus("REFRESH")
+
 [[IVC_ITEMLOOKUP.ASIZ]]
 rem --- Maintain minimum Form size
 	minFormWidth=950
@@ -33,88 +99,12 @@ rem --- Resize item info window
 rem --- Resize item group box
 	grpBox!=infoWin!.getControl(15999)
 	grpBox!.setSize(w.w-10,w.h-5)
+
 [[IVC_ITEMLOOKUP.ASVA]]
 rem --- set find_item only if OK is clicked
 
 callpoint!.setDevObject("find_item",callpoint!.getDevObject("selected_item"))
-[[IVC_ITEMLOOKUP.BEND]]
-rem --- since files were forced open on new channels, close to keep tidy
 
-	num_files=5
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	
-	open_tables$[1]="IVM_ITEMSYN",   open_opts$[1]="@C"
-	open_tables$[2]="IVM_ITEMWHSE",   open_opts$[2]="@C"
-	open_tables$[3]="IVS_PARAMS",   open_opts$[3]="@C"
-	open_tables$[4]="IVM_ITEMMAST",   open_opts$[4]="@C"	
-	open_tables$[5]="IVM_ITEMMAST",   open_opts$[5]="@C"
-	gosub open_tables
-	
-[[IVC_ITEMLOOKUP.SEARCH_KEY.AVAL]]
-rem --- set search key/file according to user's selection in the 'search by' listbutton.
-rem --- and search text entered here.
-rem --- load/display grid
-
-search_by$=callpoint!.getColumnData("IVC_ITEMLOOKUP.SEARCH_BY")
-switch pos(search_by$="ISTV")
-	case 1; rem by item
-		search_dev=fnget_dev("@IVM_ITEMMAST")
-		dim searchrec$:fnget_tpl$("@IVM_ITEMMAST")
-		search_knum$="PRIMARY"
-		search_text$=callpoint!.getUserInput()
-		search_field$="ITEM_ID"
-		gosub load_and_display_grid
-	break
-	case 2; rem by synonym
-		search_dev=fnget_dev("@IVM_ITEMSYN")
-		dim searchrec$:fnget_tpl$("@IVM_ITEMSYN")
-		search_knum$="PRIMARY"
-		search_text$=callpoint!.getUserInput()
-		search_field$="ITEM_SYNONYM"
-		gosub load_and_display_grid
-	break
-	case 3; rem by product type
-		search_dev=fnget_dev("@IVM_ITEMMAST")
-		dim searchrec$:fnget_tpl$("@IVM_ITEMMAST")
-		search_knum$="AO_PROD_ITEM"
-		search_text$=callpoint!.getUserInput()
-		search_field$="PRODUCT_TYPE"
-		gosub load_and_display_grid
-	break
-	case 4; rem by vendor
-		sql_prep$="SELECT ivm_itemvend.vendor_id, ivm_itemvend.item_id, apm_vendmast.vendor_name, ivm_itemmast.item_desc "
-		sql_prep$=sql_prep$+"FROM ivm_itemvend "
-		sql_prep$=sql_prep$+"INNER JOIN apm_vendmast ON ivm_itemvend.firm_id = apm_vendmast.firm_id "
-		sql_prep$=sql_prep$+"AND ivm_itemvend.vendor_id = apm_vendmast.vendor_id "
-		sql_prep$=sql_prep$+"INNER JOIN ivm_itemmast on ivm_itemvend.firm_id = ivm_itemmast.firm_id "
-		sql_prep$=sql_prep$+"AND ivm_itemvend.item_id = ivm_itemmast.item_id "
-		sql_prep$=sql_prep$+"WHERE ivm_itemvend.firm_id = '" + firm_id$ + "' "
-		sql_prep$=sql_prep$+"AND apm_vendmast.vendor_name like '" + callpoint!.getRawUserInput() + "%' "
-		sql_prep$=sql_prep$+"ORDER BY apm_vendmast.vendor_name"
-		gosub load_and_display_grid_sql		
-	break
-	case default
-	break
-swend
-[[IVC_ITEMLOOKUP.ARER]]
-rem --- set default search type to I (by item)
-callpoint!.setColumnData("IVC_ITEMLOOKUP.SEARCH_BY","I")
-
-dflt_meth!=callpoint!.getDevObject("default_meth")
-if dflt_meth!<>null() callpoint!.setColumnData("IVC_ITEMLOOKUP.SEARCH_BY",dflt_meth!)
-
-dflt_start!=callpoint!.getDevObject("default_start")
-if dflt_start!<>null! 
-	callpoint!.setColumnData("IVC_ITEMLOOKUP.SEARCH_KEY",dflt_start!)
-	search_dev=fnget_dev("@IVM_ITEMSYN")
-	dim searchrec$:fnget_tpl$("@IVM_ITEMSYN")
-	search_knum$="PRIMARY"
-	search_text$=dflt_start!
-	search_field$="ITEM_SYNONYM"
-	gosub load_and_display_grid
-endif
-
-callpoint!.setStatus("REFRESH")
 [[IVC_ITEMLOOKUP.AWIN]]
 rem --- open files
 
@@ -274,51 +264,68 @@ rem --- Create Item Information window
 	callpoint!.setDevObject("infoWin",infoWin!)			
 
 	util.resizeWindow(Form!, SysGui!)
-[[IVC_ITEMLOOKUP.ACUS]]
-rem --- Process custom event -- used in this pgm to select lot and display info.
-rem
-rem --- See basis docs notice() function, noticetpl() function, notify event, grid control notify events for more info.
-rem
-rem --- This routine is executed when callbacks have been set to run a "custom event".
-rem
-rem --- Analyze gui_event$ and notice$ to see which control's callback triggered the event, and what kind
-rem --- of event it is... in this case, we're toggling checkboxes on/off in form grid control.
 
-rem --- Get the control ID of the event
+[[IVC_ITEMLOOKUP.BEND]]
+rem --- since files were forced open on new channels, close to keep tidy
 
-	dim gui_event$:tmpl(gui_dev)
-	dim notify_base$:noticetpl(0,0)
-	gui_event$=SysGUI!.getLastEventString()
-	ctl_ID=dec(gui_event.ID$)
-
-	rem --- Get Grid's ID
-
-	gridSearch!=callpoint!.getDevObject("gridSearch")
-	wctl=gridSearch!.getID()
-
-	rem --- This is a grid event
-
-	if ctl_ID=wctl
+	num_files=5
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
-		if gui_event.code$="N"
-			notify_base$=notice(gui_dev,gui_event.x%)
-			dim notice$:noticetpl(notify_base.objtype%,gui_event.flags%)
-			notice$=notify_base$
-		endif
-		
-		numcols=gridSearch!.getNumColumns()
-		vectSearch!=callpoint!.getDevObject("vectSearch")
-		curr_row=dec(notice.row$)
-		curr_col=dec(notice.col$)
-		
-		switch notice.code
-			case 19; rem grid_key_press
-			case 14; rem grid_mouse_up
-				callpoint!.setDevObject("selected_item",firm_id$+gridSearch!.getCellText(curr_row,1))
-				gosub get_inventory_detail		
-			break
-		swend
-	endif
+	open_tables$[1]="IVM_ITEMSYN",   open_opts$[1]="@C"
+	open_tables$[2]="IVM_ITEMWHSE",   open_opts$[2]="@C"
+	open_tables$[3]="IVS_PARAMS",   open_opts$[3]="@C"
+	open_tables$[4]="IVM_ITEMMAST",   open_opts$[4]="@C"	
+	open_tables$[5]="IVM_ITEMMAST",   open_opts$[5]="@C"
+	gosub open_tables
+	
+
+[[IVC_ITEMLOOKUP.SEARCH_KEY.AVAL]]
+rem --- set search key/file according to user's selection in the 'search by' listbutton.
+rem --- and search text entered here.
+rem --- load/display grid
+
+search_by$=callpoint!.getColumnData("IVC_ITEMLOOKUP.SEARCH_BY")
+switch pos(search_by$="ISTV")
+	case 1; rem by item
+		search_dev=fnget_dev("@IVM_ITEMMAST")
+		dim searchrec$:fnget_tpl$("@IVM_ITEMMAST")
+		search_knum$="PRIMARY"
+		search_text$=callpoint!.getUserInput()
+		search_field$="ITEM_ID"
+		gosub load_and_display_grid
+	break
+	case 2; rem by synonym
+		search_dev=fnget_dev("@IVM_ITEMSYN")
+		dim searchrec$:fnget_tpl$("@IVM_ITEMSYN")
+		search_knum$="PRIMARY"
+		search_text$=callpoint!.getUserInput()
+		search_field$="ITEM_SYNONYM"
+		gosub load_and_display_grid
+	break
+	case 3; rem by product type
+		search_dev=fnget_dev("@IVM_ITEMMAST")
+		dim searchrec$:fnget_tpl$("@IVM_ITEMMAST")
+		search_knum$="AO_PROD_ITEM"
+		search_text$=callpoint!.getUserInput()
+		search_field$="PRODUCT_TYPE"
+		gosub load_and_display_grid
+	break
+	case 4; rem by vendor
+		sql_prep$="SELECT ivm_itemvend.vendor_id, ivm_itemvend.item_id, apm_vendmast.vendor_name, ivm_itemmast.item_desc "
+		sql_prep$=sql_prep$+"FROM ivm_itemvend "
+		sql_prep$=sql_prep$+"INNER JOIN apm_vendmast ON ivm_itemvend.firm_id = apm_vendmast.firm_id "
+		sql_prep$=sql_prep$+"AND ivm_itemvend.vendor_id = apm_vendmast.vendor_id "
+		sql_prep$=sql_prep$+"INNER JOIN ivm_itemmast on ivm_itemvend.firm_id = ivm_itemmast.firm_id "
+		sql_prep$=sql_prep$+"AND ivm_itemvend.item_id = ivm_itemmast.item_id "
+		sql_prep$=sql_prep$+"WHERE ivm_itemvend.firm_id = '" + firm_id$ + "' "
+		sql_prep$=sql_prep$+"AND apm_vendmast.vendor_name like '" + callpoint!.getRawUserInput() + "%' "
+		sql_prep$=sql_prep$+"ORDER BY apm_vendmast.vendor_name"
+		gosub load_and_display_grid_sql		
+	break
+	case default
+	break
+swend
+
 [[IVC_ITEMLOOKUP.<CUSTOM>]]
 rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
 
@@ -428,7 +435,6 @@ rem --- get/display Inventory Detail info
 	dim ivm_itemwhse$:fnget_tpl$("@IVM_ITEMWHSE")
 
 	read record (ivs_params_dev,key=firm_id$+"IV00",dom=*next)ivs_params$
-	ls$=ivs_params.lotser_flag$
 
 	read (ivm_itemwhse_dev,key=callpoint!.getDevObject("selected_item"),knum="AO_ITEM_WH",dom=*next)
 	on_hand=0
@@ -474,7 +480,9 @@ rem --- get/display Inventory Detail info
 	w!.setText(func.formatDate(ivm_itemmast.lstrec_date$))
 	w!=infoWin!.getControl( num( callpoint!.getDevObject("last_issue") ) )
 	w!.setText(func.formatDate(ivm_itemmast.lstiss_date$))
-	switch pos(ls$="LS")
+
+	w!=infoWin!.getControl( num( callpoint!.getDevObject("lot_ser") ) )
+	switch pos(ivm_itemmast.lotser_flag$="LS")
 		case 1
 			ls_text$=Translate!.getTranslation("AON_LOTTED")
 		break
@@ -482,10 +490,9 @@ rem --- get/display Inventory Detail info
 			ls_text$=Translate!.getTranslation("AON_SERIALIZED")
 		break
 		case default
-			ls_text$=""
+			ls_text$=Translate!.getTranslation("AON_NO")
 		break
 	swend
-	w!=infoWin!.getControl( num( callpoint!.getDevObject("lot_ser") ) )	
 	w!.setText(ls_text$)
 	w!=infoWin!.getControl( num( callpoint!.getDevObject("on_hand") ) )	
 	w!.setText(str(on_hand))
@@ -543,3 +550,6 @@ rem --- Format date from YYYYMMDD to MM/DD/YY
 rem ==========================================================================
 #include [+ADDON_LIB]std_missing_params.aon
 rem ==========================================================================
+
+
+

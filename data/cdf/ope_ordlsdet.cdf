@@ -340,14 +340,6 @@ rem --- Inits
 	user_tpl.left_to_ord = 0; rem --- get initialized in AGDS
 	user_tpl.prev_ord = 0
 
-rem --- Set Lot/Serial button up properly
-
-	switch pos(callpoint!.getDevObject("lotser_flag")="LS")
-		case 1; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_LOT_LOOKUP")); break
-		case 2; callpoint!.setOptionText("LLOK",Translate!.getTranslation("AON_SERIAL_LOOKUP")); break
-		case default; callpoint!.setOptionEnabled("LLOK",0); break
-	swend
-
 rem --- Set a flag for non-inventoried items
 	
 	item$ = callpoint!.getDevObject("item")
