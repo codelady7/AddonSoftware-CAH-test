@@ -1758,7 +1758,7 @@ rem --- Initialize "kit" DevObject
 
 		rem --- Initialize UNIT_PRICE for newly entered kits
 		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
-			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+			callpoint!.setDevObject("orderDate",user_tpl.order_date$)
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 
@@ -2448,37 +2448,37 @@ rem ==========================================================================
 
 	if callpoint!.getDevObject("kit")<>"Y" then
 		rem --- Pricing a non-kitted item
-	dim pc_files[6]
-	pc_files[1] = fnget_dev("IVM_ITEMMAST")
-	pc_files[2] = fnget_dev("IVM_ITEMWHSE")
-	pc_files[3] = fnget_dev("IVM_ITEMPRIC")
-	pc_files[4] = fnget_dev("IVC_PRICCODE")
-	pc_files[5] = fnget_dev("ARS_PARAMS")
-	pc_files[6] = fnget_dev("IVS_PARAMS")
+		dim pc_files[6]
+		pc_files[1] = fnget_dev("IVM_ITEMMAST")
+		pc_files[2] = fnget_dev("IVM_ITEMWHSE")
+		pc_files[3] = fnget_dev("IVM_ITEMPRIC")
+		pc_files[4] = fnget_dev("IVC_PRICCODE")
+		pc_files[5] = fnget_dev("ARS_PARAMS")
+		pc_files[6] = fnget_dev("IVS_PARAMS")
 
-	call stbl("+DIR_PGM")+"opc_pricing.aon",
-:		pc_files[all],
-:		firm_id$,
-:		wh$,
-:		item$,
-:		user_tpl.price_code$,
-:		cust$,
-:		user_tpl.order_date$,
-:		user_tpl.pricing_code$,
-:		qty_ord*conv_factor,
-:		typeflag$,
-:		price,
-:		disc,
-:		status
+		call stbl("+DIR_PGM")+"opc_pricing.aon",
+:			pc_files[all],
+:			firm_id$,
+:			wh$,
+:			item$,
+:			user_tpl.price_code$,
+:			cust$,
+:			user_tpl.order_date$,
+:			user_tpl.pricing_code$,
+:			qty_ord*conv_factor,
+:			typeflag$,
+:			price,
+:			disc,
+:			status
 
-	if status=999 then
-		exitto std_exit
-	else
-		price=price*conv_factor
-	endif
+		if status=999 then
+			exitto std_exit
+		else
+			price=price*conv_factor
+		endif
 	else
 		rem --- Pricing a kitted item
-		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+		callpoint!.setDevObject("orderDate",user_tpl.order_date$)
 		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 		callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
 
@@ -2686,8 +2686,8 @@ rem ==========================================================================
 
 		if !pos(ivm_itemmast.lotser_flag$="LS") or ivm_itemmast.inventoried$<>"Y" then
 			if callpoint!.getDevObject("kit")<>"Y" then
-			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-		else
+				call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+			else
 				rem --- Skip the kit, and do its components instead.
 				optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
 				dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
@@ -3002,8 +3002,8 @@ rem ==========================================================================
 			if pos(ivm01a.lotser_flag$="LS") then 
 				lotted$="Y"
 				callpoint!.setDevObject("lotser_flag",ivm01a.lotser_flag$)
+			endif
 		endif
-	endif
 	endif
 
 	return

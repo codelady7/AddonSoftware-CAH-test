@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invkitdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invkitdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invkitdet">2460278</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20240124</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20240124</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">175302</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20240131</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20240131</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">123150</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invkitdet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invkitdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.opt_invkitdet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.opt_invkitdet">G</DD_ATTR_FTYP>
@@ -2677,7 +2677,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet013">20231129</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet013">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet013">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invkitdet013">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invkitdet013"></DD_ATTR_CTLY>
@@ -2779,7 +2779,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet015">20231129</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet015"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet015">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invkitdet015">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invkitdet015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invkitdet015"></DD_ATTR_CTLY>
@@ -4156,7 +4156,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet042">20231129</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet042">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invkitdet042">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invkitdet042"></DD_ATTR_CTLY>
@@ -4207,7 +4207,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.opt_invkitdet043">20231129</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.opt_invkitdet043">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.opt_invkitdet043">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.opt_invkitdet043"></DD_ATTR_CTLY>
@@ -4521,7 +4521,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet001">inn_unit_cost_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet001">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_invkitdet001"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet001"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet001">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.opt_invkitdet002">
 			<DD_TABLE_ALIAS id="ddm_table_disp.opt_invkitdet002">OPT_INVKITDET   </DD_TABLE_ALIAS>
@@ -4544,7 +4544,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet002">inn_qty_ordered_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_invkitdet002"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet002">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet002">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.opt_invkitdet003">
 			<DD_TABLE_ALIAS id="ddm_table_disp.opt_invkitdet003">OPT_INVKITDET   </DD_TABLE_ALIAS>
@@ -4567,7 +4567,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet003">inn_unit_price_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_invkitdet003"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet003"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet003">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.opt_invkitdet004">
 			<DD_TABLE_ALIAS id="ddm_table_disp.opt_invkitdet004">OPT_INVKITDET   </DD_TABLE_ALIAS>
@@ -4590,7 +4590,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet004">inn_qty_backord_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_invkitdet004"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet004"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet004">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 		<RECORD id="ddm_table_disp.opt_invkitdet005">
 			<DD_TABLE_ALIAS id="ddm_table_disp.opt_invkitdet005">OPT_INVKITDET   </DD_TABLE_ALIAS>
@@ -4613,7 +4613,7 @@
 			<DD_ATTR_CTLN id="ddm_table_disp.opt_invkitdet005">inn_qty_shipped_dsp</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_disp.opt_invkitdet005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_RADG>
-			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet005"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_disp.opt_invkitdet005">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
@@ -4643,10 +4643,100 @@
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetitem_idbinq">ITEM_ID         </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetitem_idbinq">BINQ</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetum_soldaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetum_soldaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetum_soldaval">UM_SOLD         </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetum_soldaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetum_soldbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetum_soldbinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetum_soldbinp">UM_SOLD         </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetum_soldbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetstd_list_prcbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetstd_list_prcbinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetstd_list_prcbinp">STD_LIST_PRC    </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetstd_list_prcbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetext_priceaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetext_priceaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetext_priceaval">EXT_PRICE       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetext_priceaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetext_priceavec">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetext_priceavec">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetext_priceavec">EXT_PRICE       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetext_priceavec">AVEC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetext_pricebinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetext_pricebinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetext_pricebinp">EXT_PRICE       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetext_pricebinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetunit_cost_dspaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetunit_cost_dspaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetunit_cost_dspaval">UNIT_COST_DSP   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetunit_cost_dspaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_column_cpro.opt_invkitdetqty_ordered_dspaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_ordered_dspaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_ordered_dspaval">QTY_ORDERED_DSP </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_ordered_dspaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_ordered_dspavec">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_ordered_dspavec">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_ordered_dspavec">QTY_ORDERED_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_ordered_dspavec">AVEC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_ordered_dspbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_ordered_dspbinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_ordered_dspbinp">QTY_ORDERED_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_ordered_dspbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetunit_price_dspaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetunit_price_dspaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetunit_price_dspaval">UNIT_PRICE_DSP  </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetunit_price_dspaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetunit_price_dspavec">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetunit_price_dspavec">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetunit_price_dspavec">UNIT_PRICE_DSP  </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetunit_price_dspavec">AVEC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetunit_price_dspbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetunit_price_dspbinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetunit_price_dspbinp">UNIT_PRICE_DSP  </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetunit_price_dspbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_backord_dspaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_backord_dspaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_backord_dspaval">QTY_BACKORD_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_backord_dspaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_backord_dspavec">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_backord_dspavec">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_backord_dspavec">QTY_BACKORD_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_backord_dspavec">AVEC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_backord_dspbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_backord_dspbinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_backord_dspbinp">QTY_BACKORD_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_backord_dspbinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_shipped_dspaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_shipped_dspaval">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_shipped_dspaval">QTY_SHIPPED_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_shipped_dspaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_shipped_dspavec">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_shipped_dspavec">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_shipped_dspavec">QTY_SHIPPED_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_shipped_dspavec">AVEC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.opt_invkitdetqty_shipped_dspbinp">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.opt_invkitdetqty_shipped_dspbinp">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.opt_invkitdetqty_shipped_dspbinp">QTY_SHIPPED_DSP </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.opt_invkitdetqty_shipped_dspbinp">BINP</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
