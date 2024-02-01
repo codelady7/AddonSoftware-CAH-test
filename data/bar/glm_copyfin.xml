@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.glm_copyfin">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.glm_copyfin">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.glm_copyfin">GL </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.glm_copyfin">23.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.glm_copyfin">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.glm_copyfin">0A4B6F1AFACAA23839493BB3A75C8637</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_copyfin">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_copyfin">20070925</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_copyfin">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_copyfin">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_copyfin">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_copyfin">20240201</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_copyfin">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_copyfin">142908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_copyfin"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glm_copyfin"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_copyfin"></DD_ATTR_DKNM>

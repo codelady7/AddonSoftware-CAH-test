@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apw_positivepay">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apw_positivepay">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apw_positivepay">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apw_positivepay">24.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apw_positivepay">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apw_positivepay"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apw_positivepay">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apw_positivepay">20231023</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apw_positivepay">20231025</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apw_positivepay">20231025</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apw_positivepay">113958</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apw_positivepay">20240201</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apw_positivepay">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apw_positivepay">142908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apw_positivepay"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.apw_positivepay"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apw_positivepay"></DD_ATTR_DKNM>
@@ -58,12 +58,69 @@
 			<DD_ATTR_PADG id="ddm_tables.apw_positivepay">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
+	<ALIAS id="ddm_table_opts">
+		<ID id="ddm_table_opts">DDM_TABLE_OPTS</ID>
+		<RECORD id="ddm_table_opts.apw_positivepaya">
+			<DD_TABLE_ALIAS id="ddm_table_opts.apw_positivepaya">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.apw_positivepaya">A</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.apw_positivepayn">
+			<DD_TABLE_ALIAS id="ddm_table_opts.apw_positivepayn">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.apw_positivepayn">N</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.apw_positivepayp">
+			<DD_TABLE_ALIAS id="ddm_table_opts.apw_positivepayp">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.apw_positivepayp">P</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.apw_positivepayu">
+			<DD_TABLE_ALIAS id="ddm_table_opts.apw_positivepayu">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.apw_positivepayu">U</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.apw_positivepayv">
+			<DD_TABLE_ALIAS id="ddm_table_opts.apw_positivepayv">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.apw_positivepayv">V</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.apw_positivepayr">
+			<DD_TABLE_ALIAS id="ddm_table_opts.apw_positivepayr">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.apw_positivepayr">r</DD_ATTR_OPTS>
+		</RECORD>
+	</ALIAS>
 	<ALIAS id="ddm_table_tpls">
 		<ID id="ddm_table_tpls">DDM_TABLE_TPLS</ID>
 		<RECORD id="ddm_table_tpls.apw_positivepay">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apw_positivepay">APW_POSITIVEPAY </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apw_positivepay"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.apw_positivepay">firm_id:c(2),bnk_acct_cd:c(10),check_no:c(7),check_date:c(8),comp_or_void:c(1),bnk_acct_no:c(20),firm_name:c(40),vendor_name:c(30),payment_amt:n(7)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apw_positivepaybnk_acct_cdadc_bankacctcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apw_positivepaybnk_acct_cdadc_bankacctcode">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apw_positivepaybnk_acct_cdadc_bankacctcode">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apw_positivepaybnk_acct_cdadc_bankacctcode">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apw_positivepaybnk_acct_cdadc_bankacctcode">FK_APW_POSITIVEPAY_BNK_ACCT_CD_ADC_BANKACCTCODE                                                                                                                                                                                                                </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">APW_POSITIVEPAY </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">ADC_BANKACCTCODE</REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apw_positivepaybnk_acct_cdadc_bankacctcode0002">BNK_ACCT_CD     </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -157,7 +214,7 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay001"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay001"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay001"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay001"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay001">1</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay001"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay001">FIRM_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay001"></DD_ATTR_FONT>
@@ -168,7 +225,7 @@
 			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay001"></DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay001"></DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay001"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay001"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay001">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay001"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay002">
@@ -208,19 +265,19 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay002"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay002"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay002"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay002"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay002">2</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay002"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay002">BNK_ACCT_CD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay002"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay002"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay002">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay002">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay002"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay002"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay002"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay002">3001</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay002">dis_bnk_acct_cd</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay002">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay002"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay002"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay002"></DD_ATTR_BTNS>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay002">Y</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay002">F</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay003">
 			<DD_TABLE_ALIAS id="ddm_table_cols.apw_positivepay003">APW_POSITIVEPAY </DD_TABLE_ALIAS>
@@ -259,18 +316,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay003"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay003"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay003"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay003"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay003">3</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay003"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay003">CHECK_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay003"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay003"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay003">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay003">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay003"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay003"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay003"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay003">3002</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay003">ine_check_no</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay003">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay003"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay003"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay003">Y</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay003"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay004">
@@ -310,19 +367,19 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay004"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay004"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay004"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay004"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay004">4</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay004"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay004">CHECK_DATE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay004"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay004"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay004">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay004">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay004"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay004"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay004"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay004">3003</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay004">ind_check_date</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay004">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay004"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay004"></DD_ATTR_RKEY>
-			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay004"></DD_ATTR_BTNS>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay004">N</DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay004">C</DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay005">
 			<DD_TABLE_ALIAS id="ddm_table_cols.apw_positivepay005">APW_POSITIVEPAY </DD_TABLE_ALIAS>
@@ -361,18 +418,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay005"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay005"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay005"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay005"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay005">5</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay005"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay005">COMP_OR_VOID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay005"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay005"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay005">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay005">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay005"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay005"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay005"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay005">3004</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay005">ine_comp_or_void</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay005">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay005"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay005"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay005">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay005"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay006">
@@ -412,18 +469,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay006"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay006"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay006"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay006"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay006">6</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay006"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay006">BNK_ACCT_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay006"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay006"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay006">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay006">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay006"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay006"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay006"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay006">3005</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay006">ine_bnk_acct_no</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay006">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay006"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay006"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay006">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay006"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay007">
@@ -463,18 +520,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay007"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay007"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay007"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay007"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay007">7</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay007"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay007">FIRM_NAME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay007"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay007"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay007">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay007">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay007"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay007"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay007"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay007">3006</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay007">ine_firm_name</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay007">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay007"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay007"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay007">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay007"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay008">
@@ -514,18 +571,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay008"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay008"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay008"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay008"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay008">8</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay008"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay008">VENDOR_NAME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay008"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay008"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay008">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay008">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay008"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay008"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay008"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay008">3007</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay008">ine_vendor_name</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay008">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay008"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay008"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay008">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay008"></DD_ATTR_BTNS>
 		</RECORD>
 		<RECORD id="ddm_table_cols.apw_positivepay009">
@@ -565,18 +622,18 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.apw_positivepay009"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.apw_positivepay009"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.apw_positivepay009"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay009"></DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.apw_positivepay009">9</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.apw_positivepay009"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.apw_positivepay009">PAYMENT_AMT</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.apw_positivepay009"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.apw_positivepay009"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.apw_positivepay009">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.apw_positivepay009">0</DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay009"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay009"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay009"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.apw_positivepay009">3008</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.apw_positivepay009">inn_payment_amt</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.apw_positivepay009">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.apw_positivepay009"></DD_ATTR_RADG>
-			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay009"></DD_ATTR_RKEY>
+			<DD_ATTR_RKEY id="ddm_table_cols.apw_positivepay009">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.apw_positivepay009"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>

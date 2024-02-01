@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.adm_procmaster"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.adm_procmaster">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.adm_procmaster">AD </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.adm_procmaster">23.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.adm_procmaster">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.adm_procmaster">3049CDE190EDA31F2875AC1BD90D36EC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.adm_procmaster">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.adm_procmaster">20070305</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.adm_procmaster">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.adm_procmaster">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.adm_procmaster">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.adm_procmaster">20240201</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.adm_procmaster">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.adm_procmaster">142908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.adm_procmaster"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.adm_procmaster">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.adm_procmaster"></DD_ATTR_DKNM>

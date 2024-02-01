@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.glx_clsdyradjdet">N</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.glx_clsdyradjdet">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.glx_clsdyradjdet">GL </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.glx_clsdyradjdet">23.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.glx_clsdyradjdet">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.glx_clsdyradjdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glx_clsdyradjdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glx_clsdyradjdet">20230912</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjdet">20230912</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjdet">20230912</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjdet">175452</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glx_clsdyradjdet">20240201</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glx_clsdyradjdet">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glx_clsdyradjdet">142908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glx_clsdyradjdet"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.glx_clsdyradjdet">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.glx_clsdyradjdet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glx_clsdyradjdet"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.glx_clsdyradjdet"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.glx_clsdyradjdet">G</DD_ATTR_FTYP>
@@ -140,6 +140,60 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.glx_clsdyradjdet">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.glx_clsdyradjdet"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.glx_clsdyradjdet">firm_id:c(2),journal_id:c(2),trans_id:c(10),line_no:c(3*),account:c(10),post_memo:c(30),debit_amt:n(12*),credit_amt:n(12*),units:n(7*),memo_1024:c(1024*=1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.glx_clsdyradjdetaccountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glx_clsdyradjdetaccountglm_acct">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glx_clsdyradjdetaccountglm_acct">ACCOUNT         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glx_clsdyradjdetaccountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glx_clsdyradjdetaccountglm_acct">FK_GLX_CLSDYRADJDET_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                           </TABLE_REF_NAME>
+		</RECORD>
+		<RECORD id="ddm_table_ref.glx_clsdyradjdetjournal_idglc_journalcode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.glx_clsdyradjdetjournal_idglc_journalcode">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.glx_clsdyradjdetjournal_idglc_journalcode">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.glx_clsdyradjdetjournal_idglc_journalcode">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.glx_clsdyradjdetjournal_idglc_journalcode">FK_GLX_CLSDYRADJDET_JOURNAL_ID_GLC_JOURNALCODE                                                                                                                                                                                                                 </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">ACCOUNT         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">ACCOUNT         </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetaccountglm_acct0002">ACCOUNT         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">GLX_CLSDYRADJDET</DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">JOURNAL_ID      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">GLC_JOURNALCODE </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">JOURNAL_ID      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.glx_clsdyradjdetjournal_idglc_journalcode0002">JOURNAL_ID      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -429,7 +483,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjdet005">20230912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjdet005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjdet005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet005">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjdet005">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjdet005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjdet005"></DD_ATTR_CTLY>
@@ -480,7 +534,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjdet006">20230912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjdet006"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjdet006"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet006">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet006">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjdet006">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjdet006"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjdet006"></DD_ATTR_CTLY>
@@ -531,7 +585,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjdet007">20230912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjdet007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjdet007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet007">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjdet007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjdet007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjdet007"></DD_ATTR_CTLY>
@@ -582,7 +636,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjdet008">20230912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjdet008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjdet008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet008">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet008">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjdet008">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjdet008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjdet008"></DD_ATTR_CTLY>
@@ -633,7 +687,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjdet009">20230912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjdet009"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjdet009"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet009">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet009">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjdet009">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjdet009"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjdet009"></DD_ATTR_CTLY>
@@ -684,7 +738,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.glx_clsdyradjdet010">20230912</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.glx_clsdyradjdet010"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.glx_clsdyradjdet010"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet010">/dev_projects/aon2400dev/aon/;C:/dev_projects/aon2400dev/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.glx_clsdyradjdet010">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.glx_clsdyradjdet010">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.glx_clsdyradjdet010"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.glx_clsdyradjdet010"></DD_ATTR_CTLY>

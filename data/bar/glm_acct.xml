@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.glm_acct"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.glm_acct">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.glm_acct">GL </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.glm_acct">23.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.glm_acct">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.glm_acct">7BF72C176100CB915982E0D83A98F97E</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.glm_acct">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.glm_acct">20060703</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.glm_acct">20230329</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.glm_acct">20230328</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glm_acct">184746</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.glm_acct">20240201</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.glm_acct">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.glm_acct">142908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glm_acct"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glm_acct">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glm_acct"></DD_ATTR_DKNM>

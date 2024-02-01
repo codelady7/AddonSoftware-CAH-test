@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.apc_typecode"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.apc_typecode">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.apc_typecode">AP </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.apc_typecode">23.0</ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.apc_typecode">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.apc_typecode">44F184B82D7466071C7729391E50A547</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apc_typecode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apc_typecode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apc_typecode">20230508</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apc_typecode">20230508</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apc_typecode">123322</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apc_typecode">20240201</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apc_typecode">20240129</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apc_typecode">142908</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apc_typecode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.apc_typecode">/dev_projects/aon_dev1/aon/;C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.apc_typecode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apc_typecode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.apc_typecode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.apc_typecode">T</DD_ATTR_FTYP>
@@ -102,6 +102,36 @@
 			<DD_TABLE_ALIAS id="ddm_table_tpls.apc_typecode">APC_TYPECODE    </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.apc_typecode"></DD_FILE_NAME>
 			<DD_TABLE_TPL id="ddm_table_tpls.apc_typecode">firm_id:c(2),record_id_a:c(1),ap_type:c(2),code_desc:c(20),ap_dist_code:c(2),payment_grp:c(2),ap_terms_code:c(2),gl_account:c(10),irs1099_type_box:c(6),code_inactive:c(1)</DD_TABLE_TPL>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_ref">
+		<ID id="ddm_table_ref">DDM_TABLE_REF</ID>
+		<RECORD id="ddm_table_ref.apc_typecodegl_accountglm_acct">
+			<DD_TABLE_ALIAS id="ddm_table_ref.apc_typecodegl_accountglm_acct">APC_TYPECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.apc_typecodegl_accountglm_acct">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.apc_typecodegl_accountglm_acct">GLM_ACCT        </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.apc_typecodegl_accountglm_acct">FK_APC_TYPECODE_GL_ACCOUNT_GLM_ACCT                                                                                                                                                                                                                            </TABLE_REF_NAME>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_refcol">
+		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
+		<RECORD id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">APC_TYPECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apc_typecodegl_accountglm_acct0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">APC_TYPECODE    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">GL_ACCOUNT      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">GLM_ACCT        </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">GL_ACCOUNT      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.apc_typecodegl_accountglm_acct0002">GL_ACCOUNT      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

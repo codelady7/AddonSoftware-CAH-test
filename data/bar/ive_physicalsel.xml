@@ -17,11 +17,11 @@
 			<RESTRICT_AUTOADD id="ddm_tables.ive_physicalsel">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.ive_physicalsel">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.ive_physicalsel">IV </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.ive_physicalsel">23.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.ive_physicalsel">24.0      </ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.ive_physicalsel"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ive_physicalsel">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ive_physicalsel">20090204</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ive_physicalsel">20240129</DD_LSTREV_DATE>
+			<DD_LSTREV_DATE id="ddm_tables.ive_physicalsel">20240201</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ive_physicalsel">20240129</DD_LSTSYNC_DATE>
 			<DD_LSTSYNC_TIME id="ddm_tables.ive_physicalsel">160836</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ive_physicalsel"></DD_ATTR_ATAB>
