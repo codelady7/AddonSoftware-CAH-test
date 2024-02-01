@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.ope_invdet">20090501</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ope_invdet">20240201</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ope_invdet">20240201</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_invdet">103326</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_invdet">113224</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_invdet">OPT_INVDET      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_invdet">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_invdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -63,7 +63,7 @@
 		<RECORD id="ddm_table_aopt.ope_invdet01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_invdet01">OPE_INVDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_invdet01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet01">&Serial Entry</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_invdet01">&Lot/Serial Entry</DD_ATTR_AOPT>
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_invdet01">LENT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_invdet01">B</DD_ATTR_AOPT_FM>
 		</RECORD>
