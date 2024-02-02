@@ -1,10 +1,41 @@
 =======================================================================================================================================
-Report Branch: AddonSoftware Development Build
+ Report Date:   2024-02-02
+ Report Branch: AddonSoftware 24.00
+ Last Release:  AddonSoftware 23.06
 =======================================================================================================================================
-Development builds are generated daily.
 
-AddonSoftware Co-op Developers can access code changes and bug fixes for the Development Builds via Git.
+23.06 released 1/22/2024
+BBjBaristaDemos2306_01-18-2024_1754.jar
+=======================================================================================================================================
 
-Information about code changes and bug fixes for RELEASE builds can be found at:
+Revision: 4623281e47e17c85344d68818dee4ab4ee55961c
+Author: Christine <chawkins@basis.com>
+Date: 1/19/2024 6:03:35 PM
+Message:
+Bug 10783 - AP - Payment Selection puts out invalid "to" email string when using Payment Authorization
 
-https://bugs.basis.cloud
+(cherry picked from commit 1d58d5a11227dc32553ac226832b18f60f8cb466)
+----
+Modified: data/bar/ape_payselect.xml
+Modified: data/cdf/ape_payselect.cdf
+=======================================================================================================================================
+
+Revision: be4441eaf6880aa113dc4966bd69f3bdfbe43486
+Author: Christine <chawkins@basis.com>
+Date: 1/29/2024 4:22:07 PM
+Message:
+Bug 10782 - IV - Physical Select, Cancel, Print, and Register can throw err 42
+ - added test for rows!.size()>0 in the toggle_selected subroutine
+----
+Modified: data/bar/ive_physicalcan.xml
+Modified: data/bar/ive_physicalsel.xml
+Modified: data/bar/ivr_physprint.xml
+Modified: data/bar/ivr_physreg.xml
+Modified: data/cdf/ive_physicalcan.cdf
+Modified: data/cdf/ive_physicalsel.cdf
+Modified: data/cdf/ivr_physprint.cdf
+Modified: data/cdf/ivr_physreg.cdf
+
+=======================================================================================================================================
+
+
