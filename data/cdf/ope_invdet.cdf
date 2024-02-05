@@ -258,8 +258,9 @@ rem --- Initialize "kit" DevObject
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 		callpoint!.setOptionEnabled("RCPR",0)
 	else
-		callpoint!.setDevObject("kit","")
+		callpoint!.setDevObject("kit","N")
 	endif
+	callpoint!.setDevObject("priced_kit","N")
 
 rem --- Disable by line type (Needed because Barista is skipping Line Code)
 
@@ -294,6 +295,7 @@ rem --- Set item price if item and whse exist
 		if start_block then
 			find record (fnget_dev(file$), key=firm_id$+wh$+item$, dom=*endif) itemwhse$
 			user_tpl.item_price = itemwhse.cur_price
+			if ivm01a.kit$="Y" and itemwhse.cur_price<>0 then callpoint!.setDevObject("priced_kit","Y")
 		endif
 	endif
 
@@ -1752,12 +1754,17 @@ rem --- Initialize "kit" DevObject
 		endif
 
 		callpoint!.setDevObject("kit","Y")
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		if ivm02a.cur_price<>0 then
+			callpoint!.setDevObject("priced_kit","Y")
+		else
+			callpoint!.setDevObject("priced_kit","N")
+			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
+		endif
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP",0)
 		callpoint!.setOptionEnabled("RCPR",0)
 
-		rem --- Initialize UNIT_PRICE for newly entered kits
-		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" then
+		rem --- Initialize UNIT_PRICE for newly entered non-priced kits
+		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" and callpoint!.getDevObject("priced_kit")="N" then
 			callpoint!.setDevObject("orderDate",user_tpl.order_date$)
 			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
@@ -1777,6 +1784,7 @@ rem --- Initialize "kit" DevObject
 		endif
 	else
 		callpoint!.setDevObject("kit","")
+		callpoint!.setDevObject("priced_kit","N")
 	endif
 
 rem --- Enable/disable KITS button
@@ -2446,8 +2454,8 @@ rem ==========================================================================
 		return
 	endif
 
-	if callpoint!.getDevObject("kit")<>"Y" then
-		rem --- Pricing a non-kitted item
+	if callpoint!.getDevObject("kit")<>"Y" and callpoint!.getDevObject("priced_kit")="Y" then
+		rem --- Pricing a non-kitted item, or a priced kitted item
 		dim pc_files[6]
 		pc_files[1] = fnget_dev("IVM_ITEMMAST")
 		pc_files[2] = fnget_dev("IVM_ITEMWHSE")
@@ -2477,7 +2485,7 @@ rem ==========================================================================
 			price=price*conv_factor
 		endif
 	else
-		rem --- Pricing a kitted item
+		rem --- Pricing a non-priced kitted item
 		callpoint!.setDevObject("orderDate",user_tpl.order_date$)
 		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
 		callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
