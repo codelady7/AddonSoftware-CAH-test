@@ -35,7 +35,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    num_files = 17
+    num_files = 18
     open_beg  = 1
     open_end  = num_files
 
@@ -55,6 +55,7 @@ rem --- Open/Lock files
     open_tables$[15]="ARS_CREDIT",   open_opts$[15]="OTA"
     open_tables$[16]="IVS_PARAMS",   open_opts$[16]="OTA"
     open_tables$[17]="OPC_TAXCODE",   open_opts$[17]="OTA"
+    open_tables$[18]="IVM_ITEMWHSE",  open_opts$[18]="OTA"
 
     gosub open_tables
 
@@ -72,6 +73,7 @@ rem --- Open/Lock files
     ars01c_dev=num(open_chans$[15])
     ivs01a_dev=num(open_chans$[16])
     opm06a_dev=num(open_chans$[17])
+    ivmItemWhse_dev=num(open_chans$[18])
 
 rem --- Dimension string templates
 
@@ -79,7 +81,7 @@ rem --- Dimension string templates
     dim ope01a$:open_tpls$[7],optInvKitDet$:open_tpls$[8],ope03a$:open_tpls$[9],ope04a$:open_tpls$[10]
     dim ope11a$:open_tpls$[11],ope21a$:open_tpls$[12],opm02a$:open_tpls$[13]
     dim ars01a$:open_tpls$[14],ars01c$:open_tpls$[15],ivs01a$:open_tpls$[16]
-    dim opm06a$:open_tpls$[17]
+    dim opm06a$:open_tpls$[17],ivmItemWhse$:open_tpls$[18]
 
 rem --- Assign form input values to local variables
 
@@ -170,7 +172,10 @@ rem --- Header loop
             endif
             
             rem --- Get the item master record
+            redim ivm01a$
             readrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
+            redim ivmItemWhse$
+            readrecord(ivmItemWhse_dev,key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next)ivmItemWhse$
 
             if pos(opm02a.line_type$="NOM")=0
                 if opm02a.dropship$<>"Y" and ivm01a.kit$<>"Y" then
@@ -208,6 +213,7 @@ rem --- Header loop
 
             ope11a.commit_flag$="Y"
             ope11a.pick_flag$="N"
+            x5=ope11a.qty_shipped
             ope11a.qty_shipped=ope11a.qty_ordered
             x6=ope11a.ext_price
             x7=ope11a.taxable_amt
@@ -223,9 +229,15 @@ rem --- Header loop
             endif
 
             gosub Taxable_Check
-            ope01a.taxable_amt=ope01a.taxable_amt+ope11a.taxable_amt-x7
-            ope01a.total_sales=ope01a.total_sales+ope11a.ext_price-x6
-            ope01a.total_cost=ope01a.total_cost+unit_cost*ope11a.qty_shipped
+            rem --- For non-priced kits use components
+            if ivm01a.kit$<>"Y" or (ivm01a.kit$="Y" and ivmItemWhse.cur_price<>0) then
+                ope01a.taxable_amt=ope01a.taxable_amt+ope11a.taxable_amt-x7
+                ope01a.total_sales=ope01a.total_sales+ope11a.ext_price-x6
+            endif
+            rem --- For all kits use components
+            if ivm01a.kit$<>"Y" then
+                ope01a.total_cost=ope01a.total_cost+ope11a.unit_cost*(ope11a.qty_shipped-x5)
+            endif
             precision num(ivs01a.precision$)
             ope11a.mod_user$=sysinfo.user_id$
             ope11a.mod_date$=date(0:"%Yd%Mz%Dz")
@@ -253,7 +265,10 @@ rem --- Header loop
                     rem --- Update this component's record
                     optInvKitDet.commit_flag$="Y"
                     optInvKitDet.pick_flag$="N"
+                    x5=optInvKitDet.qty_shipped
                     optInvKitDet.qty_shipped=optInvKitDet.qty_ordered
+                    x6=optInvKitDet.ext_price
+                    x7=optInvKitDet.taxable_amt
                     precision 2
                     optInvKitDet.ext_price=optInvKitDet.unit_price*optInvKitDet.qty_shipped
 
@@ -267,6 +282,13 @@ rem --- Header loop
                     optInvKitDet.mod_time$=date(0:"%Hz%mz")
                     optInvKitDet$=field(optInvKitDet$)
                     writerecord(optInvKitDet_dev)optInvKitDet$
+
+                    rem --- Added to invoice amounts
+                    if ivmItemWhse.cur_price=0 then
+                        ope01a.taxable_amt=ope01a.taxable_amt+optInvKitDet.taxable_amt-x7
+                        ope01a.total_sales=ope01a.total_sales+optInvKitDet.ext_price-x6
+                    endif
+                    ope01a.total_cost=ope01a.total_cost+optInvKitDet.unit_cost*(optInvKitDet.qty_shipped-x5)
                 wend
             endif
 
