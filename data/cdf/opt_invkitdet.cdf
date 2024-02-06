@@ -260,16 +260,6 @@ rem --- Initialize detail line for the line_code
 
 	callpoint!.setDevObject("item_wh_failed",1)
 
-rem --- Disable/enable buttons
-	callpoint!.setOptionEnabled("RCPR",0)
-	callpoint!.setOptionEnabled("ADDL",0)
-	if callpoint!.isEditMode() then
-		callpoint!.setOptionEnabled("COMM",1)
-	else
-		callpoint!.setOptionEnabled("COMM",0)
-	endif
-	callpoint!.setStatus("REFRESH")
-
 [[OPT_INVKITDET.ASHO]]
 rem --- Disable grid for Invoice History Inquiry
 	if callpoint!.getDevObject("disable_grid")<>null() and callpoint!.getDevObject("disable_grid")="Y" then
@@ -1325,8 +1315,7 @@ rem --- Disable/enable Extended Price
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"OPT_INVKITDET.EXT_PRICE",0)
 	endif
 
-	if pos(opc_linecode.line_type$="SP")>0 and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))<>0 and
-:	callpoint!.isEditMode() then
+	if pos(opc_linecode.line_type$="SP")>0 and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))<>0 then
 		callpoint!.setOptionEnabled("RCPR",1)
 	else
 		callpoint!.setOptionEnabled("RCPR",0)
@@ -1351,8 +1340,8 @@ rem --- Disable/enable UM Sold
 
 rem --- Disable/enable displayed unit price and quantity ordered
 	if pos(opc_linecode.line_type$="NSP") then
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", callpoint!.isEditMode())
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_ORDERED_DSP", callpoint!.isEditMode())
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 1)
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_ORDERED_DSP", 1)
 	else
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_PRICE_DSP", 0)
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_ORDERED_DSP", 0)
@@ -1365,7 +1354,7 @@ rem --- Disable/enable unit cost (can't just enable/disable this field by line t
 	else
 		if opc_linecode.line_type$="N"
 			rem --- always have cost enabled for Nonstock
-			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP", callpoint!.isEditMode())
+			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP", 1)
 		else				
 			rem --- Standard or sPecial line 
 			rem --- note: when item id is entered, cost will get enabled in that AVAL if S or P and cost = 0 (or dropshippable)
@@ -1388,7 +1377,7 @@ rem --- Disable qty shipped if necessary
 	gosub able_qtyshipped
 
 rem --- Enable Comment button
-	if callpoint!.isEditMode() then callpoint!.setOptionEnabled("COMM",1)
+	callpoint!.setOptionEnabled("COMM",1)
 
 	return
 
@@ -1402,7 +1391,7 @@ rem ==========================================================================
 :	then
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_BACKORD_DSP", 0)
 	else
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_BACKORD_DSP", callpoint!.isEditMode())
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_BACKORD_DSP", 1)
 
 		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) = "Y" then
 			callpoint!.setColumnData("OPT_INVKITDET.QTY_BACKORD", "0")
@@ -1418,7 +1407,7 @@ rem ==========================================================================
 	if pos(callpoint!.getDevObject("component_line_type")="NSP") and
 :	callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG") = "Y"
 :	then
-		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_SHIPPED_DSP", callpoint!.isEditMode())
+		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_SHIPPED_DSP", 1)
 	else
 		callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_SHIPPED_DSP", 0)
 	endif
@@ -1458,8 +1447,7 @@ rem ==========================================================================
 		warn  = 0
 		gosub check_item_whse
 
-		if !callpoint!.getDevObject("item_wh_failed") and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) and
-:		callpoint!.isEditMode() then
+		if !callpoint!.getDevObject("item_wh_failed") and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")) then
 			callpoint!.setOptionEnabled("RCPR",1)
 		else
 			callpoint!.setOptionEnabled("RCPR",0)
@@ -1478,7 +1466,7 @@ rem ==========================================================================
 		gosub check_item_whse
 
 		if (!callpoint!.getDevObject("item_wh_failed")and num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))) or
-:		callpoint!.getDevObject("component_line_type") = "O" and callpoint!.isEditMode() then
+:		callpoint!.getDevObject("component_line_type") = "O" then
 			callpoint!.setOptionEnabled("ADDL",1)
 		else
 			callpoint!.setOptionEnabled("ADDL",0)
