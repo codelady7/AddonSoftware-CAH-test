@@ -2707,7 +2707,7 @@ rem ==========================================================================
 		return
 	endif
 
-	if callpoint!.getDevObject("kit")<>"Y" and callpoint!.getDevObject("priced_kit")="Y" then
+	if callpoint!.getDevObject("kit")<>"Y" or callpoint!.getDevObject("priced_kit")="Y" then
 		rem --- Pricing a non-kitted item, or a priced kitted item
 		dim pc_files[6]
 		pc_files[1] = fnget_dev("IVM_ITEMMAST")
