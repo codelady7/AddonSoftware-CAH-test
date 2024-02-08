@@ -1,3 +1,7 @@
+[[OPT_INVKITDET.ADEL]]
+rem --- Set Kit Component grid's kit_detail_changed flag
+	callpoint!.setDevObject("kit_details_changed","Y")
+
 [[OPT_INVKITDET.AGDR]]
 rem --- Disable by line type
 	line_code$ = callpoint!.getColumnData("OPT_INVKITDET.LINE_CODE")
@@ -75,8 +79,8 @@ rem --- Warehouse and Item must be correct, don't let user leave corrupt row
 
 rem --- Returns
 	if num( callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP") ) < 0 then
-		callpoint!.setColumnData( "<<DISPLAY>>.QTY_SHIPPED_DSP", callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
-		callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP", "0")
+		callpoint!.setColumnData( "<<DISPLAY>>.QTY_SHIPPED_DSP", callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"),1)
+		callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP", "0",1)
 	endif
 
 rem --- Verify Qty Ordered is not 0 for unprinted S, N or P line types
@@ -133,8 +137,6 @@ rem --- Set price and discount
 
 rem --- Use UM_SOLD related <DISPLAY> fields to update the real record fields
 	gosub update_record_fields
-
-	callpoint!.setStatus("MODIFIED-REFRESH")
 
 [[OPT_INVKITDET.AGRN]]
 rem --- Initialize kit_whse_item_warned flag
@@ -275,13 +277,13 @@ rem --- Disable grid for Invoice History Inquiry
 	endif
 
 [[OPT_INVKITDET.AWRI]]
-rem --- Set Kit Component grid's kit_detail_changed flag
-	callpoint!.setDevObject("kit_details_changed","Y")
-
-rem --- Is this row deleted?
+rem --- Has this row been modified?
 	if callpoint!.getGridRowModifyStatus( callpoint!.getValidationRow() ) <> "Y" then 
 		break; rem --- exit callpoint
 	endif
+
+rem --- Set Kit Component grid's kit_detail_changed flag
+	callpoint!.setDevObject("kit_details_changed","Y")
 
 rem --- Get current and prior values
 	curr_whse$ = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
@@ -510,6 +512,49 @@ rem --- then next time thru AWRI it won't see a false difference between curr an
 	callpoint!.setDevObject("component_prior_qty", curr_qty)
 	callpoint!.setDevObject("component_prior_commit", curr_commit$)
 
+[[OPT_INVKITDET.BDEL]]
+rem --- Require existing modified rows be saved before deleting so can't uncommit quantity different from what was committed
+	if callpoint!.getGridRowModifyStatus(num(callpoint!.getValidationRow()))="Y" and
+:	callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" then
+		msg_id$="OP_MODIFIED_DELETE"
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE-ABORT")
+		break
+	endif
+
+rem --- Set qty_ordered to zero rather than deleting the detail line if it's already been printed on a picking list.
+	if pos(callpoint!.getDevObject("component_line_type")="NSP") then
+		pick_flag$=callpoint!.getColumnData("OPT_INVKITDET.PICK_FLAG")
+		if pos(pick_flag$="YM") then
+			msg_id$="OP_DELETE_ZEROED"
+			gosub disp_message
+			if msg_opt$="O" then
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_ORDERED_DSP","0",1)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP","0",1)
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP","0",1)
+				callpoint!.setColumnData("OPT_INVKITDET.QTY_ORDERED","0")
+				callpoint!.setColumnData("OPT_INVKITDET.QTY_BACKORD","0")
+				callpoint!.setColumnData("OPT_INVKITDET.QTY_SHIPPED","0")
+				callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE","0",1)
+				callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT","0")
+				callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG","M")
+				callpoint!.setDevObject("kit_details_changed","Y")
+				callpoint!.setStatus("ACTIVATE-MODIFIED-ABORT")
+			else
+				callpoint!.setStatus("ACTIVATE-ABORT")
+			endif
+			break
+		endif
+	endif
+
+rem --- Update inventory commitments
+	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" and
+:		callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y"
+:	then
+		action$="UC"
+		gosub uncommit_iv
+	endif
+
 [[OPT_INVKITDET.BEND]]
 rem  --- Report component shortages
 	gosub reportShortages
@@ -561,6 +606,15 @@ rem --- Set column size for memo_1024 field very small so it doesn't take up roo
 
 rem --- Initialize Kit Component grid's kit_detail_changed flag
 	callpoint!.setDevObject("kit_details_changed","N")
+
+[[OPT_INVKITDET.BUDE]]
+rem --- Update inventory commitments
+	if callpoint!.getGridRowNewStatus(num(callpoint!.getValidationRow()))<>"Y" and
+:		callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y"
+:	then
+		action$="CO"
+		gosub uncommit_iv
+	endif
 
 [[OPT_INVKITDET.BWRI]]
 rem --- Set values based on line type
@@ -651,22 +705,8 @@ rem --- Set previous extended price
 
 [[OPT_INVKITDET.ITEM_ID.AINV]]
 rem --- Skip check for item synonyms
-	if callpoint!.getDevObject("skip_ItemId_AINV") then
-		callpoint!.setDevObject("skip_ItemId_AINV",0)
-		callpoint!.setStatus("ABORT")
-		break
-	endif
-
-rem --- Check for item synonyms
-	rem --- Get starting item so we know if it gets changed
-	item_id$=callpoint!.getUserInput()
-
-	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::grid_entry"
-
-	rem --- Item will not have changed if AVAL did an ABORT 
-	if item_id$=callpoint!.getUserInput() then
-		callpoint!.setFocus(num(callpoint!.getValidationRow()),"OPT_INVKITDET.ITEM_ID",1)
-	endif
+	callpoint!.setStatus("ABORT")
+	break
 
 [[OPT_INVKITDET.ITEM_ID.AVAL]]
 rem --- Don't allow changing the item if the detail line has already been printed on a picking list.
@@ -689,6 +729,7 @@ rem --- Don't allow changing the item if the detail line has already been printe
 				callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE","0",1)
 				callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT","0")
 				callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG","M")
+				callpoint!.setDevObject("kit_details_changed","Y")
 				callpoint!.setStatus("ACTIVATE-MODIFIED")
 				gosub clear_all_numerics
 			else
@@ -712,7 +753,6 @@ rem "Inventory Inactive Feature"
 		msg_tokens$[2]=cvs(ivm01a.display_desc$,2)
 		gosub disp_message
 		callpoint!.setStatus("ACTIVATE-ABORT")
-		callpoint!.setDevObject("skip_ItemId_AINV",1)
 		break
 	endif
 
@@ -763,6 +803,9 @@ rem --- Check item/warehouse combination and setup values
 		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", str(ivm02a.unit_cost*conv_factor))
 		callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(ivm02a.cur_price))
 		callpoint!.setDevObject("component_price", ivm02a.cur_price)
+		qty_shipped = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+		callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", str(round(qty_shipped * ivm02a.cur_price, 2)))
+
 		if pos(callpoint!.getDevObject("component_line_prod_type_pr")="DN")=0
 			callpoint!.setColumnData("OPT_INVKITDET.PRODUCT_TYPE", ivm01a.product_type$)
 		endif
@@ -781,7 +824,6 @@ rem --- Check item/warehouse combination and setup values
 			callpoint!.setStatus("ACTIVATE")
 			if msg_opt$="C" then
 				callpoint!.setStatus("ABORT")
-				callpoint!.setDevObject("skip_ItemId_AINV",1)
 				break
 			else
 				if callpoint!.getDevObject("component_avail")<=0 then
@@ -792,7 +834,6 @@ rem --- Check item/warehouse combination and setup values
 					callpoint!.setStatus("ACTIVATE")
 					if msg_opt$="N" then
 						callpoint!.setStatus("ABORT")
-						callpoint!.setDevObject("skip_ItemId_AINV",1)
 						break
 					endif
 				endif
@@ -840,6 +881,9 @@ rem --- Initialize UM_SOLD ListButton for a new or changed item
 		callpoint!.setColumnData("OPT_INVKITDET.CONV_FACTOR","1")
 	endif
 
+rem --- Make sure the new item is displayed if it was changed
+	if cvs(item$,3)<>cvs(prev_item$,3) then callpoint!.setColumnData("OPT_INVKITDET.ITEM_ID",item$,1)
+
 [[OPT_INVKITDET.ITEM_ID.AVEC]]
 rem --- Enable repricing button
 	gosub enable_repricing
@@ -848,9 +892,6 @@ rem --- Set item tax flag
 	gosub set_item_taxable
 
 [[OPT_INVKITDET.ITEM_ID.BINP]]
-rem --- Initialize skip_ItemId_AINV DevObject
-	callpoint!.setDevObject("skip_ItemId_AINV",0)
-
 rem --- Enable repricing and options buttons
 	gosub enable_repricing
 	gosub enable_addl_opts
@@ -1292,6 +1333,7 @@ rem ============================================================================
 	find record (opcLineCode_dev, key=firm_id$+line_code$, dom=*next) opc_linecode$
 	callpoint!.setDevObject("component_line_type",opc_linecode.line_type$)
 	callpoint!.setDevObject("component_line_taxable",opc_linecode.taxable_flag$)
+	callpoint!.setDevObject("component_line_dropship",opc_linecode.dropship$)
 	callpoint!.setDevObject("component_line_prod_type_pr",opc_linecode.prod_type_pr$)
 
 rem --- Disable/enable Item ID
@@ -1628,6 +1670,33 @@ rem =========================================================
 			endif
 		endif
 	endif
+	return
+
+rem ==========================================================================
+uncommit_iv: rem --- Uncommit Inventory
+             rem --- Make sure action$ is set before entry
+rem ==========================================================================
+	ord_type$ = callpoint!.getDevObject("invoice_type")
+	wh$      = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
+	item$    = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+	line_ship_date$=callpoint!.getColumnData("OPT_INVKITDET.EST_SHP_DATE")
+	ord_qty  = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
+	conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
+	if conv_factor=0 then conv_factor=1
+
+	if cvs(item$, 2)<>"" and cvs(wh$, 2)<>"" and ord_qty and ord_type$<>"P" and callpoint!.getDevObject("component_line_dropship")="N" then
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+		items$[1]=wh$
+		items$[2]=item$
+		refs[0]=ord_qty*conv_factor
+
+		if (action$="CO" and line_ship_date$<=stbl("OPE_DEF_COMMIT")) or
+:		(callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y") then
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+		endif
+	endif
+
 	return
 
 rem ==========================================================================

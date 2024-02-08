@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.opt_invkitdet"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.opt_invkitdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.opt_invkitdet">2460278</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20240205</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20240205</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">155846</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.opt_invkitdet">20240207</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.opt_invkitdet">20240207</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.opt_invkitdet">181116</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.opt_invkitdet"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.opt_invkitdet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.opt_invkitdet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -84,6 +84,10 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.opt_invkitdetadel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetadel">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetadel">ADEL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_invkitdetagdr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetagdr">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetagdr">AGDR</DD_ATTR_CPRO>
@@ -112,6 +116,10 @@
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetawri">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetawri">AWRI</DD_ATTR_CPRO>
 		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_invkitdetbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbdel">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbdel">BDEL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_invkitdetbend">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbend">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbend">BEND</DD_ATTR_CPRO>
@@ -123,6 +131,10 @@
 		<RECORD id="ddm_table_cpro.opt_invkitdetbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbsho">OPT_INVKITDET   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbsho">BSHO</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.opt_invkitdetbude">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbude">OPT_INVKITDET   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.opt_invkitdetbude">BUDE</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.opt_invkitdetbwri">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.opt_invkitdetbwri">OPT_INVKITDET   </DD_TABLE_ALIAS>
