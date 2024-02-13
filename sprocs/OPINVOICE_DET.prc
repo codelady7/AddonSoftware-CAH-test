@@ -11,10 +11,11 @@ rem --- ope_invhdr.cdf), (2) Batch (from menu: OP Invoice Printing--
 rem --- opr_invoice.aon), and (3) Historical Invoices (from Invoice History
 rem --- Inquiry--opt_invhdr.cdf).
 
-rem --- opc_invoice.aon uses four sprocs and four .jaspers to generate invoicest:
+rem --- opc_invoice.aon uses five sprocs and five .jaspers to generate invoices:
 rem ---    - OPINVOICE_HDR.prc / OPInvoiceHdr.jasper
 rem ---    - OPINVOICE_DET.prc / OPInvoiceDet.jasper
 rem ---    - OPINVOICE_DET_LOTSER.prc / OPInvoiceDet-LotSer.jasper
+rem ---    - OPINVOICE_DET_KITCOMP.prc / OPInvoiceDet-KitComp.jasper <=== new for v24 Kitting feature
 rem ---    - OPINVOICE_SHIPTRACK.prc / OPInvoiceShipTrack.jasper
 
 rem ----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ rem --- Get 'IN' SPROC parameters
 	qty_mask$ =    sp!.getParameter("QTY_MASK")
 	amt_mask$ =    sp!.getParameter("AMT_MASK")
 	price_mask$ =  sp!.getParameter("PRICE_MASK")
-    ivIMask$ =       sp!.getParameter("ITEM_MASK")
+    ivIMask$ =     sp!.getParameter("ITEM_MASK")
 	ext_mask$ =    sp!.getParameter("EXT_MASK")
 	barista_wd$ =  sp!.getParameter("BARISTA_WD")
     report_type$ = sp!.getParameter("REPORT_TYPE")
@@ -55,7 +56,7 @@ rem --- create the in memory recordset for return
 	dataTemplate$ = dataTemplate$ + "item_id:c(1*), item_desc:c(1*), um:c(1*), "
 	dataTemplate$ = dataTemplate$ + "price_raw:c(1*), price_masked:c(1*), "
 	dataTemplate$ = dataTemplate$ + "extended_raw:c(1*), extended_masked:c(1*), internal_seq_no:c(1*), "
-	dataTemplate$ = dataTemplate$ + "lotser_flag:c(1), linetype_allows_ls:c(1),ship_qty:c(1*)"
+	dataTemplate$ = dataTemplate$ + "lotser_flag:c(1), linetype_allows_ls:c(1),ship_qty:c(1*), kit:c(1*), priced_kit:c(1*)"
 
 
 	rs! = BBJAPI().createMemoryRecordSet(dataTemplate$)
@@ -70,12 +71,13 @@ rem --- Initializationas
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
 
-    files=3,begfile=1,endfile=files
+    files=4,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
     files$[1]="ivm-01",      ids$[1]="IVM_ITEMMAST"
     files$[2]="opt-11",      ids$[2]="OPE_INVDET"
     files$[3]="opm-02",      ids$[3]="OPC_LINECODE"
+    files$[4]="ivm-02",      ids$[4]="IVM_ITEMWHSE"
 
 	call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 
@@ -90,10 +92,12 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     ivm01_dev   = channels[1]
     ope11_dev   = channels[2]
     opm02_dev   = channels[3]
+    ivm02_dev   = channels[4]
     
     dim ivm01a$:templates$[1]
     dim ope11a$:templates$[2]
     dim opm02a$:templates$[3]
+    dim ivm02a$:templates$[4]
 	
 rem --- Main
 
@@ -122,7 +126,9 @@ rem --- Main
 			ext_masked$ =         ""
 			internal_seq_no$ =    ""
 			linetype_allows_ls$ = "N"
-			lotser_flag$ =         "N"	
+			lotser_flag$ =        "N"
+            kit$=""
+            priced_kit$=""
 			
             read record (ope11_dev, end=*break) ope11a$
 
@@ -133,7 +139,7 @@ rem --- Main
             if ar_inv_no$   <> ope11a.ar_inv_no$   then break
 
 			internal_seq_no$ = ope11a.internal_seq_no$
-			
+
         rem --- Type
 		
             dim opm02a$:fattr(opm02a$)
@@ -151,6 +157,11 @@ rem --- Main
                 find record (ivm01_dev, key=firm_id$+ope11a.item_id$, dom=*next) ivm01a$
                 item_description$ = func.displayDesc(ivm01a.item_desc$)
 				lotser_flag$ = ivm01a.lotser_flag$
+                kit$ = ivm01a.kit$
+                if kit$="Y"
+                    find record (ivm02_dev, key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next)ivm02a$
+                    if ivm02a.cur_price>0 then priced_kit$="Y" else priced_kit$="N"
+                endif
 			endif
 
             if opm02a.line_type$="M" and pos(opm02a.message_type$="BI ")=0 then continue
@@ -194,20 +205,31 @@ line_detail: rem --- Item Detail
             if len(item_desc$) then if item_desc$(len(item_desc$),1)=$0A$ then item_desc$=item_desc$(1,len(item_desc$)-1)
 
 			data! = rs!.getEmptyRecordData()
-			data!.setFieldValue("ORDER_QTY_MASKED", order_qty_masked$)
-			data!.setFieldValue("SHIP_QTY_MASKED", ship_qty_masked$)
 			data!.setFieldValue("SHIP_QTY", ship_qty$)
-			data!.setFieldValue("BACKORD_QTY_MASKED", backord_qty_masked$)
 			data!.setFieldValue("ITEM_ID", item_id$)
 			data!.setFieldValue("ITEM_DESC", item_desc$)
 			data!.setFieldValue("UM", um$)
-			data!.setFieldValue("PRICE_RAW", price_raw$)
-			data!.setFieldValue("PRICE_MASKED", price_masked$)
-			data!.setFieldValue("EXTENDED_RAW", ext_raw$)
-			data!.setFieldValue("EXTENDED_MASKED", ext_masked$)
+            data!.setFieldValue("ORDER_QTY_MASKED", order_qty_masked$)
+            data!.setFieldValue("SHIP_QTY_MASKED", ship_qty_masked$)
+            data!.setFieldValue("BACKORD_QTY_MASKED", backord_qty_masked$)
+            if kit$="Y" and priced_kit$<>"Y"
+            	data!.setFieldValue("UM", "KIT")
+                data!.setFieldValue("PRICE_RAW","")
+                data!.setFieldValue("PRICE_MASKED","")
+                data!.setFieldValue("EXTENDED_RAW","")
+                data!.setFieldValue("EXTENDED_MASKED","")
+			else
+            	data!.setFieldValue("UM", um$)
+                data!.setFieldValue("PRICE_RAW", price_raw$)
+                data!.setFieldValue("PRICE_MASKED", price_masked$)
+                data!.setFieldValue("EXTENDED_RAW", ext_raw$)
+                data!.setFieldValue("EXTENDED_MASKED", ext_masked$)                
+            endif
 			data!.setFieldValue("INTERNAL_SEQ_NO",internal_seq_no$)
 			data!.setFieldValue("LOTSER_FLAG",lotser_flag$)
 			data!.setFieldValue("LINETYPE_ALLOWS_LS",linetype_allows_ls$)
+            data!.setFieldValue("KIT",kit$)
+            data!.setFieldValue("PRICED_KIT",priced_kit$)
 
 			rs!.insert(data!)		
 

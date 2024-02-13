@@ -1275,7 +1275,7 @@ rem ==========================================================================
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.UPC_CODE",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.BAR_CODE","",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.BAR_CODE",0)
-		callpoint!.setColumnData("IVM_ITEMMAST.UNIT_OF_SALE","EA",1)
+		callpoint!.setColumnData("IVM_ITEMMAST.UNIT_OF_SALE","",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.UNIT_OF_SALE",0)
 		callpoint!.setColumnData("IVM_ITEMMAST.WEIGHT","0",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.WEIGHT",0)

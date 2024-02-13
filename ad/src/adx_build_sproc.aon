@@ -38,6 +38,7 @@ rem --- VENDORDETAIL_HIST
 rem --- OPINVOICE_HDR
 rem --- OPINVOICE_DET
 rem --- OPINVOICE_DET_LOTSER
+rem --- OPINVOICE_DET_KITCOMP
 rem --- OPINVOICE_SHIPTRACK
 rem --- OPORDERCONF_DET
 rem --- OPORDERCONF_DET_LOTSER
@@ -332,6 +333,10 @@ rem --- first drop all std Addon SPROCs
     gosub create_sproc_def
 		
 	sproc_vw_name$="OPINVOICE_DET_LOTSER"
+    sqlprep$=sql_action$+" "+sproc_vw_name$+" "
+    gosub create_sproc_def
+
+	sproc_vw_name$="OPINVOICE_DET_KITCOMP"
     sqlprep$=sql_action$+" "+sproc_vw_name$+" "
     gosub create_sproc_def
         
@@ -850,7 +855,19 @@ rem --- now add them back (i.e., drop, then add, in case anything has changed)
 	sqlprep$=sqlprep$+"LOTSER_FLAG CHAR(1) IN, BARISTA_WD VARCHAR(50) IN, REPORT_TYPE CHAR(1) IN)"	
     sqlprep$=sqlprep$+"'"+sproc_path$+"OPINVOICE_DET_LOTSER.prc' '"+barista_cfg_path$+"barista.cfg' "
     sqlprep$=sqlprep$+"RESULT_SET "
-    sqlprep$=sqlprep$+"{_begin_}{_end_} 'OP Invoice Detail'"
+    sqlprep$=sqlprep$+"{_begin_}{_end_} 'OP Invoice Detail Lot/Serial'"
+
+    gosub create_sproc_def
+
+	rem --- OPINVOICE_DET_KITCOMP	
+    sproc_vw_name$="OPINVOICE_DET_KITCOMP"
+	sqlprep$="CREATE PROCEDURE OPINVOICE_DET_KITCOMP "
+    sqlprep$=sqlprep$+"(FIRM_ID CHAR(2) IN, AR_TYPE CHAR(2) IN, CUSTOMER_ID CHAR(6) IN, ORDER_NO CHAR(7) IN, AR_INV_NO CHAR(7) IN, "
+	sqlprep$=sqlprep$+"QTY_MASK CHAR(20) IN, AMT_MASK CHAR(20) IN, PRICE_MASK CHAR(20) IN, EXT_MASK CHAR(20) IN, "
+	sqlprep$=sqlprep$+"ITEM_MASK CHAR(20) IN, BARISTA_WD VARCHAR(50) IN, REPORT_TYPE CHAR(1) IN, INTERNAL_SEQ_NO CHAR(12) IN)"	
+    sqlprep$=sqlprep$+"'"+sproc_path$+"OPINVOICE_DET_KITCOMP.prc' '"+barista_cfg_path$+"barista.cfg' "
+    sqlprep$=sqlprep$+"RESULT_SET "
+    sqlprep$=sqlprep$+"{_begin_}{_end_} 'OP Invoice Detail Kit Components'"
 
     gosub create_sproc_def
 
@@ -861,7 +878,7 @@ rem --- now add them back (i.e., drop, then add, in case anything has changed)
     sqlprep$=sqlprep$+"BARISTA_WD VARCHAR(50) IN)"  
     sqlprep$=sqlprep$+"'"+sproc_path$+"OPINVOICE_SHIPTRACK.prc' '"+barista_cfg_path$+"barista.cfg' "
     sqlprep$=sqlprep$+"RESULT_SET "
-    sqlprep$=sqlprep$+"{_begin_}{_end_} 'OP Invoice Detail'"
+    sqlprep$=sqlprep$+"{_begin_}{_end_} 'OP Invoice Detail Ship Track'"
 
     gosub create_sproc_def
 
