@@ -8,20 +8,18 @@
 	<parameter name="AR_TYPE" class="java.lang.String"/>
 	<parameter name="CUSTOMER_ID" class="java.lang.String"/>
 	<parameter name="ORDER_NO" class="java.lang.String"/>
+	<parameter name="AR_INV_NO" class="java.lang.String"/>
+	<parameter name="INTERNAL_SEQ_NO" class="java.lang.String"/>
 	<parameter name="QTY_MASK" class="java.lang.String"/>
 	<parameter name="QTY_MASK_PATTERN" class="java.lang.String"/>
 	<parameter name="PRICE_MASK" class="java.lang.String"/>
 	<parameter name="AMT_MASK" class="java.lang.String"/>
 	<parameter name="EXT_MASK" class="java.lang.String"/>
 	<parameter name="BARISTA_WD" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Dev_aon\\aon\\reports\\"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="AR_INV_NO" class="java.lang.String"/>
 	<parameter name="ITEM_MASK" class="java.lang.String"/>
 	<parameter name="REPORT_TYPE" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[call OPInvoice_Det($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{QTY_MASK},$P{AMT_MASK},$P{PRICE_MASK},$P{EXT_MASK},$P{ITEM_MASK},$P{BARISTA_WD},$P{REPORT_TYPE})]]>
+		<![CDATA[call OPInvoice_Det_KitComp($P{FIRM_ID},$P{AR_TYPE},$P{CUSTOMER_ID},$P{ORDER_NO},$P{AR_INV_NO},$P{QTY_MASK},$P{AMT_MASK},$P{PRICE_MASK},$P{EXT_MASK},$P{ITEM_MASK},$P{BARISTA_WD},$P{REPORT_TYPE},$P{INTERNAL_SEQ_NO})]]>
 	</queryString>
 	<field name="ORDER_QTY_MASKED" class="java.lang.String"/>
 	<field name="SHIP_QTY_MASKED" class="java.lang.String"/>
@@ -33,133 +31,10 @@
 	<field name="PRICE_MASKED" class="java.lang.String"/>
 	<field name="EXTENDED_RAW" class="java.lang.String"/>
 	<field name="EXTENDED_MASKED" class="java.lang.String"/>
-	<field name="INTERNAL_SEQ_NO" class="java.lang.String"/>
-	<field name="LOTSER_FLAG" class="java.lang.String">
-		<fieldDescription><![CDATA[Item is flagged as Lotted/Serialized]]></fieldDescription>
-	</field>
-	<field name="LINETYPE_ALLOWS_LS" class="java.lang.String">
-		<fieldDescription><![CDATA[Line Type is P or S so may have Lot/SerNum]]></fieldDescription>
-	</field>
-	<field name="SHIP_QTY" class="java.lang.String"/>
-	<field name="KIT" class="java.lang.String"/>
-	<field name="PRICED_KIT" class="java.lang.String"/>
 	<variable name="EXTENDED_BigDec" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[$F{EXTENDED_RAW} == "" ? 0 : new java.math.BigDecimal($F{EXTENDED_RAW})]]></variableExpression>
 		<initialValueExpression><![CDATA[]]></initialValueExpression>
 	</variable>
-	<group name="LINE_ITEM">
-		<groupExpression><![CDATA[$F{INTERNAL_SEQ_NO}]]></groupExpression>
-		<groupFooter>
-			<band height="15" splitType="Stretch">
-				<subreport>
-					<reportElement x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" uuid="8c3bdbc6-c025-4818-96eb-9a460c53d528">
-						<printWhenExpression><![CDATA[($F{LOTSER_FLAG}=="L" || $F{LOTSER_FLAG}=="S")
- && $F{LINETYPE_ALLOWS_LS} == "Y"]]></printWhenExpression>
-					</reportElement>
-					<subreportParameter name="QTY_MASK">
-						<subreportParameterExpression><![CDATA[$P{QTY_MASK}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="OPE11_QTY_SHIPPED">
-						<subreportParameterExpression><![CDATA[$F{SHIP_QTY}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="BARISTA_WD">
-						<subreportParameterExpression><![CDATA[$P{BARISTA_WD}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="AR_TYPE">
-						<subreportParameterExpression><![CDATA[$P{AR_TYPE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ORDER_NO">
-						<subreportParameterExpression><![CDATA[$P{ORDER_NO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="AR_INV_NO">
-						<subreportParameterExpression><![CDATA[$P{AR_INV_NO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="FIRM_ID">
-						<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="CUSTOMER_ID">
-						<subreportParameterExpression><![CDATA[$P{CUSTOMER_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ITEM_ID">
-						<subreportParameterExpression><![CDATA[$F{ITEM_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="INTERNAL_SEQ_NO">
-						<subreportParameterExpression><![CDATA[$F{INTERNAL_SEQ_NO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="QTY_MASK_PATTERN">
-						<subreportParameterExpression><![CDATA[$P{QTY_MASK_PATTERN}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="REPORT_TYPE">
-						<subreportParameterExpression><![CDATA[$P{REPORT_TYPE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SHADE_BACKCOLOR">
-						<subreportParameterExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="LOTSER_FLAG">
-						<subreportParameterExpression><![CDATA[$F{LOTSER_FLAG}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["OPInvoiceDet-LotSer.jasper"]]></subreportExpression>
-				</subreport>
-				<subreport>
-					<reportElement x="0" y="0" width="555" height="15" isRemoveLineWhenBlank="true" uuid="762ba89a-795a-473a-a8f9-d2cdd75a7a63">
-						<property name="com.jaspersoft.studio.unit.x" value="px"/>
-						<property name="com.jaspersoft.studio.unit.y" value="px"/>
-						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<printWhenExpression><![CDATA[$F{KIT}=="Y"]]></printWhenExpression>
-					</reportElement>
-					<subreportParameter name="AR_TYPE">
-						<subreportParameterExpression><![CDATA[$P{AR_TYPE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="CUSTOMER_ID">
-						<subreportParameterExpression><![CDATA[$P{CUSTOMER_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ORDER_NO">
-						<subreportParameterExpression><![CDATA[$P{ORDER_NO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="QTY_MASK">
-						<subreportParameterExpression><![CDATA[$P{QTY_MASK}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="QTY_MASK_PATTERN">
-						<subreportParameterExpression><![CDATA[$P{QTY_MASK_PATTERN}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PRICE_MASK">
-						<subreportParameterExpression><![CDATA[$P{PRICE_MASK}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="AMT_MASK">
-						<subreportParameterExpression><![CDATA[$P{AMT_MASK}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="EXT_MASK">
-						<subreportParameterExpression><![CDATA[$P{EXT_MASK}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="BARISTA_WD">
-						<subreportParameterExpression><![CDATA[$P{BARISTA_WD}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="AR_INV_NO">
-						<subreportParameterExpression><![CDATA[$P{AR_INV_NO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ITEM_MASK">
-						<subreportParameterExpression><![CDATA[$P{ITEM_MASK}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="REPORT_TYPE">
-						<subreportParameterExpression><![CDATA[$P{REPORT_TYPE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="FIRM_ID">
-						<subreportParameterExpression><![CDATA[$P{FIRM_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SHADE_BACKCOLOR">
-						<subreportParameterExpression><![CDATA[new Boolean( ($V{PAGE_COUNT}.intValue() + 1 ) % 2 == 0)]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="INTERNAL_SEQ_NO">
-						<subreportParameterExpression><![CDATA[$F{INTERNAL_SEQ_NO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["OPInvoiceDet-KitComp.jasper"]]></subreportExpression>
-				</subreport>
-			</band>
-		</groupFooter>
-	</group>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
@@ -177,18 +52,18 @@
 			</rectangle>
 			<rectangle>
 				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="555" height="13" isRemoveLineWhenBlank="true" uuid="b1116a26-2602-425e-9572-ce7122f89812">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<graphicElement>
 					<pen lineColor="#C0C0C0"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
+			<textField evaluationTime="Report">
 				<reportElement x="1" y="0" width="54" height="12" uuid="98d29c70-c7e5-4189-bb3e-36402a88c3f1">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="8" isItalic="false"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ORDER_QTY_MASKED}]]></textFieldExpression>
@@ -199,7 +74,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="8" isItalic="false"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SHIP_QTY_MASKED}]]></textFieldExpression>
@@ -210,7 +85,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="8" isItalic="false"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{BACKORD_QTY_MASKED}]]></textFieldExpression>
@@ -221,7 +96,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="8" isItalic="false"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{UM}]]></textFieldExpression>
@@ -232,7 +107,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="9" isItalic="false"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PRICE_MASKED}]]></textFieldExpression>
@@ -243,7 +118,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="9" isItalic="false"/>
 					<paragraph rightIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{EXTENDED_MASKED}]]></textFieldExpression>
@@ -255,7 +130,7 @@
 					<printWhenExpression><![CDATA[new Boolean (!$F{ITEM_DESC}.isEmpty())]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9"/>
+					<font fontName="DejaVu Serif" size="8" isItalic="true"/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ITEM_DESC}]]></textFieldExpression>

@@ -9,10 +9,11 @@ rem --- ope_invhdr.cdf), (2) Batch (from menu: OP Invoice Printing--
 rem --- opr_invoice.aon), and (3) Historical Invoices (from Invoice History
 rem --- Inquiry--opt_invhdr.cdf).
 
-rem --- opc_invoice.aon uses four sprocs and four .jaspers to generate invoicest:
+rem --- opc_invoice.aon uses five sprocs and five .jaspers to generate invoices:
 rem ---    - OPINVOICE_HDR.prc / OPInvoiceHdr.jasper
 rem ---    - OPINVOICE_DET.prc / OPInvoiceDet.jasper
 rem ---    - OPINVOICE_DET_LOTSER.prc / OPInvoiceDet-LotSer.jasper
+rem ---    - OPINVOICE_DET_KITCOMP.prc / OPInvoiceDet-KitComp.jasper <=== new for v24 Kitting feature
 rem ---    - OPINVOICE_SHIPTRACK.prc / OPInvoiceShipTrack.jasper
 
 rem ----------------------------------------------------------------------------
