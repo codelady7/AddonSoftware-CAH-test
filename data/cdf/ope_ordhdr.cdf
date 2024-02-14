@@ -4220,7 +4220,7 @@ rem ==========================================================================
 		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
 		readrecord(ivm01_dev,key=firm_id$+item_id$,dom=*next)ivm01a$
 		if ivm01a.kit$<>"Y" then
-		call stbl("+DIR_PGM")+"ivc_itemupdt.aon",iv_action$,iv_files[all],ivs01a$,iv_info$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
+			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",iv_action$,iv_files[all],ivs01a$,iv_info$[all],iv_refs$[all],iv_refs[all],table_chans$[all],iv_status
 		else
 			rem --- Skip the kit, and do its components instead.
 			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")

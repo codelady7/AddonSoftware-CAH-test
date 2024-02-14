@@ -680,10 +680,9 @@ rem --- For uncommitted "O" line type sales (not quotes), move ext_price to unit
 :		callpoint!.getDevObject("component_line_type") = "O" then
 		rem --- Don't overwrite existing unit_price with zero
 		if num(callpoint!.getUserInput()) then
-			callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP", callpoint!.getUserInput())
+			callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP", callpoint!.getUserInput(),1)
 			callpoint!.setUserInput("0")
 			callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT", "0")
-			callpoint!.setStatus("REFRESH")
 		endif
 	endif
 
@@ -709,6 +708,11 @@ rem --- Skip check for item synonyms
 	break
 
 [[OPT_INVKITDET.ITEM_ID.AVAL]]
+rem --- Skip if the item_id has NOT changed
+	item$=callpoint!.getUserInput()
+	prev_item$=callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+	if cvs(item$,3)=cvs(prev_item$,3) then break
+
 rem --- Don't allow changing the item if the detail line has already been printed on a picking list.
 	item$=callpoint!.getUserInput()
 	prev_item$=callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
@@ -800,14 +804,14 @@ rem --- Check item/warehouse combination and setup values
 	if !callpoint!.getDevObject("item_wh_failed") then 
 		conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
 		if conv_factor=0 then conv_factor=1
-		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", str(ivm02a.unit_cost*conv_factor))
-		callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(ivm02a.cur_price))
+		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", str(ivm02a.unit_cost*conv_factor),1)
+		callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(ivm02a.cur_price),1)
 		callpoint!.setDevObject("component_price", ivm02a.cur_price)
 		qty_shipped = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
-		callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", str(round(qty_shipped * ivm02a.cur_price, 2)))
+		callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", str(round(qty_shipped * ivm02a.cur_price, 2)),1)
 
 		if pos(callpoint!.getDevObject("component_line_prod_type_pr")="DN")=0
-			callpoint!.setColumnData("OPT_INVKITDET.PRODUCT_TYPE", ivm01a.product_type$)
+			callpoint!.setColumnData("OPT_INVKITDET.PRODUCT_TYPE", ivm01a.product_type$,1)
 		endif
 		if pos(callpoint!.getDevObject("component_line_type")="SP") and num(ivm02a.unit_cost$)=0
 			callpoint!.setColumnEnabled(num(callpoint!.getValidationRow()),"<<DISPLAY>>.UNIT_COST_DSP",1)
@@ -839,8 +843,6 @@ rem --- Check item/warehouse combination and setup values
 				endif
 			endif
 		endif
-
-		callpoint!.setStatus("REFRESH")
 	endif
 
 rem --- Initialize UM_SOLD ListButton for a new or changed item
@@ -880,9 +882,6 @@ rem --- Initialize UM_SOLD ListButton for a new or changed item
 		rem --- Initialize CONV_FACTOR
 		callpoint!.setColumnData("OPT_INVKITDET.CONV_FACTOR","1")
 	endif
-
-rem --- Make sure the new item is displayed if it was changed
-	if cvs(item$,3)<>cvs(prev_item$,3) then callpoint!.setColumnData("OPT_INVKITDET.ITEM_ID",item$,1)
 
 [[OPT_INVKITDET.ITEM_ID.AVEC]]
 rem --- Enable repricing button
