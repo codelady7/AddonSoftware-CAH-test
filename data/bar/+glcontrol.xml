@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.+glcontrol">Y</RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.+glcontrol">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.+glcontrol">AD </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.+glcontrol">24.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.+glcontrol">24.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.+glcontrol">231F211DB6339ED08228F8C3A115EACC</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.+glcontrol">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.+glcontrol">20060425</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.+glcontrol">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.+glcontrol">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.+glcontrol">142908</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.+glcontrol">20240214</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.+glcontrol">20240201</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.+glcontrol">122138</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.+glcontrol"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.+glcontrol"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.+glcontrol"></DD_ATTR_DKNM>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.+glcontrol"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.+glcontrol"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.+glcontrol"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.+glcontrol"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.+glcontrol"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.+glcontrol"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.+glcontrol"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.+glcontrol"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.+glcontrol"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.+glcontrol"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.+glcontrol">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.+glcontrol">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.+glcontrol">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.+glcontrol">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.+glcontrol">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.+glcontrol">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.+glcontrol">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_tpls">
@@ -63,7 +63,7 @@
 		<RECORD id="ddm_table_tpls.+glcontrol">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.+glcontrol">+GLCONTROL      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.+glcontrol"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.+glcontrol">firm_id:c(2),system_id:c(11),post_gl:c(1),current_per:c(2),current_year:c(4),journal_id:c(2),gl_adt_no:c(7),update_flag:c(1),gl_period:c(2),gl_year:c(4),acct_length:c(2),max_acct_len:c(2),detail_flag:c(1),budget_flag:c(1),units_flag:c(1),retain_det:c(1),gl_yr_closed:c(1),gl_post_code:c(1),permit_je:c(1),post_yr_end:c(1),post_locked:c(1),gl_audit:c(1),gl_work_file:c(1),prt_gl_sum:c(1),description:c(30),trns_date:c(8),period:c(2),year:c(4),pri_total_pers:c(2),cur_total_pers:c(2),nxt_total_pers:c(2),pri_per_beg_01:c(8),pri_per_beg_02:c(8),pri_per_beg_03:c(8),pri_per_beg_04:c(8),pri_per_beg_05:c(8),pri_per_beg_06:c(8),pri_per_beg_07:c(8),pri_per_beg_08:c(8),pri_per_beg_09:c(8),pri_per_beg_10:c(8),pri_per_beg_11:c(8),pri_per_beg_12:c(8),pri_per_beg_13:c(8),cur_per_beg_01:c(8),cur_per_beg_02:c(8),cur_per_beg_03:c(8),cur_per_beg_04:c(8),cur_per_beg_05:c(8),cur_per_beg_06:c(8),cur_per_beg_07:c(8),cur_per_beg_08:c(8),cur_per_beg_09:c(8),cur_per_beg_10:c(8),cur_per_beg_11:c(8),cur_per_beg_12:c(8),cur_per_beg_13:c(8),nxt_per_beg_01:c(8),nxt_per_beg_02:c(8),nxt_per_beg_03:c(8),nxt_per_beg_04:c(8),nxt_per_beg_05:c(8),nxt_per_beg_06:c(8),nxt_per_beg_07:c(8),nxt_per_beg_08:c(8),nxt_per_beg_09:c(8),nxt_per_beg_10:c(8),nxt_per_beg_11:c(8),nxt_per_beg_12:c(8),nxt_per_beg_13:c(8),pri_per_end_01:c(8),pri_per_end_02:c(8),pri_per_end_03:c(8),pri_per_end_04:c(8),pri_per_end_05:c(8),pri_per_end_06:c(8),pri_per_end_07:c(8),pri_per_end_08:c(8),pri_per_end_09:c(8),pri_per_end_10:c(8),pri_per_end_11:c(8),pri_per_end_12:c(8),pri_per_end_13:c(8),cur_per_end_01:c(8),cur_per_end_02:c(8),cur_per_end_03:c(8),cur_per_end_04:c(8),cur_per_end_05:c(8),cur_per_end_06:c(8),cur_per_end_07:c(8),cur_per_end_08:c(8),cur_per_end_09:c(8),cur_per_end_10:c(8),cur_per_end_11:c(8),cur_per_end_12:c(8),cur_per_end_13:c(8),nxt_per_end_01:c(8),nxt_per_end_02:c(8),nxt_per_end_03:c(8),nxt_per_end_04:c(8),nxt_per_end_05:c(8),nxt_per_end_06:c(8),nxt_per_end_07:c(8),nxt_per_end_08:c(8),nxt_per_end_09:c(8),nxt_per_end_10:c(8),nxt_per_end_11:c(8),nxt_per_end_12:c(8),nxt_per_end_13:c(8),pri_locked_flag_01:c(1),pri_locked_flag_02:c(1),pri_locked_flag_03:c(1),pri_locked_flag_04:c(1),pri_locked_flag_05:c(1),pri_locked_flag_06:c(1),pri_locked_flag_07:c(1),pri_locked_flag_08:c(1),pri_locked_flag_09:c(1),pri_locked_flag_10:c(1),pri_locked_flag_11:c(1),pri_locked_flag_12:c(1),pri_locked_flag_13:c(1),cur_locked_flag_01:c(1),cur_locked_flag_02:c(1),cur_locked_flag_03:c(1),cur_locked_flag_04:c(1),cur_locked_flag_05:c(1),cur_locked_flag_06:c(1),cur_locked_flag_07:c(1),cur_locked_flag_08:c(1),cur_locked_flag_09:c(1),cur_locked_flag_10:c(1),cur_locked_flag_11:c(1),cur_locked_flag_12:c(1),cur_locked_flag_13:c(1),nxt_locked_flag_01:c(1),nxt_locked_flag_02:c(1),nxt_locked_flag_03:c(1),nxt_locked_flag_04:c(1),nxt_locked_flag_05:c(1),nxt_locked_flag_06:c(1),nxt_locked_flag_07:c(1),nxt_locked_flag_08:c(1),nxt_locked_flag_09:c(1),nxt_locked_flag_10:c(1),nxt_locked_flag_11:c(1),nxt_locked_flag_12:c(1),nxt_locked_flag_13:c(1),app_per_beg:c(8),app_per_end:c(8),gl_per_beg:c(8),gl_per_end:c(8),process_id:c(16),program_name:c(24),use_suspense:c(1),gl_account:c(10),max_lim_str:c(15),max_bal_str:c(15),acct_output:c(15),amount_mask:c(15),unit_mask:c(12),percent_mask:c(10)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.+glcontrol">firm_id:c(2),system_id:c(11),post_gl:c(1),current_per:c(2),current_year:c(4),journal_id:c(2),gl_adt_no:c(7),update_flag:c(1),gl_period:c(2),gl_year:c(4),acct_length:c(2),max_acct_len:c(2),detail_flag:c(1),budget_flag:c(1),units_flag:c(1),retain_det:c(1),gl_yr_closed:c(1),gl_post_code:c(1),permit_je:c(1),post_yr_end:c(1),post_locked:c(1),gl_audit:c(1),gl_work_file:c(1),prt_gl_sum:c(1),description:c(30),trns_date:c(8),period:c(2),year:c(4),pri_total_pers:c(2),cur_total_pers:c(2),nxt_total_pers:c(2),pri_per_beg_01:c(8),pri_per_beg_02:c(8),pri_per_beg_03:c(8),pri_per_beg_04:c(8),pri_per_beg_05:c(8),pri_per_beg_06:c(8),pri_per_beg_07:c(8),pri_per_beg_08:c(8),pri_per_beg_09:c(8),pri_per_beg_10:c(8),pri_per_beg_11:c(8),pri_per_beg_12:c(8),pri_per_beg_13:c(8),cur_per_beg_01:c(8),cur_per_beg_02:c(8),cur_per_beg_03:c(8),cur_per_beg_04:c(8),cur_per_beg_05:c(8),cur_per_beg_06:c(8),cur_per_beg_07:c(8),cur_per_beg_08:c(8),cur_per_beg_09:c(8),cur_per_beg_10:c(8),cur_per_beg_11:c(8),cur_per_beg_12:c(8),cur_per_beg_13:c(8),nxt_per_beg_01:c(8),nxt_per_beg_02:c(8),nxt_per_beg_03:c(8),nxt_per_beg_04:c(8),nxt_per_beg_05:c(8),nxt_per_beg_06:c(8),nxt_per_beg_07:c(8),nxt_per_beg_08:c(8),nxt_per_beg_09:c(8),nxt_per_beg_10:c(8),nxt_per_beg_11:c(8),nxt_per_beg_12:c(8),nxt_per_beg_13:c(8),pri_per_end_01:c(8),pri_per_end_02:c(8),pri_per_end_03:c(8),pri_per_end_04:c(8),pri_per_end_05:c(8),pri_per_end_06:c(8),pri_per_end_07:c(8),pri_per_end_08:c(8),pri_per_end_09:c(8),pri_per_end_10:c(8),pri_per_end_11:c(8),pri_per_end_12:c(8),pri_per_end_13:c(8),cur_per_end_01:c(8),cur_per_end_02:c(8),cur_per_end_03:c(8),cur_per_end_04:c(8),cur_per_end_05:c(8),cur_per_end_06:c(8),cur_per_end_07:c(8),cur_per_end_08:c(8),cur_per_end_09:c(8),cur_per_end_10:c(8),cur_per_end_11:c(8),cur_per_end_12:c(8),cur_per_end_13:c(8),nxt_per_end_01:c(8),nxt_per_end_02:c(8),nxt_per_end_03:c(8),nxt_per_end_04:c(8),nxt_per_end_05:c(8),nxt_per_end_06:c(8),nxt_per_end_07:c(8),nxt_per_end_08:c(8),nxt_per_end_09:c(8),nxt_per_end_10:c(8),nxt_per_end_11:c(8),nxt_per_end_12:c(8),nxt_per_end_13:c(8),pri_locked_flag_01:c(1),pri_locked_flag_02:c(1),pri_locked_flag_03:c(1),pri_locked_flag_04:c(1),pri_locked_flag_05:c(1),pri_locked_flag_06:c(1),pri_locked_flag_07:c(1),pri_locked_flag_08:c(1),pri_locked_flag_09:c(1),pri_locked_flag_10:c(1),pri_locked_flag_11:c(1),pri_locked_flag_12:c(1),pri_locked_flag_13:c(1),cur_locked_flag_01:c(1),cur_locked_flag_02:c(1),cur_locked_flag_03:c(1),cur_locked_flag_04:c(1),cur_locked_flag_05:c(1),cur_locked_flag_06:c(1),cur_locked_flag_07:c(1),cur_locked_flag_08:c(1),cur_locked_flag_09:c(1),cur_locked_flag_10:c(1),cur_locked_flag_11:c(1),cur_locked_flag_12:c(1),cur_locked_flag_13:c(1),nxt_locked_flag_01:c(1),nxt_locked_flag_02:c(1),nxt_locked_flag_03:c(1),nxt_locked_flag_04:c(1),nxt_locked_flag_05:c(1),nxt_locked_flag_06:c(1),nxt_locked_flag_07:c(1),nxt_locked_flag_08:c(1),nxt_locked_flag_09:c(1),nxt_locked_flag_10:c(1),nxt_locked_flag_11:c(1),nxt_locked_flag_12:c(1),nxt_locked_flag_13:c(1),app_per_beg:c(8),app_per_end:c(8),gl_per_beg:c(8),gl_per_end:c(8),process_id:c(16),program_name:c(24),use_suspense:c(1),gl_account:c(10),max_lim_str:c(15),max_bal_str:c(15),acct_output:c(15),amount_mask:c(15*),unit_mask:c(12*),percent_mask:c(10*)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cols">
@@ -2676,8 +2676,8 @@
 			<DD_DVAR_NAME id="ddm_table_cols.+glcontrol052">AMOUNT_MASK     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.+glcontrol052">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.+glcontrol052">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.+glcontrol052">N</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.+glcontrol052"></DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.+glcontrol052">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.+glcontrol052">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.+glcontrol052"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.+glcontrol052"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.+glcontrol052"></DD_MASK_TYPE>
@@ -2727,8 +2727,8 @@
 			<DD_DVAR_NAME id="ddm_table_cols.+glcontrol053">UNIT_MASK       </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.+glcontrol053">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.+glcontrol053">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.+glcontrol053">N</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.+glcontrol053"></DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.+glcontrol053">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.+glcontrol053">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.+glcontrol053"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.+glcontrol053"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.+glcontrol053"></DD_MASK_TYPE>
@@ -2778,8 +2778,8 @@
 			<DD_DVAR_NAME id="ddm_table_cols.+glcontrol054">PERCENT_MASK    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.+glcontrol054">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.+glcontrol054">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.+glcontrol054">N</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.+glcontrol054"></DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.+glcontrol054">Y</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.+glcontrol054">0A</DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.+glcontrol054"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.+glcontrol054"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.+glcontrol054"></DD_MASK_TYPE>
