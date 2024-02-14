@@ -337,6 +337,9 @@ rem --- May want to skip line code entry, and/or warehouse code entry, the first
 	callpoint!.setDevObject("skipLineCode",user_tpl.skip_ln_code$)
 	callpoint!.setDevObject("skipWHCode",user_tpl.skip_whse$)
 
+rem --- Initialize Kit Component grid's kit_detail_changed flag
+	callpoint!.setDevObject("kit_details_changed","N")
+
 [[OPE_INVDET.AOPT-ADDL]]
 rem --- Additional Options
 
@@ -542,6 +545,17 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 :		table_chans$[all], 
 :		"",
 :		dflt_data$[all]
+
+rem --- For non-priced Kits, make updates for changes made in the Kit Components grid
+	if callpoint!.getDevObject("kit_details_changed")="Y" and callpoint!.getDevObject("priced_kit")="N" then
+		rem --- Update kit's detail row and Totals tab
+		gosub updateKitTotals
+
+		rem --- Set header REPRINT_FLAG
+		if pos(callpoint!.getColumnData("OPE_INVDET.PICK_FLAG")="YM") then
+			callpoint!.setHeaderColumnData("OPE_INVHDR.REPRINT_FLAG","Y")
+		endif
+	endif
 
 rem --- Return focus to where we were in Detail Line grid
 	sysgui!.setContext(grid_ctx)
@@ -778,6 +792,9 @@ rem --- Buttons start disabled
 	callpoint!.setOptionEnabled("ADDL",0)
 	callpoint!.setOptionEnabled("COMM",0)
 	callpoint!.setStatus("REFRESH")
+
+rem --- Initialize Kit Component grid's kit_detail_changed flag
+	callpoint!.setDevObject("kit_details_changed","N")
 
 [[OPE_INVDET.AUDE]]
 print "Det:AUDE"; rem debug
@@ -1124,11 +1141,11 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 
 			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
 			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
-			kit_keyPrefix$=cvs(callpoint!.getKeyPrefix(),2)
-			read(optInvKitDet_dev,key=kit_keyPrefix$,knum="AO_STAT_CUST_ORD",dom=*next)
+			trip_key$=firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+			read(optInvKitDet_dev,key=trip_key$,knum="AO_STAT_CUST_ORD",dom=*next)
 			while 1
 				thisKey$=key(optInvKitDet_dev,end=*break)
-				if pos(kit_keyPrefix$=thisKey$)<>1 then break
+				if pos(trip_key$=thisKey$)<>1 then break
 				extractrecord(optInvKitDet_dev)optInvKitDet$
 				comp_per_kit=optInvKitDet.comp_per_kit
 				adjusted_kit_ordered=round(kit_ordered*comp_per_kit,round_precision)
@@ -1258,11 +1275,11 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 			wend
 		endif
 
-		rem --- Auto launch Kit Components grid if allowed
+		rem --- Auto launch Kit Components grid if allowed and NOT following Kit Components button
 		ars01_dev = fnget_dev("ARS_PARAMS")
 		dim ars01a$:fnget_tpl$("ARS_PARAMS")
 		read record (ars01_dev, key=firm_id$+"AR00") ars01a$
-		if ars01a.launch_kit_grid$="Y" then
+		if ars01a.launch_kit_grid$="Y" and callpoint!.getDevObject("kit_details_changed")<>"Y" then
 			rem --- Hold on to this detail record for use in OPT_INVKITDET grid
 			callpoint!.setDevObject("kitDetailLine",rec_data$)
 			callpoint!.setDevObject("orderDate",user_tpl.order_date$)
@@ -1297,6 +1314,17 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 :				table_chans$[all], 
 :				"",
 :				dflt_data$[all]
+
+			rem --- For non-priced Kits, make updates for changes made in the Kit Components grid
+			if callpoint!.getDevObject("kit_details_changed")="Y" and callpoint!.getDevObject("priced_kit")="N" then
+				rem --- Update kit's detail row and Totals tab
+				gosub updateKitTotals
+
+				rem --- Set header REPRINT_FLAG
+				if pos(callpoint!.getColumnData("OPE_INVDET.PICK_FLAG")="YM") then
+					callpoint!.setHeaderColumnData("OPE_INVHDR.REPRINT_FLAG","Y")
+				endif
+			endif
 		else
 			rem --- Report shortages if any
 			gosub reportShortages		
@@ -2346,8 +2374,6 @@ rem ==========================================================================
 	callpoint!.setHeaderColumnData("OPE_INVHDR.FREIGHT_AMT",str(round(freight_amt,2)))
 	callpoint!.setHeaderColumnData("<<DISPLAY>>.ORDER_TOT", str(net_sales))
 
-	callpoint!.setStatus("REFRESH")
-
 	cm$=callpoint!.getDevObject("msg_credit_memo")
 
 	if cm$="Y" and ttl_ext_price>=0 callpoint!.setDevObject("msg_credit_memo","N")
@@ -3026,7 +3052,7 @@ rem ==========================================================================
 	if pos(user_tpl.line_type$="NSP")
 		rem --- Grid vector must be updated before updating Totals tab
 		ext_price=round(qty_shipped * unit_price, 2)
-		callpoint!.setColumnData("OPE_INVDET.EXT_PRICE", str(ext_price) )
+		callpoint!.setColumnData("OPE_INVDET.EXT_PRICE", str(ext_price),1)
 		declare BBjVector dtlVect!
 		dtlVect!=cast(BBjVector, GridVect!.getItem(0))
 		dim dtl_rec$:dtlg_param$[1,3]
@@ -3037,7 +3063,9 @@ rem ==========================================================================
 	endif
 	gosub disp_grid_totals
 	gosub check_if_tax
-	if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED;REFRESH")
+rem wgh ... 7491 ... MODIFIED;REFRESH
+rem ...	if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED;REFRESH")
+if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED")
 
 	return
 
@@ -3254,7 +3282,7 @@ rem =========================================================
 :	user_tpl.line_dropship$ <> "Y" and callpoint!.getDevObject("warn_not_avail")="Y" and callpoint!.getDevObject("kit")<>"Y" then
 		if conv_factor=0 then
 			conv_factor=1
-			callpoint!.setColumnData("OPE_ORDDET.CONV_FACTOR",str(conv_factor))
+			callpoint!.setColumnData("OPE_INVDET.CONV_FACTOR",str(conv_factor))
 		endif
 
 		shipqty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))*conv_factor
@@ -3547,6 +3575,92 @@ rem =========================================================
 		endif
 	endif
 	shortage_vect!=BBjAPI().makeVector()
+
+	return
+
+rem =========================================================
+updateKitTotals: rem --- Update kit detail row with totals for the sum of its components
+	rem    IN:	key_pfx$
+rem =========================================================
+	optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+	dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+
+	total_cost=0
+	total_unit_price=0
+	total_list_price=0
+	total_ext_price=0
+	total_taxable_amt=0
+	total_disc_percent=0
+	total_comm_percent=0
+	total_comm_amt=0
+
+	read(optInvKitDet_dev,key=key_pfx$,knum="AO_STAT_CUST_ORD",dom=*next)
+	while 1
+		thisKey$=key(optInvKitDet_dev,end=*break)
+		if pos(key_pfx$=thisKey$)<>1 then break
+		readrecord(optInvKitDet_dev)optInvKitDet$
+
+		total_cost=total_cost+optInvKitDet.unit_cost*optInvKitDet.qty_ordered
+		total_unit_price=total_unit_price+optInvKitDet.unit_price*optInvKitDet.qty_ordered
+		total_list_price=total_list_price+optInvKitDet.std_list_prc*optInvKitDet.qty_ordered
+		total_ext_price=total_ext_price+optInvKitDet.ext_price
+		total_taxable_amt=total_taxable_amt+optInvKitDet.taxable_amt
+		total_comm_amt=total_comm_amt+optInvKitDet.comm_amt
+	wend
+
+	if total_list_price then
+		kit_disc_percent=round(100 - total_unit_price * 100 /total_list_price, 2)
+	else
+		kit_disc_percent=0
+	endif
+	if total_ext_price then
+		kit_comm_percent=round(100 * total_comm_amt/total_ext_price,2)
+	else
+		kit_comm_percent=0
+	endif
+	kit_spl_comm_pct=kit_comm_percent
+
+	conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
+	if conv_factor=0 then
+		conv_factor=1
+		callpoint!.setColumnData("OPE_INVDET.CONV_FACTOR",str(conv_factor))
+	endif
+	kit_unit_cost=round(total_cost/num(callpoint!.getColumnData("OPE_INVDET.QTY_ORDERED")),4)
+	callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP",str(kit_unit_cost*conv_factor),1)
+	callpoint!.setColumnData("OPE_INVDET.UNIT_COST",str(kit_unit_cost))
+	kit_unit_price=round(total_unit_price/num(callpoint!.getColumnData("OPE_INVDET.QTY_ORDERED")),2)
+	callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(kit_unit_price*conv_factor),1)
+	callpoint!.setColumnData("OPE_INVDET.UNIT_PRICE",str(kit_unit_price))
+	kit_list_price=round(total_list_price/num(callpoint!.getColumnData("OPE_INVDET.QTY_ORDERED")),2)
+	callpoint!.setColumnData("OPE_INVDET.STD_LIST_PRC",str(kit_list_price))
+	callpoint!.setColumnData("OPE_INVDET.EXT_PRICE",str(total_ext_price),1)
+	callpoint!.setColumnData("OPE_INVDET.TAXABLE_AMT",str(total_taxable_amt))
+	callpoint!.setColumnData("OPE_INVDET.DISC_PERCENT",str(kit_disc_percent))
+	callpoint!.setColumnData("OPE_INVDET.COMM_PERCENT",str(kit_comm_percent))
+	callpoint!.setColumnData("OPE_INVDET.COMM_AMT",str(total_comm_amt))
+	callpoint!.setColumnData("OPE_INVDET.SPL_COMM_PCT",str(kit_spl_comm_pct))
+
+	rem --- Grid vector must be updated before updating Totals tab
+	declare BBjVector dtlVect!
+	dtlVect!=cast(BBjVector, GridVect!.getItem(0))
+	dim dtl_rec$:dtlg_param$[1,3]
+	dtl_rec$=cast(BBjString, dtlVect!.getItem(callpoint!.getValidationRow()))
+	dtl_rec.conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
+	dtl_rec.unit_cost=num(callpoint!.getColumnData("OPE_INVDET.UNIT_COST"))
+	dtl_rec.unit_price=num(callpoint!.getColumnData("OPE_INVDET.UNIT_PRICE"))
+	dtl_rec.std_list_prc=num(callpoint!.getColumnData("OPE_INVDET.STD_LIST_PRC"))
+	dtl_rec.ext_price=num(callpoint!.getColumnData("OPE_INVDET.EXT_PRICE"))
+	dtl_rec.taxable_amt=num(callpoint!.getColumnData("OPE_INVDET.TAXABLE_AMT"))
+	dtl_rec.disc_percent=num(callpoint!.getColumnData("OPE_INVDET.DISC_PERCENT"))
+	dtl_rec.comm_percent=num(callpoint!.getColumnData("OPE_INVDET.COMM_PERCENT"))
+	dtl_rec.comm_amt=num(callpoint!.getColumnData("OPE_INVDET.COMM_AMT"))
+	dtl_rec.spl_comm_pct=num(callpoint!.getColumnData("OPE_INVDET.SPL_COMM_PCT"))
+	dtlVect!.setItem(callpoint!.getValidationRow(),dtl_rec$)
+	GridVect!.setItem(0,dtlVect!)
+
+	qty_shipped = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+	unit_price  = num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))
+	gosub disp_ext_amt
 
 	return
 
