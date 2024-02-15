@@ -161,7 +161,7 @@ rem --- Set Report Name & Subreport directory
     
 rem --- Open all files
 
-    num_files = 16
+    num_files = 17
     open_beg  = 1
     open_end  = num_files
 
@@ -183,6 +183,7 @@ rem --- Open all files
     open_tables$[14]="OPE_ORDLSDET", open_opts$[14]="OTA"; rem ope21
     open_tables$[15]="OPE_PRNTLIST", open_opts$[15]="OTA"; rem ope04
     open_tables$[16]="ARS_REPORT",   open_opts$[16]="OTA"; rem ars01b
+    open_tables$[17]="OPS_PARAMS",   open_opts$[17]="OTA"
    
     gosub open_tables
 
@@ -202,6 +203,7 @@ rem --- Open all files
     ordlsdet_dev = num(open_chans$[14])
     prntlist_dev = num(open_chans$[15])
 	ars_report_dev = num(open_chans$[16])
+    opsParams_dev = num(open_chans$[17])
     
     dim whsecode_rec$:open_tpls$[1]
     dim params_rec$:open_tpls$[2]
@@ -220,10 +222,12 @@ rem --- Open all files
     dim ope21a$:open_tpls$[14]
     dim ope04a$:open_tpls$[15]
 	dim ars01b$:open_tpls$[16]
+    dim opsParams$:open_tpls$[17]
 
 rem --- Get Parameters
     
     find record (params_dev, key=firm_id$+"IV00", dom=std_missing_params) params_rec$
+    find record (opsParams_dev, key=firm_id$+"AR00", dom=std_missing_params) opsParams$
     find record (credit_dev, key=firm_id$+"AR01") credit_rec$	
 	find record (ars_report_dev, key=firm_id$+"AR02", err=std_missing_params) ars01b$
 
@@ -241,7 +245,16 @@ rem --- Initialize Data
     more=1
     precision num(params_rec.precision$)
 
-    barCode$=cvs(stbl("+ORDER_PICK_LIST_BARCODES",err=*next),2)
+    barCode$=cvs(opsParams.barcode_source$,2)
+    if barCode$="U" then
+        barCode$="UPC"
+    else
+        if barCode$="B" then
+            barCode$="BAR"
+        else
+            barCode$=""
+        endif
+    endif
 
     call pgmdir$+"adc_getmask.aon","","AR","I","",cust_mask$,0,cust_size
     call pgmdir$+"adc_getmask.aon","","AR","A","",amt_mask$,0,amt_mask_size
