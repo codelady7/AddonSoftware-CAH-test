@@ -92,6 +92,15 @@ rem --- Finish changing customer for this order
 				remove(opeOrdLSDet_dev2,key=opeOrdLSDet_key2$)
 			wend
 
+			rem --- Remove OPT_INVKITDET records for the previous customer
+			optInvKitDet_dev2=fnget_dev("2_OPT_INVKITDET")
+			read(optInvKitDet_dev2,key=previous_optInvHdr_key$,knum="PRIMARY",dom=*next)
+			while 1
+				optInvKitDet_key2$=key(optInvKitDet_dev2,end=*break)
+				if pos(previous_optInvHdr_key$=optInvKitDet_key2$)<>1 then break
+				remove(optInvKitDet_dev2,key=optInvKitDet_key2$)
+			wend
+
 			rem --- Remove OPE_ORDSHIP record for the previous customer
 			opeOrdShip_dev=fnget_dev("OPE_ORDSHIP")
 			find(opeOrdShip_dev,key=opeOrdShip_key$,knum="PRIMARY", dom=*next)x$
@@ -811,6 +820,26 @@ rem --- Update order detail records for new customer
 		writerecord(ope21_dev2)ope21a$
 	wend
 	read(ope21_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
+
+	rem --- Update OPT_INVKITDET for new customer
+	optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+	optInvKitDet_dev2=fnget_dev("2_OPT_INVKITDET")
+	dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+	read (optInvKitDet_dev, key=optInvHdrDev2_key$,knum="PRIMARY",dom=*next)
+	while 1
+		readrecord(optInvKitDet_dev,end=*break)optInvKitDet$
+		if pos(optInvHdrDev2_key$=optInvKitDet$)<>1 then break
+
+		rem --- Update order lot/serial detail record for new customer
+		optInvKitDet.customer_id$=newCustomerId$
+
+		rem --- Write order lot/serial detail record for new customer
+		optInvKitDet.mod_user$=sysinfo.user_id$
+		optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+		optInvKitDet.mod_time$=date(0:"%Hz%mz")
+		writerecord(optInvKitDet_dev2)optInvKitDet$
+	wend
+	read(optInvKitDet_dev,key="",knum="AO_STAT_CUST_ORD",dom=*next)
 
 	rem --- Update OPE_PRNTLIST for new customer
 	ope_prntlist_dev=fnget_dev("OPE_PRNTLIST")
@@ -2197,7 +2226,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=49
+	num_files=50
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -2246,6 +2275,7 @@ rem --- Open needed files
 	open_tables$[47]="ADM_RPTCTL_RCP",open_opts$[47]="OTA"
 	open_tables$[48]="OPT_FILLMNTHDR",open_opts$[48]="OTA"
 	open_tables$[49]="OPT_INVKITDET",open_opts$[49]="OTA"
+	open_tables$[50]="OPT_INVKITDET", open_opts$[50]="OTA[2_]"
 
 	gosub open_tables
 
