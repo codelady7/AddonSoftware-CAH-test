@@ -370,7 +370,7 @@ rem --- Update inventory if there have been any changes
 				items$[2] = curr_item$
 				refs[0]   = curr_qty
 
-				if line_ship_date$<=stbl("OPE_DEF_COMMIT") then
+				if line_ship_date$<=stbl("OPE_DEF_COMMIT",err=*next) then
 					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 					if status then goto awri_update_hdr
 				endif
@@ -387,7 +387,7 @@ rem --- If new record, or item and warehouse haven't changed, then commit differ
 
 				if curr_qty - prior_qty > 0 then
 					rem --- Commit
-					if line_ship_date$<=stbl("OPE_DEF_COMMIT") then
+					if line_ship_date$<=stbl("OPE_DEF_COMMIT",err=*next) then
 						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 						if status then goto awri_update_hdr
 					endif
