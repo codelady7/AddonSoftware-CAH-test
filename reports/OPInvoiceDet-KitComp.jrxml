@@ -58,7 +58,7 @@
 					<pen lineColor="#C0C0C0"/>
 				</graphicElement>
 			</rectangle>
-			<textField evaluationTime="Report">
+			<textField>
 				<reportElement x="1" y="0" width="54" height="12" uuid="98d29c70-c7e5-4189-bb3e-36402a88c3f1">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
