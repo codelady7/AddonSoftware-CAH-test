@@ -165,7 +165,7 @@
 	</columnHeader>
 	<detail>
 		<band height="13" splitType="Prevent">
-			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle>
 				<reportElement stretchType="RelativeToBandHeight" mode="Opaque" x="0" y="0" width="555" height="13" isRemoveLineWhenBlank="true" backcolor="#EBF0FA" uuid="626ec31b-09bc-48f4-9589-72823189b525">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -186,6 +186,7 @@
 			<textField>
 				<reportElement x="1" y="0" width="54" height="12" uuid="98d29c70-c7e5-4189-bb3e-36402a88c3f1">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<printWhenExpression><![CDATA[new Boolean (!$F{KIT}.equals("Y") || $F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="9"/>
@@ -197,6 +198,7 @@
 				<reportElement x="57" y="0" width="54" height="12" uuid="38e5a190-7bac-4798-a763-d4c94818d674">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<printWhenExpression><![CDATA[new Boolean (!$F{KIT}.equals("Y") || $F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="9"/>
@@ -208,6 +210,7 @@
 				<reportElement x="113" y="0" width="54" height="12" uuid="33322784-2b92-46b5-b60c-5ab20b8e761b">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<printWhenExpression><![CDATA[new Boolean (!$F{KIT}.equals("Y") || $F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="9"/>
@@ -219,6 +222,7 @@
 				<reportElement x="376" y="0" width="45" height="12" uuid="c0cbc277-7b10-4c8c-a02f-2d5b393581f6">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<printWhenExpression><![CDATA[new Boolean (!$F{KIT}.equals("Y") || $F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="9"/>
@@ -252,7 +256,7 @@
 				<reportElement x="169" y="0" width="205" height="12" isRemoveLineWhenBlank="true" uuid="b9da765f-f80c-497f-91ff-a1c840042b80">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<printWhenExpression><![CDATA[new Boolean (!$F{ITEM_DESC}.isEmpty())]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean (!$F{ITEM_DESC}.isEmpty() && (!$F{KIT}.equals("Y" )|| $F{PRICED_KIT}.equals("Y")))]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Serif" size="9"/>
@@ -316,6 +320,71 @@
 					<pen lineColor="#C0C0C0"/>
 				</graphicElement>
 			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="169" y="0" width="205" height="12" isRemoveLineWhenBlank="true" forecolor="#808080" uuid="64f20262-890e-4698-b558-7f7a7d66e234">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean (!$F{ITEM_DESC}.isEmpty() && ($F{KIT}.equals("Y" ) && !$F{PRICED_KIT}.equals("Y")))]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ITEM_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="0" width="45" height="12" forecolor="#808080" uuid="3bd0b751-cf23-4643-8aaf-e253eee7ba39">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean ($F{KIT}.equals("Y") && !$F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{UM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="54" height="12" forecolor="#808080" uuid="5ec1353d-14ad-4657-9b36-e6a6b77dbf78">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean ($F{KIT}.equals("Y") && !$F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ORDER_QTY_MASKED}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="57" y="0" width="54" height="12" forecolor="#808080" uuid="82e49288-c078-4827-aba3-bdbbdd7b1893">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean ($F{KIT}.equals("Y") && !$F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SHIP_QTY_MASKED}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="0" width="54" height="12" forecolor="#808080" uuid="7d2b55ce-9082-4ed8-988d-dd1eaa2540ca">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean ($F{KIT}.equals("Y") && !$F{PRICED_KIT}.equals("Y"))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BACKORD_QTY_MASKED}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
