@@ -127,6 +127,305 @@ rem --- Warehouse and Item must be correct, don't let user leave corrupt row
 		break; rem --- exit callpoint
 	endif
 
+rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line's kit
+	if callpoint!.getDevObject("kit")="Y" and num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED"))<>0 then
+		rem --- Get current and prior values
+		dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
+		kitDetailLine$=rec_data$
+		curr_whse$ = callpoint!.getColumnData("OPE_ORDDET.WAREHOUSE_ID")
+		curr_item$ = callpoint!.getColumnData("OPE_ORDDET.ITEM_ID")
+		prior_whse$ = callpoint!.getDevObject("prior_whse")
+		prior_item$ = callpoint!.getDevObject("prior_item")
+		cust$    = callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
+		ar_type$ = callpoint!.getColumnData("OPE_ORDDET.AR_TYPE")
+		order$   = callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
+		invoice_no$= callpoint!.getColumnData("OPE_ORDDET.AR_INV_NO")
+		seq$     = callpoint!.getColumnData("OPE_ORDDET.INTERNAL_SEQ_NO")
+
+		rem --- Get the kit's item descripton
+		ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
+		findrecord(ivmItemMast_dev,key=firm_id$+kitDetailLine.item_id$)ivmItemMast$
+		callpoint!.setDevObject("kitDesc",ivmItemMast.item_desc$)
+
+		rem --- Displaying a kit' description requires the Inventory item description lengths.
+		ivsParams_dev=fnget_dev("IVS_PARAMS")
+		dim ivsParams$:fnget_tpl$("IVS_PARAMS")
+		findrecord(ivsParams_dev,key=firm_id$+"IV00")ivsParams$
+		itemDescLen! = BBjAPI().makeVector()
+		itemDescLen!.addItem(num(ivsParams.desc_len_01$))
+		itemDescLen!.addItem(num(ivsParams.desc_len_02$))
+		itemDescLen!.addItem(num(ivsParams.desc_len_03$))
+		callpoint!.setDevObject("itemDescLen",itemDescLen!)
+
+		rem --- Was this kit just added to the order?
+		shortage_vect!=BBjAPI().makeVector()
+		callpoint!.setDevObject("shortageVect",shortage_vect!)
+		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" or
+:		(curr_whse$<>prior_whse$ or  curr_item$<>prior_item$) then
+			rem --- Explode this kit into its components
+			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
+			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
+			ivm01_dev=fnget_dev("IVM_ITEMMAST")
+			dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+			ivm02_dev=fnget_dev("IVM_ITEMWHSE")
+			dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
+			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+
+			kit_item$=kitDetailLine.item_id$
+			kit_ordered=kitDetailLine.qty_ordered
+			kit_shipped=kitDetailLine.qty_shipped
+			nextLineNo=1
+			call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","U","",qty_mask$,0,qty_mask
+			call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","I","",ivIMask$,0,0
+			lineMask$=pad("",len(callpoint!.getColumnData("OPE_ORDDET.LINE_NO")),"0")
+
+			gosub explodeKit
+		endif
+
+		rem --- Was the order for this kit changed?
+		shortage_vect!=BBjAPI().makeVector()
+		callpoint!.setDevObject("shortageVect",shortage_vect!)
+		skippedComponents_vect!=BBjAPI().makeVector()
+		callpoint!.setDevObject("skippedComponentsVect",skippedComponents_vect!)
+		if (curr_whse$=prior_whse$ or curr_item$=prior_item$) and
+:		callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow())="Y" and 
+:		callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
+			round_precision = num(callpoint!.getDevObject("precision"))
+
+			rem --- Update this kit's components for the changes made to the order
+			kit_ordered=kitDetailLine.qty_ordered
+			kit_shipped=kitDetailLine.qty_shipped
+			kit_commit$=kitDetailLine.commit_flag$
+			kit_prior_qty=callpoint!.getDevObject("prior_qty")
+
+			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+			trip_key$=firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+			read(optInvKitDet_dev,key=trip_key$,knum="AO_STAT_CUST_ORD",dom=*next)
+			while 1
+				thisKey$=key(optInvKitDet_dev,end=*break)
+				if pos(trip_key$=thisKey$)<>1 then break
+				extractrecord(optInvKitDet_dev)optInvKitDet$
+				comp_per_kit=optInvKitDet.comp_per_kit
+				if comp_per_kit=0 then
+					rem --- Custom component
+					adjusted_kit_ordered=optInvKitDet.qty_ordered
+
+					rem --- Warn custom component quantities not updated
+					skipped_vect!=BBjAPI().makeVector()
+					skipped_vect!.addItem(optInvKitDet.item_id$)
+					skipped_vect!.addItem(optInvKitDet.qty_ordered)
+					skipped_vect!.addItem(optInvKitDet.qty_shipped)
+					skippedComponents_vect!.addItem(skipped_vect!)
+					callpoint!.setDevObject("skippedComponentsVect",skippedComponents_vect!)
+				else
+					rem --- Standard component
+					adjusted_kit_ordered=round(kit_ordered*comp_per_kit,round_precision)
+				endif
+
+				rem --- If the modified kit record is committed and the existing component record is committed, then …
+				if kit_commit$="Y" and optInvKitDet.commit_flag$="Y" then
+					rem --- If adjusted kit_ordered>optInvKitDet.qty_ordered then ...
+					if adjusted_kit_ordered>optInvKitDet.qty_ordered then
+						rem --- Commit adjusted kit_ordered-optInvKitDet.qty_ordered
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+						items$[1]=optInvKitDet.warehouse_id$
+						items$[2]=optInvKitDet.item_id$
+						refs[0]=adjusted_kit_ordered-optInvKitDet.qty_ordered
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					endif
+
+					rem --- If adjusted kit_ordered<optInvKitDet.qty_ordered then ...
+					if adjusted_kit_ordered<optInvKitDet.qty_ordered then
+						rem --- Uncommit optInvKitDet.qty_ordered-adjusted kit_ordered
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+						items$[1]=optInvKitDet.warehouse_id$
+						items$[2]=optInvKitDet.item_id$
+						refs[0]=optInvKitDet.qty_ordered-adjusted_kit_ordered
+						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+					endif
+				endif
+
+				rem --- If the modified kit record is committed and the existing component record is NOT committed, then ...
+				if kit_commit$="Y" and optInvKitDet.commit_flag$<>"Y" then
+					rem --- Commit the adjusted kit_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+					items$[1]=optInvKitDet.warehouse_id$
+					items$[2]=optInvKitDet.item_id$
+					refs[0]=adjusted_kit_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				endif
+
+				rem --- If the modified kit record is NOT committed and the existing component record is committed, then ...
+				if kit_commit$<>"Y" and optInvKitDet.commit_flag$="Y" then
+					rem --- Uncommit optInvKitDet.qty_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+					items$[1]=optInvKitDet.warehouse_id$
+					items$[2]=optInvKitDet.item_id$
+					refs[0]=optInvKitDet.qty_ordered
+					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+				endif
+
+				rem --- If the modified kit record is NOT committed and the existing component record is NOT committed, then ... 
+				if kit_commit$<>"Y" and optInvKitDet.commit_flag$<>"Y" then
+					rem --- Do NOT commit/uncommit inventory
+				endif
+
+				rem --- Update this kit component record
+				optInvKitDet.commit_flag$=kit_commit$
+				prior_qty_ordered=optInvKitDet.qty_ordered
+				prior_qty_shipped=optInvKitDet.qty_shipped
+				if comp_per_kit<>0 then
+					rem --- Kit standard component
+					optInvKitDet.qty_ordered=round(kit_ordered*comp_per_kit,round_precision)
+					optInvKitDet.qty_shipped=round(kit_shipped*comp_per_kit,round_precision)
+				else
+					rem --- Kit custom component
+					rem --- Do NOT change quantities for custom components
+				endif
+				optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
+
+				rem --- Update unit_price and disc_percent if qty_ordered changed
+				prior_unit_price=optInvKitDet.unit_price
+				if prior_qty_ordered<>optInvKitDet.qty_ordered then
+					dim pc_files[6]
+					pc_files[1] = fnget_dev("IVM_ITEMMAST")
+					pc_files[2] = fnget_dev("IVM_ITEMWHSE")
+					pc_files[3] = fnget_dev("IVM_ITEMPRIC")
+					pc_files[4] = fnget_dev("IVC_PRICCODE")
+					pc_files[5] = fnget_dev("ARS_PARAMS")
+					pc_files[6] = fnget_dev("IVS_PARAMS")
+					call stbl("+DIR_PGM")+"opc_pricing.aon",
+:						pc_files[all],
+:						firm_id$,
+:						optInvKitDet.warehouse_id$,
+:						optInvKitDet.item_id$,
+:						str(callpoint!.getDevObject("priceCode")),
+:						optInvKitDet.customer_id$,
+:						str(callpoint!.getDevObject("orderDate")),
+:						str(callpoint!.getDevObject("pricingCode")),
+:						optInvKitDet.qty_ordered,
+:						typeflag$,
+:						price,
+:						disc,
+:						status
+					if status=999 then
+						typeflag$="N"
+						price=0
+						disc=0
+					endif
+					optInvKitDet.unit_price=price
+					optInvKitDet.disc_percent=disc
+				endif
+
+				rem --- Update ext_price and taxable_amt if unit_price or qty_shipped changed
+				if prior_unit_price<>optInvKitDet.unit_price or prior_qty_shipped<>optInvKitDet.qty_shipped then
+					optInvKitDet.ext_price=round(optInvKitDet.qty_shipped * optInvKitDet.unit_price, 2)
+
+					redim ivmItemMast$
+					readrecord(ivmItemMast_dev,key=firm_id$+optInvKitDet.item_id$,dom=*next)ivmItemMast$
+					if (user_tpl.line_taxable$="Y" and ivmItemMast.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
+						optInvKitDet.taxable_amt=optInvKitDet.ext_price
+					else
+						optInvKitDet.taxable_amt=0
+					endif
+				endif
+
+				writerecord(optInvKitDet_dev)optInvKitDet$
+
+				rem --- Warn if ship quantity is more than currently available.
+				ivm02_dev=fnget_dev("IVM_ITEMWHSE")
+				dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
+				readrecord(ivm02_dev,key=firm_id$+optInvKitDet.warehouse_id$+optInvKitDet.item_id$,dom=*next)ivm02a$
+				shipqty=optInvKitDet.qty_shipped
+				available=ivm02a.qty_on_hand-(ivm02a.qty_commit-shipqty); rem --- Note: ivm_itemwhse record read AFTER this component was committed
+				if shipqty>available then
+					available_vect!=BBjAPI().makeVector()
+					available_vect!.addItem(optInvKitDet.item_id$)
+					available_vect!.addItem(shipqty)
+					available_vect!.addItem(available)
+					shortage_vect!.addItem(available_vect!)
+				endif
+				callpoint!.setDevObject("shortageVect",shortage_vect!)
+			wend
+
+			rem --- For non-priced Kits, make updates for changes made to the Kit in case it has custom components
+			if callpoint!.getDevObject("priced_kit")="N" then
+				rem --- Update kit's detail row and Totals tab
+				key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+				gosub updateKitTotals
+
+				rem --- Set header REPRINT_FLAG
+				if pos(callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="YM") then
+					callpoint!.setHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
+				endif
+			endif
+		endif
+
+		rem --- Auto launch Kit Components grid if allowed and NOT following Kit Components button
+		ars01_dev = fnget_dev("ARS_PARAMS")
+		dim ars01a$:fnget_tpl$("ARS_PARAMS")
+		read record (ars01_dev, key=firm_id$+"AR00") ars01a$
+		if ars01a.launch_kit_grid$="Y" and callpoint!.getDevObject("kit_details_changed")<>"Y" then
+			rem --- Hold on to this detail record for use in OPT_INVKITDET grid
+			callpoint!.setDevObject("kitDetailLine",rec_data$)
+			callpoint!.setDevObject("orderDate",user_tpl.order_date$)
+			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+			callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
+			callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
+			callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_ORDHDR.CASH_SALE"))
+			callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE"))
+
+			key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+
+			dim dflt_data$[6,1]
+			dflt_data$[1,0] = "TRANS_STATUS"
+			dflt_data$[1,1] = "E"
+			dflt_data$[2,0] = "AR_TYPE"
+			dflt_data$[2,1] = ar_type$
+			dflt_data$[3,0] = "CUSTOMER_ID"
+			dflt_data$[3,1] = cust$
+			dflt_data$[4,0] = "ORDER_NO"
+			dflt_data$[4,1] = order$
+			dflt_data$[5,0] = "AR_INV_NO"
+			dflt_data$[5,1] = invoice_no$
+			dflt_data$[6,0] = "ORDDET_SEQ_REF"
+			dflt_data$[6,1] = seq$
+
+			call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:				"OPT_INVKITDET", 
+:				stbl("+USER_ID"), 
+:				"MNT", 
+:				key_pfx$, 
+:				table_chans$[all], 
+:				"",
+:				dflt_data$[all]
+
+			rem --- For non-priced Kits, make updates for changes made in the Kit Components grid
+			if callpoint!.getDevObject("kit_details_changed")="Y" and callpoint!.getDevObject("priced_kit")="N" then
+				rem --- Update kit's detail row and Totals tab
+				gosub updateKitTotals
+
+				rem --- Set header REPRINT_FLAG
+				if pos(callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="YM") then
+					callpoint!.setHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
+				endif
+			endif
+		else
+			rem --- Report shortages if any
+			gosub reportShortages		
+		endif
+
+		callpoint!.setStatus("ACTIVATE")
+	endif
+
 rem --- Returns
 
 	if num( callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP") ) < 0 then
@@ -332,8 +631,6 @@ rem --- Initialize Kit Component grid's kit_detail_changed flag
 	callpoint!.setDevObject("kit_details_changed","N")
 
 [[OPE_ORDDET.AOPT-ADDL]]
-print "Det:AOPT.ADDL"; rem debug
-
 rem --- Additional Options
 
 	if user_tpl.line_type$ = "M" then break; rem --- exit callpoint
@@ -517,6 +814,8 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 	callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE"))
 	shortage_vect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("shortageVect",shortage_vect!)
+	skippedComponents_vect!=BBjAPI().makeVector()
+	callpoint!.setDevObject("skippedComponentsVect",skippedComponents_vect!)
 
 	ar_type$ = callpoint!.getColumnData("OPE_ORDDET.AR_TYPE")
 	cust$ = callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
@@ -561,6 +860,7 @@ rem --- For non-priced Kits, make updates for changes made in the Kit Components
 
 rem --- Return focus to where we were in Detail Line grid
 	sysgui!.setContext(grid_ctx)
+	callpoint!.setStatus("ACTIVATE")
 
 [[OPE_ORDDET.AOPT-LENT]]
 rem --- Save current context so we'll know where to return from lot lookup
@@ -704,8 +1004,6 @@ rem --- Are things set for a reprice?
 
 	if pos(user_tpl.line_type$="SP") then
 		qty_ord = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
-		print "---Qty ordered:", qty_ord; rem debug
-
 		if qty_ord then 
 
 			rem --- Save current column so we'll know where to set focus when we return
@@ -1144,260 +1442,6 @@ awri_update_hdr: rem --- Update header
 		if opc_linecode.line_type$<>"M"
 			callpoint!.setDevObject("details_changed","Y")
 		endif
-	endif
-
-rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line's kit
-	if callpoint!.getDevObject("kit")="Y" and curr_qty<>0 then
-		rem --- Get the kit's item descripton
-		dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
-		kitDetailLine$=rec_data$
-		ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
-		dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
-		findrecord(ivmItemMast_dev,key=firm_id$+kitDetailLine.item_id$)ivmItemMast$
-		callpoint!.setDevObject("kitDesc",ivmItemMast.item_desc$)
-
-		rem --- Displaying a kit' description requires the Inventory item description lengths.
-		ivsParams_dev=fnget_dev("IVS_PARAMS")
-		dim ivsParams$:fnget_tpl$("IVS_PARAMS")
-		findrecord(ivsParams_dev,key=firm_id$+"IV00")ivsParams$
-		itemDescLen! = BBjAPI().makeVector()
-		itemDescLen!.addItem(num(ivsParams.desc_len_01$))
-		itemDescLen!.addItem(num(ivsParams.desc_len_02$))
-		itemDescLen!.addItem(num(ivsParams.desc_len_03$))
-		callpoint!.setDevObject("itemDescLen",itemDescLen!)
-
-		rem --- Was this kit just added to the order?
-		shortage_vect!=BBjAPI().makeVector()
-		callpoint!.setDevObject("shortageVect",shortage_vect!)
-		if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" or
-:		(curr_whse$<>prior_whse$ or  curr_item$<>prior_item$) then
-			rem --- Explode this kit into its components
-			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
-			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
-			ivm01_dev=fnget_dev("IVM_ITEMMAST")
-			dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-			ivm02_dev=fnget_dev("IVM_ITEMWHSE")
-			dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
-			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
-			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
-
-			kit_item$=kitDetailLine.item_id$
-			kit_ordered=kitDetailLine.qty_ordered
-			kit_shipped=kitDetailLine.qty_shipped
-			nextLineNo=1
-			call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","U","",qty_mask$,0,qty_mask
-			call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","I","",ivIMask$,0,0
-			lineMask$=pad("",len(callpoint!.getColumnData("OPE_ORDDET.LINE_NO")),"0")
-
-			gosub explodeKit
-			callpoint!.setDevObject("shortageVect",shortage_vect!)
-		endif
-
-		rem --- Was the order for this kit changed?
-		if (curr_whse$=prior_whse$ or curr_item$=prior_item$) and
-:		callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow())="Y" and 
-:		callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())<>"Y" then
-			shortage_vect!=BBjAPI().makeVector()
-			round_precision = num(callpoint!.getDevObject("precision"))
-
-			rem --- Update this kit's components for the changes made to the order
-			kit_ordered=kitDetailLine.qty_ordered
-			kit_shipped=kitDetailLine.qty_shipped
-			kit_commit$=kitDetailLine.commit_flag$
-			kit_prior_qty=callpoint!.getDevObject("prior_qty")
-
-			optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
-			dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
-			trip_key$=firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
-			read(optInvKitDet_dev,key=trip_key$,knum="AO_STAT_CUST_ORD",dom=*next)
-			while 1
-				thisKey$=key(optInvKitDet_dev,end=*break)
-				if pos(trip_key$=thisKey$)<>1 then break
-				extractrecord(optInvKitDet_dev)optInvKitDet$
-				comp_per_kit=optInvKitDet.comp_per_kit
-				adjusted_kit_ordered=round(kit_ordered*comp_per_kit,round_precision)
-
-				rem --- If the modified kit record is committed and the existing component record is committed, then …
-				if kit_commit$="Y" and optInvKitDet.commit_flag$="Y" then
-					rem --- If adjusted kit_ordered>optInvKitDet.qty_ordered then ...
-					if adjusted_kit_ordered>optInvKitDet.qty_ordered then
-						rem --- Commit adjusted kit_ordered-optInvKitDet.qty_ordered
-						call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-						items$[1]=optInvKitDet.warehouse_id$
-						items$[2]=optInvKitDet.item_id$
-						refs[0]=adjusted_kit_ordered-optInvKitDet.qty_ordered
-						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-					endif
-
-					rem --- If adjusted kit_ordered<optInvKitDet.qty_ordered then ...
-					if adjusted_kit_ordered<optInvKitDet.qty_ordered then
-						rem --- Uncommit optInvKitDet.qty_ordered-adjusted kit_ordered
-						call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-						items$[1]=optInvKitDet.warehouse_id$
-						items$[2]=optInvKitDet.item_id$
-						refs[0]=optInvKitDet.qty_ordered-adjusted_kit_ordered
-						call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-					endif
-				endif
-
-				rem --- If the modified kit record is committed and the existing component record is NOT committed, then ...
-				if kit_commit$="Y" and optInvKitDet.commit_flag$<>"Y" then
-					rem --- Commit the adjusted kit_ordered
-					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-					items$[1]=optInvKitDet.warehouse_id$
-					items$[2]=optInvKitDet.item_id$
-					refs[0]=adjusted_kit_ordered
-					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-				endif
-
-				rem --- If the modified kit record is NOT committed and the existing component record is committed, then ...
-				if kit_commit$<>"Y" and optInvKitDet.commit_flag$="Y" then
-					rem --- Uncommit optInvKitDet.qty_ordered
-					call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-					items$[1]=optInvKitDet.warehouse_id$
-					items$[2]=optInvKitDet.item_id$
-					refs[0]=optInvKitDet.qty_ordered
-					call stbl("+DIR_PGM")+"ivc_itemupdt.aon","UC",channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-				endif
-
-				rem --- If the modified kit record is NOT committed and the existing component record is NOT committed, then ... 
-				if kit_commit$<>"Y" and optInvKitDet.commit_flag$<>"Y" then
-					rem --- Do NOT commit/uncommit inventory
-				endif
-
-				rem --- Update this kit component record
-				optInvKitDet.commit_flag$=kit_commit$
-				prior_qty_ordered=optInvKitDet.qty_ordered
-				optInvKitDet.qty_ordered=round(kit_ordered*comp_per_kit,round_precision)
-				prior_qty_shipped=optInvKitDet.qty_shipped
-				optInvKitDet.qty_shipped=round(kit_shipped*comp_per_kit,round_precision)
-				optInvKitDet.qty_backord=optInvKitDet.qty_ordered-optInvKitDet.qty_shipped
-
-				rem --- Update unit_price and disc_perect if qty_ordered changed
-				prior_unit_price=optInvKitDet.unit_price
-				if prior_qty_ordered<>optInvKitDet.qty_ordered then
-					dim pc_files[6]
-					pc_files[1] = fnget_dev("IVM_ITEMMAST")
-					pc_files[2] = fnget_dev("IVM_ITEMWHSE")
-					pc_files[3] = fnget_dev("IVM_ITEMPRIC")
-					pc_files[4] = fnget_dev("IVC_PRICCODE")
-					pc_files[5] = fnget_dev("ARS_PARAMS")
-					pc_files[6] = fnget_dev("IVS_PARAMS")
-					call stbl("+DIR_PGM")+"opc_pricing.aon",
-:						pc_files[all],
-:						firm_id$,
-:						optInvKitDet.warehouse_id$,
-:						optInvKitDet.item_id$,
-:						callpoint!.getDevObject("priceCode"),
-:						optInvKitDet.customer_id$,
-:						str(callpoint!.getDevObject("orderDate")),
-:						callpoint!.getDevObject("pricingCode"),
-:						optInvKitDet.qty_ordered,
-:						typeflag$,
-:						price,
-:						disc,
-:						status
-					if status=999 then
-						typeflag$="N"
-						price=0
-						disc=0
-					endif
-					optInvKitDet.unit_price=price
-					optInvKitDet.disc_percent=disc
-				endif
-
-				rem --- Update ext_price and taxable_amt if unit_price or qty_shipped changed
-				if prior_unit_price<>optInvKitDet.unit_price or prior_qty_shipped<>optInvKitDet.qty_shipped then
-					optInvKitDet.ext_price=round(optInvKitDet.qty_shipped * optInvKitDet.unit_price, 2)
-
-					redim ivmItemMast$
-					readrecord(ivmItemMast_dev,key=firm_id$+optInvKitDet.item_id$,dom=*next)ivmItemMast$
-					if (user_tpl.line_taxable$="Y" and ivmItemMast.taxable_flag$="Y") or callpoint!.getDevObject("use_tax_service")="Y" then 
-						optInvKitDet.taxable_amt=optInvKitDet.ext_price
-					else
-						optInvKitDet.taxable_amt=0
-					endif
-				endif
-
-				writerecord(optInvKitDet_dev)optInvKitDet$
-
-				rem --- Warn if ship quantity is more than currently available.
-				ivm02_dev=fnget_dev("IVM_ITEMWHSE")
-				dim ivm02a$:fnget_tpl$("IVM_ITEMWHSE")
-				readrecord(ivm02_dev,key=firm_id$+optInvKitDet.warehouse_id$+optInvKitDet.item_id$,dom=*next)ivm02a$
-				shipqty=optInvKitDet.qty_shipped
-				available=ivm02a.qty_on_hand-(ivm02a.qty_commit-shipqty); rem --- Note: ivm_itemwhse record read AFTER this component was committed
-				if shipqty>available then
-					available_vect!=BBjAPI().makeVector()
-					available_vect!.addItem(optInvKitDet.item_id$)
-					available_vect!.addItem(shipqty)
-					available_vect!.addItem(available)
-					shortage_vect!.addItem(available_vect!)
-				endif
-				callpoint!.setDevObject("shortageVect",shortage_vect!)
-			wend
-		endif
-
-		rem --- Auto launch Kit Components grid if allowed and NOT following Kit Components button
-		ars01_dev = fnget_dev("ARS_PARAMS")
-		dim ars01a$:fnget_tpl$("ARS_PARAMS")
-		read record (ars01_dev, key=firm_id$+"AR00") ars01a$
-		if ars01a.launch_kit_grid$="Y" and callpoint!.getDevObject("kit_details_changed")<>"Y" then
-			rem --- Hold on to this detail record for use in OPT_INVKITDET grid
-			callpoint!.setDevObject("kitDetailLine",rec_data$)
-			callpoint!.setDevObject("orderDate",user_tpl.order_date$)
-			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
-			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
-			callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
-			callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
-			callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_ORDHDR.CASH_SALE"))
-			callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE"))
-
-			key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
-
-			dim dflt_data$[6,1]
-			dflt_data$[1,0] = "TRANS_STATUS"
-			dflt_data$[1,1] = "E"
-			dflt_data$[2,0] = "AR_TYPE"
-			dflt_data$[2,1] = ar_type$
-			dflt_data$[3,0] = "CUSTOMER_ID"
-			dflt_data$[3,1] = cust$
-			dflt_data$[4,0] = "ORDER_NO"
-			dflt_data$[4,1] = order$
-			dflt_data$[5,0] = "AR_INV_NO"
-			dflt_data$[5,1] = invoice_no$
-			dflt_data$[6,0] = "ORDDET_SEQ_REF"
-			dflt_data$[6,1] = seq$
-
-			call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
-:				"OPT_INVKITDET", 
-:				stbl("+USER_ID"), 
-:				"MNT", 
-:				key_pfx$, 
-:				table_chans$[all], 
-:				"",
-:				dflt_data$[all]
-
-			rem --- For non-priced Kits, make updates for changes made in the Kit Components grid
-			if callpoint!.getDevObject("kit_details_changed")="Y" and callpoint!.getDevObject("priced_kit")="N" then
-				rem --- Update kit's detail row and Totals tab
-				gosub updateKitTotals
-
-				rem --- Set header REPRINT_FLAG
-				if pos(callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="YM") then
-					callpoint!.setHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
-				endif
-			endif
-		else
-			rem --- Report shortages if any
-			gosub reportShortages		
-		endif
-
-		callpoint!.setStatus("ACTIVATE")
 	endif
 
 rem --- set prior's = curr's here, since row has been written
@@ -1983,8 +2027,6 @@ rem --- Enable/disable KITS button
 	gosub able_kits_button
 
 [[OPE_ORDDET.ITEM_ID.AVEC]]
-print "Det:ITEM_ID.AVEC"; rem debug
-
 rem --- Set buttons
 
 	gosub enable_repricing
@@ -2267,7 +2309,6 @@ endif
 rem --- Get prev qty / enable repricing, options, lots
 
 	user_tpl.prev_qty_ord = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
-	print "---Prev Qty set"; rem debug
 	gosub enable_repricing
 	gosub enable_addl_opts
 	gosub able_lot_button
@@ -2718,7 +2759,6 @@ rem ==========================================================================
 	ord$  = callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
 
 	if cvs(item$, 2)="" or cvs(wh$, 2)="" then 
-		print "---No item or WH, exiting"
 		callpoint!.setStatus("ABORT")
 		return
 	endif
@@ -2727,7 +2767,6 @@ rem ==========================================================================
 	gosub check_item_whse
 
 	if user_tpl.item_wh_failed then 
-		print "---Item/WH don't match, exiting"
 		callpoint!.setStatus("ABORT")
 		return
 	endif
@@ -2764,22 +2803,47 @@ rem ==========================================================================
 		endif
 	else
 		rem --- Pricing a non-priced kitted item
-		callpoint!.setDevObject("orderDate",user_tpl.order_date$)
-		callpoint!.setDevObject("priceCode",user_tpl.price_code$)
-		callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+		optInvKitDet_dev=fnget_dev("OPT_INVKITDET")
+		dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+		total_unit_price=0
+		ar_type$ = callpoint!.getColumnData("OPE_ORDDET.AR_TYPE")
+		cust$ = callpoint!.getColumnData("OPE_ORDDET.CUSTOMER_ID")
+		order$ = callpoint!.getColumnData("OPE_ORDDET.ORDER_NO")
+		invoice_no$ = callpoint!.getColumnData("OPE_ORDDET.AR_INV_NO")
+		seq$ = callpoint!.getColumnData("OPE_ORDDET.INTERNAL_SEQ_NO")
+		key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
+		read(optInvKitDet_dev,key=key_pfx$,knum="AO_STAT_CUST_ORD",dom=*next)
+		while 1
+			thisKey$=key(optInvKitDet_dev,end=*break)
+			if pos(key_pfx$=thisKey$)<>1 then break
+			readrecord(optInvKitDet_dev)optInvKitDet$
+			total_unit_price=total_unit_price+optInvKitDet.unit_price*optInvKitDet.qty_ordered
+		wend
 
-		bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
-		dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
-		ivm01_dev=fnget_dev("IVM_ITEMMAST")
-		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
-		dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
-		kitDetailLine$=rec_data$
-		kit_item$=item$
-		kit_ordered=qty_ord
-		kitExtendedPrice=0
-		gosub getKitExtendedPrice
-		price=kitExtendedPrice/kit_ordered
-		disc=0
+		if total_unit_price then
+			rem --- Kit unit price for both standard and custom components
+			kit_unit_price=round(total_unit_price/num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED")),2)
+			price=round(kit_unit_price*conv_factor,2)
+			disc=0
+		else
+			rem --- Kit not exploded yet so price based on only standard components 
+			callpoint!.setDevObject("orderDate",user_tpl.order_date$)
+			callpoint!.setDevObject("priceCode",user_tpl.price_code$)
+			callpoint!.setDevObject("pricingCode",user_tpl.pricing_code$)
+
+			bmmBillMat_dev=fnget_dev("BMM_BILLMAT")
+			dim bmmBillMat$:fnget_tpl$("BMM_BILLMAT")
+			ivm01_dev=fnget_dev("IVM_ITEMMAST")
+			dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+			dim kitDetailLine$:fnget_tpl$("OPE_ORDDET")
+			kitDetailLine$=rec_data$
+			kit_item$=item$
+			kit_ordered=qty_ord
+			kitExtendedPrice=0
+			gosub getKitExtendedPrice
+			price=kitExtendedPrice/kit_ordered
+			disc=0
+		endif
 	endif
 
 	if price=0 and callpoint!.getVariableName()<>"<<DISPLAY>>.QTY_ORDERED_DSP" then
@@ -3145,17 +3209,10 @@ check_item_whse: rem --- Check that a warehouse record exists for this item
                  rem          ivm02a$ 
 rem ===========================================================================
 
-	rem print "in check_item_whse..."; rem debug
-
 	user_tpl.item_wh_failed = 0
 	this_row = callpoint!.getValidationRow()
-
-	rem print "---This Row:", this_row; rem debug
-	rem print "---Grid Row Delete Status: ", callpoint!.getGridRowDeleteStatus(this_row); rem debug
-
 	if callpoint!.getGridRowDeleteStatus(this_row) <> "Y" then
 		if pos(user_tpl.line_type$="SP") then
-			rem print "---checking..."; rem debug
 			file$ = "IVM_ITEMWHSE"
 			ivm02_dev = fnget_dev(file$)
 			dim ivm02a$:fnget_tpl$(file$)
@@ -3173,8 +3230,6 @@ rem ===========================================================================
 			endif
 		endif
 	endif
-
-	rem print "out"; rem debug
 
 	return
 
@@ -3327,11 +3382,10 @@ rem ==========================================================================
 		dtlVect!.setItem(callpoint!.getValidationRow(),dtl_rec$)
 		GridVect!.setItem(0,dtlVect!)
 	endif
+
 	gosub disp_grid_totals
 	gosub check_if_tax
-rem wgh ... 7491 ... MODIFIED;REFRESH
-rem ...	if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED;REFRESH")
-if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED")
+	if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED")
 
 	return
 
@@ -3586,7 +3640,7 @@ rem =========================================================
 	return
 
 rem =========================================================
-getKitExtendedPrice: rem --- Get a kit's extended price based on the sum of its components' extended price.
+getKitExtendedPrice: rem --- Get a kit's extended price based on the sum of its standard components' extended price.
 	rem    IN:	round_precision
 	rem 		bmmBillMat_dev
 	rem  	bmmBillMat$
@@ -3598,7 +3652,7 @@ getKitExtendedPrice: rem --- Get a kit's extended price based on the sum of its 
 	rem		kitExtendedPrice
 	rem OUT:	kitExtendedPrice
 rem =========================================================
-	rem --- Explode this kit to get it's extended price
+	rem --- Explode this kit to get it's standard extended price
 	read(bmmBillMat_dev,key=firm_id$+kit_item$,dom=*next)
 	while 1
 		kitKey$=key(bmmBillMat_dev,end=*break)
@@ -3635,10 +3689,10 @@ rem =========================================================
 :			firm_id$,
 :			kitDetailLine.warehouse_id$,
 :			bmmBillMat.item_id$,
-:			callpoint!.getDevObject("priceCode"),
+:			str(callpoint!.getDevObject("priceCode")),
 :			kitDetailLine.customer_id$,
 :			str(callpoint!.getDevObject("orderDate")),
-:			callpoint!.getDevObject("pricingCode"),
+:			str(callpoint!.getDevObject("pricingCode")),
 :			qty_ordered,
 :			typeflag$,
 :			price,
@@ -3774,10 +3828,10 @@ rem =========================================================
 :			firm_id$,
 :			optInvKitDet.warehouse_id$,
 :			optInvKitDet.item_id$,
-:			callpoint!.getDevObject("priceCode"),
+:			str(callpoint!.getDevObject("priceCode")),
 :			kitDetailLine.customer_id$,
 :			str(callpoint!.getDevObject("orderDate")),
-:			callpoint!.getDevObject("pricingCode"),
+:			str(callpoint!.getDevObject("pricingCode")),
 :			optInvKitDet.qty_ordered,
 :			typeflag$,
 :			price,
@@ -3826,6 +3880,7 @@ rem =========================================================
 			available_vect!.addItem(shipqty)
 			available_vect!.addItem(available)
 			shortage_vect!.addItem(available_vect!)
+			callpoint!.setDevObject("shortageVect",shortage_vect!)
 		endif
 	wend
 
@@ -3864,6 +3919,7 @@ rem =========================================================
 		endif
 	endif
 	shortage_vect!=BBjAPI().makeVector()
+	callpoint!.setDevObject("shortageVect",shortage_vect!)
 
 	return
 
@@ -3914,15 +3970,17 @@ rem =========================================================
 		conv_factor=1
 		callpoint!.setColumnData("OPE_ORDDET.CONV_FACTOR",str(conv_factor))
 	endif
+
 	kit_unit_cost=round(total_cost/num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED")),4)
-	callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP",str(kit_unit_cost*conv_factor),1)
 	callpoint!.setColumnData("OPE_ORDDET.UNIT_COST",str(kit_unit_cost))
+	callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP",str(round(kit_unit_cost*conv_factor,4)),1)
 	kit_unit_price=round(total_unit_price/num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED")),2)
-	callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(kit_unit_price*conv_factor),1)
 	callpoint!.setColumnData("OPE_ORDDET.UNIT_PRICE",str(kit_unit_price))
+	callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(round(kit_unit_price*conv_factor,2)),1)
 	kit_list_price=round(total_list_price/num(callpoint!.getColumnData("OPE_ORDDET.QTY_ORDERED")),2)
-	callpoint!.setColumnData("OPE_ORDDET.STD_LIST_PRC",str(kit_list_price))
 	callpoint!.setColumnData("OPE_ORDDET.EXT_PRICE",str(total_ext_price),1)
+
+	callpoint!.setColumnData("OPE_ORDDET.STD_LIST_PRC",str(kit_list_price))
 	callpoint!.setColumnData("OPE_ORDDET.TAXABLE_AMT",str(total_taxable_amt))
 	callpoint!.setColumnData("OPE_ORDDET.DISC_PERCENT",str(kit_disc_percent))
 	callpoint!.setColumnData("OPE_ORDDET.COMM_PERCENT",str(kit_comm_percent))
@@ -3947,8 +4005,8 @@ rem =========================================================
 	dtlVect!.setItem(callpoint!.getValidationRow(),dtl_rec$)
 	GridVect!.setItem(0,dtlVect!)
 
-	qty_shipped = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
-	unit_price  = num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))
+	qty_shipped=round(num(callpoint!.getColumnData("OPE_ORDDET.QTY_SHIPPED"))*conv_factor,2)
+	unit_price=round(kit_unit_price*conv_factor,4)
 	gosub disp_ext_amt
 
 	return

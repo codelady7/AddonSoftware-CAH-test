@@ -55,6 +55,33 @@ rem --- Initialize UM_SOLD ListButton except when line type is non-stock
 rem  --- Report component shortages
 	gosub reportShortages
 
+rem --- Warn when custom components are not updated.
+	skippedComponents_vect!=callpoint!.getDevObject("skippedComponentsVect")
+	if skippedComponents_vect!.size()>0 then
+		call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","U","",qty_mask$,0,qty_mask
+		call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","I","",ivIMask$,0,0
+
+		warning$=""
+		kit_id$=cvs(callpoint!.getColumnData("OPT_INVKITDET.KIT_ID"),3)
+		order$=Translate!.getTranslation("AON_ORDER")+": "
+		ship$=Translate!.getTranslation("AON_SHIP")+": "
+		space=len(order$)+15
+		for i=0 to skippedComponents_vect!.size()-1
+			skipped_vect!=skippedComponents_vect!.getItem(i)
+			item_id$=cvs(fnmask$(skipped_vect!.getItem(0),ivIMask$),3)
+			orderqty$=order$+cvs(str(skipped_vect!.getItem(2):qty_mask$),3)
+			shipqty$=ship$+cvs(str(skipped_vect!.getItem(1):qty_mask$),3)
+			warning$=warning$+item_id$+"    "+orderqty$+pad("",space-len(orderqty$)," ")+shipqty$+$0A$
+		next i
+
+		msg_id$="OP_KIT_COMP_UPDATE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=kit_id$
+		msg_tokens$[2]=warning$
+		gosub disp_message
+		callpoint!.setStatus("ACTIVATE")
+	endif
+
 [[OPT_INVKITDET.AGRE]]
 rem --- Skip if (not a new row and not row modified) or row deleted
 	this_row = callpoint!.getValidationRow()
@@ -967,8 +994,8 @@ rem --- Get prev qty / enable repricing, options
 
 rem --- Has a valid whse/item been entered?
 	if callpoint!.getDevObject("item_wh_failed") then 
-		item$ = callpoint!.getColumnData("OPT_INVKIT.ITEM_ID")
-		wh$   = callpoint!.getColumnData("OPT_INVKIT.WAREHOUSE_ID")
+		item$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+		wh$   = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
 		warn  = 1
 		gosub check_item_whse
 	endif
@@ -1067,8 +1094,8 @@ rem --- Get prev qty / enable repricing, options
 
 rem --- Has a valid whse/item been entered?
 	if callpoint!.getDevObject("item_wh_failed") then 
-		item$ = callpoint!.getColumnData("OPT_INVKIT.ITEM_ID")
-		wh$   = callpoint!.getColumnData("OPT_INVKIT.WAREHOUSE_ID")
+		item$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+		wh$   = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
 		warn  = 1
 		gosub check_item_whse
 	endif
@@ -1138,8 +1165,8 @@ rem --- Get prev qty / enable repricing, options
 
 rem --- Has a valid whse/item been entered?
 	if callpoint!.getDevObject("item_wh_failed") then 
-		item$ = callpoint!.getColumnData("OPT_INVKIT.ITEM_ID")
-		wh$   = callpoint!.getColumnData("OPT_INVKIT.WAREHOUSE_ID")
+		item$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+		wh$   = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
 		warn  = 1
 		gosub check_item_whse
 	endif
@@ -1247,8 +1274,8 @@ rem --- Set previous unit price / enable repricing and options
 
 rem --- Has a valid whse/item been entered?
 	if callpoint!.getDevObject("item_wh_failed") then 
-		item$ = callpoint!.getColumnData("OPT_INVKIT.ITEM_ID")
-		wh$   = callpoint!.getColumnData("OPT_INVKIT.WAREHOUSE_ID")
+		item$ = callpoint!.getColumnData("OPT_INVKITDET.ITEM_ID")
+		wh$   = callpoint!.getColumnData("OPT_INVKITDET.WAREHOUSE_ID")
 		warn  = 1
 		gosub check_item_whse
 	endif
@@ -1287,6 +1314,7 @@ rem =========================================================
 		endif
 	endif
 	shortage_vect!=BBjAPI().makeVector()
+	callpoint!.setDevObject("shortageVect",shortage_vect!)
 
 	return
 
@@ -1652,6 +1680,7 @@ rem =========================================================
 		shipqty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))*conv_factor
 		prev_available=callpoint!.getDevObject("component_avail")
 		curr_available=prev_available+callpoint!.getDevObject("component_prior_qty")
+				available=ivm02a.qty_on_hand-(ivm02a.qty_commit-shipqty); rem --- Note: ivm_itemwhse record read AFTER this component was committed
 		if shipqty>curr_available then
 			rem --- Add this shortage to the shortage_vect!
 			shortage_vect!=callpoint!.getDevObject("shortageVect")
