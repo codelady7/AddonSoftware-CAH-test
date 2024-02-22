@@ -213,6 +213,10 @@ rem --- Set buttons
 		gosub enable_addl_opts
 	endif
 
+[[OPT_INVKITDET.AOPT-COMM]]
+rem --- Invoke the Comments dialog
+	gosub comment_entry
+
 [[OPT_INVKITDET.AREC]]
 rem --- Initialize new record based on the kit's detail line
 	dim kitDetailLine$:fnget_tpl$("OPT_INVDET")
@@ -944,6 +948,27 @@ rem --- Inventory Item/Whse Lookup
 	endif
 
 	callpoint!.setStatus("ACTIVATE-ABORT")
+
+[[OPT_INVKITDET.MEMO_1024.AVAL]]
+rem --- Store first part of memo_1024 in order_memo.
+rem --- This AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor.
+rem --- If on a memo line or using ctrl-C or Comments button, code in the comment_entry: subroutine is hit instead.
+
+	disp_text$=callpoint!.getUserInput()
+	if disp_text$<>callpoint!.getColumnUndoData("OPT_INVKITDET.MEMO_1024")
+		memo_len=len(callpoint!.getColumnData("OPT_INVKITDET.ORDER_MEMO"))
+		order_memo$=disp_text$
+		order_memo$=order_memo$(1,min(memo_len,(pos($0A$=order_memo$+$0A$)-1)))
+
+		callpoint!.setColumnData("OPT_INVKITDET.MEMO_1024",disp_text$)
+		callpoint!.setColumnData("OPT_INVKITDET.ORDER_MEMO",order_memo$,1)
+
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+[[OPT_INVKITDET.ORDER_MEMO.BINP]]
+rem --- Invoke the Comments dialog
+	gosub comment_entry
 
 [[<<DISPLAY>>.QTY_BACKORD_DSP.AVAL]]
 rem --- Skip if qty_backord not changed
@@ -1724,6 +1749,53 @@ rem ==========================================================================
 			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 		endif
 	endif
+
+	return
+
+rem ==========================================================================
+comment_entry:
+rem --- On a line where you can access the memo/non-stock (order_memo) field, pop the new memo_1024 editor instead.
+rem --- The editor can be popped on demand for any line using the Comments button (alt-C),
+rem --- but will automatically pop for lines where the order_memo field is enabled.
+rem ==========================================================================
+
+	disp_text$=callpoint!.getColumnData("OPT_INVKITDET.MEMO_1024")
+	sv_disp_text$=disp_text$
+
+	editable$="YES"
+	force_loc$="NO"
+	baseWin!=null()
+	startx=0
+	starty=0
+	shrinkwrap$="NO"
+	html$="NO"
+	dialog_result$=""
+
+	call stbl("+DIR_SYP")+ "bax_display_text.bbj",
+:		"Pick List/Invoice Comments",
+:		disp_text$, 
+:		table_chans$[all], 
+:		editable$, 
+:		force_loc$, 
+:		baseWin!, 
+:		startx, 
+:		starty, 
+:		shrinkwrap$, 
+:		html$, 
+:		dialog_result$
+
+	if disp_text$<>sv_disp_text$
+		memo_len=len(callpoint!.getColumnData("OPT_INVKITDET.ORDER_MEMO"))
+		order_memo$=disp_text$
+		order_memo$=order_memo$(1,min(memo_len,(pos($0A$=order_memo$+$0A$)-1)))
+
+		callpoint!.setColumnData("OPT_INVKITDET.MEMO_1024",disp_text$)
+		callpoint!.setColumnData("OPT_INVKITDET.ORDER_MEMO",order_memo$,1)
+
+		callpoint!.setStatus("MODIFIED")
+	endif
+
+	callpoint!.setStatus("ACTIVATE")
 
 	return
 
