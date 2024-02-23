@@ -12,6 +12,7 @@ rem --- Initialize UM_SOLD ListButton except when line type is non-stock
 	if callpoint!.getDevObject("component_line_type")="N" then
 		callpoint!.setColumnEnabled(row,"OPT_INVKITDET.UM_SOLD",1)
 	else
+		declare BBjStandardGrid grid!
 		grid!=Form!.getControl(num(stbl("+GRID_CTL")))
 		col_hdr$=callpoint!.getTableColumnAttribute("OPT_INVKITDET.UM_SOLD","LABS")
 		col_ref=util.getGridColumnNumber(grid!, col_hdr$)
@@ -213,6 +214,144 @@ rem --- Set buttons
 		gosub enable_addl_opts
 	endif
 
+[[OPT_INVKITDET.AOPT-ADDL]]
+rem --- Additional Options
+	if callpoint!.getDevObject("component_line_type") = "M" then break
+
+rem --- Save current context so we'll know where to return
+	declare BBjStandardGrid grid!
+	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	grid_ctx=grid!.getContextID()
+
+rem --- Setup a templated string to pass information back and forth from form
+	declare BBjTemplatedString a!
+	tmpl$ =  "LINE_TYPE:C(1)," +
+:				"LINE_DROPSHIP:C(1)," +
+:				"INVOICE_TYPE:C(1)," +
+:				"COMMIT_FLAG:C(1)," +
+:				"MAN_PRICE:C(1)," +
+:				"PRINT_FLAG:C(1)," +
+:				"EST_SHP_DATE:C(8)," +
+:				"INTERNAL_SEQ_NO:c(12)," +
+:				"STD_LIST_PRC:N(7*)," +
+:				"DISC_PERCENT:N(7*)," +
+:				"UNIT_PRICE:N(7*)," +
+:				"isEditMode:N(1*)"
+	a! = BBjAPI().makeTemplatedString(tmpl$)
+	
+	a!.setFieldValue("LINE_TYPE",  str(callpoint!.getDevObject("component_line_type")))
+	a!.setFieldValue("LINE_DROPSHIP", str(callpoint!.getDevObject("component_line_dropship")))
+	a!.setFieldValue("INVOICE_TYPE", str(callpoint!.getDevObject("invoice_type")))
+	a!.setFieldValue("STD_LIST_PRC", callpoint!.getColumnData("OPT_INVKITDET.STD_LIST_PRC"))
+	a!.setFieldValue("DISC_PERCENT", callpoint!.getColumnData("OPT_INVKITDET.DISC_PERCENT"))
+	a!.setFieldValue("UNIT_PRICE",   callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))
+	a!.setFieldValue("EST_SHP_DATE", callpoint!.getColumnData("OPT_INVKITDET.EST_SHP_DATE"))
+	a!.setFieldValue("COMMIT_FLAG",  callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG"))
+	a!.setFieldValue("MAN_PRICE",    callpoint!.getColumnData("OPT_INVKITDET.MAN_PRICE"))
+	a!.setFieldValue("PRINT_FLAG",   callpoint!.getColumnData("OPT_INVKITDET.PICK_FLAG"))
+	a!.setFieldValue("isEditMode",   callpoint!.isEditMode())
+	a!.setFieldValue("INTERNAL_SEQ_NO",   callpoint!.getColumnData("OPT_INVKITDET.ORDDET_SEQ_REF"))
+	callpoint!.setDevObject("additional_options", a!)
+
+	dim dflt_data$[7,1]
+	dflt_data$[1,0] = "STD_LIST_PRC"
+	dflt_data$[1,1] = callpoint!.getColumnData("OPT_INVKITDET.STD_LIST_PRC")
+	dflt_data$[2,0] = "DISC_PERCENT"
+	dflt_data$[2,1] = callpoint!.getColumnData("OPT_INVKITDET.DISC_PERCENT")
+	dflt_data$[3,0] = "NET_PRICE"
+	dflt_data$[3,1] = callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP")
+	dflt_data$[4,0] = "EST_SHP_DATE"
+	dflt_data$[4,1] = callpoint!.getColumnData("OPT_INVKITDET.EST_SHP_DATE")
+	dflt_data$[5,0] = "COMMIT_FLAG"
+	dflt_data$[5,1] = callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")
+	dflt_data$[6,0] = "MAN_PRICE"
+	dflt_data$[6,1] = callpoint!.getColumnData("OPT_INVKITDET.MAN_PRICE")
+	dflt_data$[7,0] = "PRINTED"
+	dflt_data$[7,1] = callpoint!.getColumnData("OPT_INVKITDET.PICK_FLAG")
+
+rem --- Launch form and capture entries
+	call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:		"OPE_ADDL_OPTS", 
+:		stbl("+USER_ID"), 
+:		"MNT", 
+:		"", 
+:		table_chans$[all], 
+:		"",
+:		dflt_data$[all]
+
+	orig_commit$ = callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")
+
+	a! = cast(BBjTemplatedString, callpoint!.getDevObject("additional_options"))
+	callpoint!.setColumnData("OPT_INVKITDET.STD_LIST_PRC", a!.getFieldAsString("STD_LIST_PRC"))
+	callpoint!.setColumnData("OPT_INVKITDET.DISC_PERCENT", a!.getFieldAsString("DISC_PERCENT"))
+	callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",   a!.getFieldAsString("UNIT_PRICE"))
+	callpoint!.setColumnData("OPT_INVKITDET.EST_SHP_DATE", a!.getFieldAsString("EST_SHP_DATE"))
+	callpoint!.setColumnData("OPT_INVKITDET.COMMIT_FLAG",  a!.getFieldAsString("COMMIT_FLAG"))
+	callpoint!.setColumnData("OPT_INVKITDET.MAN_PRICE",    a!.getFieldAsString("MAN_PRICE"))
+	callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG",    a!.getFieldAsString("PRINT_FLAG"))
+
+rem --- Does a revised picking list need to be printed?
+	if a!.getFieldAsString("PRINT_FLAG")="N" and callpoint!.getDevObject("print_status")="Y" and callpoint!.getDevObject("reprint_flag")="Y" then
+		callpoint!.setColumnData("OPT_INVKITDET.PICK_FLAG","M")
+	endif
+
+rem --- Need to commit?
+	committed_changed=0
+	if callpoint!.getDevObject("invoice_type")<>"P" and callpoint!.getDevObject("component_line_dropship")="N" then
+		if orig_commit$ = "Y" and callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG") = "N" then
+			committed_changed=1
+			if callpoint!.getDevObject("component_line_type")<>"O" then
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_BACKORD_DSP", "0")
+				callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP", "0")
+				callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", "0")
+				callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT", "0")
+			else
+				callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP", str(callpoint!.getColumnData("OPT_INVKITDET.EXT_PRICE")))
+				callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", "0")
+				callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT", "0")
+			endif
+		endif
+
+		if orig_commit$ = "N" and callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG") = "Y" then
+			committed_changed=1
+			callpoint!.setColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP", str(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP")))
+			if (callpoint!.getDevObject("component_line_taxable")="Y" and (pos(callpoint!.getDevObject("component_line_type")="OMN") or callpoint!.getDevObject("component_taxable")="Y" )) or
+: 			callpoint!.getDevObject("use_tax_service")="Y" then 
+				callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT", str(ext_price))
+			endif
+			rem --- Warn if ship quantity is more than currently available.
+			gosub check_ship_qty
+
+			if callpoint!.getDevObject("component_line_type")="O" and 
+:			num(callpoint!.getColumnData("OPT_INVKITDET.EXT_PRICE")) = 0 and 
+:			num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP")) 
+:			then
+				callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", str(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP")))
+				callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP", "0")
+				callpoint!.setColumnData("OPT_INVKITDET.STD_LIST_PRC", "0")
+			endif
+		endif
+	endif
+
+	rem --- Extend price if the order quantity has changed
+	qty_shipped = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+	unit_price = num(callpoint!.getColumnData("<<DISPLAY>>.UNIT_PRICE_DSP"))
+	ext_price=round(qty_shipped * unit_price, 2)
+	callpoint!.setColumnData("OPT_INVKITDET.EXT_PRICE", str(ext_price),1)
+
+	rem --- Set taxable amount
+	if (callpoint!.getDevObject("component_line_taxable")="Y" and (pos(callpoint!.getDevObject("component_line_type")="OMN") or callpoint!.getDevObject("component_taxable")="Y" )) or
+: 	callpoint!.getDevObject("use_tax_service")="Y" then 
+		callpoint!.setColumnData("OPT_INVKITDET.TAXABLE_AMT", str(ext_price))
+	endif
+
+	gosub able_backorder
+	gosub able_qtyshipped
+
+rem --- Return focus to where we were (Detail line grid)
+	sysgui!.setContext(grid_ctx)
+	callpoint!.setStatus("MODIFIED;REFRESH")
+
 [[OPT_INVKITDET.AOPT-COMM]]
 rem --- Invoke the Comments dialog
 	gosub comment_entry
@@ -276,6 +415,7 @@ rem --- Initialize detail line for the line_code
 	rem --- Initialize UM_SOLD ListButton with a blank item for new rows except when line type is non-stock
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" and callpoint!.getDevObject("component_line_type")<>"N" then
 		rem --- Skip if UM_SOLD ListButton is already initialized
+		declare BBjStandardGrid grid!
 		grid!=Form!.getControl(num(stbl("+GRID_CTL")))
 		col_hdr$=callpoint!.getTableColumnAttribute("OPT_INVKITDET.UM_SOLD","LABS")
 		col_ref=util.getGridColumnNumber(grid!, col_hdr$)
@@ -590,6 +730,9 @@ rem --- Update inventory commitments
 rem  --- Report component shortages
 	gosub reportShortages
 
+rem --- No longer working with kit components
+	callpoint!.setDevObject("kit_component","N")
+
 [[OPT_INVKITDET.BGDR]]
 rem --- Initialize UM_SOLD related <DISPLAY> fields
 	conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
@@ -630,6 +773,7 @@ rem --- Get the kit's item description
 	callpoint!.setDevObject("kit_desc",Translate!.getTranslation("AON_KIT","Kit")+": "+item$+" "+itemDesc$)
 
 rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
+	declare BBjStandardGrid grid!
 	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
 	col_hdr$=callpoint!.getTableColumnAttribute("OPT_INVKITDET.MEMO_1024","LABS")
 	memo_1024_col=util.getGridColumnNumber(grid!, col_hdr$)
@@ -637,6 +781,7 @@ rem --- Set column size for memo_1024 field very small so it doesn't take up roo
 
 rem --- Initialize Kit Component grid's kit_detail_changed flag
 	callpoint!.setDevObject("kit_details_changed","N")
+	callpoint!.setDevObject("kit_component","Y")
 
 [[OPT_INVKITDET.BUDE]]
 rem --- Update inventory commitments
@@ -878,6 +1023,7 @@ rem --- Check item/warehouse combination and setup values
 
 rem --- Initialize UM_SOLD ListButton for a new or changed item
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" or cvs(item$,3)<>cvs(prev_item$,3) then
+		declare BBjStandardGrid grid!
 		grid!=Form!.getControl(num(stbl("+GRID_CTL")))
 		col_hdr$=callpoint!.getTableColumnAttribute("OPT_INVKITDET.UM_SOLD","LABS")
 		col_ref=util.getGridColumnNumber(grid!, col_hdr$)
@@ -1231,7 +1377,8 @@ rem --- Initialize CONV_FACTOR when UM_SOLD changed
 
 [[OPT_INVKITDET.UM_SOLD.BINP]]
 rem --- Get current CONV_FACTOR so we'll know if it gets changed
-	dtlGrid!=util.getGrid(Form!)
+	declare BBjStandardGrid dtlGrid!
+	dtlGrid!=Form!.getControl(num(stbl("+GRID_CTL")))
 	col_hdr$=callpoint!.getTableColumnAttribute("OPT_INVKITDET.UM_SOLD","LABS")
 	col_ref=util.getGridColumnNumber(dtlGrid!, col_hdr$)
 	row=callpoint!.getValidationRow()

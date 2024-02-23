@@ -382,6 +382,8 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 			callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
 			callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_ORDHDR.CASH_SALE"))
 			callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE"))
+			callpoint!.setDevObject("print_status",callpoint!.getHeaderColumnData("OPE_ORDHDR.PRINT_STATUS")) 
+			callpoint!.setDevObject("reprint_flag",callpoint!.getHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG"))
 
 			key_pfx$ = firm_id$+"E"+ar_type$+cust$+order$+invoice_no$+seq$
 
@@ -552,6 +554,7 @@ rem --- Initialize "kit" DevObject
 		callpoint!.setDevObject("kit","N")
 	endif
 	callpoint!.setDevObject("priced_kit","N")
+	callpoint!.setDevObject("kit_component","N")
 
 rem --- Disable by line type (Needed because Barista is skipping Line Code)
 
@@ -811,7 +814,9 @@ rem --- Launch OPT_INVKITDET Kit Components grid for this detail line's kit
 	callpoint!.setDevObject("lineCodeTaxable",user_tpl.line_taxable$)
 	callpoint!.setDevObject("allowBO",user_tpl.allow_bo$)
 	callpoint!.setDevObject("cashSale",callpoint!.getHeaderColumnData("OPE_ORDHDR.CASH_SALE"))
-	callpoint!.setDevObject("invoice_type",  callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE"))
+	callpoint!.setDevObject("invoice_type",callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE"))
+	callpoint!.setDevObject("print_status",callpoint!.getHeaderColumnData("OPE_ORDHDR.PRINT_STATUS")) 
+	callpoint!.setDevObject("reprint_flag",callpoint!.getHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG"))
 	shortage_vect!=BBjAPI().makeVector()
 	callpoint!.setDevObject("shortageVect",shortage_vect!)
 	skippedComponents_vect!=BBjAPI().makeVector()
