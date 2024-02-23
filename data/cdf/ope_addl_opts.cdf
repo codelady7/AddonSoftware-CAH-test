@@ -36,9 +36,17 @@ rem --- Disable fields, set globals
 		endif
 
 		if callpoint!.getDevObject("kit")="Y" then
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.STD_LIST_PRC", -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.DISC_PERCENT",  -1)
-			callpoint!.setColumnEnabled("OPE_ADDL_OPTS.MAN_PRICE", -1)
+			if callpoint!.getDevObject("kit_component")="Y" then
+				rem --- A component of a kit
+				callpoint!.setColumnEnabled("OPE_ADDL_OPTS.EST_SHP_DATE", -1)
+				callpoint!.setColumnEnabled("OPE_ADDL_OPTS.COMMIT_FLAG",  -1)
+				callpoint!.setColumnEnabled("OPE_ADDL_OPTS.PRINTED", -1)
+			else
+				rem --- The kit itself, not a component
+				callpoint!.setColumnEnabled("OPE_ADDL_OPTS.STD_LIST_PRC", -1)
+				callpoint!.setColumnEnabled("OPE_ADDL_OPTS.DISC_PERCENT",  -1)
+				callpoint!.setColumnEnabled("OPE_ADDL_OPTS.MAN_PRICE", -1)
+			endif
 		endif
 	else
 		callpoint!.setColumnEnabled("OPE_ADDL_OPTS.COMMIT_FLAG",  -1)
