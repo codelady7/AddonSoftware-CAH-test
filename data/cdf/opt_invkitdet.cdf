@@ -218,11 +218,6 @@ rem --- Set buttons
 rem --- Additional Options
 	if callpoint!.getDevObject("component_line_type") = "M" then break
 
-rem --- Save current context so we'll know where to return
-	declare BBjStandardGrid grid!
-	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
-	grid_ctx=grid!.getContextID()
-
 rem --- Setup a templated string to pass information back and forth from form
 	declare BBjTemplatedString a!
 	tmpl$ =  "LINE_TYPE:C(1)," +
@@ -348,13 +343,24 @@ rem --- Need to commit?
 	gosub able_backorder
 	gosub able_qtyshipped
 
-rem --- Return focus to where we were (Detail line grid)
-	sysgui!.setContext(grid_ctx)
 	callpoint!.setStatus("MODIFIED;REFRESH")
 
 [[OPT_INVKITDET.AOPT-COMM]]
 rem --- Invoke the Comments dialog
 	gosub comment_entry
+
+[[OPT_INVKITDET.AOPT-RCPR]]
+rem --- Are things set for a reprice?
+	if pos(callpoint!.getDevObject("component_line_type")="SP") then
+		qty_ord = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
+		if qty_ord then 
+			rem --- Do repricing
+			conv_factor=num(callpoint!.getColumnData("OPT_INVKITDET.CONV_FACTOR"))
+			gosub pricing
+			callpoint!.setColumnData("OPT_INVKITDET.MAN_PRICE", "N")
+			callpoint!.setStatus("MODIFIED")
+		endif
+	endif
 
 [[OPT_INVKITDET.AREC]]
 rem --- Initialize new record based on the kit's detail line
@@ -1891,7 +1897,7 @@ rem ==========================================================================
 		items$[2]=item$
 		refs[0]=ord_qty*conv_factor
 
-		if (action$="CO" and line_ship_date$<=stbl("OPE_DEF_COMMIT")) or
+		if (action$="CO" and line_ship_date$<=stbl("OPE_DEF_COMMIT",err=*next)) or
 :		(callpoint!.getColumnData("OPT_INVKITDET.COMMIT_FLAG")="Y") then
 			call stbl("+DIR_PGM")+"ivc_itemupdt.aon",action$,channels[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 		endif

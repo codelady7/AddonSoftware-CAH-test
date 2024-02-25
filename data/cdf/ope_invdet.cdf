@@ -664,6 +664,7 @@ rem --- Setup a templated string to pass information back and forth from form
 :				"MAN_PRICE:C(1)," +
 :				"PRINT_FLAG:C(1)," +
 :				"EST_SHP_DATE:C(8)," +
+:				"INTERNAL_SEQ_NO:c(12)," +
 :				"STD_LIST_PRC:N(7*)," +
 :				"DISC_PERCENT:N(7*)," +
 :				"UNIT_PRICE:N(7*)," +
@@ -697,6 +698,7 @@ rem --- Setup a templated string to pass information back and forth from form
 	a!.setFieldValue("MAN_PRICE",    callpoint!.getColumnData("OPE_INVDET.MAN_PRICE"))
 	a!.setFieldValue("PRINT_FLAG",   callpoint!.getColumnData("OPE_INVDET.PICK_FLAG"))
 	a!.setFieldValue("isEditMode",   callpoint!.isEditMode())
+	a!.setFieldValue("INTERNAL_SEQ_NO",   callpoint!.getColumnData("OPE_INVDET.INTERNAL_SEQ_NO"))
 
 	callpoint!.setDevObject("additional_options", a!)
 
@@ -1743,8 +1745,10 @@ rem --- Check item/warehouse combination and setup values
 
 	if !user_tpl.item_wh_failed then 
 		gosub set_avail
-		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", ivm02a.unit_cost$)
-		callpoint!.setColumnData("OPE_INVDET.STD_LIST_PRC", ivm02a.cur_price$)
+		conv_factor=num(callpoint!.getColumnData("OPE_INVDDET.CONV_FACTOR"))
+		if conv_factor=0 then conv_factor=1
+		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", str(ivm02a.unit_cost*conv_factor))
+		callpoint!.setColumnData("OPE_INVDET.STD_LIST_PRC", str(ivm02a.cur_price*conv_factor))
 		if pos(user_tpl.line_prod_type_pr$="DN")=0
 			callpoint!.setColumnData("OPE_INVDET.PRODUCT_TYPE", ivm01a.product_type$)
 		endif
@@ -1863,7 +1867,7 @@ rem --- Initialize "kit" DevObject
 			callpoint!.setColumnData("<<DISPLAY>>.UNIT_PRICE_DSP",str(kitExtendedPrice),1)
 		endif
 	else
-		callpoint!.setDevObject("kit","")
+		callpoint!.setDevObject("kit","N")
 		callpoint!.setDevObject("priced_kit","N")
 	endif
 
@@ -2081,14 +2085,14 @@ rem --- Recalc quantities and extended price
 	callpoint!.setColumnData("<<DISPLAY>>.QTY_ORDERED_DSP",str(qty_ord))
 	gosub update_record_fields
 
-rem --- Enable/disable KITS button
-	gosub able_kits_button
+rem --- Warn if ship quantity is more than currently available.
+	gosub check_ship_qty
 
 rem --- Skip UNIT_PRICE for kits
 	if callpoint!.getDevObject("kit")="Y" then callpoint!.setFocus(num(callpoint!.getValidationRow()),"<<DISPLAY>>.QTY_BACKORD_DSP",1)
 
-rem --- Warn if ship quantity is more than currently available.
-	gosub check_ship_qty
+rem --- Enable/disable KITS button
+	gosub able_kits_button
 
 [[<<DISPLAY>>.QTY_ORDERED_DSP.AVEC]]
 rem --- Extend price now that grid vector has been updated, if the order quantity has changed
@@ -2783,6 +2787,7 @@ rem ==========================================================================
 	seq$     = callpoint!.getColumnData("OPE_INVDET.INTERNAL_SEQ_NO")
 	wh$      = callpoint!.getColumnData("OPE_INVDET.WAREHOUSE_ID")
 	item$    = callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
+	line_ship_date$=callpoint!.getColumnData("OPE_INVDET.EST_SHP_DATE")
 	ord_qty  = num(callpoint!.getColumnData("<<DISPLAY>>.QTY_ORDERED_DSP"))
 	conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
 	if conv_factor=0 then conv_factor=1
@@ -3133,6 +3138,8 @@ rem ==========================================================================
 		dtlVect!=cast(BBjVector, GridVect!.getItem(0))
 		dim dtl_rec$:dtlg_param$[1,3]
 		dtl_rec$=cast(BBjString, dtlVect!.getItem(callpoint!.getValidationRow()))
+		dtl_rec.unit_price=unit_price
+		dtl_rec.qty_shipped=qty_shipped
 		dtl_rec.ext_price=ext_price
 		dtlVect!.setItem(callpoint!.getValidationRow(),dtl_rec$)
 		GridVect!.setItem(0,dtlVect!)
@@ -3355,6 +3362,7 @@ check_ship_qty: rem --- Warn if ship quantity is more than currently available.
 rem =========================================================
 	if callpoint!.getColumnData("OPE_INVDET.COMMIT_FLAG") = "Y" and user_tpl.line_type$ <> "N" and
 :	user_tpl.line_dropship$ <> "Y" and callpoint!.getDevObject("warn_not_avail")="Y" and callpoint!.getDevObject("kit")<>"Y" then
+		conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
 		if conv_factor=0 then
 			conv_factor=1
 			callpoint!.setColumnData("OPE_INVDET.CONV_FACTOR",str(conv_factor))
@@ -3670,6 +3678,7 @@ rem =========================================================
 	total_disc_percent=0
 	total_comm_percent=0
 	total_comm_amt=0
+	manual_priced$="N"
 
 	read(optInvKitDet_dev,key=key_pfx$,knum="AO_STAT_CUST_ORD",dom=*next)
 	while 1
@@ -3683,6 +3692,7 @@ rem =========================================================
 		total_ext_price=total_ext_price+optInvKitDet.ext_price
 		total_taxable_amt=total_taxable_amt+optInvKitDet.taxable_amt
 		total_comm_amt=total_comm_amt+optInvKitDet.comm_amt
+		if optInvKitDet.man_price$="Y" then manual_priced$="Y"
 	wend
 
 	if total_list_price then
@@ -3717,6 +3727,7 @@ rem =========================================================
 	callpoint!.setColumnData("OPE_INVDET.COMM_PERCENT",str(kit_comm_percent))
 	callpoint!.setColumnData("OPE_INVDET.COMM_AMT",str(total_comm_amt))
 	callpoint!.setColumnData("OPE_INVDET.SPL_COMM_PCT",str(kit_spl_comm_pct))
+	callpoint!.setColumnData("OPE_INVDET.MAN_PRICE",manual_priced$)
 
 	rem --- Grid vector must be updated before updating Totals tab
 	declare BBjVector dtlVect!
@@ -3733,12 +3744,14 @@ rem =========================================================
 	dtl_rec.comm_percent=num(callpoint!.getColumnData("OPE_INVDET.COMM_PERCENT"))
 	dtl_rec.comm_amt=num(callpoint!.getColumnData("OPE_INVDET.COMM_AMT"))
 	dtl_rec.spl_comm_pct=num(callpoint!.getColumnData("OPE_INVDET.SPL_COMM_PCT"))
+	dtl_rec.man_price$=manual_priced$
 	dtlVect!.setItem(callpoint!.getValidationRow(),dtl_rec$)
 	GridVect!.setItem(0,dtlVect!)
 
 	qty_shipped=round(num(callpoint!.getColumnData("OPE_INVDET.QTY_SHIPPED"))*conv_factor,2)
 	unit_price=round(kit_unit_price*conv_factor,4)
 	gosub disp_ext_amt
+	gosub manual_price_flag
 
 	return
 

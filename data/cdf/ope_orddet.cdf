@@ -3943,6 +3943,7 @@ rem =========================================================
 	total_disc_percent=0
 	total_comm_percent=0
 	total_comm_amt=0
+	manual_priced$="N"
 
 	read(optInvKitDet_dev,key=key_pfx$,knum="AO_STAT_CUST_ORD",dom=*next)
 	while 1
@@ -3956,6 +3957,7 @@ rem =========================================================
 		total_ext_price=total_ext_price+optInvKitDet.ext_price
 		total_taxable_amt=total_taxable_amt+optInvKitDet.taxable_amt
 		total_comm_amt=total_comm_amt+optInvKitDet.comm_amt
+		if optInvKitDet.man_price$="Y" then manual_priced$="Y"
 	wend
 
 	if total_list_price then
@@ -3991,6 +3993,7 @@ rem =========================================================
 	callpoint!.setColumnData("OPE_ORDDET.COMM_PERCENT",str(kit_comm_percent))
 	callpoint!.setColumnData("OPE_ORDDET.COMM_AMT",str(total_comm_amt))
 	callpoint!.setColumnData("OPE_ORDDET.SPL_COMM_PCT",str(kit_spl_comm_pct))
+	callpoint!.setColumnData("OPE_ORDDET.MAN_PRICE",manual_priced$)
 
 	rem --- Grid vector must be updated before updating Totals tab
 	declare BBjVector dtlVect!
@@ -4007,12 +4010,14 @@ rem =========================================================
 	dtl_rec.comm_percent=num(callpoint!.getColumnData("OPE_ORDDET.COMM_PERCENT"))
 	dtl_rec.comm_amt=num(callpoint!.getColumnData("OPE_ORDDET.COMM_AMT"))
 	dtl_rec.spl_comm_pct=num(callpoint!.getColumnData("OPE_ORDDET.SPL_COMM_PCT"))
+	dtl_rec.man_price$=manual_priced$
 	dtlVect!.setItem(callpoint!.getValidationRow(),dtl_rec$)
 	GridVect!.setItem(0,dtlVect!)
 
 	qty_shipped=round(num(callpoint!.getColumnData("OPE_ORDDET.QTY_SHIPPED"))*conv_factor,2)
 	unit_price=round(kit_unit_price*conv_factor,4)
 	gosub disp_ext_amt
+	gosub manual_price_flag
 
 	return
 
