@@ -1468,10 +1468,10 @@ rem --- Require existing modified rows be saved before deleting so can't uncommi
 		break
 	endif
 
-rem --- Set qty_ordered to zero rather than deleting the detail line if it's already been printed on a picking list.
+rem --- Set qty_ordered to zero rather than deleting the detail line if it's already been printed on a picking list, and isn't a quote.
 	if pos(user_tpl.line_type$="NSP") then
 		pick_flag$=callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")
-		if pos(pick_flag$="YM") then
+		if pos(pick_flag$="YM") and  callpoint!.getHeaderColumnData("OPE_ORDHDR.INVOICE_TYPE")<>"P" then
 			msg_id$="OP_DELETE_ZEROED"
 			gosub disp_message
 			if msg_opt$="O" then
