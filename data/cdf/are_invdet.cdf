@@ -1,10 +1,8 @@
-[[ARE_INVDET.AREC]]
-rem --- Disable GL_ACCOUNT if not using GL
-	if user_tpl.glint$<>"Y"
-		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",0)
-	else
-		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",1)
-	endif
+[[ARE_INVDET.ADEL]]
+rem --- after deleting a row from detail grid, recalc/redisplay balance left to distribute
+gosub calc_grid_tots
+gosub disp_totals
+
 [[ARE_INVDET.ADGE]]
 rem --- Disable GL_ACCOUNT if not using GL
 	if user_tpl.glint$<>"Y"
@@ -12,10 +10,19 @@ rem --- Disable GL_ACCOUNT if not using GL
 	else
 		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",1)
 	endif
-[[ARE_INVDET.BDGX]]
-rem --- Disable comments
-	callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"ARE_INVDET.MEMO_1024",0)
-	callpoint!.setOptionEnabled("COMM",0)
+
+[[ARE_INVDET.AGCL]]
+rem --- set preset val for batch_no
+callpoint!.setTableColumnAttribute("ARE_INVDET.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
+rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
+	use ::ado_util.src::util
+
+	grid! = util.getGrid(Form!)
+	col_hdr$=callpoint!.getTableColumnAttribute("ARE_INVDET.MEMO_1024","LABS")
+	memo_1024_col=util.getGridColumnNumber(grid!, col_hdr$)
+	grid!.setColumnWidth(memo_1024_col,15)
+
 [[ARE_INVDET.AGRN]]
 rem --- Enable comments
 	if callpoint!.isEditMode() then
@@ -25,30 +32,42 @@ rem --- Enable comments
 		callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"ARE_INVDET.MEMO_1024",0)
 		callpoint!.setOptionEnabled("COMM",0)
 	endif
-[[ARE_INVDET.MEMO_1024.AVAL]]
-rem --- store first part of memo_1024 in description
-rem --- this AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor
-rem --- if on a memo line or using ctrl-C or Comments button, code in the comment_entry: subroutine is hit instead
 
-	disp_text$=callpoint!.getUserInput()
-	if disp_text$<>callpoint!.getColumnUndoData("ARE_INVDET.MEMO_1024")
-		description_len=len(callpoint!.getColumnData("ARE_INVDET.GL_POST_MEMO"))
-		description$=disp_text$
-		description$=description$(1,min(description_len,(pos($0A$=description$+$0A$)-1)))
-
-		callpoint!.setColumnData("ARE_INVDET.MEMO_1024",disp_text$)
-		callpoint!.setColumnData("ARE_INVDET.DESCRIPTION",description$,1)
-
-		callpoint!.setStatus("MODIFIED")
-	endif
-[[ARE_INVDET.DESCRIPTION.BINP]]
-rem --- Launch Comments dialog
-	gosub comment_entry
-	callpoint!.setStatus("ABORT")
 [[ARE_INVDET.AOPT-COMM]]
 rem --- Launch Comments dialog
 	gosub comment_entry
 	callpoint!.setStatus("ABORT")
+
+[[ARE_INVDET.AREC]]
+rem --- Disable GL_ACCOUNT if not using GL
+	if user_tpl.glint$<>"Y"
+		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",0)
+	else
+		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",1)
+	endif
+
+[[ARE_INVDET.AUDE]]
+rem --- after deleting a row from detail grid, recalc/redisplay balance left to distribute
+gosub calc_grid_tots
+gosub disp_totals
+
+rem --- Disable GL_ACCOUNT if not using GL
+	if user_tpl.glint$<>"Y"
+		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",0)
+	else
+		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",1)
+	endif
+
+[[ARE_INVDET.BDGX]]
+rem --- Disable comments
+	callpoint!.setColumnEnabled(callpoint!.getValidationRow(),"ARE_INVDET.MEMO_1024",0)
+	callpoint!.setOptionEnabled("COMM",0)
+
+[[ARE_INVDET.DESCRIPTION.BINP]]
+rem --- Launch Comments dialog
+	gosub comment_entry
+	callpoint!.setStatus("ABORT")
+
 [[ARE_INVDET.GL_ACCOUNT.AVAL]]
 rem "GL INACTIVE FEATURE"
    glm01_dev=fnget_dev("GLM_ACCT")
@@ -66,6 +85,7 @@ rem "GL INACTIVE FEATURE"
       gosub disp_message
       callpoint!.setStatus("ACTIVATE-ABORT")
    endif
+
 [[ARE_INVDET.GL_ACCOUNT.BINP]]
 rem --- pre-fill with gl sales account for the distribution code
 
@@ -80,52 +100,48 @@ if user_tpl.glint$="Y"
 	endif
 
 endif
-[[ARE_INVDET.AGCL]]
-rem --- set preset val for batch_no
-callpoint!.setTableColumnAttribute("ARE_INVDET.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
 
-rem --- Set column size for memo_1024 field very small so it doesn't take up room, but still available for hover-over of memo contents
-	use ::ado_util.src::util
+[[ARE_INVDET.MEMO_1024.AVAL]]
+rem --- store first part of memo_1024 in description
+rem --- this AVAL is hit if user navigates via arrows or clicks on the memo_1024 field, and double-clicks or ctrl-F to bring up editor
+rem --- if on a memo line or using ctrl-C or Comments button, code in the comment_entry: subroutine is hit instead
 
-	grid! = util.getGrid(Form!)
-	col_hdr$=callpoint!.getTableColumnAttribute("ARE_INVDET.MEMO_1024","LABS")
-	memo_1024_col=util.getGridColumnNumber(grid!, col_hdr$)
-	grid!.setColumnWidth(memo_1024_col,15)
-[[ARE_INVDET.AUDE]]
-rem --- after deleting a row from detail grid, recalc/redisplay balance left to distribute
-gosub calc_grid_tots
-gosub disp_totals
+	disp_text$=callpoint!.getUserInput()
+	if disp_text$<>callpoint!.getColumnUndoData("ARE_INVDET.MEMO_1024")
+		description_len=len(callpoint!.getColumnData("ARE_INVDET.GL_POST_MEMO"))
+		description$=disp_text$
+		description$=description$(1,min(description_len,(pos($0A$=description$+$0A$)-1)))
 
-rem --- Disable GL_ACCOUNT if not using GL
-	if user_tpl.glint$<>"Y"
-		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",0)
-	else
-		callpoint!.setColumnEnabled(-1,"ARE_INVDET.GL_ACCOUNT",1)
+		callpoint!.setColumnData("ARE_INVDET.MEMO_1024",disp_text$)
+		callpoint!.setColumnData("ARE_INVDET.DESCRIPTION",description$,1)
+
+		callpoint!.setStatus("MODIFIED")
 	endif
-[[ARE_INVDET.ADEL]]
-rem --- after deleting a row from detail grid, recalc/redisplay balance left to distribute
-gosub calc_grid_tots
-gosub disp_totals
+
 [[ARE_INVDET.UNITS.AVAL]]
 newqty=num(callpoint!.getUserInput())                       
 unit_price=num(callpoint!.getColumnData("ARE_INVDET.UNIT_PRICE"))               
-new_ext_price=newqty*unit_price
+new_ext_price=round(newqty*unit_price,2)
 
 callpoint!.setColumnData("ARE_INVDET.EXT_PRICE",str(new_ext_price))
 callpoint!.setStatus("MODIFIED-REFRESH")
+
 [[ARE_INVDET.UNITS.AVEC]]
 gosub calc_grid_tots
 gosub disp_totals
+
 [[ARE_INVDET.UNIT_PRICE.AVAL]]
 new_unit_price=num(callpoint!.getUserInput())
 units=num(callpoint!.getColumnData("ARE_INVDET.UNITS"))               
-new_ext_price=units*new_unit_price
+new_ext_price=round(units*new_unit_price,2)
 
 callpoint!.setColumnData("ARE_INVDET.EXT_PRICE",str(new_ext_price))
 callpoint!.setStatus("MODIFIED-REFRESH")
+
 [[ARE_INVDET.UNIT_PRICE.AVEC]]
 gosub calc_grid_tots
 gosub disp_totals
+
 [[ARE_INVDET.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon
 #include [+ADDON_LIB]std_missing_params.aon
@@ -203,3 +219,6 @@ rem ==========================================================================
 	callpoint!.setStatus("ACTIVATE")
 
 	return
+
+
+
