@@ -199,7 +199,7 @@ rem --- Loop thru all soft locked poe-04 keys
         readrecord(poe04_dev,key=poe04_k$,knum="BATCH_KEY",dom=*continue,end=*break)poe04a$
         call pgmdir$+"adc_progress.aon","S","","","","",0,0,1,meter_num,status
         
-        if pos(poe04a.po_no$=receivedZero$)>0 then continue
+        if pos(poe04a.receiver_no$=receivedZero$)>0 then continue
         if poe04a.firm_id$+poe04a.vendor_id$=apm01a.firm_id$+apm01a.vendor_id$ then goto l1100
         dim apm01a$:fattr(apm01a$)
         apm01a.firm_id$=poe04a.firm_id$
