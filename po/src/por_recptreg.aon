@@ -728,7 +728,7 @@ rem --- Loop back for next header record
 
         if zero_receipt then
             if receivedZero$<>"" then receivedZero$=receivedZero$+" "+Translate!.getTranslation("AON_AND")+" "
-            receivedZero$=receivedZero$+poe04a.po_no$
+            receivedZero$=receivedZero$+poe04a.receiver_no$
         endif
         totals$=Translate!.getTranslation("AON_TOTAL_FOR_PO_#_")+poe04a.po_no$
         next_hdr$=""
