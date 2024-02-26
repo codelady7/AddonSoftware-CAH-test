@@ -616,12 +616,42 @@ ar_open_inv_hdr: rem --- AR Open Invoice Header
                 find record (arm10_dev,key=firm_id$+"A"+ope01a.terms_code$,dom=*next) arm10a$
                 v=arm10a.inv_days_due
                 call pgmdir$+"adc_duedate.aon",arm10a.prox_or_days$,art01a.invoice_date$,v,v$,status
-                if status = 999 then exitto std_exit
+                if status = 999 then
+                    msg_id$ = "OP_BAD_DUE_DATE"
+                    dim msg_tokens$[5]
+                    msg_tokens$[1] = Translate!.getTranslation("AON_INVOICE")+" "+Translate!.getTranslation("AON_DUE")
+                    msg_tokens$[2] = func.alphaMask(ope01a.customer_id$,customer_output$)
+                    msg_tokens$[3] = ope01a.ar_inv_no$
+                    if arm10a.prox_or_days$="D" then
+                        msg_tokens$[4] = "due in "+str(arm10a.inv_days_due)+" days after"
+                    else
+                        msg_tokens$[4] = "due on the "+str(arm10a.inv_days_due)+" month after"
+                    endif
+                    msg_tokens$[4] = ope11a.line_no$
+                    msg_tokens$[5] = ope01a.invoice_date$
+                    gosub disp_message
+                    exitto std_exit
+                endif
                 art01a.inv_due_date$=v$
 
                 v=arm10a.disc_days
                 call pgmdir$+"adc_duedate.aon",arm10a.prox_or_days$,art01a.invoice_date$,v,v$,status
-                if status = 999 then exitto std_exit
+                if status = 999 then
+                    msg_id$ = "OP_BAD_DUE_DATE"
+                    dim msg_tokens$[5]
+                    msg_tokens$[1] = Translate!.getTranslation("AON_DISCOUNT")
+                    msg_tokens$[2] = func.alphaMask(ope01a.customer_id$,customer_output$)
+                    msg_tokens$[3] = ope01a.ar_inv_no$
+                    if arm10a.prox_or_days$="D" then
+                        msg_tokens$[4] = "by "+str(arm10a.disc_days)+" days after"
+                    else
+                        msg_tokens$[4] = "by the "+str(arm10a.disc_days)+" month after"
+                    endif
+                    msg_tokens$[4] = ope11a.line_no$
+                    msg_tokens$[5] = ope01a.invoice_date$
+                    gosub disp_message
+                    exitto std_exit
+                endif
                 art01a.disc_date$=v$
 
                 art01a.invoice_amt=total_ext+ope01a.tax_amount+ope01a.freight_amt-ope01a.discount_amt
