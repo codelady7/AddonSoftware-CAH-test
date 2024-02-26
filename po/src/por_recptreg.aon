@@ -485,7 +485,7 @@ non_stock: rem --- Non-stock line
             OutVect!.addItem("")
             OutVect!.addItem(poe14a.po_line_code$)
             OutVect!.addItem(poe14a.warehouse_id$)
-            OutVect!.addItem(fnmask$(poe14a.item_id$,ivIMask$))
+            OutVect!.addItem(ns_item_id$)
             OutVect!.addItem(code$)
             OutVect!.addItem(poe14a.unit_measure$)
             OutVect!.addItem(str(poe14a.qty_ordered:m2$)+$00$+"R")
