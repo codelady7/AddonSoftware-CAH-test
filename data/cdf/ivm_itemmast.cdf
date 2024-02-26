@@ -67,31 +67,33 @@ rem --- disable lot/ser trans hist if item isn't lot/serial
 		callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 	else
-		rem --- Kitting is not allowed if the corresponding BOM is NOT a phantom and it include either operations or subcontracts
-		bmm01_dev=fnget_dev("BMM_BILLMAST")
-		dim bmm01$:fnget_tpl$("BMM_BILLMAST")
-		item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
-		findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$
-		if bmm01.phantom_bill$="Y" then
-			bmm03_dev=fnget_dev("BMM_BILLOPER")
-			bmm03Found=0
-			read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
-			bmm03_key$=key(bmm03_dev,end=*next)
-			if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+		if callpoint!.getDevObject("bm_installed")="Y" then
+			rem --- Kitting is not allowed if the corresponding BOM is NOT a phantom and it include either operations or subcontracts
+			bmm01_dev=fnget_dev("BMM_BILLMAST")
+			dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+			item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+			findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$
+			if bmm01.phantom_bill$="Y" then
+				bmm03_dev=fnget_dev("BMM_BILLOPER")
+				bmm03Found=0
+				read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+				bmm03_key$=key(bmm03_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
 
-			bmm05_dev=fnget_dev("BMM_BILLSUB")
-			bmm05Found=0
-			read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
-			bmm05_key$=key(bmm05_dev,end=*next)
-			if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+				bmm05_dev=fnget_dev("BMM_BILLSUB")
+				bmm05Found=0
+				read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+				bmm05_key$=key(bmm05_dev,end=*next)
+				if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
 
-			if bmm03Found or bmm05Found then
+				if bmm03Found or bmm05Found then
+					callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+				endif
+			else
 				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
 				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 			endif
-		else
-			callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
-			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 		endif
 	endif
 	callpoint!.setDevObject("kit",callpoint!.getColumnData("IVM_ITEMMAST.KIT"))
@@ -1076,38 +1078,40 @@ rem --- Lotted/serialized items cannot be kitted
 		callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
 		callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 	else
-		rem --- Allow a kit if the corresponding BOM is a phantom and does NOT include operations or subcontracts
-		bmm01_dev=fnget_dev("BMM_BILLMAST")
-		dim bmm01$:fnget_tpl$("BMM_BILLMAST")
-		item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
-		bomFound=0
-		findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$; bomFound=1
-		if bomFound then
-			if bmm01.phantom_bill$="Y" then
-				bmm03_dev=fnget_dev("BMM_BILLOPER")
-				bmm03Found=0
-				read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
-				bmm03_key$=key(bmm03_dev,end=*next)
-				if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
+		if callpoint!.getDevObject("bm_installed")="Y" then
+			rem --- Allow a kit if the corresponding BOM is a phantom and does NOT include operations or subcontracts
+			bmm01_dev=fnget_dev("BMM_BILLMAST")
+			dim bmm01$:fnget_tpl$("BMM_BILLMAST")
+			item_id$=callpoint!.getColumnData("IVM_ITEMMAST.ITEM_ID")
+			bomFound=0
+			findrecord(bmm01_dev,key=firm_id$+item_id$,dom=*next)bmm01$; bomFound=1
+			if bomFound then
+				if bmm01.phantom_bill$="Y" then
+					bmm03_dev=fnget_dev("BMM_BILLOPER")
+					bmm03Found=0
+					read(bmm03_dev,key=firm_id$+item_id$,dom=*next)
+					bmm03_key$=key(bmm03_dev,end=*next)
+					if pos(firm_id$+item_id$=bmm03_key$) then bmm03Found=1
 
-				bmm05_dev=fnget_dev("BMM_BILLSUB")
-				bmm05Found=0
-				read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
-				bmm05_key$=key(bmm05_dev,end=*next)
-				if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
+					bmm05_dev=fnget_dev("BMM_BILLSUB")
+					bmm05Found=0
+					read(bmm05_dev,key=firm_id$+item_id$,dom=*next)
+					bmm05_key$=key(bmm05_dev,end=*next)
+					if pos(firm_id$+item_id$=bmm05_key$) then bmm03Found=1
 
-				if !bmm03Found and !bmm05Found then
-					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
+					if !bmm03Found and !bmm05Found then
+						callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
+					else
+						callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
+						callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+					endif
 				else
 					callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
 					callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
 				endif
 			else
-				callpoint!.setColumnData("IVM_ITEMMAST.KIT","N",1)
-				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",0)
+				callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
 			endif
-		else
-			callpoint!.setColumnEnabled("IVM_ITEMMAST.KIT",1)
 		endif
 	endif
 
