@@ -584,11 +584,21 @@ rem ========================================================
 		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.MEMO_1024",0)
 		callpoint!.setOptionEnabled("COMM",0)
 
-		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.WO_REF_NUM",1)
-		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.OP_INT_SEQ_REF",1)
-		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.DIVISOR",1)
-		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.ALT_FACTOR",1)
-		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.SCRAP_FACTOR",1)
+		ivm01_dev=fnget_dev("IVM_ITEMMAST")
+		dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
+		ivm01a_key$=firm_id$+callpoint!.getColumnData("BMM_BILLMAT.ITEM_ID")
+		find record (ivm01_dev,key=ivm01a_key$,err=*next)ivm01a$
+		if ivm01a.kit$="Y" then
+			rem --- Disable fields for kitted items
+			enable=0
+		else
+			enable=1
+		endif
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.WO_REF_NUM",enable)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.OP_INT_SEQ_REF",enable)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.DIVISOR",enable)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.ALT_FACTOR",enable)
+		callpoint!.setColumnEnabled(thisRow,"BMM_BILLMAT.SCRAP_FACTOR",enable)
 	endif
 
 	return
