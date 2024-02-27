@@ -315,7 +315,9 @@ rem --- Main read
             ivm01a.sa_level$="I"
             arm02a.sa_flag$="I"
             if opm02a.line_type$="N" then ivm01a.sa_level$="P"
+            redim ivm01a$
             find record (ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next) ivm01a$
+            redim ivm02a$
             find record (ivm02_dev,key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next) ivm02a$
             
             if ivm01a.stock_level$="W" then
@@ -328,10 +330,11 @@ rem --- Main read
             if status goto std_exit
             period=num(period$)
 
+            kit$=ivm01a.kit$
             gosub updateSalesAnalysis
 
         rem --- Do sales analysis for both the kit AND it's components
-            if ivm01a.kit$="Y" then
+            if kit$="Y" then
                 rem --- Explode this kit into its components
                 optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
                 ope11a_tpl$=fattr(ope11a$)
@@ -341,6 +344,8 @@ rem --- Main read
                     thisKey$=key(optInvKitDet_dev,end=*break)
                     if pos(optInvKitDet_key$=thisKey$)<>1 then break
                     readrecord(optInvKitDet_dev,key=thisKey$)ope11a$
+                    rem --- For priced kits, skip standard components
+                    if ivm02a.cur_price<>0 and ope11a.comp_per_kit<>0 then continue
 
                     kitComponent$="Y"
                     gosub updateSalesAnalysis
@@ -414,7 +419,7 @@ no_to_update: rem --- NO to Update: Clear On-Sales-Register Flags
 
                 rem --- Update trans_status of kit components
                 findrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
-                if ivm01a.kit$="Y" then
+                if kit$="Y" then
                     optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
                     read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
                     while 1
@@ -506,31 +511,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif
 
         rem --- Update sam_customer (sam-01)                
-        if kitComponent$<>"Y" or cvs(sam01a.item_id$,2)<>"" then
-            dim sam$:fattr(sam01a$)
-            sam_dev=sam01_dev
-            sam_key$=sam01a.firm_id$+sam01a.year$+sam01a.customer_id$+sam01a.product_type$+sam01a.item_id$
-            sam$=sam01a$
-            gosub write_sam_rec
-    
-            rem --- Update sales totals by customer
-            dim sam$:fattr(sam01tot$)
-            sam01tot.firm_id$=sam01a.firm_id$
-            sam01tot.year$=sam01a.year$
-            sam01tot.customer_id$=sam01a.customer_id$
-            sam01tot.product_type$=""
-            sam_dev=sam01tot_dev
+        dim sam$:fattr(sam01a$)
+        sam_dev=sam01_dev
+        sam_key$=sam01a.firm_id$+sam01a.year$+sam01a.customer_id$+sam01a.product_type$+sam01a.item_id$
+        sam$=sam01a$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by customer
+        dim sam$:fattr(sam01tot$)
+        sam01tot.firm_id$=sam01a.firm_id$
+        sam01tot.year$=sam01a.year$
+        sam01tot.customer_id$=sam01a.customer_id$
+        sam01tot.product_type$=""
+        sam_dev=sam01tot_dev
+        sam_key$=sam01tot.firm_id$+sam01tot.year$+sam01tot.customer_id$+sam01tot.product_type$
+        sam$=sam01tot$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by customer/product type
+        if arm02a.sa_flag$<>"C" and sas01a.customer_lev$<>"C" 
+            sam01tot.product_type$=sam01a.product_type$
             sam_key$=sam01tot.firm_id$+sam01tot.year$+sam01tot.customer_id$+sam01tot.product_type$
             sam$=sam01tot$
             gosub write_sam_rec
-    
-            rem --- Update sales totals by customer/product type
-            if arm02a.sa_flag$<>"C" and sas01a.customer_lev$<>"C" 
-                sam01tot.product_type$=sam01a.product_type$
-                sam_key$=sam01tot.firm_id$+sam01tot.year$+sam01tot.customer_id$+sam01tot.product_type$
-                sam$=sam01tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -554,31 +557,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif               
 
         rem --- Update sam_territry (sam-02)                
-        if kitComponent$<>"Y" or cvs(sam02a.item_id$,2)<>"" then
-            dim sam$:fattr(sam02a$)
-            sam_dev=sam02_dev
-            sam_key$=sam02a.firm_id$+sam02a.year$+sam02a.territory$+sam02a.product_type$+sam02a.item_id$
-            sam$=sam02a$
-            gosub write_sam_rec
-    
-            rem --- Update sales totals by territory
-            dim sam$:fattr(sam02tot$)
-            sam02tot.firm_id$=sam02a.firm_id$
-            sam02tot.year$=sam02a.year$
-            sam02tot.territory$=sam02a.territory$
-            sam02tot.product_type$=""
-            sam_dev=sam02tot_dev
+        dim sam$:fattr(sam02a$)
+        sam_dev=sam02_dev
+        sam_key$=sam02a.firm_id$+sam02a.year$+sam02a.territory$+sam02a.product_type$+sam02a.item_id$
+        sam$=sam02a$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by territory
+        dim sam$:fattr(sam02tot$)
+        sam02tot.firm_id$=sam02a.firm_id$
+        sam02tot.year$=sam02a.year$
+        sam02tot.territory$=sam02a.territory$
+        sam02tot.product_type$=""
+        sam_dev=sam02tot_dev
+        sam_key$=sam02tot.firm_id$+sam02tot.year$+sam02tot.territory$+sam02tot.product_type$
+        sam$=sam02tot$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by territory/product type
+        if ivm01a.sa_level$<>"N" and sas01a.terrcode_lev$<>"T"
+            sam02tot.product_type$=sam02a.product_type$
             sam_key$=sam02tot.firm_id$+sam02tot.year$+sam02tot.territory$+sam02tot.product_type$
             sam$=sam02tot$
             gosub write_sam_rec
-    
-            rem --- Update sales totals by territory/product type
-            if ivm01a.sa_level$<>"N" and sas01a.terrcode_lev$<>"T"
-                sam02tot.product_type$=sam02a.product_type$
-                sam_key$=sam02tot.firm_id$+sam02tot.year$+sam02tot.territory$+sam02tot.product_type$
-                sam$=sam02tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -602,31 +603,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif               
 
         rem --- Update sam_salespsn (sam-03)                
-        if kitComponent$<>"Y" or cvs(sam03a.item_id$,2)<>"" then
-            dim sam$:fattr(sam03a$)
-            sam_dev=sam03_dev
-            sam_key$=sam03a.firm_id$+sam03a.year$+sam03a.slspsn_code$+sam03a.product_type$+sam03a.item_id$
-            sam$=sam03a$
-            gosub write_sam_rec
+        dim sam$:fattr(sam03a$)
+        sam_dev=sam03_dev
+        sam_key$=sam03a.firm_id$+sam03a.year$+sam03a.slspsn_code$+sam03a.product_type$+sam03a.item_id$
+        sam$=sam03a$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by salesperson
+        dim sam$:fattr(sam03tot$)
+        sam03tot.firm_id$=sam03a.firm_id$
+        sam03tot.year$=sam03a.year$
+        sam03tot.slspsn_code$=sam03a.slspsn_code$
+        sam03tot.product_type$=""
+        sam_dev=sam03tot_dev
+        sam_key$=sam03tot.firm_id$+sam03tot.year$+sam03tot.slspsn_code$+sam03tot.product_type$
+        sam$=sam03tot$
+        gosub write_sam_rec
     
-            rem --- Update sales totals by salesperson
-            dim sam$:fattr(sam03tot$)
-            sam03tot.firm_id$=sam03a.firm_id$
-            sam03tot.year$=sam03a.year$
-            sam03tot.slspsn_code$=sam03a.slspsn_code$
-            sam03tot.product_type$=""
-            sam_dev=sam03tot_dev
+        rem --- Update sales totals by salesperson/product type
+        if ivm01a.sa_level$<>"N" and sas01a.salespsn_lev$<>"S"
+            sam03tot.product_type$=sam03a.product_type$
             sam_key$=sam03tot.firm_id$+sam03tot.year$+sam03tot.slspsn_code$+sam03tot.product_type$
             sam$=sam03tot$
             gosub write_sam_rec
-        
-            rem --- Update sales totals by salesperson/product type
-            if ivm01a.sa_level$<>"N" and sas01a.salespsn_lev$<>"S"
-                sam03tot.product_type$=sam03a.product_type$
-                sam_key$=sam03tot.firm_id$+sam03tot.year$+sam03tot.slspsn_code$+sam03tot.product_type$
-                sam$=sam03tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -650,31 +649,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif               
 
         rem --- Update sam_custtype (sam-04)                
-        if kitComponent$<>"Y" or cvs(sam04a.item_id$,2)<>"" then
-            dim sam$:fattr(sam04a$)
-            sam_dev=sam04_dev
-            sam_key$=sam04a.firm_id$+sam04a.year$+sam04a.customer_type$+sam04a.product_type$+sam04a.item_id$
-            sam$=sam04a$
-            gosub write_sam_rec
+        dim sam$:fattr(sam04a$)
+        sam_dev=sam04_dev
+        sam_key$=sam04a.firm_id$+sam04a.year$+sam04a.customer_type$+sam04a.product_type$+sam04a.item_id$
+        sam$=sam04a$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by customer type
+        dim sam$:fattr(sam04tot$)
+        sam04tot.firm_id$=sam04a.firm_id$
+        sam04tot.year$=sam04a.year$
+        sam04tot.customer_type$=sam04a.customer_type$
+        sam04tot.product_type$=""
+        sam_dev=sam04tot_dev
+        sam_key$=sam04tot.firm_id$+sam04tot.year$+sam04tot.customer_type$+sam04tot.product_type$
+        sam$=sam04tot$
+        gosub write_sam_rec
     
-            rem --- Update sales totals by customer type
-            dim sam$:fattr(sam04tot$)
-            sam04tot.firm_id$=sam04a.firm_id$
-            sam04tot.year$=sam04a.year$
-            sam04tot.customer_type$=sam04a.customer_type$
-            sam04tot.product_type$=""
-            sam_dev=sam04tot_dev
+        rem --- Update sales totals by customer type/product type
+        if ivm01a.sa_level$<>"N" and sas01a.custtype_lev$<>"C"
+            sam04tot.product_type$=sam04a.product_type$
             sam_key$=sam04tot.firm_id$+sam04tot.year$+sam04tot.customer_type$+sam04tot.product_type$
             sam$=sam04tot$
             gosub write_sam_rec
-        
-            rem --- Update sales totals by customer type/product type
-            if ivm01a.sa_level$<>"N" and sas01a.custtype_lev$<>"C"
-                sam04tot.product_type$=sam04a.product_type$
-                sam_key$=sam04tot.firm_id$+sam04tot.year$+sam04tot.customer_type$+sam04tot.product_type$
-                sam$=sam04tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -698,31 +695,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif               
 
         rem --- Update sam_custship (sam-05)                
-        if kitComponent$<>"Y" or cvs(sam05a.item_id$,2)<>"" then
-            dim sam$:fattr(sam05a$)
-            sam_dev=sam05_dev
-            sam_key$=sam05a.firm_id$+sam05a.year$+sam05a.customer_id$+sam05a.shipto_no$+sam05a.item_id$
-            sam$=sam05a$
-            gosub write_sam_rec
-        
-            rem --- Update sales totals by customer
-            dim sam$:fattr(sam05tot$)
-            sam05tot.firm_id$=sam05a.firm_id$
-            sam05tot.year$=sam05a.year$
-            sam05tot.customer_id$=sam05a.customer_id$
-            sam05tot.shipto_no$=sam05a.shipto_no$
-            sam_dev=sam05tot_dev
+        dim sam$:fattr(sam05a$)
+        sam_dev=sam05_dev
+        sam_key$=sam05a.firm_id$+sam05a.year$+sam05a.customer_id$+sam05a.shipto_no$+sam05a.item_id$
+        sam$=sam05a$
+        gosub write_sam_rec
+    
+        rem --- Update sales totals by customer
+        dim sam$:fattr(sam05tot$)
+        sam05tot.firm_id$=sam05a.firm_id$
+        sam05tot.year$=sam05a.year$
+        sam05tot.customer_id$=sam05a.customer_id$
+        sam05tot.shipto_no$=sam05a.shipto_no$
+        sam_dev=sam05tot_dev
+        sam_key$=sam05tot.firm_id$+sam05tot.year$+sam05tot.customer_id$+sam05tot.shipto_no$
+        sam$=sam05tot$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by customer/ship-to
+        if sas01a.shipto_lev$<>"C"
+            sam05tot.shipto_no$=""
             sam_key$=sam05tot.firm_id$+sam05tot.year$+sam05tot.customer_id$+sam05tot.shipto_no$
             sam$=sam05tot$
             gosub write_sam_rec
-    
-            rem --- Update sales totals by customer/ship-to
-            if sas01a.shipto_lev$<>"C"
-                sam05tot.shipto_no$=""
-                sam_key$=sam05tot.firm_id$+sam05tot.year$+sam05tot.customer_id$+sam05tot.shipto_no$
-                sam$=sam05tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -746,31 +741,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif                               
 
         rem --- Update sam_custsic (sam-06)                
-        if kitComponent$<>"Y" or cvs(sam06a.item_id$,2)<>"" then
-            dim sam$:fattr(sam06a$)
-            sam_dev=sam06_dev
-            sam_key$=sam06a.firm_id$+sam06a.year$+sam06a.sic_code$+sam06a.product_type$+sam06a.item_id$
-            sam$=sam06a$
-            gosub write_sam_rec
+        dim sam$:fattr(sam06a$)
+        sam_dev=sam06_dev
+        sam_key$=sam06a.firm_id$+sam06a.year$+sam06a.sic_code$+sam06a.product_type$+sam06a.item_id$
+        sam$=sam06a$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by SIC
+        dim sam$:fattr(sam06tot$)
+        sam06tot.firm_id$=sam06a.firm_id$
+        sam06tot.year$=sam06a.year$
+        sam06tot.sic_code$=sam06a.sic_code$
+        sam06tot.product_type$=""
+        sam_dev=sam06tot_dev
+        sam_key$=sam06tot.firm_id$+sam06tot.year$+sam06tot.sic_code$+sam06tot.product_type$
+        sam$=sam06tot$
+        gosub write_sam_rec
     
-            rem --- Update sales totals by SIC
-            dim sam$:fattr(sam06tot$)
-            sam06tot.firm_id$=sam06a.firm_id$
-            sam06tot.year$=sam06a.year$
-            sam06tot.sic_code$=sam06a.sic_code$
-            sam06tot.product_type$=""
-            sam_dev=sam06tot_dev
+        rem --- Update sales totals by SIC/product type
+        if ivm01a.sa_level$<>"N" and sas01a.sic_code_lev$<>"C"
+            sam06tot.product_type$=sam06a.product_type$
             sam_key$=sam06tot.firm_id$+sam06tot.year$+sam06tot.sic_code$+sam06tot.product_type$
             sam$=sam06tot$
             gosub write_sam_rec
-        
-            rem --- Update sales totals by SIC/product type
-            if ivm01a.sa_level$<>"N" and sas01a.sic_code_lev$<>"C"
-                sam06tot.product_type$=sam06a.product_type$
-                sam_key$=sam06tot.firm_id$+sam06tot.year$+sam06tot.sic_code$+sam06tot.product_type$
-                sam$=sam06tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -788,23 +781,21 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif
 
         rem --- Update sam_item (sam-07)                
-        if kitComponent$<>"Y" or cvs(sam07a.item_id$,2)<>"" then
-            dim sam$:fattr(sam07a$)
-            sam_dev=sam07_dev
-            sam_key$=sam07a.firm_id$+sam07a.year$+sam07a.product_type$+sam07a.item_id$
-            sam$=sam07a$
-            gosub write_sam_rec
-        
-            rem --- Update sales totals by product type
-            dim sam$:fattr(sam07tot$)
-            sam07tot.firm_id$=sam07a.firm_id$
-            sam07tot.year$=sam07a.year$
-            sam07tot.product_type$=sam07a.product_type$
-            sam_dev=sam07tot_dev
-            sam_key$=sam07tot.firm_id$+sam07tot.year$+sam07tot.product_type$
-            sam$=sam07tot$
-            gosub write_sam_rec
-        endif
+        dim sam$:fattr(sam07a$)
+        sam_dev=sam07_dev
+        sam_key$=sam07a.firm_id$+sam07a.year$+sam07a.product_type$+sam07a.item_id$
+        sam$=sam07a$
+        gosub write_sam_rec
+    
+        rem --- Update sales totals by product type
+        dim sam$:fattr(sam07tot$)
+        sam07tot.firm_id$=sam07a.firm_id$
+        sam07tot.year$=sam07a.year$
+        sam07tot.product_type$=sam07a.product_type$
+        sam_dev=sam07tot_dev
+        sam_key$=sam07tot.firm_id$+sam07tot.year$+sam07tot.product_type$
+        sam$=sam07tot$
+        gosub write_sam_rec
     endif
 
     rem --- Warehouse
@@ -827,31 +818,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif                               
 
         rem --- Update sam_warehse (sam-08)                
-        if kitComponent$<>"Y" or cvs(sam08a.item_id$,2)<>"" then
-            dim sam$:fattr(sam08a$)
-            sam_dev=sam08_dev
-            sam_key$=sam08a.firm_id$+sam08a.year$+sam08a.warehouse_id$+sam08a.product_type$+sam08a.item_id$
-            sam$=sam08a$
-            gosub write_sam_rec
-    
-            rem --- Update sales totals by warehouse
-            dim sam$:fattr(sam08tot$)
-            sam08tot.firm_id$=sam08a.firm_id$
-            sam08tot.year$=sam08a.year$
-            sam08tot.warehouse_id$=sam08a.warehouse_id$
-            sam08tot.product_type$=""
-            sam_dev=sam08tot_dev
+        dim sam$:fattr(sam08a$)
+        sam_dev=sam08_dev
+        sam_key$=sam08a.firm_id$+sam08a.year$+sam08a.warehouse_id$+sam08a.product_type$+sam08a.item_id$
+        sam$=sam08a$
+        gosub write_sam_rec
+
+        rem --- Update sales totals by warehouse
+        dim sam$:fattr(sam08tot$)
+        sam08tot.firm_id$=sam08a.firm_id$
+        sam08tot.year$=sam08a.year$
+        sam08tot.warehouse_id$=sam08a.warehouse_id$
+        sam08tot.product_type$=""
+        sam_dev=sam08tot_dev
+        sam_key$=sam08tot.firm_id$+sam08tot.year$+sam08tot.warehouse_id$+sam08tot.product_type$
+        sam$=sam08tot$
+        gosub write_sam_rec
+               
+        rem --- Update sales totals by warehouse/product type
+        if ivm01a.sa_level$<>"N" and sas01a.whse_lev$<>"W"
+            sam08a.product_type$=sam08a.product_type$
             sam_key$=sam08tot.firm_id$+sam08tot.year$+sam08tot.warehouse_id$+sam08tot.product_type$
             sam$=sam08tot$
             gosub write_sam_rec
-                   
-            rem --- Update sales totals by warehouse/product type
-            if ivm01a.sa_level$<>"N" and sas01a.whse_lev$<>"W"
-                sam08a.product_type$=sam08a.product_type$
-                sam_key$=sam08tot.firm_id$+sam08tot.year$+sam08tot.warehouse_id$+sam08tot.product_type$
-                sam$=sam08tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -875,31 +864,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif                                               
 
         rem --- Update sam_vendor (sam-09)                
-        if kitComponent$<>"Y" or cvs(sam09a.item_id$,2)<>"" then
-            dim sam$:fattr(sam09a$)
-            sam_dev=sam09_dev
-            sam_key$=sam09a.firm_id$+sam09a.year$+sam09a.vendor_id$+sam09a.product_type$+sam09a.item_id$
-            sam$=sam09a$
-            gosub write_sam_rec
-            
-            rem --- Update sales totals by stocking vendor
-            dim sam$:fattr(sam09tot$)
-            sam09tot.firm_id$=sam09a.firm_id$
-            sam09tot.year$=sam09a.year$
-            sam09tot.vendor_id$=sam09a.vendor_id$
-            sam09tot.product_type$=""
-            sam_dev=sam09tot_dev
+        dim sam$:fattr(sam09a$)
+        sam_dev=sam09_dev
+        sam_key$=sam09a.firm_id$+sam09a.year$+sam09a.vendor_id$+sam09a.product_type$+sam09a.item_id$
+        sam$=sam09a$
+        gosub write_sam_rec
+        
+        rem --- Update sales totals by stocking vendor
+        dim sam$:fattr(sam09tot$)
+        sam09tot.firm_id$=sam09a.firm_id$
+        sam09tot.year$=sam09a.year$
+        sam09tot.vendor_id$=sam09a.vendor_id$
+        sam09tot.product_type$=""
+        sam_dev=sam09tot_dev
+        sam_key$=sam09tot.firm_id$+sam09tot.year$+sam09tot.vendor_id$+sam09tot.product_type$
+        sam$=sam09tot$
+        gosub write_sam_rec
+    
+        rem --- Update sales totals by stocking vendor/product type
+        if ivm01a.sa_level$<>"N" and sas01a.vendor_lev$<>"V"
+            sam09tot.product_type$=sam09a.product_type$
             sam_key$=sam09tot.firm_id$+sam09tot.year$+sam09tot.vendor_id$+sam09tot.product_type$
             sam$=sam09tot$
             gosub write_sam_rec
-        
-            rem --- Update sales totals by stocking vendor/product type
-            if ivm01a.sa_level$<>"N" and sas01a.vendor_lev$<>"V"
-                sam09tot.product_type$=sam09a.product_type$
-                sam_key$=sam09tot.firm_id$+sam09tot.year$+sam09tot.vendor_id$+sam09tot.product_type$
-                sam$=sam09tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -923,31 +910,29 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif                                               
 
         rem --- Update sam_distcode (sam-10)                
-        if kitComponent$<>"Y" or cvs(sam10a.item_id$,2)<>"" then
-            dim sam$:fattr(sam10a$)
-            sam_dev=sam10_dev
-            sam_key$=sam10a.firm_id$+sam10a.year$+sam10a.ar_dist_code$+sam10a.product_type$+sam10a.item_id$
-            sam$=sam10a$
-            gosub write_sam_rec
-           
-            rem --- Update sales totals by distribution code
-            dim sam$:fattr(sam10tot$)
-            sam10tot.firm_id$=sam10a.firm_id$
-            sam10tot.year$=sam10a.year$
-            sam10tot.ar_dist_code$=sam10a.ar_dist_code$
-            sam10tot.product_type$=""
-            sam_dev=sam10tot_dev
+        dim sam$:fattr(sam10a$)
+        sam_dev=sam10_dev
+        sam_key$=sam10a.firm_id$+sam10a.year$+sam10a.ar_dist_code$+sam10a.product_type$+sam10a.item_id$
+        sam$=sam10a$
+        gosub write_sam_rec
+       
+        rem --- Update sales totals by distribution code
+        dim sam$:fattr(sam10tot$)
+        sam10tot.firm_id$=sam10a.firm_id$
+        sam10tot.year$=sam10a.year$
+        sam10tot.ar_dist_code$=sam10a.ar_dist_code$
+        sam10tot.product_type$=""
+        sam_dev=sam10tot_dev
+        sam_key$=sam10tot.firm_id$+sam10tot.year$+sam10tot.ar_dist_code$+sam10tot.product_type$
+        sam$=sam10tot$
+        gosub write_sam_rec
+    
+        rem --- Update sales totals by distribution code/product type
+        if ivm01a.sa_level$<>"N" and sas01a.distcode_lev$<>"D"
+            sam10tot.product_type$=sam10a.product_type$
             sam_key$=sam10tot.firm_id$+sam10tot.year$+sam10tot.ar_dist_code$+sam10tot.product_type$
             sam$=sam10tot$
             gosub write_sam_rec
-        
-            rem --- Update sales totals by distribution code/product type
-            if ivm01a.sa_level$<>"N" and sas01a.distcode_lev$<>"D"
-                sam10tot.product_type$=sam10a.product_type$
-                sam_key$=sam10tot.firm_id$+sam10tot.year$+sam10tot.ar_dist_code$+sam10tot.product_type$
-                sam$=sam10tot$
-                gosub write_sam_rec
-            endif
         endif
     endif
 
@@ -965,23 +950,21 @@ updateSalesAnalysis: rem ---Update Sales Analysis
         endif
 
         rem --- Update sam_nonstock (sam-11)                
-        if kitComponent$<>"Y" or cvs(sam11a.item_id$,2)<>"" then
-            dim sam$:fattr(sam11a$)
-            sam_dev=sam11_dev
-            sam_key$=sam11a.firm_id$+sam11a.year$+sam11a.product_type$+sam11a.nonstock_no$
-            sam$=sam11a$
-            gosub write_sam_rec
-        
-            rem --- Update sales totals by non-stock product type
-            dim sam$:fattr(sam11tot$)
-            sam11tot.firm_id$=sam11a.firm_id$
-            sam11tot.year$=sam11a.year$
-            sam11tot.product_type$=sam11a.product_type$
-            sam_dev=sam11tot_dev
-            sam_key$=sam11tot.firm_id$+sam11tot.year$+sam11tot.product_type$
-            sam$=sam11tot$
-            gosub write_sam_rec
-        endif
+        dim sam$:fattr(sam11a$)
+        sam_dev=sam11_dev
+        sam_key$=sam11a.firm_id$+sam11a.year$+sam11a.product_type$+sam11a.nonstock_no$
+        sam$=sam11a$
+        gosub write_sam_rec
+    
+        rem --- Update sales totals by non-stock product type
+        dim sam$:fattr(sam11tot$)
+        sam11tot.firm_id$=sam11a.firm_id$
+        sam11tot.year$=sam11a.year$
+        sam11tot.product_type$=sam11a.product_type$
+        sam_dev=sam11tot_dev
+        sam_key$=sam11tot.firm_id$+sam11tot.year$+sam11tot.product_type$
+        sam$=sam11tot$
+        gosub write_sam_rec
     endif
 
     return
@@ -996,9 +979,16 @@ write_sam_rec: rem --- write Sales Analysis records
     next x
 
     extract record (sam_dev,key=sam_key$,dom=*next) sam$;rem Advisory Locking
-    field sam$, "qty_shipped_" + str(period:"00") = nfield(sam$, "qty_shipped_" + str(period:"00")) + ope11a.qty_shipped
-    field sam$, "total_cost_" + str(period:"00") = nfield(sam$, "total_cost_" + str(period:"00")) + round(ope11a.unit_cost*ope11a.qty_shipped, 2)
-    field sam$, "total_sales_" + str(period:"00") = nfield(sam$, "total_sales_" + str(period:"00")) + ope11a.ext_price
+    if kit$="Y" and ivm02a.cur_price=0 and kitComponent$<>"Y" then
+        rem --- Do only quantity SA on non-priced kits
+        field sam$, "qty_shipped_" + str(period:"00") = nfield(sam$, "qty_shipped_" + str(period:"00")) + ope11a.qty_shipped
+    else
+        rem --- Do full SA on priced kits
+        rem --- Do full SA on kit custom components (standard components have already been skipped)
+        field sam$, "qty_shipped_" + str(period:"00") = nfield(sam$, "qty_shipped_" + str(period:"00")) + ope11a.qty_shipped
+        field sam$, "total_cost_" + str(period:"00") = nfield(sam$, "total_cost_" + str(period:"00")) + round(ope11a.unit_cost*ope11a.qty_shipped, 2)
+        field sam$, "total_sales_" + str(period:"00") = nfield(sam$, "total_sales_" + str(period:"00")) + ope11a.ext_price
+    endif
     sam$=field(sam$)
     write record (sam_dev) sam$
     return
