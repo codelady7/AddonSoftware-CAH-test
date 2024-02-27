@@ -37,7 +37,7 @@ rem --- Retrieve sysinfo data
 
 rem --- Open/Lock files
 
-    files=32,begfile=1,endfile=files
+    files=33,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="sas_params",ids$[1]="SAS_PARAMS"
     files$[2]="arm-01",ids$[2]="ARM_CUSTMAST"
@@ -71,6 +71,7 @@ rem --- Open/Lock files
     files$[30]="sam_vendor_tot",ids$[30]="SAM_VENDOR_TOT"
     files$[31]="sam_distcode_tot",ids$[31]="SAM_DISTCODE_TOT"
     files$[32]="sam_nonstock_tot",ids$[32]="SAM_NONSTOCK_TOT"
+    files$[33]="opt_invkitdet",ids$[33]="OPT_INVKITDET"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
@@ -105,6 +106,7 @@ rem --- Open/Lock files
     sam09tot_dev=channels[30]
     sam10tot_dev=channels[31]
     sam11tot_dev=channels[32]
+    optInvKitDet_dev=channels[33]
 
 rem --- Dimension string templates
 
@@ -118,7 +120,7 @@ rem --- Dimension string templates
 :       sam01tot$:templates$[22],sam02tot$:templates$[23],sam03tot$:templates$[24],
 :       sam04tot$:templates$[25],sam05tot$:templates$[26],sam06tot$:templates$[27],
 :       sam07tot$:templates$[28],sam08tot$:templates$[29],sam09tot$:templates$[30],
-:       sam10tot$:templates$[31],sam11tot$:templates$[32]
+:       sam10tot$:templates$[31],sam11tot$:templates$[32],optInvKitDet$:templates$[33]
 
 rem --- Get types of sales analysis to rebuild
 
@@ -180,411 +182,42 @@ rem --- Update Sales Analysis
             if pos(opm02a.line_type$="NPO") and opm02a.prod_type_pr$="N" continue
             dim ivm01a$:fattr(ivm01a$),ivm02a$:fattr(ivm02a$)
             if opm02a.line_type$="N" ivm01a.sa_level$="P"
+            redim ivm01a$
             find record (ivm01_dev,key=firm_id$+opt11a.item_id$,dom=*next) ivm01a$
+            redim ivm02a$
             find record (ivm02_dev,key=firm_id$+opt11a.warehouse_id$+opt11a.item_id$,dom=*next) ivm02a$
+            
             if ivm01a.stock_level$="W" vendor$=ivm02a.vendor_id$ else vendor$=ivm01a.vendor_id$
+            
             call pgmdir$+"adc_fiscalperyr.aon",firm_id$,opt01a.invoice_date$,period$,year$,table_chans$[all],status
             if status goto std_exit
             period=num(period$)
+        
+            kit$=ivm01a.kit$
+            gosub updateSalesAnalysis
 
-rem --- Customer
+            rem --- Do sales analysis for both the kit AND it's components
+            if kit$="Y" then
+                rem --- Explode this kit into its components
+                optInvKitDet_key$=firm_id$+opt11a.ar_type$+opt11a.customer_id$+opt11a.order_no$+opt11a.ar_inv_no$+opt11a.internal_seq_no$
+                opt11a_tpl$=fattr(opt11a$)
+                dim opt11a$:fattr(optInvKitDet$); rem --- Temporarily set the opt11a$ string to the optInvKitDet$ template
+                read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+                while 1
+                    thisKey$=key(optInvKitDet_dev,end=*break)
+                    if pos(optInvKitDet_key$=thisKey$)<>1 then break
+                    readrecord(optInvKitDet_dev,key=thisKey$)opt11a$
+                    rem --- For priced kits, skip standard components
+                    if ivm02a.cur_price<>0 and opt11a.comp_per_kit<>0 then continue
 
-            if opt_cust$<>"Y" or pos(arm02a.sa_flag$="PI")=0 or pos(ivm01a.sa_level$="PI")=0 goto territory
-            dim sam$:fattr(sam01a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.customer_id$=opt01a.customer_id$
-            if arm02a.sa_flag$<>"C" and sas01a.customer_lev$<>"C" 
-                sam.product_type$=opt11a.product_type$
-                if arm02a.sa_flag$="I" and sas01a.customer_lev$="I" 
-                    sam.item_id$=opt11a.item_id$
-                endif
+                    kitComponent$="Y"
+                    gosub updateSalesAnalysis
+                wend
+                kitComponent$=""
+                dim opt11a$:opt11a_tpl$; rem --- Reset the opt11a$ string back to the opt11a_tpl$ template
             endif
-            sam_dev=sam01_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.customer_id$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by customer
-            dim sam$:fattr(sam01tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.customer_id$=opt01a.customer_id$
-            sam.product_type$=""
-            sam_dev=sam01tot_dev
-            sam_key$=firm_id$+year$+sam.customer_id$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by customer/product type
-            if arm02a.sa_flag$<>"C" and sas01a.customer_lev$<>"C" 
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.customer_id$+sam.product_type$
-                gosub write_rec
-            endif
-
-territory: rem --- Territory
-
-            if opt_terr$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto slspsn
-            dim sam$:fattr(sam02a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.territory$=opt01a.territory$
-            if ivm01a.sa_level$<>"N" and sas01a.terrcode_lev$<>"T" 
-                sam.product_type$=opt11a.product_type$
-                if ivm01a.sa_level$="I" and sas01a.terrcode_lev$="I" 
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            sam_dev=sam02_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.territory$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by territory
-            dim sam$:fattr(sam02tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.territory$=opt01a.territory$
-            sam.product_type$=""
-            sam_dev=sam02tot_dev
-            sam_key$=firm_id$+year$+sam.territory$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by territory/product type
-            if ivm01a.sa_level$<>"N" and sas01a.terrcode_lev$<>"T"
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.territory$+sam.product_type$
-                gosub write_rec
-            endif
-
-slspsn: rem --- Salesperson
-
-            if opt_slspsn$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto custtype
-            dim sam$:fattr(sam03a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.slspsn_code$=opt01a.slspsn_code$
-            if ivm01a.sa_level$<>"N" and sas01a.salespsn_lev$<>"S"
-                sam.product_type$=opt11a.product_type$
-                if ivm01a.sa_level$="I" and sas01a.salespsn_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            sam_dev=sam03_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.slspsn_code$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by salesperson
-            dim sam$:fattr(sam03tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.slspsn_code$=opt01a.slspsn_code$
-            sam.product_type$=""
-            sam_dev=sam03tot_dev
-            sam_key$=firm_id$+year$+sam.slspsn_code$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by salesperson/product type
-            if ivm01a.sa_level$<>"N" and sas01a.salespsn_lev$<>"S"
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.slspsn_code$+sam.product_type$
-                gosub write_rec
-            endif
-
-custtype: rem --- Customer Type
-
-            if opt_custtype$<>"Y" or pos(arm02a.sa_flag$="PI")=0 or pos(ivm01a.sa_level$="PI")=0 then goto shipto
-            dim sam$:fattr(sam04a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.customer_type$=arm02a.customer_type$
-            if ivm01a.sa_level$<>"N" and sas01a.custtype_lev$<>"C"
-                sam.product_type$=opt11a.product_type$
-                if ivm01a.sa_level$="I" and sas01a.custtype_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            sam_dev=sam04_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.customer_type$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by customer type
-            dim sam$:fattr(sam04tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.customer_type$=arm02a.customer_type$
-            sam.product_type$=""
-            sam_dev=sam04tot_dev
-            sam_key$=firm_id$+year$+sam.customer_type$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by customer type/product type
-            if ivm01a.sa_level$<>"N" and sas01a.custtype_lev$<>"C"
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.customer_type$+sam.product_type$
-                gosub write_rec
-            endif
-
-shipto: rem --- Ship-To
-
-            if opt_shipto$<>"Y" or pos(arm02a.sa_flag$="PI")=0 or pos(ivm01a.sa_level$="PI")=0 goto sic
-            dim sam$:fattr(sam05a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.customer_id$=opt01a.customer_id$
-            if sas01a.shipto_lev$<>"C"
-                sam.shipto_no$=opt01a.shipto_no$
-                if ivm01a.sa_level$="I" and sas01a.shipto_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            sam_dev=sam05_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.customer_id$+sam.shipto_no$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by customer
-            dim sam$:fattr(sam05tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.customer_id$=opt01a.customer_id$
-            sam.shipto_no$=opt01a.shipto_no$
-            sam_dev=sam05tot_dev
-            sam_key$=firm_id$+year$+sam.customer_id$+sam.shipto_no$
-            gosub write_rec
-            
-            rem --- Build sales totals by customer/ship-to
-            if sas01a.shipto_lev$<>"C"
-                sam.shipto_no$=""
-                sam_key$=firm_id$+year$+sam.customer_id$+sam.shipto_no$
-                gosub write_rec
-            endif
-
-sic: rem --- Standard Industry Code
-
-            if opt_sic$<>"Y" or pos(ivm01a.sa_level$="PI")=0 or cvs(arm01a.sic_code$,2)="" goto prodtype
-            dim sam$:fattr(sam06a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.sic_code$=arm01a.sic_code$
-            if ivm01a.sa_level$<>"N" and sas01a.sic_code_lev$<>"C"
-                sam.product_type$=opt11a.product_type$               
-                if ivm01a.sa_level$="I" and sas01a.sic_code_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.sic_code$+sam.product_type$+sam.item_id$
-            sam_dev=sam06_dev
-            gosub write_rec
-            
-            rem --- Build sales totals by SIC
-            dim sam$:fattr(sam06tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.sic_code$=arm01a.sic_code$
-            sam.product_type$=""               
-            sam_key$=firm_id$+year$+sam.sic_code$+sam.product_type$
-            sam_dev=sam06tot_dev
-            gosub write_rec
-            
-            rem --- Build sales totals by SIC/product type
-            if ivm01a.sa_level$<>"N" and sas01a.sic_code_lev$<>"C"
-                sam.product_type$=opt11a.product_type$               
-                sam_key$=firm_id$+year$+sam.sic_code$+sam.product_type$
-                gosub write_rec
-            endif
-
-prodtype: rem --- Product Type
-
-            if opt_prod$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto warehouse
-            dim sam$:fattr(sam07a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.product_type$=opt11a.product_type$
-            if ivm01a.sa_level$="I" and sas01a.product_lev$="I"
-                sam.item_id$=opt11a.item_id$
-            endif
-            sam_dev=sam07_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by product type
-            dim sam$:fattr(sam07tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.product_type$=opt11a.product_type$
-            sam_dev=sam07tot_dev
-            sam_key$=firm_id$+year$+sam.product_type$
-            gosub write_rec
-
-warehouse: rem --- Warehouse
-
-            if opt_whse$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto stockvend
-            dim sam$:fattr(sam08a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.warehouse_id$=opt11a.warehouse_id$
-            if ivm01a.sa_level$<>"N" and sas01a.whse_lev$<>"W"
-                sam.product_type$=opt11a.product_type$
-                if ivm01a.sa_level$="I" and sas01a.whse_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif            
-            sam_dev=sam08_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.warehouse_id$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by warehouse
-            dim sam$:fattr(sam08tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.warehouse_id$=opt11a.warehouse_id$
-            sam.product_type$=""
-            sam_dev=sam08tot_dev
-            sam_key$=firm_id$+year$+sam.warehouse_id$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by warehouse/product type
-            if ivm01a.sa_level$<>"N" and sas01a.whse_lev$<>"W"
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.warehouse_id$+sam.product_type$
-                gosub write_rec
-            endif
-
-stockvend: rem --- Stocking Vendor
-
-            if opt_vend$<>"Y" or pos(ivm01a.sa_level$="PI")=0 or cvs(vendor$,2)="" goto distcode
-            dim sam$:fattr(sam09a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.vendor_id$=vendor$
-            if ivm01a.sa_level$<>"N" and sas01a.vendor_lev$<>"V"
-                sam.product_type$=opt11a.product_type$
-                if ivm01a.sa_level$="I" and sas01a.vendor_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            sam_dev=sam09_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.vendor_id$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by stocking vendor
-            dim sam$:fattr(sam09tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.vendor_id$=vendor$
-            sam.product_type$=""
-            sam_dev=sam09tot_dev
-            sam_key$=firm_id$+year$+sam.vendor_id$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by stocking vendor/product type
-            if ivm01a.sa_level$<>"N" and sas01a.vendor_lev$<>"V"
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.vendor_id$+sam.product_type$
-                gosub write_rec
-            endif
-
-distcode: rem --- Distribution Code
-
-            if opt_distcode$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto nonstock
-            dim sam$:fattr(sam10a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.ar_dist_code$=opt01a.ar_dist_code$
-            if ivm01a.sa_level$<>"N" and sas01a.distcode_lev$<>"D"
-                sam.product_type$=opt11a.product_type$
-                if ivm01a.sa_level$="I" and sas01a.distcode_lev$="I"
-                    sam.item_id$=opt11a.item_id$
-                endif
-            endif
-            sam_dev=sam10_dev
-            if len(sam.item_id$)=0
-            	q$=fattr(sam$,"item_id")
-            	sam.item_id$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.ar_dist_code$+sam.product_type$+sam.item_id$
-            gosub write_rec
-            
-            rem --- Build sales totals by distribution code
-            dim sam$:fattr(sam10tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.ar_dist_code$=opt01a.ar_dist_code$
-            sam.product_type$=""
-            sam_dev=sam10tot_dev
-            sam_key$=firm_id$+year$+sam.ar_dist_code$+sam.product_type$
-            gosub write_rec
-            
-            rem --- Build sales totals by distribution code/product type
-            if ivm01a.sa_level$<>"N" and sas01a.distcode_lev$<>"D"
-                sam.product_type$=opt11a.product_type$
-                sam_key$=firm_id$+year$+sam.ar_dist_code$+sam.product_type$
-                gosub write_rec
-            endif
-
-nonstock: rem --- Non-Stock
-
-            if opt_nonstock$<>"Y" or opm02a.line_type$<>"N" continue
-            dim sam$:fattr(sam11a$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.product_type$=opt11a.product_type$
-            if sas01a.nonstock_lev$="N"
-                sam.nonstock_no$=opt11a.order_memo$
-            endif
-            sam_dev=sam11_dev
-            if len(sam.nonstock_no$)=0
-            	q$=fattr(sam$,"nonstock_no")
-            	sam.nonstock_no$=fill(dec(q$(10,2)))
-            endif
-            sam_key$=firm_id$+year$+sam.product_type$+sam.nonstock_no$
-            gosub write_rec
-            
-            rem --- Build sales totals by non-stock product type
-            dim sam$:fattr(sam11tot$)
-            sam.firm_id$=firm_id$
-            sam.year$=year$
-            sam.product_type$=opt11a.product_type$
-            sam_dev=sam11tot_dev
-            sam_key$=firm_id$+year$+sam.product_type$
-            gosub write_rec
 
 rem --- Loop back for next line item
-
         wend
         
 rem --- Loop back for next invoice
@@ -657,8 +290,395 @@ init_firm: rem --- Firm specific initializations
 
     return
 
-write_rec: rem --- write records
+updateSalesAnalysis: rem --- Update Sales Analysis
+    rem --- Customer
+    if opt_cust$<>"Y" or pos(arm02a.sa_flag$="PI")=0 or pos(ivm01a.sa_level$="PI")=0 goto territory
+    dim sam$:fattr(sam01a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.customer_id$=opt01a.customer_id$
+    if arm02a.sa_flag$<>"C" and sas01a.customer_lev$<>"C" 
+        sam.product_type$=opt11a.product_type$
+        if arm02a.sa_flag$="I" and sas01a.customer_lev$="I" 
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam01_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.customer_id$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by customer
+    dim sam$:fattr(sam01tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.customer_id$=opt01a.customer_id$
+    sam.product_type$=""
+    sam_dev=sam01tot_dev
+    sam_key$=firm_id$+year$+sam.customer_id$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by customer/product type
+    if arm02a.sa_flag$<>"C" and sas01a.customer_lev$<>"C" 
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.customer_id$+sam.product_type$
+        gosub write_rec
+    endif
 
+territory: rem --- Territory
+    if opt_terr$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto slspsn
+    dim sam$:fattr(sam02a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.territory$=opt01a.territory$
+    if ivm01a.sa_level$<>"N" and sas01a.terrcode_lev$<>"T" 
+        sam.product_type$=opt11a.product_type$
+        if ivm01a.sa_level$="I" and sas01a.terrcode_lev$="I" 
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam02_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.territory$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by territory
+    dim sam$:fattr(sam02tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.territory$=opt01a.territory$
+    sam.product_type$=""
+    sam_dev=sam02tot_dev
+    sam_key$=firm_id$+year$+sam.territory$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by territory/product type
+    if ivm01a.sa_level$<>"N" and sas01a.terrcode_lev$<>"T"
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.territory$+sam.product_type$
+        gosub write_rec
+    endif
+
+slspsn: rem --- Salesperson
+    if opt_slspsn$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto custtype
+    dim sam$:fattr(sam03a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.slspsn_code$=opt01a.slspsn_code$
+    if ivm01a.sa_level$<>"N" and sas01a.salespsn_lev$<>"S"
+        sam.product_type$=opt11a.product_type$
+        if ivm01a.sa_level$="I" and sas01a.salespsn_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam03_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.slspsn_code$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by salesperson
+    dim sam$:fattr(sam03tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.slspsn_code$=opt01a.slspsn_code$
+    sam.product_type$=""
+    sam_dev=sam03tot_dev
+    sam_key$=firm_id$+year$+sam.slspsn_code$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by salesperson/product type
+    if ivm01a.sa_level$<>"N" and sas01a.salespsn_lev$<>"S"
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.slspsn_code$+sam.product_type$
+        gosub write_rec
+    endif
+
+custtype: rem --- Customer Type
+    if opt_custtype$<>"Y" or pos(arm02a.sa_flag$="PI")=0 or pos(ivm01a.sa_level$="PI")=0 then goto shipto
+    dim sam$:fattr(sam04a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.customer_type$=arm02a.customer_type$
+    if ivm01a.sa_level$<>"N" and sas01a.custtype_lev$<>"C"
+        sam.product_type$=opt11a.product_type$
+        if ivm01a.sa_level$="I" and sas01a.custtype_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam04_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.customer_type$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by customer type
+    dim sam$:fattr(sam04tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.customer_type$=arm02a.customer_type$
+    sam.product_type$=""
+    sam_dev=sam04tot_dev
+    sam_key$=firm_id$+year$+sam.customer_type$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by customer type/product type
+    if ivm01a.sa_level$<>"N" and sas01a.custtype_lev$<>"C"
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.customer_type$+sam.product_type$
+        gosub write_rec
+    endif
+
+shipto: rem --- Ship-To
+    if opt_shipto$<>"Y" or pos(arm02a.sa_flag$="PI")=0 or pos(ivm01a.sa_level$="PI")=0 goto sic
+    dim sam$:fattr(sam05a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.customer_id$=opt01a.customer_id$
+    if sas01a.shipto_lev$<>"C"
+        sam.shipto_no$=opt01a.shipto_no$
+        if ivm01a.sa_level$="I" and sas01a.shipto_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam05_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.customer_id$+sam.shipto_no$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by customer
+    dim sam$:fattr(sam05tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.customer_id$=opt01a.customer_id$
+    sam.shipto_no$=opt01a.shipto_no$
+    sam_dev=sam05tot_dev
+    sam_key$=firm_id$+year$+sam.customer_id$+sam.shipto_no$
+    gosub write_rec
+    
+    rem --- Build sales totals by customer/ship-to
+    if sas01a.shipto_lev$<>"C"
+        sam.shipto_no$=""
+        sam_key$=firm_id$+year$+sam.customer_id$+sam.shipto_no$
+        gosub write_rec
+    endif
+
+sic: rem --- Standard Industry Code
+    if opt_sic$<>"Y" or pos(ivm01a.sa_level$="PI")=0 or cvs(arm01a.sic_code$,2)="" goto prodtype
+    dim sam$:fattr(sam06a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.sic_code$=arm01a.sic_code$
+    if ivm01a.sa_level$<>"N" and sas01a.sic_code_lev$<>"C"
+        sam.product_type$=opt11a.product_type$               
+        if ivm01a.sa_level$="I" and sas01a.sic_code_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.sic_code$+sam.product_type$+sam.item_id$
+    sam_dev=sam06_dev
+    gosub write_rec
+    
+    rem --- Build sales totals by SIC
+    dim sam$:fattr(sam06tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.sic_code$=arm01a.sic_code$
+    sam.product_type$=""               
+    sam_key$=firm_id$+year$+sam.sic_code$+sam.product_type$
+    sam_dev=sam06tot_dev
+    gosub write_rec
+    
+    rem --- Build sales totals by SIC/product type
+    if ivm01a.sa_level$<>"N" and sas01a.sic_code_lev$<>"C"
+        sam.product_type$=opt11a.product_type$               
+        sam_key$=firm_id$+year$+sam.sic_code$+sam.product_type$
+        gosub write_rec
+    endif
+
+prodtype: rem --- Product Type
+    if opt_prod$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto warehouse
+    dim sam$:fattr(sam07a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.product_type$=opt11a.product_type$
+    if ivm01a.sa_level$="I" and sas01a.product_lev$="I"
+        sam.item_id$=opt11a.item_id$
+    endif
+    sam_dev=sam07_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by product type
+    dim sam$:fattr(sam07tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.product_type$=opt11a.product_type$
+    sam_dev=sam07tot_dev
+    sam_key$=firm_id$+year$+sam.product_type$
+    gosub write_rec
+
+warehouse: rem --- Warehouse
+    if opt_whse$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto stockvend
+    dim sam$:fattr(sam08a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.warehouse_id$=opt11a.warehouse_id$
+    if ivm01a.sa_level$<>"N" and sas01a.whse_lev$<>"W"
+        sam.product_type$=opt11a.product_type$
+        if ivm01a.sa_level$="I" and sas01a.whse_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif            
+    sam_dev=sam08_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.warehouse_id$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by warehouse
+    dim sam$:fattr(sam08tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.warehouse_id$=opt11a.warehouse_id$
+    sam.product_type$=""
+    sam_dev=sam08tot_dev
+    sam_key$=firm_id$+year$+sam.warehouse_id$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by warehouse/product type
+    if ivm01a.sa_level$<>"N" and sas01a.whse_lev$<>"W"
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.warehouse_id$+sam.product_type$
+        gosub write_rec
+    endif
+
+stockvend: rem --- Stocking Vendor
+    if opt_vend$<>"Y" or pos(ivm01a.sa_level$="PI")=0 or cvs(vendor$,2)="" goto distcode
+    dim sam$:fattr(sam09a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.vendor_id$=vendor$
+    if ivm01a.sa_level$<>"N" and sas01a.vendor_lev$<>"V"
+        sam.product_type$=opt11a.product_type$
+        if ivm01a.sa_level$="I" and sas01a.vendor_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam09_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.vendor_id$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by stocking vendor
+    dim sam$:fattr(sam09tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.vendor_id$=vendor$
+    sam.product_type$=""
+    sam_dev=sam09tot_dev
+    sam_key$=firm_id$+year$+sam.vendor_id$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by stocking vendor/product type
+    if ivm01a.sa_level$<>"N" and sas01a.vendor_lev$<>"V"
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.vendor_id$+sam.product_type$
+        gosub write_rec
+    endif
+
+distcode: rem --- Distribution Code
+    if opt_distcode$<>"Y" or pos(ivm01a.sa_level$="PI")=0 goto nonstock
+    dim sam$:fattr(sam10a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.ar_dist_code$=opt01a.ar_dist_code$
+    if ivm01a.sa_level$<>"N" and sas01a.distcode_lev$<>"D"
+        sam.product_type$=opt11a.product_type$
+        if ivm01a.sa_level$="I" and sas01a.distcode_lev$="I"
+            sam.item_id$=opt11a.item_id$
+        endif
+    endif
+    sam_dev=sam10_dev
+    if len(sam.item_id$)=0
+        q$=fattr(sam$,"item_id")
+        sam.item_id$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.ar_dist_code$+sam.product_type$+sam.item_id$
+    gosub write_rec
+    
+    rem --- Build sales totals by distribution code
+    dim sam$:fattr(sam10tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.ar_dist_code$=opt01a.ar_dist_code$
+    sam.product_type$=""
+    sam_dev=sam10tot_dev
+    sam_key$=firm_id$+year$+sam.ar_dist_code$+sam.product_type$
+    gosub write_rec
+    
+    rem --- Build sales totals by distribution code/product type
+    if ivm01a.sa_level$<>"N" and sas01a.distcode_lev$<>"D"
+        sam.product_type$=opt11a.product_type$
+        sam_key$=firm_id$+year$+sam.ar_dist_code$+sam.product_type$
+        gosub write_rec
+    endif
+
+nonstock: rem --- Non-Stock
+    if opt_nonstock$<>"Y" or opm02a.line_type$<>"N" then return
+    dim sam$:fattr(sam11a$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.product_type$=opt11a.product_type$
+    if sas01a.nonstock_lev$="N"
+        sam.nonstock_no$=opt11a.order_memo$
+    endif
+    sam_dev=sam11_dev
+    if len(sam.nonstock_no$)=0
+        q$=fattr(sam$,"nonstock_no")
+        sam.nonstock_no$=fill(dec(q$(10,2)))
+    endif
+    sam_key$=firm_id$+year$+sam.product_type$+sam.nonstock_no$
+    gosub write_rec
+    
+    rem --- Build sales totals by non-stock product type
+    dim sam$:fattr(sam11tot$)
+    sam.firm_id$=firm_id$
+    sam.year$=year$
+    sam.product_type$=opt11a.product_type$
+    sam_dev=sam11tot_dev
+    sam_key$=firm_id$+year$+sam.product_type$
+    gosub write_rec
+    
+    return
+
+write_rec: rem --- write records
     rem --- Initialize sales analysis numerics to zero to eliminate <null>s in SQL queries
     for x=1 to 13
         field sam$,"qty_shipped_"+str(x:"00")=0
@@ -668,14 +688,24 @@ write_rec: rem --- write records
 
     extract record (sam_dev,key=sam_key$,dom=*next) sam$;rem Advisory Locking
     if opt11a.trans_status$="U" then
-        field sam$,"QTY_SHIPPED_"+str(period:"00")=nfield(sam$,"QTY_SHIPPED_"+str(period:"00"))+opt11a.qty_shipped
-        precision 2
-        field sam$,"TOTAL_COST_"+str(period:"00")=nfield(sam$,"TOTAL_COST_"+str(period:"00"))+opt11a.unit_cost*opt11a.qty_shipped
-        precision ivprecision
-        field sam$,"TOTAL_SALES_"+str(period:"00")=nfield(sam$,"TOTAL_SALES_"+str(period:"00"))+opt11a.ext_price
-        sam$=field(sam$)
+        if kit$="Y" and ivm02a.cur_price=0 and kitComponent$<>"Y" then
+            rem --- Do only quantity SA on non-priced kits
+            precision 2
+            field sam$,"QTY_SHIPPED_"+str(period:"00")=nfield(sam$,"QTY_SHIPPED_"+str(period:"00"))+opt11a.qty_shipped
+            precision ivprecision
+        else
+            rem --- Do full SA on priced kits
+            rem --- Do full SA on kit custom components (standard components have already been skipped)
+            field sam$,"QTY_SHIPPED_"+str(period:"00")=nfield(sam$,"QTY_SHIPPED_"+str(period:"00"))+opt11a.qty_shipped
+            precision 2
+            field sam$,"TOTAL_COST_"+str(period:"00")=nfield(sam$,"TOTAL_COST_"+str(period:"00"))+opt11a.unit_cost*opt11a.qty_shipped
+            precision ivprecision
+            field sam$,"TOTAL_SALES_"+str(period:"00")=nfield(sam$,"TOTAL_SALES_"+str(period:"00"))+opt11a.ext_price
+            sam$=field(sam$)
+        endif
     endif
     write record (sam_dev) sam$
+
     return
 
 disp_message: rem --- Display Message Dialog
