@@ -239,7 +239,7 @@ rem --- Get WO commits
 				if firm_id$<>womatdtl_tpl.firm_id$ break
 				if whse$<>womatdtl_tpl.warehouse_id$ break
 				if item$<>womatdtl_tpl.item_id$ break
-				womatdtl_qty = womatdtl_qty + womatdtl_tpl.qty_ordered
+				womatdtl_qty = womatdtl_qty + womatdtl_tpl.qty_ordered - womatdtl_tpl.tot_qty_iss
 			wend
 
 			rem --- Include additional committments made after WO was released

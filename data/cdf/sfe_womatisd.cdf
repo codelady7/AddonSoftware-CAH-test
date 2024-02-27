@@ -23,7 +23,7 @@ rem --- Init DISPLAY columns
 rem --- Start lot/serial button disabled
 	callpoint!.setOptionEnabled("LENT",0)
 
-rem --- Do not commit if row has been deleted
+rem --- Do not commit if row has been deleted (uncommit happens in BDEL)
 	if callpoint!.getGridRowDeleteStatus(callpoint!.getValidationRow())="Y" then
 		rem --- row has been deleted, so do not commit inventory
 		break
@@ -36,39 +36,28 @@ rem --- Init things for later
 	tot_qty_iss=num(callpoint!.getColumnData("SFE_WOMATISD.TOT_QTY_ISS"))
 	qty_issued=num(callpoint!.getColumnData("SFE_WOMATISD.QTY_ISSUED"))
 
-rem --- Adjust committed if issue qty exceeds ordered qty 
-rem --- (For new records qty_ordered=qty_issued and tot_qty_iss=0)
-	if qty_issued+tot_qty_iss>qty_ordered then
-
-rem --- Do not commit unless quantity issued has changed, or quantity issued exceeds quantity ordered
-	sfe_womatisd_dev=fnget_dev("SFE_WOMATISD")
-	dim sfe_womatisd$:fnget_tpl$("SFE_WOMATISD")
+rem --- Do not commit if qty_issued hasn't changed, or qty_issued+tot_qty_iss is still <= qty_ordered
+	sfe_womatisd_dev2=fnget_dev("@SFE_WOMATISD")
+	dim sfe_womatisd$:fnget_tpl$("@SFE_WOMATISD")
 	firm_loc_wo$=callpoint!.getDevObject("firm_loc_wo")
-	sfe_womatish_key$=callpoint!.getDevObject("sfe_womatish_key")
-	sfe_womatisd_key$=sfe_womatish_key$+callpoint!.getColumnData("SFE_WOMATISD.MATERIAL_SEQ")
-	readrecord(sfe_womatisd_dev,key=sfe_womatisd_key$,knum="AO_DISP_SEQ",dom=*next)sfe_womatisd$
+	sfe_womatisd_key$=callpoint!.getColumnData("SFE_WOMATISD.FIRM_ID")+
+:		callpoint!.getColumnData("SFE_WOMATISD.WO_LOCATION")+
+:		callpoint!.getColumnData("SFE_WOMATISD.WO_NO")+
+:		callpoint!.getColumnData("SFE_WOMATISD.INTERNAL_SEQ_NO")
+	found_issues=0
+	readrecord(sfe_womatisd_dev2,key=sfe_womatisd_key$,knum="PRIMARY",dom=*next)sfe_womatisd$;found_issues=1
 	start_qty_issued=sfe_womatisd.qty_issued
-	if qty_issued=start_qty_issued and qty_issued+tot_qty_iss<=qty_ordered then
-		rem --- qty_issued has not changed and less than qty_ordered, so do not commit inventory
+	start_qty_ordered=sfe_womatisd.qty_ordered
+	if found_issues and (qty_issued=start_qty_issued or qty_issued+tot_qty_iss<=qty_ordered) then
+		rem --- qty_issued has not changed or is still less than qty_ordered, so do not commit inventory
 		break
 	endif
 
-rem --- Inform user when item quantity is recommitted
-rem --- Actually, nothing is recommitted. In the update less will be uncommitted since qty_issued has decreased.
-rem --- It's this reduction in uncommitted that is being described as recommitted.
-	if qty_issued<start_qty_issued then
-		msg_id$="SF_ITEM_RECOMMIT"
-		dim msg_tokens$[2]
-		msg_tokens$[1] = str(abs(start_qty_issued-qty_issued))
-		msg_tokens$[2] = cvs(item_id$, 2)
-		gosub disp_message
-	endif
-    
 rem --- Initialize inventory item update
 	call stbl("+DIR_PGM")+"ivc_itemupdt.aon::init",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 
 rem --- Do initial commit if nothing previously ordered or issued
-	if qty_ordered=0 and tot_qty_iss=0 then
+	if start_qty_ordered=0 and start_qty_issued=0 then
 		qty_ordered=qty_issued
 		callpoint!.setColumnData("SFE_WOMATISD.QTY_ORDERED",str(qty_ordered),1)
 
@@ -78,7 +67,37 @@ rem --- Do initial commit if nothing previously ordered or issued
 		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
 	endif
 
-	rem --- Item lotted/serialized and inventoried?
+rem --- Adjust committed if issue qty exceeds ordered qty 
+rem --- (For new records qty_ordered=qty_issued and tot_qty_iss=0)
+	if qty_issued+tot_qty_iss>qty_ordered then
+		items$[1]=warehouse_id$
+		items$[2]=item_id$
+		refs[0]=max(0,qty_issued+tot_qty_iss-qty_ordered)
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+
+		rem --- Update order quantity with adjusted committed quantity
+		qty_ordered=qty_issued+tot_qty_iss
+		callpoint!.setColumnData("SFE_WOMATISD.QTY_ORDERED",str(qty_ordered),1)
+	endif
+
+rem --- For negative issue, inform user quantity will be returned to stock
+rem --- Commit the negative amount here, and register/updt will subtract that negative from OH (i.e., increase it)
+rem --- CAH wording of this message should be changed - it's not really a 'recommit'
+
+	if qty_issued<0  then
+		msg_id$="SF_ITEM_RECOMMIT"
+		dim msg_tokens$[2]
+		msg_tokens$[1] = str(abs(start_qty_issued-qty_issued))
+		msg_tokens$[2] = cvs(item_id$, 2)
+		gosub disp_message
+
+		items$[1]=warehouse_id$
+		items$[2]=item_id$
+		refs[0]=qty_issued
+		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
+	endif
+
+rem --- Item lotted/serialized and inventoried?
 	ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
 	warehouse_id$=callpoint!.getDevObject("warehouse_id")
@@ -126,20 +145,6 @@ rem --- Do initial commit if nothing previously ordered or issued
 				callpoint!.setColumnData("SFE_WOMATISD.ISSUE_COST",str(issue_cost),1)
 			endif
 		endif
-	endif
-
-rem --- Adjust committed if issue qty exceeds ordered qty 
-rem --- (For new records qty_ordered=qty_issued and tot_qty_iss=0)
-	if qty_issued+tot_qty_iss>qty_ordered then
-		comit_qty=qty_issued+tot_qty_iss-qty_ordered
-		items$[1]=warehouse_id$
-		items$[2]=item_id$
-		refs[0]=max(0,qty_issued+tot_qty_iss-qty_ordered)
-		call stbl("+DIR_PGM")+"ivc_itemupdt.aon","CO",chan[all],ivs01a$,items$[all],refs$[all],refs[all],table_chans$[all],status
-
-		rem --- Update order quantity with adjusted committed quantity
-		qty_ordered=qty_issued+tot_qty_iss
-		callpoint!.setColumnData("SFE_WOMATISD.QTY_ORDERED",str(qty_ordered),1)
 	endif
 
 rem --- Init DISPLAY columns
@@ -479,6 +484,9 @@ rem --- Can't un-issue (negative issue) more than have already been issued.
 
 rem --- Init DISPLAY columns
 	callpoint!.setColumnData("SFE_WOMATISD.QTY_ISSUED",callpoint!.getUserInput())
+	if num(callpoint!.getColumnData("SFE_WOMATISD.QTY_ORDERED"))=0 then 
+		callpoint!.setColumnData("SFE_WOMATISD.QTY_ORDERED",str(qty_issued),1)
+	endif
 	gosub init_display_cols
 
 [[SFE_WOMATISD.<CUSTOM>]]
