@@ -240,7 +240,7 @@ rem --- ivm-02 Warehouse
     if action$="TA" then goto update_lifo_fifo
     ivm02k0$=firm_id$+whse$+item$
     ivm02_extracted=0
-    extract record (ivm02_dev,key=ivm02k0$,dom=missing_record_error,err=*next,tim=2) ivm02a$; ivm02_extracted=0; rem Advisory Locking
+    extract record (ivm02_dev,key=ivm02k0$,dom=missing_record_error,err=*next,tim=2) ivm02a$; ivm02_extracted=1; rem Advisory Locking
     if !ivm02_extracted then
         rem --- If extract times out, then record probably open in item maintenace as other transactions on
         rem --- ivm-02 won't hold the extract long. Do a read hear to avoid an error zero. This probably won't

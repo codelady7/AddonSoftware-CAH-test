@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.sfe_womatisd">224167E0BD2C8848576DC4411D1F9004</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.sfe_womatisd">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.sfe_womatisd">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.sfe_womatisd">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.sfe_womatisd">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.sfe_womatisd">142910</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.sfe_womatisd">20240227</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.sfe_womatisd">20240226</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.sfe_womatisd">100248</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.sfe_womatisd"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.sfe_womatisd">C:/dev_addon/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.sfe_womatisd">AO_DISP_SEQ</DD_ATTR_DKNM>
@@ -63,7 +63,7 @@
 		<RECORD id="ddm_table_aopt.sfe_womatisd01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.sfe_womatisd01">SFE_WOMATISD    </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.sfe_womatisd01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.sfe_womatisd01">Lot/Serial Entry</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT id="ddm_table_aopt.sfe_womatisd01">&Lot/Serial Entry</DD_ATTR_AOPT>
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.sfe_womatisd01">LENT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.sfe_womatisd01">B</DD_ATTR_AOPT_FM>
 		</RECORD>

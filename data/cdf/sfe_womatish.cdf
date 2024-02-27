@@ -239,7 +239,7 @@ rem --- Initializations
 	use ::sfo_SfUtils.aon::SfUtils
 
 rem --- Open Files
-	num_files=14
+	num_files=15
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="SFS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -255,6 +255,7 @@ rem --- Open Files
 	open_tables$[12]="SFC_WOTYPECD",open_opts$[12]="OTA"
 	open_tables$[13]="IVM_ITEMMAST",open_opts$[13]="OTA"
 	open_tables$[14]="IVM_ITEMWHSE",open_opts$[14]="OTA"
+	open_tables$[15]="SFE_WOMATISD",open_opts$[15]="OTA@"
 
 	gosub open_tables
 
@@ -453,26 +454,25 @@ rem --- New materials issues entry or no existing materials issues
 					redim sfe_womatl$
 					sfe_womatl_key$=firm_id$+sfe_womatdtl.wo_location$+sfe_womatdtl.wo_no$+sfe_womatdtl.womatl_seq_ref$
 					findrecord(sfe_womatl_dev,key=sfe_womatl_key$,knum="AO_MAT_SEQ",dom=*continue)sfe_womatl$
-					if cvs(sfe_womatl.oper_seq_ref$,2)="" then read (sfe_womatisd_dev); continue
-
-					rem --- Was this operation selected?
-					if !all_selected then
-						oprtn_selected=0
-						iter!=selected_ops!.keySet().iterator()
-						while iter!.hasNext()
-							op_seq$=iter!.next()
-							if selected_ops!.get(op_seq$)="" then continue
-							if selected_ops!.get(op_seq$)=sfe_womatl.oper_seq_ref$ then
-								oprtn_selected=1
-								break
+					if cvs(sfe_womatl.oper_seq_ref$,2)<>""
+						rem --- Was this operation selected?
+						if !all_selected then
+							oprtn_selected=0
+							iter!=selected_ops!.keySet().iterator()
+							while iter!.hasNext()
+								op_seq$=iter!.next()
+								if selected_ops!.get(op_seq$)="" then continue
+								if selected_ops!.get(op_seq$)=sfe_womatl.oper_seq_ref$ then
+									oprtn_selected=1
+									break
+								endif
+							wend
+							if !oprtn_selected then
+								read (sfe_womatisd_dev)
+								continue
 							endif
-						wend
-						if !oprtn_selected then
-							read (sfe_womatisd_dev)
-							continue
 						endif
 					endif
-
 					dim ivm_itemwhse$:ivm_itemwhse_tpl$
 					findrecord(ivm_itemwhse_dev,key=firm_id$+sfe_womatisd.warehouse_id$+sfe_womatisd.item_id$,dom=*next)ivm_itemwhse$
 
@@ -495,7 +495,7 @@ rem --- New materials issues entry or no existing materials issues
 
 	        rem --- Reload and display with new detail
 		sfe_womatish_key$=callpoint!.getDevObject("sfe_womatish_key")
-		callpoint!.setStatus("RECORD:["+sfe_womatish_key$+"]")
+		callpoint!.setStatus("ACTIVATE-RECORD:["+sfe_womatish_key$+"]")
 	endif
 
 [[SFE_WOMATISH.ISSUED_DATE.BINP]]
