@@ -1,11 +1,14 @@
 =======================================================================================================================================
- Report Date:   2024-02-02
+ Report Date:   2024-02-27
  Report Branch: AddonSoftware 24.00
- Last Release:  AddonSoftware 23.06
+ Last Release:  AddonSoftware 23.07
 =======================================================================================================================================
 
 23.06 released 1/22/2024
-BBjBaristaDemos2306_01-18-2024_1754.jar
+BBjBaristaAddonDemos2306_01-18-2024_1754.jar
+
+23.07 released 2/15/2024
+BBjBaristaAddonDemos2307_02-14-2024_1754.jar
 =======================================================================================================================================
 
 Revision: 4623281e47e17c85344d68818dee4ab4ee55961c
@@ -37,5 +40,122 @@ Modified: data/cdf/ivr_physprint.cdf
 Modified: data/cdf/ivr_physreg.cdf
 
 =======================================================================================================================================
+Revision: e99947c3133443ab69ecc94cfb01174ea8067ae5
+Author: Christine <chawkins@basis.com>
+Date: 2/14/2024 2:05:40 PM
+Message:
+Bug 10736 - AD - Fixes/enhancements to Addon Upgrade Wizard
+ - Fine tuned previous fix. Rather than setting the translator key to use "addon", set the +PROPS_NAME global. That way, downstream conversion utils that also use +PROPS_NAME won't run into err 49.
+
+(cherry picked from commit 28ea65eaeea476b8daf4a72079aa863131265de5)
+----
+Modified: ad/src/adc_mvupgrdfiles.aon
+
+=======================================================================================================================================
+Revision: fca4a3140011f375634f3126b9e54f1b9c8034f9
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/14/2024 12:20:06 PM
+Message:
+Bug 10789: Added 0A Delimiter to the end of the AMOUNT_MASK,
+PERCENT_MASK and UNIT_MASK elements in the +GLCONTROL Reference table.
+----
+Modified: data/bar/+glcontrol.xml
+
+=======================================================================================================================================
+Revision: b24c5741abef37b53b654a431ac466e2339f5080
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/14/2024 5:19:13 PM
+Message:
+ER 10555 and Bug 10662: Made the AO_BNKACCT_CHECK alternate key for
+APR_CHECKHISTORY is a unique key, and changed the AP_PAIDINVOICES
+Drilldown Definition to use it again instead of the CHECK_VENDOR_INV
+alternate key.
+----
+Modified: data/apt-05
+Modified: data/bar/apt_checkhistory.xml
+Modified: data/sync/ddm_drill_defs~[01007514AP].xml
+
+=======================================================================================================================================
+Revision: b0acf6e238816c7b9e0837624760dc9202e76057
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/26/2024 10:41:21 AM
+Message:
+Bug 10799: Rounded Extended Price to two decimal places to eliminate
+possible fractional penny.
+----
+Modified: data/bar/are_invdet.xml
+Modified: data/cdf/are_invdet.cdf
+
+=======================================================================================================================================
+Revision: 6fbeaf14bed52d0118d85a064661a095e00902b9
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/26/2024 12:35:00 PM
+Message:
+Bug 10798: Added error messages when a bad invoice due date or discount
+date is encountered in the Sales Register Update.
+----
+Modified: data/sync/ads_messages~[01007514OP].xml
+Modified: op/src/opu_updateinventory.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+
+=======================================================================================================================================
+Revision: 126afe1930eb77a55f8adfb7c1c92408ed0a86a5
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/26/2024 1:21:24 PM
+Message:
+Bug 10776: In PO Receipt Register warning message that refers to the PO
+Receiver Number, show the Receiver Number instead of the Purchase Order
+Number.
+----
+Modified: po/src/por_recptreg.aon
+Modified: po/src/pou_recptreg.aon
+
+=======================================================================================================================================
+Revision: cebe61d195967464fc040490b2505102a46391b9
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/26/2024 1:51:53 PM
+Message:
+Bug 10796: For non-stock items in the PO Receipt Register show their
+non-stock item number.
+----
+Modified: po/src/por_recptreg.aon
+
+=======================================================================================================================================
+Revision: 3a4f4336e19c87d5db8fe6d20aedf61b1a1bf367
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/26/2024 3:25:44 PM
+Message:
+Bug 10667: For quotes in Order Entry, do NOT require setting qty_ordered
+to zero rather than deleting the detail line when it's already been
+printed on a picking list
+----
+Modified: data/bar/ope_orddet.xml
+Modified: data/cdf/ope_orddet.cdf
+
+=======================================================================================================================================
+Revision: 6f246e5bcaefe21ebdc0689e957b216e7fe7b1d8
+Author: Christine <chawkins@basis.com>
+Date: 2/27/2024 6:40:41 PM
+Message:
+Bug 10802 - SF - Materials Issues leaves entry records behind when doing a negative issue
+ - Primary fix: AGRE in sfe_womatisd heavily revised
+ - Also a change in the qty_issued AVAL to set qty_ordered = qty_issued if qty_ordered is 0.
+ - Change to the Mats Issue header: if you say the WO was not pulled complete, the option entry form that lets you provide a quantity and select affected operations was not sending the quantity back to the detail grid.
+ - Minor change in the Item/Warehouse code that calculates the committed balance (compares it to what's in ivm-02 and shades the cell if <>) to make sure it takes into account what may have already been issued
+ - Minor change in ivc_itemupdt to correct set the ivm02_extracted flag when ivm_02 is successfully extracted (was setting it to 0 instead of 1).
+
+(cherry picked from commit bd81473a1d952f36d52beb14474e3b100edd76ae)
+----
+Modified: data/bar/ivm_itemwhse.xml
+Modified: data/bar/sfe_womatisd.xml
+Modified: data/bar/sfe_womatish.xml
+Modified: data/cdf/ivm_itemwhse.cdf
+Modified: data/cdf/sfe_womatisd.cdf
+Modified: data/cdf/sfe_womatish.cdf
+Modified: iv/src/ivc_itemupdt.aon
+
+
+
 
 
