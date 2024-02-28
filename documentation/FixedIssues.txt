@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-02-27
+ Report Date:   2024-02-28
  Report Branch: AddonSoftware 24.00
  Last Release:  AddonSoftware 23.07
 =======================================================================================================================================
@@ -155,7 +155,15 @@ Modified: data/cdf/sfe_womatisd.cdf
 Modified: data/cdf/sfe_womatish.cdf
 Modified: iv/src/ivc_itemupdt.aon
 
-
-
-
-
+=======================================================================================================================================
+Revision: 9d829cc0b888466b1cf18eafd65cb1811fc8d5d0
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 2/28/2024 11:00:02 AM
+Message:
+Bug 10801: Changed PO_HIST_REQ query:
+1. Deleted the "calculation" row that referenced column alias REQ_REF1.
+2. Made the REQ_NO column "Always visible".
+3. Added the PO_HIST_REQDET Drilldown Definition to the REQ_NO column.
+----
+Modified: data/sync/adm_query_cols~[01007514PO].xml
+Modified: data/sync/adm_query~[01007514PO].xml
