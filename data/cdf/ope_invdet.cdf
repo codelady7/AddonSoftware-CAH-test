@@ -1745,7 +1745,7 @@ rem --- Check item/warehouse combination and setup values
 
 	if !user_tpl.item_wh_failed then 
 		gosub set_avail
-		conv_factor=num(callpoint!.getColumnData("OPE_INVDDET.CONV_FACTOR"))
+		conv_factor=num(callpoint!.getColumnData("OPE_INVDET.CONV_FACTOR"))
 		if conv_factor=0 then conv_factor=1
 		callpoint!.setColumnData("<<DISPLAY>>.UNIT_COST_DSP", str(ivm02a.unit_cost*conv_factor))
 		callpoint!.setColumnData("OPE_INVDET.STD_LIST_PRC", str(ivm02a.cur_price*conv_factor))
@@ -2862,7 +2862,7 @@ rem ==========================================================================
 	find record (fnget_dev(file$), key=firm_id$+line_code$, dom=*endif) opc_linecode$
 
 	rem --- Shouldn't be possible to have a bad line_code$ at this point.
-	rem --- If it happens, add error trap to send to OPE_INVDDET.LINE_CODE.
+	rem --- If it happens, add error trap to send to OPE_INVDET.LINE_CODE.
 
 	callpoint!.setStatus("ENABLE:"+opc_linecode.line_type$)
 	user_tpl.line_type$     = opc_linecode.line_type$
