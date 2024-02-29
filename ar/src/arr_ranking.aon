@@ -59,6 +59,7 @@ rem --- Assign form input values to local variables
     sequence$=option!.getOptionData("REPORT_SEQUENCE")
     col_format$=option!.getOptionData("COL_FORMAT")
     page_break$=option!.getOptionData("PAGE_BREAK")
+    inactive$=Option!.getOptionData("CUST_INACTIVE")
 
 rem --- Retrieve parameter records
 
@@ -86,7 +87,7 @@ rem --- Initializations
     rep_time_stamp$=date(0:"%Hz%mz%sz")
     rep_prog$=pgm(-2)
 
-    headings=3
+    headings=4
     dim headings$[headings+1],o[8],customer[5],subtotals[5],totals[5]
     done=0
     more=1
@@ -131,7 +132,8 @@ rem --- Initializations
     headings$[0]=sysinfo.firm_name$
     headings$[1]=sysinfo.task_desc$+Translate!.getTranslation("AON__BY_")+by$
     headings$[2]=Translate!.getTranslation("AON_RANKED_BY_")+rankby$
-    if page_break$<>"N" and sequence$<>"N" headings$[3]="[HEADER]"
+    headings$[3]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_CUSTOMERS")+" = "+inactive$
+    if page_break$<>"N" and sequence$<>"N" headings$[4]="[HEADER]"
 
     columns=8
     dim columns$[columns,10]
@@ -218,6 +220,7 @@ rem --- Read next sort file record
         dim arm01a$:fattr(arm01a$),arm06a$:fattr(arm06a$),customer[5]
         k$=arw06a.firm_id$+arw06a.customer_id$
         find record (arm01_dev,key=k$,dom=*continue) arm01a$
+        if inactive$="Y" and arm01a.cust_inactive$="Y" then continue
         find record (arm06_dev,key=k$,dom=*continue) arm06a$
 
         rem --- Level break?
