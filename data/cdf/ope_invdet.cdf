@@ -192,7 +192,7 @@ rem --- Initialize/update OPT_INVKITDET Kit Components grid for this detail line
 			nextLineNo=1
 			call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","U","",qty_mask$,0,qty_mask
 			call stbl("+DIR_PGM")+"adc_getmask.aon","","IV","I","",ivIMask$,0,0
-			lineMask$=pad("",len(callpoint!.getColumnData("INVDET.LINE_NO")),"0")
+			lineMask$=pad("",len(callpoint!.getColumnData("OPE_INVDET.LINE_NO")),"0")
 
 			gosub explodeKit
 		endif
