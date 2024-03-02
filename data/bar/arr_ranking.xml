@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.arr_ranking">56F208E62482A8CB6D051E38F561CB6F</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arr_ranking"></DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arr_ranking">20060419</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arr_ranking">20240228</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arr_ranking">20240228</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arr_ranking">172530</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arr_ranking">20240229</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arr_ranking">20240229</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arr_ranking">131514</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arr_ranking"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arr_ranking"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arr_ranking"></DD_ATTR_DKNM>
@@ -380,7 +380,7 @@
 			<DD_ATTR_DRLE id="ddm_table_cols.arr_ranking006"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.arr_ranking006"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.arr_ranking006"></DD_ATTR_IDEF>
-			<DD_ATTR_LABL id="ddm_table_cols.arr_ranking006">Exclude Customer Inactive?</DD_ATTR_LABL>
+			<DD_ATTR_LABL id="ddm_table_cols.arr_ranking006">Exclude Inactive Customer?</DD_ATTR_LABL>
 			<DD_ATTR_LABS id="ddm_table_cols.arr_ranking006"></DD_ATTR_LABS>
 			<DD_ATTR_MLAN id="ddm_table_cols.arr_ranking006">N</DD_ATTR_MLAN>
 			<DD_ATTR_MINL id="ddm_table_cols.arr_ranking006"></DD_ATTR_MINL>

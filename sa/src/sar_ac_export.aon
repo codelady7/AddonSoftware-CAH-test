@@ -142,6 +142,17 @@ rem --- Report headings
     headings$[3]=h1$
     headings$[4]=h2$
 
+    switch action
+        case 1; rem --- By Customer
+        case 5; rem --- By Customer Ship-To
+        case 12; rem --- By Territory/Cust
+        case 21; rem --- By Product/Item/Cust
+            headings$[5]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_CUSTOMERS")+" = "+inactive$
+            break
+        case default
+            break
+    swend
+
 rem --- Document columns
 
     myps=iff(len(myp$)<3, len(myp$), 4)
@@ -293,6 +304,41 @@ l1500: rem --- Next Sales Analysis Record
     if action<>21
         read (sam00_dev,key=sam00_k$,dom=l1600) iol=sam00a
     endif
+
+    rem --- Test for excluded inactive customers
+    switch action
+        case 1; rem --- By Customer
+            redim samCustomer$
+            readrecord(sam00_dev,key=sam00_k$,dom=*next)samCustomer$
+            armCustMast.cust_inactive$="Y"
+            readrecord(armCustMast_dev,key=firm_id$+samCustomer.customer_id$,dom=*next)armCustMast$
+            if inactive$="Y" and armCustMast.cust_inactive$="Y" then exitto l1600
+            break
+        case 5; rem --- By Customer Ship-To
+            redim samCustShip$
+            readrecord(sam00_dev,key=sam00_k$,dom=*next)samCustShip$
+            armCustMast.cust_inactive$="Y"
+            readrecord(armCustMast_dev,key=firm_id$+samCustShip.customer_id$,dom=*next)armCustMast$
+            if inactive$="Y" and armCustMast.cust_inactive$="Y" then exitto l1600
+            break
+        case 12; rem --- By Territory/Cust
+            redim sam12a$
+            readrecord(sam00_dev,key=sam00_k$,dom=*next)sam12a$
+            armCustMast.cust_inactive$="Y"
+            readrecord(armCustMast_dev,key=firm_id$+sam12a.customer_id$,dom=*next)armCustMast$
+            if inactive$="Y" and armCustMast.cust_inactive$="Y" then exitto l1600
+            break
+        case 21; rem --- By Product/Item/Cust
+            redim samCustomer$
+            readrecord(sam00_dev,key=sam00_k$,knum="AO_PRD_ITM_CST",dom=*next)samCustomer$
+            armCustMast.cust_inactive$="Y"
+            readrecord(armCustMast_dev,key=firm_id$+samCustomer.customer_id$,dom=*next)armCustMast$
+            if inactive$="Y" and armCustMast.cust_inactive$="Y" then exitto l1600
+            break
+        case default
+            break
+    swend
+
     if pos("M"=myp$) qnty[yr]=qnty[yr]+q[period-1],cost[yr]=cost[yr]+c[period-1],sales[yr]=sales[yr]+s[period-1]
     if pos("Y"=myp$)=0 goto l1600
     for i=0 to period-1
