@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.poe_reqhdr"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.poe_reqhdr">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.poe_reqhdr">PO </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.poe_reqhdr">24.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.poe_reqhdr">24.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.poe_reqhdr">F9FC21F71215048005A59538BE93E299</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_reqhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_reqhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_reqhdr">20240304</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_reqhdr">20240304</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_reqhdr">190144</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_reqhdr">20240305</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_reqhdr">20240201</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_reqhdr">122202</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_reqhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.poe_reqhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.poe_reqhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_reqhdr"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.poe_reqhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.poe_reqhdr">T</DD_ATTR_FTYP>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.poe_reqhdr"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.poe_reqhdr"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.poe_reqhdr"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.poe_reqhdr"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.poe_reqhdr"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.poe_reqhdr"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.poe_reqhdr"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.poe_reqhdr"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.poe_reqhdr"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.poe_reqhdr"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.poe_reqhdr">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.poe_reqhdr">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.poe_reqhdr">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.poe_reqhdr">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.poe_reqhdr">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.poe_reqhdr">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.poe_reqhdr">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_aopt">
@@ -218,7 +218,7 @@
 		<RECORD id="ddm_table_tpls.poe_reqhdr">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.poe_reqhdr">POE_REQHDR      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.poe_reqhdr">poe-01</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.poe_reqhdr">firm_id:c(2),req_no:c(7*),vendor_id:c(6),warehouse_id:c(2),purch_addr:c(2),hold_flag:c(1),ap_terms_code:c(2),po_frt_terms:c(15),ap_ship_via:c(15),acknowledge:c(20),fob:c(15),po_msg_code:c(3),ord_date:c(8),promise_date:c(8),not_b4_date:c(8),reqd_date:c(8*),dropship:c(1),customer_id:c(6),order_no:c(7),shipto_no:c(6),ds_name:c(30),ds_addr_line_1:c(30),ds_addr_line_2:c(30),ds_addr_line_3:c(30),ds_addr_line_4:c(30),ds_city:c(30),ds_state_cd:c(2),ds_zip_code:c(9),entered_by:c(16)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.poe_reqhdr">firm_id:c(2),req_no:c(7*),vendor_id:c(6),warehouse_id:c(2),purch_addr:c(2),hold_flag:c(1),ap_terms_code:c(2),po_frt_terms:c(15),ap_ship_via:c(15),acknowledge:c(20),fob:c(15),po_msg_code:c(3),ord_date:c(8),promise_date:c(8),not_b4_date:c(8),reqd_date:c(8),dropship:c(1),customer_id:c(6),order_no:c(7),shipto_no:c(6),ds_name:c(30),ds_addr_line_1:c(30),ds_addr_line_2:c(30),ds_addr_line_3:c(30),ds_addr_line_4:c(30),ds_city:c(30),ds_state_cd:c(2),ds_zip_code:c(9),entered_by:c(16)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -519,7 +519,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr002">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr002"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr002"></DD_ATTR_CTLY>
@@ -570,7 +570,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr003">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr003"></DD_ATTR_CTLY>
@@ -621,7 +621,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr004"></DD_ATTR_CTLY>
@@ -672,7 +672,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr005">+33</DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr005">-8</DD_ATTR_CTLY>
@@ -721,8 +721,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr006"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr006">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr006">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr006"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr006"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr006">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr006">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr006"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr006"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr006"></DD_ATTR_CTLX>
@@ -772,8 +772,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr007"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr007">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr007">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr007"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr007"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr007">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr007">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr007"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr007"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr007"></DD_ATTR_CTLX>
@@ -823,8 +823,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr008"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr008">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr008">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr008"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr008"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr008">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr008">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr008"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr008"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr008"></DD_ATTR_CTLX>
@@ -874,8 +874,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr009"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr009">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr009">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr009"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr009"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr009">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr009">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr009"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr009"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr009"></DD_ATTR_CTLX>
@@ -925,8 +925,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr010"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr010">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr010">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr010"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr010"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr010">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr010">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr010"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr010"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr010"></DD_ATTR_CTLX>
@@ -976,8 +976,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr011"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr011">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr011">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr011"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr011"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr011">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr011">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr011"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr011"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr011"></DD_ATTR_CTLX>
@@ -1027,8 +1027,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr012"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr012">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr012">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr012"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr012"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr012">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr012">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr012"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr012"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr012">+32</DD_ATTR_CTLX>
@@ -1078,8 +1078,8 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr013"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr013">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr013">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr013"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr013"></DD_ATTR_ABLV>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr013">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr013">!</DD_ATTR_ABLV>
 			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr013"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr013"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr013"></DD_ATTR_CTLX>
@@ -1129,9 +1129,9 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr014"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr014">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr014">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr014"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr014"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr014">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr014">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr014">!</DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr014">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr014"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr014"></DD_ATTR_CTLY>
@@ -1180,9 +1180,9 @@
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr015"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr015">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr015">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr015"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr015">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr015">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr015">!</DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr015">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr015"></DD_ATTR_CTLY>
@@ -1224,16 +1224,16 @@
 			<DD_DVAR_NAME id="ddm_table_cols.poe_reqhdr016">REQD_DATE       </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.poe_reqhdr016">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.poe_reqhdr016">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.poe_reqhdr016">Y</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.poe_reqhdr016">0A</DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.poe_reqhdr016">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.poe_reqhdr016"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.poe_reqhdr016"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.poe_reqhdr016"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.poe_reqhdr016"></DD_MASK_TYPE>
 			<DD_CREATE_DATE id="ddm_table_cols.poe_reqhdr016">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr016">20060119</DD_LSTREV_DATE>
-			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr016"></DD_ATTR_ABLC>
-			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr016"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr016">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr016">POE_REQHDR.REQ_NO</DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr016">!</DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr016">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr016"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr016"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr016"></DD_ATTR_CTLY>
@@ -1284,7 +1284,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr017">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr017"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr017"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr017">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr017">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr017">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr017">+1</DD_ATTR_CTLY>
@@ -1335,7 +1335,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr018">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr018">POE_REQHDR.DROPSHIP</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr018">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr018">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr018">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr018">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr018"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr018"></DD_ATTR_CTLY>
@@ -1386,7 +1386,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr019">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr019">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr019">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr019">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_CTLY>
@@ -1409,7 +1409,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr019">40</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr019">ORDER_NO_LK</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr019">ORDER_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr019"></DD_ATTR_FTSR>
@@ -1437,7 +1437,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.poe_reqhdr020">20081014</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.poe_reqhdr020">POE_REQHDR.DROPSHIP</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.poe_reqhdr020">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr020">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.poe_reqhdr020">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.poe_reqhdr020">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_CTLY>
@@ -1460,7 +1460,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr020">41</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr020">SHIPTO_NO_LK</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr020">SHIPTO_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr020"></DD_ATTR_FTSR>
@@ -1511,7 +1511,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr021"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr021">42</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr021"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr021">NAME</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr021">DS_NAME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr021"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr021"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr021"></DD_ATTR_FTSR>
@@ -1562,7 +1562,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr022"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr022">43</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr022"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr022">ADDR_LINE_1</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr022">DS_ADDR_LINE_1</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr022"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr022"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr022"></DD_ATTR_FTSR>
@@ -1613,7 +1613,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr023"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr023">44</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr023"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr023">ADDR_LINE_2</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr023">DS_ADDR_LINE_2</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr023"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr023"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr023"></DD_ATTR_FTSR>
@@ -1664,7 +1664,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr024"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr024">45</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr024"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr024">ADDR_LINE_3</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr024">DS_ADDR_LINE_3</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr024"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr024"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr024"></DD_ATTR_FTSR>
@@ -1715,7 +1715,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr025"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr025">46</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr025"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr025">ADDR_LINE_4</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr025">DS_ADDR_LINE_4</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr025"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr025"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr025"></DD_ATTR_FTSR>
@@ -1766,7 +1766,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr026"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr026">47</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr026"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr026">CITY</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr026">DS_CITY</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr026"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr026"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr026"></DD_ATTR_FTSR>
@@ -1817,7 +1817,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr027">48</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr027">STATE_CODE</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr027">DS_STATE_CD</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_FTSR>
@@ -1868,7 +1868,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr028"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr028">49</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr028"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr028">ZIP_CODE</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr028">DS_ZIP_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr028"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr028"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr028"></DD_ATTR_FTSR>
@@ -1919,7 +1919,7 @@
 			<DD_ATTR_TABG id="ddm_table_cols.poe_reqhdr029"></DD_ATTR_TABG>
 			<DD_ATTR_TIND id="ddm_table_cols.poe_reqhdr029">11</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.poe_reqhdr029"></DD_ATTR_HELP>
-			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr029">ORD_TAKEN_BY</SQL_COLUMN_NAME>
+			<SQL_COLUMN_NAME id="ddm_table_cols.poe_reqhdr029">ENTERED_BY</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.poe_reqhdr029"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.poe_reqhdr029"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr029"></DD_ATTR_FTSR>

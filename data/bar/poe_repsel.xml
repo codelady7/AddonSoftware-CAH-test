@@ -17,13 +17,13 @@
 			<RESTRICT_AUTOADD id="ddm_tables.poe_repsel"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.poe_repsel">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.poe_repsel">PO </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.poe_repsel">24.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.poe_repsel">24.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.poe_repsel">6D8237B3A1B250590911DB4E422B2E2C</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_repsel">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_repsel">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_repsel">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_repsel">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_repsel">142910</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_repsel">20240305</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_repsel">20240201</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_repsel">122202</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_repsel"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.poe_repsel"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_repsel"></DD_ATTR_DKNM>
@@ -49,13 +49,13 @@
 			<DD_ATTR_RSET id="ddm_tables.poe_repsel"></DD_ATTR_RSET>
 			<DD_ATTR_IGNR id="ddm_tables.poe_repsel"></DD_ATTR_IGNR>
 			<DD_ATTR_RPOS id="ddm_tables.poe_repsel"></DD_ATTR_RPOS>
-			<DD_ATTR_XPOS id="ddm_tables.poe_repsel"></DD_ATTR_XPOS>
-			<DD_ATTR_YPOS id="ddm_tables.poe_repsel"></DD_ATTR_YPOS>
-			<DD_ATTR_FWID id="ddm_tables.poe_repsel"></DD_ATTR_FWID>
-			<DD_ATTR_FHGT id="ddm_tables.poe_repsel"></DD_ATTR_FHGT>
-			<DD_ATTR_PADW id="ddm_tables.poe_repsel"></DD_ATTR_PADW>
-			<DD_ATTR_PADH id="ddm_tables.poe_repsel"></DD_ATTR_PADH>
-			<DD_ATTR_PADG id="ddm_tables.poe_repsel"></DD_ATTR_PADG>
+			<DD_ATTR_XPOS id="ddm_tables.poe_repsel">0</DD_ATTR_XPOS>
+			<DD_ATTR_YPOS id="ddm_tables.poe_repsel">0</DD_ATTR_YPOS>
+			<DD_ATTR_FWID id="ddm_tables.poe_repsel">0</DD_ATTR_FWID>
+			<DD_ATTR_FHGT id="ddm_tables.poe_repsel">0</DD_ATTR_FHGT>
+			<DD_ATTR_PADW id="ddm_tables.poe_repsel">0</DD_ATTR_PADW>
+			<DD_ATTR_PADH id="ddm_tables.poe_repsel">0</DD_ATTR_PADH>
+			<DD_ATTR_PADG id="ddm_tables.poe_repsel">0</DD_ATTR_PADG>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -90,7 +90,7 @@
 		<RECORD id="ddm_table_tpls.poe_repsel">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.poe_repsel">POE_REPSEL      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.poe_repsel">poe-07</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.poe_repsel">firm_id:c(2),sequence_num:c(2*),begin_vend:c(6),ending_vend:c(6),beg_buyer:c(3),end_buyer:c(3),reserved_str:c(6),rep_comments:c(30),from_whse:c(2),thru_whse:c(2),reserved_str_02:c(16),begrev_date:c(8),endrev_date:c(8*)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.poe_repsel">firm_id:c(2),sequence_num:c(2*),begin_vend:c(6),ending_vend:c(6),beg_buyer:c(3),end_buyer:c(3),reserved_str:c(6),rep_comments:c(30),from_whse:c(2),thru_whse:c(2),reserved_str_02:c(16),begrev_date:c(8),endrev_date:c(8)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -753,8 +753,8 @@
 			<DD_DVAR_NAME id="ddm_table_cols.poe_repsel013">ENDREV_DATE     </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.poe_repsel013">1</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.poe_repsel013">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.poe_repsel013">Y</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.poe_repsel013">0A</DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.poe_repsel013">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.poe_repsel013"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.poe_repsel013"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.poe_repsel013"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.poe_repsel013"></DD_MASK_TYPE>
