@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.pot_pohdr_arc"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.pot_pohdr_arc">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.pot_pohdr_arc">PO </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.pot_pohdr_arc">24.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.pot_pohdr_arc">24.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.pot_pohdr_arc">905D4E0E43FB95DBA5F14FEBF11CCE58</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pot_pohdr_arc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_pohdr_arc">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pot_pohdr_arc">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_pohdr_arc">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_pohdr_arc">142910</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pot_pohdr_arc">20240305</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_pohdr_arc">20240304</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_pohdr_arc">105054</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_pohdr_arc"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.pot_pohdr_arc">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.pot_pohdr_arc">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_pohdr_arc"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.pot_pohdr_arc"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.pot_pohdr_arc">T</DD_ATTR_FTYP>
@@ -161,7 +161,7 @@
 		<RECORD id="ddm_table_tpls.pot_pohdr_arc">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pot_pohdr_arc">POT_POHDR_ARC   </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pot_pohdr_arc"></DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.pot_pohdr_arc">firm_id:c(2),po_no:c(7*),vendor_id:c(6),warehouse_id:c(2),purch_addr:c(2),hold_flag:c(1),ap_terms_code:c(2),po_frt_terms:c(15),ap_ship_via:c(15),acknowledge:c(20),fob:c(15),po_msg_code:c(3),req_no:c(7),ord_date:c(8),promise_date:c(8),not_b4_date:c(8),reqd_date:c(8),recpt_date:c(8*),dropship:c(1),customer_id:c(6),order_no:c(7),shipto_no:c(6),ds_name:c(30),ds_addr_line_1:c(30),ds_addr_line_2:c(30),ds_addr_line_3:c(30),ds_addr_line_4:c(30),ds_city:c(30),ds_state_cd:c(2),ds_zip_code:c(9),entered_by:c(16),purch_agent_cd:c(5)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.pot_pohdr_arc">firm_id:c(2),po_no:c(7*),vendor_id:c(6),warehouse_id:c(2),purch_addr:c(2),hold_flag:c(1),ap_terms_code:c(2),po_frt_terms:c(15),ap_ship_via:c(15),acknowledge:c(20),fob:c(15),po_msg_code:c(3),req_no:c(7),ord_date:c(8),promise_date:c(8),not_b4_date:c(8),reqd_date:c(8),recpt_date:c(8),dropship:c(1),customer_id:c(6),order_no:c(7),shipto_no:c(6),ds_name:c(30),ds_addr_line_1:c(30),ds_addr_line_2:c(30),ds_addr_line_3:c(30),ds_addr_line_4:c(30),ds_city:c(30),ds_state_cd:c(2),ds_zip_code:c(9),entered_by:c(16),purch_agent_cd:c(5)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1376,8 +1376,8 @@
 			<DD_DVAR_NAME id="ddm_table_cols.pot_pohdr_arc018">RECPT_DATE      </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.pot_pohdr_arc018">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.pot_pohdr_arc018">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.pot_pohdr_arc018">Y</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.pot_pohdr_arc018">0A</DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.pot_pohdr_arc018">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.pot_pohdr_arc018"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.pot_pohdr_arc018"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.pot_pohdr_arc018"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.pot_pohdr_arc018"></DD_MASK_TYPE>

@@ -17,15 +17,15 @@
 			<RESTRICT_AUTOADD id="ddm_tables.pot_invhdr"></RESTRICT_AUTOADD>
 			<ASC_COMP_ID id="ddm_tables.pot_invhdr">01007514</ASC_COMP_ID>
 			<ASC_PROD_ID id="ddm_tables.pot_invhdr">PO </ASC_PROD_ID>
-			<ASC_VERSION_ID id="ddm_tables.pot_invhdr">24.0      </ASC_VERSION_ID>
+			<ASC_VERSION_ID id="ddm_tables.pot_invhdr">24.0</ASC_VERSION_ID>
 			<ASC_LICENSE_ID id="ddm_tables.pot_invhdr">AA58D4CA10B301F965A1C25083CB6B13</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.pot_invhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_invhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.pot_invhdr">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_invhdr">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_invhdr">142910</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.pot_invhdr">20240305</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_invhdr">20240229</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_invhdr">143636</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_invhdr"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.pot_invhdr">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.pot_invhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_invhdr">PRIMARY</DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.pot_invhdr"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.pot_invhdr">T</DD_ATTR_FTYP>
@@ -135,7 +135,7 @@
 		<RECORD id="ddm_table_tpls.pot_invhdr">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.pot_invhdr">POT_INVHDR      </DD_TABLE_ALIAS>
 			<DD_FILE_NAME id="ddm_table_tpls.pot_invhdr">pot-05</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.pot_invhdr">firm_id:c(2),ap_type:c(2),vendor_id:c(6),ap_inv_no:c(20),sequence_ref:c(3*),reserved_str:c(24),hold_flag:c(1),ap_terms_code:c(2),ap_dist_code:c(2),payment_grp:c(2),reference:c(10),ap_inv_memo:c(16),reserved_str_02:c(7),inv_date:c(8),acct_date:c(8),due_date:c(8),po_disc_date:c(8*),reserved_str_03:c(1*),dealer_str:c(1*),invoice_amt:n(7*),discount_amt:n(7*),retention:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),reserved_num_03:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*),memo_1024:c(1024*=1),cc_trans_date:c(8),creditcard_id:c(7)</DD_TABLE_TPL>
+			<DD_TABLE_TPL id="ddm_table_tpls.pot_invhdr">firm_id:c(2),ap_type:c(2),vendor_id:c(6),ap_inv_no:c(20),sequence_ref:c(3*),reserved_str:c(24),hold_flag:c(1),ap_terms_code:c(2),ap_dist_code:c(2),payment_grp:c(2),reference:c(10),ap_inv_memo:c(16),reserved_str_02:c(7),inv_date:c(8),acct_date:c(8),due_date:c(8),po_disc_date:c(8),reserved_str_03:c(1*),dealer_str:c(1*),invoice_amt:n(7*),discount_amt:n(7*),retention:n(7*),reserved_num_01:n(1*),reserved_num_02:n(1*),reserved_num_03:n(1*),dealer_num_01:n(1*),dealer_num_02:n(1*),dealer_num_03:n(1*),memo_1024:c(1024*=1),cc_trans_date:c(8),creditcard_id:c(7)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1167,8 +1167,8 @@
 			<DD_DVAR_NAME id="ddm_table_cols.pot_invhdr017">PO_DISC_DATE    </DD_DVAR_NAME>
 			<DD_COL_REPEATS id="ddm_table_cols.pot_invhdr017">0</DD_COL_REPEATS>
 			<DD_COL_OCCURS id="ddm_table_cols.pot_invhdr017">0</DD_COL_OCCURS>
-			<DD_FIELD_DELIM id="ddm_table_cols.pot_invhdr017">Y</DD_FIELD_DELIM>
-			<DD_DELIM_CHAR id="ddm_table_cols.pot_invhdr017">0A</DD_DELIM_CHAR>
+			<DD_FIELD_DELIM id="ddm_table_cols.pot_invhdr017">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.pot_invhdr017"></DD_DELIM_CHAR>
 			<DD_SYSTEM_REC id="ddm_table_cols.pot_invhdr017"></DD_SYSTEM_REC>
 			<DD_SYSTEM_ID id="ddm_table_cols.pot_invhdr017"></DD_SYSTEM_ID>
 			<DD_MASK_TYPE id="ddm_table_cols.pot_invhdr017"></DD_MASK_TYPE>
