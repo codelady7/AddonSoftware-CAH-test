@@ -182,3 +182,26 @@ Modified: data/bar/poe_pohdr.xml
 Modified: data/bar/poe_rechdr.xml
 Modified: data/bar/poe_reqhdr.xml
 
+=======================================================================================================================================
+Revision: 9c6a554c6328516b8d051bd9e81d712d94eb309f
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/5/2024 11:30:22 AM
+Message:
+Bug 10805: Eliminated terminating field delimiter for date fields in
+Purchase Order tables.
+----
+Modified: data/bar/poe_pohdr.xml
+Modified: data/bar/poe_qahdr.xml
+Modified: data/bar/poe_rechdr.xml
+Modified: data/bar/poe_repsel.xml
+Modified: data/bar/poe_reqhdr.xml
+Modified: data/bar/pot_invhdr.xml
+Modified: data/bar/pot_pohdr_arc.xml
+Modified: data/bar/pot_reqhdr_arc.xml
+Modified: data/bar/pow_recvarnc.xml
+Modified: data/poe-01
+Modified: data/poe-02
+Modified: data/poe-04
+Modified: data/pot-05
+Modified: data/pot_pohdr_arc
+Modified: data/pot_reqhdr_arc
