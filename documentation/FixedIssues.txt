@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-02-28
+ Report Date:   2024-03-05
  Report Branch: AddonSoftware 24.00
  Last Release:  AddonSoftware 23.07
 =======================================================================================================================================
@@ -167,3 +167,18 @@ Bug 10801: Changed PO_HIST_REQ query:
 ----
 Modified: data/sync/adm_query_cols~[01007514PO].xml
 Modified: data/sync/adm_query~[01007514PO].xml
+
+=======================================================================================================================================
+Revision: 877b322824b1bb6e811ed7011676233a917fcba9
+Author: Christine <chawkins@basis.com>
+Date: 3/5/2024 12:00:59 PM
+Message:
+Bug 10807 - PO - PO, Requisition, and Receipt forms enable fields before going into edit mode
+ - removed enable column/enable value in these forms where column is the key (PO_NO, RECEIVER_NO, REQ_NO), and enable value is ! (not blank).
+
+(cherry picked from commit b9657485aba69b54c3b16e1291767d149a20248b)
+----
+Modified: data/bar/poe_pohdr.xml
+Modified: data/bar/poe_rechdr.xml
+Modified: data/bar/poe_reqhdr.xml
+
