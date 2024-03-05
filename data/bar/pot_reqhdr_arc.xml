@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.pot_reqhdr_arc">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.pot_reqhdr_arc">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.pot_reqhdr_arc">20240305</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.pot_reqhdr_arc">20240201</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.pot_reqhdr_arc">122204</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.pot_reqhdr_arc">20240305</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.pot_reqhdr_arc">121934</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.pot_reqhdr_arc"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.pot_reqhdr_arc">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.pot_reqhdr_arc"></DD_ATTR_DKNM>
@@ -111,6 +111,10 @@
 		<RECORD id="ddm_table_opts.pot_reqhdr_arca">
 			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arca">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_ATTR_OPTS id="ddm_table_opts.pot_reqhdr_arca">A</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_table_opts.pot_reqhdr_arcb">
+			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arcb">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_ATTR_OPTS id="ddm_table_opts.pot_reqhdr_arcb">B</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_table_opts.pot_reqhdr_arcn">
 			<DD_TABLE_ALIAS id="ddm_table_opts.pot_reqhdr_arcn">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
@@ -2360,6 +2364,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcfirm_ido">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcfirm_ido">FIRM_ID         </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcfirm_ido">O</DD_ATTR_OPTS>
+		</RECORD>
+		<RECORD id="ddm_column_opts.pot_reqhdr_arcreq_noi">
+			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcreq_noi">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_opts.pot_reqhdr_arcreq_noi">REQ_NO          </DD_DVAR_NAME>
+			<DD_ATTR_OPTS id="ddm_column_opts.pot_reqhdr_arcreq_noi">i</DD_ATTR_OPTS>
 		</RECORD>
 		<RECORD id="ddm_column_opts.pot_reqhdr_arcvendor_idc">
 			<DD_TABLE_ALIAS id="ddm_column_opts.pot_reqhdr_arcvendor_idc">POT_REQHDR_ARC  </DD_TABLE_ALIAS>
