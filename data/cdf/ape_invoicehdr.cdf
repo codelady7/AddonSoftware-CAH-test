@@ -722,8 +722,16 @@ if dont_write$="Y"
 	break
 endif
 
-
-	
+rem --- Warn if discount date has expired
+	if num(callpoint!.getColumnData("APE_INVOICEHDR.DISCOUNT_AMT"))<>0 and 
+:	(callpoint!.getColumnData("APE_INVOICEHDR.DISC_DATE")=callpoint!.getColumnData("APE_INVOICEHDR.INVOICE_DATE") or
+:	callpoint!.getColumnData("APE_INVOICEHDR.DISC_DATE")<stbl("+SYSTEM_DATE")) then
+		msg_id$="AP_ADJUST_DISC_DT"
+		gosub disp_message
+		if msg_opt$="Y"
+			callpoint!.setFocus("APE_INVOICEHDR.DISC_DATE")
+		endif
+	endif
 
 [[APE_INVOICEHDR.CREDITCARD_ID.AVAL]]
 rem --- Skip if CREDITCARD_ID wasn't changed
