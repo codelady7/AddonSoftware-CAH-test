@@ -282,9 +282,6 @@ rem --- Enable cost fields for new item if not a kit
 	if callpoint!.getDevObject("kit")="Y" then
 		rem --- Disable cost fields
 		enable=0
-
-		rem --- New warehouse for a kit, so allow save without any changes
-		callpoint!.setStatus("MODIFIED")
 	else
 		rem --- Enable cost fields
 		enable=1
