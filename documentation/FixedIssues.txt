@@ -205,3 +205,15 @@ Modified: data/poe-04
 Modified: data/pot-05
 Modified: data/pot_pohdr_arc
 Modified: data/pot_reqhdr_arc
+
+=======================================================================================================================================
+Revision: 93875d21ca4cd67ddb5e82875fddabb94d9121f2
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/5/2024 1:37:35 PM
+Message:
+Bug 10806: Checked "Allow unvalidated data in this column" Optional Def
+for the Requisition Number (REQ_NO) field on the Archived Purchase
+Requisition Inquiry form. And, checked the "Disallow new records"
+Optional Def for the form.
+----
+Modified: data/bar/pot_reqhdr_arc.xml
