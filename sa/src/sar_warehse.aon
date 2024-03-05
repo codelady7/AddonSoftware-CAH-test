@@ -37,6 +37,7 @@ rem --- Get info from selection form
     if option!.getOptionData("MTD") = "Y" then myp$=myp$+"M"
     if option!.getOptionData("YTD") = "Y" then myp$=myp$+"Y"
     if option!.getOptionData("PRIOR") = "Y" myp$=myp$+"P"
+    iv_inactive$=Option!.getOptionData("ITEM_INACTIVE")
     export_fmt$=Option!.getOptionData("EXPORT_FMT")
     rd_alias_id$=Option!.getAlias()    
     
@@ -47,15 +48,20 @@ rem --- Get info from selection form
 
 rem --- Open/Lock Files
 
-    files=2,begfile=1,endfile=files
+    files=3,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
     files$[1]="saw-08",options$[1]="CL",ids$[1]="SAW_WAREHSE"; rem Lock work file for Advisory Locking
     files$[2]="sam-08",ids$[2]="SAM_WAREHSE"
+    files$[3]="ivm-01",ids$[3]="IVM_ITEMMAST"
     call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
 :                                   ids$[all],templates$[all],channels[all],batch,status
     if status goto std_exit
     saw00_dev=channels[1]
     sam00_dev=channels[2]
+    ivmItemMast_dev=channels[3]
+
+    dim samWarehse$:templates$[2]
+    dim ivmItemMast$:templates$[3]
     
     file_name$ = "SAM_WAREHSE"
     sam_dev    = fnget_dev(file_name$)
