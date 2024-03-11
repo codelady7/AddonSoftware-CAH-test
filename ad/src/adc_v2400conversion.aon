@@ -59,6 +59,7 @@ rem --- Start progress meter
     meter_action$="WIN-LST"
     gosub disp_meter
 
+rem --- For version 24.00, Copy ADC_STATECODE ZZ records for all firms (ER 8362)
 rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenance and GL Posting Control to records for all firms (ER 10627)
     this_module$="AD"
     if installMap!.get(this_module$)="Y" then
@@ -74,13 +75,14 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             print(log_dev)meter_text$
     
             rem --- Open File(s)
-            num_files=5
+            num_files=6
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="ADM_FIRMS",        open_opts$[1]="OTA"
             open_tables$[2]="ADM_PROCMASTER",   open_opts$[2]="OTA"
             open_tables$[3]="ADM_PROCDETAIL",   open_opts$[3]="OTA"
             open_tables$[4]="ADM_PROCTABLES",   open_opts$[4]="OTA"
             open_tables$[5]="ADM_AUDITCONTROL", open_opts$[5]="OTA"
+            open_tables$[6]="ADC_STATECODE", open_opts$[6]="OTA"
     
             gosub open_tables
     
@@ -89,6 +91,7 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             admProcDetail_dev=num(open_chans$[3]); dim admProcDetail$:open_tpls$[3]
             admProcTables_dev=num(open_chans$[4]); dim admProcTables$:open_tpls$[4]
             admAuditControl_dev=num(open_chans$[5]); dim admAuditControl$:open_tpls$[5]
+            adcStateCode_dev=num(open_chans$[6]); dim adcStateCode$:open_tpls$[6]
 
             rem --- Get firm IDs used in this installation
             firms!=BBjAPI().makeVector()
@@ -96,6 +99,21 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             while 1
                 readrecord(admFirms_dev,end=*break)admFirms$
                 firms!.addItem(admFirms.company_id$)
+            wend
+
+            rem --- Copy ADC_STATECODE ZZ records for all firms
+            read(adcStateCode_dev,key="ZZ",dom=*next)
+            while 1
+                k$=key(adcStateCode_dev,end=*break)
+                if pos("ZZ"=k$)<>1 then break
+                readrecord(adcStateCode_dev)adcStateCode$
+                for i=0 to firms!.size()-1
+                    thisFirm$=firms!.getItem(i)
+                    if thisFirm$="99" then continue
+                    adcStateCode.firm_id$=thisFirm$
+                    writerecord(adcStateCode_dev)adcStateCode$
+                next i
+                read(adcStateCode_dev,key=k$)
             wend
 
             rem --- Add firm "GL Adjustments" records to ADM_PROCMASTER
@@ -159,13 +177,14 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             wend
                 
             rem --- close files opened for this conversion
-            num_files=5
+            num_files=6
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="ADM_FIRMS",        open_opts$[1]="C"
             open_tables$[2]="ADM_PROCMASTER",   open_opts$[2]="C"
             open_tables$[3]="ADM_PROCDETAIL",   open_opts$[3]="C"
             open_tables$[4]="ADM_PROCTABLES",   open_opts$[4]="C"
             open_tables$[5]="ADM_AUDITCONTROL", open_opts$[5]="C"
+            open_tables$[6]="ADC_STATECODE", open_opts$[6]="C"
             gosub open_tables
            
             write(convCtrlFileChan)task$+"=Completed"
