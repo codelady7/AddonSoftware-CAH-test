@@ -389,6 +389,7 @@ method_error:rem --- Method error trap/handler (11Oct2017)
 
             rem --- Required files listed in readme.htm
             if fileType%=1 or fileType%=3 then
+                requiredFiles!.add("adc_statecode")
                 requiredFiles!.add("adm_rptctl")
                 requiredFiles!.add("adm-09"); rem --- adm_procmaster
                 requiredFiles!.add("adm-19"); rem --- adm_procdetail
@@ -405,6 +406,7 @@ method_error:rem --- Method error trap/handler (11Oct2017)
 
             rem --- Files with firm ZZ default data.
             if fileType%=2 or fileType%=3 then
+                requiredFiles!.add("adc_statecode")
                 requiredFiles!.add("apc_distribution")
                 requiredFiles!.add("apc_paymentgroup")
                 requiredFiles!.add("apc_termscode")

@@ -5481,3 +5481,5503 @@
 	</div>
     </body>
 </html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>
+            README for AddonSoftware
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+		<STYLE type="text/css">
+			
+			BODY {
+				color: #252525; 
+				font-size: 12px; 
+				font-family:Arial,Tahoma; 
+				margin: 0px 0px 0px 10px; 
+				padding: 0px 0px 0px 0px;
+				display: block;
+				overflow: auto;
+			}			
+			a:link, a:visited{
+				color:#0000FF; text-decoration: none;
+				padding: 1px;
+			}
+			a:hover, a:active{
+				color:#0000FF; 
+				text-decoration: none; 
+				background-color:#CCCCFF;
+				color: #000080;
+			}		
+			.indent1 {
+				padding-left: 15px;
+			}			
+			.new {
+				color: #008040;
+				font-style: italic;
+				font-weight: bold;
+			}	
+			.code {
+				FONT-FAMILY: "Courier New", Courier, mono; font-size: 12px; font-weight:bolder; color:#000000;
+			}	
+			.title {
+				font-size: 18px; font-weight:bolder
+			}		
+			.style1 {
+				FONT-WEIGHT: bold; FONT-SIZE: 14px; 
+			}
+			.style2 {
+				FONT-WEIGHT:bolder; font-size:12px;
+			}		
+			.style6 {
+				FONT-SIZE: 10px; COLOR: #339900; FONT-STYLE: italic; 
+			}
+		    .style7 {
+		        font-family: "Courier New", Courier, mono
+		    }
+		    .style8 {
+		        FONT-WEIGHT:bolder; FONT-SIZE: 12px; COLOR: #FF0000; FONT-STYLE: italic;
+		    }
+        </STYLE>
+        
+    </head>
+	
+    <body>
+	
+		<a name="TOP" id="TOP"></a>
+		<center>
+			<br />
+            <span class="title">README for AddonSoftware 23.00 </span>
+		</center>
+		<br />
+
+		<span class="style1">CONTENTS</span>
+		<br />
+		<div class="indent1">
+			<span class="style1"><a href="#RESOURCES">1. RESOURCES</a></span>
+			<br />
+			<span class="style1"><a href="#INSTALLATION">2. INSTALLATION</a></span>
+			<br />
+			<span class="style1"><a href="#BEFORE">3. BEFORE USING THIS PRODUCT</a></span>
+			<br />				
+		</div>
+		
+		<br />
+		
+		<span class="style1"><a name="RESOURCES" id="RESOURCES">1. RESOURCES</a></span><span class="style6"><a href="#TOP">(top of page)</a></span>
+		<br />
+	<div class="indent1">
+			<span class="style2">RELEASE NOTES</span>
+			<br />
+			The release notes document, named <span class="code">relnotes.htm</span>, describes this release in further detail.
+			<br />
+			<br />
+			<span class="style2">DOCUMENTATION</span>
+			<br />
+		AddonSoftware&reg; documentation is always accessible while running AddonSoftware. The complete documentation is also available separately in both HTML and Flash formats,
+				along with several developer tutorials in <span class="code">.pdf</span> format, from Partner &gt; Existing Partners at <a href="https://www.addonsoftware.com/" target="_blank">www.addonsoftware.com</a>.
+		</div>
+	
+		<br />
+		
+		<span class="style1"><a name="INSTALLATION" id="INSTALLATION">2. INSTALLATION</a></span><span class="style6"><a href="#TOP">(top of page)</a></span>
+		<br />
+		<div class="indent1">
+			<span class="style2">OVERVIEW</span>
+			<br />
+			AddonSoftware documentation is always accessible while running AddonSoftware. The complete documentation is also available separately in both HTML and Flash formats,
+				along with several developer tutorials in <span class="code">.pdf</span> format, from Partner &gt; Existing Partners at <a href="https://www.addonsoftware.com/" target="_blank">www.addonsoftware.com</a>.
+			<br />
+			<br />
+			<span class="style2">GENERAL NOTES</span>
+			<ul><li>
+			Select the desired release/build and packages (e.g., BBj&reg;, Barista&reg;, and AddonSoftware) from the BASIS Web site at <a href="https://www.basis.cloud/products/bbj/download.html" target="_blank">www.basis.cloud/products/bbj/download.html</a>. Refer to the documentation for BBj and/or Barista when installing those products.
+			</li>
+			<li>The default installation path for AddonSoftware is the <span class="style7">apps/aon/</span> directory inside the home directory of your BBj/Barista installation. All of the Addon files needed to update the Barista data dictionary and create/run forms, as well as standalone program files (for reports, publics, updates and utilities), data files, etc., can be found in this directory structure.
+			</li>
+			<li>The AddonSoftware installation comes with a demo database. Some of these files are pre-populated and are required to run Addon. Others simply contain demo data for your convenience and may be cleared and/or deleted since Addon defines a file on the first attempt to open it if the file doesn't exist. The following tables should not be deleted, but may be customized with your own data: 
+	 		</li>
+			</ul>
+			<table width="40%"  border="0" cellspacing="1" cellpadding="1">
+              <tr>
+                <td width="47%"><strong>Alias Name </strong></td>
+                <td width="53%"><strong>Physical File Name </strong></td>
+              </tr>
+              <tr>
+                <td>adc_statecode</td>
+                <td>adc_statecode</td>
+              </tr>
+              <tr>
+                <td>adm_auditcontrol</td>
+                <td>glm-06</td>
+              </tr>
+              <tr>
+                <td>adm_procmaster</td>
+                <td>adm-09</td>
+              </tr>
+              <tr>
+                <td>adm_procdetail</td>
+                <td>adm-19</td>
+              </tr>
+              <tr>
+                <td>adm_proctables</td>
+                <td>adm-39</td>
+              </tr>              
+              <tr>
+                <td>adm_rptctl</td>
+                <td>adm_rptctl</td>
+              </tr>
+              <tr>
+                <td>ars_gatewaydet</td>
+                <td>ars_gatewaydet</td>
+              </tr>
+              <tr>
+                <td>ars_gatewayhdr</td>
+                <td>ars_gatewayhdr</td>
+              </tr>
+              <tr>
+                <td>glc_journalcode</td>
+                <td>glm-03</td>
+              </tr>              
+              <tr>
+                <td>ivc_whsecode</td>
+                <td>ivc_whsecode </td>
+              </tr>
+              <tr>
+                <td>opm_pointofsale</td>
+                <td>opm_pointofsale </td>
+              </tr>
+              <tr>
+                <td>ops_slstaxsvcdet</td>
+                <td>ops_slstaxsvcdet</td>
+              </tr>
+              <tr>
+                <td>ops_slstaxsvchdr</td>
+                <td>ops_slstaxsvchdr</td>
+              </tr>
+            </table>
+            <br />
+            <span class="style2">DATABASE CHANGES</span>
+            <br />
+            <br />
+            If you are upgrading from a previous version of Barista/Addon, consult the table below for information on database changes. 
+            <br />
+            As noted in the <strong>"Action"</strong> column, make structural changes by running the <strong>Enterprise Manager Update Wizard</strong> during the upgrade process.
+            <br />
+            See the <strong>AddonSoftware Installation and Upgrade Processes</strong> document for complete information.
+            <br />
+            <br />
+            <table width="90%"  border="0" cellspacing="1" cellpadding="1">
+              <tr>
+                <td width="5%"><strong>From Version </strong></td>
+                <td width="5%"><strong>To Version </strong></td>
+                <td width="10%"><strong>Table </strong></td>
+                <td width="50%"><strong>Change </strong></td>
+                <td width="30%"><strong>Action </strong></td>
+              </tr>
+              <tr>
+                <td>9.x</td>
+                <td>10.00</td>
+                <td>Multiple</td>
+                <td>Converted to use named keys</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>10.00</td>
+                <td>10.01</td>
+                <td>ars_params</td>
+                <td>Added new field OP_TOTALS_WARN</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pot-25</td>
+                <td>Corrected missing named key</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>10.01 </td>
+                <td>10.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>10.02 </td>
+                <td>10.03 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr> 
+              <tr>
+                <td>10.03 </td>
+                <td>10.04 </td>
+                <td>apm-01</td>
+                <td>Added VAT ID/Country for Vendors</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm-01</td>
+                <td>Added VAT ID/Country for Customers</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivm-01</td>
+                <td>Added VAT rate on Items</td>
+                <td>EM Update Wizard </td>
+              </tr>   
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ads_compinfo</td>
+                <td>New table for determining VAT vs Sales Tax; also contains other company info</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>adm_vatrates</td>
+                <td>New header table for VAT rates</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>adm_vatrates_dtl</td>
+                <td>New detail table for VAT ratess</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td>10.04 </td>
+                <td>11.00 </td>
+                <td>apm-01</td>
+                <td>VAT ID moved to addon_vat project</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm-01</td>
+                <td>VAT ID moved to addon_vat project</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivm-01</td>
+                <td>VAT rate moved to addon_vat project</td>
+                <td>EM Update Wizard </td>
+              </tr>   
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm-03</td>
+                <td>Added CNTRY_ID</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope-01</td>
+                <td>Added BCNTRY_ID, SCNTRY_ID</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope-11</td>
+                <td>Renamed ope_invdet key AO_CUST_ORD_LN to match ope_orddet key AO_CUST_ORD_LINE</td>
+                <td>EM Update Wizard </td>
+              </tr> 
+                <td> </td>
+                <td> </td>
+                <td>ope-31</td>
+                <td>Added CNTRY_ID</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              </tr> 
+                <td> </td>
+                <td> </td>
+                <td>ads_compinfo</td>
+                <td>Moved Taxing Method and VAT ID to addon_vat project</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              </tr> 
+                <td> </td>
+                <td> </td>
+                <td>adm_vatrates</td>
+                <td>Moved table to addon_vat mods project</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              </tr> 
+                <td> </td>
+                <td> </td>
+                <td>adm_vatrates_dtl</td>
+                <td>Moved table to addon_vat mods project</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>11.00 </td>
+                <td>11.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr> 
+              <tr>
+                <td>11.01 </td>
+                <td>11.10 </td>
+                <td>aps_params </td>
+                <td>Added default distribution code to AP parameters for use when not set up for multiple distribution codes</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opw_schedule </td>
+                <td>Added dropship to table definition</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>11.10 </td>
+                <td>11.11 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>               
+              <tr>
+                <td>11.11 </td>
+                <td>11.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>               
+                <td>11.12 </td>
+                <td>12.00 </td>
+                <td>glm_fincolumns</td>
+                <td>Added HEADING, HEAD_ALIGNMENT and HEAD_SPAN_COLS. Removed DEFAULT_POS</td>
+                <td>EM Update Wizard </td>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>aps_params</td>
+                <td>Added POST_TO_GL. Removed mask fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_params</td>
+                <td>Added POST_TO_GL. Removed mask fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bms_params</td>
+                <td>Added POST_TO_GL. Removed mask fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gls_params</td>
+                <td>Added POST_TO_GL. Removed mask fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_params</td>
+                <td>Added POST_TO_GL. Removed mask fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pos_params</td>
+                <td>Added POST_TO_GL.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_reqhdr</td>
+                <td>Added ORD_TAKEN_BY. Removed RESERVED_* and DEALER_* fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_pohdr</td>
+                <td>Added ORD_TAKEN_BY. Removed RESERVED_* and DEALER_* fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_qahdr</td>
+                <td>Added ORD_TAKEN_BY. Removed RESERVED_* and DEALER_* fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_rechdr</td>
+                <td>Added ORD_TAKEN_BY. Removed RESERVED_* and DEALER_* fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_invhdr</td>
+                <td>Added ORD_TAKEN_BY. Removed RESERVED_* and DEALER_* fields.</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_reqdet</td>
+                <td>Changed old sequence number field to sequence reference for Shop Floor interface.</td>
+                <td>EM Update Wizard </td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_podet</td>
+                <td>Changed old sequence number field to sequence reference for Shop Floor interface.</td>
+                <td>EM Update Wizard </td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_recdet</td>
+                <td>Changed old sequence number field to sequence reference for Shop Floor interface.</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_invcash</td>
+                <td>Added new Credit Card Element Type.</td>
+                <td>EM Update Wizard </td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_ordhdr</td>
+                <td>Remove duplicate and/or unused keys.</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invdet</td>
+                <td>Remove duplicate and/or unused keys.</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invdet</td>
+                <td>Remove duplicate and/or unused keys.</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>12.00 </td>
+                <td>12.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>12.01 </td>
+                <td>12.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>12.02 </td>
+                <td>12.10 </td>
+                <td>art_invdet</td>
+                <td>Added AO_CUST index per Query Analyzer recommendation</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_invhdr</td>
+                <td>Added AO_CUST index per Query Analyzer recommendation</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_cashhdr</td>
+                <td>Added AO_CUST index per Query Analyzer recommendation</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_cashdet</td>
+                <td>Added AO_CUST index per Query Analyzer recommendation</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_cashgl</td>
+                <td>Added AO_CUST index per Query Analyzer recommendation</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>12.10 </td>
+                <td>12.20 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>12.20 </td>
+                <td>13.00 </td>
+                <td>apm_vendmast</td>
+                <td>Added PO_FRT_TERMS</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_ordcomments</td>
+                <td>New table</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_ordhdr</td>
+                <td>Added FOB element, added CUST_PO key</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_invhdr</td>
+                <td>Added FOB element, added CUST_PO key</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_invhdr</td>
+                <td>Added FOB element, added CUST_PO key</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_params</td>
+                <td>Added OP_CHECK_DUPE_PO element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_dupepo</td>
+                <td>New Options Entry form for duplicate Customer PO display</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_checks</td>
+                <td>Added AP_PAYMENT_AMT element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivs_params</td>
+                <td>Added SEASONAL_REPLEN</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivc_buycode</td>
+                <td>Added SEASONS_GROUP</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>13.00 </td>
+                <td>13.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>13.01 </td>
+                <td>13.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>13.02 </td>
+                <td>13.03 </td>
+                <td>sfe_womastr</td>
+                <td>Added LOCK_REF_NUM</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womatl</td>
+                <td>Added WO_REF_NUM</td>
+                <td>EM Update Wizard </td>
+              </tr>              
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_wosubcnt</td>
+                <td>Added WO_REF_NUM</td>
+                <td>EM Update Wizard </td>
+              </tr>              
+              <tr>
+                <td>13.03 </td>
+                <td>13.04 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>13.04 </td>
+                <td>13.10 </td>
+                <td>sfe_wooprtn</td>
+                <td>Added WO_OP_REF</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td>13.10 </td>
+                <td>13.11 </td>
+                <td>sfe_womatdtl</td>
+                <td>Added WO_MAT_REF</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td>13.11 </td>
+                <td>13.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>13.12 </td>
+                <td>13.13 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>13.13 </td>
+                <td>13.14 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>13.14 </td>
+                <td>14.00 </td>
+                <td>bmm_billmast</td>
+                <td>Added LOCK_REF_NUM</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billmat</td>
+                <td>Added WO_REF_NUM</td>
+                <td>EM Update Wizard </td>
+              </tr>              
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billsub</td>
+                <td>Added WO_REF_NUM</td>
+                <td>EM Update Wizard </td>
+              </tr>              
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billoper</td>
+                <td>Added WO_OP_REF</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_invoicehdr</td>
+                <td>Added INVOICE_BAL</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ive_transdet</td>
+                <td>Increased LS_LOCATION size</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivm_lsmaster</td>
+                <td>Increased LS_LOCATION size</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_params</td>
+                <td>Changed MIN_ORD_AMT, MIN_LINE_AMT and MIN_CSH_SALE to numeric fields</td>
+                <td>EM Update Wizard </td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_chkjasperprn</td>
+                <td>Added SIGNATURE_1 and SIGNATURE_2</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td>14.00 </td>
+                <td>14.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>14.01 </td>
+                <td>14.10 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>14.10 </td>
+                <td>14.11 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>14.11 </td>
+                <td>14.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>14.12 </td>
+                <td>14.20 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>14.20 </td>
+                <td>14.21 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>14.21 </td>
+                <td>14.22 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>              
+              <tr>
+                <td>14.22</td>
+                <td>15.00</td>
+                <td>adm_rptctl</td>
+                <td>Added RECIPIENT_TP, EMAIL_ACCOUNT, DFLT_SUBJECT, DFLT_MESSAGE, LOGO_FILE</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_rptctl_rcp</td>
+                <td>New table, replacing apm_vendrpt_ctl and arm_custrpt_ctl</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ads_compinfo</td>
+                <td>Added EMAIL_ACCOUNT and LOGO_FILE</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_emailfax</td>
+                <td>Added EMAIL_BCC, increased size of EMAIL_TO and EMAIL_CC</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custdet</td>
+                <td>Added REPORT_DATE, REPORT_TYPE, and AGE_CREDITS fields, removed unneeded delimiters and RESERVED fields</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_emailfax</td>
+                <td>Added EMAIL_BCC, increased size of EMAIL_TO and EMAIL_CC</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invhdr</td>
+                <td>Added INVOICE_BAL and DISC_TAKEN</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemwhse</td>
+                <td>Added PRODUCT_TYPE</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_invcash</td>
+                <td>Made child table of opt_invcash</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_invdet</td>
+                <td>Made child table of opt_invdet</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_invhdr</td>
+                <td>Made child table of opt_invhdr</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_orddet</td>
+                <td>Made child table of opt_orddet</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_ordhdr</td>
+                <td>Made child table of opt_ordhdr</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_orditem</td>
+                <td>Deleted</td>
+                <td>None</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_ordlsdet</td>
+                <td>Made child table of opt_invlsdet</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_ordship</td>
+                <td>Made child table of opt_invship</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invcash</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invdet</td>
+                <td>Added new Real Time Processing fields</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (opt-11). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invhdr</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invlsdet</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invship</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_lstprice</td>
+                <td>Deleted</td>
+                <td>None</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_salescom </td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_customer</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_custship</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_custsic</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_custterr</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_custtype</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_distcode</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_item</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_nonstock</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_proditmcst</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_salespsn</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_territry</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_vendor</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sam_warehse</td>
+                <td>Added new Real Time Processing fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>              
+              <tr>
+                <td>15.00 </td>
+                <td>15.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>15.01 </td>
+                <td>15.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>15.02 </td>
+                <td>15.10 </td>
+                <td>ars_custdflt</td>
+                <td>Added new new-customer defaults.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td>15.10 </td>
+                <td>15.11 </td>
+                <td>opw_invcash </td>
+                <td>Added new key BY_CUST</td>
+                <td>None (file initialized when opened)</td>
+              </tr>              
+              <tr>
+                <td>15.11 </td>
+                <td>15.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>15.12 </td>
+                <td>15.13 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>15.13 </td>
+                <td>15.14 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>15.14 </td>
+                <td>16.00 </td>
+                <td>ade_execgen</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_auditcontrol</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_execsummary</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_procbatches</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_procdetail</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_procmaster</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_proctables</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_rptctl_rcp</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_rptctl</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adm_userdefaults</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ads_compinfo</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ads_general</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ads_terminal</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>adx_locks</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_invoicedet</td>
+                <td>Replaced 2-char SEQUENCE_NUM with 3-char SEQUENCE_NO.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (ape-11). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>            
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_recurringdet</td>
+                <td>Replaced 2-char SEQUENCE_NUM with 3-char SEQUENCE_NO.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (ape-13). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_selectionhdr</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_payaddr</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR, DEALER_STR, RESERVED_NUM and DEALER_NUM fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendhist</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendmast</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendrepl</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_NUM fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendrpt_ctl</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>aps_numbers</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invoicedet</td>
+                <td>Replaced 2-char SEQUENCE_NUM with 3-char SEQUENCE_NO.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (apt-11). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invoicedist</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invoicehdr</td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_chkjasperprn</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_purchasegl</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_purchasename</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_purchjrn</td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_cashgl</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_cashhdr</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added DEPOSIT_ID field.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_cnvinv</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_finchg</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_invdet</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_invhdr</td>
+                <td>Removed delimiter character after character fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custdet</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custrpt_ctl</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_cyclecod</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_mtdcash</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_next_seq</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_report</td>
+                <td>Removed FEDERAL_ID field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_cashhdr</td>
+                <td>Added DEPOSIT_ID and BATCH_NO fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_deposit</td>
+                <td>New file.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gle_financialamt</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>   
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_acctsummary</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>        
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_budgetmaster</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>   
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_finheading</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>   
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_recordtypes</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>                   
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glt_bankother</td>
+                <td>Added CASH_REC_CD field.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td></td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added alternate key AO_TRANS_NO.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glw_rectypes</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ive_physical</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_descrip1</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_descrip2</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_descrip3</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemmast</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td></td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemvend</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemwshe</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_lsmaster</td>
+                <td>Added missing delimiter character for numeric fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_abcitem</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_defaults</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_numbers</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_zerobal</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivw_abcitem</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivw_abcwhse</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivw_acttype</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivw_eoqprod</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivx_itemsyn</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_ordcomments</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>                
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opm_pointofsale</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ops_mtdsales</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ops_numbers</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>               
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invcash</td>
+                <td>Added DEPOSIT_ID field.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invship</td>
+                <td>Removed delimiter character after character fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opw_linesumm</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opw_mtdgljrn</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_reclsdet</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pos_numbers</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_rechdr</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_closedwo</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_openedwo</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timedatedet</td>
+                <td>Removed delimiter character after character fields.</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>    
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timeempl</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timeempldet</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timewo</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timewodet</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_wocommit</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_womastr</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_wooprtn</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_wotrans</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfm_emplmast</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfw_costadjt</td>
+                <td>Eliminated unnecessary field delimiter to avoid possible problems with non-padded key fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td>16.00 </td>
+                <td>16.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.01 </td>
+                <td>16.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.02 </td>
+                <td>16.10 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.10 </td>
+                <td>16.11 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.11 </td>
+                <td>16.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.12 </td>
+                <td>16.20 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.20 </td>
+                <td>16.21 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.21 </td>
+                <td>16.22 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.22 </td>
+                <td>16.23 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.23 </td>
+                <td>16.24 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>16.24 </td>
+                <td>17.00 </td>
+                <td>apc_distribution</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apc_paymentgroup</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apc_termscode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apc_typecode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_invoicehdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_recurringhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_emailfax</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_payaddr</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendaddr</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendmast</td>
+                <td>Added CODE_INACTIVE and MEMO_1024 fields, and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apm_vendrepl</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>aps_params</td>
+                <td>Added FORM_ORDER field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invoicehdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_cashcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_custtype</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_distcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_salecode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_termcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_terrcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_cashdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_cashgl</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_cashhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_invhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custmast</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_cashdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_cashgl</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_cashhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custmast</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custship</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_cyclecod</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_emailfax</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_params</td>
+                <td>Added PICK_LISTBUTTON and WO_TYPE fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bmc_opcodes</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bme_order</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bmm_billmast</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bmm_billmat</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bmm_billoper</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bmm_billsub</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glc_cyclecod</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glc_journalcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gle_jrnldet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_acct</td>
+                <td>Added CODE_INACTIVE and MEMO_1024 fields, and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_acctbudget</td>
+                <td>New table for approved budget amounts and units split out of glm_acctsummary (glm-02). RECORD_ID replaced with YEAR.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_acctsummary</td>
+                <td> Split into three tables: glm_acctbudget, glm_acctsummary and glm_budgetplans.  Re-purposed glm_acctsummary (glm-02) for only actual amounts and units. Replaced RECORD_ID with YEAR. Changed PRIMARY key and added new alternate key BY_YEAR_ACCT.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (glm-02). EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_budgetmaster</td>
+                <td>Expanded BUDGET_CODE element type from 1-char to 5-char. Expanded REVISION_SRC element type from 3-char to 6-char.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_budgetplans</td>
+                <td>New table for planned budget amounts and units split out of glm_acctsummary (glm-02). RECORD_ID replaced with BUDGET_CODE.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_recordtypes</td>
+                <td>Deleted table/file (glm-18). Replaced by DisplayColumns class (glo_DisplayColumns.aon).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gls_calendar</td>
+                <td>No longer a child of gls_params, and now holds only fiscal calendar info.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gls_columns</td>
+                <td>Expanded BUD_MN_COLS element type from 1-char to 5-char.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gls_params</td>
+                <td>Fiscal calendar fields moved to gls_calendar, which no longer a child table. Expanded BUD_MN_COLS element type from 1-char to 5-char.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glt_bankchecks</td>
+                <td>Added fields CLOSED and CLOSED_EFF_DT.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glt_bankother</td>
+                <td>Added fields CLOSED and CLOSED_EFF_DT.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glt_transdetail</td>
+                <td>Added new keys BY_TRANS_DATE, BY_YEAR_PERIOD and BY_AUDIT_NO.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glw_acctsummary</td>
+                <td>New table to hold account summary information for re-aligned fiscal years.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_activtypes</td>
+                <td>Deleted unused table.</td>
+                <td>None</td>
+              </tr>              
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_buycode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_clascode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_itemavail</td>
+                <td>Added CNTRY_ID field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_physcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_priccode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_prodcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_trancode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_typecode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_whsecode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ive_transdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ive_transhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemmast</td>
+                <td>Added CODE_INACTIVE, CODE_DESC, MEMO_1024 and SELL_PURCH_UM fields, and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemwhse</td>
+                <td>Added CNTRY_ID field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_lsmaster</td>
+                <td>Added CNTRY_ID and MEMO_1024 fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_params</td>
+                <td>Added SELL_PURCH_UM field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivt_itemtran</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivt_lstrans</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_disccode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_linecode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_msg_hdr</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_pricecds</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_taxcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opm_frtterms</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invdet</td>
+                <td>Added MEMO_1024, UNIT_OF_SALE and CONV_FACTOR fields, and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invhdr</td>
+                <td>Added MEMO_1024, PICK_INTEGER, and GENERIC_CHK (x2) fields and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poc_linecode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poc_msgcode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poc_rejctcod</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_invdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_invhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_ordhdr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_podet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_qadet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_recdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_reqdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_recdet</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfc_oprtncode</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfc_wotypecd</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_womastr</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_subcnt</td>
+                <td>Added MEMO_1024 field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfm_emplmast</td>
+                <td>Added CODE_INACTIVE field and removed unnecessary field delimiters.</td>
+                <td>EM Update Wizard</td>
+              </tr>              
+              <tr>
+                <td>17.00 </td>
+                <td>17.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>17.01 </td>
+                <td>17.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>17.02 </td>
+                <td>17.10 </td>
+                <td>apm_vendcmts</td>
+                <td>Vendor comments moved from apm_vendcmts to apm_vendmast. Abandoned apm_vendcmts, and will be deleted later.</td>
+                <td>Auto-Launch Data Conversion or AP v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custcmts</td>
+                <td>Customer comments moved from arm_custcmts to arm_custmast. Abandoned arm_custcmts, and will be deleted later.</td>
+                <td>Auto-Launch Data Conversion or AR v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invdet</td>
+                <td>Added alternate key AO_INVOICE.</td>
+                <td>Auto-Launch Data Conversion or AR v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invhdr</td>
+                <td>Added alternate key AO_INVOICE.</td>
+                <td>Auto-Launch Data Conversion or AR v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bmm_billcmts</td>
+                <td>Bill Of Materials comments moved from bmm_billcmts to bmm_billmast. Abandoned bmm_billcmts, and will be deleted later.</td>
+                <td>Auto-Launch Data Conversion or BM v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_acctcomments</td>
+                <td>GL account comments moved from glm_acctcomments to glm_acct. Abandoned glm_acctcomments, and will be deleted later.</td>
+                <td>Auto-Launch Data Conversion or GL v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemcmts</td>
+                <td>Inventory item comments moved from ivm_itemcmts to ivm_itemmast. Abandoned ivm_itemcmts, and will be deleted later.</td>
+                <td>Auto-Launch Data Conversion or IV v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_message</td>
+                <td>New table replacing opc_msg_hdr (opm-04) and opc_msg_det (opm-14).</td>
+                <td>Auto-Launch Data Conversion or OP v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invhdr</td>
+                <td>Renamed SEQUENCE_NO field to SEQUENCE_REF.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (pot-05). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poc_message</td>
+                <td>New table replacing poc_msgcode (pom-04) and poc_msgline (pom-14).</td>
+                <td>Auto-Launch Data Conversion or PO v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invsel</td>
+                <td>Renamed SEQUENCE_NO field to SEQUENCE_REF.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (pot-15). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invdet</td>
+                <td>Renamed SEQUENCE_NO field to SEQUENCE_REF.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (pot-25). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_wocomnt</td>
+                <td>Work Order comments moved from sfe_wocomnt to sfe_womastr. Abandoned sfe_wocomnt, and will be deleted later.</td>
+                <td>Auto-Launch Data Conversion or SF v17 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td>17.10 </td>
+                <td>17.11 </td>
+                <td>pot_invhdr</td>
+                <td>Added alternate key AO_VEND_INV to improve query performance.</td>
+                <td>None (table rebuild optional)<td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sft_opnoprtr</td>
+                <td>Added alternate key AO_WO_SEQREF to improve query performance.</td>
+                <td>None (table rebuild optional)</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sft_clsoprtr</td>
+                <td>Added alternate key AO_WO_SEQREF to improve query performance.</td>
+                <td>None (table rebuild optional)</td>
+              </tr>
+              <tr>
+                <td>17.11 </td>
+                <td>17.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>17.12 </td>
+                <td>17.13 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>17.13 </td>
+                <td>18.00 </td>
+                <td>arc_scaccode</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_shipviacode</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>are_invdet</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custmast</td>
+                <td>Added SHIPPING_ID and SHIPPING_EMAIL fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custship</td>
+                <td>Added AR_SHIP_VIA, SHIPPING_ID and SHIPPING_EMAIL fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invdet</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>bme_order</td>
+                <td>Deleted MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gle_dailydetail</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glt_transdetail</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_descrip1</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_descrip2</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_descrip3</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_params</td>
+                <td>Removed unused obsolete MASTER_FLAG fields.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_creddate</td>
+                <td>Eliminated delimiter to ORDER_NO field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_creditaction</td>
+                <td>Deleted MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_invdet</td>
+                <td>Added delimiter to CONV_FACTOR field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ope_orddet</td>
+                <td>Added delimiter to CONV_FACTOR field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invdet</td>
+                <td>Added delimiter to CONV_FACTOR field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invhdr</td>
+                <td>Added SHIP_SEQ_NO, SHIPPING_ID and SHIPPING_EMAIL fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_shiptrack</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_ordhdr</td>
+                <td>Deleted MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_qadet</td>
+                <td>Deleted MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invdet</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_womatl</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_wooprtn</td>
+                <td>Added MEMO_1024 field.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfw_pickmatl</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>18.00 </td>
+                <td>18.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>18.01 </td>
+                <td>18.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>18.02 </td>
+                <td>18.03 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arc_shipviacode</td>
+                <td>Initialize arc_shipviacode with existing AR_SHIP_VIA codes.</td>
+                <td>Auto-Launch Data Conversion or AR v18 Minor Rev Upgrade utility</td>
+              </tr>
+              <tr>
+                <td>18.03 </td>
+                <td>18.10 </td>
+                <td>arc_carriercode</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>18.10 </td>
+                <td>18.11 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+              <tr>
+                <td>18.11 </td>
+                <td>18.20 </td>
+                <td>aps_numbers</td>
+                <td>Deleted obsolete table.</td>
+                <td>None </td>
+              </tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_gatewayhdr</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_gatewaydet</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_cc_custsvc</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_next_seq</td>
+                <td>Deleted obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_resphdr</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_respdet</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pos_numbers</td>
+                <td>Deleted obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>18.20 </td>
+                <td>19.00 </td>
+                <td>adc_bankacctcode</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_payaddr</td>
+                <td>Added CNTRY_ID.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendaddr</td>
+                <td>Added CNTRY_ID.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendcmts</td>
+                <td>Deleted obsolete table/file (apm-09).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendmast</td>
+                <td>Added PAYMENT_TYPE, ABA_NO, BNK_ACCT_NO and BNK_ACCT_TYPE.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Renamed second RESERVED_STR to RESERVED_STR_02.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>aps_ach</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>aps_report</td>
+                <td>Added FAX_NO.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_checkhistory</td>
+                <td>Added alternate key CHECK_VENDOR_INV.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_disbursemnts</td>
+                <td>Added alternate key ALT+VEND+CHK+INV.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_custcmts</td>
+                <td>Deleted obsolete table/file (arm-05).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_custmast</td>
+                <td>Added PAY_ONLINE and PAY_AUTH_EMAIL fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_report</td>
+                <td>Added FAX_NO.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_respdet</td>
+                <td>Re-keyed to use new CREDIT_TRANS_NO Barista sequence number.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (art_respdet). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+                <td> </td>
+                <td> </td>
+                <td>art_resphdr</td>
+                <td>Re-keyed to use new CREDIT_TRANS_NO Barista sequence number.</td>
+                <td><span class="style8">EM Update Wizard may log failure for this file (art_resphdr). Auto-Launch Data Conversion will correctly restructure the file.</span></td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billcmts</td>
+                <td>Deleted obsolete table/file (bmm-09).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>glm_acctcomments</td>
+                <td>Deleted obsolete table/file.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>glm_bankmaster</td>
+                <td>Added BNK_ACCT_NO</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Moved DESCRIPTION to ACCT_DESC in adc_bankacctcode.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Moved BNK_ACCT_NO to adc_bankacctcode.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Moved NAME to BANK_NAME in adc_bankacctcode.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Moved ADDRESS_LINE_1, ADDRESS_LINE_2 and ADDRESS_LINE_3 to adc_bankacctcode.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Renamed second RESERVED_STR to RESERVED_STR_02.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivm_itemcmts</td>
+                <td>Deleted obsolete table/file (ivm-09).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opc_msg_det</td>
+                <td>Deleted obsolete table/file (opm-14).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opc_msg_hdr</td>
+                <td>Deleted obsolete table/file (opm-04).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_ordcomments</td>
+                <td>Deleted obsolete table/file.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_invcash</td>
+                <td>New fields CARD_LAST_4, CREDIT_TRANS_NO, MANUAL_SWIPE.</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion.</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poc_msgcode</td>
+                <td>Deleted obsolete table/file (pom-04).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poc_msgline</td>
+                <td>Deleted obsolete table/file (pom-14).</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_customer</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_customer_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custship</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custship_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custsic</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custsic_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custterr</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custterr_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custtype</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_custtype_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_distcode</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_distcode_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_item</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_item_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_nonstock</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_nonstock_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_proditmcst</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_salespsn</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_salespsn_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_territry</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_territry_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_vendor</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_vendor_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_warehse</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sam_warehse_tot</td>
+                <td>Deleted ORD_QTY_SHIPPED_nn, ORD_TOTAL_COST_nn and ORD_TOTAL_SALES_nn fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_wocomnt</td>
+                <td>Deleted obsolete table/file.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.00 </td>
+                <td>19.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.01 </td>
+                <td>19.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.02 </td>
+                <td>19.10 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.10 </td>
+                <td>19.11 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.11 </td>
+                <td>19.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.12 </td>
+                <td>19.20 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.20 </td>
+                <td>19.21 </td>
+                <td>apr_tempvendor</td>
+                <td>Deleted obsolete table/file.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.21 </td>
+                <td>19.22 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>19.22 </td>
+                <td>20.00 </td>
+                <td>apm_vendhist </td>
+                <td>Added IRS1099_TYPE_BOX</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendmast </td>
+                <td>Added alternate key for VEND_INACTIVE</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arc_cc_register </td>
+                <td>Added new table</td>
+                <td>None</td>
+              </tr>
+              <tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arc_cc_users </td>
+                <td>Added new table</td>
+                <td>None</td>
+              </tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_custmast </td>
+                <td>Added alternate key for CUST_INACTIVE</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_cc_custpmt </td>
+                <td>Added new table</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_invdet </td>
+                <td>Added CUSTOMER_ID to AO_INVOICE alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>art_invhdr </td>
+                <td>Added CUSTOMER_ID to AO_INVOICE alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>glm_acct </td>
+                <td>Added alternate key for ACCT_INACTIVE</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glw_rectypes </td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_itemavail </td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivm_itemmast </td>
+                <td>Added alternate key for ITEM_INACTIVE</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td>20.00 </td>
+                <td>20.01 </td>
+                <td>apw_chkjasperprn</td>
+                <td>Increased size of CHK_EXACTLY.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td>20.01 </td>
+                <td>20.10 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.10 </td>
+                <td>20.11 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.11 </td>
+                <td>20.12 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.12 </td>
+                <td>20.20 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.20 </td>
+                <td>20.21 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.21 </td>
+                <td>20.30 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.30 </td>
+                <td>20.31 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.31 </td>
+                <td>20.32 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>20.32 </td>
+                <td>21.00 </td>
+                <td>adc_bankacctcode</td>
+                <td>Expanded BNK_ACCT_NO FROM 15 to 16 characters and encrypted</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td>Added CHECK_NO element as NEXT_CHECK_NO field</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>adm_report</td>
+                <td>Deleted unused table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>adm_rptctl</td>
+                <td>Expanded DFLT_SUBJECT from 60 to 128</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded DFLT_MESSAGE from 512 to 1024</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>adm_rptctl_rcp</td>
+                <td>Expanded FROM_COMPANY, FROM_NAME, RECIPIENT_NAME from 30 to 60</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded FAX_SUBJECT, EMAIL_SUBJECT from 60 to 128</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded FAX_MESSAGE, EMAIL_MESSAGE from 512 to 1024</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded EMAIL_TO, EMAIL_CC, EMAIL_BCC from 80 to 1024</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>adx_git_auth</td>
+                <td>Added new table.</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_approvers</td>
+                <td>New field REVIEW_APPROVE</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendaddr</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendmast</td>
+                <td>Expanded BNK_ACCT_NO FROM 15 to 16 characters and encrypted</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>aps_params</td>
+                <td>New field PRNT_ABA_NO</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>New field PRNT_BNK_ACCT_NO</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>New field SCAN_DOCS_TO</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>New field WARN_IN_REG</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>New field OK_TO_UPDATE</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>New field PRNT_SIGNATURE</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>New field SIGNATURE_FILE</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>aps_report</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr>               
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arc_shipviacode</td>
+                <td>Added FREIGHT_TAXCD element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>arm_custdet</td>
+                <td>Expanded PRICING_CODE from 4 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_custexmpt</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_custmast</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_custship</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>arm_entityuse</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_custdflt</td>
+                <td>Expanded PRICING_CODE from 4 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_params</td>
+                <td>Added SLS_TAX_INTRFACE element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added TAX_SVC_CD_SRC element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added GENERIC_CHK element as ON_DEMAND_AGING field</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added DFLT_AGE_BY element</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added 4 AGE_BUCKET_DAYS elements as AGE_PER_DAYS_1, 2, 3, and 4 fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added GENERIC_CHK element as AUTO_ORD_CONF field</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added GENERIC_CHK element as WARN_NOT_AVAIL field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ars_report</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bme_product</td>
+                <td>Expanded UNIT_OF_SALE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billmast</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billmat</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>bmm_billsub</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glm_acctbreaks</td>
+                <td>Expanded ACCT_BK_DESC from 20 to 50</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>gls_calendar</td>
+                <td>Added YYYYMMDD fields for START_DATE and PERIOD_END_01 thru 13 dates</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_clascode</td>
+                <td>Added TAX_SVC_CD element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Expanded ITEM_CLASS from 3 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_priccode</td>
+                <td>Expanded ITEM_CLASS from 3 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Expanded PRICING_CODE from 4 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added PRICING_BASIS field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added BREAK_AMT fields as BREAK_AMT_01 thru 10</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added new key AO_PRICING_CODE</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_prodcode</td>
+                <td>Added TAX_SVC_CD element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_typecode</td>
+                <td>Added TAX_SVC_CD element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivc_umcodes</td>
+                <td>Added new table</td>
+                <td>Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivc_whsecode</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ive_transfer</td>
+                <td>Expanded UNIT_OF_SALE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemmast</td>
+                <td>Added TAX_SVC_CD element</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Expanded ITEM_CLASS from 3 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded UNIT_OF_SALE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded PURCHASE_UM from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_defaults</td>
+                <td>Expanded ITEM_CLASS from 3 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded PURCHASE_UM from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded UNIT_OF_SALE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivt_itemtran</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivt_lstrans</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivw_turnxref</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>mpw_planwo</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>mpw_reqvend</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opc_pricecds</td>
+                <td>Expanded PRICING_CODE from 4 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opc_linecode</td>
+                <td>Added TAX_SVC_CD_SRC element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opc_taxcode</td>
+                <td>Added USE_TAX_SERVICE element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_invdet</td>
+                <td>Expanded UM_SOLD from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_orddet</td>
+                <td>Expanded UM_SOLD from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ope_prntlist</td>
+                <td>Added NO_SLS_TAX_CALC element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opm_custjobs</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ops_slstaxsvcdet</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ops_slstaxsvchdr</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_invdet</td>
+                <td>Expanded UM_SOLD from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invhdr</td>
+                <td>Expanded PRICING_CODE from 4 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+                <td>Added NO_SLS_TAX_CALC element</td>
+                <td>EM Update Wizard </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added GENERIC_CHK as ORD_CONF_PRINTED</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_invship</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_slstaxtrans</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_podet</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_pohdr</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_rechdr</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_reqhdr</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr>  
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_qadet</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_recdet</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_reqdet</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pot_recdet</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pot_rechdr</td>
+                <td>Expanded ADDR_LINE_n and CITY to 30</td>
+                <td>EM Update Wizard</td>
+              </tr>         
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_woclose</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_woconvrn</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womastr</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womatdtl</td>
+                <td>Added field SEQ_REF as WOMATL_SEQ_REF</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womathdr</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womatisd</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womatish</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_womatl</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_wosubcnt</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sfe_wo_cost_adj</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sft_clsmattr</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr> 
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>sft_opnmattr</td>
+                <td>Expanded UNIT_MEASURE from 2 to 6</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td>21.00 </td>
+                <td>21.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.01 </td>
+                <td>21.02 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.02 </td>
+                <td>21.03 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.03 </td>
+                <td>21.10 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.10 </td>
+                <td>21.11</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.11 </td>
+                <td>21.12</td>
+                <td>pow_cal_colors</td>
+                <td>New table to store colors for PO Calendar</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.12 </td>
+                <td>21.13</td>
+                <td>sfw_cal_colors</td>
+                <td>New table to store colors for Shop Floor Calendar</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.13 </td>
+                <td>21.14</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>21.14 </td>
+                <td>22.00 </td>
+                <td>ape_mancheckdet</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_mancheckdist</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_mancheckhdr</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added CHECK_PRINTED field</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added RETAIN_APPROVALS field</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added alternate key AO_BNKACCT_CHEC.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR and RESERVED_NUM fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_openchecks</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_checkhistory</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added alternate key AO_BNKACCT_CHEC.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_invoicedist</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_checkinvoice</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_checkpurge</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_chkjasperprn</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_disbursemnts</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_invoicepurge</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>glm_finmaster</td>
+                <td>Removed HEADING_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>glt_bankchecks</td>
+                <td>Added BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed RESERVED_STR and RESERVED_NUM fields.</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>gls_calendar</td>
+                <td>Removed obsolete CAL_START_DATE and PER_ENDING_nn fields</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>gls_suspense</td>
+                <td>Removed RESERVED_STR field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added JOURNAL_ID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_invship</td>
+                <td>New field ADDRESS_TYPE</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td>22.00 </td>
+                <td>22.01 </td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>22.01 </td>
+                <td>22.02</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>22.02 </td>
+                <td>22.03</td>
+                <td>apt_vendpayments</td>
+                <td>New table to store vendor payment (check) history</td>
+                <td>None </td>
+              </tr>                  
+              <tr>
+                <td>22.03 </td>
+                <td>22.04</td>
+                <td>opt_fillmnthdr</td>
+                <td>New table to store Order Fulfillment Header</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_fillmntdet</td>
+                <td>New table to store Order Fulfillment Detail</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_fillmntlsdet</td>
+                <td>New table to store Order Fulfillment Lot/Serial Detail</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_carthdr</td>
+                <td>New table to store Packing Carton Header</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_cartdet</td>
+                <td>New table to store Packing Carton Detail</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_cartlsdet</td>
+                <td>New table to store Packing Carton Lot/Serial Detail</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>22.04 </td>
+                <td>22.10</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>22.10 </td>
+                <td>22.11</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>22.11 </td>
+                <td>22.12</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>22.14 </td>
+                <td>23.00 </td>
+                <td>adc_bankacctcode</td>
+                <td>Added MICR_PRINT field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added MICR_ACCT field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Expanded BNK_ACCT_NO from 15 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apc_typecode</td>
+                <td>Added GL_ACCOUNT field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added IRS1099_TYPE_BOX field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_checks</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_invoicedet</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_invoicehdr</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_mancheckdet</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added AP_INV_MEMO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_mancheckdist</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_recurringdet</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ape_recurringhdr</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apm_vendmast</td>
+                <td>Expanded BNK_ACCT_NO from 15 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>aps_params</td>
+                <td>Removed unused PRNT_ABA_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed unused PRNT_BNK_ACCT_NO field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>aps_payauth</td>
+                <td>Removed SCAN_DOCS_TO field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed WARN_IN_REGISTER field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed OK_TO_UPDATE field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_checkhistory</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td></td>
+                <td>Added AO_VEND_INV_CHK alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_invapproval</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invdet_arc</td>
+                <td>New table for displaying/printing archived AP invoices</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invhdr_arc</td>
+                <td>New table for displaying/printing archived AP invoices</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_invimage</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_invoicedet</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apt_invoicehdr</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_checkinvoice</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_chkjasperprn</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_disbursements</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apw_invoicename</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_purchasegl</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_purchasename</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apw_purchjrn</td>
+                <td>Deleted unused obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>apx_micrcode</td>
+                <td>New table for displaying MICR characters</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_cashdet</td>
+                <td>Added new AO_CUST_INV alternate key</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invdet_arc</td>
+                <td>New table for displaying/printing archived AR invoices</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>art_invhdr_arc</td>
+                <td>New table for displaying/printing archived AR invoices</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glt_transdetail</td>
+                <td>Added new AO_JOURNAL_REFS alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added new AO_JRN_REF0103 alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>glw_transdetail</td>
+                <td>New work table</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ive_transferdet</td>
+                <td>New table to replace ive_transfer</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ive_transferhdr</td>
+                <td>New table to replace ive_transfer</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ivs_numbers</td>
+                <td>Deleted table. Replaced by ITEM_ID in ADS_SEQUENCES table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ops_numbers</td>
+                <td>Deleted obsolete table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>ops_params</td>
+                <td>Added HIDE_COST field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>opt_slstaxtrans</td>
+                <td>Expanded SLSTAX_DATE from 20 to 28 characters</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_invdet</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_invgl</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_invhdr</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>poe_invsel</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pot_invdet</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pot_invhdr</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td> </td>
+                <td>pot_invsel</td>
+                <td>Expanded AP_INV_NO from 10 to 20</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_podet_arc</td>
+                <td>New table for displaying/printing archived POs</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_pohdr_arc</td>
+                <td>New table for displaying/printing archived POs</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_reclsdet</td>
+                <td>New table for historical PO lot/serial receipts</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_reqdet_arc</td>
+                <td>New table for displaying/printing archived Purchase Requisitions</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_reqhdr_arc</td>
+                <td>New table for displaying/printing archived Purchase Requisitions</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timedatedet</td>
+                <td>Added new AO_WO_DATE_EMPL alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_timeempldet</td>
+                <td>Added new AO_WO_EMPL_DATE alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_womastr</td>
+                <td>Added new AO_NON_STOCK alternate key</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td>23.00 </td>
+                <td>23.01</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.01 </td>
+                <td>23.02</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.02 </td>
+                <td>23.03</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.03 </td>
+                <td>23.04</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.04 </td>
+                <td>23.05</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.05 </td>
+                <td>23.06</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.06 </td>
+                <td>23.07</td>
+                <td> </td>
+                <td>No structural changes</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td>23.07 </td>
+                <td>24.00 </td>
+                <td>adc_statecode</td>
+                <td>Added LOTSER_FLAG field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ape_invoicehdr</td>
+                <td>Added CREDITCARD_ID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added CC_TRANS_DATE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>apt_invhdr</td>
+                <td>Added CREDITCARD_ID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added CC_TRANS_DATE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+               <tr>
+                <td></td>
+                <td></td>
+                <td>apw_positivepay</td>
+                <td>Added new table.</td>
+                <td>None </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ars_params</td>
+                <td>Added LAUNCH_KIT_GRID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+             <tr>
+                <td></td>
+                <td></td>
+                <td>ivc_prodcode</td>
+                <td>Added ABC_CODE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added AR_DIST_CODE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added BUYER_CODE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added EOQ_CODE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added INVENTORIED field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added ITEM_CLASS field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added ITEM_TYPE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added LOTSER_FLAG field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added ORD_PNT_CODE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added PURCHASE_UM field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added SAF_STK_CODE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added TAXABLE_FLAG field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added UNIT_OF_SALE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ive_physical</td>
+                <td>Added LOTSER_FLAG field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed LOTSER_ITEM field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivm_itemmast</td>
+                <td>Added KIT field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added LOTSER_FLAG field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed LOTSER_ITEM field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_defaults</td>
+                <td>Added LOTSER_FLAG field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed LOTSER_ITEM field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ivs_params</td>
+                <td>Removed LOTSER_ITEM field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>ops_params</td>
+                <td>Added LAUNCH_KIT_GRID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>opt_invkitdet</td>
+                <td>New table for displaying/editing the components of a kit</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>poe_invhdr</td>
+                <td>Added CREDITCARD_ID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added CC_TRANS_DATE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>pot_invhdr</td>
+                <td>Added CREDITCARD_ID field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Added CC_TRANS_DATE field</td>
+                <td>EM Update Wizard</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>sfe_womastr</td>
+                <td>Added LOTSER_FLAG field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Removed LOTSER_ITEM field</td>
+                <td>EM Update Wizard and Auto-Launch Data Conversion</td>
+              </tr>
+       </table>
+		</div>
+			<br />
+			<br />
+		
+		<span class="style1"><a name="BEFORE" id="BEFORE">3. BEFORE USING THIS PRODUCT</a></span><span class="style6"><a href="#TOP">(top of page)</a></span>
+		<div class="indent1">
+
+			BBj 23.00 or higher and Barista Application Framework 23.00 or higher are both required to run AddonSoftware 23.00.	</div>
+
+		</div>
+		
+		<br>
+        <hr />
+
+		Copyright BASIS International Ltd. All rights reserved. 
+		<br />
+		<br />
+		AddonSoftware&reg;, BBj&reg; and Barista&reg; are registered trademarks 
+		of BASIS International Ltd. All other product names and brand names are service 
+		marks and/or trademarks or registered trademarks of their respective companies.
+
+	</div>
+    </body>
+</html>
