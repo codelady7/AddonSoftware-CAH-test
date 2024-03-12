@@ -1,6 +1,7 @@
 [[BMM_BILLMAST.ADIS]]
 rem --- set DevObjects
 	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM"))
+	callpoint!.setDevObject("BOMchanged","N")
 
 rem --- Kitted items must be phantom bills
 	item_id$=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
@@ -155,6 +156,11 @@ rem --- set devobject
 	callpoint!.setColumnData("<<DISPLAY>>.WHERE_LAST_USED","",1)
 	callpoint!.setColumnData("BMM_BILLMAST.LOCK_REF_NUM","N")
 	callpoint!.setDevObject("lock_ref_num",callpoint!.getColumnData("BMM_BILLMAST.LOCK_REF_NUM"))
+	callpoint!.setDevObject("BOMchanged","N")
+
+[[BMM_BILLMAST.AWRI]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
 
 [[BMM_BILLMAST.BDTW]]
 rem --- Kits cannot include operations or subcontracts
@@ -216,6 +222,33 @@ rem --- set defaults for new record
 		callpoint!.setColumnData("BMM_BILLMAST.STD_LOT_SIZE","1",1)
 		callpoint!.setColumnData("BMM_BILLMAST.EST_YIELD","100",1)
 		callpoint!.setStatus("MODIFIED")
+	endif
+
+[[BMM_BILLMAST.BREX]]
+rem --- Something affecting the BOM's cost may have changed
+	if callpoint!.getDevObject("BOMchanged")="Y" then
+		rem --- Launch BOM Inventory Costing Update for this BOM?
+		msg_id$="BM_UPDATE_COST"
+		gosub disp_message
+		if msg_opt$="Y" then 
+			dim dflt_data$[3,1]
+			dflt_data$[1,0]="BILL_NO_1"
+			dflt_data$[1,1]=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
+			dflt_data$[2,0]="BILL_NO_2"
+			dflt_data$[2,1]=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
+			dflt_data$[3,0]="WAREHOUSE_ID"
+			dflt_data$[3,1]=callpoint!.getDevObject("dflt_whse")
+			call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:				"BMU_IVCOSTING",
+:				stbl("+USER_ID"),
+:				"MNT",
+:				"",
+:				table_chans$[all],
+:				"",
+:				dflt_data$[all]
+		endif
+
+		callpoint!.setDevObject("BOMchanged","N")
 	endif
 
 [[BMM_BILLMAST.BSHO]]

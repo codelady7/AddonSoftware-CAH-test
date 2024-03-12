@@ -1,3 +1,7 @@
+[[BMM_BILLOPER.ADEL]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
+
 [[BMM_BILLOPER.AGDR]]
 rem --- Track wo_op_ref in Map to insure they are unique
 	refnumMap!=callpoint!.getDevObject("refnumMap")
@@ -29,6 +33,10 @@ rem --- Launch Comments dialog
 rem --- Set Op Code DevObject
 
 	callpoint!.setDevObject("op_code","")
+
+[[BMM_BILLOPER.AWRI]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
 
 [[BMM_BILLOPER.BDEL]]
 rem --- Before deleting, check to make sure the op isn't used in a material or subcontract line
