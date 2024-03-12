@@ -90,11 +90,12 @@ rem --- Accumulate invoice totals for this receipt
         invoiced_amt=invoiced_amt+(pot_invdet.unit_cost*pot_invdet.qty_received)
         invoiced=1
         pot_invhdr_key$=pot_invdet.firm_id$+pot_invdet.ap_type$+pot_invdet.vendor_id$+pot_invdet.ap_inv_no$+pot_invdet.sequence_ref$
-        if pos(pot_invhdr_key$=header_keys$,23)=0 then header_keys$=header_keys$+pot_invhdr_key$
+        keyLen=len(pot_invhdr_key$)
+        if pos(pot_invhdr_key$=header_keys$,keyLen)=0 then header_keys$=header_keys$+pot_invhdr_key$
     wend
     if len(header_keys$) then
-        for i=1 to len(header_keys$) step 23
-            findrecord(pot_invhdr_dev,key=header_keys$(i,23),dom=*continue)pot_invhdr$
+        for i=1 to len(header_keys$) step keyLen
+            findrecord(pot_invhdr_dev,key=header_keys$(i,keyLen),dom=*continue)pot_invhdr$
             invTotal=invTotal+pot_invhdr.invoice_amt
         next i
     endif
