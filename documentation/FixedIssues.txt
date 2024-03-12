@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-03-11
+ Report Date:   2024-03-12
  Report Branch: AddonSoftware 24.00
  Last Release:  AddonSoftware 23.07
 =======================================================================================================================================
@@ -227,3 +227,14 @@ Bug 10812: Added a delimiter to the PAYMENT_AMT field in the
 APW_POSITIVEPAY table.
 ----
 Modified: data/bar/apw_positivepay.xml
+
+=======================================================================================================================================
+Revision: d57d252ad381cfa4406380632faa50fa00ee2b66
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/12/2024 12:01:06 PM
+Message:
+Bug 10810: Updated use of POT_INVHDR's PRIMARY key length to included
+the new size of the AP_INV_NO Element Type that was increased from 10 to
+20 for v23.00 (ER 10119).
+----
+Modified: po/src/pof_receipt_hist.aon
