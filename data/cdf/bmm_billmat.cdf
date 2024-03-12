@@ -1,3 +1,7 @@
+[[BMM_BILLMAT.ADEL]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
+
 [[BMM_BILLMAT.AGDR]]
 rem --- Set ROW_NUM (material_seq may not be numbered sequentially from one when DataPorted)
 	dim bmm_billmat$:fnget_tpl$("BMM_BILLMAT")
@@ -88,6 +92,10 @@ rem --- Maintain count of inserted rows (don't count if last row)
 		insertedRows=insertedRows+1
 		callpoint!.setDevObject("insertedRows",insertedRows)
 	endif
+
+[[BMM_BILLMAT.AWRI]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
 
 [[BMM_BILLMAT.BDEL]]
 rem --- Update refnumMap!

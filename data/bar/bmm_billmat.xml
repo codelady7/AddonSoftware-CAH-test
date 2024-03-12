@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.bmm_billmat">46B14A353DD5EC77FA2FA141B846A6D1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.bmm_billmat">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.bmm_billmat">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.bmm_billmat">20240227</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.bmm_billmat">20240227</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.bmm_billmat">105722</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.bmm_billmat">20240312</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.bmm_billmat">20240312</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.bmm_billmat">162722</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.bmm_billmat"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.bmm_billmat">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.bmm_billmat"></DD_ATTR_DKNM>
@@ -77,6 +77,10 @@
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.bmm_billmatadel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.bmm_billmatadel">BMM_BILLMAT     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.bmm_billmatadel">ADEL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_table_cpro.bmm_billmatagdr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.bmm_billmatagdr">BMM_BILLMAT     </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.bmm_billmatagdr">AGDR</DD_ATTR_CPRO>
@@ -100,6 +104,10 @@
 		<RECORD id="ddm_table_cpro.bmm_billmatarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.bmm_billmatarec">BMM_BILLMAT     </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.bmm_billmatarec">AREC</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.bmm_billmatawri">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.bmm_billmatawri">BMM_BILLMAT     </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.bmm_billmatawri">AWRI</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.bmm_billmatbdel">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.bmm_billmatbdel">BMM_BILLMAT     </DD_TABLE_ALIAS>

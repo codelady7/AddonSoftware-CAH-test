@@ -1,3 +1,7 @@
+[[BMM_BILLSUB.ADEL]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
+
 [[BMM_BILLSUB.AGDR]]
 rem --- Track wo_ref_num in Map to insure they are unique
 	refnumMap!=callpoint!.getDevObject("refnumMap")
@@ -18,6 +22,10 @@ rem --- Display Net Qty and Total Cost
 [[BMM_BILLSUB.AOPT-COMM]]
 rem --- Launch Comments dialog
 	gosub comment_entry
+
+[[BMM_BILLSUB.AWRI]]
+rem --- Something affecting the BOM's cost may have changed
+	callpoint!.setDevObject("BOMchanged","Y")
 
 [[BMM_BILLSUB.BDEL]]
 rem --- Update refnumMap!
