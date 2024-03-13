@@ -228,24 +228,39 @@ rem --- set defaults for new record
 rem --- Something affecting the BOM's cost may have changed
 	if callpoint!.getDevObject("BOMchanged")="Y" then
 		rem --- Launch BOM Inventory Costing Update for this BOM?
-		msg_id$="BM_UPDATE_COST"
-		gosub disp_message
-		if msg_opt$="Y" then 
-			dim dflt_data$[3,1]
-			dflt_data$[1,0]="BILL_NO_1"
-			dflt_data$[1,1]=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
-			dflt_data$[2,0]="BILL_NO_2"
-			dflt_data$[2,1]=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
-			dflt_data$[3,0]="WAREHOUSE_ID"
-			dflt_data$[3,1]=callpoint!.getDevObject("dflt_whse")
-			call stbl("+DIR_SYP")+"bam_run_prog.bbj",
-:				"BMU_IVCOSTING",
-:				stbl("+USER_ID"),
-:				"MNT",
-:				"",
-:				table_chans$[all],
-:				"",
-:				dflt_data$[all]
+		rem ---       Standard Cost: Always update
+		rem --- Replacement Cost: If bill is the original Parent, update
+		rem ---                                If bill is sub-bill AND a Phantom, update
+		rem ---        Average Cost: If bill is a Phantom, update
+		skipCostUpdate=0
+		cost_param$=callpoint!.getDevObject("cost_param")
+		if cost_param$<>"S" then
+			rem --- This is always for the original Parent bill, never a sub-bill
+			if cost_param$="A" and callpoint!.getColumnData("BMM_BILLMAST.PHANTOM_BILL")<>"Y" then
+				skipCostUpdate=1
+			endif
+		endif
+
+		if !skipCostUpdate then
+			msg_id$="BM_UPDATE_COST"
+			gosub disp_message
+			if msg_opt$="Y" then 
+				dim dflt_data$[3,1]
+				dflt_data$[1,0]="BILL_NO_1"
+				dflt_data$[1,1]=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
+				dflt_data$[2,0]="BILL_NO_2"
+				dflt_data$[2,1]=callpoint!.getColumnData("BMM_BILLMAST.BILL_NO")
+				dflt_data$[3,0]="WAREHOUSE_ID"
+				dflt_data$[3,1]=callpoint!.getDevObject("dflt_whse")
+				call stbl("+DIR_SYP")+"bam_run_prog.bbj",
+:					"BMU_IVCOSTING",
+:					stbl("+USER_ID"),
+:					"MNT",
+:					"",
+:					table_chans$[all],
+:					"",
+:					dflt_data$[all]
+			endif
 		endif
 
 		callpoint!.setDevObject("BOMchanged","N")
@@ -281,6 +296,7 @@ rem --- Set DevObjects required
 	read record (ivs01_dev,key=firm_id$+"IV00",err=std_missing_params)ivs01a$
 	callpoint!.setDevObject("dflt_whse",ivs01a.warehouse_id$)
 	callpoint!.setDevObject("iv_precision",num(ivs01a.precision$))
+	callpoint!.setDevObject("cost_param",ivs01a.cost_method$)
 
 	read record (bms01_dev,key=firm_id$+"BM00")bms01a$
 	callpoint!.setDevObject("bm_precision",bms01a.bm_precision)
