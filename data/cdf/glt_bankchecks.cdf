@@ -48,6 +48,29 @@ rem --- Update paid_code for selected grid rows
 		next i
 	endif
 
+[[GLT_BANKCHECKS.AOPT-TOTL]]
+rem --- Sum Amounts for the selected checks
+	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	selectedRows!=grid!.getSelectedRows()
+	if selectedRows!.size()=0 then break
+
+	totalAmt=0
+	dim gltBankChecks$:fnget_tpl$("GLT_BANKCHECKS")
+	for i=0 to selectedRows!.size()-1
+		row=selectedRows!.getItem(i)
+		gltBankChecks$=GridVect!.getItem(row)
+		totalAmt=totalAmt+gltBankChecks.check_amount
+	next i
+
+rem --- Show total Amount for the selected checks
+	call stbl("+DIR_PGM")+"adc_getmask.aon","","GL","A","",m1$,0,m1 
+	msg_id$="GENERIC_OK"
+	dim msg_tokens$[1]
+	msg_tokens$[1]="Total amount for selected checks: "+str(totalAmt:m1$)
+	gosub disp_message
+
+	callpoint!.setStatus("ACTIVATE")
+
 [[GLT_BANKCHECKS.AOPT-UNDO]]
 rem --- remove column sorting
 
