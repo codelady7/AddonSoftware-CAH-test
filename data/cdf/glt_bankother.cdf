@@ -48,6 +48,29 @@ rem --- Update posted_code for selected grid rows
 		next i
 	endif
 
+[[GLT_BANKOTHER.AOPT-TOTL]]
+rem --- Sum Amounts for the selected deposits/transactions
+	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
+	selectedRows!=grid!.getSelectedRows()
+	if selectedRows!.size()=0 then break
+
+	totalAmt=0
+	dim gltBankOther$:fnget_tpl$("GLT_BANKOTHER")
+	for i=0 to selectedRows!.size()-1
+		row=selectedRows!.getItem(i)
+		gltBankOther$=GridVect!.getItem(row)
+		totalAmt=totalAmt+gltBankOther.trans_amt
+	next i
+
+rem --- Show total Amount for the selected deposits/transactions
+	call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","A","",m1$,0,m1 
+	msg_id$="GENERIC_OK"
+	dim msg_tokens$[1]
+	msg_tokens$[1]="Total amount for selected deposits/transactions: "+str(totalAmt:m1$)
+	gosub disp_message
+
+	callpoint!.setStatus("ACTIVATE")
+
 [[GLT_BANKOTHER.AOPT-UNDO]]
 rem --- remove column sorting
 
