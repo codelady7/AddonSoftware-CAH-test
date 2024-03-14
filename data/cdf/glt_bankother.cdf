@@ -48,8 +48,8 @@ rem --- Update posted_code for selected grid rows
 		next i
 	endif
 
-[[GLT_BANKOTHER.AOPT-TOTL]]
-rem --- Sum Amounts for the selected deposits/transactions
+[[GLT_BANKOTHER.AGRN]]
+rem --- Update Total Amount for selected rows
 	grid!=Form!.getControl(num(stbl("+GRID_CTL")))
 	selectedRows!=grid!.getSelectedRows()
 	if selectedRows!.size()=0 then break
@@ -62,14 +62,9 @@ rem --- Sum Amounts for the selected deposits/transactions
 		totalAmt=totalAmt+gltBankOther.trans_amt
 	next i
 
-rem --- Show total Amount for the selected deposits/transactions
-	call stbl("+DIR_PGM")+"adc_getmask.aon","","AP","A","",m1$,0,m1 
-	msg_id$="GENERIC_OK"
-	dim msg_tokens$[1]
-	msg_tokens$[1]="Total amount for selected deposits/transactions: "+str(totalAmt:m1$)
-	gosub disp_message
-
-	callpoint!.setStatus("ACTIVATE")
+	call stbl("+DIR_PGM")+"adc_getmask.aon","","GL","A","",m1$,0,m1 
+	totalAmtCtrl!=callpoint!.getDevObject("totalAmtCtrl")
+	totalAmtCtrl!.setText("Total Amount: "+cvs(str(totalAmt:m1$),3))
 
 [[GLT_BANKOTHER.AOPT-UNDO]]
 rem --- remove column sorting
@@ -83,6 +78,21 @@ rem --- Skip transactions after current statement date
 	if callpoint!.getColumnData("GLT_BANKOTHER.TRNS_DATE")>stmtdate$ then
 		callpoint!.setStatus("SKIP")
 	endif
+
+[[GLT_BANKOTHER.ASHO]]
+rem ... Add Total Amount text control to navbar after Barista's buttons
+	navWin!=Form!.getChildWindow(num(stbl("+NAVBAR_CTL")))
+	ctrlVec!=navWin!.getAllControls()
+	for i=0 to ctrlVec!.size()-1
+		ctrl!=ctrlVec!.get(i)
+		if ctrl!.getToolTipText()="Display additional options" then
+			rem --- Barista's last navbar button
+			break
+		endif
+	next i
+
+	totalAmtCtrl!=navWin!.addStaticText(navWin!.getAvailableControlID(),ctrl!.getX()+40,ctrl!.getY()+5,175,ctrl!.getHeight(),"", $12001$)
+	callpoint!.setDevObject("totalAmtCtrl",totalAmtCtrl!)
 
 [[GLT_BANKOTHER.BSHO]]
 rem --- Open/Lock files
