@@ -62,6 +62,7 @@ rem --- Assign form input values to local variables
     endzip$=Option!.getOptionData("ZIP_CODE_2")
     labels=num(labels$)
     vend_type$=Option!.getOptionData("VENDOR_TYPE")
+    col_format$=option!.getOptionData("COL_FORMAT")
     rem "VENDOR INACTIVE FEATURE"
     inactive$=Option!.getOptionData("VEND_INACTIVE")
 
@@ -72,6 +73,37 @@ rem --- Retrieve parameter records
     across=num(aps01a.label_across$)
     length=num(aps01a.label_length$)
     width=num(aps01a.label_width$)
+
+rem --- Document initializations
+    if col_format$="Y"
+        OutVect!=bbjAPI().makeVector()
+        BrkVect!=bbjAPI().makeVector()
+        HdrVect!=bbjAPI().makeVector()
+        TotVect!=bbjAPI().makeVector()
+        rep_date$=date(0:"%Mz/%Dz/%Yd")
+        rep_date_stamp$=date(0:"%Yd%Mz%Dz")
+        rep_time$=date(0:"%hz:%mz %p")
+        rep_time_stamp$=date(0:"%Hz%mz%sz")
+        rep_prog$=pgm(-2)
+
+        columns=3
+        dim columns$[columns,10]
+
+        columns$[0,0]=Translate!.getTranslation("AON_NAME"),columns$[0,1]="C",columns$[0,2]="30"
+        columns$[1,0]=Translate!.getTranslation("AON_ADDRESS_1"),columns$[1,1]="C",columns$[1,2]="30"
+        columns$[2,0]=Translate!.getTranslation("AON_ADDRESS_2"),columns$[2,1]="C",columns$[2,2]="30"
+        columns$[3,0]=Translate!.getTranslation("AON_ADDRESS_3"),columns$[3,1]="C",columns$[3,2]="30"
+
+        call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
+
+        headings=4
+        dim headings$[headings]
+        headings$[0]=sysinfo.firm_name$
+        headings$[1]=sysinfo.task_desc$
+        if sequence$="N" headings$[3]=Translate!.getTranslation("AON_BY_VENDOR")
+:           else if sequence$="A" headings$[3]=Translate!.getTranslation("AON_BY_ALTERNATE_SEQUENCE")
+:           else if sequence$="Z" headings$[3]=Translate!.getTranslation("AON_BY_ZIP_CODE")
+    endif
 
 rem --- Initializations
 
@@ -100,33 +132,38 @@ rem --- Initializations
        keyfield$="ZIP_CODE"
     endif
     endvaluelen=len(endvalue$)
+    if col_format$="Y"
+        if begvalue$="" beg_out$=Translate!.getTranslation("AON_FIRST") else beg_out$=begvalue$
+        if endvalue$="" end_out$=Translate!.getTranslation("AON_LAST") else end_out$=endvalue$
+        headings$[4]=Translate!.getTranslation("AON_FROM_")+beg_out$+Translate!.getTranslation("AON__THROUGH_")+end_out$
+    endif
     total_recs=0
 
-rem --- Print test patterns until the user is satisfied
-
-    while answer$="Y"
-        dim msg_tokens$[1]
-        msg_opt$=""
-        gosub disp_message
-        if msg_opt$<>"Y" break
-
-        rem --- Print test pattern
-
+rem --- Open the printer unless doing export format (which goes thru docout)
+    if col_format$<>"Y"
+        rem --- Print test patterns until the user is satisfied
+        while answer$="Y"
+            dim msg_tokens$[1]
+            msg_opt$=""
+            gosub disp_message
+            if msg_opt$<>"Y" break
+    
+            rem --- Print test pattern
+            call pgmdir$+"adc_printer.aon",printer_dev,1,"","",status
+            if status exitto std_exit
+            dim label$(across*width*length,"X")
+            printed_across=1
+            gosub label
+            close (printer_dev)
+            msg_id$="ANOTHER_PATTERN"
+        wend
+    
+        if msg_opt$="C" goto std_exit
+    
+        close (printer_dev,err=*next)    
         call pgmdir$+"adc_printer.aon",printer_dev,1,"","",status
-        if status exitto std_exit
-        dim label$(across*width*length,"X")
-        printed_across=1
-        gosub label
-        close (printer_dev)
-        msg_id$="ANOTHER_PATTERN"
-    wend
-
-    if msg_opt$="C" goto std_exit
-
-    close (printer_dev,err=*next)    
-    call pgmdir$+"adc_printer.aon",printer_dev,1,"","",status
-    if status goto std_exit
-
+        if status goto std_exit
+    endif
 
 rem --- Start the progress meter and position the file
 
@@ -161,10 +198,19 @@ rem --- Read next Vendor Master (apm-01) record
                 printed_across=printed_across+1
                 address$=apm01a.addr_line_1$+apm01a.addr_line_2$+apm01a.city$+apm01a.state_code$+apm01a.zip_code$
                 call pgmdir$+"adc_address.aon",address$,30,3,9,30
-                label$(width*(printed_across-1)+1,width)=apm01a.vendor_name$
-                label$(width*(across+printed_across-1)+1,width)=address$(1,30)
-                label$(width*(2*across+printed_across-1)+1,width)=address$(31,30)
-                label$(width*(3*across+printed_across-1)+1,width)=address$(61,30)
+                if col_format$<>"Y"
+                    label$(width*(printed_across-1)+1,width)=apm01a.vendor_name$
+                    label$(width*(across+printed_across-1)+1,width)=address$(1,30)
+                    label$(width*(2*across+printed_across-1)+1,width)=address$(31,30)
+                    label$(width*(3*across+printed_across-1)+1,width)=address$(61,30)
+                endif 
+    
+                if col_format$="Y"
+                    OutVect!.addItem(apm01a.vendor_name$)
+                    OutVect!.addItem(address$(1,30))
+                    OutVect!.addItem(address$(31,30))
+                    OutVect!.addItem(address$(61,30))
+                endif
           wend
 
           rem --- Loop back for next vendor master
@@ -178,7 +224,7 @@ rem --- All done
 
 label: rem --- Print the label(s)
 
-    if printed_across=0 return
+    if printed_across=0 or col_format$="Y" return
     if first 
        for x=1 to length
            print (printer_dev) ""
