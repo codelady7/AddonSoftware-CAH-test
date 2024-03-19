@@ -120,7 +120,7 @@ rem --- Report initializations
 
 rem --- Build Financial Report Format header info for this Report
 
-	OutVect!.addItem(Translate!.getTranslation("AON_HEADING_NO:_")+glm12a.heading_no$)
+	OutVect!.addItem(Translate!.getTranslation("AON_REPORT_NUMBER")+": "+glm12a.gl_rpt_no$)
 	n=fnblank(columns-1)
 	
 	OutVect!.addItem("")
