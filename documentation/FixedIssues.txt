@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-03-12
+ Report Date:   2024-03-19
  Report Branch: AddonSoftware 24.00
  Last Release:  AddonSoftware 23.07
 =======================================================================================================================================
@@ -238,3 +238,14 @@ the new size of the AP_INV_NO Element Type that was increased from 10 to
 20 for v23.00 (ER 10119).
 ----
 Modified: po/src/pof_receipt_hist.aon
+
+=======================================================================================================================================
+Revision: a623778570789bc9b747aa0b636c51c99acd7427
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/19/2024 4:02:16 PM
+Message:
+Bug 6059: Replaced reference to glm_finmaster.heading_no$ with
+glm_finmaster.gl_rpt_no$. The heading_no field was removed from
+glm_finmaster in v22.00 per enhancement Bug 10342.
+----
+Modified: gl/src/glr_financialformat.aon
