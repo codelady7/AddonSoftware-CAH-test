@@ -14,6 +14,7 @@ rem --- Init Data
     first=0
     if height<6 x9=height else x9=6
     another$="A"
+    call pgmdir$+"adc_getmask.aon","","IV","I","",ivIMask$,0,0
     more=1
 
 rem --- Loop Starting
@@ -61,30 +62,70 @@ rem --- Loop Starting
         goto std_exit_no_report
     endif
 
+rem --- Document initializations
+    if col_format$="Y"
+        OutVect!=bbjAPI().makeVector()
+        BrkVect!=bbjAPI().makeVector()
+        HdrVect!=bbjAPI().makeVector()
+        TotVect!=bbjAPI().makeVector()
+        rep_date$=date(0:"%Mz/%Dz/%Yd")
+        rep_date_stamp$=date(0:"%Yd%Mz%Dz")
+        rep_time$=date(0:"%hz:%mz %p")
+        rep_time_stamp$=date(0:"%Hz%mz%sz")
+        rep_prog$=pgm(-2)
+
+        columns=6
+        dim columns$[columns,10]
+
+        columns$[0,0]=Translate!.getTranslation("AON_COMPANY"),columns$[0,1]="C",columns$[0,2]="30"
+        columns$[1,0]=Translate!.getTranslation("AON_WHSE"),columns$[1,1]="C",columns$[1,2]="5"
+        columns$[2,0]=Translate!.getTranslation("AON_ITEM_ID"),columns$[2,1]="C",columns$[2,2]="20"
+        columns$[3,0]=Translate!.getTranslation("AON_DESCRIPTION"),columns$[3,1]="C",columns$[3,2]="60"
+        columns$[4,0]=Translate!.getTranslation("AON_PROD^TYPE"),columns$[4,1]="C",columns$[4,2]="5"
+        columns$[5,0]=Translate!.getTranslation("AON_CYCLE^CODE"),columns$[5,1]="C",columns$[5,2]="5"
+        columns$[6,0]=Translate!.getTranslation("AON_WHSE")+"^"+Translate!.getTranslation("AON_LOCATION"),columns$[6,1]="C",columns$[6,2]="10"
+
+        call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
+
+        headings=7
+        dim headings$[headings]
+        headings$[0]=sysinfo.firm_name$
+        headings$[1]=sysinfo.task_desc$
+        if beg_whse$="" then headings$[3]=Translate!.getTranslation("AON_FROM_WAREHOUSE:_FIRST") else headings$[3]=Translate!.getTranslation("AON_FROM_WAREHOUSE:_")+beg_whse$
+        if end_whse$="" then headings$[3]=headings$[3]+Translate!.getTranslation("AON__--_TO_WAREHOUSE:_LAST") else headings$[3]=headings$[3]+Translate!.getTranslation("AON__--_TO_WAREHOUSE:_")+end_whse$
+        if beg_prod$="" then headings$[4]=Translate!.getTranslation("AON_FROM_PRODUCT:_FIRST") else headings$[4]=Translate!.getTranslation("AON_FROM_PRODUCT:_")+cvs(beg_prod$,3)                
+        if end_prod$="" then headings$[4]=headings$[4]+Translate!.getTranslation("AON__--_TO_PRODUCT:_LAST") else headings$[4]=headings$[4]+Translate!.getTranslation("AON__--_TO_PRODUCT:_")+cvs(end_prod$,3)
+        if beg_item$="" then headings$[5]=Translate!.getTranslation("AON_FROM_ITEM:_FIRST") else headings$[5]=Translate!.getTranslation("AON_FROM_ITEM:_")+cvs(fnmask$(beg_item$,ivIMask$),3)
+        if end_item$="" then headings$[5]=headings$[5]+Translate!.getTranslation("AON__--_TO_ITEM:_LAST") else headings$[5]=headings$[5]+Translate!.getTranslation("AON__--_TO_ITEM:_")+cvs(fnmask$(end_item$,ivIMask$),3)
+        if itype$="" then headings$[6]=Translate!.getTranslation("AON_ALL_ITEM_TYPES") else headings$[6]=Translate!.getTranslation("AON_ITEM_TYPE_")+itype$
+        headings$[7]=Translate!.getTranslation("AON_EXCLUDE_INACTIVE")+Translate!.getTranslation("AON_ITEMS")+" = "+inactive$
+    endif
+
 rem --- Open printer
-
-    call pgmdir$+"adc_printer.aon",printer_dev,1,"","",status
-    if status goto std_exit
-
-    while more
-        call pgmdir$+"adc_yesno.aon",0,Translate!.getTranslation("AON_DO_YOU_WISH_TO_PRINT_")+another$+Translate!.getTranslation("AON__TEST_PATTERN"),3,v$,v3
-        if v3=4 goto std_exit
-
-        switch pos(v$="YN")
-            case 1;rem v$="Y"  
-                dim w0$(across*width*6,"X")
-                x0=1
-                gosub Print
-                another$=Translate!.getTranslation("AON_ANOTHER")
-                break
-            case 2; rem v$="N" no more test patterns
-                more=0
-                break
-            case default
-                continue
-                break
-        swend
-    wend
+    if col_format$<>"Y"
+        call pgmdir$+"adc_printer.aon",printer_dev,1,"","",status
+        if status goto std_exit
+    
+        while more
+            call pgmdir$+"adc_yesno.aon",0,Translate!.getTranslation("AON_DO_YOU_WISH_TO_PRINT_")+another$+Translate!.getTranslation("AON__TEST_PATTERN"),3,v$,v3
+            if v3=4 goto std_exit
+    
+            switch pos(v$="YN")
+                case 1;rem v$="Y"  
+                    dim w0$(across*width*6,"X")
+                    x0=1
+                    gosub Print
+                    another$=Translate!.getTranslation("AON_ANOTHER")
+                    break
+                case 2; rem v$="N" no more test patterns
+                    more=0
+                    break
+                case default
+                    continue
+                    break
+            swend
+        wend
+    endif
 
     call pgmdir$+"adc_progress.aon","N","IVM_ITEMWHSE","","","",0,ivm02_dev,1,meter_num,status
     more=1
@@ -93,7 +134,6 @@ rem --- Main Read
     while more
 
         read_tpl$=sqlfetch(sql_chan,err=*break)
-
         read record (ivm01_dev,key=firm_id$+read_tpl.item_id$,dom=*continue) ivm01a$
         rcnt=rcnt+1
 
@@ -117,7 +157,7 @@ rem --- Main Read
 
 done: rem --- End of label printing
 
-    gosub Print
+    if col_format$<>"Y" then gosub Print
     goto std_exit
 
 Assemble: rem --- Assemble
@@ -126,7 +166,7 @@ Assemble: rem --- Assemble
     while x3<=w3
         x3=x3+1
         if x3>w3 break
-        if x0>=across gosub Print
+        if x0>=across or col_format$="Y" then gosub Print
         x0=x0+1
         if mod(rcnt,milestone)=0 call pgmdir$+"adc_progress.aon","S","","","",ivm01a.item_id$,0,0,1,0,ignore_status
         w0$(width*(x0-1)+1,width)=n1$
@@ -146,19 +186,31 @@ Assemble: rem --- Assemble
 
 Print: rem --- Print
 
-    if x0=0 then return
-    if first
-        for x=0 to height-1
-            print (printer_dev)""
+    if x0=0  and col_format$<>"Y" then return
+    
+    if col_format$<>"Y"
+        if first
+            for x=0 to height-1
+                print (printer_dev)""
+            next x
+            first=0
+        endif
+    
+        for x=0 to x9-1
+            print (printer_dev,err=printer_err)@(0+w9),w0$(x*across*width+1,across*width)
         next x
-        first=0
+    
+        if height>6 print (printer_dev)w9$(1,height-7)
+    else
+        OutVect!.addItem(n1$)
+        OutVect!.addItem(ivm02a.warehouse_id$)
+        OutVect!.addItem(fnmask$(ivm01a.item_id$,ivIMask$))
+        OutVect!.addItem(ivm01a.item_desc$)
+        OutVect!.addItem(ivm01a.product_type$)
+        OutVect!.addItem(ivm02a.pi_cyclecode$)
+        OutVect!.addItem(ivm02a.location$)
     endif
-
-    for x=0 to x9-1
-        print (printer_dev,err=printer_err)@(0+w9),w0$(x*across*width+1,across*width)
-    next x
-
-    if height>6 print (printer_dev)w9$(1,height-7)
+    
     x0=0
     w0$(1)=""
 

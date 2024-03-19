@@ -57,6 +57,7 @@ rem --- Assign form input values to local variables
     end_item$=option!.getOptionData("item_id_2")
     item_type$=option!.getOptionData("item_type")
     no_label$=option!.getOptionData("pick_count")
+    col_format$=option!.getOptionData("COL_FORMAT")
     rem "ITEM INACTIVE FEATURE"
     inactive$=Option!.getOptionData("ITEM_INACTIVE")
 
