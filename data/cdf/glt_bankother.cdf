@@ -137,6 +137,11 @@ rem --- Make Number, Type, Trans Date, Amount, Cash Rec Cd and Code columns sort
 	grid!.setColumnUserSortable(7,1)
 	grid!.setSortByMultipleColumns(1)
 
+rem --- Get stmtdate in case launched via All Transactions button on GLM_BANKMASTER form
+	rdFuncSpace!=BBjAPI().getGroupNamespace()
+	stmtdate$=rdFuncSpace!.getValue(stbl("+USER_ID")+": BANKMASTER stmtdate",err=*next)
+	if cvs(stmtdate$,2)<>"" then callpoint!.setDevObject("stmtdate",stmtdate$)
+
 [[GLT_BANKOTHER.CASH_REC_CD.AVAL]]
 arm10_dev=fnget_dev("ARC_CASHCODE")
 dim arm10c$:fnget_tpl$("ARC_CASHCODE")

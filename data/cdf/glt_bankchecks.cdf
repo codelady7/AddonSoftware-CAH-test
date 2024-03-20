@@ -128,6 +128,11 @@ rem --- Make Number, Type, Check Date, Amount and Code columns sortable by click
 	grid!.setColumnUserSortable(5,1)
 	grid!.setSortByMultipleColumns(1)
 
+rem --- Get stmtdate in case launched via All Transactions button on GLM_BANKMASTER form
+	rdFuncSpace!=BBjAPI().getGroupNamespace()
+	stmtdate$=rdFuncSpace!.getValue(stbl("+USER_ID")+": BANKMASTER stmtdate",err=*next)
+	if cvs(stmtdate$,2)<>"" then callpoint!.setDevObject("stmtdate",stmtdate$)
+
 [[GLT_BANKCHECKS.CHECK_NO.AVEC]]
 callpoint!.setColumnData("GLT_BANKCHECKS.CHECK_TYPE","E")
 callpoint!.setColumnData("GLT_BANKCHECKS.PAID_CODE","O")
