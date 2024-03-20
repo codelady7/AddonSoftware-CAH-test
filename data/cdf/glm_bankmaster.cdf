@@ -196,6 +196,43 @@ rem " --- Recalc Summary Info
 
 	gosub calc_totals
 
+[[GLM_BANKMASTER.AOPT-TRAN]]
+rem --- Pass current statement date to check detail and deposits/other transaction grids
+	stmtdate$=callpoint!.getColumnData("GLM_BANKMASTER.CURSTM_DATE")
+	rdFuncSpace!=BBjAPI().getGroupNamespace()
+	rdFuncSpace!.setValue(stbl("+USER_ID")+": BANKMASTER stmtdate",stmtdate$)
+
+rem --- Set arguments to SCALL bax_launch_task.bbj
+	bar_dir$=(new java.io.File(dir(""))).getCanonicalPath()
+	run_arg$="bbj -tT0 -q -WD"+$22$+bar_dir$+$22$
+:		+" -c"+$22$+bar_dir$+"/sys/config/enu/barista.cfg"+$22$
+:		+" "+$22$+bar_dir$+"/sys/prog/bax_launch_task.bbj"+$22$
+
+rem --- Launch Check Detail grid
+	rdAdmin!=rdFuncSpace!.getValue("+bar_admin_"+cvs(stbl("+USER_ID",err=*next),11),err=*next)
+	user_arg$=" - "
+:		+" -u"+rdAdmin!.getUser()
+:		+" -p"+rdAdmin!.getPassword()
+:		+" -y"+"T"
+:		+" -t"+"GLT_BANKCHECKS"
+:		+" -w"
+
+	scall_result=scall(run_arg$+user_arg$+" &",err=*next)
+
+rem --- Launch Deposits/Other Transactions grid
+	user_arg$=" - "
+:		+" -u"+rdAdmin!.getUser()
+:		+" -p"+rdAdmin!.getPassword()
+:		+" -y"+"T"
+:		+" -t"+"GLT_BANKOTHER"
+:		+" -w"
+
+	scall_result=scall(run_arg$+user_arg$+" &",err=*next)
+
+rem --- Remove stmtdate from GroupNamespace after the grids have launched
+	wait(5)
+	rdFuncSpace!.removeValue(stbl("+USER_ID")+": BANKMASTER stmtdate")
+
 [[GLM_BANKMASTER.ARAR]]
 rem --- Display Bank Account Information
 	bnk_acct_cd$=callpoint!.getColumnData("GLM_BANKMASTER.BNK_ACCT_CD")
