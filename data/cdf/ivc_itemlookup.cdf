@@ -34,10 +34,16 @@ rem --- Get the control ID of the event
 		vectSearch!=callpoint!.getDevObject("vectSearch")
 		curr_row=dec(notice.row$)
 		curr_col=dec(notice.col$)
-		
+
 		switch notice.code
-			case 19; rem grid_key_press
+			case 3; rem grid_double click
+				callpoint!.setDevObject("selected_item",firm_id$+gridSearch!.getCellText(curr_row,1))
+				callpoint!.setDevObject("find_item",callpoint!.getDevObject("selected_item"))
+				gosub closeTables
+				callpoint!.setStatus("EXIT")
+			break
 			case 14; rem grid_mouse_up
+			case 19; rem grid_key_press
 				callpoint!.setDevObject("selected_item",firm_id$+gridSearch!.getCellText(curr_row,1))
 				gosub get_inventory_detail		
 			break
@@ -139,7 +145,7 @@ rem ---  Set up grid
 
 	dims_tmpl$ = "x:u(2),y:u(2),w:u(2),h:u(2)"
 	dim g$:dims_tmpl$
-	g.x = 10, g.y = 65, g.w = 610, g.h = 300
+	g.x = 10, g.y = 65, g.w = 660, g.h = 300
 	callpoint!.setDevObject("dims_tmpl", dims_tmpl$)
 	callpoint!.setDevObject("grid_dims", g$)
 
@@ -152,12 +158,13 @@ rem ---  Set up grid
 
 	gridSearch!.setCallback(gridSearch!.ON_GRID_MOUSE_UP,"custom_event")
 	gridSearch!.setCallback(gridSearch!.ON_GRID_SELECT_ROW,"custom_event")
+	gridSearch!.setCallback(gridSearch!.ON_GRID_DOUBLE_CLICK,"custom_event")
 
 	callpoint!.setDevObject("gridSearch",gridSearch!)
 
 	dim attr_def_col_str$[0,0]
 	attr_def_col_str$[0,0]=callpoint!.getColumnAttributeTypes()
-	def_grid_cols=3
+	def_grid_cols=4
 	dim attr_grid_col$[def_grid_cols,len(attr_def_col_str$[0,0])/5]
 	min_rows=9
 	callpoint!.setDevObject("min_rows",min_rows)
@@ -177,6 +184,10 @@ rem ---  Set up grid
 	attr_grid_col$[3,dvar_pos]="DESC"
 	attr_grid_col$[3,labs_pos]=Translate!.getTranslation("AON_DESCRIPTION")
 	attr_grid_col$[3,ctlw_pos]="350"	
+
+	attr_grid_col$[4,dvar_pos]="QTY_AVAILABLE"
+	attr_grid_col$[4,labs_pos]=Translate!.getTranslation("AON_QTY")+" "+Translate!.getTranslation("AON_AVAILABLE")
+	attr_grid_col$[4,ctlw_pos]="50"	
 	
 	for curr_attr=1 to def_grid_cols
 		attr_grid_col$[0,1] = attr_grid_col$[0,1] + 
@@ -197,7 +208,7 @@ rem ---  Set up grid
 rem --- Create Item Information window			
 		
 	dim w$:dims_tmpl$
-	w.x = 625, w.y = 55, w.w = 330, w.h = 300
+	w.x = 675, w.y = 55, w.w = 330, w.h = 300
 	callpoint!.setDevObject("child_window_dims", w$)
 
 	cxt=SysGUI!.getAvailableContext()
@@ -267,17 +278,7 @@ rem --- Create Item Information window
 
 [[IVC_ITEMLOOKUP.BEND]]
 rem --- since files were forced open on new channels, close to keep tidy
-
-	num_files=5
-	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-	
-	open_tables$[1]="IVM_ITEMSYN",   open_opts$[1]="@C"
-	open_tables$[2]="IVM_ITEMWHSE",   open_opts$[2]="@C"
-	open_tables$[3]="IVS_PARAMS",   open_opts$[3]="@C"
-	open_tables$[4]="IVM_ITEMMAST",   open_opts$[4]="@C"	
-	open_tables$[5]="IVM_ITEMMAST",   open_opts$[5]="@C"
-	gosub open_tables
-	
+	gosub closeTables
 
 [[IVC_ITEMLOOKUP.SEARCH_KEY.AVAL]]
 rem --- set search key/file according to user's selection in the 'search by' listbutton.
@@ -351,6 +352,8 @@ load_and_display_grid:
 
 	ivm_itemmast_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivm_itemmast$:fnget_tpl$("IVM_ITEMMAST")
+	ivm_itemwhse_dev=fnget_dev("@IVM_ITEMWHSE")
+	dim ivm_itemwhse$:fnget_tpl$("@IVM_ITEMWHSE")
 
 	rem --- Position search file	
 
@@ -366,10 +369,23 @@ load_and_display_grid:
 		endif
 		dim ivm_itemmast$:fattr(ivm_itemmast$)
 		read record (ivm_itemmast_dev,key=firm_id$+searchrec.item_id$,dom=*next)ivm_itemmast$
+
+		on_hand=0
+		committed=0
+		available=0
+		read (ivm_itemwhse_dev,key=ivm_itemmast.firm_id$+ivm_itemmast.item_id$,knum="AO_ITEM_WH",dom=*next)
+		while 1
+			read record(ivm_itemwhse_dev,end=*break)ivm_itemwhse$
+			if ivm_itemmast.firm_id$+ivm_itemmast.item_id$<>ivm_itemwhse.firm_id$+ivm_itemwhse.item_id$ then break
+			on_hand=on_hand+ivm_itemwhse.qty_on_hand
+			committed=committed+ivm_itemwhse.qty_commit
+		wend
+		available=on_hand-committed
 	
 		vectSearch!.addItem(field(searchrec$,search_field$))
 		vectSearch!.addItem(fnmask$(ivm_itemmast.item_id$,ivIMask$))
 		vectSearch!.addItem(ivm_itemmast.item_desc$)
+		vectSearch!.addItem(available)
 	wend
 
 	callpoint!.setDevObject("vectSearch",vectSearch!)
@@ -522,6 +538,21 @@ rem --- get/display Inventory Detail info
 	w!=infoWin!.getControl(num(callpoint!.getDevObject("item_pic")))
 	wImage!=SysGUI!.getImageManager().loadImageFromFile(image$,err=*next)
 	w!.setImage(wImage!,err=*next)
+
+return
+
+rem ==========================================================================
+closeTables: rem --- since files were forced open on new channels, close to keep tidy
+rem ==========================================================================
+	num_files=5
+	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+	
+	open_tables$[1]="IVM_ITEMSYN",   open_opts$[1]="@C"
+	open_tables$[2]="IVM_ITEMWHSE",   open_opts$[2]="@C"
+	open_tables$[3]="IVS_PARAMS",   open_opts$[3]="@C"
+	open_tables$[4]="IVM_ITEMMAST",   open_opts$[4]="@C"	
+	open_tables$[5]="IVM_ITEMMAST",   open_opts$[5]="@C"
+	gosub open_tables
 
 return
 
