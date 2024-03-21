@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.glt_bankother">20060609</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.glt_bankother">20240320</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankother">20240320</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankother">150434</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankother">170420</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glt_bankother"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glt_bankother">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glt_bankother"></DD_ATTR_DKNM>
@@ -89,6 +89,10 @@
 		<RECORD id="ddm_table_cpro.glt_bankotherasho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankotherasho">GLT_BANKOTHER   </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankotherasho">ASHO</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.glt_bankotherbend">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankotherbend">GLT_BANKOTHER   </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankotherbend">BEND</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.glt_bankotherbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankotherbsho">GLT_BANKOTHER   </DD_TABLE_ALIAS>

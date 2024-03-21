@@ -229,8 +229,18 @@ rem --- Launch Deposits/Other Transactions grid
 
 	scall_result=scall(run_arg$+user_arg$+" &",err=*next)
 
-rem --- Remove stmtdate from GroupNamespace after the grids have launched
+rem --- Wait for both grids to exit so amounts on Statement Information tab can be updated
 	wait(5)
+	gridInUse$="In Use"
+	while cvs(gridInUse$,2)<>""
+		wait(2)
+		gridInUse$=""
+		gridInUse$=rdFuncSpace!.getValue(stbl("+USER_ID")+": GLT_BANKCHECKS",err=*next)
+		gridInUse$=rdFuncSpace!.getValue(stbl("+USER_ID")+": GLT_BANKOTHER",err=*next)
+	wend
+	gosub calc_totals
+
+rem --- Remove stmtdate from GroupNamespace after the grids have launched
 	rdFuncSpace!.removeValue(stbl("+USER_ID")+": BANKMASTER stmtdate")
 
 [[GLM_BANKMASTER.ARAR]]
