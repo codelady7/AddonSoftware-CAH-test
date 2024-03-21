@@ -94,6 +94,11 @@ rem ... Add Total Amount text control to navbar after Barista's buttons
 	totalAmtCtrl!=navWin!.addStaticText(navWin!.getAvailableControlID(),ctrl!.getX()+40,ctrl!.getY()+5,175,ctrl!.getHeight(),"", $12001$)
 	callpoint!.setDevObject("totalAmtCtrl",totalAmtCtrl!)
 
+[[GLT_BANKOTHER.BEND]]
+rem --- Let GLM_BANKMASTER form know this grid is no longer in use in case it was launched via All Transactions button
+	rdFuncSpace!=BBjAPI().getGroupNamespace()
+	rdFuncSpace!.removeValue(stbl("+USER_ID")+": GLT_BANKOTHER")
+
 [[GLT_BANKOTHER.BSHO]]
 rem --- Open/Lock files
 	num_files=1
@@ -141,6 +146,9 @@ rem --- Get stmtdate in case launched via All Transactions button on GLM_BANKMAS
 	rdFuncSpace!=BBjAPI().getGroupNamespace()
 	stmtdate$=rdFuncSpace!.getValue(stbl("+USER_ID")+": BANKMASTER stmtdate",err=*next)
 	if cvs(stmtdate$,2)<>"" then callpoint!.setDevObject("stmtdate",stmtdate$)
+
+	rem --- Let GLM_BANKMASTER form know this grid is in use in case it was launched via All Transactions button
+	rdFuncSpace!.setValue(stbl("+USER_ID")+": GLT_BANKOTHER","In Use")
 
 [[GLT_BANKOTHER.CASH_REC_CD.AVAL]]
 arm10_dev=fnget_dev("ARC_CASHCODE")

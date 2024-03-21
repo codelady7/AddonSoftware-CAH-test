@@ -94,6 +94,11 @@ rem ... Add Total Amount text control to navbar after Barista's buttons
 	totalAmtCtrl!=navWin!.addStaticText(navWin!.getAvailableControlID(),ctrl!.getX()+40,ctrl!.getY()+5,175,ctrl!.getHeight(),"", $12001$)
 	callpoint!.setDevObject("totalAmtCtrl",totalAmtCtrl!)
 
+[[GLT_BANKCHECKS.BEND]]
+rem --- Let GLM_BANKMASTER form know this grid is no longer in use in case it was launched via All Transactions button
+	rdFuncSpace!=BBjAPI().getGroupNamespace()
+	rdFuncSpace!.removeValue(stbl("+USER_ID")+": GLT_BANKCHECKS")
+
 [[GLT_BANKCHECKS.BSHO]]
 rem --- Add pop-up menu to match ListButton items for paid_code
 	popUpMenu!=SysGUI!.addPopupMenu()
@@ -132,6 +137,9 @@ rem --- Get stmtdate in case launched via All Transactions button on GLM_BANKMAS
 	rdFuncSpace!=BBjAPI().getGroupNamespace()
 	stmtdate$=rdFuncSpace!.getValue(stbl("+USER_ID")+": BANKMASTER stmtdate",err=*next)
 	if cvs(stmtdate$,2)<>"" then callpoint!.setDevObject("stmtdate",stmtdate$)
+
+	rem --- Let GLM_BANKMASTER form know this grid is in use in case it was launched via All Transactions button
+	rdFuncSpace!.setValue(stbl("+USER_ID")+": GLT_BANKCHECKS","In Use")
 
 [[GLT_BANKCHECKS.CHECK_NO.AVEC]]
 callpoint!.setColumnData("GLT_BANKCHECKS.CHECK_TYPE","E")

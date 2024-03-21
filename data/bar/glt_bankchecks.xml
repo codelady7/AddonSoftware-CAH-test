@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.glt_bankchecks">20060609</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.glt_bankchecks">20240320</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.glt_bankchecks">20240320</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankchecks">150400</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.glt_bankchecks">170256</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.glt_bankchecks"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.glt_bankchecks">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.glt_bankchecks"></DD_ATTR_DKNM>
@@ -89,6 +89,10 @@
 		<RECORD id="ddm_table_cpro.glt_bankchecksasho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankchecksasho">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankchecksasho">ASHO</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.glt_bankchecksbend">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankchecksbend">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.glt_bankchecksbend">BEND</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.glt_bankchecksbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.glt_bankchecksbsho">GLT_BANKCHECKS  </DD_TABLE_ALIAS>
