@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_ordhdr">EB0DBEC2E6C8C30E6F7008EBB52E70A1</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_ordhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_ordhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20240216</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20240216</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">152120</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_ordhdr">20240326</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_ordhdr">20240326</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_ordhdr">114948</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_ordhdr">OPT_INVHDR      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_ordhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_ordhdr">AO_STATUS</DD_ATTR_DKNM>
@@ -63,93 +63,100 @@
 		<RECORD id="ddm_table_aopt.ope_ordhdr01">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr01">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr01">01</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr01">&Duplicate Invoice</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr01">DINV</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr01">B</DD_ATTR_AOPT_FM>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr01">&Backordered</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr01">BACK</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr01">F</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr02">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr02">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr02">02</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr02">Credit &Invoice</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr02">CINV</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr02">&Duplicate Invoice</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr02">DINV</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr02">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr03">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr03">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr03">03</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr03">&Reprint Next Run</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr03">RPRT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr03">Credit &Invoice</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr03">CINV</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr03">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr04">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr04">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr04">04</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr04">Credit &Status</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr04">CRCH</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr04">&Reprint Next Run</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr04">RPRT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr04">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr05">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr05">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr05">05</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr05">Credit &Action</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr05">CRAT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr05">Credit &Status</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr05">CRCH</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr05">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr06">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr06">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr06">06</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr06">&Print Now</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr06">PRNT</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr06">Credit &Action</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr06">CRAT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr06">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr07">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr07">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr07">07</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr07">Work Order Links</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr07">WOLN</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr07">&Print Now</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr07">PRNT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr07">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr08">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr08">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr08">08</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr08">Shipment &Tracking</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr08">SHPT</DD_ATTR_AOPT_CD>
-			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr08">M</DD_ATTR_AOPT_FM>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr08">Work Order Links</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr08">WOLN</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr08">B</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr09">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr09">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr09">09</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr09">Refresh Aging</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr09">AGNG</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr09">Shipment &Tracking</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr09">SHPT</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr09">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr10">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr10">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr10">10</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr10">Recalculate Ta&x</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr10">RTAX</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr10">Refresh Aging</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr10">AGNG</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr10">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr11">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr11">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr11">11</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr11">Order Ac&knowledgement</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr11">OACK</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr11">Recalculate Ta&x</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr11">RTAX</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr11">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr12">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr12">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr12">12</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr12">Change Customer</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr12">CUST</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr12">Order Ac&knowledgement</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr12">OACK</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr12">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 		<RECORD id="ddm_table_aopt.ope_ordhdr13">
 			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr13">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr13">13</DD_ATTR_SEQ>
-			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr13">Create &New Ship-To Address</DD_ATTR_AOPT>
-			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr13">SHP2</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr13">Change Customer</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr13">CUST</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr13">M</DD_ATTR_AOPT_FM>
+		</RECORD>
+		<RECORD id="ddm_table_aopt.ope_ordhdr14">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_ordhdr14">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.ope_ordhdr14">14</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_ordhdr14">Create &New Ship-To Address</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_ordhdr14">SHP2</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_ordhdr14">M</DD_ATTR_AOPT_FM>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
@@ -173,6 +180,10 @@
 		<RECORD id="ddm_table_cpro.ope_ordhdraopt-agng">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_ordhdraopt-agng">OPE_ORDHDR      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ope_ordhdraopt-agng">AOPT-AGNG</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ope_ordhdraopt-back">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_ordhdraopt-back">OPE_ORDHDR      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ope_ordhdraopt-back">AOPT-BACK</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ope_ordhdraopt-cinv">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_ordhdraopt-cinv">OPE_ORDHDR      </DD_TABLE_ALIAS>
