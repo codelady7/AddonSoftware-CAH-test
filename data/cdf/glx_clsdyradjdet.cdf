@@ -163,12 +163,16 @@ update_grid_tots: rem --- Calculate total debits/credits/units and display in fo
 
 		debitCtrl!=callpoint!.getDevObject("debitCtrl")
 		debitCtrl!.setValue(tdb)
+		callpoint!.setHeaderColumnData("<<DISPLAY>>.DEBIT_AMT",str(tdb))
 		creditCtrl!=callpoint!.getDevObject("creditCtrl")
 		creditCtrl!.setValue(tcr)
+		callpoint!.setHeaderColumnData("<<DISPLAY>>.CREDIT_AMT",str(tcr))
 		totalCtrl!=callpoint!.getDevObject("totalCtrl")
 		totalCtrl!.setValue(tbal)
+		callpoint!.setHeaderColumnData("<<DISPLAY>>.TOTAL_AMOUNT",str(tbal))
 		unitsCtrl!=callpoint!.getDevObject("unitsCtrl")
 		unitsCtrl!.setValue(tunits)
+		callpoint!.setHeaderColumnData("<<DISPLAY>>.UNITS",str(tunits))
 	endif
 
 	return
