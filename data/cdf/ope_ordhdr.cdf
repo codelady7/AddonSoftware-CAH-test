@@ -226,6 +226,9 @@ rem --- Enable buttons
 	if callpoint!.getColumnData("OPE_ORDHDR.INVOICE_TYPE")<>"P" then callpoint!.setOptionEnabled("OACK",1)
 	callpoint!.setOptionEnabled("CUST",1)
 
+rem --- Disable buttons
+	callpoint!.setOptionEnabled("BACK",0)
+
 rem --- Enable/disable Freight Amount
 	if cvs(callpoint!.getColumnData("OPE_ORDHDR.SHIPPING_ID"),2)<>"" then
 		callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",0)
@@ -509,6 +512,41 @@ rem --- Update this customer's aging stats if allowed by param
 				break
 		swend
 		callpoint!.setColumnData("<<DISPLAY>>.REPORT_TYPE",report_type$,1)
+	endif
+
+[[OPE_ORDHDR.AOPT-BACK]]
+rem --- Launch the Backordered Items Inquiry
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPE_ORDHDR","AO_STATUS",key_tpl$,rd_table_chans$[all],status$
+	dim aoStatus_key$:key_tpl$
+	call stbl("+DIR_SYP")+"bac_key_template.bbj","OPE_ORDHDR","PRIMARY",key_tpl$,rd_table_chans$[all],status$
+	dim primary_key$:key_tpl$
+
+	dim filter_defs$[1,2]
+	filter_defs$[0,0]="OPT_INVDET.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+	filter_defs$[1,0]="OPT_INVDET.TRANS_STATUS"
+	filter_defs$[1,1]="='E'"
+	filter_defs$[1,2]="LOCK"
+
+	call stbl("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev,
+:		Form!,
+:		"OP_BACKORD_ITEMS",
+:		"",
+:		table_chans$[all],
+:		primary_key$,
+:		filter_defs$[all]
+
+rem ... Load selected order
+	if cvs(primary_key$,2)<>"" then
+		aoStatus_key.firm_id$=primary_key.firm_id$
+		aoStatus_key.trans_status$="E"
+		aoStatus_key.ar_type$=primary_key.ar_type$
+		aoStatus_key.customer_id$=primary_key.customer_id$
+		aoStatus_key.order_no$=primary_key.order_no$
+		aoStatus_key.ar_inv_no$=primary_key.ar_inv_no$
+		callpoint!.setStatus("RECORD:["+aoStatus_key$+"]")
 	endif
 
 [[OPE_ORDHDR.AOPT-CINV]]
@@ -1518,6 +1556,9 @@ rem --- Reset default warehouse for new order
 
 rem --- Enable Freight Amount
 	callpoint!.setColumnEnabled("OPE_ORDHDR.FREIGHT_AMT",1)
+
+rem --- Enable Backordered button
+	callpoint!.setOptionEnabled("BACK",1)
 
 [[OPE_ORDHDR.ASHO]]
 rem --- Get default dates, POS station
@@ -2736,6 +2777,9 @@ rem --- If cash customer, get correct customer number
 		callpoint!.setColumnData("OPE_ORDHDR.CASH_SALE", "Y")
 		callpoint!.setStatus("REFRESH")
 	endif
+
+rem --- Disable Backordered button
+	callpoint!.setOptionEnabled("BACK",0)
 
 [[OPE_ORDHDR.CUSTOMER_ID.AVAL]]
 	cust_id$ = callpoint!.getUserInput()
