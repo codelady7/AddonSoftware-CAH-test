@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-03-27
+ Report Date:   2024-03-28
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -7,6 +7,7 @@
 24.00 released 3/26/2024
 BBjBaristaAddonDemos2400_03-25-2024_1535.jar
 =======================================================================================================================================
+
 Revision: 071239177bc6ab8b78c94ab7006c548d668a553a
 Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 3/27/2024 6:17:43 PM
@@ -16,3 +17,13 @@ Year Adjustments Utility.
 ----
 Modified: data/bar/glx_clsdyradjdet.xml
 Modified: data/cdf/glx_clsdyradjdet.cdf
+=======================================================================================================================================
+
+Revision: bf5355df50755edfd926f3ad1b0716e7c177cbc9
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 3/28/2024 1:14:32 PM
+Message:
+Restored Credit Card Master on the AP - Inquiry and Maintenance menu.
+----
+Modified: data/sync/adm_mnu_item~[01007514AD].xml
+=======================================================================================================================================
