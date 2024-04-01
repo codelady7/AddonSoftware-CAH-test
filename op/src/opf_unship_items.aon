@@ -1,8 +1,8 @@
-rem --- Backordered Items query filter program
-rem --- Program ID: opf_backord_items.aon
+rem --- Unshipped Items query filter program
+rem --- Program ID: opf_unship_items.aon
 rem --- Copyright BASIS International Ltd.  All Rights Reserved.
 
-rem --- Run by Barista as part of the OP_BACKORD_ITEMS query.
+rem --- Run by Barista as part of the OP_UNSHIP_ITEMS query.
 rem --- For each row in the result set, apply various filters to show non-stock item description, qty backordered and total available.
 
     use ::bbtranslator.bbj::BBTranslator
