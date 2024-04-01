@@ -20,6 +20,11 @@ rem --- Check if PO receiver or QA receiver exists for this PO.  If so, give war
 vendor_id$=callpoint!.getColumnData("POE_POHDR.VENDOR_ID")
 po_no$=callpoint!.getColumnData("POE_POHDR.PO_NO")
 
+rem --- Prepare to enable the Edit button and menu
+able_map$ = callpoint!.getAbleMap()
+if pos("31066B"=able_map$) then able_map$(pos("31066B"=able_map$,8)+6,1)=""; rem Edit (EDB) tool button
+if pos("31066M"=able_map$) then able_map$(pos("31066M"=able_map$,8)+6,1)=""; rem Edit (EDB) menu item
+
 poe_rechdr_dev=fnget_dev("POE_RECHDR")
 dim poe_rechdr$:fnget_tpl$("POE_RECHDR")
 read (poe_rechdr_dev,key=firm_id$+vendor_id$,knum="AO_VEND_RCVR_PO",dom=*next)
@@ -31,9 +36,16 @@ while 1
 
 	msg_id$="PO_REC_EXISTS"
 	gosub disp_message
-	callpoint!.setStatus("NEWREC")
+
+	rem --- Prepare to disable the Edit button and menu
+	if pos("31066B"=able_map$) then able_map$(pos("31066B"=able_map$,8)+6,1)="X"; rem Edit (EDB) tool button
+	if pos("31066M"=able_map$) then able_map$(pos("31066M"=able_map$,8)+6,1)="X"; rem Edit (EDB) menu item
 	break
 wend
+
+rem --- Enable/disable the Edit button and menu
+callpoint!.setAbleMap(able_map$)
+callpoint!.setStatus("ABLEMAP")
 
 poe_qahdr_dev=fnget_dev("POE_QAHDR")
 dim poe_qahdr$:fnget_tpl$("POE_QAHDR")
