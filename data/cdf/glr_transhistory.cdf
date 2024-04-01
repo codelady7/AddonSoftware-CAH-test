@@ -335,7 +335,7 @@ if jrnl_id$<>""
 	filter_defs$[10,1]="='"+jrnl_id$+"'"
 endif
 
-call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,Form!,"GL_AMOUNT_INQ","",table_chans$[all],
+call stbl("+DIR_SYP")+"bax_query.bbj",gui_dev,Form!,"GL_TRANS_INQ","",table_chans$[all],
 :	"",filter_defs$[all],search_defs$[all]
 
 return
