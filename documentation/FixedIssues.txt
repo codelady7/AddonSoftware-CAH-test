@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-03-28
+ Report Date:   2024-04-01
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -26,4 +26,15 @@ Message:
 Restored Credit Card Master on the AP - Inquiry and Maintenance menu.
 ----
 Modified: data/sync/adm_mnu_item~[01007514AD].xml
+=======================================================================================================================================
+
+Revision: 91891718ee3e90cd2dddaa02f86ab61240159fd3
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/1/2024 3:59:36 PM
+Message:
+Bug 10821: Prevented editing a PO in Purchase Order Entry when there is
+an active Receipt for the PO.
+----
+Modified: data/bar/poe_pohdr.xml
+Modified: data/cdf/poe_pohdr.cdf
 =======================================================================================================================================
