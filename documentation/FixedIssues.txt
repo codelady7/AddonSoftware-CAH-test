@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-01
+ Report Date:   2024-04-02
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -50,4 +50,14 @@ On-hand.
 ----
 Modified: data/bar/poe_recdet.xml
 Modified: data/cdf/poe_recdet.cdf
+=======================================================================================================================================
+
+Revision: b171a08ed501ba5d074a836aec7550d767fed46f
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/2/2024 2:02:13 PM
+Message:
+Bug 10823: Added missing Invoice number to the Purchase Order Invoice
+Register - Variance Report.
+----
+Modified: po/src/por_invreg_o1.aon
 =======================================================================================================================================
