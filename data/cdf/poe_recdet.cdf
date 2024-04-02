@@ -119,6 +119,7 @@ rem --- check data to see if o.k. to leave row (only if the row isn't marked as 
 if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 
 	ok_to_write$="Y"
+	newStatus$=callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())
 
 	if ok_to_write$="Y" and cvs(callpoint!.getColumnData("POE_RECDET.PO_LINE_CODE"),3)=""
 		ok_to_write$="N"
@@ -141,6 +142,15 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 	qty_ordered=num(callpoint!.getColumnData("POE_RECDET.QTY_ORDERED"))
 	qty_received=num(callpoint!.getColumnData("POE_RECDET.QTY_RECEIVED"))
 	qty_prev_rec=num(callpoint!.getColumnData("POE_RECDET.QTY_PREV_REC"))
+	if newStatus$="Y" then
+		whse$=callpoint!.getColumnData("POE_RECDET.WAREHOUSE_ID")
+		item$=callpoint!.getColumnData("POE_RECDET.ITEM_ID")
+		ivm_itemwhse=fnget_dev("IVM_ITEMWHSE")
+		dim ivm_itemwhse$:fnget_tpl$("IVM_ITEMWHSE")
+		findrecord (ivm_itemwhse,key=firm_id$+whse$+item$,dom=*break) ivm_itemwhse$
+		qty_on_hand=ivm_itemwhse.qty_on_hand
+	endif
+
 	if ok_to_write$="Y" and pos(line_type$="SD")<>0 
 		if ok_to_write$="Y" and cvs(callpoint!.getColumnData("POE_RECDET.ITEM_ID"),3)=""
 			ok_to_write$="N"
@@ -152,7 +162,9 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 			focus_column$="POE_RECDET.CONV_FACTOR"
 			translate$="AON_CONVERSION_FACTOR"
 		endif
-		if ok_to_write$="Y" and qty_ordered=0 or (qty_ordered>0 and qty_received<0)
+		if ok_to_write$="Y" and qty_ordered=0 or 
+: 		(NewStatus$="" and qty_received<0 and abs(qty_received)>qty_prev_rec) or
+: 		(NewStatus$="Y" and qty_received<0 and abs(qty_received)>qty_on_hand)
 			ok_to_write$="N"
 			focus_column$="POE_RECDET.QTY_RECEIVED"
 			translate$="AON_QUANTITY_RECEIVED"
@@ -170,7 +182,9 @@ if callpoint!.getGridRowDeleteStatus(num(callpoint!.getValidationRow()))<>"Y"
 			focus_column$="POE_RECDET.UNIT_COST"
 			translate$="AON_UNIT_COST"
 		endif
-		if ok_to_write$="Y" and qty_ordered=0 or (qty_ordered>0 and qty_received<0)
+		if ok_to_write$="Y" and qty_ordered=0 or 
+: 		(NewStatus$="" and qty_received<0 and abs(qty_received)>qty_prev_rec) or
+: 		(NewStatus$="Y" and qty_received<0 and abs(qty_received)>qty_on_hand)
 			ok_to_write$="N"
 			focus_column$="POE_RECDET.QTY_RECEIVED"
 			translate$="AON_QUANTITY_RECEIVED"
