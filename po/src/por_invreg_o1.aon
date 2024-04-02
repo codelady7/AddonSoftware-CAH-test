@@ -31,6 +31,7 @@ rem --- Document initializations
     rep_date_stamp$=date(0:"%Yd%Mz%Dz")
     rep_time$=date(0:"%hz:%mz %p")
     rep_time_stamp$=date(0:"%Hz%mz%sz")
+    rep_title$=rep_title$+"-"+Translate!.getTranslation("AON_VARIANCE")
 
 rem --- Initializations
 
@@ -193,7 +194,7 @@ l2200: rem --- Standard or Non-stock line
 	else
 		outVect!.addItem("")
 	endif
-	outVect!.addItem("")
+	outVect!.addItem(poe25a.ap_inv_no$)
 	outVect!.addItem(received$)
 	outVect!.addItem(str(poe25a.qty_received))
 	outVect!.addItem(pot14a.unit_measure$)
