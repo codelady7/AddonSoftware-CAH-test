@@ -38,3 +38,16 @@ an active Receipt for the PO.
 Modified: data/bar/poe_pohdr.xml
 Modified: data/cdf/poe_pohdr.cdf
 =======================================================================================================================================
+
+Revision: 212e33726234491f36a2e8467fcb91af8f55b282
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/1/2024 6:10:43 PM
+Message:
+Bug 10822: Modified Purchase Order Receipt Entry to allow a negative Qty
+Received for existing detail lines if it doesn't exceed the Qty Prev
+Rec, or for new detail lines if it doesn't exceed the warehouse Qty
+On-hand.
+----
+Modified: data/bar/poe_recdet.xml
+Modified: data/cdf/poe_recdet.cdf
+=======================================================================================================================================
