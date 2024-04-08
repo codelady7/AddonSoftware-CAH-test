@@ -5773,6 +5773,7 @@
 		<LANG_ID>ENU</LANG_ID>
 		<NO_SHOW> </NO_SHOW>
 		<MENU_DESC>Inventory Transfer Entry</MENU_DESC>
+		<HELP_TAG>Inventory_Transfer_Entry</HELP_TAG>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>IV </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
@@ -6388,6 +6389,7 @@
 		<LANG_ID>ENU</LANG_ID>
 		<NO_SHOW> </NO_SHOW>
 		<MENU_DESC>Physical Count Entry</MENU_DESC>
+		<HELP_TAG>Physical_Inventory_Count_Entry</HELP_TAG>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>IV </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
@@ -6612,6 +6614,16 @@
 		<NO_SHOW> </NO_SHOW>
 		<MENU_DESC>Registro cambiamento costo</MENU_DESC>
 		<HELP_TAG>Cost_Change_Register</HELP_TAG>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>IV </ASC_PROD_ID>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MOUNT_SYS_ID>ADDON           </MOUNT_SYS_ID>
+		<MENUITEM_ID>e3abfc8d-5194-4528-a8ad-ec7ae31cfd00</MENUITEM_ID>
+		<LANG_ID>ENU</LANG_ID>
+		<NO_SHOW> </NO_SHOW>
+		<MENU_DESC>Backordered Items Report</MENU_DESC>
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>IV </ASC_PROD_ID>
 		<USER_MODIFIED> </USER_MODIFIED>
