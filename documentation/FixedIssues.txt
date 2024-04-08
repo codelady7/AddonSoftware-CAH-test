@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-02
+ Report Date:   2024-04-08
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -60,4 +60,14 @@ Bug 10823: Added missing Invoice number to the Purchase Order Invoice
 Register - Variance Report.
 ----
 Modified: po/src/por_invreg_o1.aon
+=======================================================================================================================================
+
+Revision: 57b4be5eff8dbb05c8a8975ec047dac417b1d180
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/8/2024 3:43:37 PM
+Message:
+Bug 10834: Add the BARCODE_SOURCE field to the ARS_PARAMS table so that
+it once again matches the OPS_PARAMS table.
+----
+Modified: data/bar/ars_params.xml
 =======================================================================================================================================
