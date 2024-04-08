@@ -1,0 +1,428 @@
+rem --- Backordered Items Report
+rem --- Program ivr_backorders.aon
+
+rem --- AddonSoftware Version 24.01
+rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+
+    seterr std_error
+    setesc std_error
+
+rem --- Use function object, Option object
+    use ::ado_func.src::func
+
+rem --- Document initializations
+    OutVect!=bbjAPI().makeVector()
+    HdrVect!=bbjAPI().makeVector()
+    BrkVect!=bbjAPI().makeVector()
+    TotVect!=bbjAPI().makeVector()
+    
+    rep_date$=date(0:"%Mz/%Dz/%Yd")
+    rep_date_stamp$=date(0:"%Yd%Mz%Dz")
+    rep_time$=date(0:"%hz:%mz %p")
+    rep_time_stamp$=date(0:"%Hz%mz%sz")
+    rep_prog$=pgm(-2)
+
+rem --- Retrieve the program path
+    pgmdir$=stbl("+DIR_PGM",err=*next)
+
+rem --- Retrieve sysinfo data
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=*next)
+    firm_id$=sysinfo.firm_id$
+
+    milestone=50
+    milestone=num(stbl("+MILESTONE",err=*next))
+
+rem --- Open/Lock files
+    files=6,begfile=1,endfile=files
+    dim files$[files],options$[files],ids$[files],templates$[files],channels[files]
+    files$[1]="opm-02",     ids$[1]="OPC_LINECODE"
+    files$[2]="opt-01",     ids$[2]="OPT_INVHDR"
+    files$[3]="opt-11",     ids$[3]="OPT_INVDET"
+    files$[4]="ivm-01",     ids$[4]="IVM_ITEMMAST"
+    files$[5]="ivm-02",     ids$[5]="IVM_ITEMWHSE"
+    files$[6]="ivs_params", ids$[6]="IVS_PARAMS"
+
+    call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],
+:       ids$[all],templates$[all],channels[all],batch,status
+    if status goto std_exit
+    
+    opcLineCode_dev=channels[1]
+    optInvHdr_dev=channels[2]
+    optInvDet_dev=channels[3]
+    ivmItemMast_dev=channels[4]
+    ivmItemWhse_dev=channels[5]
+    ivsParams_dev=channels[6]
+
+rem --- Dimension string templates
+    dim opcLineCode$:templates$[1]
+    dim optInvHdr$:templates$[2]
+    dim optInvDet$:templates$[3]
+    dim ivmItemMast$:templates$[4]
+    dim ivmItemWhse$:templates$[5]
+    dim ivsParams$:templates$[6]
+
+rem --- Assign form input values to local variables
+    sortBy$ = option!.getOptionData("SORT_BY")
+    warehouses$ = cvs(callpoint!.getDevObject("warehouses"),3)
+    if warehouses$(len(warehouses$),1)="," then warehouses$=warehouses$(1,len(warehouses$)-1)
+
+rem --- Initializations
+    recs=0
+    total_recs=0
+    headings=4
+    h0=132
+    dim headings$[headings+1]
+    headings$[0]=sysinfo.firm_name$,headings$[1]=sysinfo.task_desc$
+    headings$[3]=Translate!.getTranslation("AON_WAREHOUSE")+": "
+    if warehouses$<>"All" then
+        for i=1 to len(warehouses$)
+            if warehouses$(i,1)<>"'" then whses$=whses$+warehouses$(i,1)
+        next i
+        headings$[3]=headings$[3]+whses$
+    else
+        headings$[3]=headings$[3]+Translate!.getTranslation("AON_ALL")
+    endif
+    headings$[4]=cvs(Translate!.getTranslation("AON__SORTED_BY_"),3)+": "
+    if sortBy$="W" then
+        headings$[4]=headings$[4]+Translate!.getTranslation("AON_WAREHOUSE")
+    else
+        if sortBy$="I" then
+            headings$[4]=headings$[4]+Translate!.getTranslation("AON_ITEM")
+        else
+            headings$[4]=headings$[4]+Translate!.getTranslation("AON_ORDER")
+        endif
+    endif
+
+    when$=sysinfo.system_date$,clock$=""
+
+    dim i[5]
+    findrecord(ivsParams_dev,key=firm_id$+"IV00",dom=std_missing_params)ivsParams$
+    i[0]=ivsParams.item_id_len
+    i[1]=num(ivsParams.precision$)
+    i[2]=ivsParams.ls_no_len
+    i[3]=num(ivsParams.desc_len_01$)
+    i[4]=num(ivsParams.desc_len_02$)
+    i[5]=num(ivsParams.desc_len_03$)
+
+    call pgmdir$+"adc_getmask.aon","","AR","I","",m0$,m0,0
+    call pgmdir$+"adc_getmask.aon","","IV","U",imask$,m2$,m2,0
+    call pgmdir$+"adc_getmask.aon","","IV","I","",ivIMask$,0,0
+
+    columns = 10
+    dim columns$[columns,10]
+    columns$[0,0]=Translate!.getTranslation("AON_WHSE"),                                                     columns$[0,1]="C", columns$[0,2]="5"
+    columns$[1,0]=Translate!.getTranslation("AON_ITEM")+"^ID/"+Translate!.getTranslation("AON_DESCRIPTION"), columns$[1,1]="C", columns$[1,2]="20"
+    columns$[2,0]=Translate!.getTranslation("AON_ORDER^NUMBER"),                                             columns$[2,1]="C", columns$[2,2]="7"
+    columns$[3,0]=Translate!.getTranslation("AON_CUSTOMER")+"^"+Translate!.getTranslation("AON_NUMBER")+"/"+Translate!.getTranslation("AON_NAME"), columns$[3,1]="C", columns$[3,2]="20"
+    columns$[4,0]=Translate!.getTranslation("AON_UM"),                                                       columns$[4,1]="C", columns$[4,2]="5"
+    columns$[5,0]=Translate!.getTranslation("AON_BACKORDERED"),                                              columns$[5,1]="C", columns$[5,2]="12", columns$[5,3]=m2$, columns$[5,5]="R"
+    columns$[6,0]=Translate!.getTranslation("AON_WHSE")+" "+Translate!.getTranslation("AON_AVAILABLE"),      columns$[6,1]="C", columns$[6,2]="14", columns$[6,3]=m2$, columns$[6,5]="R"
+    columns$[7,0]=Translate!.getTranslation("AON_TOTAL")+" "+Translate!.getTranslation("AON_AVAILABLE"),     columns$[7,1]="C", columns$[7,2]="14", columns$[7,3]=m2$, columns$[7,5]="R"
+    columns$[8,0]=Translate!.getTranslation("AON_WHSE")+" "+Translate!.getTranslation("AON_ON_HAND"),        columns$[8,1]="C", columns$[8,2]="14", columns$[8,3]=m2$, columns$[8,5]="R"
+    columns$[9,0]=Translate!.getTranslation("AON_WHSE")+" "+Translate!.getTranslation("AON_COMMITTED"),      columns$[9,1]="C", columns$[9,2]="14", columns$[9,3]=m2$, columns$[9,5]="R"
+    columns$[10,0]=Translate!.getTranslation("AON_WHSE")+" "+Translate!.getTranslation("AON_ON_ORDER"),      columns$[10,1]="C", columns$[10,2]="14", columns$[10,3]=m2$, columns$[10,5]="R"
+
+    call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
+
+rem --- Background
+    call pgmdir$+"adc_progress.aon","N","","","","",0,optInvHdr_dev,1,meter_num,status
+    if status = 999 then goto std_exit
+
+rem --- Backordered Items query
+    sql_prep$=""
+    sql_prep$=sql_prep$+"SELECT opt_invdet.firm_id, opt_invdet.trans_status, opt_invdet.warehouse_id, opt_invdet.item_id, ivm_itemmast.item_desc, "
+    sql_prep$=sql_prep$+"       opt_invdet.order_no, opt_invdet.customer_id, arm_custmast.customer_name, ivm_itemmast.unit_of_sale, opt_invdet.qty_backord, "
+    sql_prep$=sql_prep$+"       ivm_itemwhse.qty_on_hand, ivm_itemwhse.qty_commit, ivm_itemwhse.qty_on_order, opt_invdet.ar_type, opt_invdet.ar_inv_no, "
+    sql_prep$=sql_prep$+"       opt_invdet.internal_seq_no, opt_invdet.line_code, opt_invdet.order_memo, opt_invdet.qty_shipped "
+    sql_prep$=sql_prep$+"FROM opt_invdet "
+    sql_prep$=sql_prep$+"LEFT JOIN ivm_itemmast ON ivm_itemmast.firm_id=opt_invdet.firm_id AND ivm_itemmast.item_id=opt_invdet.item_id "
+    sql_prep$=sql_prep$+"LEFT JOIN arm_custmast ON arm_custmast.firm_id=opt_invdet.firm_id AND arm_custmast.customer_id=opt_invdet.customer_id "
+    sql_prep$=sql_prep$+"LEFT JOIN ivm_itemwhse ON ivm_itemwhse.firm_id=opt_invdet.firm_id AND ivm_itemwhse.warehouse_id=opt_invdet.warehouse_id AND " 
+    sql_prep$=sql_prep$+"          ivm_itemwhse.item_id=opt_invdet.item_id "
+    sql_prep$=sql_prep$+"WHERE firm_id='"+firm_id$+"' AND trans_status='E' AND "
+    sql_prep$=sql_prep$+"      (opt_invdet.qty_backord<>0 OR "
+    sql_prep$=sql_prep$+"      order_no IN (SELECT order_no FROM opt_invhdr WHERE firm_id=opt_invdet.firm_id AND ar_type=opt_invdet.ar_type AND "
+    sql_prep$=sql_prep$+"      customer_id=opt_invdet.customer_id AND order_no=opt_invdet.order_no AND ar_inv_no=opt_invdet.ar_inv_no AND backord_flag='B')) "
+    if warehouses$<>"All" then
+        sql_prep$=sql_prep$+"AND opt_invdet.warehouse_id IN ("+warehouses$+") "
+    endif
+    if sortBy$="W" then
+        sql_prep$=sql_prep$+"ORDER BY opt_invdet.warehouse_id, opt_invdet.item_id, opt_invdet.order_no "
+    else
+        if sortBy$="I" then
+            sql_prep$=sql_prep$+"ORDER BY opt_invdet.item_id, opt_invdet.warehouse_id, opt_invdet.order_no "
+        else
+            sql_prep$=sql_prep$+"ORDER BY opt_invdet.order_no,opt_invdet.warehouse_id, opt_invdet.item_id "
+        endif
+    endif
+
+    sql_chan=sqlunt
+    sqlopen(sql_chan,err=*next)stbl("+DBNAME")
+    sqlprep(sql_chan)sql_prep$
+    dim read_tpl$:sqltmpl(sql_chan)
+    sqlexec(sql_chan)
+
+rem --- Main Read for Backordered Items
+    while 1
+        read_tpl$ = sqlfetch(sql_chan,err=*break)
+
+        total_recs=total_recs+1
+        if mod(total_recs,milestone)=0 then call stbl("+DIR_PGM")+"adc_progress.aon","S","","","","",0,0,milestone,meter_num,status
+        if status = 999 then exitto std_exit
+
+        rem --- Exclude Dropship, Memo and Other detail lines
+        readrecord(opcLineCode_dev,key=read_tpl.firm_id$+read_tpl.line_code$)opcLineCode$
+        if opcLineCode.dropship$="Y" or pos(opcLineCode.line_type$="MO") then continue
+    
+        rem --- Set Qty Backordered when the Order is backordered
+        optInvHdr_key$=read_tpl.firm_id$+read_tpl.ar_type$+read_tpl.customer_id$+read_tpl.order_no$+read_tpl.ar_inv_no$
+        findrecord(optInvHdr_dev,key=optInvHdr_key$)optInvHdr$
+        if optInvHdr.backord_flag$="B" then
+            read_tpl.qty_backord$=read_tpl.qty_shipped$
+        endif
+
+        rem --- Keep track of backordered stock items
+        boItems$=boItems$+"'"+read_tpl.item_id$+"', "
+    
+        rem --- Get all open backorders for this stocked item
+        item_BOs!=BBjAPI().makeVector()
+        if cvs(read_tpl.item_id$,2)<>"" then
+            optInvDet_key$=read_tpl.firm_id$+read_tpl.trans_status$
+            read(optInvDet_dev,key=optInvDet_key$,knum="STAT_WH_ITEM_ORD",dom=*next)
+            while 1
+                thisKey$=key(optInvDet_dev,end=*break)
+                if pos(optInvDet_key$=thisKey$)<>1 then break
+                readrecord(optInvDet_dev)optInvDet$
+                if optInvDet.qty_backord<>0 then
+                    item_BOs!.addItem(thisKey$)
+                    continue
+                endif
+                optInvHdr_key$=optInvDet.firm_id$+optInvDet.ar_type$+optInvDet.customer_id$+optInvDet.order_no$+optInvDet.ar_inv_no$
+                findrecord(optInvHdr_dev,key=optInvHdr_key$)optInvHdr$
+                if optInvHdr.backord_flag$="B" then item_BOs!.addItem(thisKey$)
+            wend
+            call stbl("+DIR_SYP")+"bac_key_template.bbj","OPT_INVDET","STAT_WH_ITEM_ORD",key_tpl$,table_chans$[all],status$
+            dim backorderKey$:key_tpl$
+        endif
+    
+        rem --- Set stocked item's warehouse available
+        qty_available=0
+        if cvs(read_tpl.item_id$,2)<>"" then
+            whseOnHand=0
+            whseCommitted=0
+            ivmItemWhse_key$=read_tpl.firm_id$+read_tpl.warehouse_id$+read_tpl.item_id$
+            redim ivmItemWhse$
+            findrecord(ivmItemWhse_dev,key=ivmItemWhse_key$,knum="PRIMARY",dom=*next)ivmItemWhse$
+            whseOnHand=ivmItemWhse.qty_on_hand
+            whseCommitted=ivmItemWhse.qty_commit
+        
+            rem --- Don't count committed backorders
+            committedBOs=0
+            backorderIter!=item_BOs!.iterator()
+            while backorderIter!.hasNext()
+                backorderKey!=backorderIter!.next()
+                backorderKey$=backorderKey!
+                if backorderKey.warehouse_id$<>read_tpl.warehouse_id$ or backorderKey$.item_id$<>read_tpl.item_id$ then continue
+                findrecord(optInvDet_dev,key=backorderKey$,dom=*continue)optInvDet$
+                if optInvDet.commit_flag$="Y" then committedBOs=committedBOs+read_tpl.qty_backord
+            wend
+            qty_available=whseOnHand-(whseCommitted-committedBOs)
+        endif
+    
+        rem --- Set stocked item's total available for all warehouses
+        total_available=0
+        if cvs(read_tpl.item_id$,2)<>"" then
+            ttlOnHand=0
+            ttlCommitted=0
+            ivmItemWhse_key$=read_tpl.firm_id$+read_tpl.item_id$
+            read(ivmItemWhse_dev,key=ivmItemWhse_key$,knum="AO_ITEM_WH",dom=*next)
+            while 1
+                thisKey$=key(ivmItemWhse_dev,end=*break)
+                if pos(ivmItemWhse_key$=thisKey$)<>1 then break
+                readrecord(ivmItemWhse_dev)ivmItemWhse$
+                ttlOnHand=ttlOnHand+ivmItemWhse.qty_on_hand
+                ttlCommitted=ttlCommitted+ivmItemWhse.qty_commit
+            wend
+        
+            rem --- Don't count committed backorders
+            committedBOs=0
+            backorderIter!=item_BOs!.iterator()
+            while backorderIter!.hasNext()
+                backorderKey!=backorderIter!.next()
+                backorderKey$=backorderKey!
+                if backorderKey$.item_id$<>read_tpl.item_id$ then continue
+                findrecord(optInvDet_dev,key=backorderKey$,dom=*continue)optInvDet$
+                if optInvDet.commit_flag$="Y" then committedBOs=committedBOs+read_tpl.qty_backord
+            wend
+            total_available=ttlOnHand-(ttlCommitted-committedBOs)
+        endif
+    
+        rem --- Set Item Description for non-stock items
+        if cvs(read_tpl.item_id$,2)="" then
+            read_tpl.item_id$="*** "+Translate!.getTranslation("AON_NON-STOCK")+" ***"
+            read_tpl.item_desc$=read_tpl.order_memo$
+        endif
+
+        rem --- Print detail line
+        OutVect!.addItem(read_tpl.warehouse_id$)
+        OutVect!.addItem(fnmask$(read_tpl.item_id$,ivIMask$))
+        OutVect!.addItem(read_tpl.order_no$)
+        OutVect!.addItem(fnmask$(read_tpl.customer_id$,m0$))
+        OutVect!.addItem(read_tpl.unit_of_sale$)
+        OutVect!.addItem(str(read_tpl.qty_backord))
+        OutVect!.addItem(str(qty_available))
+        OutVect!.addItem(str(total_available))
+        OutVect!.addItem(str(read_tpl.qty_on_hand))
+        OutVect!.addItem(str(read_tpl.qty_commit))   
+        OutVect!.addItem(str(read_tpl.qty_on_order))   
+
+        OutVect!.addItem("")
+        OutVect!.addItem("  "+func.displayDesc(read_tpl.item_desc$, i[3], i[4], i[5]))
+        OutVect!.addItem(" ")
+        OutVect!.addItem("  "+read_tpl.customer_name$)
+        xwk=fnblank(7)
+
+        recs=recs+1
+    wend
+
+done: rem --- All done
+    if recs=0
+        msg_id$="DOC_OUTPUT_NODATA"
+        gosub disp_message
+        goto std_exit_no_report
+    endif
+
+    rem --- Run overlay
+    update$       = pgmdir$+"ivr_backorders_o1.aon"
+    overlay$      = update$
+    out_action$   = "PRT-PDF"
+    next_overlay$ = overlay$
+
+    goto std_exit
+    
+rem --- Date/time handling functions
+
+    def fndate$(q$)
+        q1$=""
+        q1$=date(jul(num(q$(1,4)),num(q$(5,2)),num(q$(7,2)),err=*next),err=*next)
+        if q1$="" q1$=q$
+        return q1$
+    fnend
+
+rem --- Format inventory item description
+
+    def fnitem$(q$,q1,q2,q3)
+        q$=pad(q$,q1+q2+q3)
+        return cvs(q$(1,q1)+" "+q$(q1+1,q2)+" "+q$(q1+q2+1,q3),32)
+    fnend
+
+rem --- fnmask$: Alphanumeric Masking Function (formerly fnf$)
+
+    def fnmask$(q1$,q2$)
+        if cvs(q1$,2)="" return ""
+        if q2$="" q2$=fill(len(q1$),"0")
+        if pos("E"=cvs(q1$,4)) goto alpha_mask
+:      else return str(-num(q1$,err=alpha_mask):q2$,err=alpha_mask)
+alpha_mask:
+        q=1
+        q0=0
+        while len(q2$(q))
+            if pos(q2$(q,1)="-()") q0=q0+1 else q2$(q,1)="X"
+            q=q+1
+        wend
+        if len(q1$)>len(q2$)-q0 q1$=q1$(1,len(q2$)-q0)
+        return str(q1$:q2$)
+    fnend
+
+rem --- fnBlank : Create blank cells in OutVect!. No return value
+
+    def fnblank(q0)
+        for q1=1 to q0
+            OutVect!.addItem("")
+        next q1
+        return q1
+    fnend
+
+rem #include disp_message.src
+
+disp_message: rem --- Display Message Dialog
+
+    call stbl("+DIR_SYP")+"bac_message.bbj",msg_id$,msg_tokens$[all],msg_opt$,table_chans$[all]
+    return
+
+rem --- #include std_error.src
+
+std_error: rem --- Standard error handler (11Oct2017)
+
+    if tcb(19)>0
+        rem --- Escape handler
+        if and(chr(tcb(19)),$08$)=$08$
+            release
+        else
+            setesc std_error
+            return
+        endif
+    endif
+
+    if err=0   
+        rem --- Get tcb(12) and tcb(10) to send into bac_error
+        lock_byte=tcb(10)
+        lock_chan=tcb(12)  
+    endif
+
+    rd_err_text$="",err_num=err
+    if tcb(2)=0 and tcb(5) then rd_err_text$=pgm(tcb(5),tcb(13),err=*next)
+    if err_num=252 then
+        E!=BBjAPI().getLastBBjException()
+        rd_err_text$=rd_err_text$+$0A$+E!.getClass().getName()
+        if E!.getMessage()<>null() then rd_err_text$=rd_err_text$+": "+E!.getMessage()
+    endif
+    call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
+    if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
+    if pos("RETRY"=rd_err_act$) retry
+    if pgm(-1)<>pgm(-2) status=999; exit 
+    release
+
+rem --- #endinclude std_error.src
+rem --- #include std_missing_params.src
+
+std_missing_params: rem --- Standard missing parameter handler (15Apr2006)
+
+    rd_err_text$=""
+    if tcb(5)<>0 and pgm(-1)=pgm(-2) rd_err_text$=pgm(tcb(5))
+    pgmdir$=stbl("+DIR_PGM",err=std_missing_params_exit)
+    call pgmdir$+"adc_noparams.aon",err=std_missing_params_exit,pgm(-2),str(tcb(5):"00000"),
+:       str(err:"000"),rd_err_text$,rd_err_act$
+
+std_missing_params_exit: 
+    master_user$=cvs(stbl("+MASTER_USER",err=std_missing_params_release),2)
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=std_missing_params_release)
+    dim sysinfo$:sysinfo_template$
+    sysinfo$=stbl("+SYSINFO",err=std_missing_params_release)
+    if cvs(sysinfo.user_id$,2)=master_user$ escape
+
+std_missing_params_release: 
+    status=999
+    if pgm(-1)<>pgm(-2) exit
+    release
+
+rem --- #endinclude std_missing_params.src
+
+rem --- #include std_end.src
+
+std_exit: rem --- Standard program end (01Mar2006)
+    call stbl("+DIR_PGM")+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
+    run stbl("+DIR_SYP")+"bas_process_end.bbj",err=*next
+    release
+
+rem --- #endinclude std_end.src
+
+std_exit_no_report: 
+
+    call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,status    
+    OutVect!=null()
+    goto std_exit
+
+    end
