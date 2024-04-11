@@ -243,7 +243,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					if callpoint!.getColumnData("APE_PAYSELECT.INCLUDE_DISC")="Y" or
 :						apt01a.disc_date$ >= sysinfo.system_date$
 :					then
-						gridInvoices!.setCellText(curr_row, 12, apt01a.discount_amt$)
+						gridInvoices!.setCellText(curr_row, 12, apt01a.discount_amt)
 					else
 						gridInvoices!.setCellText(curr_row, 12, "0.00")
 					endif
@@ -1597,7 +1597,7 @@ rem --- updates grid and vectors accordingly
                             callpoint!.setColumnData("<<DISPLAY>>.ACH_PAYMENTS",str(ach_payments),1)
                             callpoint!.setColumnData("<<DISPLAY>>.TOT_PAYMENTS",str(tot_payments),1)
                             if apt01a.discount_amt<0 and apt01a.invoice_amt>0 then apt01a.discount_amt=0
-                            vectInvoicesMaster!.set(demote_row+13,apt01a.discount_amt$)
+                            vectInvoicesMaster!.set(demote_row+13,apt01a.discount_amt)
                             vectInvoicesMaster!.set(demote_row+14,"0")
                         endif
                     endif
@@ -2471,7 +2471,7 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 				if callpoint!.getColumnData("APE_PAYSELECT.INCLUDE_DISC")="Y" or
 :					apt01a.disc_date$ >= sysinfo.system_date$
 :				then
-					gridInvoices!.setCellText(row_no, 12, apt01a.discount_amt$)
+					gridInvoices!.setCellText(row_no, 12, apt01a.discount_amt)
 				else
 					gridInvoices!.setCellText(row_no, 12, "0.00")
 				endif
