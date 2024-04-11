@@ -47,8 +47,12 @@ rem --- Disable Load Image and View Images options as needed
 rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id is blank.
 	if cvs(callpoint!.getColumnData("APE_INVOICEHDR.CREDITCARD_ID"),2)="" then
 		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",0)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISC_DATE",1)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISCOUNT_AMT",1)
 	else
 		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",1)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISC_DATE",0)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISCOUNT_AMT",0)
 	endif
 
 [[APE_INVOICEHDR.AOPT-LIIM]]
@@ -733,6 +737,11 @@ rem --- Warn if discount date has expired
 		endif
 	endif
 
+[[APE_INVOICEHDR.CC_TRANS_DATE.AVAL]]
+rem --- Set the discount date for credit card purchase
+	cc_trans_date$=callpoint!.getUserInput()
+	callpoint!.setColumnData("APE_INVOICEHDR.DISC_DATE",cc_trans_date$,1)
+
 [[APE_INVOICEHDR.CREDITCARD_ID.AVAL]]
 rem --- Skip if CREDITCARD_ID wasn't changed
 	ccID$=callpoint!.getUserInput()
@@ -852,12 +861,18 @@ rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id i
 	if cvs(ccID$,2)="" then
 		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",0)
 		callpoint!.setColumnData("APE_INVOICEHDR.CC_TRANS_DATE","",1)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISC_DATE",1)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISCOUNT_AMT",1)
+		gosub calculate_due_and_discount
 	else
 		callpoint!.setColumnEnabled("APE_INVOICEHDR.CC_TRANS_DATE",1)
 		if cvs(callpoint!.getColumnData("APE_INVOICEHDR.CC_TRANS_DATE"),2)="" then
 			invoice_date$=callpoint!.getColumnData("APE_INVOICEHDR.INVOICE_DATE")
 			callpoint!.setColumnData("APE_INVOICEHDR.CC_TRANS_DATE",invoice_date$,1)
 		endif
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISC_DATE",0)
+		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISCOUNT_AMT",0)
+		callpoint!.setColumnData("APE_INVOICEHDR.DISCOUNT_AMT","0",1)
 	endif
 
 [[APE_INVOICEHDR.CREDITCARD_ID.BINP]]
