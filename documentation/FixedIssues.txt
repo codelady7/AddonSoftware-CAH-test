@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-08
+ Report Date:   2024-04-10
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -70,4 +70,17 @@ Bug 10834: Add the BARCODE_SOURCE field to the ARS_PARAMS table so that
 it once again matches the OPS_PARAMS table.
 ----
 Modified: data/bar/ars_params.xml
+=======================================================================================================================================
+
+Revision: 6f87cdc33577e7793f9343f232fc5f06fac3c0f6
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/10/2024 6:21:46 PM
+Message:
+Bug 10827: Modified AP Invoice Entry so that invoices paid via credit
+card do NOT have a Discount.
+----
+Modified: data/bar/ape_invoicehdr.xml
+Modified: data/bar/ape_payselect.xml
+Modified: data/cdf/ape_invoicehdr.cdf
+Modified: data/cdf/ape_payselect.cdf
 =======================================================================================================================================
