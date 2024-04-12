@@ -95,8 +95,6 @@ rem --- remove software lock on batch, if batching
 	endif
 
 [[IVE_TRANSHDR.BSHO]]
-rem print 'show', ; rem debug
-
 rem --- Pre-inits
 	
 	use ::ado_util.src::util
@@ -188,6 +186,11 @@ rem --- Is GL installed?
 rem --- Final inits
 
 	precision num(ivs01a.precision$)
+
+rem --- Reduce size of Transaction Comments label so it doesn't cover link for the Transaction Code
+	memo1024!=callpoint!.getControl("IVE_TRANSHDR.MEMO_1024")
+	label!=Form!.getControl(memo1024!.getID()-1000)
+	label!.setSize(label!.getWidth(), int(label!.getHeight()/2))
 
 [[IVE_TRANSHDR.BTBL]]
 rem --- Get Batch information
