@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-10
+ Report Date:   2024-04-12
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -83,4 +83,15 @@ Modified: data/bar/ape_invoicehdr.xml
 Modified: data/bar/ape_payselect.xml
 Modified: data/cdf/ape_invoicehdr.cdf
 Modified: data/cdf/ape_payselect.cdf
+=======================================================================================================================================
+
+Revision: af0c97111515340c7c6f06fff3b7873c99f3acc2
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/12/2024 3:51:50 PM
+Message:
+Bug 10835: Reduced size of Transaction Comments label so it doesn't
+cover link for the Transaction Code.
+----
+Modified: data/bar/ive_transhdr.xml
+Modified: data/cdf/ive_transhdr.cdf
 =======================================================================================================================================
