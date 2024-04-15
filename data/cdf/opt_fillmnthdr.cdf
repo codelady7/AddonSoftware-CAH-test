@@ -390,6 +390,7 @@ rem --- Make sure modified records are saved before printing Packing List
 		dim optFillmntHdr$:optFillmntHdr_tpl$
 		optFillmntHdr$=util.copyFields(optFillmntHdr_tpl$, callpoint!)
 		optFillmntHdr$=field(optFillmntHdr$)
+		if cvs(optFillmntHdr.firm_id$,2)="" then optFillmntHdr.firm_id$=firm_id$
 		writerecord(optFillmntHdr_dev)optFillmntHdr$
 		extractrecord(optFillmntHdr_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$, dom=*next)optFillmntHdr$; rem Advisory Locking
 		callpoint!.setStatus("SETORIG")
@@ -431,6 +432,7 @@ rem --- Update print_status flag
 			dim optFillmntHdr$:optFillmntHdr_tpl$
 			optFillmntHdr$=util.copyFields(optFillmntHdr_tpl$, callpoint!)
 			optFillmntHdr$=field(optFillmntHdr$)
+			if cvs(optFillmntHdr.firm_id$,2)="" then optFillmntHdr.firm_id$=firm_id$
 			writerecord(optFillmntHdr_dev)optFillmntHdr$
 			extractrecord(optFillmntHdr_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$, dom=*next)optFillmntHdr$; rem Advisory Locking
 			callpoint!.setStatus("SETORIG")
