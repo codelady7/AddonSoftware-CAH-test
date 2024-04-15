@@ -236,6 +236,7 @@ rem --- Has the total quantity packed changed?
 		dim optCartDet$:optCartDet_tpl$
 		optCartDet$=util.copyFields(optCartDet_tpl$, callpoint!)
 		optCartDet$=field(optCartDet$)
+		if cvs(optCartDet.firm_id$,2)="" then optCartDet.firm_id$=firm_id$
 		writerecord(optCartDet_dev)optCartDet$
 		extractrecord(optCartDet_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$, dom=*next)optCartDet$; rem Advisory Locking
 		callpoint!.setStatus("REFRESH;SETORIG")
@@ -779,6 +780,7 @@ rem --- Automatically launch OPT_CARTLSDET grid for lot/serial items
 			dim optCartDet$:optCartDet_tpl$
 			optCartDet$=util.copyFields(optCartDet_tpl$, callpoint!)
 			optCartDet$=field(optCartDet$)
+			if cvs(optCartDet.firm_id$,2)="" then optCartDet.firm_id$=firm_id$
 			writerecord(optCartDet_dev)optCartDet$
 			extractrecord(optCartDet_dev, key=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+carton_no$+orddet_seq_ref$, dom=*next)optCartDet$; rem Advisory Locking
 			callpoint!.setStatus("REFRESH;SETORIG")
