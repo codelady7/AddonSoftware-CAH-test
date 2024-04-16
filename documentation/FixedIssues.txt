@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-12
+ Report Date:   2024-04-15
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -94,4 +94,17 @@ cover link for the Transaction Code.
 ----
 Modified: data/bar/ive_transhdr.xml
 Modified: data/cdf/ive_transhdr.cdf
+=======================================================================================================================================
+
+Revision: b00e743d34e1954ba8b9dc0531b0335f87c3c1cc
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/15/2024 4:59:19 PM
+Message:
+Bug 10836: Set optCartDet.firm_id$=firm_id$ after getting optCartDet$
+from util.copyFields(optCartDet_tpl$, callpoint!)
+----
+Modified: data/bar/opt_cartdet.xml
+Modified: data/bar/opt_fillmnthdr.xml
+Modified: data/cdf/opt_cartdet.cdf
+Modified: data/cdf/opt_fillmnthdr.cdf
 =======================================================================================================================================
