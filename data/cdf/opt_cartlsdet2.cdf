@@ -91,6 +91,7 @@ rem ---Initialize fields needed for CARTON_NO Lot/Serial lookup
 	callpoint!.setColumnData("OPT_CARTLSDET2.CUSTOMER_ID",optCartLsDet2_keyPrefix.customer_id$)
 	callpoint!.setColumnData("OPT_CARTLSDET2.ORDER_NO",optCartLsDet2_keyPrefix.order_no$)
 	callpoint!.setColumnData("OPT_CARTLSDET2.AR_INV_NO",optCartLsDet2_keyPrefix.ar_inv_no$)
+	callpoint!.setColumnData("OPT_CARTLSDET2.CARTON_NO",optCartLsDet2_keyPrefix.carton_no$)
 	callpoint!.setColumnData("OPT_CARTLSDET2.ORDDET_SEQ_REF",optCartLsDet2_keyPrefix.orddet_seq_ref$)
 
 rem --- Initialize RTP trans_status and created fields
