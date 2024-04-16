@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-15
+ Report Date:   2024-04-16
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -107,4 +107,15 @@ Modified: data/bar/opt_cartdet.xml
 Modified: data/bar/opt_fillmnthdr.xml
 Modified: data/cdf/opt_cartdet.cdf
 Modified: data/cdf/opt_fillmnthdr.cdf
+=======================================================================================================================================
+
+Revision: 28a92bb604dc93debc4278df1111b22aceca363e
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/16/2024 1:38:40 PM
+Message:
+Bug 10837: In OPT_CARTLSDET2 AREC initialized CARTON_NO using the key
+prefix the grid was launched with in OPT_CARTDET2.
+----
+Modified: data/bar/opt_cartlsdet2.xml
+Modified: data/cdf/opt_cartlsdet2.cdf
 =======================================================================================================================================
