@@ -374,6 +374,20 @@ rem --- Automatically launch OPT_FILLMNTLSDET grid for lot/serial items
 			callpoint!.setColumnData("<<DISPLAY>>.QTY_PICKED_DSP",str(total_picked),1)
 			callpoint!.setStatus("MODIFIED")
 		endif
+
+		rem --- Provide visual warning when quantity picked is NOT equal to the ship quantity
+		ship_qty=num(callpoint!.getColumnData("<<DISPLAY>>.QTY_SHIPPED_DSP"))
+		pickGrid!=callpoint!.getDevObject("pickGrid")
+		curr_row=num(callpoint!.getValidationRow())
+		picked_col=callpoint!.getDevObject("picked_col")
+
+		if total_picked<>ship_qty then
+			pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("boldFont"))
+			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("redColor"))
+		else
+			pickGrid!.setCellFont(curr_row,picked_col,callpoint!.getDevObject("plainFont"))
+			pickGrid!.setCellForeColor(curr_row,picked_col,callpoint!.getDevObject("blackColor"))
+		endif
 	endif
 
 [[OPT_FILLMNTDET.<CUSTOM>]]
