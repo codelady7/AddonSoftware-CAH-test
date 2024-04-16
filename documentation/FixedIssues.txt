@@ -119,3 +119,15 @@ prefix the grid was launched with in OPT_CARTDET2.
 Modified: data/bar/opt_cartlsdet2.xml
 Modified: data/cdf/opt_cartlsdet2.cdf
 =======================================================================================================================================
+
+Revision: 343f6d4c605a7f5198c628508a7cd0a810669c45
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/16/2024 4:46:50 PM
+Message:
+Bug 10838: Added "Provide visual warning when quantity picked is NOT
+equal to the ship quantity" code to QTY_PICKED_DSP BINP for lot/serial
+items.
+----
+Modified: data/bar/opt_fillmntdet.xml
+Modified: data/cdf/opt_fillmntdet.cdf
+=======================================================================================================================================
