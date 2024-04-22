@@ -128,14 +128,27 @@
 			<ul>
                 <li>Preview for version 25.00</li>
                 <ul>
-                    <li>...</li>
+                    <li>General</li>
+                    <ul>
+                        <li>File verify the existing STATE_CODE Element Type with the new ADC_STATECODE Postal State Codes table.</li>
+                    </ul>
+                    <li>Distribution</li>
+                    <ul>
+                        <li>New Order Entry Backordered Items query shows orders containing backordered items, along with available quantities at specified vs. all warehouses. Drill into a given order to see other items on the order. This information is also available in report form from the Inventory Reports menu, Backordered Items Report.</li>
+                    </ul>
                 </ul>
                 <li>New for version 24.00</li>
                 <ul>
                     <li>General</li>
+                    <ul>
+                        <li>Jasper-based documents are now automatically added to the document archive.</li>
+                        <li>Expresso has a new Vendor Payment History search.</li>
+                        <li>Enhanced SQL statements to use parameters for Customer ID, Item ID, and Vendor ID to avoid WHERE clause problems with illegal characters (e.g. apostrophe in Item ID).</li>
+                    </ul>
                     <li>Accounting</li>
                     <ul>
                         <li>New Closed Fiscal Year Adjustment Utility allows creation of adjusting entries for the prior fiscal year when it has already been closed.</li>
+                        <li>AP and On-demand Manual Checks can now be printed in Check/Long stub or Long stub/Check format, in addition to the existing 3-part formats.</li>
                         <li>Accounts Payable can now handle invoices that have been paid with a credit card. In Invoice Entry, mark desired invoices as already paid by credit card, which automatically generates a corresponding invoice for the credit card company that appears in Payment Selection Entry.</li>
                         <li>Positive Pay files can be generated based on the Bank Account Code. Example programs for generating Positive Pay files are included for Bank of America and City National Bank.</li>
                         <li>The Customer Ranking Report has a new filter to allow exclusion of inactive customers.</li>
