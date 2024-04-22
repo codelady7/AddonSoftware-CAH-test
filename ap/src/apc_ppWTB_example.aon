@@ -1,13 +1,13 @@
-rem --- Example program for generating Positive Pay file for Bank of America
-rem --- Program apc_ppBoA_example.aon
+rem --- Example program for generating Positive Pay file for Washington Trust Bank
+rem --- Program apc_ppWTB_example.aon 
 
-rem --- AddonSoftware Version 24.00
-rem --- Copyright BASIS International Ltd.  All Rights Reserved.
+rem --- AddonSoftware Version 24.00 
+rem --- Copyright BASIS International Ltd.  All Rights Reserved. 
 
-rem --- bnkAcctCd$         : Bank Account Code checks are to be processed for (input)
-rem --- apwPositivePay_dev : Channel APW_POSITIVEPAY is open on (input)
-rem --- apwPositivePay_tpl$: Record template for APW_POSITIVEPAY (input)
-rem --- status             : Status/0=No error (returned)
+rem --- bnkAcctCd$        : Bank Account Code checks are to be processed for (input) 
+rem --- apwPositivePay_dev : Channel APW_POSITIVEPAY is open on (input) 
+rem --- apwPositivePay_tpl$: Record template for APW_POSITIVEPAY (input) 
+rem --- status             : Status/0=No error (returned) 
 
     use java.io.File
 
@@ -19,7 +19,7 @@ rem --- status             : Status/0=No error (returned)
     
     enter bnkAcctCd$,apwPositivePay_dev,apwPositivePay_tpl$,status
 
-rem --- Initializations
+rem --- Initializations 
     status=0
     dim apwPositivePay$:apwPositivePay_tpl$
 
@@ -33,17 +33,20 @@ rem --- Initializations
         BBjAPI().getGroupNamespace().setValue(rdTransSpaceKey$,Translate!)
     endif
 
-rem --- Retrieve sysinfo data
-    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next)
-    dim sysinfo$:sysinfo_template$
-    sysinfo$=stbl("+SYSINFO",err=*next)
-    firm_id$=sysinfo.firm_id$
+    rem --- Initialize needed fields that are not in APW_POSITIVEPAY 
+    ppFileDate$=DATE(0:"%Mz/%Dz/%Yz")
+
+rem --- Retrieve sysinfo data 
+    sysinfo_template$=stbl("+SYSINFO_TPL",err=*next) 
+    dim sysinfo$:sysinfo_template$ 
+    sysinfo$=stbl("+SYSINFO",err=*next) 
+    firm_id$=sysinfo.firm_id$ 
 
 rem --- Get Positive Pay filename and directories
     date$=DATE(0:"%Yd%Mz%Dz")
     time$=DATE(0:"%Hz%mz%sz")
     bnk_acct_cd$=cvs(apwPositivePay.bnk_acct_cd$,3)
-    ppFileName$="ppBoA_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
+    ppFileName$="ppWTB_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
     ppDir$ = FileObject.fixPath(stbl("+DOC_DIR_DEFAULT") + "PP", "/")
     clientDir$=""
 
@@ -77,10 +80,10 @@ rem --- Call ADE_FILENAMEPATH form
     ppDir$=groupNS!.getValue("ADE_FILENAMEPATH.EXPORT_LOC")
     clientDir$=groupNS!.getValue("ADE_FILENAMEPATH.CLIENT_DIR")
 
-rem --- Create directory for Positive Pay files
+rem --- Create directory for Positive Pay files 
     FileObject.makeDirs(new File(ppDir$))
 
-rem --- Process checks in APW_POSITIVEPAY
+rem --- Process checks in APW_POSITIVEPAY 
     ppFile_dev=-1
     read(apwPositivePay_dev,key=firm_id$+bnkAcctCd$,dom=*next)
     while 1
@@ -88,73 +91,84 @@ rem --- Process checks in APW_POSITIVEPAY
         if pos(firm_id$+bnkAcctCd$=apwPositivePay_key$)<>1 then break
         readrecord(apwPositivePay_dev)apwPositivePay$
         if ppFile_dev<0 then
-            rem --- Create and open new Positive Pay file
+            rem --- Initialize Summary totals for the new Positive Pay file 
+            checksTotalNum=0
+            checksTotalAmt=0
+            voidsTotalNum=0
+            voidsTotalAmt=0
+
+            rem --- Create and open new Positive Pay file 
             ppFile$=ppDir$+"/"+ppFileName$
             string ppFile$
-            ppFile_dev=unt
+            ppFile_dev=unt 
             open(ppFile_dev)ppFile$
 
-            rem --- Add example warning to Positive Pay file
-            print(ppFile_dev)"  *** WARNING: Do NOT use this file. It was created with an example program.  ***"
+            rem --- Add example warning to Positive Pay file 
+            print(ppFile_dev)"  *** WARNING: Do NOT use this file. It was created with an example program.   ***"
             print(ppFile_dev)"  *** The user is responsible for making all necessary program changes so the ***"
             print(ppFile_dev)"  *** fields and formats meet the user's bank's requirements.                 ***"
             print(ppFile_dev)""
         endif
 
-        rem --- Format APW_POSITIVEPAY fields for Positive Pay file
-        rem --- Bank Account #: 12-char without hyphens, aligned rigt, zero padded
-        ppBankAccount!=cast(BBjString, cvs(apwPositivePay.bnk_acct_no$,3))
-        ppBankAccount$=ppBankAccount!.replace("-","")
-        if len(ppBankAccount$)<12 then ppBankAccount$=pad(ppBankAccount$,12,"R","0")
-        if len(ppBankAccount$)>12 then ppBankAccount$=ppBankAccount$((len(ppBankAccount$)-12)+1)
-        
-        rem --- Void Indicator: V for voids
-        if pos(apwPositivePay.comp_or_void$="VX") then
-            ppVoidIndicator$="V"
+        rem --- Add this check to Summary totals for the Positive Pay file 
+        if apwPositivePay.comp_or_void$="V" then
+            voidsTotalNum=voidsTotalNum+1
+            voidsTotalAmt=voidsTotalAmt+apwPositivePay.payment_amt
         else
-            ppVoidIndicator$=" "
+            checksTotalNum=checksTotalNum+1
+            checksTotalAmt=checksTotalAmt+apwPositivePay.payment_amt
         endif
 
-        rem --- Check #: 10-char, aligned rigt, zero padded
-        ppCheckNumber$=cvs(apwPositivePay.check_no$,3)
-        if len(ppCheckNumber$)<10 then ppCheckNumber$=pad(ppCheckNumber$,10,"R","0")
-        if len(ppCheckNumber$)>10 then ppCheckNumber$=ppCheckNumber$((len(ppCheckNumber$)-10)+1)
+        rem --- Do Check Details section of Positive Pay file 
+        rem --- Format APW_POSITIVEPAY fields for Positive Pay file 
 
-        rem --- Check Amount: 12-char excluding decimal point, aligned right, zero padded  
-        ppCheckAmount$=str(apwPositivePay.payment_amt:"0000000000.00")
+        rem --- Bank Account #: 20-char without hyphens, aligned rigt, zero padded 
+        ppBankAccount!=cast(BBjString, cvs(apwPositivePay.bnk_acct_no$,3))
+        ppBankAccount$=ppBankAccount!.replace("-","")
+        if len(ppBankAccount$)<20 then ppBankAccount$=pad(ppBankAccount$,20,"R","0")
+        if len(ppBankAccount$)>20 then ppBankAccount$=ppBankAccount$((len(ppBankAccount$)-20)+1)
+
+        rem --- Check #: 8-char, aligned rigt, zero padded 
+        ppCheckNumber$=cvs(apwPositivePay.check_no$,3)
+        if len(ppCheckNumber$)<8 then ppCheckNumber$=pad(ppCheckNumber$,8,"R","0")
+        if len(ppCheckNumber$)>8 then ppCheckNumber$=ppCheckNumber$((len(ppCheckNumber$)-8)+1)
+
+        rem --- Check Amount: 10-char excluding decimal point, aligned right, zero padded   
+        ppCheckAmount$=str(apwPositivePay.payment_amt:"00000000.00")
         dp_pos=pos("."=ppCheckAmount$)
         ppCheckAmount$=ppCheckAmount$(1,dp_pos-1)+ppCheckAmount$(dp_pos+1)
 
-        rem --- Check Date or Void Date: YYYYMMDD
+        rem --- Check Date or Void Date: YYYYMMDD 
         ppCheckDate$=pad(apwPositivePay.check_date$,8,"R","0")
         theYear=num(ppCheckDate$(1,4))
         theMonth=num(ppCheckDate$(5,2))
         theDay=num(ppCheckDate$(7,2))
         goodDate=0
         julDate=jul(theYear,theMonth,theDay,err=*next); goodDate=1
-        if goodDate then ppCheckDate$=DATE(julDate:"%Yd%Mz%Dz")
+        if goodDate then ppCheckDate$=DATE(julDate:"%Mz/%Dz/%Yz")
 
-        rem --- Payee #/Memo: 10-char, aligned left, blank space padded
-        ppPayee$=apwPositivePay.vendor_name$
-        if len(ppPayee$)<10 then ppPayee$=pad(ppPayee$,10,"L"," ")
-        if len(ppPayee$)>10 then ppPayee$=ppPayee$(1,10)
+        rem --- Void Indicator: V for voids 
+        if pos(apwPositivePay.comp_or_void$="VX") then
+            ppVoidIndicator$="V"
+        else
+            ppVoidIndicator$="I"
+        endif
 
-        rem --- Company Name: 24-char, aligned left, blank space padded
-        ppCompanyName$=apwPositivePay.firm_name$
-        if len(ppCompanyName$)<24 then ppCompanyName$=pad(ppCompanyName$,24,"L"," ")
-        if len(ppCompanyName$)>24 then ppCompanyName$=ppCompanyName$(1,24)
+        rem --- Payee #/Memo: max 30-char, aligned left
+        ppPayee$=cvs(apwPositivePay.vendor_name$,3)
+        if len(ppPayee$)>30 then ppPayee$=ppPayee$(1,30)
 
-        rem --- Blank Space: 2 blank spaces
-        blankSpace$=pad("",2," ")
+        rem --- Double quote to surround strings
+        dblQuo$ = chr(34)
 
-        rem --- Add this check to Positive Pay file
-        print(ppFile_dev)ppBankAccount$+ppVoidIndicator$+ppCheckNumber$+ppCheckAmount$+ppCheckDate$+ppVoidIndicator$+ppPayee$+ppCompanyName$+blankSpace$
+        rem --- Add this check to Positive Pay file 
+        print(ppFile_dev)ppBankAccount$+","+ppCheckAmount$+","+ppCheckNumber$+","+ppCheckDate$+","+ppVoidIndicator$+","+dblQuo$+ppPayee$+dblQuo$
 
-        rem --- Remove this check from APW_POSITIVEPAY
+        rem --- Remove this check from APW_POSITIVEPAY 
         remove(apwPositivePay_dev,key=apwPositivePay_key$)
     wend
 
-done: rem --- All done
+done: rem --- All done 
 
     if clientDir$<>"" then
         cfs! = BBjAPI().getThinClient().getClientFileSystem()
@@ -163,13 +177,13 @@ done: rem --- All done
     endif
 
     goto std_exit
-   
-rem #include std_error.src
 
-std_error: rem --- Standard error handler (11Oct2017)
+rem #include std_error.src 
+
+std_error: rem --- Standard error handler (11Oct2017) 
 
     if tcb(19)>0
-        rem --- Escape handler
+        rem --- Escape handler 
         if and(chr(tcb(19)),$08$)=$08$
             release
         else
@@ -178,10 +192,10 @@ std_error: rem --- Standard error handler (11Oct2017)
         endif
     endif
 
-    if err=0   
-        rem --- Get tcb(12) and tcb(10) to send into bac_error
+    if err=0
+        rem --- Get tcb(12) and tcb(10) to send into bac_error 
         lock_byte=tcb(10)
-        lock_chan=tcb(12)  
+        lock_chan=tcb(12)
     endif
 
     rd_err_text$="",err_num=err
@@ -194,15 +208,15 @@ std_error: rem --- Standard error handler (11Oct2017)
     call stbl("+DIR_SYP")+"bac_error.bbj",pgm(-2),str(tcb(5)),str(err_num),rd_err_text$,rd_err_act$,lock_byte,lock_chan
     if pos("ESCAPE"=rd_err_act$) seterr 0; setesc 0
     if pos("RETRY"=rd_err_act$) retry
-    if pgm(-1)<>pgm(-2) status=999; exit 
+    if pgm(-1)<>pgm(-2) status=999; exit
     release
 
-rem #endinclude std_error.src
+rem #endinclude std_error.src 
 
-rem #include std_exit.src
+rem #include std_exit.src 
 
-std_exit: rem --- Standard called program exit (01Mar2006)
+std_exit: rem --- Standard called program exit (01Mar2006) 
 
     exit
 
-rem #endinclude std_exit.src
+rem #endinclude std_exit.src 
