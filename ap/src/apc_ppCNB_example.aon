@@ -11,6 +11,7 @@ rem --- status             : Status/0=No error (returned)
 
     use java.io.File
 
+    use ::bbtranslator.bbj::BBTranslator
     use ::ado_file.src::FileObject
 
     seterr std_error
@@ -21,6 +22,16 @@ rem --- status             : Status/0=No error (returned)
 rem --- Initializations
     status=0
     dim apwPositivePay$:apwPositivePay_tpl$
+
+    declare BBTranslator Translate!
+    rdtmp$=stbl("+PROPS_NAME",err=*next)
+    if rdtmp$="" then rdtmp$=stbl("+PROPS_NAME","addon")
+    rdTransSpaceKey$=stbl("+PROPS_NAME",err=*next)+"_"+stbl("+USER_LOCALE")+"_BBTranslator"
+    Translate!=cast(BBTranslator,BBjAPI().getGroupNamespace().getValue(rdTransSpaceKey$,err=*next))
+    if Translate!=null()
+        Translate!=BBTranslator.getInstance(stbl("+PROPS_NAME"),stbl("+USER_LOCALE"),null(),stbl("+PROPS_PATH"))
+        BBjAPI().getGroupNamespace().setValue(rdTransSpaceKey$,Translate!)
+    endif
     
     rem --- Initialize needed fields that are not in APW_POSITIVEPAY
     ppFileDate$=DATE(0:"%Mz/%Dz/%Yz")
@@ -35,8 +46,45 @@ rem --- Retrieve sysinfo data
     sysinfo$=stbl("+SYSINFO",err=*next)
     firm_id$=sysinfo.firm_id$
 
-rem --- Create directory for Positive Pay files
+rem --- Get Positive Pay filename and directories
+    date$=DATE(0:"%Yd%Mz%Dz")
+    time$=DATE(0:"%Hz%mz%sz")
+    bnk_acct_cd$=cvs(apwPositivePay.bnk_acct_cd$,3)
+    ppFileName$="ppCNB_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
     ppDir$ = FileObject.fixPath(stbl("+DOC_DIR_DEFAULT") + "PP", "/")
+    clientDir$=""
+
+rem --- Provide security warning
+    warning$=Translate!.getTranslation("AON_POSITIVE_PAY","Positive Pay")+" "+Translate!.getTranslation("AON_FILE","file")+": "
+    warning$=warning$+Translate!.getTranslation("AON_PP_SECURITY",
+:       "For security reasons, be sure to delete the file from your system after transmitting it to your financial institution.")
+
+rem --- Call ADE_FILENAMEPATH form
+    dim dflt_data$[4,1]
+    dflt_data$[1,0] = "FILE_NAME"
+    dflt_data$[1,1] = ppFileName$
+    dflt_data$[2,0] = "EXPORT_LOC"
+    dflt_data$[2,1] = ppDir$
+    dflt_data$[3,0] = "CLIENT_DIR"
+    dflt_data$[3,1] = clientDir$
+    dflt_data$[4,0] = "WARNING"
+    dflt_data$[4,1] = warning$
+
+    call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:       "ADE_FILENAMEPATH", 
+:       stbl("+USER_ID"), 
+:       "MNT", 
+:       "", 
+:       table_chans$[all], 
+:       "",
+:       dflt_data$[all]
+
+    groupNS!=BBjAPI().getGroupNamespace()
+    ppFileName$=groupNS!.getValue("ADE_FILENAMEPATH.FILE_NAME")
+    ppDir$=groupNS!.getValue("ADE_FILENAMEPATH.EXPORT_LOC")
+    clientDir$=groupNS!.getValue("ADE_FILENAMEPATH.CLIENT_DIR")
+
+rem --- Create directory for Positive Pay files
     FileObject.makeDirs(new File(ppDir$))
 
 rem --- Process checks in APW_POSITIVEPAY
@@ -54,10 +102,7 @@ rem --- Process checks in APW_POSITIVEPAY
             voidsTotalAmt=0
             
             rem --- Create and open new Positive Pay file
-            date$=DATE(0:"%Yd%Mz%Dz")
-            time$=DATE(0:"%Hz%mz")
-            bnk_acct_cd$=cvs(apwPositivePay.bnk_acct_cd$,3)
-            ppFile$=ppDir$+"/ppCNB_"+firm_id$+"_"+date$+"_"+time$+"_"+bnk_acct_cd$+".txt"
+            ppFile$=ppDir$+"/"+ppFileName$
             string ppFile$
             ppFile_dev=unt
             open(ppFile_dev)ppFile$
@@ -98,7 +143,7 @@ rem --- Process checks in APW_POSITIVEPAY
             checksTotalAmt=checksTotalAmt+apwPositivePay.payment_amt
         endif
 
-        rem --- Do Check Detials section of Positive Pay file
+        rem --- Do Check Details section of Positive Pay file
         rem --- Format APW_POSITIVEPAY fields for Positive Pay file
 
         rem --- Bank Account #: 9-char without hyphens, aligned rigt, zero padded
@@ -178,6 +223,12 @@ done: rem --- All done
     
     rem --- Add Summary to Positive Pay file
     print(ppFile_dev)ppBankTrailerID$+ppChecksTotalNum$+ppChecksTotalAmt$+ppVoidsTotalNum$+ppVoidsTotalAmt$+blankSpace_34$
+
+    if clientDir$<>"" then
+        cfs! = BBjAPI().getThinClient().getClientFileSystem()
+        cf!=cfs!.getClientFile(clientDir$+"/"+ppFileName$)
+        cf!.copyToClient(ppFile$)
+    endif
 
     goto std_exit
 

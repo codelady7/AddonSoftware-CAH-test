@@ -323,6 +323,18 @@ remove_check: rem --- Remove Check
     wend
 
 done: rem --- All done
+
+    rem --- Do NOT clear remainding records in APE_CHECKS. 
+    rem --- They may be for invoices being paid with a checking account that checks haven't been printed for yet.
+
+    if gl$="Y"
+       call pgmdir$+"glc_update.aon",glm01_dev,glt04_dev,glw11_dev,status
+       call pgmdir$+"glc_ctlupdate.aon",status
+    endif
+    call pgmdir$+"adc_batchdelete.aon",err=*next,status
+
+    rem --- Finish building complete NACHA text file for ACH payments
+    if nacha_dev>-1 then gosub finish_NACHA_file
           
     rem --- Build Positive Pay files
     while len(bnkAcctCds$)
@@ -334,17 +346,6 @@ done: rem --- All done
         call pgmPath$,thisBnkAcctCd$,apwPositivePay_dev,fattr(apwPositivePay$),status
     wend
 
-    rem --- Do NOT clear remainding records in APE_CHECKS. 
-    rem --- They may be for invoices being paid with a checking account that checks haven't been printed for yet.
-
-    rem --- Finish building complete NACHA text file for ACH payments
-    if nacha_dev>-1 then gosub finish_NACHA_file
-
-    if gl$="Y"
-       call pgmdir$+"glc_update.aon",glm01_dev,glt04_dev,glw11_dev,status
-       call pgmdir$+"glc_ctlupdate.aon",status
-    endif
-    call pgmdir$+"adc_batchdelete.aon",err=*next,status
     goto std_exit
           
 doPositivePay: rem --- Save information for Positive Pay
