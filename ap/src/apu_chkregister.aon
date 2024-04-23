@@ -396,15 +396,50 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
 
     rem --- As necessary, create new NACHA text file
     if nacha_dev=-1 then
-        rem --- Make sure ACH File Export Directory exists
-
+        rem --- Get NACHA filename and directories
+        date$=DATE(0:"%Yd%Mz%Dz")
+        time$=DATE(0:"%Hz%mz%sz")
+        bnk_acct_cd$=cvs(apsACH.bnk_acct_cd$,3)
+        nachaFileName$=bnk_acct_cd$+"_NACHA_"+date$+"_"+time$+".txt"
         ach_export_dir$=util.resolvePathStbls(cvs(apsACH.ach_export_dir$,3))
         nachaDir$=cvs(FileObject.fixPath(ach_export_dir$, "/"),2)
+        clientDir$=""
+
+        rem --- Provide security warning
+        warning$="NACHA file: "
+        warning$=warning$+"For security reasons, be sure to delete the file from your system after transmitting it to your financial institution."
+
+        rem --- Call ADE_FILENAMEPATH form
+        dim dflt_data$[4,1]
+        dflt_data$[1,0] = "FILE_NAME"
+        dflt_data$[1,1] = nachaFileName$
+        dflt_data$[2,0] = "EXPORT_LOC"
+        dflt_data$[2,1] = nachaDir$
+        dflt_data$[3,0] = "CLIENT_DIR"
+        dflt_data$[3,1] = clientDir$
+        dflt_data$[4,0] = "WARNING"
+        dflt_data$[4,1] = warning$
+    
+        call stbl("+DIR_SYP") + "bam_run_prog.bbj", 
+:           "ADE_FILENAMEPATH", 
+:           stbl("+USER_ID"), 
+:           "MNT", 
+:           "", 
+:           table_chans$[all], 
+:           "",
+:           dflt_data$[all]
+
+        groupNS!=BBjAPI().getGroupNamespace()
+        nachaFileName$=groupNS!.getValue("ADE_FILENAMEPATH.FILE_NAME")
+        nachaDir$=groupNS!.getValue("ADE_FILENAMEPATH.EXPORT_LOC")
+        clientDir$=groupNS!.getValue("ADE_FILENAMEPATH.CLIENT_DIR")
+
+        rem --- Make sure NACHA File Export Directory exists
         FileObject.makeDirs(new File(nachaDir$))
         nachaDir$=BBjAPI().getFileSystem().resolvePath(nachaDir$)+"/"
 
         rem --- Create NACHA text file
-        nacha$=nachaDir$+cvs(apsACH.bnk_acct_cd$,2)+"_NACHA_"+DATE(0:"%Yd%Mz%Dz")+"_"+DATE(0:"%Hz%mz")+".txt"
+        nacha$=nachaDir$+nachaFileName$
         erase nacha$,err=*next
         string nacha$
         nacha_dev=unt
