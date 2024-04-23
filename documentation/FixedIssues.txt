@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-16
+ Report Date:   2024-04-23
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -130,4 +130,14 @@ items.
 ----
 Modified: data/bar/opt_fillmntdet.xml
 Modified: data/cdf/opt_fillmntdet.cdf
+=======================================================================================================================================
+
+Revision: 0bb68a7ce0d474796a1a32000ae9f2cc1d1075d6
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/23/2024 1:22:39 PM
+Message:
+Bug 10842: Added error trap to the extract(...) method in the
+PackagerExtractor class.
+----
+Modified: util/packager_extractor/aon_packagerextractor.bbj
 =======================================================================================================================================
