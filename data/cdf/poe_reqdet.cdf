@@ -45,6 +45,10 @@ else
 	callpoint!.setColumnEnabled(-1,"POE_REQDET.SO_INT_SEQ_REF",0)
 endif 
 
+[[POE_REQDET.ADTW]]
+rem --- Initializations
+	use ::sfo_SfUtils.aon::SfUtils
+
 [[POE_REQDET.AGCL]]
 rem print 'show';rem debug
 
@@ -607,6 +611,20 @@ rem --- throw message to user and abort manual entry
 				callpoint!.setMessage("PO_USE_QUERY")
 				callpoint!.setStatus("ABORT")
 			endif
+			break
+		else
+			rem --- Warn existing transactions if WO is being closed complete.
+			wo_no$=callpoint!.getUserInput()
+			wo_location$="  "
+			sfutils!=new SfUtils(firm_id$)
+			closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+			sfutils!.close()
+			if closeComplete then
+				msg_id$="SF_CLOSE_COMP_EXIST"
+				dim msg_tokens$[1]
+				msg_tokens$[1]=wo_no$
+				gosub disp_message
+			endif
 		endif
 	else
 		callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF","",1)
@@ -719,6 +737,23 @@ rem --- Query displays WO's for given firm/vendor, only showing those not alread
 	if cvs(wo_key$,3)=firm_id$ wo_key$=""
 
 	gosub get_wo_info
+
+rem --- Don't allow new transactions if WO is being closed complete. Warn existing transactions.
+	sfutils!=new SfUtils(firm_id$)
+	closeComplete=sfutils!.woClosedComplete(wo_no$,wo_location$)
+	sfutils!.close()
+	if closeComplete then
+		msg_id$="SF_CLOSE_COMP_EXIST"
+		dim msg_tokens$[1]
+		msg_tokens$[1]=wo_no$
+		gosub disp_message
+		if wo_no$<>callpoint!.getColumnData("POE_REQDET.WO_NO") then
+			callpoint!.setColumnData("POE_REQDET.WO_NO","",1)
+			callpoint!.setColumnData("POE_REQDET.WK_ORD_SEQ_REF","",1)
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
 
 	if cvs(wo_key$,3)<>""
 		callpoint!.setColumnData("POE_REQDET.WO_NO",wo_no$,1)
@@ -1009,11 +1044,13 @@ rem ========================================================
 		switch pos(wo_type$="NS")
 			case 1; rem Non-stock Subcontract line
 				read record (sfe_wosub,key=wo_key$,knum="PRIMARY") sfe_wosub$
+				wo_location$=sfe_wosub.wo_location$
 				wo_no$=sfe_wosub.wo_no$
 				wo_line$=sfe_wosub.internal_seq_no$
 			break
 			case 2;rem Special Order Item
 				read record (sfe_womatl,key=wo_key$,knum="PRIMARY") sfe_womatl$
+				wo_location$=sfe_womatl.wo_location$
 				wo_no$=sfe_womatl.wo_no$
 				wo_line$=sfe_womatl.internal_seq_no$
 			break
