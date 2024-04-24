@@ -631,6 +631,12 @@ rem --- Set buttons
 		gosub enable_addl_opts
 	endif
 
+	if cvs(callpoint!.getColumnData("OPE_INVDET.ITEM_ID"),2)<>"" then
+		callpoint!.setOptionEnabled("WHSE",1)
+	else
+		callpoint!.setOptionEnabled("WHSE",0)
+	endif
+
 rem --- Set availability info
 
 	gosub set_avail
@@ -1042,6 +1048,33 @@ rem --- Are things set for a reprice?
 		endif
 	endif
 
+[[OPE_INVDET.AOPT-WHSE]]
+rem --- Show availability for this item
+	item_id$=callpoint!.getColumnData("OPE_INVDET.ITEM_ID")
+
+	selected_key$ = ""
+	dim filter_defs$[1,2]
+	filter_defs$[0,0]="IVM_ITEMWHSE.FIRM_ID"
+	filter_defs$[0,1]="='"+firm_id$+"'"
+	filter_defs$[0,2]="LOCK"
+	filter_defs$[1,0]="IVM_ITEMWHSE.ITEM_ID"
+	filter_defs$[1,1]="='"+item_id$+"'"
+	filter_defs$[1,2]="LOCK"
+
+	dim search_defs$[3]
+
+	call stbl("+DIR_SYP")+"bax_query.bbj",
+:		gui_dev,
+:		Form!,
+:		"IV_PRICE_AVAIL",
+:		"",
+:		table_chans$[all],
+:		selected_key$,
+:		filter_defs$[all],
+:		search_defs$[all],
+:		"",
+:		""
+
 [[OPE_INVDET.AREC]]
 rem --- Initialize RTP trans_status and created fields
 	rem --- TRANS_STATUS set to "E" via form Preset Value
@@ -1099,6 +1132,7 @@ rem --- Buttons start disabled
 	callpoint!.setOptionEnabled("RCPR",0)
 	callpoint!.setOptionEnabled("ADDL",0)
 	callpoint!.setOptionEnabled("COMM",0)
+	callpoint!.setOptionEnabled("WHSE",0)
 	callpoint!.setStatus("REFRESH")
 
 rem --- Initialize Kit Component grid's kit_detail_changed flag
@@ -1486,6 +1520,7 @@ rem --- Disable detail-only buttons
 	callpoint!.setOptionEnabled("RCPR",0)
 	callpoint!.setOptionEnabled("ADDL",0)
 	callpoint!.setOptionEnabled("COMM",0)
+	callpoint!.setOptionEnabled("WHSE",0)
 
 rem --- Set header total amounts
 
@@ -1873,6 +1908,9 @@ rem --- Initialize "kit" DevObject
 
 rem --- Enable/disable KITS button
 	gosub able_kits_button
+
+rem --- Enable Total Whse Availability option
+	callpoint!.setOptionEnabled("WHSE",1)
 
 [[OPE_INVDET.ITEM_ID.AVEC]]
 rem --- Set buttons

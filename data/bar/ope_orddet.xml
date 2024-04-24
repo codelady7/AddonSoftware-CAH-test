@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_orddet">BA8EF92D04BD6C841674DEB28D164BD7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_orddet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_orddet">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_orddet">20240226</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_orddet">20240226</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_orddet">152202</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_orddet">20240424</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_orddet">20240424</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_orddet">135916</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_orddet">OPT_INVDET      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_orddet">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_orddet">AO_STAT_CUST_ORD</DD_ATTR_DKNM>
@@ -95,6 +95,13 @@
 			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_orddet05">COMM</DD_ATTR_AOPT_CD>
 			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_orddet05">B</DD_ATTR_AOPT_FM>
 		</RECORD>
+		<RECORD id="ddm_table_aopt.ope_orddet06">
+			<DD_TABLE_ALIAS id="ddm_table_aopt.ope_orddet06">OPE_ORDDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_SEQ id="ddm_table_aopt.ope_orddet06">06</DD_ATTR_SEQ>
+			<DD_ATTR_AOPT id="ddm_table_aopt.ope_orddet06">Total &Whse Availability</DD_ATTR_AOPT>
+			<DD_ATTR_AOPT_CD id="ddm_table_aopt.ope_orddet06">WHSE</DD_ATTR_AOPT_CD>
+			<DD_ATTR_AOPT_FM id="ddm_table_aopt.ope_orddet06">M</DD_ATTR_AOPT_FM>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_cpro">
 		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
@@ -141,6 +148,10 @@
 		<RECORD id="ddm_table_cpro.ope_orddetaopt-rcpr">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_orddetaopt-rcpr">OPE_ORDDET      </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.ope_orddetaopt-rcpr">AOPT-RCPR</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.ope_orddetaopt-whse">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_orddetaopt-whse">OPE_ORDDET      </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.ope_orddetaopt-whse">AOPT-WHSE</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.ope_orddetarec">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.ope_orddetarec">OPE_ORDDET      </DD_TABLE_ALIAS>
