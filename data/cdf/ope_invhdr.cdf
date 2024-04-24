@@ -2280,6 +2280,7 @@ rem --- Enable buttons
 	callpoint!.setOptionEnabled("LENT",0)
 	callpoint!.setOptionEnabled("KITS",0)
 	callpoint!.setOptionEnabled("RCPR",0)
+	callpoint!.setOptionEnabled("WHSE",0)
 	callpoint!.setOptionEnabled("DINV",0)
 	callpoint!.setOptionEnabled("CINV",0)
 	callpoint!.setOptionEnabled("UINV",0)
