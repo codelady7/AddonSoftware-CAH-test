@@ -822,6 +822,26 @@ rem --- Reset the print file
 		endif
 	next i
 
+	rem --- Replace opt_invkitdet records
+	optInvKitDet_dev = fnget_dev("OPT_INVKITDET")
+	dim optInvKitDet$:fnget_tpl$("OPT_INVKITDET")
+	optInvKitDet_trip$=firm_id$+status$+ar_type$+cust_id$+order_no$+old_inv_no$
+	read (optInvKitDet_dev, key=optInvKitDet_trip$,knum="AO_STAT_CUST_ORD",dom=*next)
+	while 1
+		optInvKitDet_key$=key(optInvKitDet_dev,end=*break)
+		if pos(optInvKitDet_trip$=optInvKitDet_key$)<>1 then break
+		extractrecord(optInvKitDet_dev)optInvKitDet$; rem Advisory locking
+		optInvKitDet.ar_inv_no$=""
+		optInvKitDet.mod_user$=sysinfo.user_id$
+		optInvKitDet.mod_date$=date(0:"%Yd%Mz%Dz")
+		optInvKitDet.mod_time$=date(0:"%Hz%mz")
+		optInvKitDet$=field(optInvKitDet$)
+		writerecord(optInvKitDet_dev)optInvKitDet$
+		optInvKitDet_primary$=optInvKitDet.firm_id$+optInvKitDet.ar_type$+optInvKitDet.customer_id$+optInvKitDet.order_no$+old_inv_no$+optInvKitDet.orddet_seq_ref$+optInvKitDet.internal_seq_no$
+		remove(optInvKitDet_dev,key=optInvKitDet_primary$)
+		read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
+	wend
+
 rem --- Restore fulfillment records if using fulfillment
 	optFillmntHdr_dev=fnget_dev("OPT_FILLMNTHDR")
 	didFulfillment=0
