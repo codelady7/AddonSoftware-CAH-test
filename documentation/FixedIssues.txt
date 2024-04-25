@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-04-23
+ Report Date:   2024-04-24
  Report Branch: AddonSoftware 24.01
  Last Release:  AddonSoftware 24.00
 =======================================================================================================================================
@@ -140,4 +140,15 @@ Bug 10842: Added error trap to the extract(...) method in the
 PackagerExtractor class.
 ----
 Modified: util/packager_extractor/aon_packagerextractor.bbj
+=======================================================================================================================================
+
+Revision: 359725e7f4e043da94e24f2be6bd5bb43d8b14b4
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 4/24/2024 6:42:00 PM
+Message:
+Bug 10845: Updated opt_invkitdet records to blank ar_inv_no when an
+invoice is undone.
+----
+Modified: data/bar/ope_invhdr.xml
+Modified: data/cdf/ope_invhdr.cdf
 =======================================================================================================================================
