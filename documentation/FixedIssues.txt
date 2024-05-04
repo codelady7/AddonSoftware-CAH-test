@@ -1,10 +1,21 @@
 =======================================================================================================================================
-Report Branch: AddonSoftware Development Build
+ Report Date:   2024-05-03
+ Report Branch: AddonSoftware 24.02
+ Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
-Development builds are generated daily.
 
-AddonSoftware Co-op Developers can access code changes and bug fixes for the Development Builds via Git.
+24.01 released 4/30/2024
+BBjBaristaAddonDemos2401_04-29-2024_1315.jar
+=======================================================================================================================================
 
-Information about code changes and bug fixes for RELEASE builds can be found at:
-
-https://bugs.basis.cloud
+Revision: 3400b782fbd53cca7205d9b3f0b99aced2536f7d
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/3/2024 7:41:25 PM
+Message:
+Bug 10844: Eliminated BBJasperReport showing a progress window for the
+individual Packing Lists.
+----
+Modified: data/bar/opt_fillmnthdr.xml
+Modified: data/cdf/opt_fillmnthdr.cdf
+Modified: op/src/opr_packlist.aon
+=======================================================================================================================================
