@@ -954,7 +954,7 @@ rem --- Position the file at the correct record
 		read (optFillmntHdr_dev,key=start_key$,dom=*next)
 	else
 		current_key$=callpoint!.getRecordKey()
-		read(optFillmntHdr_dev,key=current_key$,dom=*next)
+		read(optFillmntHdr_dev,key=current_key$,dir=0,dom=*next)
 	endif
 
 	hit_eof=0
@@ -963,8 +963,8 @@ rem --- Position the file at the correct record
 		read record (optFillmntHdr_dev, key=p_key$)optFillmntHdr$
 		if optFillmntHdr.firm_id$+optFillmntHdr.trans_status$+optFillmntHdr.ar_type$ = firm_id$+status$+ar_type$ then break
 
-eof_pkey: rem --- If end-of-file or end-of-firm, rewind to first record of the firm
-		read (optFillmntHdr_dev, key=firm_id$+status$+ar_type$, dom=*next)
+eof_pkey: rem --- If end-of-file or end-of-firm, rewind to last record of the firm
+		read (optFillmntHdr_dev, key=firm_id$+status$+ar_type$+$FF$, dom=*next)
 		hit_eof=hit_eof+1
 		if hit_eof>1 then
 			msg_id$ = "OP_NO_FULFILLMENT"
