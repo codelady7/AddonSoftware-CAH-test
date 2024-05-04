@@ -40,3 +40,14 @@ Bug 10850: Made sure the values[] array was DIM'd before being used.
 ----
 Modified: gl/src/glr_financials.aon
 =======================================================================================================================================
+
+Revision: cc76021dbde8e01ca9ab6c5ff2ede654beb9d559
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/3/2024 9:32:56 PM
+Message:
+Bug 10846: Missed the new Jasper OPPackList-Report in the previous
+commit.
+----
+Added: reports/OPPackList-Report.jasper
+Added: reports/OPPackList-Report.jrxml
+=======================================================================================================================================
