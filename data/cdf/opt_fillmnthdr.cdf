@@ -446,6 +446,9 @@ rem --- Remove temporary soft lock used just for this task
 		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
 	endif
 
+rem --- Get focus back on this form
+	callpoint!.setStatus("ACTIVATE")
+
 [[OPT_FILLMNTHDR.APFE]]
 rem --- Enable Print List button if all_packed
 	if callpoint!.getColumnData("OPT_FILLMNTHDR.ALL_PACKED")="Y"  then callpoint!.setOptionEnabled("PRNT",1)
