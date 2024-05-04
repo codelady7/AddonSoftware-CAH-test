@@ -134,17 +134,18 @@ rem --- Read next Financial Report Detail (glm-22) record
 
         wend
 
-        rem --- If it's a heading line just go print it
-
-        if line_type$="H" then goto print_line
-
         rem --- This section of the program deals with accumulating the detail
         rem --- for the line, performing any totaling and then updating the
         rem --- totals record for the line.
 
+        dim values[7]
+
+        rem --- If it's a heading line just go print it
+
+        if line_type$="H" then goto print_line
+
         rem --- Check to see if this is a new update sequence
 
-        dim values[7]
         if glm22a.gl_updt_seq$<>sequence$ dim y[mt],s[mx,my,mz]
 
         rem --- Accumulate detail for this line
