@@ -173,8 +173,8 @@ rem --- Set Report Name & Subreport directory
     open (temp)reportDir$
     reportDir$ = fid(temp)(9)+"/"
     close (temp)
-    reportBaseName$ = "OPPackListHdr"
-    filename$ = reportDir$ + reportBaseName$ + ".jasper"
+    reportname$ = reportDir$ + "OPPackList-Report.jasper"
+    filename$ = reportDir$ + "OPPackListHdr.jasper"
 
 rem --- See if this document is set up in Addon Report Control
     rptctl_alias$ = "PACKING_LIST"
@@ -203,7 +203,7 @@ rem --- See if this document is set up in Addon Report Control
     
 rem --- Check for user authentication
     declare BBJasperReport report!
-    report! = BarUtils.getBBJasperReport(filename$)
+    report! = BarUtils.getBBJasperReport(reportname$)
     report!.putParams(params!)
 
     locale$ = stbl("!LOCALE")
@@ -232,8 +232,8 @@ rem --- Fill Report and Show
         read(optCartHdr_dev)
         cartons=cartons+1
     wend
-    if cartons>1 then
-        for i=2 to cartons
+    if cartons>0 then
+        for i=1 to cartons
             report!.appendReport(packingList!)
         next i
     endif
