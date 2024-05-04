@@ -51,3 +51,14 @@ commit.
 Added: reports/OPPackList-Report.jasper
 Added: reports/OPPackList-Report.jrxml
 =======================================================================================================================================
+
+Revision: f41632ada27af52b89ffacdf6689e070c7ed5aaf
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/3/2024 9:40:28 PM
+Message:
+Bug 10851: Added dir=0 to positioning read so the key won't advance to
+the next record, which is the currently displayed record.
+----
+Modified: data/bar/opt_fillmnthdr.xml
+Modified: data/cdf/opt_fillmnthdr.cdf
+=======================================================================================================================================
