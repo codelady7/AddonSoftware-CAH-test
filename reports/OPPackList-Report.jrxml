@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OPPackListHdr" language="groovy" pageWidth="612" pageHeight="792" columnWidth="570" leftMargin="22" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="addon" uuid="b146e7c7-7794-48d0-bad4-a5da78d1668b">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="1095"/>
+	<property name="ireport.y" value="1831"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="222"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="767"/>
+	<parameter name="FIRM_ID" class="java.lang.String"/>
+	<parameter name="AR_TYPE" class="java.lang.String"/>
+	<parameter name="CUSTOMER_ID" class="java.lang.String"/>
+	<parameter name="ORDER_NO" class="java.lang.String"/>
+	<parameter name="AR_INV_NO" class="java.lang.String"/>
+	<parameter name="QTY_MASK" class="java.lang.String"/>
+	<parameter name="ITEM_MASK" class="java.lang.String"/>
+	<parameter name="CUST_MASK" class="java.lang.String"/>
+	<parameter name="CUST_SIZE" class="java.lang.String"/>
+	<parameter name="BARISTA_WD" class="java.lang.String"/>
+	<parameter name="LOGO_FILE" class="java.lang.String"/>
+	<parameter name="REPRINT" class="java.lang.String"/>
+	<parameter name="AR_ADDRESS1" class="java.lang.String"/>
+	<parameter name="AR_ADDRESS2" class="java.lang.String"/>
+	<parameter name="AR_ADDRESS3" class="java.lang.String"/>
+	<parameter name="AR_ADDRESS4" class="java.lang.String"/>
+	<parameter name="AR_PHONE_NO" class="java.lang.String"/>
+	<parameter name="AR_FAX_NO" class="java.lang.String"/>
+	<parameter name="DOC_NO" class="java.lang.String"/>
+	<parameter name="DATE_REP" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="ORDER_DATE" class="java.lang.String"/>
+	<field name="BILL_ADDR_LINE1" class="java.lang.String"/>
+	<field name="BILL_ADDR_LINE2" class="java.lang.String"/>
+	<field name="BILL_ADDR_LINE3" class="java.lang.String"/>
+	<field name="BILL_ADDR_LINE4" class="java.lang.String"/>
+	<field name="BILL_ADDR_LINE5" class="java.lang.String"/>
+	<field name="BILL_ADDR_LINE6" class="java.lang.String"/>
+	<field name="SHIP_ADDR_LINE1" class="java.lang.String"/>
+	<field name="SHIP_ADDR_LINE2" class="java.lang.String"/>
+	<field name="SHIP_ADDR_LINE3" class="java.lang.String"/>
+	<field name="SHIP_ADDR_LINE4" class="java.lang.String"/>
+	<field name="SHIP_ADDR_LINE5" class="java.lang.String"/>
+	<field name="SHIP_ADDR_LINE6" class="java.lang.String"/>
+	<field name="SALESREP_CODE" class="java.lang.String"/>
+	<field name="SALESREP_DESC" class="java.lang.String"/>
+	<field name="CUST_PO_NUM" class="java.lang.String"/>
+	<field name="SHIP_VIA" class="java.lang.String"/>
+	<field name="SHIPPING_ID" class="java.lang.String"/>
+	<field name="FOB" class="java.lang.String"/>
+	<field name="SHIP_DATE" class="java.lang.String"/>
+	<field name="TERMS_CODE" class="java.lang.String"/>
+	<field name="TERMS_DESC" class="java.lang.String"/>
+	<field name="INV_STD_MESSAGE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="PackList" isReprintHeaderOnEachPage="true" footerPosition="ForceAtBottom" keepTogether="true" preventOrphanFooter="true"/>
+	<detail>
+		<band height="246"/>
+	</detail>
+</jasperReport>
