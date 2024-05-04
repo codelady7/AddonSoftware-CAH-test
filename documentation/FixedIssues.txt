@@ -31,3 +31,12 @@ Modified: reports/OPPackListDet-LotSer.jasper
 Modified: reports/OPPackListDet.jasper
 Modified: reports/OPPackListDet.jrxml
 =======================================================================================================================================
+
+Revision: 60b1e7a35dd717213825f9df1b4b5c7aadbf204d
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/3/2024 9:19:11 PM
+Message:
+Bug 10850: Made sure the values[] array was DIM'd before being used.
+----
+Modified: gl/src/glr_financials.aon
+=======================================================================================================================================
