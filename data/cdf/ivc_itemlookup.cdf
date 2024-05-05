@@ -42,10 +42,35 @@ rem --- Get the control ID of the event
 				gosub closeTables
 				callpoint!.setStatus("EXIT")
 			break
-			case 14; rem grid_mouse_up
-			case 19; rem grid_key_press
+			case 19; rem grid_select_row
 				callpoint!.setDevObject("selected_item",firm_id$+gridSearch!.getCellText(curr_row,1))
 				gosub get_inventory_detail		
+
+				if curr_col=3 then
+					rem --- Show availability for this item
+					selected_key$ = ""
+					dim filter_defs$[1,2]
+					filter_defs$[0,0]="IVM_ITEMWHSE.FIRM_ID"
+					filter_defs$[0,1]="='"+firm_id$+"'"
+					filter_defs$[0,2]="LOCK"
+					filter_defs$[1,0]="IVM_ITEMWHSE.ITEM_ID"
+					filter_defs$[1,1]="='"+gridSearch!.getCellText(curr_row,1)+"'"
+					filter_defs$[1,2]="LOCK"
+
+					dim search_defs$[3]
+
+					call stbl("+DIR_SYP")+"bax_query.bbj",
+:						gui_dev,
+:						Form!,
+:						"IV_PRICE_AVAIL",
+:						"",
+:						table_chans$[all],
+:						selected_key$,
+:						filter_defs$[all],
+:						search_defs$[all],
+:						"",
+:						""
+				endif
 			break
 		swend
 	endif
@@ -156,7 +181,6 @@ rem ---  Set up grid
 	gridSearch!.setColumnEditable(0,0)
 	gridSearch!.setColumnEditable(1,0)
 
-	gridSearch!.setCallback(gridSearch!.ON_GRID_MOUSE_UP,"custom_event")
 	gridSearch!.setCallback(gridSearch!.ON_GRID_SELECT_ROW,"custom_event")
 	gridSearch!.setCallback(gridSearch!.ON_GRID_DOUBLE_CLICK,"custom_event")
 
@@ -204,6 +228,12 @@ rem ---  Set up grid
 :		attr_def_col_str$[all],
 :		attr_disp_col$,
 :		attr_grid_col$[all]
+
+	gridFont!=gridSearch!.getColumnFont(3)
+	qtyAvailFont!=SysGUI!.makeFont(gridFont!.getName(),gridFont!.getSize(),SysGUI!.UNDERLINE)
+	gridSearch!.setColumnFont(3,qtyAvailFont!)
+	call stbl("+DIR_SYP")+"bac_create_color.bbj","+HYPERLINK_COLOR","32,32,192",rdHyperlinkColor!,""
+	gridSearch!.setColumnForeColor(3,rdHyperlinkColor!)
 
 rem --- Create Item Information window			
 		
