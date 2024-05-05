@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.poe_reqhdr">F9FC21F71215048005A59538BE93E299</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.poe_reqhdr">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.poe_reqhdr">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.poe_reqhdr">20240307</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.poe_reqhdr">20240307</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.poe_reqhdr">135242</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.poe_reqhdr">20240430</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.poe_reqhdr">20240430</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.poe_reqhdr">173458</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.poe_reqhdr"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.poe_reqhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.poe_reqhdr"></DD_ATTR_DKNM>
@@ -229,6 +229,12 @@
 			<REF_TABLE_ALIAS id="ddm_table_ref.poe_reqhdrcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
 			<TABLE_REF_NAME id="ddm_table_ref.poe_reqhdrcustomer_idarm_custmast">FK_POE_REQHDR_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                         </TABLE_REF_NAME>
 		</RECORD>
+		<RECORD id="ddm_table_ref.poe_reqhdrds_state_cdadc_statecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.poe_reqhdrds_state_cdadc_statecode">POE_REQHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.poe_reqhdrds_state_cdadc_statecode">DS_STATE_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.poe_reqhdrds_state_cdadc_statecode">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.poe_reqhdrds_state_cdadc_statecode">FK_POE_REQHDR_DS_STATE_CD_ADC_STATECODE                                                                                                                                                                                                                        </TABLE_REF_NAME>
+		</RECORD>
 		<RECORD id="ddm_table_ref.poe_reqhdrpo_msg_codepoc_message">
 			<DD_TABLE_ALIAS id="ddm_table_ref.poe_reqhdrpo_msg_codepoc_message">POE_REQHDR      </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.poe_reqhdrpo_msg_codepoc_message">PO_MSG_CODE     </DD_TABLE_COL>
@@ -273,6 +279,24 @@
 			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_reqhdrcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
 			<REF_KEY_COLUMN id="ddm_table_refcol.poe_reqhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
 			<FK_TABLE_COL id="ddm_table_refcol.poe_reqhdrcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">POE_REQHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">DS_STATE_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">POE_REQHDR      </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">DS_STATE_CD     </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">STATE_CODE      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.poe_reqhdrds_state_cdadc_statecode0002">DS_STATE_CD     </FK_TABLE_COL>
 		</RECORD>
 		<RECORD id="ddm_table_refcol.poe_reqhdrpo_msg_codepoc_message0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.poe_reqhdrpo_msg_codepoc_message0001">POE_REQHDR      </DD_TABLE_ALIAS>
@@ -1823,7 +1847,7 @@
 			<DD_ATTR_FTSR id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_CWID>
 			<DD_ATTR_CTLI id="ddm_table_cols.poe_reqhdr027">3210</DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.poe_reqhdr027">ine_ds_state_cd</DD_ATTR_CTLN>
+			<DD_ATTR_CTLN id="ddm_table_cols.poe_reqhdr027">dis_ds_state_cd</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.poe_reqhdr027">2</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.poe_reqhdr027"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.poe_reqhdr027">N</DD_ATTR_RKEY>

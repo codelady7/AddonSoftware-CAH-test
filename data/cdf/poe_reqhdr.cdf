@@ -395,6 +395,30 @@ rem --- Update links to Work Orders
 		wend
 	endif
 
+rem --- Archive Requisition before deletion?
+	msg_id$="PO_ARCHIVE_REQ"
+	gosub disp_message
+	if msg_opt$="Y"
+		rem --- Add to historical Purchase Requisition archive before it gets deleted
+		poe_reqhdr_dev = fnget_dev("POE_REQHDR")
+		dim poe_reqhdr$:fnget_tpl$("POE_REQHDR")
+		poe_reqdet_dev = fnget_dev("POE_REQDET")
+		dim poe_reqdet$:fnget_tpl$("POE_REQDET")
+		pot_reqhdr_dev = fnget_dev("POT_REQHDR_ARC")
+		pot_reqdet_dev = fnget_dev("POT_REQDET_ARC")
+
+		poe_reqhdr_key$=callpoint!.getRecordKey()
+		find record (poe_reqhdr_dev,key=poe_reqhdr_key$,dom=*endif) poe_reqhdr$
+		writerecord(pot_reqhdr_dev)poe_reqhdr$
+
+		read (poe_reqdet_dev,key=poe_reqhdr.firm_id$+poe_reqhdr.req_no$,dom=*next)
+		while 1
+			read record (poe_reqdet_dev,end=*break) poe_reqdet$
+			if pos(poe_reqhdr.firm_id$+poe_reqhdr.req_no$=poe_reqdet.firm_id$+poe_reqdet.req_no$)<>1 then break
+			writerecord(pot_reqdet_dev)poe_reqdet$
+		wend
+	endif
+
 [[POE_REQHDR.BPFX]]
 rem --- disable buttons
 	callpoint!.setOptionEnabled("QPRT",0)
