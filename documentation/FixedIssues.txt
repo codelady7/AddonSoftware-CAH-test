@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-03
+ Report Date:   2024-05-06
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -61,4 +61,13 @@ the next record, which is the currently displayed record.
 ----
 Modified: data/bar/opt_fillmnthdr.xml
 Modified: data/cdf/opt_fillmnthdr.cdf
+=======================================================================================================================================
+
+Revision: c7f9e4d67580b9244e1e4058923871a3708882c1
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/6/2024 5:34:59 PM
+Message:
+Bug 10829: Using info(3,6)="5" to test for running in BUI.
+----
+Modified: ap/src/apc_imageviewer.aon
 =======================================================================================================================================
