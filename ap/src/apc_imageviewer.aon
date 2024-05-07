@@ -67,6 +67,12 @@ rem --- Get image files for the invoice
             
             BBjAPI().getThinClient().browse(thisFile$)
 
+            rem --- Get imageCount! TreeMap from Global Namespace, and set count for this image
+            global_ns!=BBjAPI().getGlobalNamespace()
+            imageCount!=global_ns!.getValue("apcImageViewer_imageCount"+processID$)
+            count=imageCount!.lastKey()+1
+            imageCount!.put(count,ap_inv_no$)
+
         else
 
             rem --- Using MDI or SDI or Google Docs
