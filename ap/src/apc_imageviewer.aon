@@ -57,7 +57,7 @@ rem --- Get image files for the invoice
 
         rem --- Show the invoice images
         frameMode!=BBjAPI().getConfig().getCurrentCommandLineObject().getChildFrameMode()
-        if frameMode! = null() then
+        if frameMode! = null() or info(3,6) = "5" then
             rem --- Using BUI
             if cvs(invimage.scan_docs_to$,2)<>"GD" then
                 sslReq = BBUtils.isWebServerSSLEnabled()
