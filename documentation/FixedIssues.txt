@@ -71,3 +71,14 @@ Bug 10829: Using info(3,6)="5" to test for running in BUI.
 ----
 Modified: ap/src/apc_imageviewer.aon
 =======================================================================================================================================
+
+Revision: a638324730e09b9a58725979a190d8a4b03efd5e
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/6/2024 5:46:31 PM
+Message:
+Bug 10828: Counted images processed for BUI.
+----
+Modified: ap/src/apc_imageviewer.aon
+Modified: data/bar/ape_payselect.xml
+Modified: data/cdf/ape_payselect.cdf
+=======================================================================================================================================
