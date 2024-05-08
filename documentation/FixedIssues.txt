@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-06
+ Report Date:   2024-05-08
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -81,4 +81,14 @@ Bug 10828: Counted images processed for BUI.
 Modified: ap/src/apc_imageviewer.aon
 Modified: data/bar/ape_payselect.xml
 Modified: data/cdf/ape_payselect.cdf
+=======================================================================================================================================
+
+Revision: bae919e4f466ed3046de3a4c973ee7016ec0abce
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/8/2024 1:18:16 PM
+Message:
+Bug 10854: Skip testing for the "addon_source" directory when the
+auto-launch data conversion process is being run for DataPort.
+----
+Modified: ad/src/adx_init_data.aon
 =======================================================================================================================================
