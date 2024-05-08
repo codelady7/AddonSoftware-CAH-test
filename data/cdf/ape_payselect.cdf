@@ -2716,8 +2716,6 @@ rem ==========================================================================
 		ap_inv_no$ = vectInvoicesMaster!.getItem(mast_offset+16)
 
 		call stbl("+DIR_PGM")+"apc_imageviewer.aon", ap_type$, vend_id$, ap_inv_no$, table_chans$[all], imageCount!, urls!
-rem wgh ... 10828 ...
-rem ...		image_count=num(imageCount$)
 
 		callpoint!.setDevObject("imageCount",imageCount!)
 
