@@ -318,7 +318,7 @@ rem --- Check to see if "old" Addon path exists, and warn/prevent continuing if 
 
     oldAonDir$=convCtrl!.getProperty("addon_source")
     oldAonDir!=new File(oldAonDir$,err=*next)
-    if !oldAonDir!.exists()
+    if !oldAonDir!.exists() and convCtrl!.getProperty("data_source")<>"DataPort" then
         err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
 :       Translate!.getTranslation("AON_OLD_ADDON_NOT_FOUND","Old/source Addon not found at: ",1)+oldAonDir$+". "+
 :       Translate!.getTranslation("AON_CORRECT_CNVCTRL","Correct 'addon_source' property in adx_conversionCtrl file.",1)+" *****"
