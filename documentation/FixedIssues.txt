@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-08
+ Report Date:   2024-05-09
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -91,4 +91,15 @@ Bug 10854: Skip testing for the "addon_source" directory when the
 auto-launch data conversion process is being run for DataPort.
 ----
 Modified: ad/src/adx_init_data.aon
+=======================================================================================================================================
+
+Revision: 267b8c80ed5a27754acaf7d01f4991bd7e14d596
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/9/2024 6:14:36 PM
+Message:
+Bug 10857: Use the old source ivs_numbers file for moving IVS_NUMBERS
+data to ITEM_ID records in ADS_SEQUENCES since the IVS_NUMBERS table was
+dropped in v24.
+----
+Modified: ad/src/adc_v2300conversion.aon
 =======================================================================================================================================
