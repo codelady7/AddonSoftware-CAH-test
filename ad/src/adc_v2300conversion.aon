@@ -618,67 +618,113 @@ rem --- For version 23.00, Inventory conversions
         endif
 
         rem --- Move IVS_NUMBERS data to ITEM_ID records in ADS_SEQUENCES (ER 10586)
-        task$="2300_IV_ivs_numbers"
-        if convCtrl!.getProperty(task$)<>"Completed" then
-
-            rem --- Increment progress meter
-            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+        if convCtrl!.getProperty("data_source")="OCJ" then
+            task$="2300_IV_ivs_numbers"
+            if convCtrl!.getProperty(task$)<>"Completed" then
+    
+                rem --- Increment progress meter
+                meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
 :                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-    
-            rem --- Open File(s)
-            num_files=2
-            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-            open_tables$[1]="IVS_NUMBERS",    open_opts$[1]="OTA"
-            open_tables$[2]="ADS_SEQUENCES",  open_opts$[2]="OTA"
-    
-            gosub open_tables
-    
-            ivsNumbers_dev=num(open_chans$[1])
-            adsSequences_dev=num(open_chans$[2])
-            dim ivsNumbers$:open_tpls$[1]
-            dim adsSequences$:open_tpls$[2]
-
-            rem --- Move IVS_NUMBERS data to ITEM_ID records in ADS_SEQUENCES (ER 10586)
-            read(ivsNumbers_dev,key="",dom=*next)
-            while 1
-                readrecord(ivsNumbers_dev,end=*break)ivsNumbers$
-                
-                readrecord(adsSequences_dev,key=ivsNumbers.firm_id$+pad("ITEM_ID",16," "),dom=*continue)adsSequences$
-                adsSequences.seq_last_used=ivsNumbers.nxt_item_id
-                writerecord(adsSequences_dev)adsSequences$
-            wend
-
-            rem --- close files opened for this conversion
-            num_files=2
-            dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
-            open_tables$[1]="IVS_NUMBERS",    open_opts$[1]="C"
-            open_tables$[2]="ADS_SEQUENCES",  open_opts$[2]="C"
-            gosub open_tables
-           
-            write(convCtrlFileChan)task$+"=Completed"
-
-            rem --- This task$ conversion completed successfully
-            rem --- Increment progress meter
-            meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
-:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-
-        else
-            rem --- Increment progress meter
-            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-        endif
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
         
+                rem --- Must use source IVS_NUMBERS table when conversion ends with v24 or later
+                oldStbl$="+IVDATA"
+                oldFile$="ivs_numbers"
+                gosub get_path_to_old_file
+                old_ivsNumbers$=oldPathToFile$
+                open_success=0
+                old_ivsNumbers_dev=unt
+                open(old_ivsNumbers_dev,err=*next)old_ivsNumbers$; open_success=1
+                if open_success then
+                    rem --- Get record template for old source IVS_NUMBERS file
+                    ddm_table_tpls$=convCtrl!.getProperty("barista_source")+"/barista/sys/data/ddm_table_tpls.dat"
+                    open_success=0
+                    ddm_table_tpls=unt
+                    open(ddm_table_tpls,err=*next)ddm_table_tpls$; open_success=1
+                    if open_success then
+                        dim ddm_table_tpls$:"table_name:c(16*),file_name:c(30*),template:c(10230*)"
+                        tpl_found=0
+                        findrecord(ddm_table_tpls,key=pad(cvs(oldFile$,4),16),dom=*next)ddm_table_tpls$;tpl_found=1
+                        if tpl_found then
+                            dim old_ivsNumbers$:ddm_table_tpls.template$
+                        else
+                            rem --- Required template missing
+                            err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+Translate!.getTranslation("AON_VERSION","Verion")+" "+convCtrl!.getProperty("start_version")+
+:                               " "+Translate!.getTranslation("AON_TEMPLATE_NOT_FOUND","Template not found")+": "+oldFile$+" *****"
+                            goto done
+                        endif
+                    else
+                        rem --- Required file missing
+                        msg_id$="AD_FILE_MISSING"
+                        dim msg_tokens$[1]
+                        msg_tokens$[1]=ddm_table_tpls$
+                        gosub disp_message
+                        err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                           Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+ddm_table_tpls$+" *****"
+                        goto done
+                    endif
+
+                    rem --- Open File(s)
+                    num_files=1
+                    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                    open_tables$[1]="ADS_SEQUENCES",  open_opts$[1]="OTA"
+            
+                    gosub open_tables
+            
+                    adsSequences_dev=num(open_chans$[1])
+                    dim adsSequences$:open_tpls$[1]
+        
+                    rem --- Move IVS_NUMBERS data to ITEM_ID records in ADS_SEQUENCES (ER 10586)
+                    read(old_ivsNumbers_dev,key="",dom=*next)
+                    while 1
+                        readrecord(old_ivsNumbers_dev,end=*break)old_ivsNumbers$
+                        
+                        readrecord(adsSequences_dev,key=old_ivsNumbers.firm_id$+pad("ITEM_ID",16," "),dom=*continue)adsSequences$
+                        adsSequences.seq_last_used=old_ivsNumbers.nxt_item_id
+                        writerecord(adsSequences_dev)adsSequences$
+                    wend
+        
+                    rem --- close files opened for this conversion
+                    num_files=1
+                    dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+                    open_tables$[1]="ADS_SEQUENCES",  open_opts$[1]="C"
+                    gosub open_tables
+                    
+                    close(old_ivsNumbers_dev,err=*next)
+                   
+                    write(convCtrlFileChan)task$+"=Completed"
+        
+                    rem --- This task$ conversion completed successfully
+                    rem --- Increment progress meter
+                    meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                       Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": "+task$
+                    meter_proc_recs=meter_proc_recs+1
+                    meter_action$="MTR-LST"
+                    gosub disp_meter
+                    print(log_dev)meter_text$
+                else
+                    rem --- Required file missing
+                    msg_id$="AD_FILE_MISSING"
+                    dim msg_tokens$[1]
+                    msg_tokens$[1]=old_glsParams$
+                    gosub disp_message
+                    err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                           Translate!.getTranslation("AON_FILE_NOT_FOUND","Required file not found")+": "+old_ivsNumbers$+" *****"
+                    goto done
+                endif
+    
+            else
+                rem --- Increment progress meter
+                meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+            endif
+        endif
     else
         rem --- Increment progress meter
         meter_text$=this_module$+" "+Translate!.getTranslation("AON_NOT","Not")+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
