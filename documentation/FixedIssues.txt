@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-09
+ Report Date:   2024-05-13
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -102,4 +102,16 @@ data to ITEM_ID records in ADS_SEQUENCES since the IVS_NUMBERS table was
 dropped in v24.
 ----
 Modified: ad/src/adc_v2300conversion.aon
+=======================================================================================================================================
+
+Revision: 03db5fb2dd89e48bc6c7fa70607b09dbb309458e
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/13/2024 3:12:08 PM
+Message:
+Bug 10834: Removed unwanted field terminator from the BARCODE_SOURCE
+field in ARS_PARAMS so it matches the BARCODE_SOURCE field in
+OPS_PARAMS.
+----
+Modified: data/ars_params
+Modified: data/bar/ars_params.xml
 =======================================================================================================================================
