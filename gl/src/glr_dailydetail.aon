@@ -161,6 +161,13 @@ rem --- Initializations
     h2$=""
     recs=0
     total_recs=0
+    errors=0
+
+    rem --- stbl("+GLCONTROL_TPL") must be set via glc_ctlcreate.aon
+    source$=pgm(-2)
+    call pgmdir$+"glc_ctlcreate.aon",err=std_exit_no_report,source$,"GL",glw11$,gl$,status
+    if status goto std_exit_no_report
+
 rem --- Document columns
 
     if sequence$="A"
@@ -527,6 +534,12 @@ rem --- Run update overlay
 
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,meter_num,status
 
+    if errors then
+        msg_id$="AON_REG_ERRS"
+        gosub disp_message
+        if pos("PASSVALID"=msg_opt$)=0 then goto std_exit_no_update
+    endif
+
     next_overlay$=pgmdir$+"glu_dailydetail.aon"
     goto std_exit
 
@@ -536,6 +549,12 @@ date_heading: rem --- Date heading
 	outVect!.addItem(h0$)
 	xwk=fnblank(columns)
 	h0$=""
+    call pgmdir$+"glc_datecheck.aon",glt04a.trns_date$,"N",period$,year$,glstatus
+    if glstatus call pgmdir$+"glc_datewarn.aon",0,glt04a.trns_date$,glstatus,0,errors,status
+    if stbl("+DTWARN_MSG",err=*endif)<>"" then
+        outVect!.addItem(stbl("+DTWARN_MSG")+$00$+"B")
+        xwk=fnblank(columns)
+    endif
 	gosub journal_heading
 	return
 	
@@ -560,6 +579,12 @@ audit_heading:
 	outVect!.addItem(h2$)
 	xwk=fnblank(columns)
 	h2$=""
+    call pgmdir$+"glc_datecheck.aon",glt04a.trns_date$,"N",period$,year$,glstatus
+    if glstatus call pgmdir$+"glc_datewarn.aon",0,glt04a.trns_date$,glstatus,0,errors,status
+    if stbl("+DTWARN_MSG",err=*endif)<>"" then
+        outVect!.addItem(stbl("+DTWARN_MSG")+$00$+"B")
+        xwk=fnblank(columns)
+    endif
 	return
 
 date_break: rem --- Date break
@@ -856,6 +881,15 @@ std_missing_params_release:
 rem #endinclude std_missing_params.src
 
 rem #include std_end.src
+    
+std_exit_no_update:
+
+    if num(batch_no$)<>0
+        unlock_key$=firm_id$+stbl("+PROCESS_ID")+stbl("+BATCH_NO")
+        lock_status$=""
+        call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHES",unlock_key$,"X","",rd_table_chan,rd_table_chans$[all],lock_status$
+        call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHSEL",unlock_key$,"X","",rd_table_chan,rd_table_chans$[all],lock_status$
+    endif
 
 std_exit: rem --- Standard program end (01Mar2006)
 
