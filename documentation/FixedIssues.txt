@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-13
+ Report Date:   2024-05-14
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -114,4 +114,15 @@ OPS_PARAMS.
 ----
 Modified: data/ars_params
 Modified: data/bar/ars_params.xml
+=======================================================================================================================================
+
+Revision: ec992f9bad7fa97aceb8d89ff65fef6f6b9425e3
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/14/2024 2:10:28 PM
+Message:
+Bug 10859: Updated DataPort's cross reference files for Data Name
+changes between v6 and v24.
+----
+Modified: util/dataport/files/field_file_xref
+Modified: util/dataport/files/field_name_xref
 =======================================================================================================================================
