@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-14
+ Report Date:   2024-05-15
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -125,4 +125,19 @@ changes between v6 and v24.
 ----
 Modified: util/dataport/files/field_file_xref
 Modified: util/dataport/files/field_name_xref
+=======================================================================================================================================
+
+Revision: 2bc05f8ccddd092dae4169c6e43637f8566c400b
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/15/2024 5:01:20 PM
+Message:
+ER 10756: Updated register Error and OOB warning messages as suggested.
+----
+Modified: data/sync/ads_messages~[01007514AD].xml
+Deleted: data/sync/ads_messages~aon_reg_errs.xml
+Modified: op/src/opr_salesregister.aon
+Modified: op/src/opr_salesregister_o2.aon
+Modified: op/src/opu_updatesales.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
 =======================================================================================================================================
