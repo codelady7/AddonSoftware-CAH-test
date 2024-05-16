@@ -157,12 +157,15 @@ rem --- Close Files Not Needed For Update Or GL Summary
 
 rem --- Run next overlay
 
-    update$="opu_updatesales.aon"
-    overlay$=update$
     call pgmdir$+"adc_progress.aon","D","","","","",0,0,0,0,status
 
-    if gl$="Y" then
+    update$="opu_updatesales.aon"
+    if errors and special_flag$<>"Y" then
+        update$=""
+        goto std_exit_no_update
+    endif
 
+    if gl$="Y" then
         dim glcontrol$:(stbl("+GLCONTROL_TPL"))
         start_block = 1
         
@@ -176,10 +179,9 @@ rem --- Run next overlay
         out_action$="PRT-PDF"
         next_overlay$=overlay$
         goto std_exit
-
     endif
 
-    update$="opu_updatesales.aon"
+    overlay$=update$
     run update$,err=std_exit
     goto std_exit
 
@@ -303,6 +305,15 @@ std_error: rem --- Standard error handler (11Oct2017)
 rem --- #endinclude std_error.src
 
 rem --- #include std_end.src
+    
+std_exit_no_update:
+
+    if num(batch_no$)<>0
+        unlock_key$=firm_id$+stbl("+PROCESS_ID")+stbl("+BATCH_NO")
+        lock_status$=""
+        call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHES",unlock_key$,"X","",rd_table_chan,rd_table_chans$[all],lock_status$
+        call stbl("+DIR_SYP")+"bac_lock_record.bbj","ADM_PROCBATCHSEL",unlock_key$,"X","",rd_table_chan,rd_table_chans$[all],lock_status$
+    endif
 
 std_exit: rem --- Standard program end (01Mar2006)
 
