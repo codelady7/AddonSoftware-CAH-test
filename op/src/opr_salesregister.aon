@@ -891,6 +891,12 @@ rem --- Totals
 
 rem --- Run overlay
 
+    if errors
+        msg_id$="AON_REG_ERRS"
+        gosub disp_message
+        if pos("PASSVALID"=msg_opt$)<>0 special_flag$="Y"
+    endif
+
     if ars01a.cash_sale$<>"N" then
         update$       = pgmdir$+"opr_salesregister_o1.aon"
         overlay$      = update$
