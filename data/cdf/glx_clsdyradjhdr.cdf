@@ -79,6 +79,17 @@ rem --- Verify this Journal ID is allowed for Journal Entries.
 		break
 	endif
 
+rem --- Warn about inactive code Journal ID code
+	if glcJournalCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE_OK"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(glcJournalCode.journal_id$,3)
+		msg_tokens$[2]=cvs(glcJournalCode.code_desc$,3)
+		gosub disp_message
+		if msg_opt$="C" then callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[GLX_CLSDYRADJHDR.TRANS_DATE.AVAL]]
 rem --- Must be in an existing fiscal year.
 	trans_date$=callpoint!.getUserInput()
