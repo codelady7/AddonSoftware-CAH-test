@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-05-15
+ Report Date:   2024-05-21
  Report Branch: AddonSoftware 24.02
  Last Release:  AddonSoftware 24.01
 =======================================================================================================================================
@@ -138,6 +138,26 @@ Deleted: data/sync/ads_messages~aon_reg_errs.xml
 Modified: op/src/opr_salesregister.aon
 Modified: op/src/opr_salesregister_o2.aon
 Modified: op/src/opu_updatesales.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+=======================================================================================================================================
+
+Revision: 498039c9f4427162d5557163cbc91d8ac39c85dc
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 5/21/2024 3:37:15 PM
+Message:
+ER 10860: Implemented use of CODE_INACTIVE flag for GLC_JOURNALCODE,
+i.e. Journal ID Codes.
+----
+Modified: data/bar/glc_journalcode.xml
+Modified: data/bar/gle_jrnlhdr.xml
+Modified: data/bar/gle_recjehdr.xml
+Modified: data/bar/glx_clsdyradjhdr.xml
+Modified: data/cdf/glc_journalcode.cdf
+Modified: data/cdf/gle_jrnlhdr.cdf
+Modified: data/cdf/gle_recjehdr.cdf
+Modified: data/cdf/glx_clsdyradjhdr.cdf
+Modified: data/sync/ads_messages~[01007514AD].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
 =======================================================================================================================================
