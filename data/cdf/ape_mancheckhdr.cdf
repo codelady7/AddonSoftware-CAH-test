@@ -319,7 +319,7 @@ rem --- Open/Lock files
 	files$[7]="APT_INVOICEDET",options$[7]="OTA"
 	files$[8]="APT_CHECKHISTORY",options$[8]="OTA"
 	files$[9]="APC_TYPECODE",options$[9]="OTA"
-	rem files$[10]="",options$[10]=""
+	files$[10]="APC_DISTRIBUTION",options$[10]="OTA"
 	files$[11]="APS_PARAMS",options$[11]="OTA"
 	files$[12]="GLS_PARAMS",options$[12]="OTA"
 	files$[13]="APS_PAYAUTH",options$[13]="OTA@"

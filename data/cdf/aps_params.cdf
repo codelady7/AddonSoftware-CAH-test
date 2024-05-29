@@ -97,6 +97,22 @@ rem --- Display selected color
 	all_color_ctl!=callpoint!.getDevObject("all_color_ctl")
 	all_color_ctl!.setBackColor(valRGB!)
 
+[[APS_PARAMS.AP_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcDistribution_dev=fnget_dev("APC_DISTRIBUTION")
+	dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
+	ap_dist_code$=callpoint!.getUserInput()
+	read record(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
+	if apcDistribution.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcDistribution.ap_dist_code$,3)
+		msg_tokens$[2]=cvs(apcDistribution.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APS_PARAMS.ARAR]]
 rem --- Open/Lock files
 	pgmdir$=stbl("+DIR_PGM")
@@ -362,7 +378,7 @@ rem --- Inits
 
 rem --- Open files
 
-	num_files=8
+	num_files=9
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APE_INVOICEHDR",open_opts$[1]="OTA"
 	open_tables$[2]="APT_INVOICEHDR",open_opts$[2]="OTA"
@@ -372,6 +388,7 @@ rem --- Open files
 	open_tables$[6]="ADM_FIRMS",open_opts$[6]="OTA"
 	open_tables$[7]="APW_CHECKINVOICE",open_opts$[7]="OTA"
 	open_tables$[8]="APE_CHECKS",open_opts$[8]="OTA"
+	open_tables$[9]="APC_DISTRIBUTION",open_opts$[9]="OTA"
 
 	gosub open_tables
 

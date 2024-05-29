@@ -328,6 +328,21 @@ rem --- Displaye invoice images
 	endif
 
 [[APE_MANCHECKDET.AP_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcDistribution_dev=fnget_dev("APC_DISTRIBUTION")
+	dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
+	ap_dist_code$=callpoint!.getUserInput()
+	read record(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
+	if apcDistribution.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcDistribution.ap_dist_code$,3)
+		msg_tokens$[2]=cvs(apcDistribution.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Verify the GL Cash Account for the invoice's Distribution Code matches the GLM_BANKMASTER GL Account for the BNK_ACCT_CD
 	ap_dist_code$=callpoint!.getUserInput()
 	ap_in_no$=callpoint!.getColumnData("APE_MANCHECKDET.AP_INV_NO")

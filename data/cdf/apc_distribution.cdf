@@ -41,6 +41,15 @@ rem --- Do NOT allow deleting this Distribution Code when still in use.
 		break
 	endif
 
+rem --- Do they want to deactivate code instead of deleting it?
+	msg_id$="AD_DEACTIVATE_CODE"
+	gosub disp_message
+	if msg_opt$="Y" then
+		rem --- Check the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("APC_DISTRIBUTION.CODE_INACTIVE","Y",1)
+		callpoint!.setStatus("SAVE;ABORT")
+	endif
+
 [[APC_DISTRIBUTION.BSHO]]
 rem --- This firm using Purchase Orders?
 	call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
@@ -114,6 +123,15 @@ if gl$<>"Y" then
 	callpoint!.setColumnEnabled("APC_DISTRIBUTION.GL_DISC_ACCT",-1)
 endif
 
+[[APC_DISTRIBUTION.CODE_INACTIVE.AVAL]]
+rem --- When deactivating the Distribution code, warn if there are any current/active transactions for the code, and disallow if there are any.
+	current_inactive$=callpoint!.getUserInput()
+	prior_inactive$=callpoint!.getColumnData("APC_DISTRIBUTION.CODE_INACTIVE")
+	if current_inactive$="Y" and prior_inactive$<>"Y" then
+		gosub check_active_code
+		if found then callpoint!.setStatus("ABORT")
+	endif
+
 [[APC_DISTRIBUTION.GL_AP_ACCT.AVAL]]
 gosub gl_active
 
@@ -165,6 +183,75 @@ disable_fields:
  callpoint!.setStatus("ABLEMAP-REFRESH-ACTIVATE")
  
 return
+
+rem ==========================================================================
+check_active_code: rem --- Warn if there are any current/active transactions for the code
+rem ==========================================================================
+	found=0
+	ap_dist_code$=callpoint!.getColumnData("APC_DISTRIBUTION.AP_DIST_CODE")
+
+	checkTables!=BBjAPI().makeVector()
+	checkTables!.addItem("APC_TYPECODE")
+	checkTables!.addItem("APE_INVOICEHDR")
+	checkTables!.addItem("APE_MANCHECKDET")
+	checkTables!.addItem("APE_RECURRINGHDR")
+	checkTables!.addItem("APM_VENDHIST")
+	checkTables!.addItem("APS_PARAMS")
+	if callpoint!.getDevObject("usingPO")="Y" then
+		checkTables!.addItem("POE_INVHDR")
+	endif
+	for i=0 to checkTables!.size()-1
+		thisTable$=checkTables!.getItem(i)
+		table_dev = fnget_dev(thisTable$)
+		dim table_tpl$:fnget_tpl$(thisTable$)
+		read(table_dev,key=firm_id$,dom=*next)
+		while 1
+			readrecord(table_dev,end=*break)table_tpl$
+			if table_tpl.firm_id$<>firm_id$ then break
+			if table_tpl.ap_dist_code$=ap_dist_code$ then
+				msg_id$="AD_CODE_IN_USE"
+				dim msg_tokens$[2]
+				msg_tokens$[1]="AP "+Translate!.getTranslation("AON_DISTRIBUTION_CODE")
+				switch (BBjAPI().TRUE)
+					case thisTable$="APC_TYPECODE"
+						msg_tokens$[2]=Translate!.getTranslation("DDM_TABLE_COLS-APC_TYPECODE-AP_TYPE-DD_ATTR_PROM")+" "+Translate!.getTranslation("AON_CODE")
+						break
+                				case thisTable$="APE_INVOICEHDR"
+                   				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APE_INVOICEHDR-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="APE_MANCHECKDET"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APE_MANCHECKHDR-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="APE_RECURRINGHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APE_RECURRINGHDR-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="APM_VENDHIST"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APM_VENDHIST-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="APS_PARAMS"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APS_PARAMS-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="POE_INVHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_INVHDR-DD_ATTR_WINT")
+                				case default
+                    				msg_tokens$[2]="???"
+                    				break
+            				swend
+				gosub disp_message
+
+				found=1
+				break
+			endif
+		wend
+		if found then break
+	next i
+
+	if found then
+		rem --- Uncheck the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("APC_DISTRIBUTION.CODE_INACTIVE","N",1)
+	endif
+
+	return
 
 
 

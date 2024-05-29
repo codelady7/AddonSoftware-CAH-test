@@ -224,6 +224,22 @@ endif
 
 callpoint!.setDevObject("deleted","")
 
+[[POE_INVHDR.AP_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcDistribution_dev=fnget_dev("APC_DISTRIBUTION")
+	dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
+	ap_dist_code$=callpoint!.getUserInput()
+	read record(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
+	if apcDistribution.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcDistribution.ap_dist_code$,3)
+		msg_tokens$[2]=cvs(apcDistribution.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[POE_INVHDR.AP_INV_NO.AVAL]]
 rem --- Is this a new invoice or an adjustment to an existing invoice?
 ap_inv_no$=callpoint!.getUserInput()
@@ -406,7 +422,7 @@ rem --- Open/Lock files
 files=22,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 
-rem files$[1]="",options$[1]=""
+files$[1]="APC_DISTRIBUTION",options$[1]="OTA"
 files$[2]="APM_VENDMAST",options$[2]="OTA"
 files$[3]="APM_VENDHIST",options$[3]="OTA"
 files$[4]="APS_PARAMS",options$[4]="OTA"

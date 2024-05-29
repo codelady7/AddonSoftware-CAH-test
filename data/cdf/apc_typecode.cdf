@@ -1,3 +1,19 @@
+[[APC_TYPECODE.AP_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcDistribution_dev=fnget_dev("APC_DISTRIBUTION")
+	dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
+	ap_dist_code$=callpoint!.getUserInput()
+	read record(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
+	if apcDistribution.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcDistribution.ap_dist_code$,3)
+		msg_tokens$[2]=cvs(apcDistribution.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APC_TYPECODE.AREC]]
 if callpoint!.getDevObject("multi_dist")<>"Y"
 	ap_dist_code$=callpoint!.getDevObject("ap_dist_code")
@@ -10,9 +26,10 @@ rem --- Initialize default fields
 [[APC_TYPECODE.BSHO]]
 rem --- Open/Lock files
 
-files=1,begfile=1,endfile=files
+files=2,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APS_PARAMS";rem --- ads-01
+files$[2]="APC_DISTRIBUTION";rem --- ads-01
 
 for wkx=begfile to endfile
 	options$[wkx]="OTA"

@@ -97,10 +97,20 @@ rem --- Display invoice images
 	endif
 
 [[APE_INVOICEHDR.AP_DIST_CODE.AVAL]]
-if callpoint!.getUserInput()=""
-	callpoint!.setUserInput("  ")
-	callpoint!.setStatus("REFRESH")
-endif
+rem --- Don't allow inactive code
+	apcDistribution_dev=fnget_dev("APC_DISTRIBUTION")
+	dim apcDistribution$:fnget_tpl$("APC_DISTRIBUTION")
+	ap_dist_code$=callpoint!.getUserInput()
+	read record(apcDistribution_dev,key=firm_id$+"B"+ap_dist_code$,dom=*next)apcDistribution$
+	if apcDistribution.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcDistribution.ap_dist_code$,3)
+		msg_tokens$[2]=cvs(apcDistribution.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[APE_INVOICEHDR.AP_INV_NO.AVAL]]
 rem record not in ape-01; is it in apt-01?
@@ -499,7 +509,7 @@ files=13,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APT_INVOICEHDR",options$[1]="OTA"
 files$[2]="APT_INVOICEDET",options$[2]="OTA"
-rem files$[3]="",options$[3]=""
+files$[3]="APC_DISTRIBUTION",options$[3]="OTA"
 files$[4]="APM_VENDMAST",options$[4]="OTA"
 files$[5]="APM_VENDHIST",options$[5]="OTA"
 files$[6]="APS_PARAMS",options$[6]="OTA"
