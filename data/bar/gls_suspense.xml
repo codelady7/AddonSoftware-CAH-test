@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.gls_suspense">5FA94B624C2D27DC71895CFE675094DE</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.gls_suspense">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.gls_suspense">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.gls_suspense">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.gls_suspense">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.gls_suspense">142908</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.gls_suspense">20240522</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.gls_suspense">20240522</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.gls_suspense">170820</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.gls_suspense"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.gls_suspense"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.gls_suspense">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.gls_suspense"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.gls_suspense"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.gls_suspense">T</DD_ATTR_FTYP>
@@ -56,6 +56,13 @@
 			<DD_ATTR_PADW id="ddm_tables.gls_suspense">0</DD_ATTR_PADW>
 			<DD_ATTR_PADH id="ddm_tables.gls_suspense">0</DD_ATTR_PADH>
 			<DD_ATTR_PADG id="ddm_tables.gls_suspense">0</DD_ATTR_PADG>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_table_cpro">
+		<ID id="ddm_table_cpro">DDM_TABLE_CPRO</ID>
+		<RECORD id="ddm_table_cpro.gls_suspensebsho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.gls_suspensebsho">GLS_SUSPENSE    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.gls_suspensebsho">BSHO</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -370,7 +377,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gls_suspense004">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gls_suspense004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gls_suspense004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense004">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gls_suspense004"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gls_suspense004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gls_suspense004"></DD_ATTR_CTLY>
@@ -421,7 +428,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gls_suspense005">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gls_suspense005">GLS_SUSPENSE.USE_SUSPENSE</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gls_suspense005">Y</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gls_suspense005"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gls_suspense005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gls_suspense005"></DD_ATTR_CTLY>
@@ -574,7 +581,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.gls_suspense008">20220308</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.gls_suspense008"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.gls_suspense008"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense008"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.gls_suspense008">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.gls_suspense008">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.gls_suspense008"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.gls_suspense008"></DD_ATTR_CTLY>
@@ -621,6 +628,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.gls_suspensegl_accountaval">GLS_SUSPENSE    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.gls_suspensegl_accountaval">GL_ACCOUNT      </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.gls_suspensegl_accountaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.gls_suspensejournal_idaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.gls_suspensejournal_idaval">GLS_SUSPENSE    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.gls_suspensejournal_idaval">JOURNAL_ID      </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.gls_suspensejournal_idaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
