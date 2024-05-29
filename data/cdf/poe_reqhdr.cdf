@@ -312,6 +312,22 @@ rem --- enable/disable buttons
 		callpoint!.setOptionEnabled("COPY",0)
 	endif
 
+[[POE_REQHDR.AP_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcTermsCode_dev=fnget_dev("APC_TERMSCODE")
+	dim apcTermsCode$:fnget_tpl$("APC_TERMSCODE")
+	ap_terms_code$=callpoint!.getUserInput()
+	read record(apcTermsCode_dev,key=firm_id$+"C"+ap_terms_code$,dom=*next)apcTermsCode$
+	if apcTermsCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTermsCode.terms_codeap$,3)
+		msg_tokens$[2]=cvs(apcTermsCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[POE_REQHDR.ARAR]]
 vendor_id$=callpoint!.getColumnData("POE_REQHDR.VENDOR_ID")
 purch_addr$=callpoint!.getColumnData("POE_REQHDR.PURCH_ADDR")
@@ -433,7 +449,7 @@ rem --- inits
 	use ::ado_util.src::util
 
 rem --- Open Files
-	num_files=14
+	num_files=15
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="IVS_PARAMS",open_opts$[2]="OTA"
@@ -449,6 +465,7 @@ rem --- Open Files
 	open_tables$[12]="POE_REQDET",open_opts$[12]="OTAN[2_]"
 	open_tables$[13]="POT_REQHDR_ARC",open_opts$[13]="OTA"
 	open_tables$[14]="POT_REQDET_ARC",open_opts$[14]="OTA"
+	open_tables$[15]="APC_TERMSCODE",open_opts$[15]="OTA"
 
 	gosub open_tables
 	aps_params_dev=num(open_chans$[1]),aps_params_tpl$=open_tpls$[1]

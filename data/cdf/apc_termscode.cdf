@@ -1,11 +1,43 @@
-[[APC_TERMSCODE.<CUSTOM>]]
-#include [+ADDON_LIB]std_missing_params.aon
-[[APC_TERMSCODE.BSHO]]
-rem --- Open/Lock files
+[[APC_TERMSCODE.BDEL]]
+rem --- When deleting the Terms Code, warn if there are any current/active transactions for the code, and disallow if there are any.
+	gosub check_active_code
+	if found then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
-files=1,begfile=1,endfile=files
+rem --- Do they want to deactivate code instead of deleting it?
+	msg_id$="AD_DEACTIVATE_CODE"
+	gosub disp_message
+	if msg_opt$="Y" then
+		rem --- Check the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("APC_TERMSCODE.CODE_INACTIVE","Y",1)
+		callpoint!.setStatus("SAVE;ABORT")
+		break
+	endif
+
+[[APC_TERMSCODE.BSHO]]
+rem --- This firm using Purchase Orders?
+call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
+callpoint!.setDevObject("usingPO",info$[20])
+
+rem --- Open/Lock files
+files=10
+if callpoint!.getDevObject("usingPO")<>"Y" then files=8
+begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
-files$[1]="APS_PARAMS";rem --- ads-01
+files$[1]="APS_PARAMS";rem --- aps-01
+files$[2]="APC_TYPECODE"
+files$[3]="APE_INVOICEHDR"
+files$[4]="APE_RECURRINGHDR"
+files$[5]="APM_VENDHIST"
+if callpoint!.getDevObject("usingPO")="Y" then
+	files$[6]="POE_INVHDR"
+	files$[7]="POE_POHDR"
+	files$[8]="POE_QAHDR"
+	files$[9]="POE_RECHDR"
+	files$[10]="POE_REQHDR"
+endif
 
 for wkx=begfile to endfile
 	options$[wkx]="OTA"
@@ -43,3 +75,99 @@ aps01a_key$=firm_id$+"AP00"
 find record (ads01_dev,key=aps01a_key$,err=std_missing_params) aps01a$
 
 dim info$[20]
+
+[[APC_TERMSCODE.CODE_INACTIVE.AVAL]]
+rem --- When deactivating the Terms Code, warn if there are any current/active transactions for the code, and disallow if there are any.
+	current_inactive$=callpoint!.getUserInput()
+	prior_inactive$=callpoint!.getColumnData("APC_TERMSCODE.CODE_INACTIVE")
+	if current_inactive$="Y" and prior_inactive$<>"Y" then
+		gosub check_active_code
+		if found then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
+[[APC_TERMSCODE.<CUSTOM>]]
+#include [+ADDON_LIB]std_missing_params.aon
+
+rem ==========================================================================
+check_active_code: rem --- Warn if there are any current/active transactions for the code
+rem ==========================================================================
+	found=0
+	terms_codeap$=callpoint!.getColumnData("APC_TERMSCODE.TERMS_CODEAP")
+
+	checkTables!=BBjAPI().makeVector()
+	checkTables!.addItem("APC_TYPECODE")
+	checkTables!.addItem("APE_INVOICEHDR")
+	checkTables!.addItem("APE_RECURRINGHDR")
+	checkTables!.addItem("APM_VENDHIST")
+	if callpoint!.getDevObject("usingPO")="Y" then
+		checkTables!.addItem("POE_INVHDR")
+		checkTables!.addItem("POE_POHDR")
+		checkTables!.addItem("POE_QAHDR")
+		checkTables!.addItem("POE_RECHDR")
+		checkTables!.addItem("POE_REQHDR")
+	endif
+	for i=0 to checkTables!.size()-1
+		thisTable$=checkTables!.getItem(i)
+		table_dev = fnget_dev(thisTable$)
+		dim table_tpl$:fnget_tpl$(thisTable$)
+		read(table_dev,key=firm_id$,dom=*next)
+		while 1
+			readrecord(table_dev,end=*break)table_tpl$
+			if table_tpl.firm_id$<>firm_id$ then break
+			if table_tpl.ap_terms_code$=terms_codeap$ then
+				msg_id$="AD_CODE_IN_USE"
+				dim msg_tokens$[2]
+				msg_tokens$[1]=Translate!.getTranslation("AON_TERMS_CODE")
+				switch (BBjAPI().TRUE)
+					case thisTable$="APC_TYPECODE"
+						msg_tokens$[2]=Translate!.getTranslation("DDM_TABLE_COLS-APC_TYPECODE-AP_TYPE-DD_ATTR_PROM")+" "+Translate!.getTranslation("AON_CODE")
+						break
+                				case thisTable$="APE_INVOICEHDR"
+                   				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APE_INVOICEHDR-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="APE_RECURRINGHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APE_RECURRINGHDR-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="APM_VENDHIST"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APM_VENDHIST-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="POE_INVHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_INVHDR-DD_ATTR_WINT")
+						break
+                				case thisTable$="POE_POHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_POHDR-DD_ATTR_WINT")
+						break
+                				case thisTable$="POE_QAHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_QAHDR-DD_ATTR_WINT")
+						break
+                				case thisTable$="POE_RECHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_RECHDR-DD_ATTR_WINT")
+						break
+                				case thisTable$="POE_REQHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_REQHDR-DD_ATTR_WINT")
+						break
+                				case default
+                    				msg_tokens$[2]="???"
+                    				break
+            				swend
+				gosub disp_message
+
+				found=1
+				break
+			endif
+		wend
+		if found then break
+	next i
+
+	if found then
+		rem --- Uncheck the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("APC_TERMSCODE.CODE_INACTIVE","N",1)
+	endif
+
+return
+
+
+

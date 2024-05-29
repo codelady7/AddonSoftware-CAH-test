@@ -60,6 +60,21 @@ ctl_stat$=""
 gosub disable_fields
 
 [[APE_RECURRINGHDR.AP_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcTermsCode_dev=fnget_dev("APC_TERMSCODE")
+	dim apcTermsCode$:fnget_tpl$("APC_TERMSCODE")
+	ap_terms_code$=callpoint!.getUserInput()
+	read record(apcTermsCode_dev,key=firm_id$+"C"+ap_terms_code$,dom=*next)apcTermsCode$
+	if apcTermsCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTermsCode.terms_codeap$,3)
+		msg_tokens$[2]=cvs(apcTermsCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem re-calc due and discount dates based on terms code
 	terms_cd$=callpoint!.getUserInput()
 	if terms_cd$="" callpoint!.setUserInput("  ")		
@@ -68,7 +83,6 @@ rem re-calc due and discount dates based on terms code
 	disc_amt=round(num(callpoint!.getColumnData("APE_RECURRINGHDR.NET_INV_AMT"))*(num(user_tpl.disc_pct$)/100),2)
 	callpoint!.setColumnData("APE_RECURRINGHDR.DISCOUNT_AMT",str(disc_amt))
 	callpoint!.setStatus("REFRESH")
-endif
 
 [[APE_RECURRINGHDR.AP_TYPE.AVAL]]
 user_tpl.dflt_ap_type$=callpoint!.getUserInput()

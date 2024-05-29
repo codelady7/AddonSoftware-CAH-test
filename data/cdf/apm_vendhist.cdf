@@ -107,6 +107,22 @@ rem --- Don't allow inactive code
 		break
 	endif
 
+[[APM_VENDHIST.AP_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	apcTermsCode_dev=fnget_dev("APC_TERMSCODE")
+	dim apcTermsCode$:fnget_tpl$("APC_TERMSCODE")
+	ap_terms_code$=callpoint!.getUserInput()
+	read record(apcTermsCode_dev,key=firm_id$+"C"+ap_terms_code$,dom=*next)apcTermsCode$
+	if apcTermsCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTermsCode.terms_codeap$,3)
+		msg_tokens$[2]=cvs(apcTermsCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APM_VENDHIST.AP_TYPE.AVAL]]
 rem --- get default distribution code	
 	apc_typecode_dev=fnget_dev("APC_TYPECODE")
