@@ -505,7 +505,7 @@ rem --- remove images copied temporarily to web servier for viewing
 
 [[APE_INVOICEHDR.BSHO]]
 rem --- Open/Lock files
-files=13,begfile=1,endfile=files
+files=14,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APT_INVOICEHDR",options$[1]="OTA"
 files$[2]="APT_INVOICEDET",options$[2]="OTA"
@@ -520,6 +520,7 @@ files$[10]="APS_PAYAUTH",options$[10]="OTA@"
 files$[11]="APT_INVIMAGE",options$[11]="OTA"
 files$[12]="GLS_CALENDAR",options$[12]="OTA"
 files$[13]="APM_CCVEND",options$[13]="OTA"
+files$[14]="APC_PAYMENTGROUP",options$[14]="OTA"
 call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :	begfile,
 :	endfile,
@@ -943,10 +944,20 @@ callpoint!.setColumnData("APE_INVOICEHDR.DISCOUNT_AMT",str(disc_amt))
 callpoint!.setStatus("REFRESH:APE_INVOICEHDR.DISCOUNT_AMT")
 
 [[APE_INVOICEHDR.PAYMENT_GRP.AVAL]]
-if callpoint!.getUserInput()=""
-	callpoint!.setUserInput("  ")
-	callpoint!.setStatus("REFRESH")
-endif
+rem --- Don't allow inactive code
+	apcPaymentGroup_dev=fnget_dev("APC_PAYMENTGROUP")
+	dim apcPaymentGroup$:fnget_tpl$("APC_PAYMENTGROUP")
+	payment_grp$=callpoint!.getUserInput()
+	read record(apcPaymentGroup_dev,key=firm_id$+"D"+payment_grp$,dom=*next)apcPaymentGroup$
+	if apcPaymentGroup.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcPaymentGroup.payment_grp$,3)
+		msg_tokens$[2]=cvs(apcPaymentGroup.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[APE_INVOICEHDR.REFERENCE.AVAL]]
 callpoint!.setStatus("REFRESH");REM TEST

@@ -26,10 +26,11 @@ rem --- Initialize default fields
 [[APC_TYPECODE.BSHO]]
 rem --- Open/Lock files
 
-files=2,begfile=1,endfile=files
+files=3,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APS_PARAMS";rem --- ads-01
 files$[2]="APC_DISTRIBUTION";rem --- ads-01
+files$[3]="APC_PAYMENTGROUP";rem --- ads-01
 
 for wkx=begfile to endfile
 	options$[wkx]="OTA"
@@ -79,6 +80,22 @@ rem --- Posting to General Ledger?
 		callpoint!.setColumnEnabled("APC_TYPECODE.GL_ACCOUNT",1)
 	else
 		callpoint!.setColumnEnabled("APC_TYPECODE.GL_ACCOUNT",0)
+	endif
+
+[[APC_TYPECODE.PAYMENT_GRP.AVAL]]
+rem --- Don't allow inactive code
+	apcPaymentGroup_dev=fnget_dev("APC_PAYMENTGROUP")
+	dim apcPaymentGroup$:fnget_tpl$("APC_PAYMENTGROUP")
+	payment_grp$=callpoint!.getUserInput()
+	read record(apcPaymentGroup_dev,key=firm_id$+"D"+payment_grp$,dom=*next)apcPaymentGroup$
+	if apcPaymentGroup.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcPaymentGroup.payment_grp$,3)
+		msg_tokens$[2]=cvs(apcPaymentGroup.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
 	endif
 
 [[APC_TYPECODE.<CUSTOM>]]

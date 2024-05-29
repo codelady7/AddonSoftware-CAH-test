@@ -130,7 +130,10 @@ rem --- When deactivating the Distribution code, warn if there are any current/a
 	prior_inactive$=callpoint!.getColumnData("APC_DISTRIBUTION.CODE_INACTIVE")
 	if current_inactive$="Y" and prior_inactive$<>"Y" then
 		gosub check_active_code
-		if found then callpoint!.setStatus("ABORT")
+		if found then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
 	endif
 
 [[APC_DISTRIBUTION.GL_AP_ACCT.AVAL]]

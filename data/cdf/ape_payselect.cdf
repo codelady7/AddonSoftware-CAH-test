@@ -636,7 +636,7 @@ rem --- Open/Lock files
 	use ::ado_util.src::util
 	use java.util.Iterator
 
-	num_files=14
+	num_files=15
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	open_tables$[1]="APT_INVOICEHDR",open_opts$[1]="OTA"
@@ -653,6 +653,7 @@ rem --- Open/Lock files
 	open_tables$[12]="APM_APPROVERS",open_opts$[12]="OTA@"
 	open_tables$[13]="APS_ACH",open_opts$[13]="OTA"
 	open_tables$[14]="APE_MANCHECKDET",open_opts$[14]="OTA"
+	open_tables$[15]="APC_PAYMENTGROUP",open_opts$[15]="OTA"
 
 	gosub open_tables
 
@@ -994,6 +995,21 @@ rem --- Set filters on grid if value was changed
 	endif
 
 [[APE_PAYSELECT.PAYMENT_GRP.AVAL]]
+rem --- Don't allow inactive code
+	apcPaymentGroup_dev=fnget_dev("APC_PAYMENTGROUP")
+	dim apcPaymentGroup$:fnget_tpl$("APC_PAYMENTGROUP")
+	payment_grp$=callpoint!.getUserInput()
+	read record(apcPaymentGroup_dev,key=firm_id$+"D"+payment_grp$,dom=*next)apcPaymentGroup$
+	if apcPaymentGroup.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcPaymentGroup.payment_grp$,3)
+		msg_tokens$[2]=cvs(apcPaymentGroup.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Set filters on grid if value was changed
 	if callpoint!.getUserInput()<>callpoint!.getDevObject("prev_payment_grp") then
 		gosub filter_recs

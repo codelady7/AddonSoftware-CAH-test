@@ -327,10 +327,20 @@ rem "GL INACTIVE FEATURE"
    endif
 
 [[APM_VENDHIST.PAYMENT_GRP.AVAL]]
-if callpoint!.getUserInput()=""
-	callpoint!.setUserInput("  ")
-	callpoint!.setStatus("REFRESH")
-endif
+rem --- Don't allow inactive code
+	apcPaymentGroup_dev=fnget_dev("APC_PAYMENTGROUP")
+	dim apcPaymentGroup$:fnget_tpl$("APC_PAYMENTGROUP")
+	payment_grp$=callpoint!.getUserInput()
+	read record(apcPaymentGroup_dev,key=firm_id$+"D"+payment_grp$,dom=*next)apcPaymentGroup$
+	if apcPaymentGroup.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcPaymentGroup.payment_grp$,3)
+		msg_tokens$[2]=cvs(apcPaymentGroup.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[APM_VENDHIST.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon

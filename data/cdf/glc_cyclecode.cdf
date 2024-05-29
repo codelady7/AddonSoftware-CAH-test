@@ -1,5 +1,5 @@
 [[GLC_CYCLECODE.BDEL]]
-rem --- When deleting the Journal ID code, warn if there are any current/active transactions for the code, and disallow if there are any.
+rem --- When deleting the Journal Entry Cycle Code, warn if there are any current/active transactions for the code, and disallow if there are any.
 	gosub check_active_code
 	if found then
 		callpoint!.setStatus("ABORT")

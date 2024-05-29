@@ -398,7 +398,7 @@ rem --- Open/Lock files
 	use ::ado_rptControl.src::ReportControl
 	use ::ado_util.src::util
 
-	files=13,begfile=1,endfile=files
+	files=14,begfile=1,endfile=files
 	dim files$[files],options$[files],chans$[files],templates$[files]
 	files$[1]="APE_INVOICEHDR";rem --- ape-01
 	files$[2]="APT_INVOICEHDR";rem --- apt-01
@@ -413,6 +413,7 @@ rem --- Open/Lock files
 	files$[11]="APW_CHECKINVOICE"; rem --- apw-01
 	files$[12]="APM_CCVEND"
 	files$[13]="APC_DISTRIBUTION"
+	files$[14]="APC_PAYMENTGROUP"
 
 	for wkx=begfile to endfile
 		options$[wkx]="OTA"

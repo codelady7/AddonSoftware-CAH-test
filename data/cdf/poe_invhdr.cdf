@@ -419,7 +419,7 @@ callpoint!.setOptionEnabled("INVB",0)
 
 [[POE_INVHDR.BTBL]]
 rem --- Open/Lock files
-files=22,begfile=1,endfile=files
+files=23,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 
 files$[1]="APC_DISTRIBUTION",options$[1]="OTA"
@@ -444,6 +444,7 @@ files$[19]="APM_CCVEND",options$[19]="OTA"
 files$[20]="APE_INVOICEHDR",options$[20]="OTA"
 files$[21]="APE_CHECKS",options$[21]="OTA"
 files$[22]="APE_MANCHECKDET",options$[22]="OTA"
+files$[23]="APC_PAYMENTGROUP",options$[23]="OTA"
 
 call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :	begfile,
@@ -778,6 +779,22 @@ rem re-calc discount amount based on net x disc %
 disc_amt=round(num(callpoint!.getUserInput())*(num(callpoint!.getDevObject("disc_pct"))/100),2)
 callpoint!.setColumnData("POE_INVHDR.DISCOUNT_AMT",str(disc_amt))
 callpoint!.setStatus("REFRESH:POE_INVHDR.DISCOUNT_AMT")
+
+[[POE_INVHDR.PAYMENT_GRP.AVAL]]
+rem --- Don't allow inactive code
+	apcPaymentGroup_dev=fnget_dev("APC_PAYMENTGROUP")
+	dim apcPaymentGroup$:fnget_tpl$("APC_PAYMENTGROUP")
+	payment_grp$=callpoint!.getUserInput()
+	read record(apcPaymentGroup_dev,key=firm_id$+"D"+payment_grp$,dom=*next)apcPaymentGroup$
+	if apcPaymentGroup.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcPaymentGroup.payment_grp$,3)
+		msg_tokens$[2]=cvs(apcPaymentGroup.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[POE_INVHDR.VENDOR_ID.AVAL]]
 

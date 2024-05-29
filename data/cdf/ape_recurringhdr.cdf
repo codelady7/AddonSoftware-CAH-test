@@ -172,7 +172,7 @@ endif
 
 [[APE_RECURRINGHDR.BTBL]]
 rem --- Open/Lock files
-files=8,begfile=1,endfile=files
+files=9,begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APT_INVOICEDIST",options$[1]="OTA"
 files$[2]="APC_DISTRIBUTION",options$[2]="OTA"
@@ -182,6 +182,7 @@ files$[5]="APS_PARAMS",options$[5]="OTA"
 files$[6]="GLS_PARAMS",options$[6]="OTA"
 files$[7]="APC_TYPECODE",options$[7]="OTA"
 files$[8]="GLS_CALENDAR",options$[8]="OTA"
+files$[9]="APC_PAYMENTGROUP",options$[9]="OTA"
 call stbl("+DIR_SYP")+"bac_open_tables.bbj",
 :	begfile,
 :	endfile,
@@ -334,10 +335,20 @@ callpoint!.setColumnData("APE_RECURRINGHDR.DISCOUNT_AMT",str(disc_amt))
 callpoint!.setStatus("REFRESH:APE_RECURRINGHDR.DISCOUNT_AMT")
 
 [[APE_RECURRINGHDR.PAYMENT_GRP.AVAL]]
-if cvs(callpoint!.getUserInput(),3)=""
-	callpoint!.setUserInput("  ")
-	callpoint!.setStatus("REFRESH")
-endif
+rem --- Don't allow inactive code
+	apcPaymentGroup_dev=fnget_dev("APC_PAYMENTGROUP")
+	dim apcPaymentGroup$:fnget_tpl$("APC_PAYMENTGROUP")
+	payment_grp$=callpoint!.getUserInput()
+	read record(apcPaymentGroup_dev,key=firm_id$+"D"+payment_grp$,dom=*next)apcPaymentGroup$
+	if apcPaymentGroup.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcPaymentGroup.payment_grp$,3)
+		msg_tokens$[2]=cvs(apcPaymentGroup.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[APE_RECURRINGHDR.VENDOR_ID.AVAL]]
 rem "check vend hist file to be sure this vendor/ap type ok and to set some defaults;  display vend cmts
