@@ -3,9 +3,11 @@ gosub calc_grid_tots
 gosub disp_totals
 
 [[GLE_RECJEHDR.BSHO]]
-num_files=1
+num_files=3
 dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 open_tables$[1]="GLS_PARAMS",open_opts$[1]="OTA"
+open_tables$[2]="GLC_JOURNALCODE",open_opts$[2]="OTA"
+open_tables$[3]="GLC_CYCLECODE",open_opts$[3]="OTA"
 gosub open_tables
 gls01_dev=num(open_chans$[1]),gls_params_tpl$=open_tpls$[1]
 dim gls01a$:gls_params_tpl$
@@ -66,6 +68,22 @@ if bal<>0
 	gosub disp_message
 	callpoint!.setStatus("ABORT")
 endif
+
+[[GLE_RECJEHDR.CYCLE_CODE.AVAL]]
+rem --- Don't allow inactive code
+	glcCycleCode_dev=fnget_dev("GLC_CYCLECODE")
+	dim glcCycleCode$:fnget_tpl$("GLC_CYCLECODE")
+	cycle_code$=callpoint!.getUserInput()
+	read record(glcCycleCode_dev,key=firm_id$+cycle_code$,dom=*next)glcCycleCode$
+	if glcCycleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(glcCycleCode.cycle_code$,3)
+		msg_tokens$[2]=cvs(glcCycleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[GLE_RECJEHDR.JOURNAL_ID.AVAL]]
 rem --- Don't allow inactive code

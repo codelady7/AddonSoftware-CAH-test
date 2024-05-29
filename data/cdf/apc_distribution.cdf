@@ -48,6 +48,7 @@ rem --- Do they want to deactivate code instead of deleting it?
 		rem --- Check the CODE_INACTIVE checkbox
 		callpoint!.setColumnData("APC_DISTRIBUTION.CODE_INACTIVE","Y",1)
 		callpoint!.setStatus("SAVE;ABORT")
+		break
 	endif
 
 [[APC_DISTRIBUTION.BSHO]]

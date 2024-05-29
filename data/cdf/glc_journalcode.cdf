@@ -1,7 +1,10 @@
 [[GLC_JOURNALCODE.BDEL]]
 rem --- When deleting the Journal ID code, warn if there are any current/active transactions for the code, and disallow if there are any.
 	gosub check_active_code
-	if found then callpoint!.setStatus("ABORT")
+	if found then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 rem --- Do they want to deactivate code instead of deleting it?
 	msg_id$="AD_DEACTIVATE_CODE"
@@ -14,6 +17,7 @@ rem --- Do they want to deactivate code instead of deleting it?
 
 		callpoint!.setColumnData("GLC_JOURNALCODE.CODE_INACTIVE","Y",1)
 		callpoint!.setStatus("SAVE;ABORT")
+		break
 	endif
 
 [[GLC_JOURNALCODE.BSHO]]
