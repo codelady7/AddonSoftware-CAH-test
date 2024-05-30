@@ -398,7 +398,7 @@ rem --- Open/Lock files
 	use ::ado_rptControl.src::ReportControl
 	use ::ado_util.src::util
 
-	files=15,begfile=1,endfile=files
+	files=16,begfile=1,endfile=files
 	dim files$[files],options$[files],chans$[files],templates$[files]
 	files$[1]="APE_INVOICEHDR";rem --- ape-01
 	files$[2]="APT_INVOICEHDR";rem --- apt-01
@@ -414,7 +414,8 @@ rem --- Open/Lock files
 	files$[12]="APM_CCVEND"
 	files$[13]="APC_DISTRIBUTION"
 	files$[14]="APC_PAYMENTGROUP"
-	files$[15]="APC_PAYMENTGROUP"
+	files$[15]="APC_TERMSCODE"
+	files$[16]="APM_VENDREPL"
 
 	for wkx=begfile to endfile
 		options$[wkx]="OTA"
@@ -464,6 +465,7 @@ rem --- Retrieve parameter data
 	call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
 	po$=info$[20];rem --- po installed?
 	if po$="N" aps01a.use_replen$="N"
+	callpoint!.setDevObject("usingPO",po$)
 
 	dim user_tpl$:"app:c(2),gl_interface:c(1),po_installed:c(1),iv_installed:c(1),"+
 :		"multi_types:c(1),multi_dist:c(1),ret_flag:c(1),use_replen:c(1),"+
@@ -489,13 +491,17 @@ rem --- Retrieve parameter data
 rem --- used to also open ivm-03 if iv$="Y", but using alt keys on ivm-01 instead
 rem --- knum=3 is firm/vendor/item, knum=9 is firm/buyer/vendor/item
 	if po$="Y"
-		files=5,begfile=1,endfile=files
+		files=9,begfile=1,endfile=files
 		dim files$[files],options$[files],chans$[files],templates$[files]
 		files$[1]="POC_LINECODE";rem --- pom-02
 		files$[2]="POT_RECHDR";rem --- pot-04
 		files$[3]="POT_INVHDR";rem --- pot-05
 		files$[4]="POT_RECDET";rem --- pot-14
 		files$[5]="POT_INVDET";rem --- pot-25
+		files$[6]="POE_POHDR";rem --- poe-02
+		files$[7]="POE_QAHDR";rem --- poe-03
+		files$[8]="POE_RECHDR";rem --- poe-04
+		files$[9]="POE_REQHDR";rem --- poe-01
 		for wkx=begfile to endfile
 			options$[wkx]="OTA"
 		next wkx

@@ -911,9 +911,23 @@ gosub validate_dates
 if bad_date$="" then gosub warn_dates
 
 [[POE_POHDR.PURCH_ADDR.AVAL]]
-vendor_id$=callpoint!.getColumnData("POE_POHDR.VENDOR_ID")
-purch_addr$=callpoint!.getUserInput()
-gosub purch_addr_info
+rem --- Don't allow inactive code
+	apmVendAddr_dev=fnget_dev("APM_VENDADDR")
+	dim apmVendAddr$:fnget_tpl$("APM_VENDADDR")
+	purch_addr$=callpoint!.getUserInput()
+	vendor_id$=callpoint!.getColumnData("POE_POHDR.VENDOR_ID")
+	read record(apmVendAddr_dev,key=firm_id$+vendor_id$+purch_addr$,dom=*next)apmVendAddr$
+	if apmVendAddr.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apmVendAddr.purch_addr$,3)
+		msg_tokens$[2]=cvs(apmVendAddr.city$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+	gosub purch_addr_info
 
 [[POE_POHDR.REQD_DATE.AVAL]]
 ord_date$=cvs(callpoint!.getColumnData("POE_POHDR.ORD_DATE"),2)

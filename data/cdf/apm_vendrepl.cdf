@@ -1,9 +1,24 @@
+[[APM_VENDREPL.BDEL]]
+rem --- check knum3 of ivm-01; if firm/buyer/vendor key is present, disallow deletion
+
+ivm01_dev=fnget_dev("IVM_ITEMMAST")
+wky$=firm_id$+callpoint!.getColumnData("APM_VENDREPL.BUYER_CODE")+callpoint!.getColumnData("APM_VENDREPL.VENDOR_ID")
+wky1$=""
+read(ivm01_dev,knum="AO_BUYR_VEND_ITM",key=wky$,dom=*next)
+wky1$=key(ivm01_dev,end=*next)
+if pos(wky$=wky1$)=1
+	msg_id$="AP_DEL_REPL"
+	gosub disp_message
+	callpoint!.setStatus("ABORT")
+endif
+
 [[APM_VENDREPL.BSHO]]
 rem --- Open necessary channel
 
-	num_files=1
+	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="IVM_ITEMMAST",open_opts$[1]="OTA"
+	open_tables$[2]="APM_VENDADDR",open_opts$[2]="OTA"
 	gosub open_tables
 
 rem --- Disable Buyer Code if IV not installed
@@ -14,6 +29,24 @@ rem --- Disable Buyer Code if IV not installed
 		dctl$[1]="APM_VENDREPL.BUYER_CODE"
 		gosub disable_ctls
 	endif
+
+[[APM_VENDREPL.PURCH_ADDR.AVAL]]
+rem --- Don't allow inactive code
+	apmVendAddr_dev=fnget_dev("APM_VENDADDR")
+	dim apmVendAddr$:fnget_tpl$("APM_VENDADDR")
+	purch_addr$=callpoint!.getUserInput()
+	vendor_id$=callpoint!.getColumnData("APM_VENDREPL.VENDOR_ID")
+	read record(apmVendAddr_dev,key=firm_id$+vendor_id$+purch_addr$,dom=*next)apmVendAddr$
+	if apmVendAddr.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apmVendAddr.purch_addr$,3)
+		msg_tokens$[2]=cvs(apmVendAddr.city$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APM_VENDREPL.<CUSTOM>]]
 disable_ctls:rem --- disable selected control
 
@@ -31,16 +64,6 @@ disable_ctls:rem --- disable selected control
     return
 
 #include [+ADDON_LIB]std_missing_params.aon
-[[APM_VENDREPL.BDEL]]
-rem --- check knum3 of ivm-01; if firm/buyer/vendor key is present, disallow deletion
 
-ivm01_dev=fnget_dev("IVM_ITEMMAST")
-wky$=firm_id$+callpoint!.getColumnData("APM_VENDREPL.BUYER_CODE")+callpoint!.getColumnData("APM_VENDREPL.VENDOR_ID")
-wky1$=""
-read(ivm01_dev,knum="AO_BUYR_VEND_ITM",key=wky$,dom=*next)
-wky1$=key(ivm01_dev,end=*next)
-if pos(wky$=wky1$)=1
-	msg_id$="AP_DEL_REPL"
-	gosub disp_message
-	callpoint!.setStatus("ABORT")
-endif
+
+
