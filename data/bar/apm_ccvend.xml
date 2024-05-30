@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.apm_ccvend"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.apm_ccvend">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.apm_ccvend">20230801</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.apm_ccvend">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.apm_ccvend">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.apm_ccvend">142908</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.apm_ccvend">20240529</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.apm_ccvend">20240529</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.apm_ccvend">174916</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.apm_ccvend"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.apm_ccvend">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.apm_ccvend">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.apm_ccvend"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.apm_ccvend"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.apm_ccvend">T</DD_ATTR_FTYP>
@@ -320,7 +320,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_ccvend002">20230801</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_ccvend002"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_ccvend002"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend002">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend002">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_ccvend002">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_ccvend002"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_ccvend002"></DD_ATTR_CTLY>
@@ -422,7 +422,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_ccvend004">20230805</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_ccvend004"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_ccvend004"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend004"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_ccvend004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_ccvend004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_ccvend004"></DD_ATTR_CTLY>
@@ -473,7 +473,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_ccvend005">20230801</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_ccvend005"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_ccvend005"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend005">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend005">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_ccvend005">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_ccvend005"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_ccvend005"></DD_ATTR_CTLY>
@@ -575,7 +575,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.apm_ccvend007">20230801</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.apm_ccvend007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.apm_ccvend007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend007">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.apm_ccvend007">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.apm_ccvend007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.apm_ccvend007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.apm_ccvend007"></DD_ATTR_CTLY>
@@ -617,6 +617,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.apm_ccvendcreditcard_idaval">APM_CCVEND      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.apm_ccvendcreditcard_idaval">CREDITCARD_ID   </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.apm_ccvendcreditcard_idaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.apm_ccvendcc_aptypeaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.apm_ccvendcc_aptypeaval">APM_CCVEND      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.apm_ccvendcc_aptypeaval">CC_APTYPE       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.apm_ccvendcc_aptypeaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.apm_ccvendcc_vendoraval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.apm_ccvendcc_vendoraval">APM_CCVEND      </DD_TABLE_ALIAS>

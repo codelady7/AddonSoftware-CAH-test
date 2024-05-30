@@ -17,14 +17,31 @@ rem --- Record cannot be deleted if the CREDITCARD_ID is in APE_INVOICEHDR
 
 [[APM_CCVEND.BSHO]]
 rem --- Open needed files
-	num_files=3
+	num_files=4
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="APE_INVOICEHDR",  open_opts$[1]="OTA"
 	open_tables$[2]="APM_VENDMAST",  open_opts$[2]="OTA"
 	open_tables$[3]="APM_VENDHIST",  open_opts$[3]="OTA"
+	open_tables$[4]="APC_TYPECODE",  open_opts$[4]="OTA"
 
 	gosub open_tables
+
+[[APM_CCVEND.CC_APTYPE.AVAL]]
+rem --- Don't allow inactive code
+	apcTypeCode_dev=fnget_dev("APC_TYPECODE")
+	dim apcTypeCode$:fnget_tpl$("APC_TYPECODE")
+	ap_type$=callpoint!.getUserInput()
+	read record(apcTypeCode_dev,key=firm_id$+"A"+ap_type$,dom=*next)apcTypeCode$
+	if apcTypeCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTypeCode.ap_type$,3)
+		msg_tokens$[2]=cvs(apcTypeCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[APM_CCVEND.CC_VENDOR.AVAL]]
 rem --- Entered CC_VENDOR cannot be inactive.

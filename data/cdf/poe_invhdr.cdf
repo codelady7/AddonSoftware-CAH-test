@@ -287,6 +287,17 @@ if cvs(apm10a$,2)<>""
 	callpoint!.setDevObject("dflt_dist_cd",apm10a.ap_dist_code$)
 endif
 
+rem --- Don't allow inactive code
+	if apm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apm10a.ap_type$,3)
+		msg_tokens$[2]=cvs(apm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[POE_INVHDR.ARAR]]
 if cvs(callpoint!.getColumnData("POE_INVHDR.AP_INV_NO"),2)<>""then
 	if callpoint!.getDevObject("gl_installed")="Y" and callpoint!.getDevObject("cash_basis")<>"Y"

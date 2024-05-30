@@ -124,13 +124,20 @@ rem --- Don't allow inactive code
 	endif
 
 [[APM_VENDHIST.AP_TYPE.AVAL]]
-rem --- get default distribution code	
-	apc_typecode_dev=fnget_dev("APC_TYPECODE")
-	dim apc_typecode$:fnget_tpl$("APC_TYPECODE")
-	find record (apc_typecode_dev,key=firm_id$+"A"+callpoint!.getUserInput(),err=*next)apc_typecode$
-rem	if cvs(apc_typecode$,2)<>""
-rem		user_tpl.dflt_dist_code$=apc_typecode.ap_dist_code$
-rem	endif
+rem --- Don't allow inactive code
+	apcTypeCode_dev=fnget_dev("APC_TYPECODE")
+	dim apcTypeCode$:fnget_tpl$("APC_TYPECODE")
+	ap_type$=callpoint!.getUserInput()
+	read record(apcTypeCode_dev,key=firm_id$+"A"+ap_type$,dom=*next)apcTypeCode$
+	if apcTypeCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTypeCode.ap_type$,3)
+		msg_tokens$[2]=cvs(apcTypeCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[APM_VENDHIST.ARAR]]
 rem --- Get correct Open Invoice amount

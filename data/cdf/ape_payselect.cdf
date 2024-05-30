@@ -419,6 +419,21 @@ rem --- Capture current value so will know in AVAL if it's changed
 	callpoint!.setDevObject("prev_inv_no",callpoint!.getColumnData("APE_PAYSELECT.AP_INV_NO"))
 
 [[APE_PAYSELECT.AP_TYPE.AVAL]]
+rem --- Don't allow inactive code
+	apcTypeCode_dev=fnget_dev("APC_TYPECODE")
+	dim apcTypeCode$:fnget_tpl$("APC_TYPECODE")
+	ap_type$=callpoint!.getUserInput()
+	read record(apcTypeCode_dev,key=firm_id$+"A"+ap_type$,dom=*next)apcTypeCode$
+	if apcTypeCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTypeCode.ap_type$,3)
+		msg_tokens$[2]=cvs(apcTypeCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Set filters on grid if value was changed
 	if callpoint!.getUserInput()<>callpoint!.getDevObject("prev_ap_type") then
 		gosub filter_recs
@@ -636,7 +651,7 @@ rem --- Open/Lock files
 	use ::ado_util.src::util
 	use java.util.Iterator
 
-	num_files=15
+	num_files=16
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	open_tables$[1]="APT_INVOICEHDR",open_opts$[1]="OTA"
@@ -654,6 +669,7 @@ rem --- Open/Lock files
 	open_tables$[13]="APS_ACH",open_opts$[13]="OTA"
 	open_tables$[14]="APE_MANCHECKDET",open_opts$[14]="OTA"
 	open_tables$[15]="APC_PAYMENTGROUP",open_opts$[15]="OTA"
+	open_tables$[16]="APC_TYPECODE",open_opts$[16]="OTA"
 
 	gosub open_tables
 

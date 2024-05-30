@@ -331,6 +331,17 @@ if cvs(apm10a$,2)<>""
 	user_tpl.dflt_dist_cd$=apm10a.ap_dist_code$
 endif
 
+rem --- Don't allow inactive code
+	if apm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apm10a.ap_type$,3)
+		msg_tokens$[2]=cvs(apm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APE_INVOICEHDR.AREC]]
 Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
 callpoint!.setColumnData("<<DISPLAY>>.comments","")

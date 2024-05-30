@@ -113,6 +113,22 @@ rem --- Don't allow inactive code
 		break
 	endif
 
+[[APS_PARAMS.AP_TYPE.AVAL]]
+rem --- Don't allow inactive code
+	apcTypeCode_dev=fnget_dev("APC_TYPECODE")
+	dim apcTypeCode$:fnget_tpl$("APC_TYPECODE")
+	ap_type$=callpoint!.getUserInput()
+	read record(apcTypeCode_dev,key=firm_id$+"A"+ap_type$,dom=*next)apcTypeCode$
+	if apcTypeCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(apcTypeCode.ap_type$,3)
+		msg_tokens$[2]=cvs(apcTypeCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[APS_PARAMS.ARAR]]
 rem --- Open/Lock files
 	pgmdir$=stbl("+DIR_PGM")
@@ -378,7 +394,7 @@ rem --- Inits
 
 rem --- Open files
 
-	num_files=9
+	num_files=10
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="APE_INVOICEHDR",open_opts$[1]="OTA"
 	open_tables$[2]="APT_INVOICEHDR",open_opts$[2]="OTA"
@@ -389,6 +405,7 @@ rem --- Open files
 	open_tables$[7]="APW_CHECKINVOICE",open_opts$[7]="OTA"
 	open_tables$[8]="APE_CHECKS",open_opts$[8]="OTA"
 	open_tables$[9]="APC_DISTRIBUTION",open_opts$[9]="OTA"
+	open_tables$[10]="APC_TYPECODE",open_opts$[10]="OTA"
 
 	gosub open_tables
 
