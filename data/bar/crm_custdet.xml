@@ -22,8 +22,8 @@
 			<DD_EXPORT_DATA id="ddm_tables.crm_custdet">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.crm_custdet">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.crm_custdet">20240203</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.crm_custdet">20240409</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.crm_custdet">114716</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_DATE id="ddm_tables.crm_custdet">20240601</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.crm_custdet">134346</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.crm_custdet">ARM_CUSTDET     </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.crm_custdet"></DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.crm_custdet"></DD_ATTR_DKNM>
@@ -1473,7 +1473,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.crm_custdet017">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.crm_custdet017"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.crm_custdet017"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.crm_custdet017"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.crm_custdet017">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.crm_custdet017"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.crm_custdet017"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.crm_custdet017"></DD_ATTR_CTLY>
@@ -2338,6 +2338,14 @@
 			<DD_DVAR_NAME id="ddm_column_cmts.crm_custdetcred_hold001">CRED_HOLD       </DD_DVAR_NAME>
 			<DD_COMM_SEQ id="ddm_column_cmts.crm_custdetcred_hold001">001</DD_COMM_SEQ>
 			<DD_COMM_TEXT id="ddm_column_cmts.crm_custdetcred_hold001">E = Exempt from credit check                                </DD_COMM_TEXT>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.crm_custdetcustomer_typeaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.crm_custdetcustomer_typeaval">CRM_CUSTDET     </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.crm_custdetcustomer_typeaval">CUSTOMER_TYPE   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.crm_custdetcustomer_typeaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">

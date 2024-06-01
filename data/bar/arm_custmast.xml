@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custmast">B0AE4537C94866F0AF91493A5C8B7BCB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custmast">20240409</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custmast">20240409</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custmast">114140</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custmast">20240601</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custmast">20240601</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custmast">133100</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custmast"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custmast">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custmast"></DD_ATTR_DKNM>
@@ -1383,6 +1383,12 @@
 			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custmastcntry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
 			<TABLE_REF_NAME id="ddm_table_ref.arm_custmastcntry_idadc_country">FK_ARM_CUSTMAST_CNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                           </TABLE_REF_NAME>
 		</RECORD>
+		<RECORD id="ddm_table_ref.arm_custmaststate_codeadc_statecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custmaststate_codeadc_statecode">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arm_custmaststate_codeadc_statecode">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custmaststate_codeadc_statecode">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arm_custmaststate_codeadc_statecode">FK_ARM_CUSTMAST_STATE_CODE_ADC_STATECODE                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_refcol">
 		<ID id="ddm_table_refcol">DDM_TABLE_REFCOL</ID>
@@ -1412,6 +1418,24 @@
 			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custmastcntry_idadc_country0001">01</REF_KEY_SEGMENT>
 			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custmastcntry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
 			<FK_TABLE_COL id="ddm_table_refcol.arm_custmastcntry_idadc_country0001">CNTRY_ID        </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">ARM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">STATE_CODE      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custmaststate_codeadc_statecode0002">STATE_CODE      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">

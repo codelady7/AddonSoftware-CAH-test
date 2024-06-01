@@ -64,7 +64,7 @@ callpoint!.setDevObject("usingPO",info$[20])
 
 rem --- Open/Lock files
 files=11
-if callpoint!.getDevObject("usingPO")<>"Y" then files=8
+if callpoint!.getDevObject("usingPO")<>"Y" then files=10
 begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="APS_PARAMS";rem --- ads-01
