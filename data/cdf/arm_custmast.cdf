@@ -699,6 +699,22 @@ rem --- clear out the contents of the widgets
 	agingBarWidgetControl!=callpoint!.getDevObject("dbBarWidgetControl")
 	agingBarWidgetControl!.setVisible(0)
 
+[[ARM_CUSTDET.AR_CYCLECODE.AVAL]]
+rem --- Don't allow inactive code
+	armCycleCode_dev=fnget_dev("ARM_CYCLECOD")
+	dim armCycleCode$:fnget_tpl$("ARM_CYCLECOD")
+	ar_cyclecode$=callpoint!.getUserInput()
+	read record(armCycleCode_dev,key=firm_id$+"A"+ar_cyclecode$,dom=*next)armCycleCode$
+	if armCycleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(armCycleCode.ar_cyclecode$,3)
+		msg_tokens$[2]=cvs(armCycleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARM_CUSTDET.AR_DIST_CODE.AVAL]]
 rem --- Don't allow inactive code
 	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
@@ -855,7 +871,7 @@ rem --- Set New Customer flag
 rem --- Open/Lock files
 	dir_pgm$=stbl("+DIR_PGM")
 	sys_pgm$=stbl("+DIR_SYP")
-	num_files=18
+	num_files=19
 
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[2]="ARS_PARAMS",open_opts$[2]="OTA"
@@ -875,6 +891,7 @@ rem --- Open/Lock files
 	open_tables$[16]="ARC_SALECODE",open_opts$[16]="OTA"
 	open_tables$[17]="ARC_TERMCODE",open_opts$[17]="OTA"
 	open_tables$[18]="ARC_TERRCODE",open_opts$[18]="OTA"
+	open_tables$[19]="ARM_CYCLECOD",open_opts$[19]="OTA"
 	gosub open_tables
 
 	ars01_dev=num(open_chans$[2])

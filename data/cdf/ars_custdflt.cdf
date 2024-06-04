@@ -10,6 +10,22 @@ rem --- Initialize new record
 
 	callpoint!.setColumnData("ARS_CUSTDFLT.INV_HIST_FLG","Y")
 
+[[ARS_CUSTDFLT.AR_CYCLECODE.AVAL]]
+rem --- Don't allow inactive code
+	armCycleCode_dev=fnget_dev("ARM_CYCLECOD")
+	dim armCycleCode$:fnget_tpl$("ARM_CYCLECOD")
+	ar_cyclecode$=callpoint!.getUserInput()
+	read record(armCycleCode_dev,key=firm_id$+"A"+ar_cyclecode$,dom=*next)armCycleCode$
+	if armCycleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(armCycleCode.ar_cyclecode$,3)
+		msg_tokens$[2]=cvs(armCycleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARS_CUSTDFLT.AR_DIST_CODE.AVAL]]
 rem --- Don't allow inactive code
 	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
@@ -45,7 +61,7 @@ rem --- Don't allow inactive code
 [[ARS_CUSTDFLT.AWIN]]
 rem --- Get AR parameters
 
-	num_files=7
+	num_files=8
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="ARS_CREDIT",open_opts$[2]="OTA"
@@ -54,6 +70,7 @@ rem --- Get AR parameters
 	open_tables$[5]="ARC_SALECODE",open_opts$[5]="OTA"
 	open_tables$[6]="ARC_TERMCODE",open_opts$[6]="OTA"
 	open_tables$[7]="ARC_TERRCODE",open_opts$[7]="OTA"
+	open_tables$[8]="ARM_CYCLECOD",open_opts$[8]="OTA"
 
 	gosub open_tables
 

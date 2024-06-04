@@ -105,7 +105,7 @@ rem ==========================================================================
 			if table_tpl.ar_terms_code$=ar_terms_code$ then
 				msg_id$="AD_CODE_IN_USE"
 				dim msg_tokens$[2]
-				msg_tokens$[1]="AR"+Translate!.getTranslation("AON_TERMS_CODE")
+				msg_tokens$[1]="AR "+Translate!.getTranslation("AON_TERMS_CODE")
 				switch (BBjAPI().TRUE)
                 				case thisTable$="ARE_CNVINV"
                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-ARE_CNVINV-DD_ATTR_WINT")

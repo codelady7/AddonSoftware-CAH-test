@@ -1,6 +1,22 @@
 [[CRM_CUSTMAST.ARER]]
 callpoint!.setColumnData("CRM_CUSTDET.INV_HIST_FLG","Y")
 
+[[CRM_CUSTDET.AR_CYCLECODE.AVAL]]
+rem --- Don't allow inactive code
+	armCycleCode_dev=fnget_dev("ARM_CYCLECOD")
+	dim armCycleCode$:fnget_tpl$("ARM_CYCLECOD")
+	ar_cyclecode$=callpoint!.getUserInput()
+	read record(armCycleCode_dev,key=firm_id$+"A"+ar_cyclecode$,dom=*next)armCycleCode$
+	if armCycleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(armCycleCode.ar_cyclecode$,3)
+		msg_tokens$[2]=cvs(armCycleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[CRM_CUSTDET.AR_DIST_CODE.AVAL]]
 rem --- Don't allow inactive code
 	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
@@ -38,13 +54,14 @@ rem  Initializations
 	use ::ado_util.src::util
 
 rem --- Open/Lock files
-	files=5,begfile=1,endfile=files
+	files=6,begfile=1,endfile=files
 	dim files$[files],options$[files],chans$[files],templates$[files]
 	files$[1]="ARC_CUSTTYPE",options$[1]="OTA"
 	files$[2]="ARC_DISTCODE",options$[2]="OTA"
 	files$[3]="ARC_SALECODE",options$[3]="OTA"
 	files$[4]="ARC_TERMCODE",options$[4]="OTA"
 	files$[5]="ARC_TERRCODE",options$[5]="OTA"
+	files$[6]="ARM_CYCLECOD",options$[6]="OTA"
 	call dir_pgm$+"bac_open_tables.bbj",begfile,endfile,files$[all],options$[all],
 :       	chans$[all],templates$[all],table_chans$[all],batch,status$
 	if status$<>"" then
