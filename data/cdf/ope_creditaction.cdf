@@ -1,9 +1,112 @@
+[[OPE_CREDITACTION.ARAR]]
+rem --- Display default status
+
+	credit_action = num(callpoint!.getColumnData("OPE_CREDITACTION.CREDIT_ACTION"))
+	gosub display_status
+
+[[OPE_CREDITACTION.AR_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+	dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+	ar_terms_code$=callpoint!.getUserInput()
+	read record(arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*next)arm10a$
+	if arm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arm10a.ar_terms_code$,3)
+		msg_tokens$[2]=cvs(arm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[OPE_CREDITACTION.ASVA]]
+rem --- Make sure everything is entered
+
+	credit_action = num(callpoint!.getColumnData("OPE_CREDITACTION.CREDIT_ACTION"))
+	terms$        = callpoint!.getColumnData("OPE_CREDITACTION.AR_TERMS_CODE")
+	pswd$         = callpoint!.getColumnData("OPE_CREDITACTION.ENTER_CRED_PSWRD")
+
+	switch credit_action
+
+	rem --- Hold this order
+
+		case 1
+			callpoint!.setDevObject("credit_action", "1")
+			break
+
+	rem --- Hold all future orders
+
+		case 2
+
+			if pswd$ <> user_tpl.password$ then
+				msg_id$ = "OP_INVALID_PASSWD"
+				gosub disp_message
+				callpoint!.setStatus("ABORT")
+			else
+				callpoint!.setDevObject("credit_action", "2")
+			endif
+
+			break
+
+	rem --- Release this order
+
+		case 3
+
+			abort = 0
+
+			if terms$ = "" then 
+				msg_id$ = "OP_TERM_NOT_ENTERED"
+				gosub disp_message
+				abort = 1
+			else
+				callpoint!.setDevObject("new_terms_code", terms$)
+			endif
+
+			if pswd$ <> user_tpl.password$ then
+				msg_id$ = "OP_INVALID_PASSWD"
+				gosub disp_message
+				abort = 1
+			endif
+
+			if abort then 
+				callpoint!.setStatus("ABORT")
+			else
+				if callpoint!.getColumnData("OPE_CREDITACTION.PRINT_AFTER_REL") = "Y" then
+					gosub print_doc
+				endif
+
+				callpoint!.setDevObject("credit_action", "3")
+			endif
+
+			break
+
+	rem --- Delete this order
+
+		case 4
+
+			msg_id$="OP_REALLY_DELETE"
+			gosub disp_message
+
+			if msg_opt$<>"Y" then 
+				callpoint!.setStatus("ABORT")
+			else
+				callpoint!.setDevObject("credit_action", "4")
+			endif
+
+			break
+
+		case default
+
+	swend
+
 [[OPE_CREDITACTION.BSHO]]
 rem --- Get credit password
 
-	num_files=1
+	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARS_CREDIT", open_opts$[1]="OTA"
+	open_tables$[2]="ARC_TERMCODE", open_opts$[2]="OTA"
 
 	gosub open_tables
 
@@ -18,11 +121,14 @@ rem --- Get credit password
 	endif
 	
 	callpoint!.setDevObject("credit_action", "none")
-[[OPE_CREDITACTION.ARAR]]
-rem --- Display default status
 
-	credit_action = num(callpoint!.getColumnData("OPE_CREDITACTION.CREDIT_ACTION"))
+[[OPE_CREDITACTION.CREDIT_ACTION.AVAL]]
+rem --- Send back credit action response
+	
+	credit_action = num(callpoint!.getUserInput())
 	gosub display_status
+	callpoint!.setDevObject("credit_action", str(credit_action))
+
 [[OPE_CREDITACTION.<CUSTOM>]]
 rem ==========================================================================
 display_status: rem --- Display Status by Action
@@ -119,88 +225,6 @@ rem ==========================================================================
 	endif
 
 	return
-[[OPE_CREDITACTION.ASVA]]
-rem --- Make sure everything is entered
 
-	credit_action = num(callpoint!.getColumnData("OPE_CREDITACTION.CREDIT_ACTION"))
-	terms$        = callpoint!.getColumnData("OPE_CREDITACTION.AR_TERMS_CODE")
-	pswd$         = callpoint!.getColumnData("OPE_CREDITACTION.ENTER_CRED_PSWRD")
 
-	switch credit_action
 
-	rem --- Hold this order
-
-		case 1
-			callpoint!.setDevObject("credit_action", "1")
-			break
-
-	rem --- Hold all future orders
-
-		case 2
-
-			if pswd$ <> user_tpl.password$ then
-				msg_id$ = "OP_INVALID_PASSWD"
-				gosub disp_message
-				callpoint!.setStatus("ABORT")
-			else
-				callpoint!.setDevObject("credit_action", "2")
-			endif
-
-			break
-
-	rem --- Release this order
-
-		case 3
-
-			abort = 0
-
-			if terms$ = "" then 
-				msg_id$ = "OP_TERM_NOT_ENTERED"
-				gosub disp_message
-				abort = 1
-			else
-				callpoint!.setDevObject("new_terms_code", terms$)
-			endif
-
-			if pswd$ <> user_tpl.password$ then
-				msg_id$ = "OP_INVALID_PASSWD"
-				gosub disp_message
-				abort = 1
-			endif
-
-			if abort then 
-				callpoint!.setStatus("ABORT")
-			else
-				if callpoint!.getColumnData("OPE_CREDITACTION.PRINT_AFTER_REL") = "Y" then
-					gosub print_doc
-				endif
-
-				callpoint!.setDevObject("credit_action", "3")
-			endif
-
-			break
-
-	rem --- Delete this order
-
-		case 4
-
-			msg_id$="OP_REALLY_DELETE"
-			gosub disp_message
-
-			if msg_opt$<>"Y" then 
-				callpoint!.setStatus("ABORT")
-			else
-				callpoint!.setDevObject("credit_action", "4")
-			endif
-
-			break
-
-		case default
-
-	swend
-[[OPE_CREDITACTION.CREDIT_ACTION.AVAL]]
-rem --- Send back credit action response
-	
-	credit_action = num(callpoint!.getUserInput())
-	gosub display_status
-	callpoint!.setDevObject("credit_action", str(credit_action))

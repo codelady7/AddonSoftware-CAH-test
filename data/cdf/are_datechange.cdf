@@ -40,6 +40,21 @@ invalid_inv:
 	endif
 
 [[ARE_DATECHANGE.AR_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+	dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+	ar_terms_code$=callpoint!.getUserInput()
+	read record(arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*next)arm10a$
+	if arm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arm10a.ar_terms_code$,3)
+		msg_tokens$[2]=cvs(arm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- recalculate due and discount dates
 	tmp_inv_date$=callpoint!.getColumnData("ARE_DATECHANGE.INVOICE_DATE")
 	tmp_term_code$=callpoint!.getUserInput()

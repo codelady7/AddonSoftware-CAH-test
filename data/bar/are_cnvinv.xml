@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.are_cnvinv">0C20F95B9E8E160FB0AA04AB103C7C74</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.are_cnvinv">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.are_cnvinv">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.are_cnvinv">20240603</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.are_cnvinv">20240603</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.are_cnvinv">150806</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.are_cnvinv">20240604</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.are_cnvinv">20240604</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.are_cnvinv">111942</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.are_cnvinv"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.are_cnvinv">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.are_cnvinv">BATCH_KEY</DD_ATTR_DKNM>

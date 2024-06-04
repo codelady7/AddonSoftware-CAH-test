@@ -716,14 +716,25 @@ rem --- Don't allow inactive code
 	endif
 
 [[ARM_CUSTDET.AR_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+	dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+	ar_terms_code$=callpoint!.getUserInput()
+	read record(arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*next)arm10a$
+	if arm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arm10a.ar_terms_code$,3)
+		msg_tokens$[2]=cvs(arm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- look up terms code, arm10A...if cred_hold is Y for this terms code,
 rem --- and cm$ is Y, set arm_custdet.cred_hold to Y as well
 if user_tpl.cm_installed$="Y"
-	ar_terms_code$=callpoint!.getUserInput()
-	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
-	dim arc_termcode$:fnget_tpl$("ARC_TERMCODE")
-	read record (arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*break)arc_termcode$
-	if arc_termcode.cred_hold$="Y"
+	if arm10a.cred_hold$="Y"
 		callpoint!.setColumnData("ARM_CUSTDET.CRED_HOLD","Y",1)
 	endif
 endif

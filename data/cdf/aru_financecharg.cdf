@@ -18,6 +18,22 @@ rem --- Don't allow inactive code
 		break
 	endif
 
+[[ARU_FINANCECHARG.AR_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+	dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+	ar_terms_code$=callpoint!.getUserInput()
+	read record(arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*next)arm10a$
+	if arm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arm10a.ar_terms_code$,3)
+		msg_tokens$[2]=cvs(arm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARU_FINANCECHARG.ASVA]]
 rem --- Get user approval to clearing non-updated previously created/entered finance charges
 	if num(callpoint!.getColumnData("ARU_FINANCECHARG.CLEAR_ARE02")) then
@@ -58,9 +74,10 @@ rem --- Get Batch information
 
 [[ARU_FINANCECHARG.BSHO]]
 rem --- Open/Lock files
-	num_files=1
+	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARE_FINCHG",open_opts$[1]="OTA"
+	open_tables$[2]="ARC_TERMCODE",open_opts$[2]="OTA"
 
 	gosub open_tables
 

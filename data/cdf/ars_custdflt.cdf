@@ -26,16 +26,33 @@ rem --- Don't allow inactive code
 		break
 	endif
 
+[[ARS_CUSTDFLT.AR_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+	dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+	ar_terms_code$=callpoint!.getUserInput()
+	read record(arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*next)arm10a$
+	if arm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arm10a.ar_terms_code$,3)
+		msg_tokens$[2]=cvs(arm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARS_CUSTDFLT.AWIN]]
 rem --- Get AR parameters
 
-	num_files=5
+	num_files=6
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="ARS_CREDIT",open_opts$[2]="OTA"
 	open_tables$[3]="ARC_CUSTTYPE",open_opts$[3]="OTA"
 	open_tables$[4]="ARC_DISTCODE",open_opts$[4]="OTA"
 	open_tables$[5]="ARC_SALECODE",open_opts$[5]="OTA"
+	open_tables$[6]="ARC_TERMCODE",open_opts$[6]="OTA"
 
 	gosub open_tables
 

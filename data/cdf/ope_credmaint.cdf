@@ -369,6 +369,22 @@ rem --- Display Comments
 	cust_id$=callpoint!.getColumnData("OPE_CREDMAINT.CUSTOMER_ID")
 	gosub disp_cust_comments
 
+[[OPE_CREDMAINT.AR_TERMS_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arc_termcode_dev=fnget_dev("ARC_TERMCODE")
+	dim arm10a$:fnget_tpl$("ARC_TERMCODE")
+	ar_terms_code$=callpoint!.getUserInput()
+	read record(arc_termcode_dev,key=firm_id$+"A"+ar_terms_code$,dom=*next)arm10a$
+	if arm10a.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arm10a.ar_terms_code$,3)
+		msg_tokens$[2]=cvs(arm10a.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[OPE_CREDMAINT.ASVA]]
 rem --- Update the tickler date
 	gosub update_tickler

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.ope_creditaction"></ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.ope_creditaction">N</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.ope_creditaction">20090710</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.ope_creditaction">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.ope_creditaction">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_creditaction">142908</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.ope_creditaction">20240604</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.ope_creditaction">20240604</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_creditaction">114902</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_creditaction"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.ope_creditaction">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.ope_creditaction">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_creditaction"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.ope_creditaction"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.ope_creditaction">S</DD_ATTR_FTYP>
@@ -236,7 +236,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_creditaction003">20090710</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_creditaction003"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_creditaction003"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_creditaction003">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_creditaction003">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_creditaction003">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_creditaction003"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_creditaction003"></DD_ATTR_CTLY>
@@ -287,7 +287,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.ope_creditaction004">20090714</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.ope_creditaction004">OPE_CREDITACTION.CREDIT_ACTION</DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.ope_creditaction004">3</DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.ope_creditaction004"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.ope_creditaction004">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.ope_creditaction004">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.ope_creditaction004"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.ope_creditaction004"></DD_ATTR_CTLY>
@@ -431,6 +431,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_creditactioncredit_actionaval">OPE_CREDITACTION</DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.ope_creditactioncredit_actionaval">CREDIT_ACTION   </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.ope_creditactioncredit_actionaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.ope_creditactionar_terms_codeaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_creditactionar_terms_codeaval">OPE_CREDITACTION</DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.ope_creditactionar_terms_codeaval">AR_TERMS_CODE   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.ope_creditactionar_terms_codeaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_ldat">
