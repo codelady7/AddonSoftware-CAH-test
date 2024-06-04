@@ -45,7 +45,7 @@ rem --- Don't allow inactive code
 [[ARS_CUSTDFLT.AWIN]]
 rem --- Get AR parameters
 
-	num_files=6
+	num_files=7
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="ARS_CREDIT",open_opts$[2]="OTA"
@@ -53,6 +53,7 @@ rem --- Get AR parameters
 	open_tables$[4]="ARC_DISTCODE",open_opts$[4]="OTA"
 	open_tables$[5]="ARC_SALECODE",open_opts$[5]="OTA"
 	open_tables$[6]="ARC_TERMCODE",open_opts$[6]="OTA"
+	open_tables$[7]="ARC_TERRCODE",open_opts$[7]="OTA"
 
 	gosub open_tables
 
@@ -140,6 +141,22 @@ rem --- Don't allow inactive code
 		dim msg_tokens$[2]
 		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
 		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARS_CUSTDFLT.TERRITORY.AVAL]]
+rem --- Don't allow inactive code
+	arcTerrCode_dev=fnget_dev("ARC_TERRCODE")
+	dim arcTerrCode$:fnget_tpl$("ARC_TERRCODE")
+	territory$=callpoint!.getUserInput()
+	read record(arcTerrCode_dev,key=firm_id$+"H"+territory$,dom=*next)arcTerrCode$
+	if arcTerrCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcTerrCode.territory$,3)
+		msg_tokens$[2]=cvs(arcTerrCode.code_desc$,3)
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break

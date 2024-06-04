@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.ope_invhdr">20090501</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.ope_invhdr">20240604</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.ope_invhdr">20240604</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.ope_invhdr">090920</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.ope_invhdr">132526</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.ope_invhdr">OPT_INVHDR      </DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.ope_invhdr">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.ope_invhdr">AO_STATUS</DD_ATTR_DKNM>
@@ -6280,6 +6280,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_invhdrmessage_codebinp">OPE_INVHDR      </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.ope_invhdrmessage_codebinp">MESSAGE_CODE    </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.ope_invhdrmessage_codebinp">BINP</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.ope_invhdrterritoryaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_invhdrterritoryaval">OPE_INVHDR      </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.ope_invhdrterritoryaval">TERRITORY       </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.ope_invhdrterritoryaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.ope_invhdrterritorybinp">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.ope_invhdrterritorybinp">OPE_INVHDR      </DD_TABLE_ALIAS>

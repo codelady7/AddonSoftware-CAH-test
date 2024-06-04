@@ -855,7 +855,7 @@ rem --- Set New Customer flag
 rem --- Open/Lock files
 	dir_pgm$=stbl("+DIR_PGM")
 	sys_pgm$=stbl("+DIR_SYP")
-	num_files=16
+	num_files=18
 
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[2]="ARS_PARAMS",open_opts$[2]="OTA"
@@ -873,6 +873,8 @@ rem --- Open/Lock files
 	open_tables$[14]="ARC_CUSTTYPE",open_opts$[14]="OTA"
 	open_tables$[15]="ARC_DISTCODE",open_opts$[15]="OTA"
 	open_tables$[16]="ARC_SALECODE",open_opts$[16]="OTA"
+	open_tables$[17]="ARC_TERMCODE",open_opts$[17]="OTA"
+	open_tables$[18]="ARC_TERRCODE",open_opts$[18]="OTA"
 	gosub open_tables
 
 	ars01_dev=num(open_chans$[2])
@@ -1331,6 +1333,22 @@ rem --- Don't allow inactive code
 		dim msg_tokens$[2]
 		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
 		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTDET.TERRITORY.AVAL]]
+rem --- Don't allow inactive code
+	arcTerrCode_dev=fnget_dev("ARC_TERRCODE")
+	dim arcTerrCode$:fnget_tpl$("ARC_TERRCODE")
+	territory$=callpoint!.getUserInput()
+	read record(arcTerrCode_dev,key=firm_id$+"H"+territory$,dom=*next)arcTerrCode$
+	if arcTerrCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcTerrCode.territory$,3)
+		msg_tokens$[2]=cvs(arcTerrCode.code_desc$,3)
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break

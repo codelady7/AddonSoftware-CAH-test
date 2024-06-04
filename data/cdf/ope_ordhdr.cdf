@@ -2283,7 +2283,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=51
+	num_files=52
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -2334,6 +2334,7 @@ rem --- Open needed files
 	open_tables$[49]="OPT_INVKITDET",open_opts$[49]="OTA"
 	open_tables$[50]="OPT_INVKITDET", open_opts$[50]="OTA[2_]"
 	open_tables$[51]="ARC_DISTCODE", open_opts$[51]="OTA"
+	open_tables$[52]="ARC_TERRCODE", open_opts$[52]="OTA"
 
 	gosub open_tables
 
@@ -3647,6 +3648,22 @@ rem --- Calculate Taxes
 	disc_amt = num(callpoint!.getColumnData("OPE_ORDHDR.DISCOUNT_AMT"))
 	freight_amt = num(callpoint!.getColumnData("OPE_ORDHDR.FREIGHT_AMT"))
 	gosub calculate_tax
+
+[[OPE_ORDHDR.TERRITORY.AVAL]]
+rem --- Don't allow inactive code
+	arcTerrCode_dev=fnget_dev("ARC_TERRCODE")
+	dim arcTerrCode$:fnget_tpl$("ARC_TERRCODE")
+	territory$=callpoint!.getUserInput()
+	read record(arcTerrCode_dev,key=firm_id$+"H"+territory$,dom=*next)arcTerrCode$
+	if arcTerrCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcTerrCode.territory$,3)
+		msg_tokens$[2]=cvs(arcTerrCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[OPE_ORDHDR.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon

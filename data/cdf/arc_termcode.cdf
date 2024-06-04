@@ -17,6 +17,10 @@ rem --- Do they want to deactivate code instead of deleting it?
 	endif
 
 [[ARC_TERMCODE.BSHO]]
+rem --- This firm using Sales Order Processing?
+call stbl("+DIR_PGM")+"adc_application.aon","OP",info$[all]
+callpoint!.setDevObject("usingOP",info$[20])
+
 rem --- Open/Lock files
 num_files=8
 dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]

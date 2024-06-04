@@ -83,13 +83,14 @@ rem --- Is Sales Order Processing installed for this firm?
 
 rem --- Open needed files
 
-	num_files=2
+	num_files=3
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	if op_installed$="Y" then
 		open_tables$[1]="OPT_INVSHIP",  open_opts$[1]="OTA"
 	endif
 	open_tables$[2]="ARC_SALECODE",  open_opts$[2]="OTA"
+	open_tables$[3]="ARC_TERRCODE",  open_opts$[3]="OTA"
 
 	gosub open_tables
 
@@ -115,6 +116,22 @@ rem --- Don't allow inactive code
 		dim msg_tokens$[2]
 		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
 		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTSHIP.TERRITORY.AVAL]]
+rem --- Don't allow inactive code
+	arcTerrCode_dev=fnget_dev("ARC_TERRCODE")
+	dim arcTerrCode$:fnget_tpl$("ARC_TERRCODE")
+	territory$=callpoint!.getUserInput()
+	read record(arcTerrCode_dev,key=firm_id$+"H"+territory$,dom=*next)arcTerrCode$
+	if arcTerrCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcTerrCode.territory$,3)
+		msg_tokens$[2]=cvs(arcTerrCode.code_desc$,3)
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break
