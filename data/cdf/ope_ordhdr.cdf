@@ -1560,6 +1560,22 @@ rem --- Enable Freight Amount
 rem --- Enable Backordered button
 	callpoint!.setOptionEnabled("BACK",1)
 
+[[OPE_ORDHDR.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[OPE_ORDHDR.ASHO]]
 rem --- Get default dates, POS station
 
@@ -2267,7 +2283,7 @@ rem                 = 1 -> user_tpl.hist_ord$ = "N"
 
 rem --- Open needed files
 
-	num_files=50
+	num_files=51
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="ARM_CUSTMAST",  open_opts$[1]="OTA"
@@ -2317,6 +2333,7 @@ rem --- Open needed files
 	open_tables$[48]="OPT_FILLMNTHDR",open_opts$[48]="OTA"
 	open_tables$[49]="OPT_INVKITDET",open_opts$[49]="OTA"
 	open_tables$[50]="OPT_INVKITDET", open_opts$[50]="OTA[2_]"
+	open_tables$[51]="ARC_DISTCODE", open_opts$[51]="OTA"
 
 	gosub open_tables
 

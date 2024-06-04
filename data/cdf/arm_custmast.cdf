@@ -699,6 +699,22 @@ rem --- clear out the contents of the widgets
 	agingBarWidgetControl!=callpoint!.getDevObject("dbBarWidgetControl")
 	agingBarWidgetControl!.setVisible(0)
 
+[[ARM_CUSTDET.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARM_CUSTDET.AR_TERMS_CODE.AVAL]]
 rem --- look up terms code, arm10A...if cred_hold is Y for this terms code,
 rem --- and cm$ is Y, set arm_custdet.cred_hold to Y as well
@@ -828,7 +844,7 @@ rem --- Set New Customer flag
 rem --- Open/Lock files
 	dir_pgm$=stbl("+DIR_PGM")
 	sys_pgm$=stbl("+DIR_SYP")
-	num_files=14
+	num_files=15
 
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[2]="ARS_PARAMS",open_opts$[2]="OTA"
@@ -844,6 +860,7 @@ rem --- Open/Lock files
 	open_tables$[12]="ADM_EMAIL_ACCT",open_opts$[12]="OTA"
 	open_tables$[13]="ARS_CC_CUSTPMT",open_opts$[13]="OTA"
 	open_tables$[14]="ARC_CUSTTYPE",open_opts$[14]="OTA"
+	open_tables$[15]="ARC_DISTCODE",open_opts$[15]="OTA"
 	gosub open_tables
 
 	ars01_dev=num(open_chans$[2])

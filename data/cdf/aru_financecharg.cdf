@@ -1,18 +1,23 @@
-[[ARU_FINANCECHARG.BEND]]
-rem --- remove software lock on batch, if batching
-	batch$=stbl("+BATCH_NO",err=*next)
-	if num(batch$)<>0
-		lock_table$="ADM_PROCBATCHES"
-		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
-		lock_type$="X"
-		lock_status$=""
-		lock_disp$=""
-		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+[[ARU_FINANCECHARG.AREC]]
+rem --- Default to clearing non-updated previously created/entered finance charges
+	callpoint!.setColumnData("ARU_FINANCECHARG.CLEAR_ARE02","1",1)
+
+[[ARU_FINANCECHARG.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
 	endif
-[[ARU_FINANCECHARG.BFMC]]
-rem --- Get Batch information
-	call stbl("+DIR_PGM")+"adc_getbatch.aon","ARE_FINCHG","",table_chans$[all]
-	callpoint!.setTableColumnAttribute("ARU_FINANCECHARG.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
 [[ARU_FINANCECHARG.ASVA]]
 rem --- Get user approval to clearing non-updated previously created/entered finance charges
 	if num(callpoint!.getColumnData("ARU_FINANCECHARG.CLEAR_ARE02")) then
@@ -33,6 +38,24 @@ rem --- Get user approval to clearing non-updated previously created/entered fin
 			wend
 		endif
 	endif
+
+[[ARU_FINANCECHARG.BEND]]
+rem --- remove software lock on batch, if batching
+	batch$=stbl("+BATCH_NO",err=*next)
+	if num(batch$)<>0
+		lock_table$="ADM_PROCBATCHES"
+		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
+		lock_type$="X"
+		lock_status$=""
+		lock_disp$=""
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
+[[ARU_FINANCECHARG.BFMC]]
+rem --- Get Batch information
+	call stbl("+DIR_PGM")+"adc_getbatch.aon","ARE_FINCHG","",table_chans$[all]
+	callpoint!.setTableColumnAttribute("ARU_FINANCECHARG.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
+
 [[ARU_FINANCECHARG.BSHO]]
 rem --- Open/Lock files
 	num_files=1
@@ -40,6 +63,6 @@ rem --- Open/Lock files
 	open_tables$[1]="ARE_FINCHG",open_opts$[1]="OTA"
 
 	gosub open_tables
-[[ARU_FINANCECHARG.AREC]]
-rem --- Default to clearing non-updated previously created/entered finance charges
-	callpoint!.setColumnData("ARU_FINANCECHARG.CLEAR_ARE02","1",1)
+
+
+

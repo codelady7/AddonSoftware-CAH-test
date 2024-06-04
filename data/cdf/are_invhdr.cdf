@@ -79,10 +79,23 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 endif
 
 [[ARE_INVHDR.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- get gl sales account for this distribution code
-
 	dist_code$ = callpoint!.getUserInput()
-
 	gosub get_gl_sales_acct
 
 [[ARE_INVHDR.AR_INV_NO.AVAL]]

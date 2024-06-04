@@ -39,6 +39,22 @@ rem --- Clear TAX_SVC_CD description
 		tax_svc_cd_desc!.setText("")
 	endif
 
+[[IVC_PRODCODE.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[IVC_PRODCODE.ASHO]]
 rem --- Disable TAX_SVC_CD when OP is not installed
 	callpoint!.setDevObject("salesTax",null())
@@ -118,6 +134,10 @@ rem --- Inits
 use ::ado_util.src::util
 use ::opo_AvaTaxInterface.aon::AvaTaxInterface
 
+rem --- Is Accounts Receivable installed?
+call dir_pgm1$+"adc_application.aon","AR",info$[all]
+ar$=info$[20]
+
 rem --- Is Sales Order Processing installed?
 
 call dir_pgm1$+"adc_application.aon","OP",info$[all]
@@ -126,14 +146,15 @@ callpoint!.setDevObject("op",op$)
 
 rem --- Open/Lock files
 
-files=3
-if op$="Y" then files=4
+files=6
 begfile=1,endfile=files
 dim files$[files],options$[files],chans$[files],templates$[files]
 files$[1]="IVS_PARAMS",options$[1]="OTA"
 files$[2]="IVM_ITEMMAST",options$[2]="OTA"
 files$[3]="IVS_DEFAULTS",options$[3]="OTA"
-if op$="Y" then files$[4]="OPS_PARAMS",options$[4]="OTA"
+files$[4]="IVS_DEFAULTS",options$[4]="OTA"
+if op$="Y" then files$[5]="OPS_PARAMS",options$[5]="OTA"
+if ar$="Y" then files$[6]="ARC_DISTCODE",options$[6]="OTA"
 call dir_pgm$+"bac_open_tables.bbj",begfile,endfile,files$[all],options$[all],
 :                                 chans$[all],templates$[all],table_chans$[all],batch,status$
 if status$<>"" then
@@ -160,9 +181,17 @@ call stbl("+DIR_PGM")+"adc_application.aon","SA",info$[all]
 sa$=info$[20]
 if sa$<>"Y"
 	ctl_name$="IVC_PRODCODE.SA_LEVEL"
-	ctl_stat$="I"
+	ctl_stat$="D"
 	gosub disable_fields
 	callpoint!.setTableColumnAttribute("IVC_PRODCODE.SA_LEVEL","DFLT","N")
+endif
+
+rem --- Disable AR_DIST_CODE when AR is not installed
+
+if ar$<>"Y"
+	ctl_name$="IVC_PRODCODE.AR_DIST_CODE"
+	ctl_stat$="D"
+	gosub disable_fields
 endif
 
 rem --- Add static label for displaying TAX_SVC_CD description

@@ -10,14 +10,31 @@ rem --- Initialize new record
 
 	callpoint!.setColumnData("ARS_CUSTDFLT.INV_HIST_FLG","Y")
 
+[[ARS_CUSTDFLT.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARS_CUSTDFLT.AWIN]]
 rem --- Get AR parameters
 
-	num_files=3
+	num_files=4
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="ARS_CREDIT",open_opts$[2]="OTA"
 	open_tables$[3]="ARC_CUSTTYPE",open_opts$[3]="OTA"
+	open_tables$[4]="ARC_DISTCODE",open_opts$[4]="OTA"
 
 	gosub open_tables
 

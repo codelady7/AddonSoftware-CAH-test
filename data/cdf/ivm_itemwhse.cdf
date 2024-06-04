@@ -293,6 +293,22 @@ rem --- Enable cost fields for new item if not a kit
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LANDED_COST",enable)
 	callpoint!.setColumnEnabled("IVM_ITEMWHSE.LAST_PO_COST",enable)
 
+[[IVM_ITEMWHSE.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[IVM_ITEMWHSE.AVG_COST.AVAL]]
 rem --- Update unit_cost if using average costing and average cost changes
 	avg_cost$=callpoint!.getUserInput()

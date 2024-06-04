@@ -44,7 +44,23 @@ rem --- Clear TAX_SVC_CD description
 	endif
 
 [[OPC_LINECODE.AR_DIST_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcDistCode_dev=fnget_dev("ARC_DISTCODE")
+	dim arcDistCode$:fnget_tpl$("ARC_DISTCODE")
+	ar_dist_code$=callpoint!.getUserInput()
+	read record(arcDistCode_dev,key=firm_id$+"D"+ar_dist_code$,dom=*next)arcDistCode$
+	if arcDistCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcDistCode.ar_dist_code$,3)
+		msg_tokens$[2]=cvs(arcDistCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 rem --- Either fill or blank out 3 G/L display fields
+	callpoint!.setColumnData("OPC_LINECODE.AR_DIST_CODE",ar_dist_code$)
 	gosub display_gl_fields
 
 [[OPC_LINECODE.ASHO]]
