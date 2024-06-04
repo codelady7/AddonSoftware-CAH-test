@@ -83,12 +83,13 @@ rem --- Is Sales Order Processing installed for this firm?
 
 rem --- Open needed files
 
-	num_files=1
+	num_files=2
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	if op_installed$="Y" then
 		open_tables$[1]="OPT_INVSHIP",  open_opts$[1]="OTA"
 	endif
+	open_tables$[2]="ARC_SALECODE",  open_opts$[2]="OTA"
 
 	gosub open_tables
 
@@ -99,6 +100,22 @@ rem --- 10395 ... Disable Manual Ship-to option for existing records
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
 	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTSHIP.SLSPSN_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcSaleCode_dev=fnget_dev("ARC_SALECODE")
+	dim arcSaleCode$:fnget_tpl$("ARC_SALECODE")
+	slspsn_code$=callpoint!.getUserInput()
+	read record(arcSaleCode_dev,key=firm_id$+"F"+slspsn_code$,dom=*next)arcSaleCode$
+	if arcSaleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
+		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break
 	endif

@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.arc_salecode">6DFE07C97F509A23CD3D62EC74203C2B</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arc_salecode">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arc_salecode">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arc_salecode">20240201</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arc_salecode">20240129</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arc_salecode">142908</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arc_salecode">20240603</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arc_salecode">20240603</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arc_salecode">183134</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arc_salecode"></DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.arc_salecode">C:/dev_addon/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.arc_salecode">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arc_salecode"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.arc_salecode"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.arc_salecode">T</DD_ATTR_FTYP>
@@ -63,6 +63,10 @@
 		<RECORD id="ddm_table_cpro.arc_salecodebdel">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arc_salecodebdel">ARC_SALECODE    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.arc_salecodebdel">BDEL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arc_salecodebsho">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arc_salecodebsho">ARC_SALECODE    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arc_salecodebsho">BSHO</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_opts">
@@ -476,13 +480,13 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arc_salecode007">20170320</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arc_salecode007"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arc_salecode007"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arc_salecode007"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arc_salecode007">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arc_salecode007">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.arc_salecode007"></DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.arc_salecode007">N</DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.arc_salecode007"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.arc_salecode007"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.arc_salecode007"></DD_ATTR_IDEF>
@@ -504,12 +508,20 @@
 			<DD_ATTR_STYL id="ddm_table_cols.arc_salecode007"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arc_salecode007">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arc_salecode007"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arc_salecode007"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.arc_salecode007">3004</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.arc_salecode007">cbx_code_inactive</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.arc_salecode007">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arc_salecode007"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arc_salecode007">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arc_salecode007"></DD_ATTR_BTNS>
+		</RECORD>
+	</ALIAS>
+	<ALIAS id="ddm_column_cpro">
+		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.arc_salecodecode_inactiveaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.arc_salecodecode_inactiveaval">ARC_SALECODE    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.arc_salecodecode_inactiveaval">CODE_INACTIVE   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.arc_salecodecode_inactiveaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_column_opts">
@@ -538,11 +550,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.arc_salecodecomm_ratei">ARC_SALECODE    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.arc_salecodecomm_ratei">COMM_RATE       </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.arc_salecodecomm_ratei">I</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.arc_salecodecode_inactiveo">
-			<DD_TABLE_ALIAS id="ddm_column_opts.arc_salecodecode_inactiveo">ARC_SALECODE    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.arc_salecodecode_inactiveo">CODE_INACTIVE   </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.arc_salecodecode_inactiveo">O</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">

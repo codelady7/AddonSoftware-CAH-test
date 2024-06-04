@@ -21,9 +21,9 @@
 			<ASC_LICENSE_ID id="ddm_tables.arm_custship">777AC602BEC600EEB292BD70D4270CA7</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.arm_custship">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.arm_custship">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20240409</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20240409</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">113752</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20240604</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20240604</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">085036</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custship"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custship">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custship"></DD_ATTR_DKNM>
@@ -150,6 +150,12 @@
 			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
 			<TABLE_REF_NAME id="ddm_table_ref.arm_custshipcustomer_idarm_custmast">FK_ARM_CUSTSHIP_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
 		</RECORD>
+		<RECORD id="ddm_table_ref.arm_custshipstate_codeadc_statecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custshipstate_codeadc_statecode">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.arm_custshipstate_codeadc_statecode">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.arm_custshipstate_codeadc_statecode">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.arm_custshipstate_codeadc_statecode">FK_ARM_CUSTSHIP_STATE_CODE_ADC_STATECODE                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		</RECORD>
 		<RECORD id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">
 			<DD_TABLE_ALIAS id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_TABLE_COL id="ddm_table_ref.arm_custshiptax_codeopc_taxcode">TAX_CODE        </DD_TABLE_COL>
@@ -203,6 +209,24 @@
 			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
 			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
 			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0001">FIRM_ID         </FK_TABLE_COL>
+		</RECORD>
+		<RECORD id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">STATE_CODE      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.arm_custshipstate_codeadc_statecode0002">STATE_CODE      </FK_TABLE_COL>
 		</RECORD>
 		<RECORD id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">
 			<DD_TABLE_ALIAS id="ddm_table_refcol.arm_custshiptax_codeopc_taxcode0001">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
@@ -1007,7 +1031,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_custship015">20060119</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_custship015"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_custship015"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship015"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship015">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custship015"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custship015"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_custship015"></DD_ATTR_CTLY>
@@ -1606,6 +1630,11 @@
 	</ALIAS>
 	<ALIAS id="ddm_column_cpro">
 		<ID id="ddm_column_cpro">DDM_COLUMN_CPRO</ID>
+		<RECORD id="ddm_column_cpro.arm_custshipslspsn_codeaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_custshipslspsn_codeaval">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.arm_custshipslspsn_codeaval">SLSPSN_CODE     </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.arm_custshipslspsn_codeaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
 		<RECORD id="ddm_column_cpro.arm_custshipshipping_emailaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_custshipshipping_emailaval">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.arm_custshipshipping_emailaval">SHIPPING_EMAIL  </DD_DVAR_NAME>

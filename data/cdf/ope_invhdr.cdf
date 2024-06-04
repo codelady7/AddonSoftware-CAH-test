@@ -3150,8 +3150,22 @@ rem --- Enable/Disable Cash Sale button
 	gosub able_cash_sale
 
 [[OPE_INVHDR.SLSPSN_CODE.AVAL]]
-rem --- Set Commission Percent
+rem --- Don't allow inactive code
+	arcSaleCode_dev=fnget_dev("ARC_SALECODE")
+	dim arcSaleCode$:fnget_tpl$("ARC_SALECODE")
+	slspsn_code$=callpoint!.getUserInput()
+	read record(arcSaleCode_dev,key=firm_id$+"F"+slspsn_code$,dom=*next)arcSaleCode$
+	if arcSaleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
+		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
+rem --- Set Commission Percent
 	slsp$ = callpoint!.getUserInput()
 	gosub get_comm_percent
 

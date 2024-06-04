@@ -29,12 +29,13 @@ rem --- Don't allow inactive code
 [[ARS_CUSTDFLT.AWIN]]
 rem --- Get AR parameters
 
-	num_files=4
+	num_files=5
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARS_PARAMS",open_opts$[1]="OTA"
 	open_tables$[2]="ARS_CREDIT",open_opts$[2]="OTA"
 	open_tables$[3]="ARC_CUSTTYPE",open_opts$[3]="OTA"
 	open_tables$[4]="ARC_DISTCODE",open_opts$[4]="OTA"
+	open_tables$[5]="ARC_SALECODE",open_opts$[5]="OTA"
 
 	gosub open_tables
 
@@ -106,6 +107,22 @@ rem --- Don't allow inactive code
 		dim msg_tokens$[2]
 		msg_tokens$[1]=cvs(arcCustType.customer_type$,3)
 		msg_tokens$[2]=cvs(arcCustType.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARS_CUSTDFLT.SLSPSN_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcSaleCode_dev=fnget_dev("ARC_SALECODE")
+	dim arcSaleCode$:fnget_tpl$("ARC_SALECODE")
+	slspsn_code$=callpoint!.getUserInput()
+	read record(arcSaleCode_dev,key=firm_id$+"F"+slspsn_code$,dom=*next)arcSaleCode$
+	if arcSaleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
+		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
 		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break

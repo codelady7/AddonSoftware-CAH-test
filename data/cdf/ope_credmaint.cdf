@@ -387,7 +387,7 @@ rem --- Init
 	use ::opo_SalesOrderCreateWO.aon::SalesOrderCreateWO
 
 rem --- Open tables
-	num_files=13
+	num_files=14
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[1]="ARM_CUSTMAST",open_opts$[1]="OTA"
 	open_tables$[2]="OPE_ORDHDR",open_opts$[2]="OTA"
@@ -402,6 +402,7 @@ rem --- Open tables
 	open_tables$[11]="OPE_PRNTLIST",open_opts$[11]="OTA"
 	open_tables$[12]="IVM_ITEMMAST",open_opts$[12]="OTA"
 	open_tables$[13]="OPS_PARAMS",open_opts$[13]="OTA"
+	open_tables$[14]="ARC_SALECODE",open_opts$[14]="OTA"
 
 	gosub open_tables
 
@@ -443,6 +444,22 @@ if arm01a.cust_inactive$="Y" then
    gosub disp_message
    callpoint!.setStatus("ACTIVATE")
 endif
+
+[[OPE_CREDMAINT.SLSPSN_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcSaleCode_dev=fnget_dev("ARC_SALECODE")
+	dim arcSaleCode$:fnget_tpl$("ARC_SALECODE")
+	slspsn_code$=callpoint!.getUserInput()
+	read record(arcSaleCode_dev,key=firm_id$+"F"+slspsn_code$,dom=*next)arcSaleCode$
+	if arcSaleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
+		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
 [[OPE_CREDMAINT.<CUSTOM>]]
 #include [+ADDON_LIB]std_functions.aon

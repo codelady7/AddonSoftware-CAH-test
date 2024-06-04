@@ -43,8 +43,8 @@ call stbl("+DIR_PGM")+"adc_application.aon","IV",info$[all]
 callpoint!.setDevObject("usingIV",info$[20])
 
 rem --- This firm using Purchase Orders?
-call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
-callpoint!.setDevObject("usingPO",info$[20])
+call stbl("+DIR_PGM")+"adc_application.aon","OP",info$[all]
+callpoint!.setDevObject("usingOP",info$[20])
 
 rem --- Open/Lock files
 files=10
@@ -60,7 +60,7 @@ if callpoint!.getDevObject("usingIV")="Y" then
 	files$[7]="IVM_ITEMWHSE",options$[7]="OTA"
 	files$[8]="IVS_DEFAULTS",options$[8]="OTA"
 endif
-if callpoint!.getDevObject("usingPO")="Y" then
+if callpoint!.getDevObject("usingOP")="Y" then
 	files$[9]="OPC_LINECODE",options$[9]="OTA"
 	files$[10]="OPT_INVHDR",options$[10]="OTA"
 endif
@@ -173,7 +173,7 @@ rem ==========================================================================
 		checkTables!.addItem("IVM_ITEMWHSE")
 		checkTables!.addItem("IVS_DEFAULTS")
 	endif
-	if callpoint!.getDevObject("usingPO")="Y" then
+	if callpoint!.getDevObject("usingOP")="Y" then
 		checkTables!.addItem("OPC_LINECODE")
 		checkTables!.addItem("OPT_INVHDR")
 	endif

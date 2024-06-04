@@ -844,7 +844,7 @@ rem --- Set New Customer flag
 rem --- Open/Lock files
 	dir_pgm$=stbl("+DIR_PGM")
 	sys_pgm$=stbl("+DIR_SYP")
-	num_files=15
+	num_files=16
 
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	open_tables$[2]="ARS_PARAMS",open_opts$[2]="OTA"
@@ -861,6 +861,7 @@ rem --- Open/Lock files
 	open_tables$[13]="ARS_CC_CUSTPMT",open_opts$[13]="OTA"
 	open_tables$[14]="ARC_CUSTTYPE",open_opts$[14]="OTA"
 	open_tables$[15]="ARC_DISTCODE",open_opts$[15]="OTA"
+	open_tables$[16]="ARC_SALECODE",open_opts$[16]="OTA"
 	gosub open_tables
 
 	ars01_dev=num(open_chans$[2])
@@ -1304,6 +1305,22 @@ rem --- Warn when pay_auth_email doesn't match ARS_CC_CUSTPMT Report Control Rec
 rem --- Validate email address
 	email$=callpoint!.getUserInput()
 	if !util.validEmailAddress(email$) then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+[[ARM_CUSTDET.SLSPSN_CODE.AVAL]]
+rem --- Don't allow inactive code
+	arcSaleCode_dev=fnget_dev("ARC_SALECODE")
+	dim arcSaleCode$:fnget_tpl$("ARC_SALECODE")
+	slspsn_code$=callpoint!.getUserInput()
+	read record(arcSaleCode_dev,key=firm_id$+"F"+slspsn_code$,dom=*next)arcSaleCode$
+	if arcSaleCode.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(arcSaleCode.slspsn_code$,3)
+		msg_tokens$[2]=cvs(arcSaleCode.code_desc$,3)
+		gosub disp_message
 		callpoint!.setStatus("ABORT")
 		break
 	endif
