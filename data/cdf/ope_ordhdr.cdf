@@ -3492,6 +3492,21 @@ rem --- Check Ship-to's if SHIPTO_NO has changed
 	shipto_no$  = callpoint!.getUserInput()
 	if cvs(shipto_no$,3)=cvs(callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_NO"),3) then break
 
+rem --- Don't allow inactive code
+	armCustShip_dev=fnget_dev("ARM_CUSTSHIP")
+	dim armCustShip$:fnget_tpl$("ARM_CUSTSHIP")
+	customer_id$=callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
+	read record(armCustShip_dev,key=firm_id$+customer_id$+shipto_no$,dom=*next)armCustShip$
+	if armCustShip.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(armCustShip.shipto_no$,3)
+		msg_tokens$[2]=cvs(armCustShip.city$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 	shipto_type$ = callpoint!.getColumnData("OPE_ORDHDR.SHIPTO_TYPE")
 	ship_addr$=callpoint!.getColumnData("<<DISPLAY>>.SADD1")+callpoint!.getColumnData("<<DISPLAY>>.SADD2")+
 :		callpoint!.getColumnData("<<DISPLAY>>.SADD3")+callpoint!.getColumnData("<<DISPLAY>>.SADD4")

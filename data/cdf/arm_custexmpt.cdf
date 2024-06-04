@@ -171,6 +171,23 @@ rem --- Validate ENTITY_USE_CD
 		endif
 	endif
 
+[[ARM_CUSTEXMPT.SHIPTO_NO.AVAL]]
+rem --- Don't allow inactive code
+	armCustShip_dev=fnget_dev("ARM_CUSTSHIP")
+	dim armCustShip$:fnget_tpl$("ARM_CUSTSHIP")
+	shipto_no$=callpoint!.getUserInput()
+	customer_id$=callpoint!.getColumnData("ARM_CUSTEXMPT.CUSTOMER_ID")
+	read record(armCustShip_dev,key=firm_id$+customer_id$+shipto_no$,dom=*next)armCustShip$
+	if armCustShip.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(armCustShip.shipto_no$,3)
+		msg_tokens$[2]=cvs(armCustShip.city$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
 [[ARM_CUSTEXMPT.SHIPTO_TYPE.AVAL]]
 rem ---Disable and clear SHIPTO_NO when SHIPTO_TYPE=B (Bill To)
 	shipto_type$=callpoint!.getUserInput()

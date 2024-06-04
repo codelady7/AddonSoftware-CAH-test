@@ -72,6 +72,24 @@ rem --- Need to be able to save new records coming from Order/Invoice Entry
 rem -- Enable Manual Ship-to option for new records when OP is installed
 	if callpoint!.getDevObject("op_installed")="Y" then callpoint!.setOptionEnabled("MANS",1)
 
+[[ARM_CUSTSHIP.BDEL]]
+rem --- When deleting the Customer Ship-To Address, warn if there are any current/active transactions for the code, and disallow if there are any.
+	gosub check_active_code
+	if found then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Do they want to deactivate code instead of deleting it?
+	msg_id$="AD_DEACTIVATE_CODE"
+	gosub disp_message
+	if msg_opt$="Y" then
+		rem --- Check the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("ARM_CUSTSHIP.CODE_INACTIVE","Y",1)
+		callpoint!.setStatus("SAVE;ABORT")
+		break
+	endif
+
 [[ARM_CUSTSHIP.BSHO]]
 rem  Initializations
 	use ::ado_util.src::util
@@ -83,19 +101,33 @@ rem --- Is Sales Order Processing installed for this firm?
 
 rem --- Open needed files
 
-	num_files=3
+	num_files=5
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 
 	if op_installed$="Y" then
 		open_tables$[1]="OPT_INVSHIP",  open_opts$[1]="OTA"
+		open_tables$[2]="OPT_INVHDR",  open_opts$[2]="OTA"
 	endif
-	open_tables$[2]="ARC_SALECODE",  open_opts$[2]="OTA"
-	open_tables$[3]="ARC_TERRCODE",  open_opts$[3]="OTA"
+	open_tables$[3]="ARC_SALECODE",  open_opts$[3]="OTA"
+	open_tables$[4]="ARC_TERRCODE",  open_opts$[4]="OTA"
+	open_tables$[5]="ARM_CUSTEXMPT",  open_opts$[5]="OTA"
 
 	gosub open_tables
 
 rem --- 10395 ... Disable Manual Ship-to option for existing records
 	callpoint!.setOptionEnabled("MANS",0)
+
+[[ARM_CUSTSHIP.CODE_INACTIVE.AVAL]]
+rem --- When deactivating the Customer Ship-To Address, warn if there are any current/active transactions for the code, and disallow if there are any.
+	current_inactive$=callpoint!.getUserInput()
+	prior_inactive$=callpoint!.getColumnData("ARM_CUSTSHIP.CODE_INACTIVE")
+	if current_inactive$="Y" and prior_inactive$<>"Y" then
+		gosub check_active_code
+		if found then
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
 
 [[ARM_CUSTSHIP.SHIPPING_EMAIL.AVAL]]
 rem --- Validate email address
@@ -136,6 +168,66 @@ rem --- Don't allow inactive code
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
+[[ARM_CUSTSHIP.<CUSTOM>]]
+rem ==========================================================================
+check_active_code: rem --- Warn if there are any current/active transactions for the code
+rem ==========================================================================
+	found=0
+	shipto_no$=callpoint!.getColumnData("ARM_CUSTSHIP.SHIPTO_NO")
+
+	checkTables!=BBjAPI().makeVector()
+	checkTables!.addItem("ARM_CUSTEXMPT")
+	if callpoint!.getDevObject("op_installed")="Y" then
+		checkTables!.addItem("OPT_INVHDR")
+	endif
+	for i=0 to checkTables!.size()-1
+		thisTable$=checkTables!.getItem(i)
+		table_dev = fnget_dev(thisTable$)
+		dim table_tpl$:fnget_tpl$(thisTable$)
+		if thisTable$="OPT_INVHDR" then
+			read(table_dev,key=firm_id$+"E",knum="AO_STATUS",dom=*next)
+		else
+			read(table_dev,key=firm_id$,dom=*next)
+		endif
+		while 1
+			readrecord(table_dev,end=*break)table_tpl$
+			if table_tpl.firm_id$<>firm_id$ then break
+			if thisTable$="OPT_INVHDR" and table_tpl.trans_status$<>"E" then break
+			if table_tpl.shipto_no$=shipto_no$ then
+				msg_id$="AD_CODE_IN_USE"
+				dim msg_tokens$[2]
+				msg_tokens$[1]=Translate!.getTranslation("AON_CUSTOMER_SHIP-TO")
+				switch (BBjAPI().TRUE)
+                				case thisTable$="ARM_CUSTEXMPT"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-ARM_CUSTEXMPT-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="OPT_INVHDR"
+						if table_tpl.ordinv_flag$="I" then
+                    					msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-OPE_INVHDR-DD_ATTR_WINT")
+						else
+                    					msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-OPE_ORDHDR-DD_ATTR_WINT")
+						endif
+						break
+                				case default
+                    				msg_tokens$[2]="???"
+                    				break
+            				swend
+				gosub disp_message
+
+				found=1
+				break
+			endif
+		wend
+		if found then break
+	next i
+
+	if found then
+		rem --- Uncheck the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("ARM_CUSTSHIP.CODE_INACTIVE","N",1)
+	endif
+
+return
 
 
 

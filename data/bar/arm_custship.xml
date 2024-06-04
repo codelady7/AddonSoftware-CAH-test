@@ -23,7 +23,7 @@
 			<DD_CREATE_DATE id="ddm_tables.arm_custship">20060119</DD_CREATE_DATE>
 			<DD_LSTREV_DATE id="ddm_tables.arm_custship">20240604</DD_LSTREV_DATE>
 			<DD_LSTSYNC_DATE id="ddm_tables.arm_custship">20240604</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">130358</DD_LSTSYNC_TIME>
+			<DD_LSTSYNC_TIME id="ddm_tables.arm_custship">145502</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.arm_custship"></DD_ATTR_ATAB>
 			<DD_ATTR_CPGM id="ddm_tables.arm_custship">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.arm_custship"></DD_ATTR_DKNM>
@@ -89,6 +89,10 @@
 		<RECORD id="ddm_table_cpro.arm_custshiparnf">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshiparnf">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshiparnf">ARNF</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_table_cpro.arm_custshipbdel">
+			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshipbdel">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_ATTR_CPRO id="ddm_table_cpro.arm_custshipbdel">BDEL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_table_cpro.arm_custshipbsho">
 			<DD_TABLE_ALIAS id="ddm_table_cpro.arm_custshipbsho">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
@@ -899,14 +903,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship012"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship012"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship012"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship012">15</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship012">16</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship012"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship012">PHONE_NO</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship012"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship012"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship012"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship012"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship012">3014</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship012">3015</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship012">ine_phone_no</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship012">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship012"></DD_ATTR_RADG>
@@ -950,14 +954,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship013"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship013"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship013"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship013">16</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship013">17</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship013"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship013">PHONE_EXTEN</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship013"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship013"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship013"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship013"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship013">3015</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship013">3016</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship013">ine_phone_exten</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship013">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship013"></DD_ATTR_RADG>
@@ -983,7 +987,7 @@
 			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship014"></DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custship014"></DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custship014">+45</DD_ATTR_CTLX>
-			<DD_ATTR_CTLY id="ddm_table_cols.arm_custship014">-9</DD_ATTR_CTLY>
+			<DD_ATTR_CTLY id="ddm_table_cols.arm_custship014">-10</DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.arm_custship014"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.arm_custship014"></DD_ATTR_CTLH>
 			<DD_ATTR_DFLT id="ddm_table_cols.arm_custship014"></DD_ATTR_DFLT>
@@ -1001,14 +1005,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship014"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship014"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship014"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship014">14</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship014">15</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship014"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship014">CONTACT_NAME</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship014"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship014"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship014"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship014"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship014">3013</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship014">3014</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship014">ine_contact_name</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship014">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship014"></DD_ATTR_RADG>
@@ -1059,7 +1063,7 @@
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship015"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship015"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship015"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship015">3018</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship015">3019</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship015">dis_slspsn_code</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship015">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship015"></DD_ATTR_RADG>
@@ -1103,14 +1107,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship016"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship016"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship016"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship016">17</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship016">18</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship016"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship016">TERRITORY</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship016"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship016"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship016"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship016"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship016">3016</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship016">3017</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship016">dis_territory</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship016">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship016"></DD_ATTR_RADG>
@@ -1154,14 +1158,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship017"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship017"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship017"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship017">18</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship017">19</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship017"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship017">TAX_CODE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship017"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship017"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship017"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship017"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship017">3017</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship017">3018</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship017">dis_tax_code</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship017">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship017"></DD_ATTR_RADG>
@@ -1212,7 +1216,7 @@
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship018"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship018"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship018"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship018">3019</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship018">3020</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship018">ine_db_no</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship018">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship018"></DD_ATTR_RADG>
@@ -1263,7 +1267,7 @@
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship019"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship019"></DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship019"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship019">3020</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship019">3021</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship019">ine_sic_code</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship019">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship019"></DD_ATTR_RADG>
@@ -1439,13 +1443,13 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.arm_custship023">20170320</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.arm_custship023"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.arm_custship023"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship023"></DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.arm_custship023">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.arm_custship023">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLY>
 			<DD_ATTR_CTLW id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLW>
 			<DD_ATTR_CTLH id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLH>
-			<DD_ATTR_DFLT id="ddm_table_cols.arm_custship023"></DD_ATTR_DFLT>
+			<DD_ATTR_DFLT id="ddm_table_cols.arm_custship023">N</DD_ATTR_DFLT>
 			<DD_ATTR_DRLE id="ddm_table_cols.arm_custship023"></DD_ATTR_DRLE>
 			<DD_ATTR_GHDR id="ddm_table_cols.arm_custship023"></DD_ATTR_GHDR>
 			<DD_ATTR_IDEF id="ddm_table_cols.arm_custship023"></DD_ATTR_IDEF>
@@ -1460,16 +1464,16 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship023"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship023"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship023"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship023">24</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship023">14</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship023"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship023">CODE_INACTIVE</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship023"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship023"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship023">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship023"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLI>
-			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLN>
-			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship023"></DD_ATTR_CTLC>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship023">3013</DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship023">cbx_code_inactive</DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship023">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship023"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.arm_custship023">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.arm_custship023"></DD_ATTR_BTNS>
@@ -1511,14 +1515,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship024"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship024"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship024"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship024">25</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship024">24</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship024"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship024">AR_SHIP_VIA</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship024"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship024"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship024">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship024"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship024">3021</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship024">3022</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship024">dis_ar_ship_via</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship024">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship024"></DD_ATTR_RADG>
@@ -1562,14 +1566,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship025"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship025"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship025"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship025">26</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship025">25</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship025"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship025">SHIPPING_ID</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship025"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship025"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship025">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship025"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship025">3022</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship025">3023</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship025">ine_shipping_id</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship025">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship025"></DD_ATTR_RADG>
@@ -1613,14 +1617,14 @@
 			<DD_ATTR_PVAL id="ddm_table_cols.arm_custship026"></DD_ATTR_PVAL>
 			<DD_ATTR_SLEV id="ddm_table_cols.arm_custship026"></DD_ATTR_SLEV>
 			<DD_ATTR_TABG id="ddm_table_cols.arm_custship026"></DD_ATTR_TABG>
-			<DD_ATTR_TIND id="ddm_table_cols.arm_custship026">27</DD_ATTR_TIND>
+			<DD_ATTR_TIND id="ddm_table_cols.arm_custship026">26</DD_ATTR_TIND>
 			<DD_ATTR_HELP id="ddm_table_cols.arm_custship026"></DD_ATTR_HELP>
 			<SQL_COLUMN_NAME id="ddm_table_cols.arm_custship026">SHIPPING_EMAIL</SQL_COLUMN_NAME>
 			<DD_ATTR_FONT id="ddm_table_cols.arm_custship026"></DD_ATTR_FONT>
 			<DD_ATTR_STYL id="ddm_table_cols.arm_custship026"></DD_ATTR_STYL>
 			<DD_ATTR_FTSR id="ddm_table_cols.arm_custship026">N</DD_ATTR_FTSR>
 			<DD_ATTR_CWID id="ddm_table_cols.arm_custship026"></DD_ATTR_CWID>
-			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship026">3023</DD_ATTR_CTLI>
+			<DD_ATTR_CTLI id="ddm_table_cols.arm_custship026">3024</DD_ATTR_CTLI>
 			<DD_ATTR_CTLN id="ddm_table_cols.arm_custship026">ine_shipping_email</DD_ATTR_CTLN>
 			<DD_ATTR_CTLC id="ddm_table_cols.arm_custship026">0</DD_ATTR_CTLC>
 			<DD_ATTR_RADG id="ddm_table_cols.arm_custship026"></DD_ATTR_RADG>
@@ -1639,6 +1643,11 @@
 			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_custshipterritoryaval">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_cpro.arm_custshipterritoryaval">TERRITORY       </DD_DVAR_NAME>
 			<DD_ATTR_CPRO id="ddm_column_cpro.arm_custshipterritoryaval">AVAL</DD_ATTR_CPRO>
+		</RECORD>
+		<RECORD id="ddm_column_cpro.arm_custshipcode_inactiveaval">
+			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_custshipcode_inactiveaval">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
+			<DD_DVAR_NAME id="ddm_column_cpro.arm_custshipcode_inactiveaval">CODE_INACTIVE   </DD_DVAR_NAME>
+			<DD_ATTR_CPRO id="ddm_column_cpro.arm_custshipcode_inactiveaval">AVAL</DD_ATTR_CPRO>
 		</RECORD>
 		<RECORD id="ddm_column_cpro.arm_custshipshipping_emailaval">
 			<DD_TABLE_ALIAS id="ddm_column_cpro.arm_custshipshipping_emailaval">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
@@ -1672,11 +1681,6 @@
 			<DD_TABLE_ALIAS id="ddm_column_opts.arm_custshipstate_codeh">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
 			<DD_DVAR_NAME id="ddm_column_opts.arm_custshipstate_codeh">STATE_CODE      </DD_DVAR_NAME>
 			<DD_ATTR_OPTS id="ddm_column_opts.arm_custshipstate_codeh">h</DD_ATTR_OPTS>
-		</RECORD>
-		<RECORD id="ddm_column_opts.arm_custshipcode_inactiveo">
-			<DD_TABLE_ALIAS id="ddm_column_opts.arm_custshipcode_inactiveo">ARM_CUSTSHIP    </DD_TABLE_ALIAS>
-			<DD_DVAR_NAME id="ddm_column_opts.arm_custshipcode_inactiveo">CODE_INACTIVE   </DD_DVAR_NAME>
-			<DD_ATTR_OPTS id="ddm_column_opts.arm_custshipcode_inactiveo">O</DD_ATTR_OPTS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_elements">
