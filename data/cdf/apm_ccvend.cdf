@@ -13,17 +13,35 @@ rem --- Record cannot be deleted if the CREDITCARD_ID is in APE_INVOICEHDR
 	if ccID_active$="Y" then
 		callpoint!.setColumnData("APM_CCVEND.CODE_INACTIVE","N",1)
 		callpoint!.setStatus("ABORT")
+		break
+	endif
+
+rem --- Do they want to deactivate code instead of deleting it?
+	msg_id$="AD_DEACTIVATE_CODE"
+	gosub disp_message
+	if msg_opt$="Y" then
+		rem --- Check the CODE_INACTIVE checkbox
+		callpoint!.setColumnData("APM_CCVEND.CODE_INACTIVE","Y",1)
+		callpoint!.setStatus("SAVE;ABORT")
+		break
 	endif
 
 [[APM_CCVEND.BSHO]]
+rem --- This firm using Purchase Orders?
+	call stbl("+DIR_PGM")+"adc_application.aon","PO",info$[all]
+	callpoint!.setDevObject("usingPO",info$[20])
+
 rem --- Open needed files
-	num_files=4
+	num_files=5
 	dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
 	
 	open_tables$[1]="APE_INVOICEHDR",  open_opts$[1]="OTA"
 	open_tables$[2]="APM_VENDMAST",  open_opts$[2]="OTA"
 	open_tables$[3]="APM_VENDHIST",  open_opts$[3]="OTA"
 	open_tables$[4]="APC_TYPECODE",  open_opts$[4]="OTA"
+	if callpoint!.getDevObject("usingPO")="Y" then
+		open_tables$[5]="POE_INVHDR",  open_opts$[5]="OTA"
+	endif
 
 	gosub open_tables
 
@@ -140,22 +158,42 @@ rem --- Force CREDITCARD_ID entry to start with the letter "C"
 checkIfActive: rem --- Ceck if the CREDITCARD_ID is currently active in APE_INVOICEHDR
 	ccID_active$="N"
 	ccID$=callpoint!.getColumnData("APM_CCVEND.CREDITCARD_ID")
-	apeInvoiceHdr_dev=fnget_dev("APE_INVOICEHDR")
-	dim apeInvoiceHdr$:fnget_tpl$("APE_INVOICEHDR")
-	read(apeInvoiceHdr_dev,key=firm_id$,dom=*next)
-	while 1
-		readrecord(apeInvoiceHdr_dev,end=*break)apeInvoiceHdr$
-		if apeInvoiceHdr.firm_id$<>firm_id$ then break
-		if apeInvoiceHdr.creditcard_id$<>ccID$ then continue
+	checkTables!=BBjAPI().makeVector()
+	checkTables!.addItem("APE_INVOICEHDR")
+	if callpoint!.getDevObject("usingPO")="Y" then
+		checkTables!.addItem("POE_INVHDR")
+	endif
+	for i=0 to checkTables!.size()-1
+		thisTable$=checkTables!.getItem(i)
+		table_dev = fnget_dev(thisTable$)
+		dim table_tpl$:fnget_tpl$(thisTable$)
+		read(table_dev,key=firm_id$,dom=*next)
+		while 1
+			readrecord(table_dev,end=*break)table_tpl$
+			if table_tpl.firm_id$<>firm_id$ then break
+			if table_tpl.creditcard_id$=ccID$ then
+				msg_id$="AD_CODE_IN_USE"
+				dim msg_tokens$[2]
+				msg_tokens$[1]=Translate!.getTranslation("AON_CREDIT_CARD_NO")
+				switch (BBjAPI().TRUE)
+                				case thisTable$="APE_INVOICEHDR"
+                   				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-APE_INVOICEHDR-DD_ATTR_WINT")
+                    				break
+                				case thisTable$="POE_INVHDR"
+                    				msg_tokens$[2]=Translate!.getTranslation("DDM_TABLES-POE_INVHDR-DD_ATTR_WINT")
+						break
+                				case default
+                    				msg_tokens$[2]="???"
+                    				break
+            			swend
+				gosub disp_message
 
-		msg_id$="AP_CCID_ACTIVE"
-		dim msg_tokens$[2]
-		msg_tokens$[1]=ccID$
-		msg_tokens$[2]=apeInvoiceHdr.ap_inv_no$
-		gosub disp_message
-		ccID_active$="Y"
-		break
-	wend
+				ccID_active$="Y"
+				break
+			endif
+		wend
+		if ccID_active$="Y" then break
+	next i
 
 	return
 
