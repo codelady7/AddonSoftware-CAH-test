@@ -147,6 +147,24 @@ rem --- Update extension
 	setup_time=num(callpoint!.getColumnData("SFE_TIMEEMPLDET.SETUP_TIME"))
 	gosub calculate_extension
 
+[[SFE_TIMEEMPLDET.OP_CODE.AVAL]]
+rem --- Don't allow inactive code
+	if callpoint!.getDevObject("bm")="Y" then
+		bmm08=fnget_dev("BMC_OPCODES")
+		dim bmm08$:fnget_tpl$("BMC_OPCODES")
+		op_code$=callpoint!.getUserInput()
+		read record (bmm08,key=firm_id$+op_code$,dom=*next)bmm08$
+		if bmm08.code_inactive$ = "Y"
+			msg_id$="AD_CODE_INACTIVE"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=cvs(bmm08.op_code$,3)
+			msg_tokens$[2]=cvs(bmm08.code_desc$,3)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
 [[<<DISPLAY>>.OP_REF.AVAL]]
 rem --- Use this op_ref to initialize op_code and oper_seq_ref
 	op_ref$=callpoint!.getUserInput()

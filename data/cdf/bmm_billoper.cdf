@@ -223,14 +223,24 @@ rem --- Check for valid dates
 	gosub check_dates
 
 [[BMM_BILLOPER.OP_CODE.AVAL]]
-rem --- Setup default data for new S type line
+rem --- Don't allow inactive code
+	bmm08=fnget_dev("BMC_OPCODES")
+	dim bmm08$:fnget_tpl$("BMC_OPCODES")
+	op_code$=callpoint!.getUserInput()
+	read record (bmm08,key=firm_id$+op_code$,dom=*next)bmm08$
+	if bmm08.code_inactive$ = "Y"
+		msg_id$="AD_CODE_INACTIVE"
+		dim msg_tokens$[2]
+		msg_tokens$[1]=cvs(bmm08.op_code$,3)
+		msg_tokens$[2]=cvs(bmm08.code_desc$,3)
+		gosub disp_message
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
+rem --- Setup default data for new S type line
 	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow())="Y" or
 :		callpoint!.getUserInput()<>callpoint!.getDevObject("op_code")
-		bmm08=fnget_dev("BMC_OPCODES")
-		dim bmm08$:fnget_tpl$("BMC_OPCODES")
-		op_code$=callpoint!.getUserInput()
-		read record (bmm08,key=firm_id$+op_code$,dom=*next)bmm08$
 		callpoint!.setColumnData("BMM_BILLOPER.MOVE_TIME",bmm08.move_time$)
 		callpoint!.setColumnData("BMM_BILLOPER.PCS_PER_HOUR",bmm08.pcs_per_hour$)
 		callpoint!.setColumnData("BMM_BILLOPER.SETUP_TIME",bmm08.setup_time$)

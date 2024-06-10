@@ -1,3 +1,72 @@
+[[SFE_TIMEWODET.ADGE]]
+rem --- Disable fields
+	if callpoint!.getDevObject("time_clk_flg")<>"Y" then
+		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.START_TIME",0)
+		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.STOP_TIME",0)
+	endif
+	if callpoint!.getDevObject("pr")<>"Y" then
+		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.PAY_CODE",0)
+		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.TITLE_CODE",0)
+	endif
+
+rem --- Initializations
+	callpoint!.setDevObject("prev_stoptime","")
+
+[[SFE_TIMEWODET.AGRE]]
+rem --- Display operation ref
+	oper_seq_no$=callpoint!.getColumnData("SFE_TIMEWODET.OPER_SEQ_REF")
+	gosub set_op_ref
+
+	gosub calc_header_hrs
+
+[[SFE_TIMEWODET.AGRN]]
+rem --- Display operation ref
+	oper_seq_no$=callpoint!.getColumnData("SFE_TIMEWODET.OPER_SEQ_REF")
+	gosub set_op_ref
+
+rem --- Require op_ref entry
+	callpoint!.setTableColumnAttribute("<<DISPLAY>>.OP_REF","MINL","1")
+
+rem --- Set op_ref lookup
+	callpoint!.setTableColumnAttribute("<<DISPLAY>>.OP_REF","IDEF","AO_WO_OP_REF_LK")
+
+rem --- Op_code initializations
+	op_code$=callpoint!.getColumnData("SFE_TIMEWODET.OP_CODE")
+	gosub op_code_init
+
+rem --- Hold on to starting values for hrs and setup_time
+	callpoint!.setDevObject("previous_hrs",callpoint!.getColumnData("SFE_TIMEWODET.HRS"))
+	callpoint!.setDevObject("previous_setup_time",callpoint!.getColumnData("SFE_TIMEWODET.SETUP_TIME"))
+
+[[SFE_TIMEWODET.AREC]]
+rem --- Initialize dev objects
+	callpoint!.setDevObject("opcode_direct_rate",0)
+	callpoint!.setDevObject("opcode_ovhd_factor",0)
+	callpoint!.setDevObject("normal_title","")
+	callpoint!.setDevObject("hrlysalary","")
+	callpoint!.setDevObject("previous_hrs",0)
+	callpoint!.setDevObject("previous_setup_time",0)
+
+rem --- Initialize column data
+	callpoint!.setColumnData("SFE_TIMEWODET.START_TIME",str(callpoint!.getDevObject("prev_stoptime")),1)
+	callpoint!.setStatus("REFRESH")
+
+[[SFE_TIMEWODET.AUDE]]
+
+	gosub calc_header_hrs
+
+[[SFE_TIMEWODET.AWRI]]
+
+	gosub calc_header_hrs
+
+[[SFE_TIMEWODET.BDEL]]
+
+	gosub calc_header_hrs
+
+[[SFE_TIMEWODET.BDGX]]
+
+	gosub calc_header_hrs
+
 [[SFE_TIMEWODET.BGDC]]
 rem --- set preset val for batch_no
 	callpoint!.setTableColumnAttribute("SFE_TIMEWODET.BATCH_NO","PVAL",$22$+stbl("+BATCH_NO")+$22$)
@@ -19,6 +88,57 @@ rem --- When PR is installed
 		callpoint!.setTableColumnAttribute("SFE_TIMEWODET.TITLE_CODE","DCOL","CODE_DESC")
 		callpoint!.setTableColumnAttribute("SFE_TIMEWODET.TITLE_CODE","DKEY","[+FIRM_ID]+""F""+@")
 	endif
+
+[[SFE_TIMEWODET.BGDR]]
+rem --- Display operation ref
+	oper_seq_no$=callpoint!.getColumnData("SFE_TIMEWODET.OPER_SEQ_REF")
+	gosub set_op_ref
+
+[[SFE_TIMEWODET.BGDS]]
+rem --- Set precision
+	precision num(callpoint!.getDevObject("precision"))
+
+[[SFE_TIMEWODET.EMPLOYEE_NO.AVAL]]
+rem --- Init for this employee
+
+	if callpoint!.getDevObject("pr")="Y" then
+		empcode_dev=callpoint!.getDevObject("empcode_dev")
+		dim empcode$:callpoint!.getDevObject("empcode_tpl")
+		findrecord(empcode_dev,key=firm_id$+callpoint!.getUserInput(),dom=*next)empcode$
+		callpoint!.setDevObject("normal_title",empcode.normal_title$)
+		callpoint!.setDevObject("hrlysalary",empcode.hrlysalary$)
+		if cvs(callpoint!.getColumnData("SFE_TIMEWODET.TITLE_CODE"),2)="" then
+			callpoint!.setColumnData("SFE_TIMEWODET.TITLE_CODE",empcode.normal_title$,1)
+		endif
+		if cvs(callpoint!.getColumnData("SFE_TIMEWODET.PAY_CODE"),2)="" then
+			callpoint!.setColumnData("SFE_TIMEWODET.PAY_CODE",str(callpoint!.getDevObject("reg_pay_code")),1)
+		endif
+	endif
+
+[[SFE_TIMEWODET.HRS.AVAL]]
+rem --- Update extension
+	hrs=num(callpoint!.getUserInput())
+	setup_time=num(callpoint!.getColumnData("SFE_TIMEWODET.SETUP_TIME"))
+	gosub calculate_extension
+
+[[SFE_TIMEWODET.OP_CODE.AVAL]]
+rem --- Don't allow inactive code
+	if callpoint!.getDevObject("bm")="Y" then
+		bmm08=fnget_dev("BMC_OPCODES")
+		dim bmm08$:fnget_tpl$("BMC_OPCODES")
+		op_code$=callpoint!.getUserInput()
+		read record (bmm08,key=firm_id$+op_code$,dom=*next)bmm08$
+		if bmm08.code_inactive$ = "Y"
+			msg_id$="AD_CODE_INACTIVE"
+			dim msg_tokens$[2]
+			msg_tokens$[1]=cvs(bmm08.op_code$,3)
+			msg_tokens$[2]=cvs(bmm08.code_desc$,3)
+			gosub disp_message
+			callpoint!.setStatus("ABORT")
+			break
+		endif
+	endif
+
 [[<<DISPLAY>>.OP_REF.AVAL]]
 rem --- Use this op_ref to initialize op_code and oper_seq_ref
 	op_ref$=callpoint!.getUserInput()
@@ -41,51 +161,17 @@ rem --- Use this op_ref to initialize op_code and oper_seq_ref
 		op_code$=wooprtn.op_code$
 		gosub op_code_init
 	endif
-[[SFE_TIMEWODET.AWRI]]
 
-	gosub calc_header_hrs
-[[SFE_TIMEWODET.BDGX]]
+[[SFE_TIMEWODET.PAY_CODE.AVAL]]
+rem --- Get pay rate
+	pay_code$=callpoint!.getUserInput()
+	title_code$=callpoint!.getColumnData("SFE_TIMEWODET.TITLE_CODE")
+	gosub get_pay_rate
+	if bad_code$="PC" then
+		callpoint!.setStatus("ABORT")
+		break
+	endif
 
-	gosub calc_header_hrs
-[[SFE_TIMEWODET.BDEL]]
-
-	gosub calc_header_hrs
-[[SFE_TIMEWODET.AUDE]]
-
-	gosub calc_header_hrs
-[[SFE_TIMEWODET.AGRE]]
-rem --- Display operation ref
-	oper_seq_no$=callpoint!.getColumnData("SFE_TIMEWODET.OPER_SEQ_REF")
-	gosub set_op_ref
-
-	gosub calc_header_hrs
-[[SFE_TIMEWODET.BGDR]]
-rem --- Display operation ref
-	oper_seq_no$=callpoint!.getColumnData("SFE_TIMEWODET.OPER_SEQ_REF")
-	gosub set_op_ref
-[[SFE_TIMEWODET.AGRN]]
-rem --- Display operation ref
-	oper_seq_no$=callpoint!.getColumnData("SFE_TIMEWODET.OPER_SEQ_REF")
-	gosub set_op_ref
-
-rem --- Require op_ref entry
-	callpoint!.setTableColumnAttribute("<<DISPLAY>>.OP_REF","MINL","1")
-
-rem --- Set op_ref lookup
-	callpoint!.setTableColumnAttribute("<<DISPLAY>>.OP_REF","IDEF","AO_WO_OP_REF_LK")
-
-rem --- Op_code initializations
-	op_code$=callpoint!.getColumnData("SFE_TIMEWODET.OP_CODE")
-	gosub op_code_init
-
-rem --- Hold on to starting values for hrs and setup_time
-	callpoint!.setDevObject("previous_hrs",callpoint!.getColumnData("SFE_TIMEWODET.HRS"))
-	callpoint!.setDevObject("previous_setup_time",callpoint!.getColumnData("SFE_TIMEWODET.SETUP_TIME"))
-[[SFE_TIMEWODET.HRS.AVAL]]
-rem --- Update extension
-	hrs=num(callpoint!.getUserInput())
-	setup_time=num(callpoint!.getColumnData("SFE_TIMEWODET.SETUP_TIME"))
-	gosub calculate_extension
 [[SFE_TIMEWODET.SETUP_TIME.AVAL]]
 rem --- Adjust hrs as needed
 	setup_time=num(callpoint!.getUserInput())
@@ -102,15 +188,7 @@ rem --- Adjust hrs as needed
 
 rem --- Update extension
 	gosub calculate_extension
-[[SFE_TIMEWODET.TITLE_CODE.AVAL]]
-rem --- Get pay rate
-	title_code$=callpoint!.getUserInput()
-	pay_code$=callpoint!.getColumnData("SFE_TIMEWODET.PAY_CODE")
-	gosub get_pay_rate
-	if bad_code$="TC" then
-		callpoint!.setStatus("ABORT")
-		break
-	endif
+
 [[SFE_TIMEWODET.START_TIME.AVAL]]
 rem --- Calculate hours
 	start_time$=callpoint!.getUserInput()
@@ -124,15 +202,40 @@ rem --- Calculate hours
 		callpoint!.setColumnData("SFE_TIMEWODET.HRS",str(hrs),1)
 		gosub calculate_extension
 	endif
-[[SFE_TIMEWODET.PAY_CODE.AVAL]]
+
+[[SFE_TIMEWODET.START_TIME.BINP]]
+rem --- Initialize new start_time
+	if cvs(callpoint!.getColumnData("SFE_TIMEWODET.START_TIME"),2)="" then
+		callpoint!.setColumnData("SFE_TIMEWODET.START_TIME",str(callpoint!.getDevObject("prev_stoptime")),1)
+	endif
+
+[[SFE_TIMEWODET.STOP_TIME.AVAL]]
+rem --- Capture entry so can be used for next new start time
+	stop_time$=callpoint!.getUserInput()
+	callpoint!.setDevObject("prev_stoptime",callpoint!.getUserInput())
+
+rem --- Calculate hours
+	start_time$=callpoint!.getColumnData("SFE_TIMEWODET.START_TIME")
+	gosub calculate_hours
+
+	rem --- Calculate hrs and extension
+	if hours<>0 then
+		setup_time=num(callpoint!.getColumnData("SFE_TIMEWODET.SETUP_TIME"))
+		hrs=hours-setup_time
+		callpoint!.setColumnData("SFE_TIMEWODET.HRS",str(hrs),1)
+		gosub calculate_extension
+	endif
+
+[[SFE_TIMEWODET.TITLE_CODE.AVAL]]
 rem --- Get pay rate
-	pay_code$=callpoint!.getUserInput()
-	title_code$=callpoint!.getColumnData("SFE_TIMEWODET.TITLE_CODE")
+	title_code$=callpoint!.getUserInput()
+	pay_code$=callpoint!.getColumnData("SFE_TIMEWODET.PAY_CODE")
 	gosub get_pay_rate
-	if bad_code$="PC" then
+	if bad_code$="TC" then
 		callpoint!.setStatus("ABORT")
 		break
 	endif
+
 [[SFE_TIMEWODET.<CUSTOM>]]
 rem ==========================================================================
 calculate_hours: rem --- Calculate hours
@@ -304,68 +407,6 @@ rem ==========================================================================
 	callpoint!.setStatus("REFRESH")
 
 	return
-[[SFE_TIMEWODET.STOP_TIME.AVAL]]
-rem --- Capture entry so can be used for next new start time
-	stop_time$=callpoint!.getUserInput()
-	callpoint!.setDevObject("prev_stoptime",callpoint!.getUserInput())
 
-rem --- Calculate hours
-	start_time$=callpoint!.getColumnData("SFE_TIMEWODET.START_TIME")
-	gosub calculate_hours
 
-	rem --- Calculate hrs and extension
-	if hours<>0 then
-		setup_time=num(callpoint!.getColumnData("SFE_TIMEWODET.SETUP_TIME"))
-		hrs=hours-setup_time
-		callpoint!.setColumnData("SFE_TIMEWODET.HRS",str(hrs),1)
-		gosub calculate_extension
-	endif
-[[SFE_TIMEWODET.AREC]]
-rem --- Initialize dev objects
-	callpoint!.setDevObject("opcode_direct_rate",0)
-	callpoint!.setDevObject("opcode_ovhd_factor",0)
-	callpoint!.setDevObject("normal_title","")
-	callpoint!.setDevObject("hrlysalary","")
-	callpoint!.setDevObject("previous_hrs",0)
-	callpoint!.setDevObject("previous_setup_time",0)
 
-rem --- Initialize column data
-	callpoint!.setColumnData("SFE_TIMEWODET.START_TIME",str(callpoint!.getDevObject("prev_stoptime")),1)
-	callpoint!.setStatus("REFRESH")
-[[SFE_TIMEWODET.START_TIME.BINP]]
-rem --- Initialize new start_time
-	if cvs(callpoint!.getColumnData("SFE_TIMEWODET.START_TIME"),2)="" then
-		callpoint!.setColumnData("SFE_TIMEWODET.START_TIME",str(callpoint!.getDevObject("prev_stoptime")),1)
-	endif
-[[SFE_TIMEWODET.EMPLOYEE_NO.AVAL]]
-rem --- Init for this employee
-
-	if callpoint!.getDevObject("pr")="Y" then
-		empcode_dev=callpoint!.getDevObject("empcode_dev")
-		dim empcode$:callpoint!.getDevObject("empcode_tpl")
-		findrecord(empcode_dev,key=firm_id$+callpoint!.getUserInput(),dom=*next)empcode$
-		callpoint!.setDevObject("normal_title",empcode.normal_title$)
-		callpoint!.setDevObject("hrlysalary",empcode.hrlysalary$)
-		if cvs(callpoint!.getColumnData("SFE_TIMEWODET.TITLE_CODE"),2)="" then
-			callpoint!.setColumnData("SFE_TIMEWODET.TITLE_CODE",empcode.normal_title$,1)
-		endif
-		if cvs(callpoint!.getColumnData("SFE_TIMEWODET.PAY_CODE"),2)="" then
-			callpoint!.setColumnData("SFE_TIMEWODET.PAY_CODE",str(callpoint!.getDevObject("reg_pay_code")),1)
-		endif
-	endif
-[[SFE_TIMEWODET.ADGE]]
-rem --- Disable fields
-	if callpoint!.getDevObject("time_clk_flg")<>"Y" then
-		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.START_TIME",0)
-		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.STOP_TIME",0)
-	endif
-	if callpoint!.getDevObject("pr")<>"Y" then
-		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.PAY_CODE",0)
-		callpoint!.setColumnEnabled(-1,"SFE_TIMEWODET.TITLE_CODE",0)
-	endif
-
-rem --- Initializations
-	callpoint!.setDevObject("prev_stoptime","")
-[[SFE_TIMEWODET.BGDS]]
-rem --- Set precision
-	precision num(callpoint!.getDevObject("precision"))

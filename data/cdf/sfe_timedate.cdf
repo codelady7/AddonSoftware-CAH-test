@@ -1,3 +1,43 @@
+[[SFE_TIMEDATE.ADIS]]
+rem --- Init entered hrs
+	entered_hrs=0
+	timedet_dev=fnget_dev("@SFE_TIMEDATEDET")
+	dim timedet$:fnget_tpl$("@SFE_TIMEDATEDET")
+	trip_key$=firm_id$+callpoint!.getColumnData("SFE_TIMEDATE.TRANS_DATE")+callpoint!.getColumnData("SFE_TIMEDATE.EMPLOYEE_NO")
+	read(timedet_dev,key=trip_key$,dom=*next)
+	while 1
+		timedet_key$=key(timedet_dev,end=*break)
+		if pos(trip_key$=timedet_key$)<>1 then break
+		readrecord(timedet_dev)timedet$
+		entered_hrs=entered_hrs+timedet.hrs+timedet.setup_time
+	wend
+	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
+
+	empcode_dev=callpoint!.getDevObject("empcode_dev")
+	dim empcode$:callpoint!.getDevObject("empcode_tpl")
+	findrecord(empcode_dev,key=firm_id$+rec_data.employee_no$,dom=*next)empcode$
+	callpoint!.setColumnData("<<DISPLAY>>.NAME",cvs(empcode.empl_surname$,2)+", "+cvs(empcode.empl_givname$,2),1)
+
+[[SFE_TIMEDATE.AREA]]
+rem --- Init for this employee
+	if callpoint!.getDevObject("pr")="Y" then
+		empcode_dev=callpoint!.getDevObject("empcode_dev")
+		dim empcode$:callpoint!.getDevObject("empcode_tpl")
+		rem --- temporary work around for Barista bug 6742
+		rem findrecord(empcode_dev,key=firm_id$+callpoint!.getColumnData("SFE_TIMEDATE.EMPLOYEE_NO"),dom=*next)empcode$
+		findrecord(empcode_dev,key=firm_id$+rec_data.employee_no$,dom=*next)empcode$
+		callpoint!.setDevObject("normal_title",empcode.normal_title$)
+		callpoint!.setDevObject("hrlysalary",empcode.hrlysalary$)
+	endif
+
+[[SFE_TIMEDATE.AREC]]
+rem --- Init new record
+	entered_hrs=0
+	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
+	callpoint!.setDevObject("entered_hrs",entered_hrs)
+	callpoint!.setDevObject("normal_title","")
+	callpoint!.setDevObject("hrlysalary","")
+
 [[SFE_TIMEDATE.ARNF]]
 if num(stbl("+BATCH_NO"),err=*next)<>0
 	rem --- Check if this record exists in a different batch
@@ -8,6 +48,19 @@ if num(stbl("+BATCH_NO"),err=*next)<>0
 	call stbl("+DIR_PGM")+"adc_findbatch.aon",tableAlias$,primaryKey$,Translate!,table_chans$[all],existingBatchNo$,status
 	if status or existingBatchNo$<>"" then callpoint!.setStatus("NEWREC")
 endif
+
+[[SFE_TIMEDATE.BEND]]
+rem --- Remove software lock on batch when batching
+	batch$=stbl("+BATCH_NO",err=*next)
+	if num(batch$)<>0
+		lock_table$="ADM_PROCBATCHES"
+		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
+		lock_type$="X"
+		lock_status$=""
+		lock_disp$=""
+		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+	endif
+
 [[SFE_TIMEDATE.BFMC]]
 rem --- Get Batch information
 	call stbl("+DIR_PGM")+"adc_getbatch.aon",callpoint!.getAlias(),"",table_chans$[all]
@@ -53,6 +106,14 @@ rem --- Get SF parameters
 		bm$=info$[20]
 	endif
 	callpoint!.setDevObject("bm",bm$)
+
+	if bm$="Y"
+		rem --- Open Bill Of Materials tables
+		num_files=1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="BMC_OPCODES",open_opts$[1]="OTA"
+		gosub open_tables
+	endif
 
 	if gl$="Y"
 		gl$="N"
@@ -144,6 +205,11 @@ rem --- Validate employee_no with SFM_EMPLMAST instead of PRM_EMPLMAST when PR n
 		callpoint!.setTableColumnAttribute("SFE_TIMEDATE.EMPLOYEE_NO","DTAB","PRM_EMPLMAST")
 		callpoint!.setTableColumnAttribute("SFE_TIMEDATE.EMPLOYEE_NO","IDEF","PR_EMPLOYEES")
 	endif
+
+[[SFE_TIMEDATE.BSHO]]
+rem --- Hold on to the control for entered_hrs so it can be updated in detail grid
+	callpoint!.setDevObject("control_entered_hrs",callpoint!.getControl("<<DISPLAY>>.ENTERED_HRS"))
+
 [[SFE_TIMEDATE.BWAR]]
 rem --- Check entered hrs
 	total_hrs=num(callpoint!.getColumnData("SFE_TIMEDATE.TOTAL_HRS"))
@@ -163,36 +229,7 @@ rem --- Check entered hrs
 			break
 		endif
 	endif
-[[SFE_TIMEDATE.ADIS]]
-rem --- Init entered hrs
-	entered_hrs=0
-	timedet_dev=fnget_dev("@SFE_TIMEDATEDET")
-	dim timedet$:fnget_tpl$("@SFE_TIMEDATEDET")
-	trip_key$=firm_id$+callpoint!.getColumnData("SFE_TIMEDATE.TRANS_DATE")+callpoint!.getColumnData("SFE_TIMEDATE.EMPLOYEE_NO")
-	read(timedet_dev,key=trip_key$,dom=*next)
-	while 1
-		timedet_key$=key(timedet_dev,end=*break)
-		if pos(trip_key$=timedet_key$)<>1 then break
-		readrecord(timedet_dev)timedet$
-		entered_hrs=entered_hrs+timedet.hrs+timedet.setup_time
-	wend
-	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
 
-	empcode_dev=callpoint!.getDevObject("empcode_dev")
-	dim empcode$:callpoint!.getDevObject("empcode_tpl")
-	findrecord(empcode_dev,key=firm_id$+rec_data.employee_no$,dom=*next)empcode$
-	callpoint!.setColumnData("<<DISPLAY>>.NAME",cvs(empcode.empl_surname$,2)+", "+cvs(empcode.empl_givname$,2),1)
-[[SFE_TIMEDATE.AREA]]
-rem --- Init for this employee
-	if callpoint!.getDevObject("pr")="Y" then
-		empcode_dev=callpoint!.getDevObject("empcode_dev")
-		dim empcode$:callpoint!.getDevObject("empcode_tpl")
-		rem --- temporary work around for Barista bug 6742
-		rem findrecord(empcode_dev,key=firm_id$+callpoint!.getColumnData("SFE_TIMEDATE.EMPLOYEE_NO"),dom=*next)empcode$
-		findrecord(empcode_dev,key=firm_id$+rec_data.employee_no$,dom=*next)empcode$
-		callpoint!.setDevObject("normal_title",empcode.normal_title$)
-		callpoint!.setDevObject("hrlysalary",empcode.hrlysalary$)
-	endif
 [[SFE_TIMEDATE.EMPLOYEE_NO.AVAL]]
 rem --- Init for this employee
 
@@ -205,18 +242,7 @@ rem --- Init for this employee
 	endif
 
 	callpoint!.setColumnData("<<DISPLAY>>.NAME",cvs(empcode.empl_surname$,2)+", "+cvs(empcode.empl_givname$,2),1)
-[[SFE_TIMEDATE.AREC]]
-rem --- Init new record
-	entered_hrs=0
-	callpoint!.setColumnData("<<DISPLAY>>.ENTERED_HRS",str(entered_hrs),1)
-	callpoint!.setDevObject("entered_hrs",entered_hrs)
-	callpoint!.setDevObject("normal_title","")
-	callpoint!.setDevObject("hrlysalary","")
-[[SFE_TIMEDATE.TRANS_DATE.BINP]]
-rem --- Initialize trans_date
-	if cvs(callpoint!.getColumnData("SFE_TIMEDATE.TRANS_DATE"),2)="" then 
-		callpoint!.setColumnData("SFE_TIMEDATE.TRANS_DATE",stbl("+SYSTEM_DATE"),1)
-	endif
+
 [[SFE_TIMEDATE.TRANS_DATE.AVAL]]
 rem --- Validate trans_date
 	if cvs(callpoint!.getUserInput(),2)="" then callpoint!.setUserInput(stbl("+SYSTEM_DATE"))
@@ -225,19 +251,15 @@ rem --- Validate trans_date
 		call stbl("+DIR_PGM")+"glc_datecheck.aon",trans_date$,"Y",per$,yr$,status
 		if status>99 then callpoint!.setStatus("ABORT")
 	endif
-[[SFE_TIMEDATE.BEND]]
-rem --- Remove software lock on batch when batching
-	batch$=stbl("+BATCH_NO",err=*next)
-	if num(batch$)<>0
-		lock_table$="ADM_PROCBATCHES"
-		lock_record$=firm_id$+stbl("+PROCESS_ID")+batch$
-		lock_type$="X"
-		lock_status$=""
-		lock_disp$=""
-		call stbl("+DIR_SYP")+"bac_lock_record.bbj",lock_table$,lock_record$,lock_type$,lock_disp$,rd_table_chan,table_chans$[all],lock_status$
+
+[[SFE_TIMEDATE.TRANS_DATE.BINP]]
+rem --- Initialize trans_date
+	if cvs(callpoint!.getColumnData("SFE_TIMEDATE.TRANS_DATE"),2)="" then 
+		callpoint!.setColumnData("SFE_TIMEDATE.TRANS_DATE",stbl("+SYSTEM_DATE"),1)
 	endif
-[[SFE_TIMEDATE.BSHO]]
-rem --- Hold on to the control for entered_hrs so it can be updated in detail grid
-	callpoint!.setDevObject("control_entered_hrs",callpoint!.getControl("<<DISPLAY>>.ENTERED_HRS"))
+
 [[SFE_TIMEDATE.<CUSTOM>]]
 #include [+ADDON_LIB]std_missing_params.aon
+
+
+

@@ -109,6 +109,21 @@ rem --- Get SF parameters
 	if bm$="Y"
 		call stbl("+DIR_PGM")+"adc_application.aon","BM",info$[all]
 		bm$=info$[20]
+
+		rem --- Open Bill Of Materials tables
+		num_files=1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="BMC_OPCODES",open_opts$[1]="OTA"
+		gosub open_tables
+	endif
+	callpoint!.setDevObject("bm",bm$)
+
+	if bm$="Y"
+		rem --- Open Bill Of Materials tables
+		num_files=1
+		dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
+		open_tables$[1]="BMC_OPCODES",open_opts$[1]="OTA"
+		gosub open_tables
 	endif
 	callpoint!.setDevObject("bm",bm$)
 
