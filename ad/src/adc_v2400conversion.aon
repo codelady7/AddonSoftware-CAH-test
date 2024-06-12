@@ -59,30 +59,27 @@ rem --- Start progress meter
     meter_action$="WIN-LST"
     gosub disp_meter
 
-rem --- For version 24.00, Copy ADC_STATECODE ZZ records for all firms (ER 8362)
 rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenance and GL Posting Control to records for all firms (ER 10627)
     this_module$="AD"
     if installMap!.get(this_module$)="Y" then
+        rem --- Increment progress meter
+        meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
+:               Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
+        meter_proc_recs=meter_proc_recs+1
+        meter_action$="MTR-LST"
+        gosub disp_meter
+        print(log_dev)meter_text$
+    
         task$="2400_AD_glx_clsdyradj"
         if convCtrl!.getProperty(task$)<>"Completed" then
-
-            rem --- Increment progress meter
-            meter_text$=this_module$+" "+Translate!.getTranslation("AON_INSTALLED","Installed")+", "+
-:                   Translate!.getTranslation("AON_DO_DATA_CONV","Doing data conversion for")+" "+this_module$
-            meter_proc_recs=meter_proc_recs+1
-            meter_action$="MTR-LST"
-            gosub disp_meter
-            print(log_dev)meter_text$
-    
             rem --- Open File(s)
-            num_files=6
+            num_files=5
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="ADM_FIRMS",        open_opts$[1]="OTA"
             open_tables$[2]="ADM_PROCMASTER",   open_opts$[2]="OTA"
             open_tables$[3]="ADM_PROCDETAIL",   open_opts$[3]="OTA"
             open_tables$[4]="ADM_PROCTABLES",   open_opts$[4]="OTA"
             open_tables$[5]="ADM_AUDITCONTROL", open_opts$[5]="OTA"
-            open_tables$[6]="ADC_STATECODE", open_opts$[6]="OTA"
     
             gosub open_tables
     
@@ -91,29 +88,13 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             admProcDetail_dev=num(open_chans$[3]); dim admProcDetail$:open_tpls$[3]
             admProcTables_dev=num(open_chans$[4]); dim admProcTables$:open_tpls$[4]
             admAuditControl_dev=num(open_chans$[5]); dim admAuditControl$:open_tpls$[5]
-            adcStateCode_dev=num(open_chans$[6]); dim adcStateCode$:open_tpls$[6]
-
+ 
             rem --- Get firm IDs used in this installation
             firms!=BBjAPI().makeVector()
             read(admFirms_dev,key="",dom=*next)
             while 1
                 readrecord(admFirms_dev,end=*break)admFirms$
                 firms!.addItem(admFirms.company_id$)
-            wend
-
-            rem --- Copy ADC_STATECODE ZZ records for all firms
-            read(adcStateCode_dev,key="ZZ",dom=*next)
-            while 1
-                k$=key(adcStateCode_dev,end=*break)
-                if pos("ZZ"=k$)<>1 then break
-                readrecord(adcStateCode_dev)adcStateCode$
-                for i=0 to firms!.size()-1
-                    thisFirm$=firms!.getItem(i)
-                    if thisFirm$="99" then continue
-                    adcStateCode.firm_id$=thisFirm$
-                    writerecord(adcStateCode_dev)adcStateCode$
-                next i
-                read(adcStateCode_dev,key=k$)
             wend
 
             rem --- Add firm "GL Adjustments" records to ADM_PROCMASTER
@@ -177,14 +158,13 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             wend
                 
             rem --- close files opened for this conversion
-            num_files=6
+            num_files=5
             dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
             open_tables$[1]="ADM_FIRMS",        open_opts$[1]="C"
             open_tables$[2]="ADM_PROCMASTER",   open_opts$[2]="C"
             open_tables$[3]="ADM_PROCDETAIL",   open_opts$[3]="C"
             open_tables$[4]="ADM_PROCTABLES",   open_opts$[4]="C"
             open_tables$[5]="ADM_AUDITCONTROL", open_opts$[5]="C"
-            open_tables$[6]="ADC_STATECODE", open_opts$[6]="C"
             gosub open_tables
            
             write(convCtrlFileChan)task$+"=Completed"
@@ -197,6 +177,39 @@ rem --- For version 24.00, Add "GL Adjustments" ZZ records in Process Maintenanc
             meter_action$="MTR-LST"
             gosub disp_meter
             print(log_dev)meter_text$
+        else
+            rem --- Increment progress meter
+            meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
+            meter_proc_recs=meter_proc_recs+1
+            meter_action$="MTR-LST"
+            gosub disp_meter
+            print(log_dev)meter_text$
+        endif
+
+		rem --- Initialize AD data file changes implemented during minor releases of v24
+        task$="2400_AD_v24initMinorRev"
+        if convCtrl!.getProperty(task$)<>"Completed" then
+            rem --- Execute AP upgrade conversion utility for minor releases of v17
+            theFirm$=""
+            call pgmdir$+"adc_v24initMinorRev.aon",theFirm$,rdForm!,status
+            if status=0 then
+                rem --- Conversion completed successfully
+                write(convCtrlFileChan)task$+"=Completed"
+                
+                rem --- Increment progress meter
+                meter_text$=Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+
+:                   Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": APM_VENDCMTS"
+                meter_proc_recs=meter_proc_recs+1
+                meter_action$="MTR-LST"
+                gosub disp_meter
+                print(log_dev)meter_text$
+            else
+                rem --- Conversion did NOT complete successfully, exit with error message
+                err_msg$="***** "+Translate!.getTranslation("AON_ERROR","Error")+": "+
+:                   Translate!.getTranslation("AON_DATA_CONV","Data conversion")+" "+Translate!.getTranslation("AON_NOT","Not")+" "+
+:                   Translate!.getTranslation("AON_COMPLETED_FOR","completed for")+": ADC_STATECODE"+" *****"
+                goto done
+            endif
         else
             rem --- Increment progress meter
             meter_text$=Translate!.getTranslation("AON_CONV_PREVIOUSLY","Conversion previously completed for")+" "+task$
