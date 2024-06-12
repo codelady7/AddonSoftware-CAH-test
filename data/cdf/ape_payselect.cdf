@@ -243,7 +243,7 @@ rem See basis docs notice() function, noticetpl() function, notify event, grid c
 					if callpoint!.getColumnData("APE_PAYSELECT.INCLUDE_DISC")="Y" or
 :						apt01a.disc_date$ >= sysinfo.system_date$
 :					then
-						gridInvoices!.setCellText(curr_row, 12, apt01a.discount_amt)
+						gridInvoices!.setCellText(curr_row, 12, str(apt01a.discount_amt))
 					else
 						gridInvoices!.setCellText(curr_row, 12, "0.00")
 					endif
@@ -2503,7 +2503,7 @@ rem --- in: selected_flag; if 1, bolds font and sets pay/disc amts; if 0, set ba
 				if callpoint!.getColumnData("APE_PAYSELECT.INCLUDE_DISC")="Y" or
 :					apt01a.disc_date$ >= sysinfo.system_date$
 :				then
-					gridInvoices!.setCellText(row_no, 12, apt01a.discount_amt)
+					gridInvoices!.setCellText(row_no, 12, str(apt01a.discount_amt))
 				else
 					gridInvoices!.setCellText(row_no, 12, "0.00")
 				endif
