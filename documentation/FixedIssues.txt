@@ -1,10 +1,49 @@
 =======================================================================================================================================
-Report Branch: AddonSoftware Development Build
+ Report Date:   2024-06-14
+ Report Branch: AddonSoftware 24.10
+ Last Release:  AddonSoftware 24.02
 =======================================================================================================================================
-Development builds are generated daily.
 
-AddonSoftware Co-op Developers can access code changes and bug fixes for the Development Builds via Git.
+24.02 released 5/29/2024
+BBjBaristaAddonDemos2402_05-28-2024_1812.jar
+=======================================================================================================================================
 
-Information about code changes and bug fixes for RELEASE builds can be found at:
+Revision: c3782398505814134a56395d657c8cab9ffd0ea5
+Author: Christine <chawkins@basis.cloud>
+Date: 6/11/2024 7:29:34 PM
+Message:
+Bug 10798 - OP - A bad invoice due date or discount date can terminate the Sales Register update without an error
+ - Additional fix; In the event of an invalid due or discount date, uses the invoice date instead. Still displays message to user so they know how to correct the issue, but no longer aborts the update.
+----
+Modified: data/sync/ads_messages~[01007514OP].xml
+Modified: op/src/opu_updateinventory.aon
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
+=======================================================================================================================================
 
-https://bugs.basis.cloud
+Revision: f8bf77984c5a4e48f577cedb534df57b4ac833a7
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/12/2024 10:18:04 AM
+Message:
+Bug 10890: Added "AD v24 Minor Rev Upgrade" task to initialize firms in
+ADC_STATECODE with the ZZ records. The v24 upgrade conversion program
+uses this task to initialize all firms in ADC_STATECODE.
+----
+Modified: ad/src/adc_v2400conversion.aon
+Added: ad/src/adc_v24initMinorRev.aon
+Added: ad/src/adc_v2500conversion.aon
+Added: ad/src/adx_v24initMinorRev.aon
+Modified: data/sync/adm_mnu_item~[01007514AD].xml
+Modified: data/sync/adm_mnu_trans~[01007514AD].xml
+=======================================================================================================================================
+
+Revision: 0d417bcd7cc2a25ee7e704f29ab8b3a666b05467
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/12/2024 11:02:58 AM
+Message:
+Bug 10864: Converted the apt01a.discount_amt numeric to a string where it
+is used in the setCellText() method.
+----
+Modified: data/bar/ape_payselect.xml
+Modified: data/cdf/ape_payselect.cdf
+=======================================================================================================================================
