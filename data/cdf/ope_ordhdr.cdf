@@ -175,7 +175,6 @@ rem --- Reprint order?
 		cust_id$  = callpoint!.getColumnData("OPE_ORDHDR.CUSTOMER_ID")
 		order_no$ = callpoint!.getColumnData("OPE_ORDHDR.ORDER_NO")
 		ar_type$  = callpoint!.getColumnData("OPE_ORDHDR.AR_TYPE")
-		reprint   = 0
 		gosub check_if_reprintable
 	else
 		callpoint!.setDevObject("reprintable",1)
@@ -393,6 +392,9 @@ rem --- Have ship-to or bill-to address changed?
 			gosub add_to_batch_print
 			callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
 			callpoint!.setStatus("SAVE")
+
+			msg_id$="OP_PICKLIST_REPRINT"
+			gosub disp_message
 		endif
 	endif
 
@@ -2550,7 +2552,6 @@ rem --- Setup user_tpl$
 :		"prev_ship_to:c(1*), " +
 :		"prev_sales_total:n(7*), " +
 :		"prev_unitprice:n(7*), " +
-:		"detail_modified:u(1), " +
 :		"record_deleted:u(1), " +
 :		"item_wh_failed:u(1), " +
 :		"do_end_of_form:u(1), " +
@@ -2582,7 +2583,6 @@ rem --- Setup user_tpl$
 	user_tpl.def_whse$         = ivs01a.warehouse_id$
 	user_tpl.pgmdir$           = stbl("+DIR_PGM",err=*next)
 	user_tpl.cur_row           = -1
-	user_tpl.detail_modified   = 0
 	user_tpl.record_deleted    = 0
 	user_tpl.item_wh_failed    = 1
 	user_tpl.do_end_of_form    = 1
@@ -2776,15 +2776,12 @@ rem --- Initialize RTP modified fields for modified existing records
 		rem --- For immediate write forms must compare initial record to current record to see if modified.
 		dim initial_rec_data$:fattr(rec_data$)
 		initial_rec_data$=callpoint!.getDevObject("initial_rec_data$")
-		if callpoint!.getColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" then
-			callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG","Y",1)
-			rec_data.reprint_flag$="Y"
-		endif
 		if rec_data$<>initial_rec_data$ then
 			rec_data.mod_user$=sysinfo.user_id$
 			rec_data.mod_date$=date(0:"%Yd%Mz%Dz")
 			rec_data.mod_time$=date(0:"%Hz%mz")
 			callpoint!.setDevObject("initial_rec_data$",rec_data$)
+			if callpoint!.getColumnData("OPE_ORDHDR.PRINT_STATUS")="Y" then callpoint!.setColumnData("OPE_ORDHDR.REPRINT_FLAG","Y",1)
 		endif
 	endif
 
