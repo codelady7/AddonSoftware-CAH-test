@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-06-14
+ Report Date:   2024-06-15
  Report Branch: AddonSoftware 24.10
  Last Release:  AddonSoftware 24.02
 =======================================================================================================================================
@@ -47,3 +47,18 @@ is used in the setCellText() method.
 Modified: data/bar/ape_payselect.xml
 Modified: data/cdf/ape_payselect.cdf
 =======================================================================================================================================
+
+Revision: cec456de97791d3f8d30477eb432a5ff610e552f
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 6/15/2024 6:01:59 PM
+Message:
+Bug 10891: Changed test conditions for determining when an Order detail
+row should be reprinted and when it should be labeled as modified.
+----
+Modified: data/bar/ope_orddet.xml
+Modified: data/bar/ope_ordhdr.xml
+Modified: data/cdf/ope_orddet.cdf
+Modified: data/cdf/ope_ordhdr.cdf
+Modified: data/sync/ads_messages~[01007514OP].xml
+Modified: prop/addon.properties
+Modified: prop/addon_en.properties
