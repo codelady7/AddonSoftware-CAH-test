@@ -111,8 +111,6 @@ rem --- Skip if (not a new row and not row modifed) or row deleted
 	if  callpoint!.getGridRowDeleteStatus(this_row) = "Y"
 		break; rem --- exit callpoint
 	endif
-
-	user_tpl.detail_modified = 1
 	
 rem --- Warehouse and Item must be correct, don't let user leave corrupt row
 
@@ -639,6 +637,12 @@ rem --- May want to skip line code entry, and/or warehouse code entry, the first
 rem --- Initialize Kit Component grid's kit_detail_changed flag
 	callpoint!.setDevObject("kit_details_changed","N")
 
+rem --- Hold onto grid row as-is now, before any changes are made. Need to know in disp_ext_amt subroutine if anything has changed 
+	declare BBjVector dtlVect!
+	dtlVect!=cast(BBjVector, GridVect!.getItem(0))
+	gridRow_start$=cast(BBjString, dtlVect!.getItem(callpoint!.getValidationRow()))
+	callpoint!.setDevObject("gridRow_start",gridRow_start$)
+
 [[OPE_ORDDET.AOPT-ADDL]]
 rem --- Additional Options
 
@@ -1149,7 +1153,7 @@ rem --- Turn off the print flag in the header?
 :	   callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" or
 :	   callpoint!.getGridRowDeleteStatus(callpoint!.getValidationRow()) = "Y"
 		rem --- Set ReprintFlag devObject used for workaround to Barista Bug 10297
-		rem ... callpoint!.setHeaderColumnData( "OPE_ORDHDR.PRINT_STATUS","N")
+		rem ... callpoint!.setHeaderColumnData( "OPE_ORDHDR.PRINT_STATUS","Y")
 		callpoint!.setDevObject("ReprintFlag","Y")
 		callpoint!.setDevObject("msg_printed","N")
 	endif
@@ -1785,9 +1789,9 @@ rem --- Initialize RTP modified fields for modified existing records
 	endif
 
 rem --- Does a revised picking list need to be printed?
-	if callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" and
-:	callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="Y" then
-		callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M")
+	if callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" 
+		callpoint!.setHeaderColumnData("OPE_ORDHDR.REPRINT_FLAG","Y")
+		if callpoint!.getColumnData("OPE_ORDDET.PICK_FLAG")="Y" then callpoint!.setColumnData("OPE_ORDDET.PICK_FLAG","M")
 	endif
 
 [[OPE_ORDDET.EXT_PRICE.AVAL]]
@@ -3428,8 +3432,23 @@ rem ==========================================================================
 
 	gosub disp_grid_totals
 	gosub check_if_tax
-	if callpoint!.isEditMode() then callpoint!.setStatus("MODIFIED")
 
+	if callpoint!.getGridRowNewStatus(callpoint!.getValidationRow()) = "Y" or
+:	callpoint!.getGridRowModifyStatus(callpoint!.getValidationRow()) ="Y" or
+:	callpoint!.getGridRowDeleteStatus(callpoint!.getValidationRow()) = "Y" then
+		callpoint!.setStatus("MODIFIED")
+		callpoint!.setGridRowModifyStatus(callpoint!.getValidationRow(),1 )
+	else
+		rem --- Has anything in this grid row changed even thought not labled Modified?
+		declare BBjVector dtlVect!
+		dtlVect!=cast(BBjVector, GridVect!.getItem(0))
+		gridRow_now$=cast(BBjString, dtlVect!.getItem(callpoint!.getValidationRow()))
+		gridRow_start$=callpoint!.getDevObject("gridRow_start")
+		if gridRow_now$<>gridRow_start$
+			callpoint!.setStatus("MODIFIED")
+			callpoint!.setGridRowModifyStatus(callpoint!.getValidationRow(),1 )
+		endif
+	endif
 	return
 
 rem ==========================================================================
