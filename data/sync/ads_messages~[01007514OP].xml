@@ -682,18 +682,6 @@
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
-		<MSG_ID>OP_NOT_COMPLETE_PICK</MSG_ID>
-		<MSG_TITLE>AddonSoftware</MSG_TITLE>
-		<MSG_TYPE>0</MSG_TYPE>
-		<MSG_ICON>48</MSG_ICON>
-		<MSG_DEFAULT_BUT>000</MSG_DEFAULT_BUT>
-		<MSG_CODES>O</MSG_CODES>
-		<ASC_COMP_ID>01007514</ASC_COMP_ID>
-		<ASC_PROD_ID>OP </ASC_PROD_ID>
-		<MSG_TEXT>This Order cannot be Completed until all items are completely picked and packed.[$0a$]The quantity picked is NOT equal to the ship quantity for Item %1[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </MSG_TEXT>
-		<USER_MODIFIED> </USER_MODIFIED>
-	</barista_record>
-	<barista_record>
 		<MSG_ID>OP_INCOMPLETE_LSPICK</MSG_ID>
 		<MSG_TITLE>AddonSoftware</MSG_TITLE>
 		<MSG_TYPE>0</MSG_TYPE>
@@ -703,18 +691,6 @@
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<MSG_TEXT>This Order cannot be Completed until all items are completely picked and packed.[$0a$]The lot/serial quantity picked is NOT equal to the ship quantity for Item %1[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </MSG_TEXT>
-		<USER_MODIFIED> </USER_MODIFIED>
-	</barista_record>
-	<barista_record>
-		<MSG_ID>OP_NOT_COMPLETE_PACK</MSG_ID>
-		<MSG_TITLE>AddonSoftware</MSG_TITLE>
-		<MSG_TYPE>0</MSG_TYPE>
-		<MSG_ICON>48</MSG_ICON>
-		<MSG_DEFAULT_BUT>256</MSG_DEFAULT_BUT>
-		<MSG_CODES>O</MSG_CODES>
-		<ASC_COMP_ID>01007514</ASC_COMP_ID>
-		<ASC_PROD_ID>OP </ASC_PROD_ID>
-		<MSG_TEXT>This Order cannot be Completed until all items are completely picked and packed.[$0a$]The quantity packed is NOT equal to the quantity picked for Item %1[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </MSG_TEXT>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 	<barista_record>
@@ -955,6 +931,30 @@
 		<ASC_COMP_ID>01007514</ASC_COMP_ID>
 		<ASC_PROD_ID>OP </ASC_PROD_ID>
 		<MSG_TEXT>The Picking List for this Order will be reprinted to show an address change.[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_NOT_COMPLETE_PACK</MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>0</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>256</MSG_DEFAULT_BUT>
+		<MSG_CODES>O</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>This Order cannot be Completed until all items are completely packed.[$0a$]The quantity packed is NOT equal to the quantity picked for Item %1[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </MSG_TEXT>
+		<USER_MODIFIED> </USER_MODIFIED>
+	</barista_record>
+	<barista_record>
+		<MSG_ID>OP_NOT_COMPLETE_PICK</MSG_ID>
+		<MSG_TITLE>AddonSoftware</MSG_TITLE>
+		<MSG_TYPE>4</MSG_TYPE>
+		<MSG_ICON>48</MSG_ICON>
+		<MSG_DEFAULT_BUT>256</MSG_DEFAULT_BUT>
+		<MSG_CODES>Y;N</MSG_CODES>
+		<ASC_COMP_ID>01007514</ASC_COMP_ID>
+		<ASC_PROD_ID>OP </ASC_PROD_ID>
+		<MSG_TEXT>The quantity picked for Item %1 is NOT equal to the ship quantity. Continue?[$0a$]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </MSG_TEXT>
 		<USER_MODIFIED> </USER_MODIFIED>
 	</barista_record>
 </barista_admin_records>

@@ -138,20 +138,20 @@ rem --- Validate fulfillment if marked all_packed
 			linetypeMap!=callpoint!.getDevObject("linetypeMap")
 			if dropshipMap!.get(row)="Y" or pos(linetypeMap!.get(row)="MO") then continue
 
-			if optFillmntdet.qty_shipped=optFillmntdet.qty_picked then continue
-			validationFailed=1
-			break
-		wend
-		if validationFailed then
-			msg_id$ = "OP_NOT_COMPLETE_PICK"
-			dim msg_tokens$[1]
-			if cvs(optFillmntdet.item_id$,2)<>"" then
-				item$=optFillmntdet.item_id$
-			else
-				item$=optFillmntdet.order_memo$
+			if optFillmntdet.qty_shipped<>optFillmntdet.qty_picked then
+				msg_id$ = "OP_NOT_COMPLETE_PICK"
+				dim msg_tokens$[1]
+				if cvs(optFillmntdet.item_id$,2)<>"" then
+					item$=optFillmntdet.item_id$
+				else
+					item$=optFillmntdet.order_memo$
+				endif
+				msg_tokens$[1]=cvs(item$,3)
+				gosub disp_message
+				if msg_opt$="N" then all_packed$="N"
 			endif
-			msg_tokens$[1]=item$
-			gosub disp_message
+		wend
+		if all_packed$="N" then
 			callpoint!.setStatus("ABORT")
 			callpoint!.setColumnData("OPT_FILLMNTHDR.ALL_PACKED","N",1)
 			break

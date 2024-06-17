@@ -291,9 +291,9 @@ doDetailLine: rem --- Prepare and print this detail line
         optCartHdr_key$=firm_id$+"E"+ar_type$+customer_id$+order_no$+ar_inv_no$+optCartDet.carton_no$
         findrecord(optCartHdr_dev,key=optCartHdr_key$,knum="AO_STATUS",dom=*continue)optCartHdr$
         if optCartHdr.shipped_flag$="Y" then qty_shipped=qty_shipped++optCartDet.qty_packed
-            wend
+    wend
  
-            if pos(opcLineCode.line_type$="MO") then
+    if pos(opcLineCode.line_type$="MO") then
         rem --- Memo (M) and Other (O) line types
         xwk = fnblank(1)
         OutVect!.addItem(optInvDet.line_code$)
@@ -314,7 +314,7 @@ doDetailLine: rem --- Prepare and print this detail line
         endif
         xwk = fnblank(3)
         OutVect!.addItem(str(optInvDet.qty_ordered:m2$))
-        OutVect!.addItem(str(optInvDet.qty_backord:m2$))
+        OutVect!.addItem(str(optInvDet.qty_ordered-qty_shipped:m2$))
         OutVect!.addItem(str(qty_picked:m2$))
         OutVect!.addItem(str(qty_packed:m2$))
         OutVect!.addItem(str(qty_shipped:m2$))
