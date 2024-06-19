@@ -26,7 +26,6 @@ rem --- get disc % assoc w/ terms in this rec, and disp distributed bal
 		gosub calc_grid_tots
 		gosub disp_dist_bal
 		user_tpl.inv_in_ape01$="Y"
-		Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
 		
 		vendor_id$ = callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
 		gosub disp_vendor_comments
@@ -54,6 +53,16 @@ rem --- Enable/disable cc_trans_date depending on whether or not creditcard_id i
 		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISC_DATE",0)
 		callpoint!.setColumnEnabled("APE_INVOICEHDR.DISCOUNT_AMT",0)
 	endif
+
+rem --- Display invoice adjustment info, and disable dist code, inv date, net amt
+	apt01_dev=fnget_dev("APT_INVOICEHDR")
+	dim apt01a$:fnget_tpl$("APT_INVOICEHDR")
+	ap_type$=callpoint!.getColumnData("APE_INVOICEHDR.AP_TYPE")
+	vendor_id$=callpoint!.getColumnData("APE_INVOICEHDR.VENDOR_ID")
+	ap_inv_no$=callpoint!.getColumnData("APE_INVOICEHDR.AP_INV_NO")
+	apt01_key$=firm_id$+ap_type$+vendor_id$+ap_inv_no$
+	findrecord(apt01_dev,key=apt01_key$,dom=*next)apt01a$
+	if pos(apt01_key$=apt01a$)=1 then gosub display_adjustment
 
 [[APE_INVOICEHDR.AOPT-LIIM]]
 rem --- Select invoice image and upload
@@ -113,7 +122,7 @@ rem --- Don't allow inactive code
 	endif
 
 [[APE_INVOICEHDR.AP_INV_NO.AVAL]]
-rem record not in ape-01; is it in apt-01?
+rem --- Is record already in apt-01? Is this an Adjustment?
 rem if so, make sure only pmt grp, terms, hold, 
 rem acct dt, due dt, disc dt, adj amount, disc amount
 rem reference, memo are enabled...
@@ -158,7 +167,7 @@ look_for_invoice:
 		endif
 	endif
 	if found_inv=1
-		rem --- not in ape-01, but IS in apt-01
+		rem --- Record already in apt-01. This is an Adjustment.
 		rem --- disable dist code, inv date, net amt
 		user_tpl.inv_in_ape01$="N"
 		
@@ -181,29 +190,8 @@ look_for_invoice:
 		callpoint!.setColumnData("APE_INVOICEHDR.NET_INV_AMT","")
 		callpoint!.setColumnData("APE_INVOICEHDR.RETENTION","")
 		callpoint!.setColumnData("<<DISPLAY>>.DIST_BAL","0")
-		
-		ctl_name$="APE_INVOICEHDR.AP_DIST_CODE"
-		ctl_stat$="D"
-		gosub disable_fields
-		ctl_name$="APE_INVOICEHDR.INVOICE_DATE"
-		ctl_stat$="D"
-		gosub disable_fields
-		ctl_name$="APE_INVOICEHDR.NET_INV_AMT"
-		ctl_stat$="D"
-		gosub disable_fields
 
-		apt11_dev=fnget_dev("APT_INVOICEDET")
-		dim apt11a$:fnget_tpl$("APT_INVOICEDET")
-		read(apt11_dev,key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$,dom=*next)
-		while 1
-			readrecord (apt11_dev,end=*break) apt11a$
-			if pos(firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$=apt11a$)<>1 break
-			apt01a.invoice_amt = apt01a.invoice_amt+apt11a.trans_amt
-		wend
-
-		Form!.getControl(num(user_tpl.open_inv_textID$)).setText(Translate!.getTranslation("AON_ADJUST_OPEN_INVOICE:_")+$0A$+fndate$(apt01a.invoice_date$)+
-:			",  "+str(num(apt01a.invoice_amt$):user_tpl.amt_msk$))
-		callpoint!.setStatus("ABLEMAP-REFRESH-ACTIVATE")
+		gosub display_adjustment	
 	else
 		rem not in ape-01 or apt-01; set up defaults
 		if cvs(callpoint!.getColumnUndoData("APE_INVOICEHDR.AP_INV_NO"),3) =""
@@ -527,6 +515,10 @@ rem --- remove images copied temporarily to web servier for viewing
 			BBUtils.deleteFromWebServer(urlVect!.get(wk))
 		next wk
 	endif
+
+[[APE_INVOICEHDR.BREX]]
+rem --- Clear text for adjustments to open invoice
+		Form!.getControl(num(user_tpl.open_inv_textID$)).setText("")
 
 [[APE_INVOICEHDR.BSHO]]
 rem --- Open/Lock files
@@ -1153,6 +1145,34 @@ rem ----------------------------------------------------------------------------
 	callpoint!.setColumnData("<<DISPLAY>>.DIST_BAL",str(dist_bal))
 return
 
+rem --------------------------------------------------------------------------------------------------------------
+display_adjustment: rem --- Display invoice adjustment info, and disable dist code, inv date, net amt
+rem --------------------------------------------------------------------------------------------------------------
+	callpoint!.setColumnEnabled("APE_INVOICEHDR.AP_DIST_CODE",0)
+	callpoint!.setColumnEnabled("APE_INVOICEHDR.INVOICE_DATE",0)
+	callpoint!.setColumnEnabled("APE_INVOICEHDR.NET_INV_AMT",0)
+
+	apt11_dev=fnget_dev("APT_INVOICEDET")
+	dim apt11a$:fnget_tpl$("APT_INVOICEDET")
+	read(apt11_dev,key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$,dom=*next)
+	while 1
+		readrecord (apt11_dev,end=*break) apt11a$
+		if pos(firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$=apt11a$)<>1 break
+		apt01a.invoice_amt = apt01a.invoice_amt+apt11a.trans_amt
+	wend
+
+	Form!.getControl(num(user_tpl.open_inv_textID$)).setText(Translate!.getTranslation("AON_ADJUST_OPEN_INVOICE:_")+$0A$+fndate$(apt01a.invoice_date$)+
+:		",  "+str(num(apt01a.invoice_amt$):user_tpl.amt_msk$))
+	callpoint!.setStatus("ABLEMAP-REFRESH-ACTIVATE")
+
+	rem --- Disable Credit Card payment if the invoice balance is zero
+	if apt01a.invoice_amt=0 then
+		ctl_name$="APE_INVOICEHDR.CREDITCARD_ID"
+		ctl_stat$="D"
+		gosub disable_fields
+	endif
+return
+
 rem #include fnget_control.src
 def fnget_control!(ctl_name$)
 ctlContext=num(callpoint!.getTableColumnAttribute(ctl_name$,"CTLC"))
@@ -1160,6 +1180,7 @@ ctlID=num(callpoint!.getTableColumnAttribute(ctl_name$,"CTLI"))
 get_control!=SysGUI!.getWindow(ctlContext).getControl(ctlID)
 return get_control!
 fnend
+
 rem #endinclude fnget_control.src
 #include [+ADDON_LIB]std_missing_params.aon
 

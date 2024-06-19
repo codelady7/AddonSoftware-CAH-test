@@ -332,6 +332,20 @@ rem --- Read next Invoice Header (ape-01) record
                 units=-units
                 gosub glrecap
                 if cvs(ape01a.creditcard_id$,2)<>"" then
+                    rem --- Is this an adjustment to a previously updated invoice?
+                    apt01_key$=firm_id$+ape01a.ap_type$+ape01a.vendor_id$+ape01a.ap_inv_no$
+                    findrecord(apt01_dev,key=apt01_key$,dom=*next)apt01a$
+                    if pos(apt01_key$=apt01a$)=1 then
+                        rem --- Update amount for adjustments
+                        amount=apt01a.retention-apt01a.invoice_amt
+                        read(apt11_dev,key=firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$,dom=*next)
+                        while 1
+                            readrecord (apt11_dev,end=*break) apt11a$
+                            if pos(firm_id$+apt01a.ap_type$+apt01a.vendor_id$+apt01a.ap_inv_no$=apt11a$)<>1 break
+                            amount=amount-apt11a.trans_amt
+                        wend
+                    endif
+              
                     rem --- Invoice previously paid via credit card.
                     rem --- Add new Debit to invoice's distribution code GL_AP_ACCT equal to the amount of the distribution code's GL_AP_ACCT Credit.
                     amount=-amount
