@@ -102,7 +102,7 @@
     </path>
 
     <path id="path.install.WriteConfigFiles">
-          <pathelement location="${bbj.jars.dir}/BasisInstall.jar"/>
+          <pathelement location="${bbj.jars.dir}/BASISInstall.jar"/>
           <pathelement location="${bbj.jars.dir}/BBjUtil.jar"/>
     </path>
 
@@ -218,7 +218,7 @@
         <echo message="WriteConfigurationFiles -cdstore -barista -addon"/>
         <echo message="  basedir: ${basedir}"/>
         <echo message="  install.dir: ${install.dir}"/>
-        <java classname="com.basis.install.util.WriteConfigurationFiles" dir="${basedir}" fork="true">
+        <java classname="cloud.basis.install.util.WriteConfigurationFiles" dir="${basedir}" fork="true">
             <classpath refid="path.install.WriteConfigFiles"/>
             <arg value="${install.dir}"/>
             <arg value="-cdstore"/>
