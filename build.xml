@@ -555,27 +555,16 @@ ulimit -n 10000]]></replacevalue>
         <echo message="jar installBBj.jar"/>
         <jar destfile="${work.dir}/installBBj.jar">
             <fileset dir="${work.dir}"
-                     includes="install.xml,
-                               com/basis/,
-                               com/google/common/base/,
-                               com/google/common/collect/,
-                               com/google/common/util/,
-                               com/google/gson/,
-                               com/typesafe/config/,
-                               io/netty/,
-                               org/json/,
-                               javax/xml/,
-                               org/apache/commons/io/,
-                               org/bouncycastle/,
-                               org/json/,
-                               bus/,
-                               bbjgenerated/,
-                               BBjWebstartBootstrap.jar"/>
+                     includes="BASISInstall.jar,
+                               BCIInstall.jar,
+                               cloud/basis/bci/,
+                               install.xml,
+                               lib/"/>
             <fileset dir="${build.dir}"
                      includes="package_*.jar"/>
             <manifest>
                 <attribute name="Main-Class"
-                           value="com.basis.install.BASISInstallerStarter"/>
+                           value="cloud.basis.bci.NestedJarBCIRunner"/>
             </manifest>
         </jar>
 
