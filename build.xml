@@ -102,7 +102,7 @@
     </path>
 
     <path id="path.install.WriteConfigFiles">
-          <pathelement location="${bbj.jars.dir}/BASISInstall.jar"/>
+          <pathelement location="${work.dir}/BASISInstall.jar"/>
           <pathelement location="${bbj.jars.dir}/BBjUtil.jar"/>
     </path>
 
