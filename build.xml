@@ -479,7 +479,7 @@ ulimit -n 10000]]></replacevalue>
             <arg value="${install.dir}/bin/bbjservices"/>
         </exec>
         
-        <!-- Use killBBjProcs to shutdown BBj -->
+        <!-- Use killProc to shutdown BBj -->
         <exec executable="${install.dir}/bin/bbjservices">
               <env key="DISPLAY" value="${display}"/>
         </exec>
@@ -494,8 +494,8 @@ ulimit -n 10000]]></replacevalue>
     <!-- Stop BBjServices -->
     <target name="stopBBj">
 
-        <!-- Use killBBjProcs to shutdown BBj -->
-        <exec executable="${install.dir}/bin/killBBjProcs">
+        <!-- Use killProc to shutdown BBj -->
+        <exec executable="${install.dir}/bin/killProc">
             <arg value="BBjServices"/>
         </exec>
 
