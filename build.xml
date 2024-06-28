@@ -580,6 +580,7 @@ ulimit -n 10000]]></replacevalue>
         <java jar="${work.dir}/installBBj.jar"
               fork="true"
               jvm="/usr/java/adoptjdk/bin/java">
+            <jvmarg value="-Dbci.debug=true"/>
             <arg value="-pl"/>
             <arg value="${src.dir.aon}/InstallResponse.properties"/>
         </java>
