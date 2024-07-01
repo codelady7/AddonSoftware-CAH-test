@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-06-15
+ Report Date:   2024-07-01
  Report Branch: AddonSoftware 24.10
  Last Release:  AddonSoftware 24.02
 =======================================================================================================================================
@@ -62,3 +62,31 @@ Modified: data/cdf/ope_ordhdr.cdf
 Modified: data/sync/ads_messages~[01007514OP].xml
 Modified: prop/addon.properties
 Modified: prop/addon_en.properties
+=======================================================================================================================================
+
+Revision: d5948d659a2e024d53e5b3ae73adba5443be3932
+Author: Christine <chawkins@basis.cloud>
+Date: 7/1/2024 11:48:30 AM
+Message:
+Bug 10900 - AP - Hash total in ACH NACHA file is incorrect
+ - corrected to sum the aba no instead of bank acct no
+ - also sum the aba no from the 6-27 'total' record (instead of just the 6-22 records)
+ - trim the hash in the 8 and 9 record types to the right-most 10 chars
+
+(cherry picked from commit 09e844379c441f9be207f5f58f7ed7855513a82d)
+----
+Modified: ap/src/apu_chkregister.aon
+=======================================================================================================================================
+
+Revision: 79cb82e938cb8a7d25386b34e74f85ca8f593511
+Author: Christine <chawkins@basis.cloud>
+Date: 7/1/2024 11:56:02 AM
+Message:
+Bug 10903 - AD - v1700conversion program may not handle renaming of gls_params correctly
+ - loop thru open channels and close gls_params if already open before attempting to rename
+ - also added code to set +PROPS_NAME if not already set to avoid err 49
+
+(cherry picked from commit 523925e3b235b959c9eab6be8f2a5483db98172b)
+----
+Modified: ad/src/adc_v1700conversion.aon
+
