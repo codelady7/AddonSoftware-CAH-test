@@ -542,7 +542,7 @@ build_NACHA_file: rem --- Build NACHA text file for financial institution to pro
 
     rem --- Update NACHA data
     nacha_recs=nacha_recs+1
-    route_hash$=vendor_bak_acct_no$
+    route_hash$=pad(vendor_aba_no$,8)
     batch_hash=batch_hash+num(route_hash$)
     if chkAmt>0 then
         total_credits=total_credits+chkAmt
@@ -607,14 +607,17 @@ finish_NACHA_file: rem --- Finish building complete NACHA text file for ACH paym
         write(nacha_dev)balanceRecord$+$0D$
 
         nacha_recs=nacha_recs+1
+        batch_hash=batch_hash+num(pad(aba_no$,8))
     endif
 
     rem --- NACHA Batch Control Record (Record Type Code 8)
+    batch_hash$=str(batch_hash)
+    if len(batch_hash$)>10 then batch_hash$=batch_hash$(len(batch_hash$)-9,10)
     nachaBatchControl$=""
     nachaBatchControl$=nachaBatchControl$+"8";                                      rem --- Record Type Code
     nachaBatchControl$=nachaBatchControl$+"220";                                    rem --- Service Class Code
     nachaBatchControl$=nachaBatchControl$+str(nacha_recs:"000000");                 rem --- Entry/Addenda Count
-    nachaBatchControl$=nachaBatchControl$+pad(str(batch_hash),10,"R","0");          rem --- Entry Hash
+    nachaBatchControl$=nachaBatchControl$+pad(batch_hash$,10,"R","0");              rem --- Entry Hash
     nachaBatchControl$=nachaBatchControl$+str(total_debits*100:"000000000000");     rem --- Total Debit Entry Dollar Amount
     nachaBatchControl$=nachaBatchControl$+str(total_credits*100:"000000000000");    rem --- Total Credit Entry Dollar Amount
     nachaBatchControl$=nachaBatchControl$+pad(federal_id$,10,"R"," ");              rem --- Company Identification
@@ -634,7 +637,7 @@ finish_NACHA_file: rem --- Finish building complete NACHA text file for ACH paym
     nachaFileControl$=nachaFileControl$+str(1:"000000");                        rem --- Batch Count
     nachaFileControl$=nachaFileControl$+str(block_count:"000000");              rem --- Block Count
     nachaFileControl$=nachaFileControl$+str(nacha_recs:"00000000");             rem --- Entry/Addenda Count
-    nachaFileControl$=nachaFileControl$+pad(str(batch_hash),10,"R","0");        rem --- Entry Hash
+    nachaFileControl$=nachaFileControl$+pad(batch_hash$,10,"R","0");            rem --- Entry Hash
     nachaFileControl$=nachaFileControl$+str(total_debits*100:"000000000000");   rem --- Total Debit Entry Dollar Amount in File
     nachaFileControl$=nachaFileControl$+str(total_credits*100:"000000000000");  rem --- Total Credit Entry Dollar Amount in File
     nachaFileControl$=nachaFileControl$+fill(39);                               rem --- Reserved
