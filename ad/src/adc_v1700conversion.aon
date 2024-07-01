@@ -31,6 +31,9 @@ rem --- Initializations
     pgmdir$=stbl("+DIR_PGM",err=*next)
     dataDir$=FileObject.fixPath(stbl("+DIR_DAT",err=*next), "/")
 
+    tmp$=stbl("+PROPS_NAME",err=*next)
+    if tmp$="" then tmp$=stbl("+PROPS_NAME","addon")
+
     Calendar! = new GregorianCalendar()
     
 rem --- Open log file in aon/logs directory
@@ -705,6 +708,12 @@ rem --- For version 17.00, initialize changes for Fiscal Calendars
         sysinfo$=stbl("+SYSINFO",err=*next)
 
         rem --- OCJ may have ported new gls_params file as gls_params.2 or gls_params.3 (due to multiple definitions referencing same physical file)
+        chns!=BBjAPI().getOpenChannels()
+        for wk=0 to chns!.size()-1
+            chan=chns!.get(wk)
+            fl$=fid(chan)
+            if pos(BBjAPI().getFileSystem().resolvePath(stbl("+GLDATA"))+"/gls_params"=fl$) then close(chan)
+        next wk
         fileFound=0
 		glsParams!=new File(stbl("+GLDATA")+"gls_params")
         if glsParams!.exists() then
