@@ -112,7 +112,7 @@ rem --- Start progress meter
     meter_action$="WIN-LST"
     gosub disp_meter
 
-rem --- Initialize ADC_STATECODE file new in v24.01
+rem --- Initialize adc_statecode file new in v24.01
 
     num_files=2
     dim open_tables$[1:num_files],open_opts$[1:num_files],open_chans$[1:num_files],open_tpls$[1:num_files]
@@ -127,14 +127,14 @@ rem --- Initialize ADC_STATECODE file new in v24.01
         dim adcStateCode$:open_tpls$[1]
         admFirms_dev=num(open_chans$[2]); dim admFirms$:open_tpls$[2]
 
-        rem --- Open ADC_STATECODE demo data file in BBjHome installation
+        rem --- Open adc_statecode demo data file in BBjHome installation
         demoFile_found=0
         bbjHome$=java.lang.System.getProperty("basis.BBjHome")
         demoFile_dev=unt
-        demoFile$=(new File(bbjHome$+"/apps/aon/data/ADC_STATECODE")).getAbsolutePath()
+        demoFile$=(new File(bbjHome$+"/apps/aon/data/adc_statecode")).getAbsolutePath()
         open(demoFile_dev,err=*next)demoFile$; demoFile_found=1
         if !demoFile_found then
-            err_msg$="ADC_STATECODE demo data file "+demoFile$+" not found"
+            err_msg$="adc_statecode demo data file "+demoFile$+" not found"
             print(log_dev)"***** Error: "+err_msg$+" *****"
         endif
     
@@ -147,12 +147,12 @@ rem --- Initialize ADC_STATECODE file new in v24.01
         wend
         firmsVect!.addItem("ZZ"); rem --- Also copy the ZZ records
 
-        rem --- Initialize firm data in production ADC_STATECODE
+        rem --- Initialize firm data in production adc_statecode
         for i=0 to firmsVect!.size()-1
             thisFirm$=firmsVect!.getItem(i)
 
             rem --- Increment progress meter
-            meter_text$=Translate!.getTranslation("AON_INITIALIZING","Initializing")+" ADC_STATECODE for firm "+thisFirm$
+            meter_text$=Translate!.getTranslation("AON_INITIALIZING","Initializing")+" adc_statecode for firm "+thisFirm$
             meter_proc_recs=meter_proc_recs+1
             meter_action$="MTR-LST"
             gosub disp_meter
