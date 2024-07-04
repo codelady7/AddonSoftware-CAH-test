@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-07-02
+ Report Date:   2024-07-03
  Report Branch: AddonSoftware 24.10
  Last Release:  AddonSoftware 24.02
 =======================================================================================================================================
@@ -90,6 +90,7 @@ Bug 10903 - AD - v1700conversion program may not handle renaming of gls_params c
 ----
 Modified: ad/src/adc_v1700conversion.aon
 =======================================================================================================================================
+
 Revision: 427c29764abfcb6ec612ea8fec6b41d0c7f25771
 Author: Bill Halsted <bhalsted@basis.cloud>
 Date: 7/2/2024 6:24:27 PM
@@ -97,3 +98,13 @@ Message:
 Bug 10893: Updated the invoice balance when an adjustment is made.
 ----
 Modified: po/src/pou_invreg.aon
+=======================================================================================================================================
+
+Revision: 9022f82b114dfed09bccd6c477832a176ce996c8
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/3/2024 4:51:15 PM
+Message:
+Bug 10890: Revised references to the 'ADC_STATECODE' file to use all
+lower-case 'adc_statecode' so it is valid for all OS's.
+----
+Modified: ad/src/adc_v24initMinorRev.aon
