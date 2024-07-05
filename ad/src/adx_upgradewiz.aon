@@ -363,6 +363,24 @@ restartUpgrade5:
         gosub updateAddonSyn
     endif
 
+rem --- If using addonhelp.jar, update it from the download installation, BBjHome
+    helpJar!=new File(newAonLoc$+"/help/addonhelp.jar")
+    if helpJar!.isFile() then    
+        bbjHome$=java.lang.System.getProperty("basis.BBjHome")
+        
+        call pgmdir$+"adc_copydir.aon",bbjHome$+"/apps/aon/help",newAonLoc$+"/help",rdForm!,0,status
+        helpDir!=new File(newAonLoc$+"/help")
+        if helpDir!.isDirectory then    
+            dirPerms!=PosixFilePermissions.fromString("rwxrwxrwx")
+            Files.setPosixFilePermissions(helpDir!,dirPerms!)
+        endif
+        helpJar!=new File(newAonLoc$+"/help/addonhelp.jar")
+        if helpJar!.isFile() then    
+            filePerms!=PosixFilePermissions.fromString("rw-rw-rw-")
+            Files.setPosixFilePermissions(helpJar!,filePerms!)
+        endif
+    endif
+
 rem --- Create new session specific classpath (SSCP) in Enterprise Manager
     gosub createSSCP
 
