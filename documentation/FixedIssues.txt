@@ -1,5 +1,5 @@
 =======================================================================================================================================
- Report Date:   2024-07-03
+ Report Date:   2024-07-05
  Report Branch: AddonSoftware 24.10
  Last Release:  AddonSoftware 24.02
 =======================================================================================================================================
@@ -108,3 +108,15 @@ Bug 10890: Revised references to the 'ADC_STATECODE' file to use all
 lower-case 'adc_statecode' so it is valid for all OS's.
 ----
 Modified: ad/src/adc_v24initMinorRev.aon
+=======================================================================================================================================
+
+Revision: 3ed5b6053801902399d58f1a1e870175da7c508b
+Author: Bill Halsted <bhalsted@basis.cloud>
+Date: 7/5/2024 3:52:53 PM
+Message:
+Bug 10905: Modified the Install and Upgrade Wizards to copy addhelp.jar
+from the download installation when the installation is using the Addon
+help file.
+----
+Modified: ad/src/adx_installwiz.aon
+Modified: ad/src/adx_upgradewiz.aon
