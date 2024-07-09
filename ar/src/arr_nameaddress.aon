@@ -104,24 +104,25 @@ rem --- Document columns
         columns=9
         col_start=6
     else
-        columns=6
+        columns=7
         col_start=3
     endif
     dim columns$[columns,3]
-    columns$[0,0]=Translate!.getTranslation("AON_CUST_NO"),columns$[0,1]="C",columns$[0,2]="6"
+    columns$[0,0]=Translate!.getTranslation("AON_CUST_NO"),columns$[0,1]="C",columns$[0,2]="8"
     columns$[1,0]=Translate!.getTranslation("AON_NAME"),columns$[1,1]="C",columns$[1,2]="30"
     if col_format$="Y" then
-        columns$[2,0]=Translate!.getTranslation("AON_ADDRESS_1"),columns$[2,1]="C",columns$[2,2]="30"
-        columns$[3,0]=Translate!.getTranslation("AON_ADDRESS_2"),columns$[3,1]="C",columns$[3,2]="30"
-        columns$[4,0]=Translate!.getTranslation("AON_ADDRESS_3"),columns$[4,1]="C",columns$[4,2]="30"
-        columns$[5,0]=Translate!.getTranslation("AON_ADDRESS_4"),columns$[5,1]="C",columns$[5,2]="30"
+        columns$[2,0]=Translate!.getTranslation("AON_ADDRESS_1"),columns$[2,1]="C",columns$[2,2]="24"
+        columns$[3,0]=Translate!.getTranslation("AON_ADDRESS_2"),columns$[3,1]="C",columns$[3,2]="24"
+        columns$[4,0]=Translate!.getTranslation("AON_ADDRESS_3"),columns$[4,1]="C",columns$[4,2]="24"
+        columns$[5,0]=Translate!.getTranslation("AON_ADDRESS_4"),columns$[5,1]="C",columns$[5,2]="24"
     else
-        columns$[2,0]=Translate!.getTranslation("AON_ADDRESS"),columns$[2,1]="C",columns$[2,2]="30"
+        columns$[2,0]=Translate!.getTranslation("AON_ADDRESS"),columns$[2,1]="C",columns$[2,2]="24"
     endif
-    columns$[col_start,0]=Translate!.getTranslation("AON_CITY"),columns$[col_start,1]="C",columns$[col_start,2]="30"
+    columns$[col_start,0]=Translate!.getTranslation("AON_CITY"),columns$[col_start,1]="C",columns$[col_start,2]="15"
     columns$[col_start+1,0]=Translate!.getTranslation("AON_STATE"),columns$[col_start+1,1]="C",columns$[col_start+1,2]="5"
     columns$[col_start+2,0]=Translate!.getTranslation("AON_POSTAL"),columns$[col_start+2,1]="C",columns$[col_start+2,2]="8"
     columns$[col_start+3,0]=Translate!.getTranslation("AON_PHONE"),columns$[col_start+3,1]="C",columns$[col_start+3,2]="10"
+    columns$[col_start+4,0]=Translate!.getTranslation("Test Desc","Test Desc",0),columns$[col_start+4,1]="C",columns$[col_start+4,2]="30"
 
     call stbl("+DIR_PGM",err=*next)+"adc_docout_adj.aon",columns$[all]
 
@@ -189,6 +190,7 @@ rem --- Read next Customer Master (arm-01) record
           phone$=cvs(arm01a.phone_no$,2)
           phone$=str(phone$:phone_mask$,err=*next)
           OutVect!.addItem(phone$)
+          OutVect!.addItem(arm01a.test_desc$)
         
           if col_format$<>"Y" and addrVect!.size()>1 then
               for i=1 to addrVect!.size()-1
