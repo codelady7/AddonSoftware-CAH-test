@@ -18,3 +18,9 @@
 .project
 /.metadata/
 *.bak
+/supp/classes
+/supp/data/admin_backup
+/supp/data/arc
+/supp/data/sync/base
+/supp/data/sync/new
+/supp/data/sync/new

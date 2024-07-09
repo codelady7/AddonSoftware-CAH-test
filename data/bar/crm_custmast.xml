@@ -21,11 +21,11 @@
 			<ASC_LICENSE_ID id="ddm_tables.crm_custmast">B0AE4537C94866F0AF91493A5C8B7BCB</ASC_LICENSE_ID>
 			<DD_EXPORT_DATA id="ddm_tables.crm_custmast">Y</DD_EXPORT_DATA>
 			<DD_CREATE_DATE id="ddm_tables.crm_custmast">20060119</DD_CREATE_DATE>
-			<DD_LSTREV_DATE id="ddm_tables.crm_custmast">20240409</DD_LSTREV_DATE>
-			<DD_LSTSYNC_DATE id="ddm_tables.crm_custmast">20240409</DD_LSTSYNC_DATE>
-			<DD_LSTSYNC_TIME id="ddm_tables.crm_custmast">114714</DD_LSTSYNC_TIME>
+			<DD_LSTREV_DATE id="ddm_tables.crm_custmast">20240709</DD_LSTREV_DATE>
+			<DD_LSTSYNC_DATE id="ddm_tables.crm_custmast">20240709</DD_LSTSYNC_DATE>
+			<DD_LSTSYNC_TIME id="ddm_tables.crm_custmast">115802</DD_LSTSYNC_TIME>
 			<DD_ATTR_ATAB id="ddm_tables.crm_custmast">ARM_CUSTMAST    </DD_ATTR_ATAB>
-			<DD_ATTR_CPGM id="ddm_tables.crm_custmast">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_tables.crm_custmast">C:/aon_instances/CAH/v24/v2402/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_DKNM id="ddm_tables.crm_custmast"></DD_ATTR_DKNM>
 			<DD_ATTR_FIMG id="ddm_tables.crm_custmast"></DD_ATTR_FIMG>
 			<DD_ATTR_FTYP id="ddm_tables.crm_custmast">T</DD_ATTR_FTYP>
@@ -1237,8 +1237,8 @@
 		<ID id="ddm_table_tpls">DDM_TABLE_TPLS</ID>
 		<RECORD id="ddm_table_tpls.crm_custmast">
 			<DD_TABLE_ALIAS id="ddm_table_tpls.crm_custmast">CRM_CUSTMAST    </DD_TABLE_ALIAS>
-			<DD_FILE_NAME id="ddm_table_tpls.crm_custmast">arm-01</DD_FILE_NAME>
-			<DD_TABLE_TPL id="ddm_table_tpls.crm_custmast">firm_id:c(2),customer_id:c(6),customer_name:c(30),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),zip_code:c(9),phone_no:c(20),phone_exten:c(4),resale_no:c(20),alt_sequence:c(10),reserved_str:c(3),ar_ship_via:c(10),fax_no:c(20),addr_line_4:c(30),city:c(30),state_code:c(2),retain_cust:c(1),contact_name:c(20),db_no:c(9),sic_code:c(8),country:c(24),fob:c(15),reserved_str_02:c(22),opened_date:c(8),cntry_id:c(2),cust_inactive:c(1),memo_1024:c(1024*=1),shipping_id:c(15),shipping_email:c(80),pay_online:c(1),pay_auth_email:c(80)</DD_TABLE_TPL>
+			<DD_FILE_NAME id="ddm_table_tpls.crm_custmast"></DD_FILE_NAME>
+			<DD_TABLE_TPL id="ddm_table_tpls.crm_custmast">firm_id:c(2),customer_id:c(6),customer_name:c(30),addr_line_1:c(30),addr_line_2:c(30),addr_line_3:c(30),zip_code:c(9),phone_no:c(20),phone_exten:c(4),resale_no:c(20),alt_sequence:c(10),reserved_str:c(3),ar_ship_via:c(10),fax_no:c(20),addr_line_4:c(30),city:c(30),state_code:c(2),retain_cust:c(1),contact_name:c(20),db_no:c(9),sic_code:c(8),country:c(24),fob:c(15),reserved_str_02:c(22),opened_date:c(8),cntry_id:c(2),cust_inactive:c(1),memo_1024:c(1024*=1),shipping_id:c(15),shipping_email:c(80),pay_online:c(1),pay_auth_email:c(80),test_desc:c(30)</DD_TABLE_TPL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_ref">
@@ -1255,11 +1255,11 @@
 			<REF_TABLE_ALIAS id="ddm_table_ref.crm_custmastcntry_idadc_country">ADC_COUNTRY     </REF_TABLE_ALIAS>
 			<TABLE_REF_NAME id="ddm_table_ref.crm_custmastcntry_idadc_country">FK_CRM_CUSTMAST_CNTRY_ID_ADC_COUNTRY                                                                                                                                                                                                                           </TABLE_REF_NAME>
 		</RECORD>
-		<RECORD id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">
-			<DD_TABLE_ALIAS id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">CRM_CUSTMAST    </DD_TABLE_ALIAS>
-			<DD_TABLE_COL id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">CUSTOMER_ID     </DD_TABLE_COL>
-			<REF_TABLE_ALIAS id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">ARM_CUSTMAST    </REF_TABLE_ALIAS>
-			<TABLE_REF_NAME id="ddm_table_ref.crm_custmastcustomer_idarm_custmast">FK_CRM_CUSTMAST_CUSTOMER_ID_ARM_CUSTMAST                                                                                                                                                                                                                       </TABLE_REF_NAME>
+		<RECORD id="ddm_table_ref.crm_custmaststate_codeadc_statecode">
+			<DD_TABLE_ALIAS id="ddm_table_ref.crm_custmaststate_codeadc_statecode">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_ref.crm_custmaststate_codeadc_statecode">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_ref.crm_custmaststate_codeadc_statecode">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<TABLE_REF_NAME id="ddm_table_ref.crm_custmaststate_codeadc_statecode">FK_CRM_CUSTMAST_STATE_CODE_ADC_STATECODE                                                                                                                                                                                                                       </TABLE_REF_NAME>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_refcol">
@@ -1291,23 +1291,23 @@
 			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">CNTRY_ID        </REF_KEY_COLUMN>
 			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastcntry_idadc_country0001">CNTRY_ID        </FK_TABLE_COL>
 		</RECORD>
-		<RECORD id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">
-			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">CRM_CUSTMAST    </DD_TABLE_ALIAS>
-			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">CUSTOMER_ID     </DD_TABLE_COL>
-			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">ARM_CUSTMAST    </REF_TABLE_ALIAS>
-			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">00</REF_KEY_NUMBER>
-			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">01</REF_KEY_SEGMENT>
-			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">FIRM_ID         </REF_KEY_COLUMN>
-			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0001">FIRM_ID         </FK_TABLE_COL>
+		<RECORD id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">01</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">FIRM_ID         </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0001">FIRM_ID         </FK_TABLE_COL>
 		</RECORD>
-		<RECORD id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">
-			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CRM_CUSTMAST    </DD_TABLE_ALIAS>
-			<DD_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CUSTOMER_ID     </DD_TABLE_COL>
-			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">ARM_CUSTMAST    </REF_TABLE_ALIAS>
-			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">00</REF_KEY_NUMBER>
-			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">02</REF_KEY_SEGMENT>
-			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CUSTOMER_ID     </REF_KEY_COLUMN>
-			<FK_TABLE_COL id="ddm_table_refcol.crm_custmastcustomer_idarm_custmast0002">CUSTOMER_ID     </FK_TABLE_COL>
+		<RECORD id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">
+			<DD_TABLE_ALIAS id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_TABLE_COL id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">STATE_CODE      </DD_TABLE_COL>
+			<REF_TABLE_ALIAS id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">ADC_STATECODE   </REF_TABLE_ALIAS>
+			<REF_KEY_NUMBER id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">00</REF_KEY_NUMBER>
+			<REF_KEY_SEGMENT id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">02</REF_KEY_SEGMENT>
+			<REF_KEY_COLUMN id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">STATE_CODE      </REF_KEY_COLUMN>
+			<FK_TABLE_COL id="ddm_table_refcol.crm_custmaststate_codeadc_statecode0002">STATE_CODE      </FK_TABLE_COL>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_keys">
@@ -3201,7 +3201,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.crm_custmast030">20180403</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.crm_custmast030"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.crm_custmast030"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast030">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast030">C:/aon_instances/CAH/v24/v2402/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.crm_custmast030">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.crm_custmast030"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.crm_custmast030"></DD_ATTR_CTLY>
@@ -3303,7 +3303,7 @@
 			<DD_LSTREV_DATE id="ddm_table_cols.crm_custmast032">20190408</DD_LSTREV_DATE>
 			<DD_ATTR_ABLC id="ddm_table_cols.crm_custmast032"></DD_ATTR_ABLC>
 			<DD_ATTR_ABLV id="ddm_table_cols.crm_custmast032"></DD_ATTR_ABLV>
-			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast032">C:/dev_projects/aon_dev1/aon/;</DD_ATTR_CPGM>
+			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast032">C:/aon_instances/CAH/v24/v2402/aon/;</DD_ATTR_CPGM>
 			<DD_ATTR_COLW id="ddm_table_cols.crm_custmast032">0</DD_ATTR_COLW>
 			<DD_ATTR_CTLX id="ddm_table_cols.crm_custmast032"></DD_ATTR_CTLX>
 			<DD_ATTR_CTLY id="ddm_table_cols.crm_custmast032"></DD_ATTR_CTLY>
@@ -3337,6 +3337,57 @@
 			<DD_ATTR_RADG id="ddm_table_cols.crm_custmast032"></DD_ATTR_RADG>
 			<DD_ATTR_RKEY id="ddm_table_cols.crm_custmast032">N</DD_ATTR_RKEY>
 			<DD_ATTR_BTNS id="ddm_table_cols.crm_custmast032"></DD_ATTR_BTNS>
+		</RECORD>
+		<RECORD id="ddm_table_cols.crm_custmast033">
+			<DD_TABLE_ALIAS id="ddm_table_cols.crm_custmast033">CRM_CUSTMAST    </DD_TABLE_ALIAS>
+			<DD_SEQUENCE id="ddm_table_cols.crm_custmast033">033</DD_SEQUENCE>
+			<DD_DATA_NAME id="ddm_table_cols.crm_custmast033">DESCRIPTION     </DD_DATA_NAME>
+			<DD_DVAR_NAME id="ddm_table_cols.crm_custmast033">TEST_DESC       </DD_DVAR_NAME>
+			<DD_COL_REPEATS id="ddm_table_cols.crm_custmast033">0</DD_COL_REPEATS>
+			<DD_COL_OCCURS id="ddm_table_cols.crm_custmast033">0</DD_COL_OCCURS>
+			<DD_FIELD_DELIM id="ddm_table_cols.crm_custmast033">N</DD_FIELD_DELIM>
+			<DD_DELIM_CHAR id="ddm_table_cols.crm_custmast033"></DD_DELIM_CHAR>
+			<DD_SYSTEM_REC id="ddm_table_cols.crm_custmast033"></DD_SYSTEM_REC>
+			<DD_SYSTEM_ID id="ddm_table_cols.crm_custmast033"></DD_SYSTEM_ID>
+			<DD_MASK_TYPE id="ddm_table_cols.crm_custmast033"></DD_MASK_TYPE>
+			<DD_CREATE_DATE id="ddm_table_cols.crm_custmast033">20240709</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_table_cols.crm_custmast033">20240709</DD_LSTREV_DATE>
+			<DD_ATTR_ABLC id="ddm_table_cols.crm_custmast033"></DD_ATTR_ABLC>
+			<DD_ATTR_ABLV id="ddm_table_cols.crm_custmast033"></DD_ATTR_ABLV>
+			<DD_ATTR_CPGM id="ddm_table_cols.crm_custmast033"></DD_ATTR_CPGM>
+			<DD_ATTR_COLW id="ddm_table_cols.crm_custmast033">0</DD_ATTR_COLW>
+			<DD_ATTR_CTLX id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLX>
+			<DD_ATTR_CTLY id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLY>
+			<DD_ATTR_CTLW id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLH>
+			<DD_ATTR_DFLT id="ddm_table_cols.crm_custmast033"></DD_ATTR_DFLT>
+			<DD_ATTR_DRLE id="ddm_table_cols.crm_custmast033"></DD_ATTR_DRLE>
+			<DD_ATTR_GHDR id="ddm_table_cols.crm_custmast033"></DD_ATTR_GHDR>
+			<DD_ATTR_IDEF id="ddm_table_cols.crm_custmast033"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_table_cols.crm_custmast033"></DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_table_cols.crm_custmast033"></DD_ATTR_LABS>
+			<DD_ATTR_MLAN id="ddm_table_cols.crm_custmast033">N</DD_ATTR_MLAN>
+			<DD_ATTR_MINL id="ddm_table_cols.crm_custmast033"></DD_ATTR_MINL>
+			<DD_ATTR_MAXL id="ddm_table_cols.crm_custmast033"></DD_ATTR_MAXL>
+			<DD_ATTR_MINV id="ddm_table_cols.crm_custmast033"></DD_ATTR_MINV>
+			<DD_ATTR_MAXV id="ddm_table_cols.crm_custmast033"></DD_ATTR_MAXV>
+			<DD_ATTR_PROM id="ddm_table_cols.crm_custmast033"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_table_cols.crm_custmast033"></DD_ATTR_PVAL>
+			<DD_ATTR_SLEV id="ddm_table_cols.crm_custmast033"></DD_ATTR_SLEV>
+			<DD_ATTR_TABG id="ddm_table_cols.crm_custmast033"></DD_ATTR_TABG>
+			<DD_ATTR_TIND id="ddm_table_cols.crm_custmast033"></DD_ATTR_TIND>
+			<DD_ATTR_HELP id="ddm_table_cols.crm_custmast033"></DD_ATTR_HELP>
+			<SQL_COLUMN_NAME id="ddm_table_cols.crm_custmast033">TEST_DESC</SQL_COLUMN_NAME>
+			<DD_ATTR_FONT id="ddm_table_cols.crm_custmast033"></DD_ATTR_FONT>
+			<DD_ATTR_STYL id="ddm_table_cols.crm_custmast033"></DD_ATTR_STYL>
+			<DD_ATTR_FTSR id="ddm_table_cols.crm_custmast033">N</DD_ATTR_FTSR>
+			<DD_ATTR_CWID id="ddm_table_cols.crm_custmast033">0</DD_ATTR_CWID>
+			<DD_ATTR_CTLI id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLI>
+			<DD_ATTR_CTLN id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLN>
+			<DD_ATTR_CTLC id="ddm_table_cols.crm_custmast033"></DD_ATTR_CTLC>
+			<DD_ATTR_RADG id="ddm_table_cols.crm_custmast033"></DD_ATTR_RADG>
+			<DD_ATTR_RKEY id="ddm_table_cols.crm_custmast033"></DD_ATTR_RKEY>
+			<DD_ATTR_BTNS id="ddm_table_cols.crm_custmast033"></DD_ATTR_BTNS>
 		</RECORD>
 	</ALIAS>
 	<ALIAS id="ddm_table_disp">
@@ -5276,6 +5327,58 @@
 			<DD_ATTR_OEMD id="ddm_elements.generic_chk"></DD_ATTR_OEMD>
 			<DD_ATTR_Y2KW id="ddm_elements.generic_chk"></DD_ATTR_Y2KW>
 			<DD_ATTR_CASB id="ddm_elements.generic_chk"></DD_ATTR_CASB>
+		</RECORD>
+		<RECORD id="ddm_elements.description">
+			<DD_DATA_NAME id="ddm_elements.description">DESCRIPTION     </DD_DATA_NAME>
+			<DD_DESCRIPTION id="ddm_elements.description">Description</DD_DESCRIPTION>
+			<DD_DATA_TYPE id="ddm_elements.description">C</DD_DATA_TYPE>
+			<DD_DATA_LENGTH id="ddm_elements.description">30</DD_DATA_LENGTH>
+			<DD_MASK_TYPE id="ddm_elements.description"></DD_MASK_TYPE>
+			<DD_SYSTEM_REC id="ddm_elements.description">Y</DD_SYSTEM_REC>
+			<ASC_COMP_ID id="ddm_elements.description">01007514</ASC_COMP_ID>
+			<ASC_PROD_ID id="ddm_elements.description">ADB</ASC_PROD_ID>
+			<LOCALIZATION_EX id="ddm_elements.description"></LOCALIZATION_EX>
+			<DD_CREATE_DATE id="ddm_elements.description">20060119</DD_CREATE_DATE>
+			<DD_LSTREV_DATE id="ddm_elements.description">20120326</DD_LSTREV_DATE>
+			<DD_AUTO_COMP id="ddm_elements.description"></DD_AUTO_COMP>
+			<DD_ATTR_BLNK id="ddm_elements.description"></DD_ATTR_BLNK>
+			<DD_ATTR_CDAT id="ddm_elements.description"></DD_ATTR_CDAT>
+			<DD_ATTR_CTLW id="ddm_elements.description"></DD_ATTR_CTLW>
+			<DD_ATTR_CTLH id="ddm_elements.description"></DD_ATTR_CTLH>
+			<DD_ATTR_CTYP id="ddm_elements.description">E</DD_ATTR_CTYP>
+			<DD_ATTR_DCOL id="ddm_elements.description"></DD_ATTR_DCOL>
+			<DD_ATTR_DCOM id="ddm_elements.description"></DD_ATTR_DCOM>
+			<DD_ATTR_DEXP id="ddm_elements.description"></DD_ATTR_DEXP>
+			<DD_ATTR_DFLT id="ddm_elements.description"></DD_ATTR_DFLT>
+			<DD_ATTR_DKNM id="ddm_elements.description"></DD_ATTR_DKNM>
+			<DD_ATTR_DKEY id="ddm_elements.description"></DD_ATTR_DKEY>
+			<DD_ATTR_DTAB id="ddm_elements.description"></DD_ATTR_DTAB>
+			<DD_ATTR_DINQ id="ddm_elements.description"></DD_ATTR_DINQ>
+			<DD_ATTR_ENCR id="ddm_elements.description"></DD_ATTR_ENCR>
+			<DD_ATTR_IDEF id="ddm_elements.description"></DD_ATTR_IDEF>
+			<DD_ATTR_LABL id="ddm_elements.description">Description</DD_ATTR_LABL>
+			<DD_ATTR_LABS id="ddm_elements.description">Desc</DD_ATTR_LABS>
+			<DD_ATTR_LDIS id="ddm_elements.description"></DD_ATTR_LDIS>
+			<DD_ATTR_MAXL id="ddm_elements.description"></DD_ATTR_MAXL>
+			<DD_ATTR_MAXR id="ddm_elements.description"></DD_ATTR_MAXR>
+			<DD_ATTR_MAXV id="ddm_elements.description"></DD_ATTR_MAXV>
+			<DD_ATTR_MINL id="ddm_elements.description"></DD_ATTR_MINL>
+			<DD_ATTR_MINV id="ddm_elements.description"></DD_ATTR_MINV>
+			<DD_ATTR_MSKI id="ddm_elements.description"></DD_ATTR_MSKI>
+			<DD_ATTR_MSKO id="ddm_elements.description"></DD_ATTR_MSKO>
+			<DD_ATTR_PADC id="ddm_elements.description"></DD_ATTR_PADC>
+			<DD_ATTR_PADJ id="ddm_elements.description"></DD_ATTR_PADJ>
+			<DD_ATTR_PREC id="ddm_elements.description">0</DD_ATTR_PREC>
+			<DD_ATTR_PROM id="ddm_elements.description"></DD_ATTR_PROM>
+			<DD_ATTR_PVAL id="ddm_elements.description"></DD_ATTR_PVAL>
+			<DD_ATTR_SDLG id="ddm_elements.description"></DD_ATTR_SDLG>
+			<DD_ATTR_SLEV id="ddm_elements.description"></DD_ATTR_SLEV>
+			<DD_ATTR_STYP id="ddm_elements.description"></DD_ATTR_STYP>
+			<DD_ATTR_STEP id="ddm_elements.description"></DD_ATTR_STEP>
+			<DD_ATTR_FLPT id="ddm_elements.description"></DD_ATTR_FLPT>
+			<DD_ATTR_OEMD id="ddm_elements.description"></DD_ATTR_OEMD>
+			<DD_ATTR_Y2KW id="ddm_elements.description"></DD_ATTR_Y2KW>
+			<DD_ATTR_CASB id="ddm_elements.description"></DD_ATTR_CASB>
 		</RECORD>
 		<RECORD id="ddm_elements.ytd_sales">
 			<DD_DATA_NAME id="ddm_elements.ytd_sales">YTD_SALES       </DD_DATA_NAME>
