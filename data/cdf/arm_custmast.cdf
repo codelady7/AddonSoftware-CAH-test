@@ -1371,6 +1371,11 @@ rem --- Don't allow inactive code
 		break
 	endif
 
+[[ARM_CUSTMAST.TEST_DESC.AVAL]]
+rem --- test message
+
+x=msgbox("Test Desc: "+callpoint!.getUserInput())
+
 [[ARM_CUSTMAST.<CUSTOM>]]
 rem =======================================================
 create_widgets:rem --- create pie and bar widgets to show aged balance (bar in case credits)
