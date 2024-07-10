@@ -34,7 +34,7 @@ rem --- Item synonym processing
 	call stbl("+DIR_PGM")+"ivc_itemsyn.aon::option_entry"
 
 [[IVR_PRICECHGPCT.ITEM_ID.AVAL]]
-rem --- Can't change price for kits, which is the sum of the price of its components
+rem --- Can't change price for non-priced kits, which is the sum of the price of its components
 	item_id$=callpoint!.getUserInput()
 	ivm01_dev=fnget_dev("IVM_ITEMMAST")
 	dim ivm01a$:fnget_tpl$("IVM_ITEMMAST")
