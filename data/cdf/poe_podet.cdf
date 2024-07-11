@@ -561,7 +561,7 @@ if ivm01a.item_inactive$="Y" then
 endif
 
 rem --- Can't purchase kits
-	if ivm01a.kit$="Y" then
+	if ivm01a.kit$<>"N" then
 		msg_id$="PO_KIT_PURCHASE"
 		dim msg_tokens$[2]
 		msg_tokens$[1]=cvs(ivm01a.item_id$,2)

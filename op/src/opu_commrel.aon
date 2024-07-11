@@ -178,7 +178,7 @@ rem --- Header loop
             readrecord(ivmItemWhse_dev,key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next)ivmItemWhse$
 
             if pos(opm02a.line_type$="NOM")=0
-                if opm02a.dropship$<>"Y" and ivm01a.kit$<>"Y" then
+                if opm02a.dropship$<>"Y" and ivm01a.kit$="N" then
                     iv_items$[1]=ope11a.warehouse_id$
                     iv_items$[2]=ope11a.item_id$
                     iv_items$[3]=""
@@ -230,12 +230,12 @@ rem --- Header loop
 
             gosub Taxable_Check
             rem --- For non-priced kits use components
-            if ivm01a.kit$<>"Y" or (ivm01a.kit$="Y" and ivmItemWhse.cur_price<>0) then
+            if ivm01a.kit$<>"Y" then
                 ope01a.taxable_amt=ope01a.taxable_amt+ope11a.taxable_amt-x7
                 ope01a.total_sales=ope01a.total_sales+ope11a.ext_price-x6
             endif
             rem --- For all kits use components
-            if ivm01a.kit$<>"Y" then
+            if ivm01a.kit$<>"N" then
                 ope01a.total_cost=ope01a.total_cost+ope11a.unit_cost*(ope11a.qty_shipped-x5)
             endif
             precision num(ivs01a.precision$)

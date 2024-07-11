@@ -197,7 +197,7 @@ rem --- Update Sales Analysis
             gosub updateSalesAnalysis
 
             rem --- Do sales analysis for both the kit AND it's components
-            if kit$="Y" then
+            if kit$<>"N" then
                 rem --- Explode this kit into its components
                 optInvKitDet_key$=firm_id$+opt11a.ar_type$+opt11a.customer_id$+opt11a.order_no$+opt11a.ar_inv_no$+opt11a.internal_seq_no$
                 opt11a_tpl$=fattr(opt11a$)
@@ -208,7 +208,7 @@ rem --- Update Sales Analysis
                     if pos(optInvKitDet_key$=thisKey$)<>1 then break
                     readrecord(optInvKitDet_dev,key=thisKey$)opt11a$
                     rem --- For priced kits, skip standard components
-                    if ivm02a.cur_price<>0 and opt11a.comp_per_kit<>0 then continue
+                    if kit$="P" and opt11a.comp_per_kit<>0 then continue
 
                     kitComponent$="Y"
                     gosub updateSalesAnalysis
@@ -688,7 +688,7 @@ write_rec: rem --- write records
 
     extract record (sam_dev,key=sam_key$,dom=*next) sam$;rem Advisory Locking
     if opt11a.trans_status$="U" then
-        if kit$="Y" and ivm02a.cur_price=0 and kitComponent$<>"Y" then
+        if kit$="Y" and kitComponent$<>"Y" then
             rem --- Do only quantity SA on non-priced kits
             precision 2
             field sam$,"QTY_SHIPPED_"+str(period:"00")=nfield(sam$,"QTY_SHIPPED_"+str(period:"00"))+opt11a.qty_shipped
