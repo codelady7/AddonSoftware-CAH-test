@@ -71,13 +71,12 @@ rem --- Initializationas
 rem --- Open Files    
 rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
 
-    files=4,begfile=1,endfile=files
+    files=3,begfile=1,endfile=files
     dim files$[files],options$[files],ids$[files],templates$[files],channels[files]    
 
     files$[1]="ivm-01",      ids$[1]="IVM_ITEMMAST"
     files$[2]="opt-11",      ids$[2]="OPE_INVDET"
     files$[3]="opm-02",      ids$[3]="OPC_LINECODE"
-    files$[4]="ivm-02",      ids$[4]="IVM_ITEMWHSE"
 
 	call pgmdir$+"adc_fileopen.aon",action,begfile,endfile,files$[all],options$[all],ids$[all],templates$[all],channels[all],batch,status
 
@@ -92,12 +91,10 @@ rem --- Note 'files' and 'channels[]' are used in close loop, so don't re-use
     ivm01_dev   = channels[1]
     ope11_dev   = channels[2]
     opm02_dev   = channels[3]
-    ivm02_dev   = channels[4]
     
     dim ivm01a$:templates$[1]
     dim ope11a$:templates$[2]
     dim opm02a$:templates$[3]
-    dim ivm02a$:templates$[4]
 	
 rem --- Main
 
@@ -158,9 +155,10 @@ rem --- Main
                 item_description$ = func.displayDesc(ivm01a.item_desc$)
 				lotser_flag$ = ivm01a.lotser_flag$
                 kit$ = ivm01a.kit$
-                if kit$="Y"
-                    find record (ivm02_dev, key=firm_id$+ope11a.warehouse_id$+ope11a.item_id$,dom=*next)ivm02a$
-                    if ivm02a.cur_price>0 then priced_kit$="Y" else priced_kit$="N"
+                if kit$="Y" then priced_kit$="N"
+                if kit$="P" then
+                    kit$="Y"
+                    priced_kit$="Y"
                 endif
 			endif
 

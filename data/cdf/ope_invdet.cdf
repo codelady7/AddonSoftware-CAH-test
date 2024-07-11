@@ -597,7 +597,7 @@ rem --- Set item price if item and whse exist
 		if start_block then
 			find record (fnget_dev(file$), key=firm_id$+wh$+item$, dom=*endif) itemwhse$
 			user_tpl.item_price = itemwhse.cur_price
-			if ivm01a.kit$="Y" and itemwhse.cur_price<>0 then callpoint!.setDevObject("priced_kit","Y")
+			if ivm01a.kit$="P" then callpoint!.setDevObject("priced_kit","Y")
 		endif
 	endif
 
@@ -1856,7 +1856,7 @@ rem --- Initialize UM_SOLD ListButton for a new or changed item
 	endif
 
 rem --- Initialize "kit" DevObject
-	if ivm01a.kit$="Y" then
+	if ivm01a.kit$<>"N" then
 		rem --- Can NOT dropship a kit
 		file$ = "OPC_LINECODE"
 		opcLineCode_dev=fnget_dev("OPC_LINECODE")
@@ -1873,7 +1873,7 @@ rem --- Initialize "kit" DevObject
 		endif
 
 		callpoint!.setDevObject("kit","Y")
-		if ivm02a.cur_price<>0 then
+		if ivm01a.kit$="P"then
 			callpoint!.setDevObject("priced_kit","Y")
 		else
 			callpoint!.setDevObject("priced_kit","N")

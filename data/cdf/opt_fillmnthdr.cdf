@@ -664,7 +664,7 @@ rem --- Initialize Picking tab with corresponding OPE_ORDDET data
 		ivmItemMast_dev=fnget_dev("IVM_ITEMMAST")
 		dim ivmItemMast$:fnget_tpl$("IVM_ITEMMAST")
 		readrecord(ivmItemMast_dev,key=firm_id$+opeOrdDet.item_id$,dom=*next)ivmItemMast$
-		if ivmItemMast.kit$<>"Y" then
+		if ivmItemMast.kit$="N" then
 			rem --- Initialize OPT_FILLMNTDET with this OPE_ORDDET data record
 			redim optFillmntDet$
 			optFillmntDet.firm_id$=firm_id$
