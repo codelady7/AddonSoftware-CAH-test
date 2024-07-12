@@ -326,7 +326,7 @@ rem --- Main read
             gosub updateSalesAnalysis
 
         rem --- Do sales analysis for both the kit AND it's components
-            if kit$="Y" then
+            if kit$<>"N" then
                 rem --- Explode this kit into its components
                 optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
                 ope11a_tpl$=fattr(ope11a$)
@@ -337,7 +337,7 @@ rem --- Main read
                     if pos(optInvKitDet_key$=thisKey$)<>1 then break
                     readrecord(optInvKitDet_dev,key=thisKey$)ope11a$
                     rem --- For priced kits, skip standard components
-                    if ivm02a.cur_price<>0 and ope11a.comp_per_kit<>0 then continue
+                    if kit$="P" and ope11a.comp_per_kit<>0 then continue
 
                     kitComponent$="Y"
                     gosub updateSalesAnalysis
@@ -411,7 +411,7 @@ no_to_update: rem --- NO to Update: Clear On-Sales-Register Flags
 
                 rem --- Update trans_status of kit components
                 findrecord(ivm01_dev,key=firm_id$+ope11a.item_id$,dom=*next)ivm01a$
-                if kit$="Y" then
+                if kit$<>"N" then
                     optInvKitDet_key$=firm_id$+ope11a.ar_type$+ope11a.customer_id$+ope11a.order_no$+ope11a.ar_inv_no$+ope11a.internal_seq_no$
                     read(optInvKitDet_dev,key=optInvKitDet_key$,dom=*next)
                     while 1
@@ -971,7 +971,7 @@ write_sam_rec: rem --- write Sales Analysis records
     next x
 
     extract record (sam_dev,key=sam_key$,dom=*next) sam$;rem Advisory Locking
-    if kit$="Y" and ivm02a.cur_price=0 and kitComponent$<>"Y" then
+    if kit$="Y" and kitComponent$<>"Y" then
         rem --- Do only quantity SA on non-priced kits
         field sam$, "qty_shipped_" + str(period:"00") = nfield(sam$, "qty_shipped_" + str(period:"00")) + ope11a.qty_shipped
     else

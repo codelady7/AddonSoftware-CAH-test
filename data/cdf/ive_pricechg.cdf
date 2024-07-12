@@ -124,7 +124,7 @@ if ivm01a.item_inactive$="Y" then
    callpoint!.setStatus("ACTIVATE-ABORT")
 endif
 
-rem --- Can't change price for kits, which is the sum of the price of its components
+rem --- Can't change price for non-priced kits, which is the sum of the price of its components
 	if ivm01a.kit$="Y" then
 		msg_id$="IV_KIT_PRICE_CHNG"
 		dim msg_tokens$[2]
