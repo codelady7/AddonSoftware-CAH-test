@@ -5,14 +5,14 @@ SYSDESC=Addon Supplemental
 SYSCOMP=00000000;Default Company
 SYSCOPY=Copyright: Description^
 SYSPAR=
-SYSDIR=C:/aon_instances/CAH/v24/v2402/aon/supp/
-SYSAPP=SUP;Addon Supplemental;;;supp;C:/aon_instances/CAH/v24/v2402/aon/supp/prop/;ENU
-SYSSTBL=SET SUPP=C:/aon_instances/CAH/v24/v2402/aon/supp/data/
-SYSSTBL=SET SUPP_IMAGE=C:/aon_instances/CAH/v24/v2402/aon/supp/image/
-SYSSTBL=SET SUPP_LIB=C:/aon_instances/CAH/v24/v2402/aon/supp/lib/
-SYSSTBL=SET SUPP_PROG=C:/aon_instances/CAH/v24/v2402/aon/supp/prog/
-SYSSTBL=SET SUPP_PROP=C:/aon_instances/CAH/v24/v2402/aon/supp/prop/
-SYSPFX=C:/aon_instances/CAH/v24/v2402/aon/supp/prog/
-SYSCFG=SUPP=C:/aon_instances/CAH/v24/v2402/aon/supp/data/
+SYSDIR=C:/aon_instances/CAH/v24/v2402/supp/
+SYSAPP=SUP;Addon Supplemental;;;supp;C:/aon_instances/CAH/v24/v2402/supp/prop/;ENU
+SYSSTBL=SET SUPP=C:/aon_instances/CAH/v24/v2402/supp/data/
+SYSSTBL=SET SUPP_IMAGE=C:/aon_instances/CAH/v24/v2402/supp/image/
+SYSSTBL=SET SUPP_LIB=C:/aon_instances/CAH/v24/v2402/supp/lib/
+SYSSTBL=SET SUPP_PROG=C:/aon_instances/CAH/v24/v2402/supp/prog/
+SYSSTBL=SET SUPP_PROP=C:/aon_instances/CAH/v24/v2402/supp/prop/
+SYSPFX=C:/aon_instances/CAH/v24/v2402/supp/prog/
+SYSCFG=SUPP=C:/aon_instances/CAH/v24/v2402/supp/data/
 SYSLANG=ENU
 
